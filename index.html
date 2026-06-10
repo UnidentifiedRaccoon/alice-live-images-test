@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alice Live Media Compare</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="appShell">
+      <header class="pageHeader">
+        <div>
+          <p class="label">MP4 to animated WebP review</p>
+          <h1>Alice Live media comparison</h1>
+          <p class="intro">
+            Original videos are shown next to matching animated WebP files with
+            the same resolution, frame count, duration, and FPS.
+          </p>
+        </div>
+
+        <div class="toolbar" aria-label="Playback controls">
+          <button class="controlButton" type="button" data-action="play-all">
+            Play videos
+          </button>
+          <button class="controlButton" type="button" data-action="pause-all">
+            Pause videos
+          </button>
+          <button class="controlButton strong" type="button" data-action="restart-all">
+            Restart all
+          </button>
+        </div>
+      </header>
+
+      <section class="summaryGrid" id="summary" aria-label="Conversion summary"></section>
+
+      <section class="comparisonList" id="comparisonList" aria-label="Media comparisons"></section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
