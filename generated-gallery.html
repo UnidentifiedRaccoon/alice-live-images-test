@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alice Live Generated Gallery</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="generated-gallery.css" />
+  </head>
+  <body>
+    <main class="galleryShell">
+      <header class="galleryHero">
+        <nav class="topNav" aria-label="Навигация">
+          <a href="index.html">MP4/WebP сравнение</a>
+          <a aria-current="page" href="generated-gallery.html">Generated gallery</a>
+        </nav>
+
+        <div class="heroGrid">
+          <div>
+            <p class="eyebrow">Video to animated WebP pipeline</p>
+            <h1>21 generated media examples</h1>
+            <p class="heroLead">
+              Исходные MP4 декодируются в PNG-кадры и собираются обратно в
+              animated WebP без ресайза, без пересчёта FPS и с сохранением
+              суммарной длительности.
+            </p>
+          </div>
+
+          <dl class="heroStats" id="heroStats" aria-label="Сводка"></dl>
+        </div>
+      </header>
+
+      <section class="pipelineSection" aria-labelledby="pipelineTitle">
+        <div class="sectionHeader">
+          <p class="eyebrow">Pipeline</p>
+          <h2 id="pipelineTitle">Перевод MP4 в animated WebP</h2>
+        </div>
+
+        <ol class="pipelineList">
+          <li>
+            <strong>1. Входные данные</strong>
+            <span>
+              Перед конвертацией через <code>ffprobe</code> считываются
+              разрешение, длительность, FPS, количество кадров и видеотрек.
+            </span>
+          </li>
+          <li>
+            <strong>2. Декодирование видео</strong>
+            <span>
+              <code>ffmpeg -i input.mp4 -map 0:v:0 -fps_mode passthrough frame_%06d.png</code>
+              раскладывает видео в PNG-кадры без ресайза и без пересчёта FPS.
+            </span>
+          </li>
+          <li>
+            <strong>3. Тайминг анимации</strong>
+            <span>
+              Длительность MP4 делится на количество кадров, а целочисленные
+              задержки WebP распределяются так, чтобы сумма совпала с исходным
+              видео. Для 30fps здесь используются задержки 33/34 ms.
+            </span>
+          </li>
+          <li>
+            <strong>4. Сборка animated WebP</strong>
+            <span>
+              Кадры собираются через
+              <code>img2webp -loop 0 -sharp_yuv -lossy -q 95 -m 6 ... -o output.webp</code>.
+              Используется бесконечный loop, lossy WebP, качество 95 и
+              максимальный режим сжатия.
+            </span>
+          </li>
+          <li>
+            <strong>5. Проверка результата</strong>
+            <span>
+              <code>webpmux</code> и <code>ffprobe</code> используются для
+              проверки разрешения, количества кадров, длительности, loop count
+              и корректности WebP-контейнера.
+            </span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="controlsSection" aria-label="Фильтры галереи">
+        <div class="tabs" id="groupTabs"></div>
+        <button class="controlButton" type="button" id="togglePrompts">
+          Раскрыть все промпты
+        </button>
+      </section>
+
+      <section class="galleryList" id="galleryList" aria-label="Generated examples"></section>
+    </main>
+
+    <script src="generated-gallery-data.js"></script>
+    <script src="generated-gallery.js"></script>
+  </body>
+</html>
