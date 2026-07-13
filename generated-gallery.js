@@ -23,12 +23,10 @@ const escapeHtml = (value = "") =>
 
 const mediaRatio = ({ width, height }) => `${width} / ${height}`;
 
-const sourceRatio = (item) => item.sourceRatio || mediaRatio(item);
-
 const promptStatusBadge = (item) =>
   item.positivePrompt
-    ? '<span class="badge ok">Prompt linked</span>'
-    : '<span class="badge warn">Prompt metadata missing</span>';
+    ? '<span class="badge ok">Промпт привязан</span>'
+    : '<span class="badge warn">Нет метаданных промпта</span>';
 
 const renderStats = () => {
   const groups = new Set(data.map((item) => item.group));
@@ -37,12 +35,12 @@ const renderStats = () => {
   const missingPrompts = data.filter((item) => !item.positivePrompt).length;
 
   heroStats.innerHTML = [
-    ["Examples", data.length],
-    ["Groups", groups.size],
-    ["MP4 total", formatBytes(totalMp4Bytes)],
-    ["WebP total", formatBytes(totalWebpBytes)],
-    ["Frames checked", data.reduce((sum, item) => sum + item.frames, 0)],
-    ["Missing prompts", missingPrompts],
+    ["Примеров", data.length],
+    ["Групп", groups.size],
+    ["Все MP4", formatBytes(totalMp4Bytes)],
+    ["Все WebP", formatBytes(totalWebpBytes)],
+    ["Кадров проверено", data.reduce((sum, item) => sum + item.frames, 0)],
+    ["Без промпта", missingPrompts],
   ]
     .map(
       ([label, value]) => `
@@ -63,7 +61,15 @@ const renderTabs = () => {
       const count =
         group === "all" ? data.length : data.filter((item) => item.group === group).length;
       return `
-        <button class="tabButton ${group === activeGroup ? "active" : ""}" type="button" data-group="${group}">
+        <button
+          class="tabButton ${group === activeGroup ? "active" : ""}"
+          type="button"
+          role="tab"
+          aria-selected="${group === activeGroup}"
+          aria-controls="galleryList"
+          tabindex="${group === activeGroup ? "0" : "-1"}"
+          data-group="${group}"
+        >
           ${label} · ${count}
         </button>
       `;
@@ -76,8 +82,8 @@ const renderSourceMedia = (item) => {
     return `
       <div class="mediaBlock">
         <div class="mediaLabel">
-          <strong>Source image</strong>
-          <span>not in manifest</span>
+          <strong>Исходное изображение</strong>
+          <span>нет в manifest</span>
         </div>
         <div class="mediaFrame" style="--media-ratio: ${mediaRatio(item)}">
           <div class="emptyFrame">Для этого MP4 нет исходной картинки в локальных манифестах.</div>
@@ -89,11 +95,11 @@ const renderSourceMedia = (item) => {
   return `
     <div class="mediaBlock">
       <div class="mediaLabel">
-        <strong>Source image</strong>
+        <strong>Исходное изображение</strong>
         <span>${escapeHtml(item.sourceName || "")}</span>
       </div>
-      <div class="mediaFrame" style="--media-ratio: ${sourceRatio(item)}">
-        <img src="${escapeHtml(item.sourceImage)}" alt="Source image for ${escapeHtml(item.title)}" loading="lazy" decoding="async" />
+      <div class="mediaFrame" style="--media-ratio: ${mediaRatio(item)}">
+        <img src="${escapeHtml(item.sourceImage)}" alt="Исходное изображение для ${escapeHtml(item.title)}" loading="lazy" decoding="async" />
       </div>
     </div>
   `;
@@ -130,6 +136,15 @@ const renderPromptPanel = (item) => {
 const renderGallery = () => {
   const items = activeGroup === "all" ? data : data.filter((item) => item.group === activeGroup);
 
+  if (!items.length) {
+    galleryList.innerHTML = `
+      <div class="galleryEmpty">
+        В этой группе пока нет примеров. Выберите другую группу.
+      </div>
+    `;
+    return;
+  }
+
   galleryList.innerHTML = items
     .map(
       (item, index) => `
@@ -137,16 +152,16 @@ const renderGallery = () => {
           <header class="exampleHeader">
             <div>
               <div class="exampleTitleRow">
-                <span class="exampleIndex">${index + 1}</span>
+                <span class="exampleIndex">${String(index + 1).padStart(2, "0")}</span>
                 <h3>${escapeHtml(item.title)}</h3>
               </div>
               <div class="badgeRow">
                 <span class="badge info">${escapeHtml(item.group)}</span>
                 <span class="badge">${item.width}x${item.height}</span>
                 <span class="badge">${escapeHtml(item.fps)}</span>
-                <span class="badge">${item.frames} frames</span>
+                <span class="badge">${item.frames} кадров</span>
                 <span class="badge">${(item.durationMs / 1000).toFixed(3)}s</span>
-                <span class="badge ok">Loop ${item.loop}</span>
+                <span class="badge ok">Loop ${item.loop === 0 ? "∞" : item.loop}</span>
                 ${promptStatusBadge(item)}
               </div>
             </div>
@@ -175,24 +190,24 @@ const renderGallery = () => {
                 <span>${escapeHtml(item.webpName)}</span>
               </div>
               <div class="mediaFrame" style="--media-ratio: ${mediaRatio(item)}">
-                <img src="${escapeHtml(item.webp)}" alt="Animated WebP for ${escapeHtml(item.title)}" loading="lazy" decoding="async" />
+                <img src="${escapeHtml(item.webp)}" alt="Animated WebP для ${escapeHtml(item.title)}" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
 
           <div class="detailsGrid">
             <section class="techPanel">
-              <h3>Parameters</h3>
+              <h3>Параметры</h3>
               <div class="metaGrid">
                 <span class="badge">${item.width}x${item.height} canvas</span>
                 <span class="badge">${escapeHtml(item.fps)} avg fps</span>
-                <span class="badge">${item.frames} decoded frames</span>
-                <span class="badge">${item.durationMs} ms total</span>
-                <span class="badge">${item.delayMinMs}-${item.delayMaxMs} ms delays</span>
+                <span class="badge">${item.frames} декодированных кадров</span>
+                <span class="badge">${item.durationMs} ms суммарно</span>
+                <span class="badge">Задержки ${item.delayMinMs}-${item.delayMaxMs} ms</span>
                 <span class="badge">q95 lossy</span>
                 <span class="badge">m6</span>
                 <span class="badge">sharp_yuv</span>
-                <span class="badge ok">webpmux checked</span>
+                <span class="badge ok">webpmux проверен</span>
               </div>
             </section>
             ${renderPromptPanel(item)}
@@ -203,17 +218,47 @@ const renderGallery = () => {
     .join("");
 };
 
+const setActiveGroup = (group, shouldFocus = false) => {
+  activeGroup = group;
+  groupTabs.querySelectorAll("[data-group]").forEach((button) => {
+    const isActive = button.dataset.group === activeGroup;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+    button.tabIndex = isActive ? 0 : -1;
+  });
+  renderGallery();
+
+  if (shouldFocus) {
+    groupTabs.querySelector(`[data-group="${activeGroup}"]`)?.focus();
+  }
+};
+
 groupTabs.addEventListener("click", (event) => {
   const button = event.target.closest("[data-group]");
   if (!button) return;
-  activeGroup = button.dataset.group;
-  renderTabs();
-  renderGallery();
+  setActiveGroup(button.dataset.group);
+});
+
+groupTabs.addEventListener("keydown", (event) => {
+  if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+
+  const tabs = Array.from(groupTabs.querySelectorAll("[data-group]"));
+  const currentIndex = tabs.findIndex((button) => button.dataset.group === activeGroup);
+  let nextIndex = currentIndex;
+
+  if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+  if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabs.length;
+  if (event.key === "Home") nextIndex = 0;
+  if (event.key === "End") nextIndex = tabs.length - 1;
+
+  event.preventDefault();
+  setActiveGroup(tabs[nextIndex].dataset.group, true);
 });
 
 togglePromptsButton.addEventListener("click", () => {
   promptsOpen = !promptsOpen;
   togglePromptsButton.classList.toggle("active", promptsOpen);
+  togglePromptsButton.setAttribute("aria-pressed", String(promptsOpen));
   togglePromptsButton.textContent = promptsOpen ? "Скрыть все промпты" : "Раскрыть все промпты";
   renderGallery();
 });

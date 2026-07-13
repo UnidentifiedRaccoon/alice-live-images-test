@@ -1,44 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alice Live Media Compare</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <title>Alice Live · MP4 / WebP</title>
+    <link rel="icon" href="data:," />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=Onest:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="shared.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=6" />
   </head>
   <body>
-    <main class="appShell">
+    <a class="skipLink" href="#mainContent">К сравнению</a>
+
+    <header class="siteHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="index.html?v=6" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+
+        <nav class="viewSwitch" aria-label="Разделы демо">
+          <a href="generated-gallery.html?v=6">Generated Library</a>
+          <a aria-current="page" href="index.html?v=6">MP4 / WebP</a>
+        </nav>
+
+        <p class="siteContext">7 пар · format review</p>
+      </div>
+    </header>
+
+    <main class="appShell" id="mainContent">
       <header class="pageHeader">
-        <div>
-          <p class="label">MP4 to animated WebP review</p>
-          <h1>Alice Live media comparison</h1>
+        <div class="titleBlock">
+          <p class="eyebrow">Format review · 7 пар</p>
+          <h1>Один кадр.<br />Два контейнера.</h1>
           <p class="intro">
-            Original videos are shown next to matching animated WebP files with
-            the same resolution, frame count, duration, and FPS.
+            Сравниваем исходный MP4 и animated WebP при одинаковом разрешении,
+            количестве кадров, длительности и FPS.
           </p>
         </div>
 
-        <div class="toolbar" aria-label="Playback controls">
-          <a class="controlButton" href="generated-gallery.html">
-            Generated gallery
-          </a>
-          <button class="controlButton" type="button" data-action="play-all">
-            Play videos
-          </button>
-          <button class="controlButton" type="button" data-action="pause-all">
-            Pause videos
-          </button>
-          <button class="controlButton strong" type="button" data-action="restart-all">
-            Restart all
-          </button>
+        <div class="formatMark" aria-label="MP4 сравнивается с WebP">
+          <span>MP4</span>
+          <i aria-hidden="true">/</i>
+          <span>WEBP</span>
         </div>
       </header>
 
-      <section class="summaryGrid" id="summary" aria-label="Conversion summary"></section>
+      <section class="summaryGrid" id="summary" aria-label="Сводка конвертации"></section>
 
-      <section class="comparisonList" id="comparisonList" aria-label="Media comparisons"></section>
+      <section class="playbackBar" aria-label="Управление воспроизведением">
+        <div class="playbackCopy">
+          <span class="statusDot" aria-hidden="true"></span>
+          <p><strong>Синхронная проверка</strong> · MP4 и WebP стартуют с первого кадра</p>
+        </div>
+
+        <div class="toolbar">
+          <button class="controlButton" type="button" data-action="play-all">
+            Запустить MP4
+          </button>
+          <button class="controlButton" type="button" data-action="pause-all">
+            Пауза
+          </button>
+          <button class="controlButton strong" type="button" data-action="restart-all">
+            Синхронизировать
+          </button>
+        </div>
+      </section>
+
+      <section class="comparisonList" id="comparisonList" aria-label="Сравнения медиа"></section>
     </main>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=6"></script>
   </body>
 </html>

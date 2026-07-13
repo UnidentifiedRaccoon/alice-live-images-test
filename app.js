@@ -1,7 +1,7 @@
 const assets = [
   {
     id: "480p-3375-24",
-    name: "480p short, 24fps",
+    name: "480p · короткий · 24fps",
     quality: "480p",
     resolution: "720x544",
     width: 720,
@@ -17,7 +17,7 @@ const assets = [
   },
   {
     id: "480p-6208-24",
-    name: "480p long, 24fps",
+    name: "480p · длинный · 24fps",
     quality: "480p",
     resolution: "720x544",
     width: 720,
@@ -33,7 +33,7 @@ const assets = [
   },
   {
     id: "720p-3133-30",
-    name: "720p short, 30fps",
+    name: "720p · короткий · 30fps",
     quality: "720p",
     resolution: "1088x816",
     width: 1088,
@@ -49,7 +49,7 @@ const assets = [
   },
   {
     id: "720p-3233-30",
-    name: "720p short, 30fps",
+    name: "720p · короткий · 30fps",
     quality: "720p",
     resolution: "1088x816",
     width: 1088,
@@ -64,8 +64,40 @@ const assets = [
     webpBytes: 12769244,
   },
   {
+    id: "720p-3233-30-alt",
+    name: "720p · короткий · вариант A",
+    quality: "720p",
+    resolution: "1088x816",
+    width: 1088,
+    height: 816,
+    duration: 3.233,
+    fps: 30,
+    frames: 97,
+    looped: false,
+    video: "videos/alice-live-720p-1088x816-3.233s-30fps-alt.mp4",
+    webp: "webp/alice-live-720p-1088x816-3.233s-30fps-alt.webp",
+    videoBytes: 430427,
+    webpBytes: 14055002,
+  },
+  {
+    id: "720p-3233-30-alt-2",
+    name: "720p · короткий · вариант B",
+    quality: "720p",
+    resolution: "1088x816",
+    width: 1088,
+    height: 816,
+    duration: 3.233,
+    fps: 30,
+    frames: 97,
+    looped: false,
+    video: "videos/alice-live-720p-1088x816-3.233s-30fps-alt-2.mp4",
+    webp: "webp/alice-live-720p-1088x816-3.233s-30fps-alt-2.webp",
+    videoBytes: 394663,
+    webpBytes: 13729226,
+  },
+  {
     id: "720p-3917-24",
-    name: "720p longer, 24fps",
+    name: "720p · длинный · 24fps",
     quality: "720p",
     resolution: "1088x816",
     width: 1088,
@@ -92,7 +124,7 @@ const formatBytes = (bytes) => {
 
 const formatRatio = (webpBytes, videoBytes) => {
   const ratio = webpBytes / videoBytes;
-  return `${ratio.toFixed(1)}x`;
+  return `×${ratio.toFixed(1)}`;
 };
 
 const cssRatio = ({ width, height }) => `${width} / ${height}`;
@@ -102,14 +134,14 @@ const totalWebpBytes = assets.reduce((sum, item) => sum + item.webpBytes, 0);
 const totalFrames = assets.reduce((sum, item) => sum + item.frames, 0);
 
 summaryEl.innerHTML = [
-  ["Pairs", `${assets.length}`],
-  ["Original MP4 total", formatBytes(totalVideoBytes)],
-  ["Animated WebP total", formatBytes(totalWebpBytes)],
-  ["Frames preserved", `${totalFrames}`],
+  ["Пар в выборке", `${assets.length}`],
+  ["Исходные MP4", formatBytes(totalVideoBytes)],
+  ["Animated WebP", formatBytes(totalWebpBytes)],
+  ["Кадров сохранено", `${totalFrames}`],
 ]
   .map(
-    ([label, value]) => `
-      <article class="summaryMetric">
+    ([label, value], index) => `
+      <article class="summaryMetric" style="--i: ${index}">
         <span>${label}</span>
         <strong>${value}</strong>
       </article>
@@ -121,34 +153,34 @@ listEl.innerHTML = assets
   .map((item, index) => {
     const ratio = formatRatio(item.webpBytes, item.videoBytes);
     const ratioClass = item.webpBytes / item.videoBytes > 20 ? "deltaHigh" : "deltaNeutral";
-    const loopPill = item.looped ? '<span class="pill looped">Looped</span>' : "";
+    const loopPill = item.looped ? '<span class="pill looped">Зациклено</span>' : "";
 
     return `
       <article class="pairCard" id="${item.id}" style="--ratio: ${cssRatio(item)}">
         <header class="pairHeader">
           <div>
-            <h2 class="pairTitle">${index + 1}. ${item.name}</h2>
-            <div class="metaRow" aria-label="Media metadata">
+            <h2 class="pairTitle"><span class="pairIndex">${String(index + 1).padStart(2, "0")}</span>${item.name}</h2>
+            <div class="metaRow" aria-label="Параметры медиа">
               <span class="pill quality">${item.quality}</span>
               <span class="pill">${item.resolution}</span>
               <span class="pill">${item.duration.toFixed(3)}s</span>
               <span class="pill">${item.fps}fps</span>
-              <span class="pill">${item.frames} frames</span>
+              <span class="pill">${item.frames} кадров</span>
               ${loopPill}
-              <span class="pill warning">WebP ${ratio}</span>
+              <span class="pill warning">WebP · ${ratio}</span>
             </div>
           </div>
           <div class="pairActions">
             <button class="controlButton" type="button" data-action="restart-one" data-id="${item.id}">
-              Restart pair
+              Синхронизировать пару
             </button>
           </div>
         </header>
 
         <div class="mediaPair">
-          <section class="mediaPanel" aria-label="Original MP4">
+          <section class="mediaPanel" aria-label="Исходный MP4">
             <div class="mediaPanelHeader">
-              <h3>Original MP4</h3>
+              <h3><span>01</span> Original MP4</h3>
               <span class="fileSize">${formatBytes(item.videoBytes)}</span>
             </div>
             <div class="mediaFrame">
@@ -167,13 +199,13 @@ listEl.innerHTML = assets
 
           <section class="mediaPanel" aria-label="Animated WebP">
             <div class="mediaPanelHeader">
-              <h3>Animated WebP</h3>
+              <h3><span>02</span> Animated WebP</h3>
               <span class="fileSize">${formatBytes(item.webpBytes)}</span>
             </div>
             <div class="mediaFrame">
               <img
                 src="${item.webp}"
-                alt="Animated WebP conversion for ${item.name}"
+                alt="Конвертация animated WebP для ${item.name}"
                 loading="lazy"
                 decoding="async"
                 data-webp-id="${item.id}"
@@ -183,14 +215,14 @@ listEl.innerHTML = assets
           </section>
         </div>
 
-        <table class="detailTable" aria-label="Technical comparison for ${item.name}">
+        <table class="detailTable" aria-label="Техническое сравнение для ${item.name}">
           <tbody>
             <tr>
-              <th scope="row">Parameters</th>
-              <td>${item.resolution}, ${item.duration.toFixed(3)} seconds, ${item.fps}fps, ${item.frames} frames</td>
+              <th scope="row">Параметры</th>
+              <td>${item.resolution}, ${item.duration.toFixed(3)} секунды, ${item.fps}fps, ${item.frames} кадров</td>
             </tr>
             <tr>
-              <th scope="row">File size</th>
+              <th scope="row">Размер файла</th>
               <td>MP4 ${formatBytes(item.videoBytes)} vs WebP ${formatBytes(item.webpBytes)} <span class="${ratioClass}">(${ratio})</span></td>
             </tr>
           </tbody>

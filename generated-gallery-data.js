@@ -22,8 +22,8 @@ window.generatedGalleryData = [
     "delayMinMs": 33,
     "delayMaxMs": 34,
     "webpDurationMs": 3233,
-    "positivePrompt": "",
-    "negativePrompt": ""
+    "positivePrompt": "A 3.2-second photorealistic image-to-video shot starting exactly from the input frame: sunset lake resort scene with two white swans in the lower foreground, wooden pier on the left, modern lakeside houses, trees, reeds, calm reflective water, and the visible #ДОБРОГРАД sign on the right. The two swans complete one small natural action: they gently glide a short distance to the right together, creating soft spreading ripples behind them while their bodies stay elegant and white. The water reflection subtly shimmers, reeds and treetops move very slightly in a light breeze, and the warm low sun continues glowing through the trees. Use a slow, smooth landscape-style forward glide with minimal rightward drift, preserving the original wide composition, aspect ratio, objects, lighting, colors, and tranquil atmosphere.",
+    "negativePrompt": "Do not make the swans fly, dive, flap aggressively, disappear, separate far apart, multiply, change species, change size, or turn into other animals. Do not add people, boats, cars, extra birds, rain, snow, waves, fountains, or new buildings. Do not alter, replace, distort, translate, or animate the #ДОБРОГРАД sign. Do not change the sunset time of day, remove the pier, remove houses, or remove trees. Avoid fast camera moves, zoom jumps, spinning, heavy parallax, warped reflections, unstable horizon, flicker, morphing, melting, ghosting, blur, low resolution, oversaturation, noise, artifacts, duplicate bodies, deformed swan necks, incorrect shadows, inconsistent lighting, non-photorealistic or cartoon look."
   },
   {
     "id": "example-02",
@@ -48,8 +48,8 @@ window.generatedGalleryData = [
     "delayMinMs": 33,
     "delayMaxMs": 34,
     "webpDurationMs": 3233,
-    "positivePrompt": "",
-    "negativePrompt": ""
+    "positivePrompt": "Photorealistic image-to-video clip, starting exactly from the visible first frame. A young male golfer in a red sweater and brown pants holds his completed golf swing on a wide green golf course, facing right in profile. Over about 3.2 seconds he gently settles his weight, slightly relaxes his shoulders, and keeps his head and eyes tracking the ball’s direction to the right, maintaining the same identity, clothing, pose, golf bag, pond, sand bunkers, tree line, sky, and original composition. Subtle wind moves the grass and the sweater fabric, the pond shows faint ripples, and the clouds drift slowly. Smooth minimal outdoor camera glide, very slight lateral drift, stable natural daylight, realistic motion, original aspect ratio.",
+    "negativePrompt": "Do not restart the golf swing, do not make him hit another ball, do not change the golfer’s face, age, clothing, pose, body proportions, golf bag, clubs, pond, bunkers, trees, sky, or location. Do not add people, animals, carts, extra balls, text, logos, signs, rain, night lighting, or dramatic camera moves. Avoid unnatural limb motion, warped hands, bent club, floating feet, sliding body, duplicated subject, background melting, object popping, flicker, jitter, blur, low resolution, over-sharpening, oversaturation, CGI look, cartoon style, slow-motion artifacts, frame interpolation errors, and aspect ratio changes."
   },
   {
     "id": "example-03",
@@ -74,8 +74,8 @@ window.generatedGalleryData = [
     "delayMinMs": 33,
     "delayMaxMs": 34,
     "webpDurationMs": 3233,
-    "positivePrompt": "",
-    "negativePrompt": ""
+    "positivePrompt": "A photorealistic wide panoramic image-to-video clip starting from the exact frame: a cable wakeboarder in a blue helmet and black wetsuit rides across the shallow water at the lower right of Добрый Вейк Парк, holding the taut yellow tow rope. Over about 3.2 seconds, the rider completes one short controlled glide forward toward the left, knees flexing slightly, board skimming the surface, with a small white spray trail rising and then settling behind the board. The cable stays taut on its diagonal line, the shoreline, signs, poles, trees, reflective water, and pastel pink-purple sunset clouds remain consistent. Subtle natural ripples move across the water, faint reflections shimmer, treetops barely stir, and clouds drift almost imperceptibly. Use a slow, smooth wide landscape camera glide with minimal movement, preserving the original panoramic composition, aspect ratio, colors, identity, clothing, objects, and background.",
+    "negativePrompt": "Rider falling, jumping, spinning, changing direction abruptly, leaving the frame, rope snapping or disappearing, cable moving incorrectly, helmet or vest changing, extra riders, extra people, boat appearing, large waves, stormy weather, changing park signs, distorted Cyrillic letters, moving poles, trees warping, shoreline shifting, water turning into ocean, camera zooming aggressively, fast pan, close-up crop, changed aspect ratio, identity change, clothing change, object disappearance, unrealistic physics, frozen water spray, excessive motion blur, flicker, jitter, frame interpolation artifacts, warped limbs, deformed hands, melted face, duplicated body, bad anatomy, low resolution, oversharpening, noise, compression artifacts, cartoon, CGI, painting, anime, surreal style."
   },
   {
     "id": "example-04",
