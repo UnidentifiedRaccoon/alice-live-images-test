@@ -2,39 +2,76 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alice Live Generated Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <title>Alice Live · Generated Library</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="generated-gallery.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=Onest:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="shared.css?v=6" />
+    <link rel="stylesheet" href="generated-gallery.css?v=6" />
   </head>
   <body>
-    <main class="galleryShell">
-      <header class="galleryHero">
-        <nav class="topNav" aria-label="Навигация">
-          <a href="index.html">MP4/WebP сравнение</a>
-          <a aria-current="page" href="generated-gallery.html">Generated gallery</a>
+    <a class="skipLink" href="#mainContent">К библиотеке</a>
+
+    <header class="siteHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="generated-gallery.html?v=6" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+
+        <nav class="viewSwitch" aria-label="Разделы демо">
+          <a aria-current="page" href="generated-gallery.html?v=6">Generated Library</a>
+          <a href="index.html?v=6">MP4 / WebP</a>
         </nav>
 
+        <p class="siteContext">21 render · 4 группы</p>
+      </div>
+    </header>
+
+    <main class="galleryShell" id="mainContent">
+      <header class="galleryHero">
         <div class="heroGrid">
-          <div>
-            <p class="eyebrow">Video to animated WebP pipeline</p>
-            <h1>21 generated media examples</h1>
+          <div class="heroCopy">
+            <p class="eyebrow">Image → video → animated WebP</p>
+            <h1>Generated<br />Library</h1>
             <p class="heroLead">
-              Исходные MP4 декодируются в PNG-кадры и собираются обратно в
-              animated WebP без ресайза, без пересчёта FPS и с сохранением
-              суммарной длительности.
+              Вся цепочка генерации в одном месте: исходное изображение,
+              получившийся MP4, animated WebP и промпт, который запустил движение.
             </p>
           </div>
 
-          <dl class="heroStats" id="heroStats" aria-label="Сводка"></dl>
+          <figure class="heroPreview">
+            <img
+              src="orig promo/orig 1/generated/1.webp"
+              alt="Пара лебедей на озере в первом generated-примере"
+            />
+            <figcaption>
+              <span>Featured render</span>
+              <strong>orig 1 · 01</strong>
+            </figcaption>
+          </figure>
         </div>
+
+        <dl class="heroStats" id="heroStats" aria-label="Сводка библиотеки"></dl>
       </header>
 
-      <section class="pipelineSection" aria-labelledby="pipelineTitle">
-        <div class="sectionHeader">
-          <p class="eyebrow">Pipeline</p>
-          <h2 id="pipelineTitle">Перевод MP4 в animated WebP</h2>
-        </div>
+      <details class="pipelineSection">
+        <summary>
+          <span>
+            <small>Pipeline</small>
+            <strong>Как MP4 превращается в animated WebP</strong>
+          </span>
+          <span class="pipelineHint">ffprobe → ffmpeg → img2webp → webpmux</span>
+        </summary>
 
         <ol class="pipelineList">
           <li>
@@ -77,19 +114,25 @@
             </span>
           </li>
         </ol>
-      </section>
+      </details>
 
       <section class="controlsSection" aria-label="Фильтры галереи">
-        <div class="tabs" id="groupTabs"></div>
-        <button class="controlButton" type="button" id="togglePrompts">
+        <div class="tabs" id="groupTabs" role="tablist" aria-label="Группы примеров"></div>
+        <button class="controlButton" type="button" id="togglePrompts" aria-pressed="false">
           Раскрыть все промпты
         </button>
       </section>
 
-      <section class="galleryList" id="galleryList" aria-label="Generated examples"></section>
+      <section
+        class="galleryList"
+        id="galleryList"
+        role="tabpanel"
+        tabindex="0"
+        aria-label="Generated-примеры"
+      ></section>
     </main>
 
-    <script src="generated-gallery-data.js"></script>
-    <script src="generated-gallery.js"></script>
+    <script src="generated-gallery-data.js?v=6"></script>
+    <script src="generated-gallery.js?v=6"></script>
   </body>
 </html>
