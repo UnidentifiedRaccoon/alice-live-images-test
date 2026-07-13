@@ -11,22 +11,38 @@
     />
     <title>Wan 2.7 × Veo 3.1 Lite · PROMOPAGES-9681</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../shared.css?v=7" />
+    <link rel="stylesheet" href="styles.css?v=7" />
   </head>
   <body>
     <a class="skip-link" href="#main">Перейти к сравнению</a>
 
-    <header class="site-header">
-      <div class="site-header__inner">
-        <a class="wordmark" href="./" aria-label="Alice Live — сравнение моделей">
-          <span class="wordmark__mark" aria-hidden="true">A</span>
-          <span class="wordmark__copy">
+    <header class="siteHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../index.html?v=7" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
             <strong>Alice Live</strong>
-            <small>Model review</small>
+            <small>Media Lab</small>
           </span>
         </a>
 
-        <nav class="section-nav" aria-label="Разделы страницы">
+        <nav class="viewSwitch" aria-label="Разделы демо">
+          <a href="../generated-gallery.html?v=7">
+            <span class="viewSwitchCompact">Library</span>
+            <span class="viewSwitchFull">Generated Library</span>
+          </a>
+          <a href="../index.html?v=7">MP4 / WebP</a>
+          <a aria-current="page" href="./?v=7">Wan / Veo</a>
+        </nav>
+
+        <p class="siteContext">2 пары · model review</p>
+      </div>
+    </header>
+
+    <div class="review-toolbar">
+      <div class="review-toolbar__inner">
+        <nav class="section-nav" aria-label="Разделы сравнения моделей">
           <a href="#source-1">01 · Лебеди</a>
           <a href="#source-2">02 · Гольф</a>
           <a href="#verdict">Вывод</a>
@@ -37,7 +53,7 @@
           4 финала проверены
         </p>
       </div>
-    </header>
+    </div>
 
     <main id="main">
       <section class="hero" aria-labelledby="page-title">
@@ -174,7 +190,7 @@
       <p>Публичная страница содержит только allowlist данных и относительные пути.</p>
     </footer>
 
-    <script src="comparison-data.js"></script>
-    <script src="app.js"></script>
+    <script src="comparison-data.js?v=7"></script>
+    <script src="app.js?v=7"></script>
   </body>
 </html>
