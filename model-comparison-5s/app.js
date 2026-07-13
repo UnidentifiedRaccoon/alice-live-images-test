@@ -46,7 +46,7 @@
           preload="metadata"
           poster="${source.path}"
           data-pair-video
-          aria-label="${model.name}: результат для ${source.filename}"
+          aria-label="${model.name}: результат для ${source.filename}, без аудиодорожки"
         >
           <source src="${model.video}" type="video/mp4" />
           Ваш браузер не поддерживает MP4-видео.
@@ -55,6 +55,7 @@
           <span>Final</span>
           <span>5.000 s</span>
           <span>30 fps</span>
+          <span>Без аудио</span>
         </div>
         <a class="media-download" href="${model.video}" download>
           Скачать MP4
@@ -238,7 +239,11 @@
       }
 
       try {
-        await Promise.all(videos.map((video) => video.play()));
+        const results = await Promise.allSettled(videos.map((video) => video.play()));
+        if (results.some((result) => result.status === "rejected")) {
+          videos.forEach((video) => video.pause());
+          throw new Error("Pair playback failed");
+        }
         setPlayState(true);
         setStatus("Синхронное воспроизведение", "playing");
       } catch {
