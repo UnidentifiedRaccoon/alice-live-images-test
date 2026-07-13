@@ -165,7 +165,7 @@ input:focus-visible {
   transform: translateY(0);
 }
 
-.site-header {
+.review-toolbar {
   position: sticky;
   z-index: 10;
   top: 0;
@@ -173,61 +173,21 @@ input:focus-visible {
   background: var(--paper);
 }
 
-.site-header__inner {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+.review-toolbar__inner {
+  display: flex;
   gap: var(--space-md);
   align-items: center;
+  justify-content: space-between;
   width: min(96rem, calc(100% - 1.5rem));
-  min-height: 4.5rem;
+  min-height: 3.75rem;
   margin: 0 auto;
-}
-
-.wordmark {
-  display: inline-flex;
-  gap: var(--space-sm);
-  align-items: center;
-  min-height: 2.75rem;
-  text-decoration: none;
-}
-
-.wordmark__mark {
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  color: var(--surface);
-  background: var(--accent);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.wordmark__copy {
-  display: none;
-  line-height: 1.05;
-}
-
-.wordmark__copy strong {
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.wordmark__copy small {
-  margin-top: var(--space-2xs);
-  color: var(--ink-muted);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
 }
 
 .section-nav {
   display: flex;
+  flex: 1;
   gap: var(--space-2xs);
-  justify-content: flex-end;
+  justify-content: center;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -1101,13 +1061,24 @@ code {
 
 @container model-comparison (min-width: 54rem) {
   .model-grid {
+    position: relative;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-xl);
+    gap: var(--space-3xl);
   }
 
-  .model-panel + .model-panel {
-    border-inline-start: 0.0625rem solid var(--line);
-    padding-inline-start: var(--space-xl);
+  .model-grid::after {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 50%;
+    width: 0.0625rem;
+    background: var(--line);
+    content: "";
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .findings {
+    min-height: 8.25rem;
   }
 }
 
@@ -1142,14 +1113,10 @@ code {
 }
 
 @media (min-width: 38rem) {
-  .site-header__inner,
+  .review-toolbar__inner,
   main,
   .site-footer {
     width: min(96rem, calc(100% - 3rem));
-  }
-
-  .wordmark__copy {
-    display: grid;
   }
 
   .pair-controls {
@@ -1202,10 +1169,6 @@ code {
 }
 
 @media (min-width: 52rem) {
-  .site-header__inner {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
   .section-nav {
     justify-content: center;
   }
