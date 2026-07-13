@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f5f0ed" />
+    <meta
+      name="description"
+      content="Сравнение четырёх 5-секундных image-to-video роликов Wan 2.7 и Veo 3.1 Lite для PROMOPAGES-9681."
+    />
+    <title>Wan 2.7 × Veo 3.1 Lite · PROMOPAGES-9681</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Перейти к сравнению</a>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="wordmark" href="./" aria-label="Alice Live — сравнение моделей">
+          <span class="wordmark__mark" aria-hidden="true">A</span>
+          <span class="wordmark__copy">
+            <strong>Alice Live</strong>
+            <small>Model review</small>
+          </span>
+        </a>
+
+        <nav class="section-nav" aria-label="Разделы страницы">
+          <a href="#source-1">01 · Лебеди</a>
+          <a href="#source-2">02 · Гольф</a>
+          <a href="#verdict">Вывод</a>
+        </nav>
+
+        <p class="header-status">
+          <span aria-hidden="true"></span>
+          4 финала проверены
+        </p>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero__copy">
+          <p class="eyebrow">PROMOPAGES-9681 · image-to-video</p>
+          <h1 id="page-title">Один первый кадр.<br />Две модели.</h1>
+          <p class="hero__intro">
+            Wan 2.7 и Veo 3.1 Lite на двух исходниках. Финалы приведены к одной
+            точке сравнения: ровно 5 секунд, 30 fps и без аудио.
+          </p>
+        </div>
+
+        <aside class="hero-proof" aria-label="Ключевые параметры теста">
+          <p class="hero-proof__value"><span>5.000</span> секунд</p>
+          <dl class="hero-proof__list">
+            <div>
+              <dt>Финалы</dt>
+              <dd>4 / 4</dd>
+            </div>
+            <div>
+              <dt>Стоимость</dt>
+              <dd>$1.60</dd>
+            </div>
+            <div>
+              <dt>Частота</dt>
+              <dd>30 fps</dd>
+            </div>
+            <div>
+              <dt>Аудио</dt>
+              <dd>нет</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="protocol" aria-labelledby="protocol-title">
+        <div>
+          <p class="eyebrow" id="protocol-title">Условия сравнения</p>
+          <p>1080p tier · 16:9 requested · seed 9681 · first frame</p>
+        </div>
+        <p class="protocol__note">
+          Время ниже — только API-генерация. Veo дополнительно обрезан с 6 до 5 секунд
+          и интерполирован с 24 до 30 fps; у Wan удалена неожиданная аудиодорожка.
+        </p>
+      </section>
+
+      <section
+        class="comparison-list"
+        id="comparison-list"
+        aria-label="Сравнение результатов по исходным изображениям"
+      ></section>
+
+      <section class="verdict" id="verdict" aria-labelledby="verdict-title">
+        <header class="verdict__header">
+          <div>
+            <p class="eyebrow">Итог · выборка n=2</p>
+            <h2 id="verdict-title">Победитель зависит от приоритета.</h2>
+          </div>
+          <p>
+            Оба пайплайна дали технически валидные финалы. Разница проявилась в
+            скорости, стоимости, геометрии кадра и весе файлов.
+          </p>
+        </header>
+
+        <div class="verdict-table" role="table" aria-label="Итоговое сравнение моделей">
+          <div class="verdict-row verdict-row--head" role="row">
+            <span role="columnheader">Критерий</span>
+            <span role="columnheader">Wan 2.7</span>
+            <span role="columnheader">Veo 3.1 Lite</span>
+          </div>
+          <div class="verdict-row" role="row">
+            <span role="rowheader">Стоимость двух роликов</span>
+            <strong role="cell" data-model="Wan 2.7">$1.00</strong>
+            <strong role="cell" data-model="Veo 3.1 Lite">$0.60 · на 40% дешевле</strong>
+          </div>
+          <div class="verdict-row" role="row">
+            <span role="rowheader">Среднее время API</span>
+            <strong role="cell" data-model="Wan 2.7">1:50 · быстрее на 44.7 с</strong>
+            <strong role="cell" data-model="Veo 3.1 Lite">2:35</strong>
+          </div>
+          <div class="verdict-row" role="row">
+            <span role="rowheader">Средний размер финала</span>
+            <strong role="cell" data-model="Wan 2.7">16.14 MiB</strong>
+            <strong role="cell" data-model="Veo 3.1 Lite">5.36 MiB · примерно в 3× легче</strong>
+          </div>
+          <div class="verdict-row" role="row">
+            <span role="rowheader">Геометрия</span>
+            <strong role="cell" data-model="Wan 2.7">Сохранил 3:2 и 4:3, вопреки 16:9</strong>
+            <strong role="cell" data-model="Veo 3.1 Lite">1920×1080, но с pillarbox-полями</strong>
+          </div>
+        </div>
+
+        <div class="decision-notes">
+          <article>
+            <p class="decision-notes__model">Выбирать Wan, если</p>
+            <h3>важнее скорость и исходная геометрия.</h3>
+            <p>
+              На этой выборке Wan быстрее и не помещает изображение в широкий холст,
+              но стоит дороже, создаёт более тяжёлые MP4 и требует очистки аудио.
+            </p>
+          </article>
+          <article>
+            <p class="decision-notes__model">Выбирать Veo, если</p>
+            <h3>важнее цена и компактный единый формат.</h3>
+            <p>
+              Veo дешевле и даёт заметно меньший файл 1920×1080, но работает дольше,
+              добавляет поля и требует нормализации длительности и fps.
+            </p>
+          </article>
+        </div>
+
+        <p class="verdict__caveat">
+          Качественного универсального лидера по двум изображениям определить нельзя:
+          обе модели сохранили сцены, а движение гольфиста у обеих получилось шире промпта.
+        </p>
+      </section>
+
+      <section class="integrity" aria-labelledby="integrity-title">
+        <div>
+          <p class="eyebrow">Контроль финалов</p>
+          <h2 id="integrity-title">ffprobe и полный decode — без ошибок</h2>
+        </div>
+        <ul>
+          <li><strong>5.000 с</strong><span>каждый файл</span></li>
+          <li><strong>150 кадров</strong><span>30/1 fps</span></li>
+          <li><strong>H.264 High</strong><span>yuv420p</span></li>
+          <li><strong>0 аудиопотоков</strong><span>во всех финалах</span></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>PROMOPAGES-9681 · 13 июля 2026</p>
+      <p>Публичная страница содержит только allowlist данных и относительные пути.</p>
+    </footer>
+
+    <script src="comparison-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
