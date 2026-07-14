@@ -4,6 +4,7 @@ const galleryList = document.querySelector("#galleryList");
 const librarySummary = document.querySelector("#librarySummary");
 const groupTabs = document.querySelector("#groupTabs");
 const togglePromptsButton = document.querySelector("#togglePrompts");
+const controlsSection = document.querySelector(".controlsSection");
 
 const groupDefinitions = [
   { id: "dobrograd", dataGroup: "orig 1", label: "ДоброГрад" },
@@ -11,6 +12,42 @@ const groupDefinitions = [
   { id: "cars", dataGroup: "orig 3", label: "Автомобили" },
   { id: "food", dataGroup: "orig 4", label: "Еда" },
 ];
+
+const articleLinksByView = {
+  dobrograd: {
+    label: "ДоброГрад",
+    oldUrl:
+      "https://dobrograd.promo.page/media/5-prichin-pochemu-udalensciku-stoit-pereehat-v-dobrograd-6634fb391d6b2c3f2a85fe5d_0_0",
+    newUrl:
+      "https://client.promo.page/id/64e61359d152d1661bbc4a07/5-prichin-pochemu-udalensciku-stoit-pereehat-v-dobrograd-6a36b25ee7e35e563077973c_0_0?utm_source=yandex.promopages&utm_medium=article&utm_campaign=%D0%90%D0%BD%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8%20V2.0&utm_content=5%20%D0%BF%D1%80%D0%B8%D1%87%D0%B8%D0%BD%2C%20%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83%20%D1%83%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D1%89%D0%B8%D0%BA%D1%83%20%D1%81%D1%82%D0%BE%D0%B8%D1%82%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B5%D1%85%D0%B0%D1%82%D1%8C%20%D0%B2%20%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%B4_6a36b25ee7e35e563077973c&utm_term=6a36b25ee7e35e563077973c",
+  },
+  menswear: {
+    label: "Henderson",
+    oldUrl:
+      "https://henderson.promo.page/media/vybor-idealnoi-rubashki-5-glavnyh-kriteriev-66c89bceba20cc1b75f96a8f_0_0",
+    newUrl:
+      "https://client.promo.page/id/64e61359d152d1661bbc4a07/vybor-idealnoi-rubashki-5-glavnyh-kriteriev-6a36b419c3d121292ec20228_0_0?utm_source=yandex.promopages&utm_medium=article&utm_campaign=%D0%90%D0%BD%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8%20V2.0&utm_content=%D0%92%D1%8B%D0%B1%D0%BE%D1%80%20%D0%B8%D0%B4%D0%B5%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D1%80%D1%83%D0%B1%D0%B0%D1%88%D0%BA%D0%B8%3A%205%20%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D1%8B%D1%85%20%D0%BA%D1%80%D0%B8%D1%82%D0%B5%D1%80%D0%B8%D0%B5%D0%B2_6a36b419c3d121292ec20228&utm_term=6a36b419c3d121292ec20228",
+  },
+  cars: {
+    label: "Changan",
+    oldUrl:
+      "https://changanauto.promo.page/media/pochemu-k-changan-cs55plus-stoit-prismotretsia-678a74594fc6fc4fb625430c_0_0",
+    newUrl:
+      "https://client.promo.page/id/64e61359d152d1661bbc4a07/pochemu-k-changan-cs55plus-stoit-prismotretsia-6a36bf293315fa433d316820_0_0?utm_source=yandex.promopages&utm_medium=article&utm_campaign=%D0%90%D0%BD%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8%20V2.0&utm_content=%D0%9F%D0%BE%D1%87%D0%B5%D0%BC%D1%83%20%D0%BA%20Changan%20CS55Plus%20%D1%81%D1%82%D0%BE%D0%B8%D1%82%20%D0%BF%D1%80%D0%B8%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D1%82%D1%8C%D1%81%D1%8F_6a36bf293315fa433d316820&utm_term=6a36bf293315fa433d316820",
+  },
+  food: {
+    label: "Простоквашино",
+    oldUrl:
+      "https://prostokvashino.promo.page/media/kakaia-okroshka-luchshe--na-kvase-kefire-ili-smetane-6890d352acebed29e58a0bf7_0_0",
+    newUrl:
+      "https://client.promo.page/id/64e61359d152d1661bbc4a07/kakaia-okroshka-luchshe--na-kvase-kefire-ili-smetane-6a36c074e7e35e56307820d5_0_0?utm_source=yandex.promopages&utm_medium=article&utm_campaign=%D0%90%D0%BD%D0%B8%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8%20V2.0&utm_content=%D0%9A%D0%B0%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%BA%D1%80%D0%BE%D1%88%D0%BA%D0%B0%20%D0%BB%D1%83%D1%87%D1%88%D0%B5%20%E2%80%94%20%D0%BD%D0%B0%20%D0%BA%D0%B2%D0%B0%D1%81%D0%B5%2C%20%D0%BA%D0%B5%D1%84%D0%B8%D1%80%D0%B5%20%D0%B8%D0%BB%D0%B8%20%D1%81%D0%BC%D0%B5%D1%82%D0%B0%D0%BD%D0%B5%3F_6a36c074e7e35e56307820d5&utm_term=6a36c074e7e35e56307820d5",
+  },
+};
+
+const groupArticleLinks = document.createElement("nav");
+groupArticleLinks.className = "groupArticleLinks";
+groupArticleLinks.hidden = true;
+controlsSection.insertAdjacentElement("afterend", groupArticleLinks);
 
 const titleOverrides = {
   "example-01": "Лебеди на озере",
@@ -166,6 +203,47 @@ const renderTabs = () => {
       `,
     )
     .join("");
+};
+
+const renderArticleLinks = () => {
+  const article = articleLinksByView[activeView];
+
+  if (!article) {
+    groupArticleLinks.hidden = true;
+    groupArticleLinks.removeAttribute("aria-label");
+    groupArticleLinks.replaceChildren();
+    return;
+  }
+
+  groupArticleLinks.hidden = false;
+  groupArticleLinks.setAttribute("aria-label", `Версии публикации ${article.label}`);
+  groupArticleLinks.innerHTML = `
+    <p class="groupArticleContext">
+      <span>Публикация</span>
+      <strong>${escapeHtml(article.label)}</strong>
+    </p>
+    <div class="groupArticleList">
+      <a
+        href="${escapeHtml(article.oldUrl)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Публикация ${escapeHtml(article.label)} со старой анимацией — откроется в новой вкладке"
+      >
+        <span>Старая анимация</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a
+        class="groupArticleLinkNew"
+        href="${escapeHtml(article.newUrl)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Новая анимация в публикации ${escapeHtml(article.label)} — откроется в новой вкладке"
+      >
+        <span>Новая анимация</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  `;
 };
 
 const renderSourceMedia = (item) => {
@@ -399,6 +477,7 @@ const setActiveView = (viewId, shouldFocus = false, updateUrl = true) => {
   if (!views.some((view) => view.id === viewId)) return;
   activeView = viewId;
   updateTabs();
+  renderArticleLinks();
   renderGallery();
   if (updateUrl) syncUrl();
   if (shouldFocus) groupTabs.querySelector(`[data-view="${activeView}"]`)?.focus();
@@ -465,5 +544,6 @@ reducedMotionQuery.addEventListener?.("change", renderGallery);
 
 renderSummary();
 renderTabs();
+renderArticleLinks();
 renderGallery();
 syncUrl();
