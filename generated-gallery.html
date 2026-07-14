@@ -4,23 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
-    <title>Alice Live · Generated Library</title>
-    <link rel="icon" href="data:," />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=Onest:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+    <meta
+      name="description"
+      content="Библиотека исходных изображений, MP4 и WebP для быстрой визуальной проверки."
     />
-    <link rel="stylesheet" href="shared.css?v=7" />
-    <link rel="stylesheet" href="generated-gallery.css?v=6" />
+    <title>Alice Live · Библиотека</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="shared.css?v=8" />
+    <link rel="stylesheet" href="generated-gallery.css?v=8" />
   </head>
   <body>
     <a class="skipLink" href="#mainContent">К библиотеке</a>
 
     <header class="siteHeader">
       <div class="siteHeaderInner">
-        <a class="wordmark" href="generated-gallery.html?v=7" aria-label="Alice Live Media Lab">
+        <a class="wordmark" href="generated-gallery.html?v=8" aria-label="Alice Live Media Lab">
           <span class="wordmarkDot" aria-hidden="true"></span>
           <span>
             <strong>Alice Live</strong>
@@ -29,96 +27,24 @@
         </a>
 
         <nav class="viewSwitch" aria-label="Разделы демо">
-          <a aria-current="page" href="generated-gallery.html?v=7">
-            <span class="viewSwitchCompact">Library</span>
-            <span class="viewSwitchFull">Generated Library</span>
+          <a aria-current="page" href="generated-gallery.html?v=8">
+            Библиотека
           </a>
-          <a href="index.html?v=7">MP4 / WebP</a>
-          <a href="model-comparison-5s/?v=7">Wan / Veo</a>
+          <a href="index.html?v=8">Форматы</a>
+          <a href="model-comparison-5s/?v=8">Модели</a>
         </nav>
-
-        <p class="siteContext">21 render · 4 группы</p>
       </div>
     </header>
 
     <main class="galleryShell" id="mainContent">
       <header class="galleryHero">
-        <div class="heroGrid">
-          <div class="heroCopy">
-            <p class="eyebrow">Image → video → animated WebP</p>
-            <h1>Generated<br />Library</h1>
-            <p class="heroLead">
-              Вся цепочка генерации в одном месте: исходное изображение,
-              получившийся MP4, animated WebP и промпт, который запустил движение.
-            </p>
-          </div>
-
-          <figure class="heroPreview">
-            <img
-              src="orig promo/orig 1/generated/1.webp"
-              alt="Пара лебедей на озере в первом generated-примере"
-            />
-            <figcaption>
-              <span>Featured render</span>
-              <strong>orig 1 · 01</strong>
-            </figcaption>
-          </figure>
-        </div>
-
-        <dl class="heroStats" id="heroStats" aria-label="Сводка библиотеки"></dl>
+        <p class="eyebrow">Исходник → MP4 → WebP</p>
+        <h1>Библиотека генераций</h1>
+        <p class="heroLead">
+          Исходник, MP4 и WebP рядом — для быстрой проверки движения, качества и веса.
+        </p>
+        <p class="librarySummary" id="librarySummary" aria-live="polite"></p>
       </header>
-
-      <details class="pipelineSection">
-        <summary>
-          <span>
-            <small>Pipeline</small>
-            <strong>Как MP4 превращается в animated WebP</strong>
-          </span>
-          <span class="pipelineHint">ffprobe → ffmpeg → img2webp → webpmux</span>
-        </summary>
-
-        <ol class="pipelineList">
-          <li>
-            <strong>1. Входные данные</strong>
-            <span>
-              Перед конвертацией через <code>ffprobe</code> считываются
-              разрешение, длительность, FPS, количество кадров и видеотрек.
-            </span>
-          </li>
-          <li>
-            <strong>2. Декодирование видео</strong>
-            <span>
-              <code>ffmpeg -i input.mp4 -map 0:v:0 -fps_mode passthrough frame_%06d.png</code>
-              раскладывает видео в PNG-кадры без ресайза и без пересчёта FPS.
-            </span>
-          </li>
-          <li>
-            <strong>3. Тайминг анимации</strong>
-            <span>
-              Длительность MP4 делится на количество кадров, а целочисленные
-              задержки WebP распределяются так, чтобы сумма совпала с исходным
-              видео. Для 30fps здесь используются задержки 33/34 ms.
-            </span>
-          </li>
-          <li>
-            <strong>4. Сборка animated WebP</strong>
-            <span>
-              Кадры собираются через
-              <code>img2webp -loop 0 -sharp_yuv -lossy -q 95 -m 6 ... -o output.webp</code>.
-              Используется бесконечный loop, lossy WebP, качество 95 и
-              максимальный режим сжатия.
-            </span>
-          </li>
-          <li>
-            <strong>5. Проверка результата</strong>
-            <span>
-              <code>webpmux</code> и <code>ffprobe</code> используются для
-              проверки разрешения, количества кадров, длительности, loop count
-              и корректности WebP-контейнера.
-            </span>
-          </li>
-        </ol>
-      </details>
 
       <section class="controlsSection" aria-label="Фильтры галереи">
         <div class="tabs" id="groupTabs" role="tablist" aria-label="Группы примеров"></div>
@@ -132,11 +58,26 @@
         id="galleryList"
         role="tabpanel"
         tabindex="0"
-        aria-label="Generated-примеры"
+        aria-label="Примеры генераций"
       ></section>
+
+      <details class="methodSection">
+        <summary>
+          <span>
+            <small>Метод</small>
+            <strong>Как собран WebP</strong>
+          </span>
+          <span class="methodHint">ffprobe → ffmpeg → img2webp → webpmux</span>
+        </summary>
+        <ol class="methodList">
+          <li><strong>Проверка</strong><span>Считываем геометрию, FPS и число кадров.</span></li>
+          <li><strong>Сборка</strong><span>Кодируем исходные кадры без ресайза: q95, m6, sharp_yuv.</span></li>
+          <li><strong>Контроль</strong><span>Сверяем длительность, loop и целостность контейнера.</span></li>
+        </ol>
+      </details>
     </main>
 
-    <script src="generated-gallery-data.js?v=6"></script>
-    <script src="generated-gallery.js?v=6"></script>
+    <script src="generated-gallery-data.js?v=8"></script>
+    <script src="generated-gallery.js?v=8"></script>
   </body>
 </html>

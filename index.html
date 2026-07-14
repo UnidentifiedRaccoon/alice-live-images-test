@@ -6,21 +6,15 @@
     <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
     <title>Alice Live · MP4 / WebP</title>
     <link rel="icon" href="data:," />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600;7..72,700&family=Onest:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="shared.css?v=7" />
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="shared.css?v=8" />
+    <link rel="stylesheet" href="styles.css?v=8" />
   </head>
   <body>
     <a class="skipLink" href="#mainContent">К сравнению</a>
 
     <header class="siteHeader">
       <div class="siteHeaderInner">
-        <a class="wordmark" href="index.html?v=7" aria-label="Alice Live Media Lab">
+        <a class="wordmark" href="index.html?v=8" aria-label="Alice Live Media Lab">
           <span class="wordmarkDot" aria-hidden="true"></span>
           <span>
             <strong>Alice Live</strong>
@@ -29,60 +23,44 @@
         </a>
 
         <nav class="viewSwitch" aria-label="Разделы демо">
-          <a href="generated-gallery.html?v=7">
-            <span class="viewSwitchCompact">Library</span>
-            <span class="viewSwitchFull">Generated Library</span>
-          </a>
-          <a aria-current="page" href="index.html?v=7">MP4 / WebP</a>
-          <a href="model-comparison-5s/?v=7">Wan / Veo</a>
+          <a href="generated-gallery.html?v=8">Библиотека</a>
+          <a aria-current="page" href="index.html?v=8">Форматы</a>
+          <a href="model-comparison-5s/?v=8">Модели</a>
         </nav>
-
-        <p class="siteContext">7 пар · format review</p>
       </div>
     </header>
 
     <main class="appShell" id="mainContent">
       <header class="pageHeader">
         <div class="titleBlock">
-          <p class="eyebrow">Format review · 7 пар</p>
+          <p class="eyebrow">Сравнение форматов · 7 пар</p>
           <h1>Один кадр.<br />Два контейнера.</h1>
           <p class="intro">
-            Сравниваем исходный MP4 и animated WebP при одинаковом разрешении,
-            количестве кадров, длительности и FPS.
+            MP4 и анимированный WebP с одинаковыми разрешением, длительностью и частотой
+            кадров.
           </p>
-        </div>
-
-        <div class="formatMark" aria-label="MP4 сравнивается с WebP">
-          <span>MP4</span>
-          <i aria-hidden="true">/</i>
-          <span>WEBP</span>
         </div>
       </header>
 
-      <section class="summaryGrid" id="summary" aria-label="Сводка конвертации"></section>
+      <dl class="summaryGrid" id="summary" aria-label="Сводка конвертации"></dl>
 
       <section class="playbackBar" aria-label="Управление воспроизведением">
-        <div class="playbackCopy">
-          <span class="statusDot" aria-hidden="true"></span>
-          <p><strong>Синхронная проверка</strong> · MP4 и WebP стартуют с первого кадра</p>
-        </div>
-
-        <div class="toolbar">
-          <button class="controlButton" type="button" data-action="play-all">
-            Запустить MP4
-          </button>
-          <button class="controlButton" type="button" data-action="pause-all">
-            Пауза
-          </button>
-          <button class="controlButton strong" type="button" data-action="restart-all">
-            Синхронизировать
-          </button>
-        </div>
+        <p class="playbackCopy" id="playbackStatus" aria-live="polite">
+          Перезапуск возвращает MP4 и показанные WebP к первому кадру и запускает MP4.
+        </p>
+        <button
+          class="controlButton strong"
+          type="button"
+          data-action="restart-all"
+          aria-describedby="playbackStatus"
+        >
+          Перезапустить все пары
+        </button>
       </section>
 
       <section class="comparisonList" id="comparisonList" aria-label="Сравнения медиа"></section>
     </main>
 
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=8"></script>
   </body>
 </html>
