@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "03-animal-step",
+  "image_id": "69a18ff37db58169c78ff2ae",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/wan-2.7/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the gray tabby-and-white cat halfway out of the pale green litter box, facing camera-right, with one front paw planted on the wooden floor and the other front paw suspended mid-step. Preserve the cat’s species, coat pattern, face, green eyes, ears, whiskers, all visible limbs and exact overlaps, natural paw contacts, the green box with its white rim, the gray covered box, the potted plant, the room, the original composition and aspect ratio.\n\nThe first frame already shows the cat in the final phase of one forward step, not preparing to jump. During the single continuous shot, the cat slowly lowers the raised front paw onto the wooden floor, transfers a small amount of weight forward, and stops. By the final frames, both front paws rest naturally on the floor near the litter box while the cat remains fully in frame in a calm, steady pose.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nSubtle natural breathing remains secondary to the completed step. Natural lighting and colors, realistic physics, coherent animal anatomy, smooth temporal consistency, stable fine details, photorealistic motion. Generate a single-shot video.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "negative_prompt": "jumping, walking away or leaving frame, restarting or reversing the step, large body movement, changed species or coat pattern, altered face, invented hidden limbs, extra limbs, warped paws or legs, broken ground contact, unnatural gait, changed litter box, floating cat, fast camera motion, pan, zoom, reframing, crop, shake, flicker, morphing, duplication, disappearing objects, unfinished action, cartoon or CGI look"
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "zoqiXl3eqtMjTl3TojdL",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T11:56:43Z",
+  "completed_at": "2026-07-21T11:58:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2146,
+    "height": 966,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3022199,
+    "sha256": "8617982b3a4d0fac9df872d235a62767b53341e020803419e93dc5fa7e97f87a"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "02-product-dropper",
+  "image_id": "682b56a20cfd5f4e6d52c3a1",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/video/wan-2.2/05.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/video/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the serum bottle standing beside one whole and one cut truffle, with the open gold-capped glass pipette angled above it and one clear serum drop suspended from the tip. Preserve the bottle silhouette, open neck and threads, pipette angle, gold cap, liquid level and color, both truffles, exact readable label and branding, transparent materials, reflections, shadows, original crop, composition, and aspect ratio.\n\nThe first frame already shows one hanging serum drop. During the clip, that drop makes one tiny surface-tension quiver, elongating only slightly without detaching. By the final frames, it has settled into the same stable rounded pendant shape while every product element remains fixed.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nNatural studio lighting and colors, realistic liquid physics, coherent glass and object geometry, smooth temporal consistency, stable fine details, photorealistic motion.\n\nAvoid: Drop detaching or falling, new drops, dripping, splashing, changing liquid volume, product rotation, product transformation, opening or moving the bottle, moving pipette, changed item count, floating objects, changed or unreadable label, misspelled or warped letters, replaced branding, warped bottle threads or pipette, opaque glass, melted transparency, inconsistent refraction, changing material or shadow contact, camera drift, zoom, orbit, reframing, crop, shake, flicker, morphing, duplication, disappearing objects, motion artifacts, unfinished motion, cartoon or CGI look"
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "provider_job_id": "3c891e6ad66442f79c773505edbbca5a",
+  "provider_session_hash": "promopages9856-9226fed259f0",
+  "submitted_at": "2026-07-21T11:54:13Z",
+  "completed_at": "2026-07-21T11:55:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1200,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 183773,
+    "sha256": "94abef9f9cf1c450dc4472018a5bb282c72b177ec6c7dac3ba51616c7bb896e4"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  }
+}

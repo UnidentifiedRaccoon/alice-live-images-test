@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/veo-3.1-lite/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the centered close-up of the woman holding a tense wide-eyed expression with clenched teeth and both splayed hands raised beside her face. Preserve her identity, facial proportions, eye direction, mouth and teeth, pulled-back hairstyle, striped shirt, exact finger count and hand gesture, soft indoor background, original crop, composition and aspect ratio. The first frame already shows a held expressive pose, not the beginning of a larger gesture. During the clip, one shallow breath creates barely perceptible natural motion at the base of her neck and upper chest while her head, expression and hands remain steady. By the final frames, the breath has fully settled into the same stable pose. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Natural lighting and colors, coherent anatomy, stable fine details, smooth temporal consistency, photorealistic motion.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "negativePrompt": "speaking, opening mouth, exaggerated expression, large head turn, hands touching the face, changed hand gesture, identity change, altered facial proportions, asymmetric eyes, warped teeth, deformed hands, extra or fused fingers, changed hairstyle, automatic reframing, crop, camera shake, flicker, morphing, duplication, motion artifacts, cartoon or CGI look"
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "P5nPmMcpd1fYPJlJfHU9",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T11:53:51Z",
+  "completed_at": "2026-07-21T11:56:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3403530,
+    "sha256": "c6ea5ba95466da2eaef327cfdd4b78d33c02145683488c7217877130532d1e2f"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  }
+}

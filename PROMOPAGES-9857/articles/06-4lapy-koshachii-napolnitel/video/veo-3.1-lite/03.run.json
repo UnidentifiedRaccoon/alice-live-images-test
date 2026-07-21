@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "03-animal-step",
+  "image_id": "69a18ff37db58169c78ff2ae",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/veo-3.1-lite/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the gray tabby cat already midway out of the mint-green litter tray, with one front paw planted on the wooden floor, the other raised over the rim, and its hindquarters still supported inside the tray. Preserve the cat’s coat pattern, face, eyes, ears, whiskers, limb count and overlaps, the tray geometry, all background objects, the original composition and aspect ratio.\n\nThe first frame already shows the cat completing a careful step out of the tray. The cat gently lowers the raised front paw onto the floor beside the planted paw, shifts its weight forward slightly, then settles calmly with both front paws grounded while remaining partly inside the tray. Subtle breathing and a minimal natural ear adjustment accompany the same movement.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nNatural indoor lighting and colors, realistic feline anatomy and weight transfer, stable fur detail, coherent object geometry, smooth temporal consistency, photorealistic motion.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "negativePrompt": "jumping, running, turning around, cat leaving the frame, full-body exit from the tray, large body movement, changed direction, changed species or coat pattern, invented hidden limbs, extra limbs, duplicated paws, warped legs, unnatural gait, broken paw-floor contact, changed tray shape, cat-tray intersection, moving background objects, camera drift, zoom, reframing, camera shake, flicker, morphing, motion smear, cartoon or CGI look"
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "1w9iWtLuPEsqnMnfHtcU",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T11:58:18Z",
+  "completed_at": "2026-07-21T12:00:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3532470,
+    "sha256": "3d7c5c96055df1c0db78b3226b0a559d6cd3420fe2d998e667c409c7d7a5fd17"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  }
+}

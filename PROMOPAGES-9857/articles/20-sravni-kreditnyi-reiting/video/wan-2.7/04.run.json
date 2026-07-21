@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "05-finance-ui",
+  "image_id": "64d62e4f16755434abec9873",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/wan-2.7/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A faithful image-to-video continuation of the provided flat raster graphic. Start exactly from the complete first frame. Preserve all visible Russian text, ruble amounts, dates, percentage values, checked states, icons, credit-card rows, ring-chart values and chart geometry in exact visual registration, together with the original layout, crop and aspect ratio.\n\nThe content and interface state already shown in the first frame remain unchanged. During the clip, hold the complete financial dashboard perfectly still without interaction or data animation. By the final frames, the same stable graphic state remains fully settled.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nUse crisp stable typography, unchanged values, exact chart geometry, clean edges and smooth temporal consistency. Generate a single-shot video.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "negative_prompt": "interface interaction or data animation, scrolling, clicking, typing, hover changes, changed UI state, invented controls, altered values, moving cards, changed chart values, redrawn chart ring, moving chart segment, altered chart label, rewritten or unreadable Russian text, warped numbers or currency symbols, moving panels, local parallax, zoom, pan, reframing, crop, flicker, morphing, unstable edges"
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "T5tmUF9aicebEHjyZ95f",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T12:02:48Z",
+  "completed_at": "2026-07-21T12:04:35Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1858,
+    "height": 1116,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1420361,
+    "sha256": "97be49a05d9082505187c08213d2cb4c59517bf3218f5a592d806ec714f644fa"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  }
+}

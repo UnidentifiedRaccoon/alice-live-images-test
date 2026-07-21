@@ -79,3 +79,78 @@ python3 scripts/verify_promo_images.py
 
 Успешная проверка завершается статусом `PASS`. Флаг `--write-report` дополнительно
 перезаписывает `articles/verification-report.json` актуальным результатом.
+
+## Пайплайн видео для PROMOPAGES-9856
+
+Для сравнения моделей выбраны ровно пять изображений из разных статей и разных
+визуальных классов:
+
+| Sample | Статья / файл | Проверяемый риск |
+| --- | --- | --- |
+| `01-portrait-hands` | `01-pharmocean-magiia-magniia/02.jpeg` | лицо, зубы и две кисти |
+| `02-product-dropper` | `04-graceface-antivozrastnaia-syvorotka/05.png` | этикетка, стекло и капля |
+| `03-animal-step` | `06-4lapy-koshachii-napolnitel/03.jpeg` | один завершённый шаг и лапы |
+| `04-interior-water` | `13-ilinka-elitnyi-zhk/09.png` | архитектурная геометрия и вода |
+| `05-finance-ui` | `20-sravni-kreditnyi-reiting/04.png` | неизменный UI и читаемый текст |
+
+Исходный отбор зафиксирован в `video-samples.json`, а 15 проверенных prompt-пар
+для точной матрицы 5 × 3 — в `video-prompts.json`. Промпты подготовлены через
+проектный clipmaker с отдельным model spec для `alibaba/wan-2.2`,
+`alibaba/wan-2.7` и `google/veo-3.1-lite`.
+
+CLI валидирует полный декартов набор, SHA-256 исходников и модельные ограничения,
+после чего материализует артефакты рядом с каждой статьёй:
+
+```text
+articles/<article>/video/<model>/<image>.prompt.json
+articles/<article>/video/<model>/<image>.run.json
+articles/<article>/video/<model>/<image>.mp4
+```
+
+Общий статус всех 15 запусков хранится в `video-generation-manifest.json`.
+`run.json` содержит только безопасный request preview, provider job ID, статус,
+результат `ffprobe` и явную сверку факта с модельным контрактом;
+OAuth-заголовки и временные download URL не записываются. Сырой MP4 провайдера
+не ремультиплексируется: если endpoint проигнорировал `generate_audio: false`,
+это остаётся видимым в `media.has_audio` и `contract_check.warnings`.
+Ручной keyframe-аудит результата и обнаруженные нарушения prompt fidelity
+описаны в `video-generation-review.md`.
+
+### Команды
+
+Из корня репозитория:
+
+```bash
+# Проверить каталоги и создать 15 prompt/run-пар.
+python3 scripts/video_generation_pipeline.py plan
+
+# Проверить точные provider payload без сетевых и платных запросов.
+python3 scripts/video_generation_pipeline.py run --dry-run
+
+# Реальная последовательная генерация всей матрицы или выбранной части.
+python3 scripts/video_generation_pipeline.py run
+python3 scripts/video_generation_pipeline.py run \
+  --sample 03-animal-step \
+  --model alibaba/wan-2.7
+
+# Повторный запуск продолжает сохранённые асинхронные job и пропускает готовые MP4.
+# --force нужен только для сознательной повторной платной генерации.
+python3 scripts/video_generation_pipeline.py verify
+```
+
+До завершения всей матрицы для проверки структуры можно использовать
+`verify --allow-incomplete`.
+
+Wan 2.2 отправляется в внутреннюю Gradio-демку с контрактом 97 кадров / 30 fps /
+720p. Wan 2.7 и Veo 3.1 Lite отправляются в raw OpenRouter API через Eliza;
+нужен `ELIZA_TOKEN`, либо уже настроенный `ANTHROPIC_AUTH_TOKEN`. По умолчанию
+используется `https://api.eliza.yandex.net/raw/openrouter/v1`; адрес можно
+переопределить через `ELIZA_OPENROUTER_BASE_URL`. Перед реальным запуском нужно
+перепроверить актуальные model endpoint metadata и стоимость: `run` создаёт
+внешние асинхронные jobs.
+
+Тесты пайплайна не делают сетевых запросов:
+
+```bash
+python3 -m unittest scripts/test_video_generation_pipeline.py
+```
