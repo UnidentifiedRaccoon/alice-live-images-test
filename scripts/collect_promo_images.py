@@ -146,6 +146,54 @@ ARTICLES = (
         "top5-samyh-modnyh-serejek-etogo-sezona-"
         "64f3617597d2ee3498b5576a_3_2",
     ),
+    Article(
+        15,
+        "Ozon — Грузоперевозки с предсказуемым доходом",
+        "15-ozon-gruzoperevozki",
+        "https://ozon.promo.page/media/"
+        "gruzoperevozki-s-predskazuemym-dohodom-chto-da-"
+        "698c849610b7882d19814653_0_0",
+    ),
+    Article(
+        16,
+        "Ekonika — Пять трендов сезона",
+        "16-ekonika-letnie-trendy",
+        "https://ekonika.promo.page/media/"
+        "na-letnih-kanikulah-5-trendov-sezona-"
+        "68122cd631af7c4297e554bd_0_0",
+    ),
+    Article(
+        17,
+        "Level Мичуринский — Трёхсторонняя квартира",
+        "17-level-michurinskiy-kvartira",
+        "https://level.promo.page/michurinskiy/"
+        "trehstoronniaia-kvartira-unikalnyi-vid-iz-kajdoi-komnaty-"
+        "689321d24ca9367d4afa0eff_0_0",
+    ),
+    Article(
+        18,
+        "Dalan — Правда и мифы о средствах для волос",
+        "18-dalan-sredstva-dlia-volos",
+        "https://dalan.promo.page/media/"
+        "pravda-i-mify-o-tureckih-sredstvah-dlia-volos-"
+        "68dd15f114a62125e8c2ea23_0_0",
+    ),
+    Article(
+        19,
+        "Level.Travel — Отпуск в Турции",
+        "19-level-travel-otpusk-v-turcii",
+        "https://level-travel.promo.page/media/"
+        "planiruem-otpusk-v-turcii-5-laifhakov-ot-leveltravel-"
+        "6819e3e1ea1b0b7bc375fe75_0_0",
+    ),
+    Article(
+        20,
+        "Сравни — Как повысить кредитный рейтинг",
+        "20-sravni-kreditnyi-reiting",
+        "https://sravni.promo.page/media/"
+        "kak-povysit-kreditnyi-reiting-uznaite-na-sravni-"
+        "65f160d13bba425fc5fa82cc_0_0",
+    ),
 )
 
 FORMAT_EXTENSIONS = {
@@ -258,15 +306,27 @@ def image_occurrences(page_data: dict[str, Any]) -> list[dict[str, Any]]:
         if not block.get("type", "").startswith("atomic:image"):
             continue
         block_data = block.get("data") or {}
-        image_refs = block_data.get("images")
-        if image_refs:
+        if "images" in block_data:
+            image_refs = block_data["images"]
             role = "gallery_image"
+            if not isinstance(image_refs, list) or not image_refs:
+                raise ValueError(
+                    f"atomic image gallery at block {block_index} has no images"
+                )
         else:
-            image_refs = [block_data.get("image")]
+            image_ref = block_data.get("image")
+            if not isinstance(image_ref, dict) or not image_ref.get("id"):
+                raise ValueError(
+                    f"atomic image at block {block_index} has no valid image"
+                )
+            image_refs = [image_ref]
             role = "article_image"
         for gallery_index, image_ref in enumerate(image_refs):
-            if not image_ref or not image_ref.get("id"):
-                continue
+            if not isinstance(image_ref, dict) or not image_ref.get("id"):
+                raise ValueError(
+                    "atomic image reference has no id: "
+                    f"block={block_index}, gallery_index={gallery_index}"
+                )
             occurrences.append(
                 {
                     "image_id": image_ref["id"],
@@ -325,7 +385,10 @@ def collect(output_root: Path, annotations_path: Path) -> list[dict[str, Any]]:
     first_occurrence: dict[str, str] = {}
 
     for article in ARTICLES:
-        print(f"[{article.number:02d}/14] {article.label}", flush=True)
+        print(
+            f"[{article.number:02d}/{len(ARTICLES):02d}] {article.label}",
+            flush=True,
+        )
         page_html, _, _ = fetch(article.url)
         page_data = extract_page_data(page_html)
         image_catalogue = page_data.get("images") or {}

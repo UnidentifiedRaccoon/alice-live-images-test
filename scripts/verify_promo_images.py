@@ -22,6 +22,8 @@ CLASSIFICATION_FIELDS = (
     "risk_notes",
 )
 
+EXPECTED_ARTICLE_COUNT = 20
+
 
 def fail(message: str) -> None:
     raise AssertionError(message)
@@ -49,7 +51,9 @@ def main() -> int:
         fail("manifest has no rows")
 
     article_numbers = sorted({row["article_number"] for row in rows})
-    expected_article_numbers = [f"{number:02d}" for number in range(1, 15)]
+    expected_article_numbers = [
+        f"{number:02d}" for number in range(1, EXPECTED_ARTICLE_COUNT + 1)
+    ]
     if article_numbers != expected_article_numbers:
         fail(f"article numbers differ: {article_numbers}")
 
@@ -137,8 +141,11 @@ def main() -> int:
             fail(f"article {article} image numbering is not contiguous: {numbers}")
 
     folders = [path for path in articles_root.iterdir() if path.is_dir()]
-    if len(folders) != 14:
-        fail(f"expected 14 article folders, found {len(folders)}")
+    if len(folders) != EXPECTED_ARTICLE_COUNT:
+        fail(
+            f"expected {EXPECTED_ARTICLE_COUNT} article folders, "
+            f"found {len(folders)}"
+        )
     actual_image_files = {
         path.resolve() for folder in folders for path in folder.iterdir() if path.is_file()
     }
