@@ -24,6 +24,20 @@ source of truth. Select exactly one primary scene profile. Use scene tags only
 to strengthen preservation, risks, and negative constraints. Do not use them to
 select a primary action, secondary motion, or camera.
 
+For text_interface_collage with resolved routing, also select one active
+graphic_kind and every visible graphic_kind from the controlled vocabulary.
+The active kind selects a kind-specific prompt policy. All kinds contribute
+preservation anchors and candidate negative clauses, but the final negative
+uses the active kind plus at most one secondary kind. If routing is missing,
+unknown, or conflicting, mark it unresolved and use a locked flat-raster hold
+without inventing a kind from free text. Curated catalog rows must always have
+valid routing. Treat the input as one flat raster. Never assume masks, layers,
+editable UI, source vectors, or a document model.
+
+Detailed graphic classification must improve prompt selection rather than act
+as descriptive metadata only: use it to choose the action policy, select the
+kind-specific positive anchors, and prioritize the relevant negative clauses.
+
 Preserve identity, clothing, objects, background, composition, aspect ratio,
 readable text, and logos unless the user explicitly requests a compatible
 continuation. This is scene continuation, not transformation. Route changes of
@@ -42,18 +56,30 @@ or framing instructions.
 Mention secondary motion only for elements visibly present with a plausible
 physical source. Keep it subordinate to the primary action.
 
-Compose the Positive prompt in this priority order: first-frame anchors; one
-completed action and final state; one camera module; visible secondary motion;
-concise realism and temporal-consistency terms. If a model limit is tight,
-remove lower-priority material in reverse order.
+Compose the Positive prompt in this priority order: first-frame anchors;
+kind-specific preservation for flat graphics; one completed action and final
+state; one camera module; visible secondary motion; concise realism and
+temporal-consistency terms. If a model limit is tight, remove lower-priority
+material in reverse order.
 
-Compose the Negative prompt according to the selected spec: likely wrong action;
-anchor and fragile-detail failures; one relevant camera conflict; a short
-technical tail. Use only relevant scene fragments, apply the model's required
-syntax, and verify any confirmed character limit over the complete body.
+Compose the Negative prompt according to the selected spec. For flat graphics,
+put relevant clauses from the active kind immediately after the likely wrong
+action, then at most one secondary kind if budget remains. Add only uncovered
+anchor/profile/tag risks, one relevant camera conflict, and a short technical
+tail. A kind clause replaces generic duplicates; it does not stack with them.
+Never mention object-specific failures for elements that are not visible. If
+trimming is required, preserve at least the single most important active-kind
+clause. Apply the model's required syntax and verify any confirmed character
+limit over the complete body.
 
 Runtime settings are supplied separately unless the selected spec or interface
 explicitly requires them in the prompt.
+
+For flat graphics, classification alone never invents an animation intent.
+Without explicit compatible user direction, hold the complete raster. A
+kind-specific accent or local photographic micro-motion is allowed only by its
+scene-module policy; UI state changes, scrolling, typing, data recomputation and
+content reveal remain forbidden.
 ```
 
 ## Camera Modules
@@ -144,6 +170,34 @@ Runtime-preface добавляй только по явному правилу m
 [Selected model's verified runtime preface.]
 ```
 
+## Flat-Raster Graphic Positive Template
+
+Используй вместо photorealistic template для `text_interface_collage`. Не
+называй пользователю внутренние kinds, но явно зафиксируй соответствующие им
+anchors. Не обещай pixel-perfect результат или изоляцию области: prompt
+описывает best-effort поведение одной плоской картинки.
+
+```text
+Positive prompt:
+
+A faithful image-to-video continuation of the provided flat raster graphic.
+Start exactly from the complete first frame. Preserve [kind-specific text,
+numbers, state, geometry, topology, panels or other anchors] in exact visual
+registration, together with the original layout, crop and aspect ratio.
+
+The content and state already shown in the first frame remain unchanged. During
+the clip, [one concrete image-specific hold, allowed optical accent, or allowed
+local photographic micro-motion; never expose an internal module name]. By the
+final frames, [the same stable graphic state with the permitted motion fully
+settled].
+
+[Canonical Module A.]
+
+Crisp stable typography, unchanged values, exact geometry, clean edges and
+smooth temporal consistency. Keep any photographic region natural without
+altering the surrounding graphic composition.
+```
+
 ## Negative Prompt Template
 
 Собери body из scene-specific начала, fragments активного profile и короткого
@@ -170,7 +224,11 @@ unfinished action, cartoon or CGI look
 
 Scene-specific fragments живут в [scene-modules.md](scene-modules.md). Не
 добавляй people, text, vehicle, food или animal failures, если соответствующей
-детали нет в кадре или `scene_tags`.
+детали нет в кадре или `scene_tags`. Для flat graphics сразу после wrong action
+обязательно добавляй только релевантные clauses активного `graphic_kind`, затем
+при остаточном бюджете — clauses максимум одного дополнительного
+`graphic_kinds`. Kind-clauses заменяют покрытые generic/tag-дубли. При
+сокращении оставь хотя бы одну самую важную clause активного kind.
 
 ## Final Output Format
 

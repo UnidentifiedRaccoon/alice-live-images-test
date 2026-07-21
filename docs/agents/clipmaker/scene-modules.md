@@ -30,6 +30,17 @@ text_interface_collage
 negative constraints. Состояние действия и источники движения остаются в
 first-frame evidence и не кодируются тегами.
 
+Для `text_interface_collage` действует дополнительная ось routing:
+
+- `graphic_kind` — один активный вид, который выбирает prompt-policy;
+- `graphic_kinds` — непустой список всех реально присутствующих видов, первый
+  элемент которого всегда совпадает с `graphic_kind`.
+
+У остальных `primary_class` оба поля отсутствуют. В отличие от `scene_tags`,
+активный `graphic_kind` может выбирать action policy внутри одного графического
+профиля. Все `graphic_kinds` добавляют anchors и формируют candidate negative
+fragments; в итоговый negative входит активный и максимум один secondary kind.
+
 Если в кадре есть признаки нескольких классов:
 
 1. Выбери класс субъекта, потеря или деформация которого сильнее всего разрушит
@@ -39,6 +50,41 @@ first-frame evidence и не кодируются тегами.
    предметки; лицо важнее предмета в руке; транспортный салон важнее общего
    интерьера.
 4. Не используй `scene_tags` для обхода ограничений выбранного профиля.
+
+## Управляемый словарь `graphic_kinds`
+
+Классифицируй видимую плоскую композицию, не предполагая исходных слоёв, масок
+или редактируемого документа. Значения можно сочетать: например, экран с
+кольцевой диаграммой получает `graphic_kind: ui_screenshot` и
+`graphic_kinds: [ui_screenshot, chart]`.
+
+| Kind | Когда использовать | Главные anchors |
+| --- | --- | --- |
+| `banner` | Рекламный или промоблок с headline, CTA, логотипом либо QR-кодом. | Текст, CTA, branding, code, placement и spacing. |
+| `ui_screenshot` | Состояние приложения, сайта или другого интерфейса. | Controls, значения, selection, scroll position, icons и layout. |
+| `floor_plan` | План помещения с комнатами, стенами и проёмами. | Контур, стыки стен, двери, окна, размеры, подписи и мебель. |
+| `map` | Карта, маршрут или схема территории. | География, topology маршрута, дороги, подписи, markers, legend и scale. |
+| `table` | Данные организованы строками и столбцами. | Headers, порядок строк и колонок, точные значения, units, grid и alignment. |
+| `chart` | Значения закодированы осями, сериями, точками, столбцами или секторами. | Axes, scale, plotted values, series geometry, labels и legend. |
+| `diagram` | Узлы и связи, блок-схема либо иная topology отношений. | Число и позиции узлов, connectors, arrow direction, labels и grouping. |
+| `text_document` | Непрерывный текст, дисклеймер или документ является содержанием. | Glyphs, punctuation, line breaks, paragraphs, margins и crop. |
+| `collage` | Несколько самостоятельных фото- или графических фрагментов без более сильной структуры. | Число, порядок, границы панелей, видимые контуры вырезок, overlaps и повторяющиеся субъекты. |
+
+`graphic_kind` выбирается по смысловому доминанту и обязан входить в
+`graphic_kinds`. При равном смысловом весе используй детерминированный порядок:
+`ui_screenshot` → `text_document` → `floor_plan` → `map` → `table` → `diagram`
+→ `chart` → `banner` → `collage`. Поэтому UI с диаграммой маршрутизируется как
+`ui_screenshot`, а `collage` становится активным только при отсутствии более
+сильной грамматики. Если виды остаются содержательно конфликтными или активный
+вид нельзя выбрать уверенно, runtime route считается unresolved: не назначай
+kind из свободного `scene_description`, используй generic locked fallback с
+Module A. В сохранённом каталоге unresolved-строки не допускаются и должны быть
+отправлены на ручную классификацию.
+
+Тип графики не задаёт намерение анимации. `scroll`, `highlight_room`,
+`route_trace`, `chart_accent` и похожие цели допустимы только как явное
+совместимое направление пользователя. Без такого направления любой
+графический вид начинается с `ACT_HOLD_AND_SETTLE`.
 
 ## Управляемый словарь `scene_tags`
 
@@ -132,6 +178,8 @@ secondary motion или camera module и не разрешают модуль д
 | `ACT_LOCAL_PHYSICS` | Завершить локальное движение уже видимой капли, жидкости, пара, света или подвижной детали. |
 | `ACT_GROUP_BEAT` | Завершить одно общее взаимодействие группы; остальные участники только поддерживают этот beat. |
 | `ACT_MECHANICAL_CONTINUATION` | Согласованно продолжить уже видимое движение колёс или механизма без запуска нового режима. |
+| `ACT_GRAPHIC_ACCENT` | Один раз мягко оптически выделить явно указанный существующий элемент графики и вернуть его в устойчивое состояние, не рисуя и не меняя контент. |
+| `ACT_LOCAL_MEDIA_MICROMOTION` | Выполнить одно малое действие одного субъекта внутри ясно ограниченной фотообласти; вся остальная плоская композиция остаётся неподвижной. |
 
 ### Secondary-motion modules
 
@@ -187,6 +235,28 @@ fragments ниже.
 | `steam_visible` | `invented steam source, growing smoke, excessive vapor` |
 | `screen_glow_visible` | `changing screen content, pulsing display, invented controls` |
 | `light_shadow_visible` | `new light source, changing shadow direction, exposure jump` |
+
+## Negative fragments по `graphic_kinds`
+
+Таблица ниже — меню candidate clauses, а не готовые неделимые строки. Для
+mixed-графики обязательно выбери только подтверждённые кадром clauses активного
+`graphic_kind`, затем при остаточном бюджете — clauses не более одного второго
+вида с самым хрупким контентом. Активный kind нельзя удалить раньше generic
+profile/tag failures: его clauses заменяют покрытые generic-дубли. Не упоминай
+объектно-зависимый риск, если объекта нет в кадре, например QR/CTA, coastline
+или arrows. Это сохраняет subtype routing даже при лимите Wan 2.7.
+
+| Kind | Fragment |
+| --- | --- |
+| `banner` | `rewritten headline, changed CTA, logo or QR distortion, moving text, drifting elements, layout parallax` |
+| `ui_screenshot` | `scrolling, clicking, typing, hover changes, changed UI state, invented controls, altered values, moving cards` |
+| `floor_plan` | `moved walls, resized rooms, changed door swings, altered dimensions, added openings, warped plan geometry` |
+| `map` | `rerouted path, moving geography, changed labels, invented roads or markers, warped coastlines, map zoom` |
+| `table` | `changed numbers, reordered rows or columns, merged cells, warped grid, scrolling, counting animation` |
+| `chart` | `changed values, rescaled axes, redrawn series, moving data points, altered legend, chart rebuild` |
+| `diagram` | `added or removed nodes, rerouted connectors, reversed arrows, swapped labels, topology changes` |
+| `text_document` | `rewritten or unreadable text, misspelled glyphs, changed punctuation, reflowed lines, scrolling, typing` |
+| `collage` | `merged panels, changed panel order, moving borders, cross-panel morphing, duplicate subjects, local parallax` |
 
 ## Scene profiles
 
@@ -526,41 +596,74 @@ environmental motion source; camera `A`.
 `interface_content`, `logo_or_label`, `composite_layout`, `fine_geometry`,
 `repeating_elements`, `overhead_flat_lay`, `cropped_subject`.
 
-**Conditional primary action.** Всегда `ACT_HOLD_AND_SETTLE`. Текст, controls,
-панели, иллюстрации и границы фрагментов не анимируются и не
-перекомпоновываются.
+**Flat-raster invariant.** Весь вход считается одним плоским растром. Prompt не
+утверждает наличие масок или слоёв, не создаёт локальный параллакс и не обещает
+детерминированное выделение области. Текст, numbers, controls, topology, панели
+и границы не перерисовываются и не перекомпоновываются.
 
-**Conditional secondary motion.** `SEC_LIGHT_REFLECTION` допустим только как
-единое слабое изменение общего света без локального параллакса и без изменения
-контента. Иначе `SEC_NONE`.
+**Conditional primary action.** Без явного compatible user intent любой kind
+выбирает `ACT_HOLD_AND_SETTLE`. При явном intent допустимы только следующие
+отклонения:
 
-**Anchors и risks.** Содержание и читаемость текста, логотипы, сетка, размеры и
-положение панелей, границы фрагментов, UI controls, порядок слоёв и полный crop.
+| Активный kind | Допустимое prompt-only действие |
+| --- | --- |
+| `banner` | `ACT_LOCAL_MEDIA_MICROMOTION` для одного субъекта в ясно отделённой фотообласти без наложенного текста, CTA, логотипа или QR; иначе hold. |
+| `ui_screenshot` | Только hold; click, scroll, typing и смена состояния запрещены в flat-raster workflow. |
+| `floor_plan` | `ACT_GRAPHIC_ACCENT` как один мягкий pulse указанной существующей комнаты; стены, размеры и подписи неподвижны. |
+| `map` | `ACT_GRAPHIC_ACCENT` для существующего marker или уже нарисованного маршрута; route не достраивается. |
+| `table` | `ACT_GRAPHIC_ACCENT` для одной указанной строки или ячейки; значения, grid и порядок не меняются. |
+| `chart` | `ACT_GRAPHIC_ACCENT` для существующей точки, сегмента или серии; reveal from zero и пересчёт запрещены. |
+| `diagram` | `ACT_GRAPHIC_ACCENT` для существующего узла или одного сигнала по существующему connector; topology неизменна. |
+| `text_document` | Только hold; typing, page turn, scroll и reflow запрещены. |
+| `collage` | `ACT_LOCAL_MEDIA_MICROMOTION` в одной ясно ограниченной фотопанели; границы и остальные панели неподвижны. |
+
+Для mixed-графики action берётся только из `graphic_kind`, а допустимое движение
+является пересечением ограничений всех `graphic_kinds`. Любой структурный вид
+рядом с `banner` или `collage` запрещает локальную микродинамику, если она может
+затронуть его anchors.
+
+**Conditional secondary motion.** По умолчанию `SEC_NONE`. Не добавляй общий
+световой pulse поверх текста или UI. Внутренняя микродинамика фотообласти уже
+входит в `ACT_LOCAL_MEDIA_MICROMOTION` и не получает второй secondary beat.
+
+**Anchors и risks.** Объедини anchors всех `graphic_kinds`, но не придумывай
+скрытую структуру. Всегда сохраняй полный crop, aspect ratio и точную регистрацию
+видимых элементов.
 
 **Camera.** Base: `A`. Allowed: none. Forbidden: `B`, `C`, `D`, `E`.
 
-**Вероятная ошибка.** Модель воспринимает interface как рабочий экран,
-перерисовывает текст, переключает состояние controls или создаёт параллакс между
-частями коллажа.
+**Вероятная ошибка.** Модель воспринимает плоскую композицию как рабочий экран
+или набор 3D-слоёв, перерисовывает текст и данные, меняет topology либо создаёт
+параллакс между фрагментами.
 
-**Profile fragments.** `typing, scrolling, clicking controls, changing screen
-state, rewritten text, invented interface elements, moving panels, changed grid,
-parallax between fragments`.
+**Profile fragments.** Сначала релевантные clauses активного kind и максимум
+одного secondary kind, затем только не покрытые ими clauses из `changed
+flat-raster content, rewritten text, altered numbers, invented elements, moving
+panels, changed grid, local parallax, reframing`. Не дублируй один риск на
+kind-, tag- и profile-level.
 
-**Low-risk fallback.** `ACT_HOLD_AND_SETTLE` + `SEC_NONE`; camera `A`.
+**Low-risk fallback.** `ACT_HOLD_AND_SETTLE` + `SEC_NONE`; camera `A`. Positive
+prompt явно удерживает весь flat raster, текст, numbers, logos, lines, controls,
+панели и crop в исходных позициях.
 
 ## Порядок применения
 
 1. Выбери один `primary_class` по визуальному доминанту.
-2. Нормализуй только cross-cutting anchors и risks в `scene_tags`; отложи их
+2. Только для `text_interface_collage` с resolved routing назначь один
+   `graphic_kind` и полный список `graphic_kinds`; активный kind выбирает
+   подмаршрут, все виды добавляют anchors и дают candidate negatives. При
+   unresolved runtime routing используй locked flat-raster fallback без
+   выдуманного kind.
+3. Нормализуй только cross-cutting anchors и risks в `scene_tags`; отложи их
    для preservation и negative constraints, не используя для routing.
-3. По состоянию и движению, непосредственно видимым в первом кадре, выбери один
+4. По состоянию и движению, непосредственно видимым в первом кадре, выбери один
    primary action module.
-4. Добавь secondary-motion modules только из прямых `Motion sources`.
-5. Начни с base camera; переходи к allowed camera только при ясной пользе,
+5. Добавь secondary-motion modules только из прямых `Motion sources`.
+6. Начни с base camera; переходи к allowed camera только при ясной пользе,
    подтверждённой самим кадром. Тег не может разрешить или запретить камеру.
-6. Зафиксируй anchors и собери только релевантные tag-level и profile-specific
+7. Зафиксируй anchors и собери только релевантные tag-level, kind-level и
+   profile-specific
    negative fragments; теги не добавляют действий или камер.
-7. При неоднозначности используй `low-risk fallback` выбранного профиля.
-8. Передай выбранные модули в общий pipeline и финальные prompt templates; не
+8. При неоднозначности используй `low-risk fallback` выбранного профиля.
+9. Передай выбранные модули в общий pipeline и финальные prompt templates; не
    возвращай названия классов, tags или module IDs пользователю.

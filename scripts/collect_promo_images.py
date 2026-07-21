@@ -205,6 +205,19 @@ FORMAT_EXTENSIONS = {
     "AVIF": "avif",
 }
 
+GRAPHIC_PRIMARY_CLASS = "text_interface_collage"
+GRAPHIC_KIND_VALUES = (
+    "banner",
+    "ui_screenshot",
+    "floor_plan",
+    "map",
+    "table",
+    "chart",
+    "diagram",
+    "text_document",
+    "collage",
+)
+
 MANIFEST_FIELDS = (
     "article_number",
     "article_label",
@@ -229,6 +242,8 @@ MANIFEST_FIELDS = (
     "exception_note",
     "duplicate_of",
     "primary_class",
+    "graphic_kind",
+    "graphic_kinds",
     "scene_tags",
     "scene_description",
     "motion_cues",
@@ -367,13 +382,52 @@ def inspect_image(payload: bytes) -> tuple[str, int, int, str]:
     return actual_format, width, height, digest
 
 
-def load_annotations(path: Path) -> dict[str, dict[str, str]]:
+def load_annotations(path: Path) -> dict[str, dict[str, Any]]:
     if not path.exists():
         return {}
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError(f"Annotations must be an object: {path}")
+    invalid_ids = [
+        image_id
+        for image_id, annotation in value.items()
+        if not isinstance(annotation, dict)
+    ]
+    if invalid_ids:
+        raise ValueError(f"Annotations must contain objects: {invalid_ids}")
     return value
+
+
+def serialize_graphic_routing(annotation: dict[str, Any]) -> tuple[str, str]:
+    primary_class = annotation.get("primary_class")
+    active_kind = annotation.get("graphic_kind", "")
+    kinds = annotation.get("graphic_kinds", [])
+
+    if not annotation:
+        return "", ""
+    if primary_class != GRAPHIC_PRIMARY_CLASS:
+        if active_kind or kinds:
+            raise ValueError(
+                "graphic routing is only valid for "
+                f"{GRAPHIC_PRIMARY_CLASS}, got {primary_class!r}"
+            )
+        return "", ""
+    if not isinstance(active_kind, str) or not active_kind:
+        raise ValueError("text_interface_collage annotation has no graphic_kind")
+    if not isinstance(kinds, list) or not kinds:
+        raise ValueError("text_interface_collage annotation has no graphic_kinds")
+    if any(not isinstance(kind, str) or not kind for kind in kinds):
+        raise ValueError("graphic_kinds must contain non-empty strings")
+    if len(kinds) != len(set(kinds)):
+        raise ValueError("graphic_kinds contains duplicates")
+    unknown = [kind for kind in kinds if kind not in GRAPHIC_KIND_VALUES]
+    if unknown or active_kind not in GRAPHIC_KIND_VALUES:
+        raise ValueError(
+            f"unknown graphic routing: active={active_kind!r}, kinds={unknown}"
+        )
+    if kinds[0] != active_kind:
+        raise ValueError("active graphic_kind must be first in graphic_kinds")
+    return active_kind, "; ".join(kinds)
 
 
 def collect(output_root: Path, annotations_path: Path) -> list[dict[str, Any]]:
@@ -400,6 +454,7 @@ def collect(output_root: Path, annotations_path: Path) -> list[dict[str, Any]]:
             image_id = occurrence["image_id"]
             image_meta = image_catalogue.get(image_id)
             annotation = annotations.get(image_id, {})
+            graphic_kind, graphic_kinds = serialize_graphic_routing(annotation)
             row: dict[str, Any] = {
                 "article_number": f"{article.number:02d}",
                 "article_label": article.label,
@@ -424,6 +479,8 @@ def collect(output_root: Path, annotations_path: Path) -> list[dict[str, Any]]:
                 "exception_note": "",
                 "duplicate_of": first_occurrence.get(image_id, ""),
                 "primary_class": annotation.get("primary_class", ""),
+                "graphic_kind": graphic_kind,
+                "graphic_kinds": graphic_kinds,
                 "scene_tags": annotation.get("scene_tags", ""),
                 "scene_description": annotation.get("scene_description", ""),
                 "motion_cues": annotation.get("motion_cues", ""),
