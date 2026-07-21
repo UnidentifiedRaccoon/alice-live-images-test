@@ -17,15 +17,16 @@ single input image for one explicitly selected model:
 - Prompt blocks and output format: [docs/agents/clipmaker/prompt-templates.md](docs/agents/clipmaker/prompt-templates.md)
 
 The clipmaker agent must load the selected model spec, start from visible image
-evidence, assign one primary scene profile, infer one small completed action,
-and, for flat graphic frames with resolved routing, assign one active
-`graphic_kind` plus all visible `graphic_kinds`. Unresolved or conflicting
-graphic routing fails closed to a locked flat-raster hold without a
-kind-specific action. The agent must choose no more than one camera module and
-return a final English positive prompt plus a final English negative prompt.
-Unknown model IDs must fail closed; model durations and prompt limits must
-never be guessed or copied between models. Graphic routing must not assume
-masks, layers or editable source files.
+evidence, resolve one primary scene profile or use the explicit generic
+unresolved fallback, and infer one small completed action. Only a resolved
+`text_interface_collage` frame receives one active `graphic_kind` plus all
+independent visible `graphic_kinds`. Unresolved or conflicting graphic routing
+fails closed to a locked flat-raster hold without kind-specific action or
+negative clauses. The agent must select exactly one camera state A–E; Module A
+represents no camera motion, so modules are never combined or omitted. Unknown
+model IDs must fail closed; model durations and prompt limits must never be
+guessed or copied between models. Graphic routing must not assume masks, layers
+or editable source files.
 
 ## Interface design
 
