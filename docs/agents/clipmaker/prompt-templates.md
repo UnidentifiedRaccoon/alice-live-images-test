@@ -20,9 +20,14 @@ For a supported model, output only one final English Positive prompt and one
 final English Negative prompt in the selected spec's format.
 
 Analyze the image before writing. Treat visible first-frame evidence as the
-source of truth. Select exactly one primary scene profile. Use scene tags only
-to strengthen preservation, risks, and negative constraints. Do not use them to
-select a primary action, secondary motion, or camera.
+source of truth. Select exactly one primary scene profile when the visual
+boundary is resolved. If it is not, mark primary routing unresolved and use the
+generic hold fallback without inventing an eleventh class or borrowing a nearby
+profile. Use scene tags only to strengthen preservation, risks, and negative
+constraints. Do not use them to select a primary action, secondary motion, or
+camera. Treat external taxonomy metadata as advisory: accept only current
+controlled values that visible evidence confirms, and reconstruct legacy or
+free-form tags from the image.
 
 For text_interface_collage with resolved routing, also select one active
 graphic_kind and every visible graphic_kind from the controlled vocabulary.
@@ -30,9 +35,13 @@ The active kind selects a kind-specific prompt policy. All kinds contribute
 preservation anchors and candidate negative clauses, but the final negative
 uses the active kind plus at most one secondary kind. If routing is missing,
 unknown, or conflicting, mark it unresolved and use a locked flat-raster hold
-without inventing a kind from free text. Curated catalog rows must always have
-valid routing. Treat the input as one flat raster. Never assume masks, layers,
-editable UI, source vectors, or a document model.
+without inventing a kind from free text or requiring an active-kind negative
+clause. Count a secondary kind only when it is an independent visible
+macrostructure with its own preservation anchors. If mixed-kind policies have
+no proven safe intersection, hold the entire raster with no secondary motion.
+Curated catalog rows must always have valid routing. Treat the input as one flat
+raster. Never assume masks, layers, editable UI, source vectors, or a document
+model.
 
 Detailed graphic classification must improve prompt selection rather than act
 as descriptive metadata only: use it to choose the action policy, select the
@@ -49,43 +58,51 @@ For a dynamic pose, animate only the final phase already in progress. For a
 still or fragile scene, prefer subtle settling over a new event. Extra duration
 is reserved for natural pacing and settling, not another story beat.
 
-Camera motion is optional. Select at most one canonical camera module and use
-the least active module that serves the image. Never combine conflicting camera
-or framing instructions.
+Select exactly one canonical camera state A-E and use the least active module
+that serves the image. Module A explicitly means no camera motion. Use it for
+all flat graphics, unresolved graphic evidence, and fragile text, interface or
+geometry. Never combine conflicting camera or framing instructions.
 
 Mention secondary motion only for elements visibly present with a plausible
 physical source. Keep it subordinate to the primary action.
 
 Compose the Positive prompt in this priority order: first-frame anchors;
-kind-specific preservation for flat graphics; one completed action and final
-state; one camera module; visible secondary motion; concise realism and
-temporal-consistency terms. If a model limit is tight, remove lower-priority
-material in reverse order.
+kind-specific preservation for resolved flat graphics or visible generic flat
+anchors for unresolved routing; one completed action and final state; one
+camera module; visible secondary motion; concise realism and temporal-
+consistency terms. If a model limit is tight, remove lower-priority material in
+reverse order.
 
-Compose the Negative prompt according to the selected spec. For flat graphics,
-put relevant clauses from the active kind immediately after the likely wrong
-action, then at most one secondary kind if budget remains. Add only uncovered
+Compose the Negative prompt according to the selected spec. For flat graphics
+with resolved routing, put relevant clauses from the active kind immediately
+after the likely wrong action, then at most one secondary kind if budget
+remains. With unresolved routing, use only relevant generic flat-raster failure
+clauses and never invent or require an active kind. Add only uncovered
 anchor/profile/tag risks, one relevant camera conflict, and a short technical
 tail. A kind clause replaces generic duplicates; it does not stack with them.
 Never mention object-specific failures for elements that are not visible. If
-trimming is required, preserve at least the single most important active-kind
-clause. Apply the model's required syntax and verify any confirmed character
-limit over the complete body.
+trimming resolved routing, preserve at least the single most important
+active-kind clause. Apply the model's required syntax and verify any confirmed
+character limit over the complete body.
 
 Runtime settings are supplied separately unless the selected spec or interface
 explicitly requires them in the prompt.
 
 For flat graphics, classification alone never invents an animation intent.
-Without explicit compatible user direction, hold the complete raster. A
-kind-specific accent or local photographic micro-motion is allowed only by its
-scene-module policy; UI state changes, scrolling, typing, data recomputation and
-content reveal remain forbidden.
+Valid direction must name a visible target and one operation allowed by its
+kind policy. Generic requests such as "animate it", "make it dynamic",
+"cinematic", or "add parallax" are insufficient. Without explicit compatible
+direction, hold the complete raster. A kind-specific accent or local
+photographic micro-motion is allowed only by its scene-module policy; UI state
+changes, scrolling, typing, data recomputation and content reveal remain
+forbidden.
 ```
 
 ## Camera Modules
 
-Choose no more than one. Prefer the least active module that serves the scene.
-Scene profiles may route to these modules but must not redefine their text.
+Choose exactly one. Module A represents no camera motion. Prefer the least
+active module that serves the scene. Scene profiles may route to these modules
+but must not redefine their text.
 
 ### Module A — Locked Frame
 
@@ -172,17 +189,20 @@ Runtime-preface добавляй только по явному правилу m
 
 ## Flat-Raster Graphic Positive Template
 
-Используй вместо photorealistic template для `text_interface_collage`. Не
-называй пользователю внутренние kinds, но явно зафиксируй соответствующие им
-anchors. Не обещай pixel-perfect результат или изоляцию области: prompt
-описывает best-effort поведение одной плоской картинки.
+Используй вместо photorealistic template для `text_interface_collage`, а также
+для unresolved primary routing с явным graphic evidence. При resolved kind
+routing не называй пользователю внутренние kinds, но явно зафиксируй
+соответствующие им anchors. При unresolved routing используй только общие
+видимые anchors и не добавляй kind-specific формулировки. Не обещай
+pixel-perfect результат или изоляцию области: prompt описывает best-effort
+поведение одной плоской картинки.
 
 ```text
 Positive prompt:
 
 A faithful image-to-video continuation of the provided flat raster graphic.
-Start exactly from the complete first frame. Preserve [kind-specific text,
-numbers, state, geometry, topology, panels or other anchors] in exact visual
+Start exactly from the complete first frame. Preserve [visible text, numbers,
+state, geometry, topology, panels or other relevant anchors] in exact visual
 registration, together with the original layout, crop and aspect ratio.
 
 The content and state already shown in the first frame remain unchanged. During
@@ -193,9 +213,11 @@ settled].
 
 [Canonical Module A.]
 
-Crisp stable typography, unchanged values, exact geometry, clean edges and
-smooth temporal consistency. Keep any photographic region natural without
-altering the surrounding graphic composition.
+Use only fidelity terms supported by visible content: crisp stable typography
+when text is visible, unchanged values when data is visible, and exact geometry
+when structural lines are visible. Keep clean edges and smooth temporal
+consistency. Keep any photographic region natural without altering the
+surrounding graphic composition.
 ```
 
 ## Negative Prompt Template
@@ -225,10 +247,23 @@ unfinished action, cartoon or CGI look
 Scene-specific fragments живут в [scene-modules.md](scene-modules.md). Не
 добавляй people, text, vehicle, food или animal failures, если соответствующей
 детали нет в кадре или `scene_tags`. Для flat graphics сразу после wrong action
-обязательно добавляй только релевантные clauses активного `graphic_kind`, затем
-при остаточном бюджете — clauses максимум одного дополнительного
-`graphic_kinds`. Kind-clauses заменяют покрытые generic/tag-дубли. При
-сокращении оставь хотя бы одну самую важную clause активного kind.
+с resolved routing обязательно добавляй только релевантные clauses активного
+`graphic_kind`, затем при остаточном бюджете — clauses максимум одного
+дополнительного `graphic_kinds`. Kind-clauses заменяют покрытые generic/tag-
+дубли. При сокращении оставь хотя бы одну самую важную clause активного kind.
+При unresolved routing используй следующий общий fallback и не требуй
+kind-specific clause.
+
+### Unresolved Flat-Raster Negative Fallback
+
+Это candidate menu, а не обязательная строка. Выбирай только подтверждённые
+видимым содержимым failures и не упоминай отсутствующий текст, числа или сетку:
+
+```text
+changed flat-raster content, rewritten or unreadable visible text, altered
+visible numbers, invented elements, changed layout or grid, moving panels,
+local parallax, scrolling, clicking, typing, reframing, crop, flicker
+```
 
 ## Final Output Format
 
