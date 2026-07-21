@@ -4,16 +4,24 @@ This project has one registered working agent.
 
 ## clipmaker
 
-Use the clipmaker agent when you need to create Wan 2.2 Image-to-Video prompts
-from a single input image.
+Use the clipmaker agent when you need to create image-to-video prompts from a
+single input image for one explicitly selected model:
+
+- `alibaba/wan-2.2`;
+- `alibaba/wan-2.7`;
+- `google/veo-3.1-lite`.
 
 - Entry point: [docs/agents/clipmaker/README.md](docs/agents/clipmaker/README.md)
 - Workflow: [docs/agents/clipmaker/pipeline.md](docs/agents/clipmaker/pipeline.md)
+- Scene routing: [docs/agents/clipmaker/scene-modules.md](docs/agents/clipmaker/scene-modules.md)
 - Prompt blocks and output format: [docs/agents/clipmaker/prompt-templates.md](docs/agents/clipmaker/prompt-templates.md)
 
-The clipmaker agent must start from the image, infer one small completed action,
-choose camera motion only when it fits the image, and return a final English
-positive prompt plus a final English negative prompt.
+The clipmaker agent must load the selected model spec, start from visible image
+evidence, assign one primary scene profile, infer one small completed action,
+choose no more than one camera module, and return a final English positive
+prompt plus a final English negative prompt. Unknown model IDs must fail closed;
+model durations and prompt limits must never be guessed or copied between
+models.
 
 ## Interface design
 
