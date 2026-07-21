@@ -14,8 +14,29 @@ from pathlib import Path
 from PIL import Image
 
 
-CLASSIFICATION_FIELDS = (
+GRAPHIC_PRIMARY_CLASS = "text_interface_collage"
+GRAPHIC_KIND_VALUES = (
+    "banner",
+    "ui_screenshot",
+    "floor_plan",
+    "map",
+    "table",
+    "chart",
+    "diagram",
+    "text_document",
+    "collage",
+)
+BASE_CLASSIFICATION_FIELDS = (
     "primary_class",
+    "scene_tags",
+    "scene_description",
+    "motion_cues",
+    "risk_notes",
+)
+MANIFEST_CLASSIFICATION_FIELDS = (
+    "primary_class",
+    "graphic_kind",
+    "graphic_kinds",
     "scene_tags",
     "scene_description",
     "motion_cues",
@@ -27,6 +48,64 @@ EXPECTED_ARTICLE_COUNT = 20
 
 def fail(message: str) -> None:
     raise AssertionError(message)
+
+
+def parse_graphic_routing(row: dict[str, str], occurrence: str) -> tuple[str, ...]:
+    active_kind = row["graphic_kind"].strip()
+    raw_kinds = row["graphic_kinds"].strip()
+    if row["primary_class"] != GRAPHIC_PRIMARY_CLASS:
+        if active_kind or raw_kinds:
+            fail(f"{occurrence} has graphic routing outside {GRAPHIC_PRIMARY_CLASS}")
+        return ()
+    if not active_kind or not raw_kinds:
+        fail(f"{occurrence} has incomplete graphic routing")
+    kinds = tuple(kind.strip() for kind in raw_kinds.split(";"))
+    if any(not kind for kind in kinds):
+        fail(f"{occurrence} has an empty graphic kind")
+    if len(kinds) != len(set(kinds)):
+        fail(f"{occurrence} has duplicate graphic kinds")
+    unknown = [kind for kind in kinds if kind not in GRAPHIC_KIND_VALUES]
+    if unknown or active_kind not in GRAPHIC_KIND_VALUES:
+        fail(
+            f"{occurrence} has unknown graphic routing: "
+            f"active={active_kind!r}, kinds={unknown}"
+        )
+    if kinds[0] != active_kind:
+        fail(f"{occurrence} must place active graphic_kind first")
+    return kinds
+
+
+def annotation_graphic_routing(
+    image_id: str, annotation: dict[str, object]
+) -> tuple[str, tuple[str, ...]]:
+    primary_class = annotation.get("primary_class")
+    active_kind = annotation.get("graphic_kind", "")
+    raw_kinds = annotation.get("graphic_kinds", [])
+    if primary_class != GRAPHIC_PRIMARY_CLASS:
+        if active_kind or raw_kinds:
+            fail(
+                f"annotation {image_id} has graphic routing outside "
+                f"{GRAPHIC_PRIMARY_CLASS}"
+            )
+        return "", ()
+    if not isinstance(active_kind, str) or not active_kind:
+        fail(f"annotation {image_id} has no active graphic_kind")
+    if not isinstance(raw_kinds, list) or not raw_kinds:
+        fail(f"annotation {image_id} has no graphic_kinds")
+    if any(not isinstance(kind, str) or not kind for kind in raw_kinds):
+        fail(f"annotation {image_id} has invalid graphic_kinds")
+    kinds = tuple(raw_kinds)
+    if len(kinds) != len(set(kinds)):
+        fail(f"annotation {image_id} has duplicate graphic_kinds")
+    unknown = [kind for kind in kinds if kind not in GRAPHIC_KIND_VALUES]
+    if unknown or active_kind not in GRAPHIC_KIND_VALUES:
+        fail(
+            f"annotation {image_id} has unknown graphic routing: "
+            f"active={active_kind!r}, kinds={unknown}"
+        )
+    if kinds[0] != active_kind:
+        fail(f"annotation {image_id} must place active graphic_kind first")
+    return active_kind, kinds
 
 
 def main() -> int:
@@ -45,10 +124,16 @@ def main() -> int:
     articles_root = root / "articles"
     manifest_path = articles_root / "manifest.csv"
     taxonomy_path = articles_root / "taxonomy.md"
+    annotations_path = root / "classifications.json"
     with manifest_path.open(encoding="utf-8", newline="") as source:
-        rows = list(csv.DictReader(source))
+        reader = csv.DictReader(source)
+        fieldnames = reader.fieldnames or []
+        rows = list(reader)
     if not rows:
         fail("manifest has no rows")
+    missing_columns = set(MANIFEST_CLASSIFICATION_FIELDS) - set(fieldnames)
+    if missing_columns:
+        fail(f"manifest is missing columns: {sorted(missing_columns)}")
 
     article_numbers = sorted({row["article_number"] for row in rows})
     expected_article_numbers = [
@@ -63,6 +148,8 @@ def main() -> int:
     expected_files: set[Path] = set()
     seen_by_id: dict[str, dict[str, str]] = {}
     class_by_id: dict[str, tuple[str, ...]] = {}
+    graphic_route_counts: Counter[str] = Counter()
+    graphic_kind_presence: Counter[str] = Counter()
     total_bytes = 0
 
     for row in rows:
@@ -80,9 +167,15 @@ def main() -> int:
             fail(f"{article}/{row['image_number']} does not point to /orig")
         if row["page_variant_url"].endswith("/orig"):
             fail(f"{article}/{row['image_number']} page variant is orig")
-        for field in CLASSIFICATION_FIELDS:
+        for field in BASE_CLASSIFICATION_FIELDS:
             if not row[field].strip():
                 fail(f"{article}/{row['image_number']} has empty {field}")
+        graphic_kinds = parse_graphic_routing(
+            row, f"{article}/{row['image_number']}"
+        )
+        if graphic_kinds:
+            graphic_route_counts[row["graphic_kind"]] += 1
+            graphic_kind_presence.update(graphic_kinds)
 
         relative_path = Path(row["file_path"])
         path = (root / relative_path).resolve()
@@ -116,7 +209,9 @@ def main() -> int:
             fail(f"orig-format mismatch: {relative_path}")
         total_bytes += len(payload)
 
-        classification = tuple(row[field] for field in CLASSIFICATION_FIELDS)
+        classification = tuple(
+            row[field] for field in MANIFEST_CLASSIFICATION_FIELDS
+        )
         if row["image_id"] in class_by_id and class_by_id[row["image_id"]] != classification:
             fail(f"classification differs for duplicate id {row['image_id']}")
         class_by_id[row["image_id"]] = classification
@@ -140,6 +235,33 @@ def main() -> int:
         if numbers != list(range(1, len(numbers) + 1)):
             fail(f"article {article} image numbering is not contiguous: {numbers}")
 
+    if not annotations_path.is_file():
+        fail("classifications.json is missing")
+    annotations = json.loads(annotations_path.read_text(encoding="utf-8"))
+    if not isinstance(annotations, dict):
+        fail("classifications.json must be an object keyed by image_id")
+    if set(annotations) != set(seen_by_id):
+        fail(
+            "classification coverage differs: "
+            f"missing={sorted(set(seen_by_id) - set(annotations))}, "
+            f"extra={sorted(set(annotations) - set(seen_by_id))}"
+        )
+    for image_id, row in seen_by_id.items():
+        annotation = annotations[image_id]
+        if not isinstance(annotation, dict):
+            fail(f"annotation {image_id} must be an object")
+        for field in BASE_CLASSIFICATION_FIELDS:
+            value = annotation.get(field)
+            if not isinstance(value, str) or not value:
+                fail(f"annotation {image_id} has invalid {field}")
+            if value != row[field]:
+                fail(f"annotation {image_id} differs from manifest in {field}")
+        active_kind, kinds = annotation_graphic_routing(image_id, annotation)
+        if active_kind != row["graphic_kind"]:
+            fail(f"annotation {image_id} differs from manifest in graphic_kind")
+        if "; ".join(kinds) != row["graphic_kinds"]:
+            fail(f"annotation {image_id} differs from manifest in graphic_kinds")
+
     folders = [path for path in articles_root.iterdir() if path.is_dir()]
     if len(folders) != EXPECTED_ARTICLE_COUNT:
         fail(
@@ -161,6 +283,23 @@ def main() -> int:
     missing_taxonomy_classes = [name for name in classes if f"`{name}`" not in taxonomy]
     if missing_taxonomy_classes:
         fail(f"taxonomy lacks classes: {missing_taxonomy_classes}")
+    missing_graphic_kinds = [
+        kind for kind in GRAPHIC_KIND_VALUES if f"`{kind}`" not in taxonomy
+    ]
+    if missing_graphic_kinds:
+        fail(f"taxonomy lacks graphic kinds: {missing_graphic_kinds}")
+
+    unique_graphic_route_counts = Counter(
+        row["graphic_kind"]
+        for row in seen_by_id.values()
+        if row["graphic_kind"]
+    )
+    unique_graphic_kind_presence = Counter(
+        kind.strip()
+        for row in seen_by_id.values()
+        for kind in row["graphic_kinds"].split(";")
+        if kind.strip()
+    )
 
     report = {
         "verified_at": datetime.now(timezone.utc).isoformat(),
@@ -172,6 +311,20 @@ def main() -> int:
         "total_bytes_with_duplicates": total_bytes,
         "formats": dict(sorted(Counter(row["actual_format"] for row in rows).items())),
         "classes": dict(sorted(Counter(row["primary_class"] for row in rows).items())),
+        "graphic_routes": {
+            kind: {
+                "unique": unique_graphic_route_counts[kind],
+                "occurrences": graphic_route_counts[kind],
+            }
+            for kind in GRAPHIC_KIND_VALUES
+        },
+        "graphic_kind_presence": {
+            kind: {
+                "unique": unique_graphic_kind_presence[kind],
+                "occurrences": graphic_kind_presence[kind],
+            }
+            for kind in GRAPHIC_KIND_VALUES
+        },
         "images_per_article": dict(
             sorted(Counter(row["article_number"] for row in rows).items())
         ),

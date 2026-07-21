@@ -18,10 +18,14 @@ single input image for one explicitly selected model:
 
 The clipmaker agent must load the selected model spec, start from visible image
 evidence, assign one primary scene profile, infer one small completed action,
-choose no more than one camera module, and return a final English positive
-prompt plus a final English negative prompt. Unknown model IDs must fail closed;
-model durations and prompt limits must never be guessed or copied between
-models.
+and, for flat graphic frames with resolved routing, assign one active
+`graphic_kind` plus all visible `graphic_kinds`. Unresolved or conflicting
+graphic routing fails closed to a locked flat-raster hold without a
+kind-specific action. The agent must choose no more than one camera module and
+return a final English positive prompt plus a final English negative prompt.
+Unknown model IDs must fail closed; model durations and prompt limits must
+never be guessed or copied between models. Graphic routing must not assume
+masks, layers or editable source files.
 
 ## Interface design
 

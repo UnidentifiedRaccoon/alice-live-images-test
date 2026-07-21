@@ -50,6 +50,28 @@ camera module. Они не создают второй scene profile. Для mix
 выбери доминирующий класс, затем сохрани только его cross-cutting risks и
 anchors как tags.
 
+Если выбран `text_interface_collage`, дополнительно назначь:
+
+```text
+graphic_kind  — один активный prompt-route;
+graphic_kinds — все видимые виды графики, начиная с активного.
+```
+
+Используй только controlled vocabulary и правила mixed routing из
+[scene-modules.md](scene-modules.md#управляемый-словарь-graphic_kinds).
+`graphic_kind` выбирает action policy внутри графического профиля; все
+`graphic_kinds` добавляют anchors и формируют candidate negative fragments.
+В итоговый negative попадает активный kind и максимум один дополнительный вид
+по остаточному бюджету. Для остальных классов эти поля не создаются.
+
+Считай вход одним плоским растром. Не делай выводов о масках, слоях, DOM,
+редактируемой схеме или исходном документе. Если runtime graphic routing
+отсутствует, неизвестен или конфликтует, не создавай `graphic_kind` наугад:
+отметь routing как unresolved, используй locked flat-raster fallback с Module A
+и не извлекай kind из свободного `scene_description`. Это исключение только для
+runtime-анализа; сохранённая разметка `text_interface_collage` обязана иметь
+валидные поля routing.
+
 Если класс неоднозначен или отсутствует в каталоге, используй общий fallback:
 scene continuation с минимальной динамикой и Module A либо B. Каталог
 расширяемый: новый класс добавляется отдельным профилем без изменения этого
@@ -64,6 +86,11 @@ pipeline.
 1. Используй совместимое направление пользователя.
 2. Иначе выбери самое короткое естественное продолжение видимого состояния.
 3. При высоком риске выбери settling motion вместо нового действия.
+
+Для графики тип не является intent. Акцент существующего элемента или локальная
+микродинамика фотообласти разрешены только совместимым явным направлением
+пользователя. Scroll, click, typing, перестройка данных и reveal отсутствующего
+состояния несовместимы с single-frame flat-raster workflow.
 
 В positive prompt можно кратко закрепить трактовку:
 
@@ -89,6 +116,11 @@ Finish: By the final frames, [clear settled state].
 Выбирай условный action module из активного scene profile и заполняй его
 видимыми деталями кадра. Профиль — меню допустимых продолжений, а не готовый
 случайный prompt.
+
+Для `text_interface_collage` сначала примени policy активного `graphic_kind`.
+Без compatible intent выбери `ACT_HOLD_AND_SETTLE`. При explicit intent
+разрешены только `ACT_GRAPHIC_ACCENT` или `ACT_LOCAL_MEDIA_MICROMOTION` в
+границах kind-policy; mixed-графика получает пересечение ограничений всех kinds.
 
 Предпочитай завершение уже начатого жеста, небольшую смену опоры или взгляда,
 короткое перемещение с остановкой либо settling motion. Исключай цепочки
@@ -141,16 +173,20 @@ reframing` и другими конфликтующими командами.
 
 ## 8. Собери positive prompt
 
-Примени [positive template](prompt-templates.md#positive-prompt-template), затем
-model-specific синтаксис и лимит.
+Для обычной сцены примени
+[positive template](prompt-templates.md#positive-prompt-template). Для
+`text_interface_collage` используй
+[flat-raster graphic template](prompt-templates.md#flat-raster-graphic-positive-template),
+затем model-specific синтаксис и лимит.
 
 Порядок приоритетов:
 
 1. подтверждённые first-frame anchors;
-2. одно действие и его финальное состояние;
-3. один camera module;
-4. только видимая вторичная динамика;
-5. краткие realism и temporal-consistency terms.
+2. kind-specific preservation для плоской графики;
+3. одно действие и его финальное состояние;
+4. один camera module;
+5. только видимая вторичная динамика;
+6. краткие realism и temporal-consistency terms.
 
 Если prompt не помещается, сокращай с конца этого списка. Runtime-параметры
 обычно передаются отдельно; добавляй их в текст только когда выбранная spec или
@@ -165,7 +201,7 @@ model-specific синтаксис и лимит.
 - подтверждён ли лимит;
 - требует ли модель fragments или instructive language.
 
-Собирай negative в таком бюджете:
+Для обычной сцены собирай negative в таком бюджете:
 
 1. наиболее вероятное неправильное действие или направление;
 2. исчезновение, появление или трансформация anchors;
@@ -173,9 +209,27 @@ model-specific синтаксис и лимит.
 4. один релевантный конфликт камеры;
 5. короткий technical tail.
 
+Для flat graphics subtype должен действительно улучшать выбор и не может быть
+вытеснен общими формулировками:
+
+1. наиболее вероятное неправильное действие или направление;
+2. одна или несколько релевантных clauses активного `graphic_kind` —
+   обязательный kind-specific блок;
+3. при наличии места — релевантные clauses максимум одного secondary kind;
+4. только ещё не покрытые ошибки anchors, profile и `scene_tags` без дублей;
+5. один релевантный конфликт камеры;
+6. короткий technical tail.
+
+Kind-fragment — меню comma-separated clauses, а не неделимая строка. Выбирай
+только подтверждённые кадром риски: не упоминай CTA или QR без CTA/QR, coastline
+без видимой береговой линии, arrows без стрелок. Kind-specific clause заменяет
+покрытую им generic/tag clause, а не складывается с ней.
+
 Не включай нерелевантные модули. При жёстком лимите считай весь body, включая
-пробелы и пунктуацию, и сокращай низкоприоритетный хвост, пока текст не проходит
-limit. Никогда не обрезай строку вслепую посередине слова или смысла.
+пробелы и пунктуацию, и сокращай в порядке: technical tail → camera conflict →
+generic/profile/tag clauses → secondary kind. Затем сократи активный kind до
+одной самой важной релевантной clause, но не удаляй его полностью. Никогда не
+обрезай строку вслепую посередине слова или смысла.
 
 ## 10. Проверь результат
 
@@ -185,6 +239,10 @@ limit. Никогда не обрезай строку вслепую посер
 - первый кадр описан без домыслов;
 - назначен ровно один `primary_class`;
 - `scene_tags` влияют только на preservation и negatives;
+- для `text_interface_collage` либо назначены валидные `graphic_kind` и
+  `graphic_kinds`, либо runtime routing явно unresolved и применён locked
+  flat-raster fallback; сохранённая разметка всегда использует первый вариант;
+- graphic routing применён к flat raster без допущений о слоях;
 - выбран один основной beat, физически правдоподобный для `target_duration`;
 - действие завершается и оставляет устойчивый финал;
 - использован максимум один непротиворечивый camera module;
