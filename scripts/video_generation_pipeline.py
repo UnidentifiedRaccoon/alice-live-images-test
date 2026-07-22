@@ -34,13 +34,14 @@ DEFAULT_PROMPTS = ROOT / "PROMOPAGES-9857/video-prompts.json"
 DEFAULT_MANIFEST = ROOT / "PROMOPAGES-9857/video-generation-manifest.json"
 DEFAULT_WAN_BASE_URL = "https://wan-streamlit.dod.yandex.net"
 DEFAULT_WAN_STREAM_BASE_URL = "http://wan-streamlit.dod.yandex.net"
-DEFAULT_ELIZA_BASE_URL = "https://api.eliza.yandex.net/raw/openrouter/v1"
+DEFAULT_ELIZA_BASE_URL = "https://api.eliza.yandex.net/openrouter/v1"
 
 MODEL_CONFIGS: dict[str, dict[str, Any]] = {
     "alibaba/wan-2.2": {
         "directory": "wan-2.2",
         "adapter": "wan-demo",
         "duration": 3.2,
+        "durations": [3.2],
         "resolution": "720p",
         "aspect_ratios": ["source"],
         "seed": 1,
@@ -51,7 +52,8 @@ MODEL_CONFIGS: dict[str, dict[str, Any]] = {
     "alibaba/wan-2.7": {
         "directory": "wan-2.7",
         "adapter": "eliza-openrouter",
-        "duration": 5,
+        "duration": 3,
+        "durations": list(range(2, 11)),
         "resolution": "1080p",
         "aspect_ratios": ["16:9", "9:16", "1:1", "4:3", "3:4"],
         "seed": 9681,
@@ -63,6 +65,7 @@ MODEL_CONFIGS: dict[str, dict[str, Any]] = {
         "directory": "veo-3.1-lite",
         "adapter": "eliza-openrouter",
         "duration": 4,
+        "durations": [4, 6, 8],
         "resolution": "1080p",
         "aspect_ratios": ["16:9", "9:16"],
         "seed": 9681,
@@ -73,12 +76,14 @@ MODEL_CONFIGS: dict[str, dict[str, Any]] = {
 
 EXPECTED_SAMPLE_COUNT = 5
 EXPECTED_RESULT_COUNT = EXPECTED_SAMPLE_COUNT * len(MODEL_CONFIGS)
+REQUEST_FINGERPRINT_VERSION = 2
 TERMINAL_SUCCESS = {"completed", "succeeded", "success", "done"}
 TERMINAL_FAILURE = {"failed", "error", "cancelled", "canceled", "expired"}
 SECRET_RE = re.compile(
     r"(?i)(authorization\s*[:=]\s*(?:bearer|oauth)\s+)[^\s,;]+|"
     r"((?:access[_-]?token|api[_-]?key|token)\s*[:=]\s*)[^\s,;]+"
 )
+EXPERIMENT_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 
 
 class PipelineError(RuntimeError):
@@ -175,7 +180,9 @@ def validate_catalogs(samples_path: Path, prompts_path: Path, root: Path = ROOT)
             raise PipelineError(f"Duplicate prompt record: {sample_id} / {model_id}")
         seen.add(key)
         config = MODEL_CONFIGS[model_id]
-        if float(prompt.get("target_duration_seconds", -1)) != float(config["duration"]):
+        target_duration = float(prompt.get("target_duration_seconds", -1))
+        allowed_durations = {float(value) for value in config.get("durations", [config["duration"]])}
+        if target_duration not in allowed_durations:
             raise PipelineError(f"Wrong target duration for {sample_id} / {model_id}")
         if prompt.get("camera_state") not in {"A", "B", "C", "D", "E"}:
             raise PipelineError(f"Missing camera state A-E for {sample_id} / {model_id}")
@@ -185,11 +192,27 @@ def validate_catalogs(samples_path: Path, prompts_path: Path, root: Path = ROOT)
             raise PipelineError(f"Active graphic kind mismatch for {sample_id} / {model_id}")
         if prompt.get("graphic_kinds", []) != sample_by_id[sample_id].get("graphic_kinds", []):
             raise PipelineError(f"Visible graphic kinds mismatch for {sample_id} / {model_id}")
+        if prompt.get("motion_plan_id") != sample_by_id[sample_id].get("motion_plan_id"):
+            raise PipelineError(f"Motion plan mismatch for {sample_id} / {model_id}")
+        if float(prompt.get("action_complete_by_seconds", -1)) != float(
+            sample_by_id[sample_id].get("action_complete_by_seconds", -2)
+        ):
+            raise PipelineError(f"Action completion deadline mismatch for {sample_id} / {model_id}")
+        if float(prompt["action_complete_by_seconds"]) > target_duration:
+            raise PipelineError(f"Action completion deadline exceeds target duration for {sample_id} / {model_id}")
+        if not isinstance(prompt.get("last_frame_is_source", False), bool):
+            raise PipelineError(f"last_frame_is_source must be boolean for {sample_id} / {model_id}")
+        if prompt.get("last_frame_is_source") and config["adapter"] != "eliza-openrouter":
+            raise PipelineError(f"last_frame_is_source is unsupported for {sample_id} / {model_id}")
+        if not isinstance(prompt.get("embed_negative_in_positive", False), bool):
+            raise PipelineError(f"embed_negative_in_positive must be boolean for {sample_id} / {model_id}")
+        if prompt.get("embed_negative_in_positive") and config["adapter"] != "eliza-openrouter":
+            raise PipelineError(f"embed_negative_in_positive is unsupported for {sample_id} / {model_id}")
         for field in ("positive_prompt", "negative_prompt"):
             if not isinstance(prompt.get(field), str) or not prompt[field].strip():
                 raise PipelineError(f"Missing {field} for {sample_id} / {model_id}")
         limit = config.get("negative_limit")
-        if limit and len(prompt["negative_prompt"]) > limit:
+        if limit and not prompt.get("embed_negative_in_positive") and len(prompt["negative_prompt"]) > limit:
             raise PipelineError(
                 f"Negative prompt is {len(prompt['negative_prompt'])} characters; "
                 f"{model_id} allows at most {limit}: {sample_id}"
@@ -197,6 +220,33 @@ def validate_catalogs(samples_path: Path, prompts_path: Path, root: Path = ROOT)
     expected = {(sample["sample_id"], model_id) for sample in samples for model_id in MODEL_CONFIGS}
     if seen != expected:
         raise PipelineError("Prompt matrix is not the complete 5 x 3 Cartesian product")
+    prompt_by_key = {(prompt["sample_id"], prompt["model_id"]): prompt for prompt in prompts}
+    for prompt in prompts:
+        source_model_id = prompt.get("prompt_source_model_id")
+        if not source_model_id:
+            continue
+        if source_model_id == prompt["model_id"]:
+            raise PipelineError(
+                f"Prompt source model must differ from target: {prompt['sample_id']} / {prompt['model_id']}"
+            )
+        if not prompt.get("embed_negative_in_positive"):
+            raise PipelineError(
+                f"Copied prompt must preserve the combined positive/Avoid transport: "
+                f"{prompt['sample_id']} / {prompt['model_id']}"
+            )
+        source = prompt_by_key.get((prompt["sample_id"], source_model_id))
+        if not source:
+            raise PipelineError(
+                f"Prompt source model is missing for {prompt['sample_id']} / {prompt['model_id']}"
+            )
+        prompt_matches_source = (
+            prompt["positive_prompt"] == source["positive_prompt"]
+            and prompt["negative_prompt"] == source["negative_prompt"]
+        )
+        if not prompt_matches_source:
+            raise PipelineError(
+                f"Copied prompt differs from {source_model_id}: {prompt['sample_id']} / {prompt['model_id']}"
+            )
     return samples, prompts
 
 
@@ -215,10 +265,20 @@ def choose_aspect_ratio(width: int, height: int, supported: Iterable[str]) -> st
     return min(ratios, key=distance)
 
 
-def artifact_paths(root: Path, sample: dict, model_id: str) -> dict[str, Path]:
+def artifact_paths(
+    root: Path,
+    sample: dict,
+    model_id: str,
+    experiment_id: str | None = None,
+) -> dict[str, Path]:
     if model_id not in MODEL_CONFIGS:
         raise PipelineError(f"Unsupported model_id: {model_id}")
-    base = root / "PROMOPAGES-9857/articles" / sample["article_slug"] / "video" / MODEL_CONFIGS[model_id]["directory"]
+    video_root = root / "PROMOPAGES-9857/articles" / sample["article_slug"] / "video"
+    if experiment_id is not None:
+        if not EXPERIMENT_ID_RE.fullmatch(experiment_id):
+            raise PipelineError(f"Unsafe experiment_id: {experiment_id}")
+        video_root = video_root / "experiments" / experiment_id
+    base = video_root / MODEL_CONFIGS[model_id]["directory"]
     stem = sample["image_number"]
     return {
         "directory": base,
@@ -228,9 +288,15 @@ def artifact_paths(root: Path, sample: dict, model_id: str) -> dict[str, Path]:
     }
 
 
-def prompt_artifact(sample: dict, prompt: dict, root: Path) -> dict[str, Any]:
+def prompt_artifact(
+    sample: dict,
+    prompt: dict,
+    root: Path,
+    source_catalog: str = "PROMOPAGES-9857/video-prompts.json",
+    experiment_id: str | None = None,
+) -> dict[str, Any]:
     config = MODEL_CONFIGS[prompt["model_id"]]
-    return {
+    artifact = {
         "schema_version": 1,
         "ticket": "PROMOPAGES-9856",
         "sample_id": sample["sample_id"],
@@ -249,20 +315,42 @@ def prompt_artifact(sample: dict, prompt: dict, root: Path) -> dict[str, Any]:
             "graphic_kinds": prompt.get("graphic_kinds", []),
             "camera_state": prompt["camera_state"],
         },
+        "motion": {
+            "plan_id": prompt["motion_plan_id"],
+            "action_complete_by_seconds": prompt["action_complete_by_seconds"],
+        },
         "prompt": {
             "positive": prompt["positive_prompt"],
             "negative": prompt["negative_prompt"],
+            "source_model_id": prompt.get("prompt_source_model_id"),
+            "embed_negative_in_positive": prompt.get("embed_negative_in_positive", False),
         },
         "target": {
-            "duration_seconds": config["duration"],
+            "duration_seconds": prompt["target_duration_seconds"],
             "resolution": config["resolution"],
             "aspect_ratio": choose_aspect_ratio(sample["width"], sample["height"], config["aspect_ratios"]),
             "generate_audio": config["generate_audio"],
             "seed": config["seed"],
+            "last_frame_is_source": prompt.get("last_frame_is_source", False),
         },
         "generator": "project clipmaker agent",
-        "source_catalog": "PROMOPAGES-9857/video-prompts.json",
+        "source_catalog": source_catalog,
     }
+    if "prompt_extend" in prompt:
+        artifact["target"]["prompt_extend"] = prompt["prompt_extend"]
+    if experiment_id is not None:
+        artifact["experiment_id"] = experiment_id
+    return artifact
+
+
+def request_fingerprint(request_preview: dict[str, Any], sample: dict[str, Any]) -> str:
+    envelope = {
+        "request": request_preview,
+        "source_sha256": sample.get("sha256"),
+        "adapter": MODEL_CONFIGS[request_preview["model"]]["adapter"],
+    }
+    canonical = json.dumps(envelope, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def initial_run_artifact(sample: dict, model_id: str, paths: dict[str, Path], root: Path) -> dict[str, Any]:
@@ -277,6 +365,8 @@ def initial_run_artifact(sample: dict, model_id: str, paths: dict[str, Path], ro
         "prompt_path": relative(paths["prompt"], root),
         "output_path": relative(paths["video"], root),
         "request": None,
+        "request_sha256": None,
+        "request_fingerprint_version": None,
         "provider_job_id": None,
         "provider_session_hash": None,
         "submitted_at": None,
@@ -305,9 +395,51 @@ def materialize_plan(
             atomic_write_json(paths["run"], initial_run_artifact(sample, model_id, paths, root))
         else:
             existing_run = read_json(paths["run"])
+            expected_request = build_request_preview(sample, prompt)
+            expected_fingerprint = request_fingerprint(expected_request, sample)
+            if existing_run.get("status") == "succeeded":
+                recorded_version = existing_run.get("request_fingerprint_version")
+                if existing_run.get("request") == expected_request and (
+                    recorded_version is None
+                    or (
+                        recorded_version == REQUEST_FINGERPRINT_VERSION
+                        and existing_run.get("request_sha256") == expected_fingerprint
+                    )
+                ):
+                    existing_run["request_sha256"] = expected_fingerprint
+                    existing_run["request_fingerprint_version"] = REQUEST_FINGERPRINT_VERSION
+                else:
+                    existing_run["status"] = "stale"
+                    existing_run["error"] = (
+                        "Prompt or runtime request changed after this output was generated; "
+                        "review the diff and rerun with --force"
+                    )
             if existing_run.get("status") == "succeeded" and existing_run.get("media"):
-                existing_run["contract_check"] = assess_contract(model_id, existing_run["media"])
-                atomic_write_json(paths["run"], existing_run)
+                existing_run["contract_check"] = assess_contract(
+                    model_id,
+                    existing_run["media"],
+                    prompt["target_duration_seconds"],
+                )
+            if existing_run.get("status") in {"submitted", "running"}:
+                recorded_fingerprint = existing_run.get("request_sha256")
+                recorded_version = existing_run.get("request_fingerprint_version")
+                if (
+                    existing_run.get("request") != expected_request
+                    or recorded_version != REQUEST_FINGERPRINT_VERSION
+                    or recorded_fingerprint != expected_fingerprint
+                ):
+                    existing_run["status"] = "stale"
+                    existing_run["error"] = (
+                        "Request changed while a provider job was active; inspect that job and rerun with --force"
+                    )
+            if existing_run.get("status") != "stale" and existing_run.get("request") == expected_request:
+                existing_run["request_sha256"] = expected_fingerprint
+                existing_run["request_fingerprint_version"] = REQUEST_FINGERPRINT_VERSION
+            if existing_run.get("status") != "stale" and (existing_run.get("error") or "").startswith(
+                "Prompt or runtime request changed"
+            ):
+                existing_run["error"] = None
+            atomic_write_json(paths["run"], existing_run)
         rows.append({"sample": sample, "prompt": prompt, "paths": paths})
     write_aggregate_manifest(rows, root)
     return rows
@@ -333,10 +465,14 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
             },
         }
 
+    runtime_prompt = prompt["positive_prompt"]
+    if prompt.get("embed_negative_in_positive"):
+        runtime_prompt = f"{runtime_prompt}\n\nAvoid: {prompt['negative_prompt']}"
+
     payload: dict[str, Any] = {
         "model": model_id,
-        "prompt": prompt["positive_prompt"],
-        "duration": config["duration"],
+        "prompt": runtime_prompt,
+        "duration": prompt.get("target_duration_seconds", config["duration"]),
         "resolution": config["resolution"],
         "aspect_ratio": choose_aspect_ratio(sample["width"], sample["height"], config["aspect_ratios"]),
         "seed": config["seed"],
@@ -349,16 +485,35 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
             }
         ],
     }
+    if prompt.get("last_frame_is_source"):
+        payload["frame_images"].append(
+            {
+                "type": "image_url",
+                "image_url": {"url": sample["source_url"]},
+                "frame_type": "last_frame",
+            }
+        )
     if model_id == "alibaba/wan-2.7":
+        parameters: dict[str, Any] = {"prompt_extend": prompt.get("prompt_extend", False)}
+        if not prompt.get("embed_negative_in_positive"):
+            parameters["negative_prompt"] = prompt["negative_prompt"]
         payload["provider"] = {
             "options": {
-                "atlas-cloud": {"parameters": {"negative_prompt": prompt["negative_prompt"]}}
+                "atlas-cloud": {
+                    "parameters": parameters
+                }
             }
         }
     elif model_id == "google/veo-3.1-lite":
+        parameters = {"enhancePrompt": True}
+        if not prompt.get("embed_negative_in_positive"):
+            parameters["negativePrompt"] = prompt["negative_prompt"]
         payload["provider"] = {
             "options": {
-                "google-vertex": {"parameters": {"negativePrompt": prompt["negative_prompt"]}}
+                "google-vertex": {
+                    # The live Eliza/Google route rejects enhancePrompt=false.
+                    "parameters": parameters
+                }
             }
         }
     return payload
@@ -577,8 +732,29 @@ def find_status(value: Any) -> str | None:
         direct = value.get("status") or value.get("state")
         if isinstance(direct, str):
             return direct.lower()
-        for key in ("data", "result", "job", "video"):
+        for key in ("response", "data", "result", "job", "video"):
             nested = find_status(value.get(key))
+            if nested:
+                return nested
+    return None
+
+
+def find_error_detail(value: Any) -> str | None:
+    if isinstance(value, dict):
+        for key in ("error", "error_message", "message", "detail"):
+            candidate = value.get(key)
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+            nested = find_error_detail(candidate)
+            if nested:
+                return nested
+        for key in ("response", "data", "result", "job", "video"):
+            nested = find_error_detail(value.get(key))
+            if nested:
+                return nested
+    elif isinstance(value, list):
+        for item in value:
+            nested = find_error_detail(item)
             if nested:
                 return nested
     return None
@@ -589,7 +765,7 @@ def find_job_id(value: Any) -> str | None:
         for key in ("id", "job_id", "jobId", "generation_id"):
             if isinstance(value.get(key), str) and value[key]:
                 return value[key]
-        for key in ("data", "result", "job"):
+        for key in ("response", "data", "result", "job"):
             nested = find_job_id(value.get(key))
             if nested:
                 return nested
@@ -607,7 +783,16 @@ def find_video_url(value: Any) -> str | None:
             path = urlparse(candidate).path.lower()
             if any(suffix in path for suffix in (".mp4", "/content", "/download")):
                 return candidate
-        for key in ("data", "result", "output", "outputs", "videos", "video", "unsigned_urls"):
+        for key in (
+            "response",
+            "data",
+            "result",
+            "output",
+            "outputs",
+            "videos",
+            "video",
+            "unsigned_urls",
+        ):
             nested = find_video_url(value.get(key))
             if nested:
                 return nested
@@ -624,10 +809,18 @@ def find_video_url(value: Any) -> str | None:
 
 
 def eliza_headers(token: str | None = None) -> dict[str, str]:
-    resolved = token or os.environ.get("ELIZA_TOKEN") or os.environ.get("ANTHROPIC_AUTH_TOKEN")
+    resolved = (
+        token
+        or os.environ.get("ELIZA_OAUTH_TOKEN")
+        or os.environ.get("ELIZA_TOKEN")
+        or os.environ.get("ANTHROPIC_AUTH_TOKEN")
+    )
     if not resolved:
-        raise PipelineError("Set ELIZA_TOKEN (or the configured ANTHROPIC_AUTH_TOKEN) before a real Eliza run")
-    return {"Authorization": f"OAuth {resolved}"}
+        raise PipelineError(
+            "Set ELIZA_OAUTH_TOKEN, ELIZA_TOKEN, or the configured "
+            "ANTHROPIC_AUTH_TOKEN before a real Eliza run"
+        )
+    return {"Authorization": f"OAuth {resolved}", "X-Retries": "1"}
 
 
 def eliza_poll(
@@ -646,7 +839,11 @@ def eliza_poll(
         if status in TERMINAL_SUCCESS or (find_video_url(response) and status not in TERMINAL_FAILURE):
             return response
         if status in TERMINAL_FAILURE:
-            raise PipelineError(safe_error(f"Eliza/OpenRouter job {job_id} failed with status {status}"))
+            detail = find_error_detail(response)
+            suffix = f": {detail}" if detail else ""
+            raise PipelineError(
+                safe_error(f"Eliza/OpenRouter job {job_id} failed with status {status}{suffix}")
+            )
         time.sleep(interval)
     raise PipelineError(f"Eliza/OpenRouter job {job_id} did not finish within {timeout} seconds")
 
@@ -670,12 +867,8 @@ def eliza_generate(
         if not job_id:
             raise PipelineError("Eliza/OpenRouter submit response did not contain a job ID")
         on_submitted(job_id, None)
-    result = eliza_poll(base_url, job_id, headers, timeout, poll_interval)
-    video_url = find_video_url(result)
-    if video_url:
-        http_download(video_url, destination, timeout=600)
-        return
-    content_url = f"{base_url.rstrip('/')}/videos/{job_id}/content"
+    eliza_poll(base_url, job_id, headers, timeout, poll_interval)
+    content_url = f"{base_url.rstrip('/')}/videos/{job_id}/content?index=0"
     http_download(content_url, destination, headers=headers, timeout=600)
 
 
@@ -728,9 +921,14 @@ def ffprobe_media(path: Path) -> dict[str, Any]:
     }
 
 
-def assess_contract(model_id: str, media: dict[str, Any]) -> dict[str, Any]:
+def assess_contract(
+    model_id: str,
+    media: dict[str, Any],
+    target_duration_seconds: float | int | None = None,
+) -> dict[str, Any]:
     config = MODEL_CONFIGS[model_id]
-    target_duration = float(config["duration"])
+    requested_duration = config["duration"] if target_duration_seconds is None else target_duration_seconds
+    target_duration = float(requested_duration)
     actual_duration = float(media.get("duration_seconds") or 0)
     checks: dict[str, bool] = {
         "duration": abs(actual_duration - target_duration) <= 0.1,
@@ -754,7 +952,7 @@ def assess_contract(model_id: str, media: dict[str, Any]) -> dict[str, Any]:
         warnings.append(f"actual fps {media.get('fps')} differs from requested {config['fps']}")
     return {
         "requested": {
-            "duration_seconds": config["duration"],
+            "duration_seconds": requested_duration,
             "resolution": config["resolution"],
             "generate_audio": config["generate_audio"],
             "frames": config.get("frames"),
@@ -816,22 +1014,34 @@ def select_rows(rows: list[dict[str, Any]], sample_ids: list[str], model_ids: li
     ]
 
 
-def run_rows(rows: list[dict[str, Any]], args: argparse.Namespace, root: Path = ROOT) -> int:
+def run_rows(
+    rows: list[dict[str, Any]],
+    args: argparse.Namespace,
+    root: Path = ROOT,
+    manifest_writer: Callable[[], None] | None = None,
+) -> int:
     failures = 0
     for index, row in enumerate(rows, start=1):
         sample, prompt, paths = row["sample"], row["prompt"], row["paths"]
         run = read_json(paths["run"])
         label = f"{sample['sample_id']} / {prompt['model_id']}"
         print(f"[{index}/{len(rows)}] {label}", flush=True)
+        request_preview = build_request_preview(sample, prompt)
+        request_sha256 = request_fingerprint(request_preview, sample)
         if run.get("status") == "succeeded" and paths["video"].is_file() and not args.force:
             print("  already succeeded; skipping", flush=True)
             continue
-        request_preview = build_request_preview(sample, prompt)
+        if run.get("status") == "stale" and not args.force:
+            failures += 1
+            print("  stale output; review the request diff and rerun with --force", file=sys.stderr, flush=True)
+            continue
         if args.dry_run:
             run.update(
                 {
                     "status": "dry-run",
                     "request": request_preview,
+                    "request_sha256": request_sha256,
+                    "request_fingerprint_version": REQUEST_FINGERPRINT_VERSION,
                     "provider_job_id": None,
                     "provider_session_hash": None,
                     "submitted_at": None,
@@ -850,6 +1060,8 @@ def run_rows(rows: list[dict[str, Any]], args: argparse.Namespace, root: Path = 
             {
                 "status": "running" if resume else "prepared",
                 "request": request_preview,
+                "request_sha256": request_sha256,
+                "request_fingerprint_version": REQUEST_FINGERPRINT_VERSION,
                 "error": None,
                 "media": None,
             }
@@ -909,7 +1121,11 @@ def run_rows(rows: list[dict[str, Any]], args: argparse.Namespace, root: Path = 
                     "status": "succeeded",
                     "completed_at": utc_now(),
                     "media": media,
-                    "contract_check": assess_contract(prompt["model_id"], media),
+                    "contract_check": assess_contract(
+                        prompt["model_id"],
+                        media,
+                        prompt["target_duration_seconds"],
+                    ),
                     "error": None,
                 }
             )
@@ -937,7 +1153,10 @@ def run_rows(rows: list[dict[str, Any]], args: argparse.Namespace, root: Path = 
             if args.fail_fast:
                 break
         finally:
-            write_aggregate_manifest(materialized_rows_without_rewrite(root), root)
+            if manifest_writer is None:
+                write_aggregate_manifest(materialized_rows_without_rewrite(root), root)
+            else:
+                manifest_writer()
     return failures
 
 
@@ -977,6 +1196,14 @@ def verify_materialized(root: Path = ROOT, allow_incomplete: bool = False) -> tu
                 errors.append(f"Not succeeded ({run.get('status')}): {label}")
             continue
         succeeded += 1
+        expected_request = build_request_preview(row["sample"], row["prompt"])
+        expected_request_sha256 = request_fingerprint(expected_request, row["sample"])
+        if run.get("request") != expected_request:
+            errors.append(f"Recorded request does not match current prompt/runtime: {label}")
+        if run.get("request_sha256") != expected_request_sha256:
+            errors.append(f"Recorded request fingerprint mismatch: {label}")
+        if run.get("request_fingerprint_version") != REQUEST_FINGERPRINT_VERSION:
+            errors.append(f"Recorded request fingerprint version mismatch: {label}")
         if not paths["video"].is_file():
             errors.append(f"Succeeded run has no MP4: {label}")
             continue
@@ -988,7 +1215,11 @@ def verify_materialized(root: Path = ROOT, allow_incomplete: bool = False) -> tu
         recorded = run.get("media") or {}
         if media["sha256"] != recorded.get("sha256") or media["bytes"] != recorded.get("bytes"):
             errors.append(f"Recorded media digest/size mismatch: {label}")
-        expected_contract = assess_contract(row["prompt"]["model_id"], media)
+        expected_contract = assess_contract(
+            row["prompt"]["model_id"],
+            media,
+            row["prompt"]["target_duration_seconds"],
+        )
         if run.get("contract_check") != expected_contract:
             errors.append(f"Recorded contract check mismatch: {label}")
     if not allow_incomplete and succeeded != EXPECTED_RESULT_COUNT:

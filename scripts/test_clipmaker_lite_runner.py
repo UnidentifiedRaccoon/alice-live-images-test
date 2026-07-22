@@ -16,6 +16,18 @@ from scripts import clipmaker_lite_runner as runner
 
 
 class ClipmakerLiteRunnerTest(unittest.TestCase):
+    def test_output_schema_const_fields_declare_json_types(self) -> None:
+        schema = runner.draft_output_schema("schema-check", ["alibaba/wan-2.7"])
+
+        self.assertEqual(
+            schema["properties"]["schema_version"],
+            {"type": "integer", "const": 1},
+        )
+        self.assertEqual(
+            schema["properties"]["job_id"],
+            {"type": "string", "const": "schema-check"},
+        )
+
     def make_workspace(self, directory: str) -> tuple[Path, Path, Path]:
         root = Path(directory)
         script = root / runner.RUNNER_PATH

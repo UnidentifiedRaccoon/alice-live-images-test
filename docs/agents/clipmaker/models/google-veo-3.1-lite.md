@@ -8,9 +8,13 @@ Checked: **2026-07-21**.
 - Canonical OpenRouter version observed at check time: `google/veo-3.1-lite-20260331`.
 - Current OpenRouter upstream route: Google Vertex, provider tag `google-vertex`.
 - Direct Google model ID: `veo-3.1-lite-generate-001`.
-- Intended use: single-image, first-frame image-to-video generation for a native **4-second** clip.
+- Intended use: single-image image-to-video generation for a native **4-second** clip.
 
-OpenRouter lists first- and last-frame inputs, but the clipmaker starts from one image and should send only `first_frame`. Google's direct API also documents video extension; that capability is not established by OpenRouter's normalized first-frame request and must not be promised by this route.
+OpenRouter lists first- and last-frame inputs. The clipmaker always sends the
+source as `first_frame`; it may reuse the same source as `last_frame` when the
+motion plan must return exactly to the original frame or hold a flat raster.
+Google's direct API also documents video extension; that capability is not
+established by this normalized request and must not be promised by this route.
 
 ## Project target contract
 
@@ -21,7 +25,7 @@ OpenRouter lists first- and last-frame inputs, but the clipmaker starts from one
 | Resolution | `720p` or `1080p`; choose explicitly |
 | Aspect ratio | `16:9` or `9:16`; choose the source-compatible value |
 | Audio | Choose explicitly with `generate_audio`; use `false` for a silent comparison |
-| Last frame | Omitted for the single-image path |
+| Last frame | Normally omitted; reuse the source for an exact return-to-source or flat-raster hold |
 
 OpenRouter currently exposes native durations of 4, 6, and 8 seconds. The clipmaker target is 4 seconds, not a longer request trimmed after generation.
 
@@ -50,7 +54,8 @@ Submit asynchronously with `POST /api/v1/videos`:
     "options": {
       "google-vertex": {
         "parameters": {
-          "negativePrompt": "<English undesired elements and qualities>"
+          "negativePrompt": "<English undesired elements and qualities>",
+          "enhancePrompt": true
         }
       }
     }
@@ -58,9 +63,30 @@ Submit asynchronously with `POST /api/v1/videos`:
 }
 ```
 
-The image URL must resolve directly for the provider without interactive authentication. Poll the returned job URL until completion or failure. OpenRouter does not publish a Veo-specific completion-time SLA.
+The image URL must resolve directly for the provider without interactive
+authentication. Poll the returned job URL until completion or failure.
+OpenRouter does not publish a Veo-specific completion-time SLA. When the end
+state is exactly the source, add the same URL as a second `frame_images` item
+with `frame_type: "last_frame"` and say that the endpoints are intentionally
+identical. This constrains the return state; it does not prove every
+intermediate frame will remain static.
 
-`negativePrompt` is a confirmed allowed passthrough parameter on the current Google Vertex endpoint. It is camel-cased and belongs inside provider options; it is not a normalized top-level `negative_prompt` field.
+`negativePrompt` and `enhancePrompt` are accepted passthrough parameters on the
+current Google Vertex endpoint. The live Eliza route rejects
+`enhancePrompt: false` before inference with `Veo 3 prompt enhancement cannot be
+disabled`, so the clipmaker must send `enhancePrompt: true` explicitly. This is
+a known provider-side rewriting confounder: keep the positive prompt concise,
+motion-first, and internally consistent. `negativePrompt` is camel-cased and
+belongs inside provider options; it is not a normalized top-level
+`negative_prompt` field.
+
+For an explicit cross-model replay of a Wan 2.2 demo request, submit the copied
+Positive plus `\n\nAvoid: ` plus the copied Negative as one top-level prompt and
+omit the separate `negativePrompt`, so the text accepted by Eliza remains
+byte-identical to the source request. Keep `enhancePrompt: true`: the live route
+requires it, so Google-side rewriting remains an unavoidable confounder even
+when the submitted text is identical. Do not add a last frame unless it was
+present in the source experiment.
 
 ## Prompt support and confirmed limits
 
@@ -84,8 +110,12 @@ abrupt cuts, added text overlays, invented logos, flicker, smeared motion
 - Use a sharp, clear, well-composed source image. The source establishes subject, scene, composition, lighting, and visual style.
 - In the positive prompt, focus on **motion**. Do not repeatedly redescribe the subject or background; use neutral references such as `the subject` when possible.
 - Choose **one focused moment** that can finish inside four seconds. Avoid narratives of the form “first A, then B, then C.”
-- Start the action immediately, place its main readable change near the middle, and leave the last part for a stable completed state.
-- Prefer subtle, physically plausible subject motion. Add environmental motion only when it reinforces the same moment.
+- Start the action immediately at normal real-time speed. Complete a familiar micro-action by about `2.0 s`, then hold its stable result for the remainder.
+- For a reversible beat such as one blink, or a locked flat-raster hold, reuse
+  the source as the last-frame anchor. Do not use this for a step, ripple or
+  other action whose correct completed state differs from the source.
+- Prefer small-amplitude but clearly readable, physically plausible motion. Describe direction, cause and completion rather than weakening the beat with `barely perceptible`, `minimal`, repeated `gently/calmly`, or gradual easing.
+- For a dynamic scene without requested slow motion, include direct negative phrases such as `slow-motion pacing, time-stretched motion, delayed action`.
 - For a subject that should remain still, pair `ACT_HOLD_AND_SETTLE` with at most one restrained camera move; do not combine zoom, pan, orbit, crane, and handheld behavior.
 - Use a locked camera when subject motion is already the focus. Explicitly state smooth or stable camera behavior when unwanted shake would harm comparison.
 - If audio is enabled, describe it in a separate short sentence. Keep visual motion instructions independent from dialogue, music, and ambient sound.
@@ -104,6 +134,11 @@ density and pacing, not composition order:
 Google's direct preview documentation for `veo-3.1-lite-generate-001` lists text-to-video, image-to-video, first-and-last-frame generation, prompt rewriting, and sound generation. It supports 4/6/8-second outputs, 720p/1080p, `16:9` and `9:16`, MP4 output, and 24 fps. It also documents source images up to 20 MB and English prompts for the preview model.
 
 Those details describe the direct Google service. OpenRouter exposes a compatible subset through its normalized video API and provider passthrough. Direct-only features such as video extension, maximum output count, or future reference-image modes must be checked separately before use.
+
+Neither the normalized OpenRouter request nor the current Google Vertex
+passthrough schema exposes an action `speed` control. The provider's fixed
+`24 fps` output is not a motion-speed setting. Express real-time tempo and the
+early completion deadline in the prompt; never add an unverified runtime field.
 
 ## Unknown or provider-specific
 
