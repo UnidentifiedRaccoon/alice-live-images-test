@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "agent_id": "clipmaker-lite",
+  "contract_version": "1.1.0",
+  "loader_version": 1,
+  "runner": {
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 2,
+    "path": "scripts/clipmaker_lite_runner.py",
+    "sha256": "aa647fab11bd811fa2a09b81d0ddd0e7db1f5e6b12c484222239434cd77d1eba"
+  },
+  "execution": {
+    "executor_id": "codex-exec",
+    "binary": {
+      "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30"
+    },
+    "sandbox": "read-only",
+    "ephemeral": true,
+    "ignore_user_config": true,
+    "ignore_project_rules": true,
+    "tool_event_policy": "reject-run",
+    "requires_thread_id": true,
+    "requires_explicit_external_processing": true
+  },
+  "input_binding": {
+    "image_root": "PROMOPAGES-9857",
+    "context_root": "PROMOPAGES-9884",
+    "context_filename": "content.json"
+  },
+  "base_instruction": {
+    "path": "docs/agents/clipmaker-lite/README.md",
+    "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+  },
+  "models": {
+    "alibaba/wan-2.7": {
+      "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+      "spec_sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      }
+    },
+    "google/veo-3.1-lite": {
+      "spec_path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+      "spec_sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      }
+    }
+  },
+  "output_namespace": "artifacts/clipmaker-lite/v1"
+}
