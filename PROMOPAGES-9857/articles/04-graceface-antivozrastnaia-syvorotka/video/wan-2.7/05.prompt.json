@@ -17,16 +17,23 @@
     "graphic_kinds": [],
     "camera_state": "A"
   },
+  "motion": {
+    "plan_id": "attached-drop-oscillation",
+    "action_complete_by_seconds": 1.5
+  },
   "prompt": {
-    "positive": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the open frosted serum bottle on the right, the angled glass dropper suspended above and to its left, the single clear serum drop hanging from the pipette tip, and the whole and cut black truffles resting on the white surface. Preserve the bottle and pipette silhouettes, open threaded neck, gold collar, white bulb, pale serum level, readable “GRACEFACE RUSSIA,” “TRUFFLE EXTRACT,” “Face serum,” and “30 ml” label text, truffle illustration, exact item count and placement, glass transparency, reflections, shadows, light gray studio background, original composition and aspect ratio.\n\nThe first frame already shows one serum drop suspended from the pipette tip. During the clip, that same drop completes one tiny downward stretch under gravity and settles into a stable pendant shape without detaching. By the final frames, the drop and the entire product arrangement are calm and steady.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate a single-shot video. Natural studio lighting and colors, realistic gravity and liquid surface tension, coherent glass and product geometry, smooth temporal consistency, stable fine details, photorealistic motion.",
-    "negative": "Product rotation or transformation, the existing pendant drop detaching or multiplying, invented drops, bottle or pipette movement, opening or closing the package, changed item count, altered or unreadable label text, replaced branding, warped bottle neck or pipette, opaque glass, inconsistent refraction, changing liquid volume, detached reflections, changing shadow contact, zoom, pan, tilt, reframing, crop, flicker, morphing, duplication, motion artifacts, cartoon or CGI look"
+    "positive": "A photorealistic image-to-video continuation of the provided product still life. Preserve the bottle, angled pipette, one compact solid serum drop attached to its tip, two truffle pieces, readable label, glass transparency, reflections, shadows, crop and aspect ratio.\n\nMotion begins immediately at normal real-time speed. The attached drop makes one tiny surface-tension quiver: its lower edge shifts by only a few millimeters and rebounds once, without stretching into a thread. Within the first second it returns to the same compact solid rounded pendant shape, still attached to the pipette. Hold that unchanged state for the rest of the shot. The bottle, pipette and truffles remain completely fixed.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate single shot. Natural studio lighting, realistic surface tension, coherent glass and product geometry, stable lettering, smooth temporal consistency, photorealistic motion.",
+    "negative": "slow motion, delayed quiver, long drop, stretched neck, liquid thread, hollow loop or ring, drop detachment, falling or extra drops, contact with truffle or shelf, dripping, splash, changing liquid volume, pipette or bottle motion, product rotation, warped label or glass, opaque glass, altered reflection, camera movement, zoom, crop, flicker, morphing, duplication",
+    "source_model_id": null,
+    "embed_negative_in_positive": false
   },
   "target": {
-    "duration_seconds": 5,
+    "duration_seconds": 3,
     "resolution": "1080p",
     "aspect_ratio": "16:9",
     "generate_audio": false,
-    "seed": 9681
+    "seed": 9681,
+    "last_frame_is_source": false
   },
   "generator": "project clipmaker agent",
   "source_catalog": "PROMOPAGES-9857/video-prompts.json"

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-angry-outburst-v1",
+  "sample_id": "01-portrait-hands",
+  "objective": "Apply model-specific I2V prompting to produce one continuous energetic angry outburst while preserving the original composition and the same angry or frustrated emotional sign through the final frame.",
+  "motion_plan_id": "sustained-angry-outburst",
+  "camera_state": "A",
+  "prompt_strategy": "model_specific",
+  "frame_inputs": [
+    "first_frame"
+  ],
+  "common_review_window_seconds": 3.0,
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "target_duration_seconds": 3.2,
+      "action_complete_by_seconds": 2.2,
+      "model_prompt": {
+        "positive": "A photorealistic continuation of the exact first frame. The woman immediately performs one continuous angry, frustrated outburst: she visibly shouts while rapidly shaking both raised claw-like hands in small synchronized motions within their original areas beside her face. Her motion is energetic, expressive, and natural. She finishes still visibly angry and frustrated, with both hands raised and the same emotional intensity, never smiling or calming down. Preserve her identity, striped clothing, background, lighting, composition, crop, and aspect ratio. Keep the camera completely locked with no reframing.",
+        "negative": "smiling, friendliness, calming down, emotional softening or reversal, passive or nearly static performance, closed-mouth reaction, unrelated second action, hands lowering or leaving their original areas, hands crossing or touching the face, asymmetric hand motion, changed finger pose, extra or fused fingers, face or hand deformation, identity or clothing change, background change, cuts, scene change, camera movement, reframing, crop, shake, flicker, morphing, duplication, cartoon or CGI look"
+      }
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 3,
+      "action_complete_by_seconds": 1.8,
+      "embed_negative_in_positive": false,
+      "model_prompt": {
+        "positive": "Generate a single-shot video. Continue directly from the provided frame. Preserve the same woman, wide-eyed tense expression, raised brows, teeth-baring mouth, hairstyle, striped top, both raised claw-like hands, lighting, background, crop and aspect ratio. Motion starts immediately at normal real-time speed. She performs one sustained angry, frustrated outburst: she visibly yells while both hands shake simultaneously in fast, tight side-to-side wrist and forearm oscillations, staying within their original left and right areas beside her face. Her eyes and brows retain the same angry emotional sign, her fingers retain their claw curvature, and the hands never lower, cross or leave their areas. The synchronized shout and hand shaking form one causal action that peaks and completes by about 1.8 seconds. She finishes with both hands still raised and her face equally angry and frustrated, with no smile, friendliness, softening or calming. Hold that tense final state for the remaining frames. Keep the camera locked and the original composition stable. No zoom, orbit, pan, tilt or reframing. Natural expressive mechanics, coherent mouth and hand anatomy, stable identity and background, smooth temporal consistency, photorealistic motion.",
+        "negative": "weak or nearly static motion, smile, friendliness, emotional softening, calming down, emotional reversal, laughter, hands lowering or leaving their original areas, unsynchronized hand motion, large arm swings, changed claw-like hand pose, deformed hands, extra fingers, head turn, camera motion, zoom, pan, tilt, reframing, crop change, cuts, second scene, slow motion, time-stretched action, flicker, morphing, identity change, motion artifacts, CGI look"
+      }
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "target_duration_seconds": 4,
+      "action_complete_by_seconds": 2.0,
+      "embed_negative_in_positive": false,
+      "model_prompt": {
+        "positive": "Locked-off tripod close-up using the input image as the exact opening composition. Keep the camera, crop, background, focus and lighting fixed. Preserve the same woman's identity, tied-up hair, striped top and both raised claw-like hands. She immediately performs one sustained angry, frustrated outburst at natural real-time speed. She visibly yells one forceful continuous exclamation while both raised hands shake rapidly and synchronously in short, tight side-to-side pulses inside their original left and right areas. Her eyes remain wide, her brows remain tense, her jaw and lips articulate the shout naturally, and every finger keeps its claw-like spread. Her face, shoulders and hands move as one causally synchronized performance without a separate gesture or second beat. The outburst finishes by about 2.0 seconds with both hands still raised and her expression equally angry, frustrated and tense. Hold that tense final state through the final frame, never smiling, softening or calming. Photorealistic motion, coherent facial and hand anatomy, stable identity and background, smooth temporal consistency.",
+        "negative": "smile, friendliness, cheerful expression, emotional softening or reversal, calming down, laughter, weak or nearly static performance, delayed action, slow-motion pacing, disconnected or alternating hand motion, large arm swings, lowered hands, hands leaving their original areas, changed claw-like pose, closed fists, deformed or duplicated hands, extra or fused fingers, identity drift, warped mouth or teeth, large head turn, body lunge, camera drift, zoom, orbit, pan, tilt, reframing, abrupt cuts, scene change, background motion, flicker, morphing, smeared motion, cartoon or CGI look"
+      }
+    }
+  ]
+}

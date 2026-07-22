@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-03-animal-step-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/wan-2.7/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The cat calmly steps forward out of the litter tray, placing each paw naturally on the floor as its weight shifts smoothly off the rim. Its head stays alert and turns slightly toward screen right, with subtle ear and tail movement. Keep the camera fixed, ending with the cat fully on the floor and continuing one gentle step forward.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "source_sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9816583c0174b51f458773b919f3d743106a229283a5a557e21a24f9f9466c9b",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "mainLZN4giKNSQaFg4bw",
+  "submitted_at": "2026-07-22T16:41:30Z",
+  "completed_at": "2026-07-22T16:42:49Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2146,
+    "height": 966,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5005200,
+    "sha256": "90a4eea562e8b73fa1da00cd55091083b2bc9252bff714307b12f4816cf53e2b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio does not match the Lite request",
+      "resolution does not match the Lite request",
+      "aspect_ratio does not match the Lite request"
+    ]
+  },
+  "error": null
+}

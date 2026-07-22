@@ -17,16 +17,23 @@
     "graphic_kinds": [],
     "camera_state": "A"
   },
+  "motion": {
+    "plan_id": "cascade-causes-one-ripple",
+    "action_complete_by_seconds": 2.0
+  },
   "prompt": {
-    "positive": "A photorealistic image-to-video continuation of the provided interior pool frame. Start exactly from the empty spa with two vertical water curtains already flowing into the illuminated turquoise pool. Preserve the stone architecture and strict verticals, the exact wall-panel and pool-tile geometry, the pool level, the living-wall foliage pattern, the round white daybed and cushions, the existing lighting, the original composition and aspect ratio.\n\nDuring the four-second clip, the two water curtains maintain a smooth, even downward flow while one restrained pattern of natural ripples spreads from their visible impact areas. By the final frames, the ripples ease into a calm stable surface and the cascades remain steady.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nExisting underwater illumination and reflections shimmer subtly with the water only. Natural lighting and colors, realistic water physics, exact architectural geometry, smooth temporal consistency, stable fine details, photorealistic motion.",
-    "negative": "water curtains stopping or surging, invented splashes, large waves, changing water level, moving furniture, shifted cushions, changing room layout, added openings, warped stone panels, bent verticals, drifting perspective, altered pool-tile grid, changing foliage count, invented branches, moving foliage, incoherent reflections, new light sources, changing shadow direction, exposure jumps, zoom, pan, orbit, reframing, camera shake, flicker, morphing, CGI look"
+    "positive": "Motion begins immediately at normal real-time speed under normal gravity. The existing waterfall remains a continuous downward sheet. Its impact produces one narrow ripple immediately; the ripple travels outward across the nearby pool and loses amplitude after completing its readable spread by 2 seconds. The waterfall continues at the same rate for the rest of the shot, and underwater reflections respond synchronously to the water. Preserve the water level, turquoise tile grid, straight stone panels, vertical living wall, daybed and cushions, lighting, crop and composition. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Realistic fluid momentum and reflections, exact architectural geometry, smooth temporal consistency, photorealistic motion.",
+    "negative": "slow-motion water, time-stretched flow, delayed ripple, waterfall stopping, surging or reversing, invented splashes, large waves, changing water level, moving furniture, changed room layout, warped stone panels, bent verticals, altered tile grid, changing foliage, incoherent or delayed reflections, new light sources, camera movement, reframing, shake, flicker, morphing",
+    "source_model_id": null,
+    "embed_negative_in_positive": false
   },
   "target": {
     "duration_seconds": 4,
     "resolution": "1080p",
     "aspect_ratio": "16:9",
     "generate_audio": false,
-    "seed": 9681
+    "seed": 9681,
+    "last_frame_is_source": false
   },
   "generator": "project clipmaker agent",
   "source_catalog": "PROMOPAGES-9857/video-prompts.json"

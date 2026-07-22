@@ -17,16 +17,23 @@
     "graphic_kinds": [],
     "camera_state": "A"
   },
+  "motion": {
+    "plan_id": "single-natural-blink",
+    "action_complete_by_seconds": 1.0
+  },
   "prompt": {
-    "positive": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the front-facing close-up of a woman with wide eyes, clenched teeth, and both hands raised beside her face with fingers splayed. Preserve her identity, facial proportions, eye and mouth shape, teeth, both hand poses and finger count, tied-up hairstyle, striped shirt, soft indoor background, existing crop, composition, and aspect ratio.\n\nThe first frame already shows a held tense pose. During the clip, she maintains that pose while the visible tension makes one very small natural settle. By the final frames, her face and hands are completely still in essentially the same position. Only barely perceptible breathing supports the motion.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate a single-shot video. Natural lighting and colors, realistic physics, coherent facial and hand anatomy, smooth temporal consistency, stable fine details, photorealistic motion.",
-    "negative": "speaking, shouting, exaggerated expression, large head turn, hands leaving the pose or touching the face, changed identity or facial proportions, asymmetric eyes, altered mouth or teeth, deformed hands, extra or fused fingers, changed hairstyle or striped shirt, invented wind, zoom, orbit, reframing, crop, shake, flicker, morphing, duplication, motion artifacts, unfinished settling, cartoon or CGI look"
+    "positive": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the centered tight close-up of a woman looking directly at the camera with wide blue-gray eyes, a clenched-teeth grimace, brown hair in a bun, and both splayed hands raised beside her cheeks. Preserve her exact identity, facial proportions, eye color and gaze, hairstyle, navy-and-white striped top, the anatomy and original positions of every visible finger, the softly blurred indoor background, lighting, crop, composition, and aspect ratio.\n\nThe first frame already shows a tense posed gesture, not the start of speech or a larger hand action. During the clip, she maintains the same expression and hand pose while completing one small natural blink. By the final frames, her eyes have returned to the same direct gaze and her face and hands are steady in their original positions.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nOnly subtle natural breathing is visible in her shoulders. Natural lighting and colors, realistic physics, coherent facial and hand anatomy, smooth temporal consistency, stable fine details, photorealistic motion.",
+    "negative": "Speaking, opening the mouth wider, exaggerated expression, large head turn, hands moving toward or away from the face, changed identity or facial proportions, asymmetric eyes, altered gaze, deformed hands, extra or missing fingers, fused fingers, changed hand pose, changed hairstyle, invented wind, altered striped clothing, automatic reframing, invented off-frame anatomy, camera drift or orbit, crop, zoom, shake, flicker, morphing, duplication, disappearing features, motion artifacts, unfinished action, cartoon or CGI look",
+    "source_model_id": "alibaba/wan-2.2",
+    "embed_negative_in_positive": true
   },
   "target": {
     "duration_seconds": 5,
     "resolution": "1080p",
     "aspect_ratio": "4:3",
     "generate_audio": false,
-    "seed": 9681
+    "seed": 9681,
+    "last_frame_is_source": false
   },
   "generator": "project clipmaker agent",
   "source_catalog": "PROMOPAGES-9857/video-prompts.json"

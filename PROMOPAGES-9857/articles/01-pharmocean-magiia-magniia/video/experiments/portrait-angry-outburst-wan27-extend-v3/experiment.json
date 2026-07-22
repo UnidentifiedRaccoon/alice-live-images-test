@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-angry-outburst-wan27-extend-v3",
+  "sample_id": "01-portrait-hands",
+  "objective": "Test a short motion-only Wan 2.7 prompt with provider prompt extension enabled after detailed controlled prompts suppressed hand motion or introduced facial drift.",
+  "motion_plan_id": "sustained-angry-outburst-provider-extended",
+  "camera_state": "A",
+  "prompt_strategy": "model_specific",
+  "frame_inputs": [
+    "first_frame"
+  ],
+  "common_review_window_seconds": 3.0,
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 3,
+      "action_complete_by_seconds": 2.6,
+      "embed_negative_in_positive": false,
+      "prompt_extend": true,
+      "model_prompt": {
+        "positive": "Generate a single-shot video. Locked close-up from the exact input frame. The same visibly furious woman screams continuously at normal real-time speed and vigorously shakes both raised claw-like hands beside her face in fast repeated side-to-side motions. Her hands stay inside their original left and right frame areas and her fingers remain spread. She stays furious from the first through the final frame, never smiling or calming down. Keep her identity, clothing, camera, crop, background and lighting unchanged. Energetic natural motion, realistic mouth and hands, stable anatomy, photorealistic video.",
+        "negative": "smile, laughter, cheerful or friendly expression, calming down, emotional softening or reversal, frozen hands, tiny or slow hand motion, weak performance, delayed action, hands lowering, crossing the face or leaving frame, closed fists, deformed hands, extra fingers, distorted mouth or teeth, identity change, camera movement, zoom, pan, tilt, reframing, cuts, second scene, slow motion, flicker, morphing, CGI look"
+      }
+    }
+  ]
+}

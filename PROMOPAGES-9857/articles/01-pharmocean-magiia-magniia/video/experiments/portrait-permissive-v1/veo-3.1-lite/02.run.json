@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "failed",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v1/veo-3.1-lite/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v1/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Create a lively photorealistic continuation of this exact first frame. In one continuous shot, the woman has an intense spontaneous emotional reaction toward the camera. Her face, mouth, head, shoulders, and raised hands are free to move naturally and expressively; let the performance develop on its own instead of holding the initial pose. Motion starts immediately at normal real-time speed. Preserve the same person, striped clothing, setting, lighting, and framing. Keep the camera locked.\n\nAvoid: identity replacement, extra limbs or fingers, severe face or hand anatomy failure, abrupt cuts, scene changes, flicker, morphing, cartoon or CGI look",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "06ed40c09a47dbff48f7de523835332dde4c129f2e6e8fe9393e2f6a72c55a6a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "nAvvwkYJ1En3EMv5YXPN",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T15:44:08Z",
+  "completed_at": "2026-07-21T15:45:51Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/OpenRouter job nAvvwkYJ1En3EMv5YXPN failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "experiment_id": "portrait-permissive-v1"
+}

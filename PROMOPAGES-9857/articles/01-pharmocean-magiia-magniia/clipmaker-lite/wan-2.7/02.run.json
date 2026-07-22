@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-01-portrait-hands-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/wan-2.7/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Her tense reaction builds continuously: both hands tremble subtly and move a little closer to her face as her fingers curl tighter, her eyes dart briefly and then refocus on the camera, and her clenched expression intensifies before easing slightly near the end. Keep the camera fixed.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+        "source_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "0521bffa9ef802371ebc165bf542c19bb5fa86c9d97321c2c0724f6beb49efde",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "vbMNZQ2spMXzHCCTaAQs",
+  "submitted_at": "2026-07-22T16:21:26Z",
+  "completed_at": "2026-07-22T16:23:26Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4400591,
+    "sha256": "fb48c11542ae4bb23818ca71030b4a2fb414864be612508d6d544edcb5aea1dd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio does not match the Lite request",
+      "resolution does not match the Lite request",
+      "aspect_ratio does not match the Lite request"
+    ]
+  },
+  "error": null
+}

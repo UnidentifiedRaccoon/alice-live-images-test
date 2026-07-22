@@ -17,16 +17,23 @@
     "graphic_kinds": [],
     "camera_state": "A"
   },
+  "motion": {
+    "plan_id": "single-forepaw-step",
+    "action_complete_by_seconds": 1.8
+  },
   "prompt": {
-    "positive": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the gray tabby cat already midway out of the mint-green litter tray, with one front paw planted on the wooden floor, the other raised over the rim, and its hindquarters still supported inside the tray. Preserve the cat’s coat pattern, face, eyes, ears, whiskers, limb count and overlaps, the tray geometry, all background objects, the original composition and aspect ratio.\n\nThe first frame already shows the cat completing a careful step out of the tray. The cat gently lowers the raised front paw onto the floor beside the planted paw, shifts its weight forward slightly, then settles calmly with both front paws grounded while remaining partly inside the tray. Subtle breathing and a minimal natural ear adjustment accompany the same movement.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nNatural indoor lighting and colors, realistic feline anatomy and weight transfer, stable fur detail, coherent object geometry, smooth temporal consistency, photorealistic motion.",
-    "negative": "jumping, running, turning around, cat leaving the frame, full-body exit from the tray, large body movement, changed direction, changed species or coat pattern, invented hidden limbs, extra limbs, duplicated paws, warped legs, unnatural gait, broken paw-floor contact, changed tray shape, cat-tray intersection, moving background objects, camera drift, zoom, reframing, camera shake, flicker, morphing, motion smear, cartoon or CGI look"
+    "positive": "Motion begins immediately at normal real-time feline stepping speed. The cat’s raised front paw moves downward and slightly forward, and its pads contact the wooden floor within the first second. The shoulder and chest follow with one natural forward weight transfer completed by 1.8 seconds. No second step begins. The cat then pauses with both front paws grounded, its body still partly supported by the litter tray and its gaze toward frame right. Preserve the coat pattern, face, whiskers, visible limb count and overlaps, tray geometry, background, crop and composition. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Realistic momentum and ground contact, coherent feline anatomy, stable fur detail, smooth temporal consistency, photorealistic motion.",
+    "negative": "slow-motion pacing, time-stretched paw landing, delayed action, prolonged easing, second step, continued walking, jumping, turning around, cat leaving frame, changed direction, changed coat pattern, invented hidden limbs, extra limbs, duplicated paws, warped legs, unnatural gait, broken paw-floor contact, changed tray shape, moving background, camera drift, zoom, reframing, shake, flicker, morphing, motion smear",
+    "source_model_id": null,
+    "embed_negative_in_positive": false
   },
   "target": {
     "duration_seconds": 4,
     "resolution": "1080p",
     "aspect_ratio": "16:9",
     "generate_audio": false,
-    "seed": 9681
+    "seed": 9681,
+    "last_frame_is_source": false
   },
   "generator": "project clipmaker agent",
   "source_catalog": "PROMOPAGES-9857/video-prompts.json"

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/veo-3.1-lite/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Slowly push in as the woman takes a shallow inhale and her anxious tension steadily builds. Her raised fingers curl slightly tighter toward her face, her jaw clenches, and one eyelid gives a brief subtle twitch near the end. Keep it one continuous restrained reaction, ending at the peak of tension.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+        "source_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "ae9530fcb0a699162bb11ecdd8fdce87f7afc47d3b7efbda31da247eab5e2782",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "7yGkEaqKfGMGqxfEoFS6",
+  "submitted_at": "2026-07-22T16:23:30Z",
+  "completed_at": "2026-07-22T16:25:21Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4056919,
+    "sha256": "29ab24d9273eb88f826b1e41e72a579027fc3c37aae37c43918626e530fd6675"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null
+}

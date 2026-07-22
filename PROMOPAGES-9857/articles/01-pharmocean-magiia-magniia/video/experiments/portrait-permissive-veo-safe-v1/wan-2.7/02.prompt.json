@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "routing": {
+    "primary_class": "portrait_closeup",
+    "graphic_kind": null,
+    "graphic_kinds": [],
+    "camera_state": "A"
+  },
+  "motion": {
+    "plan_id": "open-generic-improvisation",
+    "action_complete_by_seconds": null
+  },
+  "prompt": {
+    "positive": "Create a photorealistic image-to-video continuation of the provided frame. Start exactly from the source image and let the visible moment develop naturally with expressive, coherent motion. Preserve the same person, clothing, setting, lighting, framing, and visual continuity. Keep the camera fixed. Use natural timing and realistic motion.",
+    "negative": "identity change, severe anatomy failure, cuts, scene changes, flicker, morphing, cartoon or CGI look",
+    "source_model_id": null,
+    "embed_negative_in_positive": true
+  },
+  "target": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "generate_audio": false,
+    "seed": 9681,
+    "last_frame_is_source": false
+  },
+  "generator": "project clipmaker agent",
+  "source_catalog": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-veo-safe-v1/experiment.json",
+  "experiment_id": "portrait-permissive-veo-safe-v1",
+  "experiment": {
+    "objective": "Test the most neutral permissive Veo wording after the shared v1 and v2 prompts produced filtered outputs.",
+    "shared_runtime_prompt_sha256": "0d3cf027f50bade6887a5e15afd5824ce0e05ce9cc8b773c05a571e3255d79c3",
+    "common_review_window_seconds": 3.2
+  }
+}

@@ -10,8 +10,8 @@
   "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/video/wan-2.7/09.mp4",
   "request": {
     "model": "alibaba/wan-2.7",
-    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the luxury indoor pool interior with the turquoise tiled water in the foreground, the existing narrow waterfall at frame left, rectilinear stone wall panels, the dense green wall, and the curved daybed with its cushions at frame right. Preserve the pool water level and tile grid, straight architectural lines, stone textures, foliage pattern, furniture placement, lighting, reflections, original composition, crop, and aspect ratio.\n\nThe first frame already shows a steady sheet of falling water. During the single continuous shot, the waterfall maintains its gentle downward flow and sends one small ripple outward across the nearby pool surface. By the final frames, the ripple has dissipated while the waterfall and the complete interior remain calm and unchanged. Existing underwater light reflections shimmer only slightly with the same water movement.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate a single-shot video. Natural lighting and colors, realistic water physics, coherent architectural geometry, smooth temporal consistency, stable fine details, photorealistic motion.",
-    "duration": 5,
+    "prompt": "A photorealistic image-to-video continuation of the provided pool interior. Preserve the exact stone panels, vertical living wall, turquoise tile grid, water level, daybed and cushions, lighting, reflections, crop and aspect ratio.\n\nMotion begins immediately at normal real-time speed under normal gravity. The existing waterfall remains a continuous downward sheet. Its impact produces one narrow ripple immediately; the ripple travels outward across the nearby pool, loses amplitude and completes its readable spread by 2 seconds. The waterfall continues at the same rate while the surrounding surface holds a low natural disturbance for the rest of the shot. Underwater reflections respond synchronously to the moving water.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate single shot. Realistic gravity, fluid momentum and light reflection, exact architectural geometry, smooth temporal consistency, photorealistic motion.",
+    "duration": 3,
     "resolution": "1080p",
     "aspect_ratio": "16:9",
     "seed": 9681,
@@ -29,32 +29,33 @@
       "options": {
         "atlas-cloud": {
           "parameters": {
-            "negative_prompt": "moving furniture, opening doors or drawers, added openings, changing room layout, warped stone panels, drifting verticals, altered green wall, moving daybed or cushions, changing water level, invented waves or splashes, reversed waterfall, incoherent reflections, new light source, changing shadow direction, camera movement, zoom, orbit, pan, tilt, reframing, crop, shake, flicker, morphing, duplication, disappearing objects, cartoon or CGI look"
+            "negative_prompt": "slow motion, time-stretched water, delayed ripple, waterfall stopping, surging or reversing, invented splashes, large waves, changing water level, moving furniture, changed room layout, warped stone panels, drifting verticals, altered tile grid, incoherent or delayed reflections, moving foliage, new light source, camera movement, zoom, reframing, crop, shake, flicker, morphing, duplication",
+            "prompt_extend": false
           }
         }
       }
     }
   },
-  "provider_job_id": "lEEyC7q0DIbzv1rZS5EK",
+  "provider_job_id": "9sDAd05X3ZwXPZtYuEgK",
   "provider_session_hash": null,
-  "submitted_at": "2026-07-21T11:58:32Z",
-  "completed_at": "2026-07-21T12:02:47Z",
+  "submitted_at": "2026-07-21T13:59:54Z",
+  "completed_at": "2026-07-21T14:01:10Z",
   "media": {
     "container": "mov,mp4,m4a,3gp,3g2,mj2",
     "codec": "h264",
-    "duration_seconds": 5.0,
+    "duration_seconds": 3.0,
     "width": 1920,
     "height": 1080,
     "fps": 30.0,
-    "frames": 150,
+    "frames": 90,
     "has_audio": true,
-    "bytes": 10013393,
-    "sha256": "d1d3d4709a1841f1c9703838ef350db306d5a55c7d85fee9669cd78b962c2a5c"
+    "bytes": 7827013,
+    "sha256": "282787b7bcc293d2247ed5d407cca027ea0046924ab7964d41558ce057e39c69"
   },
   "error": null,
   "contract_check": {
     "requested": {
-      "duration_seconds": 5,
+      "duration_seconds": 3,
       "resolution": "1080p",
       "generate_audio": false,
       "frames": null,
@@ -68,5 +69,7 @@
     "warnings": [
       "provider returned has_audio=True despite generate_audio=False"
     ]
-  }
+  },
+  "request_sha256": "a35a07a31c346298074ff75155fff6a5c8fbfaf2df4abb149c965e6c39fa8e37",
+  "request_fingerprint_version": 2
 }

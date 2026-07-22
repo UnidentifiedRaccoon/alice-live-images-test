@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-03-animal-step-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/veo-3.1-lite/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. The cat calmly completes its step out of the litter tray: the lowered front paw lands on the floor, its weight shifts forward, the other front paw follows, and it finishes standing relaxed beside the tray. Subtle head, whisker, and ear motion accompanies the smooth, unhurried movement in one continuous shot.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "source_sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3ce4f0edf21e5ce7b2173de5446a667c8d24dbf6921a2214af0e81cc96674981",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "LC6Kzt4hI7jHiixSZgwX",
+  "submitted_at": "2026-07-22T16:42:53Z",
+  "completed_at": "2026-07-22T16:44:48Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 5702273,
+    "sha256": "54d8d276cf78d50c4892187f762f1988547bd6fc09b6bbe1e7fb656c4837919d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null
+}

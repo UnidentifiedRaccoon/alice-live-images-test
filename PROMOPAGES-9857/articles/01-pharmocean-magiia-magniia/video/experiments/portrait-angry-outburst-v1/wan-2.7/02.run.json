@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.7/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Generate a single-shot video. Continue directly from the provided frame. Preserve the same woman, wide-eyed tense expression, raised brows, teeth-baring mouth, hairstyle, striped top, both raised claw-like hands, lighting, background, crop and aspect ratio. Motion starts immediately at normal real-time speed. She performs one sustained angry, frustrated outburst: she visibly yells while both hands shake simultaneously in fast, tight side-to-side wrist and forearm oscillations, staying within their original left and right areas beside her face. Her eyes and brows retain the same angry emotional sign, her fingers retain their claw curvature, and the hands never lower, cross or leave their areas. The synchronized shout and hand shaking form one causal action that peaks and completes by about 1.8 seconds. She finishes with both hands still raised and her face equally angry and frustrated, with no smile, friendliness, softening or calming. Hold that tense final state for the remaining frames. Keep the camera locked and the original composition stable. No zoom, orbit, pan, tilt or reframing. Natural expressive mechanics, coherent mouth and hand anatomy, stable identity and background, smooth temporal consistency, photorealistic motion.",
+    "duration": 3,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": false,
+            "negative_prompt": "weak or nearly static motion, smile, friendliness, emotional softening, calming down, emotional reversal, laughter, hands lowering or leaving their original areas, unsynchronized hand motion, large arm swings, changed claw-like hand pose, deformed hands, extra fingers, head turn, camera motion, zoom, pan, tilt, reframing, crop change, cuts, second scene, slow motion, time-stretched action, flicker, morphing, identity change, motion artifacts, CGI look"
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "e5f9ac28faff021ccda0e11d3436dae19d6110ae19e43bc1a5cdb27ccd79b1f5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "4pdDjJkXfQdDcQ3wIQ52",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T11:27:09Z",
+  "completed_at": "2026-07-22T11:28:35Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 90,
+    "has_audio": true,
+    "bytes": 3338784,
+    "sha256": "3bc02fa241f985e4165a12c62379cb13a446123a45c70326b12ca820b4d522d7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "error": null,
+  "experiment_id": "portrait-angry-outburst-v1"
+}

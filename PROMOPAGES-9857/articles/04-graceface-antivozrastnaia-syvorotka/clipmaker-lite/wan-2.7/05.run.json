@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-02-product-dropper-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/wan-2.7/05.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Keep the camera fixed. Clear serum slowly travels down the pipette and gathers into a rounded droplet at the tip; the droplet elongates under gravity, detaches near the end, and falls toward the cut truffle while the pipette and bottle remain still.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+        "source_sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f55671e1fbf5589f5808c1f64c214cced6bd0ce1b3e4338836da90c5a9c303fc",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "YNaiRojaJnv0YrDOtIZ9",
+  "submitted_at": "2026-07-22T16:25:23Z",
+  "completed_at": "2026-07-22T16:39:34Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1820,
+    "height": 1138,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1623035,
+    "sha256": "a26558f7c959f9501ff62d907fadb9cc185915305a625bb43ee602ab8099bd24"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio does not match the Lite request",
+      "resolution does not match the Lite request",
+      "aspect_ratio does not match the Lite request"
+    ]
+  },
+  "error": null
+}

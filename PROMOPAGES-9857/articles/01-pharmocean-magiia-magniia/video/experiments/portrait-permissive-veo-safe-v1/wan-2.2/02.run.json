@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-veo-safe-v1/wan-2.2/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-veo-safe-v1/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "prompt": "Create a photorealistic image-to-video continuation of the provided frame. Start exactly from the source image and let the visible moment develop naturally with expressive, coherent motion. Preserve the same person, clothing, setting, lighting, framing, and visual continuity. Keep the camera fixed. Use natural timing and realistic motion.\n\nAvoid: identity change, severe anatomy failure, cuts, scene changes, flicker, morphing, cartoon or CGI look"
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "2071f6ca5c8e0d826e1bff1e04a1d19f736b99ed0c2e748855dc96ba36d4cf23",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cb9ca9a352844bbaa0773d9a78a2eaf4",
+  "provider_session_hash": "promopages9856-5f4b8bd85cd9",
+  "submitted_at": "2026-07-21T16:05:33Z",
+  "completed_at": "2026-07-21T16:06:33Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 434104,
+    "sha256": "979f4ac511aea196edaa4ebc1dce6dc9258f51af97cbffcc63789e17d00f7fd0"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "experiment_id": "portrait-permissive-veo-safe-v1",
+  "generation_runner": "project Wan adapter fallback after bundled skill SSE connection reset"
+}

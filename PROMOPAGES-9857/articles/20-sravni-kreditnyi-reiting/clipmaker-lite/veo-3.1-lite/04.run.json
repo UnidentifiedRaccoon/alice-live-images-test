@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-05-finance-ui-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/veo-3.1-lite/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. Animate one smooth financial recalculation: the blue arc of the circular indicator grows clockwise from a short stroke to its displayed 15.8% length over four seconds, easing gently as it reaches the final position. The two blue checkmarks give a subtle synchronized confirmation pulse during the calculation. Keep all interface text and numbers stable and readable, ending on the source-image state.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+        "source_sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8fbd3b44af31ca31285eafd742a0cd186ae8db4cdc5a37d920b8846850764c34",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "ROr5FKmmLv7NcitC7YDr",
+  "submitted_at": "2026-07-22T16:49:36Z",
+  "completed_at": "2026-07-22T16:51:24Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 697326,
+    "sha256": "47db419f7251fcef80f134122c9e9445fa00c11f58c4fa95e5da96a58e283845"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null
+}

@@ -10,8 +10,8 @@
   "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/wan-2.7/03.mp4",
   "request": {
     "model": "alibaba/wan-2.7",
-    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the gray tabby-and-white cat halfway out of the pale green litter box, facing camera-right, with one front paw planted on the wooden floor and the other front paw suspended mid-step. Preserve the cat’s species, coat pattern, face, green eyes, ears, whiskers, all visible limbs and exact overlaps, natural paw contacts, the green box with its white rim, the gray covered box, the potted plant, the room, the original composition and aspect ratio.\n\nThe first frame already shows the cat in the final phase of one forward step, not preparing to jump. During the single continuous shot, the cat slowly lowers the raised front paw onto the wooden floor, transfers a small amount of weight forward, and stops. By the final frames, both front paws rest naturally on the floor near the litter box while the cat remains fully in frame in a calm, steady pose.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nSubtle natural breathing remains secondary to the completed step. Natural lighting and colors, realistic physics, coherent animal anatomy, smooth temporal consistency, stable fine details, photorealistic motion. Generate a single-shot video.",
-    "duration": 5,
+    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the gray tabby-and-white cat halfway out of the pale green litter box, facing frame right, with one front paw planted on the wooden floor and the other suspended mid-step. Preserve the coat pattern, face, eyes, ears, whiskers, visible limb count and overlaps, paw contacts, litter-box geometry, room, crop and aspect ratio.\n\nMotion begins immediately at normal real-time feline stepping speed. The raised front paw travels downward and slightly forward; its pads contact the wooden floor within the first second. The shoulder and chest follow the paw as one natural forward weight transfer completes by 1.8 seconds. No second step begins. The cat then pauses with both front paws grounded, its body still partly supported by the litter box and its gaze toward frame right.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate single shot. Realistic weight, momentum and ground contact, coherent feline anatomy, stable fur detail, smooth temporal consistency, photorealistic motion.",
+    "duration": 3,
     "resolution": "1080p",
     "aspect_ratio": "16:9",
     "seed": 9681,
@@ -29,32 +29,33 @@
       "options": {
         "atlas-cloud": {
           "parameters": {
-            "negative_prompt": "jumping, walking away or leaving frame, restarting or reversing the step, large body movement, changed species or coat pattern, altered face, invented hidden limbs, extra limbs, warped paws or legs, broken ground contact, unnatural gait, changed litter box, floating cat, fast camera motion, pan, zoom, reframing, crop, shake, flicker, morphing, duplication, disappearing objects, unfinished action, cartoon or CGI look"
+            "negative_prompt": "slow motion, time-stretched or delayed paw landing, prolonged easing, second step, continued walking, jumping, leaving frame, reversing direction, large head turn, changed coat pattern or face, invented hidden limbs, extra limbs, warped paws or legs, broken ground contact, floating cat, changed litter box, pan, zoom, reframing, crop, shake, flicker, morphing, duplication, motion artifacts",
+            "prompt_extend": false
           }
         }
       }
     }
   },
-  "provider_job_id": "zoqiXl3eqtMjTl3TojdL",
+  "provider_job_id": "RhB0kpCTWRCNubYIdeIq",
   "provider_session_hash": null,
-  "submitted_at": "2026-07-21T11:56:43Z",
-  "completed_at": "2026-07-21T11:58:30Z",
+  "submitted_at": "2026-07-21T13:52:40Z",
+  "completed_at": "2026-07-21T13:53:48Z",
   "media": {
     "container": "mov,mp4,m4a,3gp,3g2,mj2",
     "codec": "h264",
-    "duration_seconds": 5.0,
+    "duration_seconds": 3.0,
     "width": 2146,
     "height": 966,
     "fps": 30.0,
-    "frames": 150,
+    "frames": 90,
     "has_audio": true,
-    "bytes": 3022199,
-    "sha256": "8617982b3a4d0fac9df872d235a62767b53341e020803419e93dc5fa7e97f87a"
+    "bytes": 2341811,
+    "sha256": "56f4390ae98c46b4e73a05099ea1cc3939fa9679e37c1bc72c490cadf623c666"
   },
   "error": null,
   "contract_check": {
     "requested": {
-      "duration_seconds": 5,
+      "duration_seconds": 3,
       "resolution": "1080p",
       "generate_audio": false,
       "frames": null,
@@ -68,5 +69,7 @@
     "warnings": [
       "provider returned has_audio=True despite generate_audio=False"
     ]
-  }
+  },
+  "request_sha256": "e2634fb834392d409480febb7545a5089ebf441c1db8ae90bf5a5c601fba5c59",
+  "request_fingerprint_version": 2
 }
