@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import re
 import shutil
@@ -27,11 +28,21 @@ CONTRACT_PATH = Path("docs/agents/clipmaker-lite/contract.json")
 RUNNER_PATH = Path("scripts/clipmaker_lite_runner.py")
 AGENT_ID = "clipmaker-lite"
 RUNNER_ID = "clipmaker-lite-runner"
-RUNNER_VERSION = 2
+RUNNER_VERSION = 3
 FINGERPRINT_ALGORITHM = "clipmaker-lite-contract-v1"
 VERIFICATION_SCOPE = "trusted-workspace-route"
 OUTPUT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
-SUPPORTED_MODELS = ("alibaba/wan-2.7", "google/veo-3.1-lite")
+WAN_22_MODEL_ID = "alibaba/wan-2.2"
+SUPPORTED_MODELS = (
+    WAN_22_MODEL_ID,
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite",
+)
+MODEL_SPEC_PATHS = {
+    "alibaba/wan-2.2": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+    "alibaba/wan-2.7": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+    "google/veo-3.1-lite": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+}
 RUN_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SECRET_RE = re.compile(
@@ -279,21 +290,39 @@ def contract_file(root: Path, value: Any, label: str) -> tuple[Path, str, bytes]
 
 def validate_runtime(model_id: str, runtime: Any) -> dict[str, Any]:
     runtime = require_mapping(runtime, f"models.{model_id}.runtime")
+    common_keys = {
+        "duration_seconds",
+        "resolution",
+        "aspect_ratios",
+        "generate_audio",
+        "frame_inputs",
+        "provider",
+        "prompt_expansion",
+    }
+    wan_22_keys = {
+        "adapter",
+        "frames",
+        "fps",
+        "seed",
+        "loop",
+        "last_frame",
+        "negative_prompt_transport",
+    }
     require_exact_keys(
         runtime,
-        {
-            "duration_seconds",
-            "resolution",
-            "aspect_ratios",
-            "generate_audio",
-            "frame_inputs",
-            "provider",
-            "prompt_expansion",
-        },
+        common_keys | (wan_22_keys if model_id == WAN_22_MODEL_ID else set()),
         f"models.{model_id}.runtime",
     )
-    if not isinstance(runtime["duration_seconds"], int) or runtime["duration_seconds"] <= 0:
-        raise LiteRunnerError(f"models.{model_id}.runtime.duration_seconds must be a positive integer")
+    duration = runtime["duration_seconds"]
+    if (
+        isinstance(duration, bool)
+        or not isinstance(duration, (int, float))
+        or not math.isfinite(float(duration))
+        or duration <= 0
+    ):
+        raise LiteRunnerError(
+            f"models.{model_id}.runtime.duration_seconds must be a positive finite number"
+        )
     require_nonempty_string(runtime["resolution"], f"models.{model_id}.runtime.resolution")
     ratios = runtime["aspect_ratios"]
     if not isinstance(ratios, list) or not ratios or any(
@@ -309,19 +338,59 @@ def validate_runtime(model_id: str, runtime: Any) -> dict[str, Any]:
         runtime["prompt_expansion"],
         f"models.{model_id}.runtime.prompt_expansion",
     )
-    require_exact_keys(
-        expansion,
-        {"parameter", "value"},
-        f"models.{model_id}.runtime.prompt_expansion",
-    )
-    require_nonempty_string(
-        expansion["parameter"],
-        f"models.{model_id}.runtime.prompt_expansion.parameter",
-    )
-    if expansion["value"] is not True:
-        raise LiteRunnerError(
-            f"models.{model_id}.runtime.prompt_expansion.value must be true"
+    if model_id == WAN_22_MODEL_ID:
+        require_exact_keys(
+            expansion,
+            {"mode"},
+            f"models.{model_id}.runtime.prompt_expansion",
         )
+        if expansion["mode"] != "not_exposed":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.prompt_expansion.mode must be not_exposed"
+            )
+        require_nonempty_string(runtime["adapter"], f"models.{model_id}.runtime.adapter")
+        for key in ("frames", "fps"):
+            value = runtime[key]
+            if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+                raise LiteRunnerError(f"models.{model_id}.runtime.{key} must be a positive integer")
+        seed = runtime["seed"]
+        if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
+            raise LiteRunnerError(f"models.{model_id}.runtime.seed must be a non-negative integer")
+        if runtime["loop"] is not False:
+            raise LiteRunnerError(f"models.{model_id}.runtime.loop must be false")
+        if runtime["last_frame"] is not None:
+            raise LiteRunnerError(f"models.{model_id}.runtime.last_frame must be null")
+        negative_transport = require_mapping(
+            runtime["negative_prompt_transport"],
+            f"models.{model_id}.runtime.negative_prompt_transport",
+        )
+        require_exact_keys(
+            negative_transport,
+            {"mode", "separator"},
+            f"models.{model_id}.runtime.negative_prompt_transport",
+        )
+        if negative_transport["mode"] != "combined_prompt":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.negative_prompt_transport.mode must be combined_prompt"
+            )
+        if negative_transport["separator"] != "\n\nAvoid: ":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.negative_prompt_transport.separator is invalid"
+            )
+    else:
+        require_exact_keys(
+            expansion,
+            {"parameter", "value"},
+            f"models.{model_id}.runtime.prompt_expansion",
+        )
+        require_nonempty_string(
+            expansion["parameter"],
+            f"models.{model_id}.runtime.prompt_expansion.parameter",
+        )
+        if expansion["value"] is not True:
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.prompt_expansion.value must be true"
+            )
     return runtime
 
 
@@ -447,6 +516,10 @@ def load_contract(root: Path) -> dict[str, Any]:
     for model_id, model_value in models.items():
         model = require_mapping(model_value, f"models.{model_id}")
         require_exact_keys(model, {"spec_path", "spec_sha256", "runtime"}, f"models.{model_id}")
+        if model["spec_path"] != MODEL_SPEC_PATHS[model_id]:
+            raise LiteRunnerError(
+                f"models.{model_id}.spec_path must be exactly {MODEL_SPEC_PATHS[model_id]}"
+            )
         validate_runtime(model_id, model["runtime"])
     return contract
 
@@ -1574,7 +1647,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=SUPPORTED_MODELS,
         dest="models",
         default=[],
-        help="repeat to select models; defaults to both in canonical order",
+        help="repeat to select models; defaults to all in canonical order",
     )
     prepare.add_argument("--direction", help="optional user direction bound into the run provenance")
 

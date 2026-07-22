@@ -5,7 +5,7 @@ Checked: **2026-07-21**.
 ## Identity and clipmaker role
 
 - Project model identifier: `alibaba/wan-2.2`.
-- Intended use: legacy single-image, first-frame image-to-video generation for the short clipmaker contract.
+- Intended use: active internal single-image, first-frame image-to-video generation for the short clipmaker contract.
 - OpenRouter status: `alibaba/wan-2.2` is **absent** from the current video-model registry. Its endpoint metadata also cannot be resolved. Do not submit a paid OpenRouter request with this ID until it appears in the registry and its endpoint metadata has been checked again.
 - The exact current OpenRouter request parameters, provider route, prompt limits, and runtime are therefore **unverified**.
 
@@ -27,11 +27,11 @@ The existing clipmaker path must preserve this local runtime contract:
 | Last frame | Not supplied |
 | Looping | Disabled |
 
-The 97-frame contract belongs to the project's legacy runtime adapter. It is **not** a confirmed OpenRouter capability and is **not** a supported duration of Alibaba's direct hosted Wan 2.2 endpoints.
+The 97-frame contract belongs to the project's active internal `wan-streamlit` runtime adapter. It is **not** a confirmed OpenRouter capability and is **not** a supported duration of Alibaba's direct hosted Wan 2.2 endpoints.
 
 ## Input and request form
 
-Until OpenRouter lists the model, treat this as an internal adapter contract rather than an OpenRouter payload:
+Treat this as the active internal adapter contract rather than an OpenRouter payload:
 
 ```yaml
 model: alibaba/wan-2.2
@@ -84,7 +84,7 @@ Direct Alibaba input constraints are provider-specific: JPEG/JPG/PNG images, no 
 
 ## Prompt support and confirmed limits
 
-The clipmaker must continue returning both an English positive prompt and an English negative prompt. For the project's legacy adapter, enforcement limits are **unknown** because the current provider route is not documented here.
+The clipmaker must continue returning both an English positive prompt and an English negative prompt. For the project's internal adapter, enforcement limits are **unknown** because the current provider route does not expose them.
 
 For the direct Alibaba Wan 2.2 endpoints only:
 
@@ -93,7 +93,7 @@ For the direct Alibaba Wan 2.2 endpoints only:
 - `prompt_extend`: supported, with `true` as the documented default.
 - `seed`: supported in the range `0` to `2147483647`.
 
-Do not apply those direct-API limits to an unidentified legacy or future OpenRouter route without revalidation.
+Do not apply those direct-API limits to the active internal route or a future OpenRouter route without revalidation.
 
 ## Clipmaker guidance for the 3.2-second target
 
@@ -108,7 +108,7 @@ Do not apply those direct-API limits to an unidentified legacy or future OpenRou
 ## Unknown or provider-specific
 
 - OpenRouter availability, upstream provider, normalized fields, provider options, positive/negative limits, billing, and runtime: **unknown** for `alibaba/wan-2.2` as of the checked date.
-- The project's 97 frames at 30 fps and 720p are a local legacy contract, not current public-provider metadata.
+- The project's 97 frames at 30 fps and 720p are an active internal contract, not current public-provider metadata.
 - Alibaba direct endpoints are asynchronous and commonly take minutes depending on queue and load; this is not an SLA for the project route.
 - The open-source Wan 2.2 repository has its own checkpoints and inference settings. Those do not establish an OpenRouter contract.
 

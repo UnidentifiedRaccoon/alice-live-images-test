@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "agent_id": "clipmaker-lite",
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "loader_version": 1,
   "runner": {
     "runner_id": "clipmaker-lite-runner",
-    "runner_version": 2,
+    "runner_version": 3,
     "path": "scripts/clipmaker_lite_runner.py",
-    "sha256": "aa647fab11bd811fa2a09b81d0ddd0e7db1f5e6b12c484222239434cd77d1eba"
+    "sha256": "fcbb6cc8af2d1af6986c7e416bb8e2eda4197065f617472d5b1f855f9cf49a69"
   },
   "execution": {
     "executor_id": "codex-exec",
@@ -31,9 +31,38 @@
   },
   "base_instruction": {
     "path": "docs/agents/clipmaker-lite/README.md",
-    "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+    "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
   },
   "models": {
+    "alibaba/wan-2.2": {
+      "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+      "spec_sha256": "376e0e3723a2f138d72d9bba31433d3c8a6f1ef960ae3eeddce6c05908977ebf",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      }
+    },
     "alibaba/wan-2.7": {
       "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
       "spec_sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd",
