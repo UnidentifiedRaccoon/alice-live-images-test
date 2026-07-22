@@ -1,11 +1,24 @@
 # Project Agents
 
-This project has one registered working agent.
+This project has two registered working agents.
 
-## clipmaker
+## Required clipmaker routing
 
-Use the clipmaker agent when you need to create image-to-video prompts from a
-single input image for one explicitly selected model:
+The canonical agent IDs are `clipmaker-classic` and `clipmaker-lite`. Select one
+explicitly before clip planning; a model ID cannot select the agent because the
+routes overlap. If the request says only "clipmaker", ask which contract to use.
+
+Once selected, load only that agent's entry point and model specs. Unsupported
+models, missing inputs, contract mismatches and runner errors fail inside the
+selected route. Never fall back to the other clipmaker. An artifact counts as
+Lite only when the Lite runner writes it below `artifacts/clipmaker-lite/v1/`
+with `producer.agent_id: clipmaker-lite` and the runner's `provenance` command
+returns `verified: true`.
+
+## clipmaker-classic
+
+Use `clipmaker-classic` only when the user explicitly selects this agent ID for
+the existing routed and preservation-oriented workflow. It supports:
 
 - `alibaba/wan-2.2`;
 - `alibaba/wan-2.7`;
@@ -16,17 +29,21 @@ single input image for one explicitly selected model:
 - Scene routing: [docs/agents/clipmaker/scene-modules.md](docs/agents/clipmaker/scene-modules.md)
 - Prompt blocks and output format: [docs/agents/clipmaker/prompt-templates.md](docs/agents/clipmaker/prompt-templates.md)
 
-The clipmaker agent must load the selected model spec, start from visible image
-evidence, resolve one primary scene profile or use the explicit generic
-unresolved fallback, and infer one small completed action. Only a resolved
-`text_interface_collage` frame receives one active `graphic_kind` plus all
-independent visible `graphic_kinds`. Unresolved or conflicting graphic routing
-fails closed to a locked flat-raster hold without kind-specific action or
-negative clauses. The agent must select exactly one camera state A–E; Module A
-represents no camera motion, so modules are never combined or omitted. Unknown
-model IDs must fail closed; model durations and prompt limits must never be
-guessed or copied between models. Graphic routing must not assume masks, layers
-or editable source files.
+## clipmaker-lite
+
+Use `clipmaker-lite` only when the user explicitly selects this agent ID. It
+analyzes the image together with the article text and exact image position,
+prepares a short semantic scene brief, and plans each model independently.
+
+- Supported model IDs: `alibaba/wan-2.7`, `google/veo-3.1-lite`.
+- Entry point: [docs/agents/clipmaker-lite/README.md](docs/agents/clipmaker-lite/README.md)
+- Locked contract: [docs/agents/clipmaker-lite/contract.json](docs/agents/clipmaker-lite/contract.json)
+- Isolated runner: [scripts/clipmaker_lite_runner.py](scripts/clipmaker_lite_runner.py)
+
+Before analysis, the Lite runner must prepare the run and its exact instruction
+bundle. The runner then invokes an isolated Codex execution, captures its
+structured response and stamps the result. Do not author an external
+`draft.json`, write provenance/runtime manually, or bypass the execution receipt.
 
 ## Interface design
 
