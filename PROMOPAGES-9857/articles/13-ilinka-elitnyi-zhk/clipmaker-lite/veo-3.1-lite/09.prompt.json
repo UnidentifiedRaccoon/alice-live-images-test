@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-04-interior-water-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+    "sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+    "width": 1600,
+    "height": 900
+  },
+  "prompt": {
+    "positive": "Hold the camera fixed. The wall cascade flows steadily into the pool, sending gentle overlapping ripples across the water toward the foreground. Turquoise underwater light reflections shimmer and drift naturally over the tiled basin while a few leaves beside the cascade move almost imperceptibly in the humid air. The ripples broaden and settle into a calm, softly undulating surface near the end."
+  },
+  "target": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-04-interior-water-veo-3-1-lite/result.json",
+    "sha256": "2a2bbaa060281f62c0676a31f34872b7630b00fb31d6b0e21daa352dd329f31c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.1.1",
+      "contract_fingerprint": "sha256:aba91674c3f790da6982d93d7467c92317047b47ca93a60f151b219ced01c1d7",
+      "instruction_bundle_sha256": "780fedf4f85f5e0bb61d1b24695323d648d5e7bae3c294592c3b8eade3aa4c6c",
+      "source_image_sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+      "article_context_sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c"
+    }
+  }
+}

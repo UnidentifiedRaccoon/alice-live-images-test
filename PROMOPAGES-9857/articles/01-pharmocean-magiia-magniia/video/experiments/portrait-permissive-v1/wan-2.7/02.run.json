@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v1/wan-2.7/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v1/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Create a lively photorealistic continuation of this exact first frame. In one continuous shot, the woman has an intense spontaneous emotional reaction toward the camera. Her face, mouth, head, shoulders, and raised hands are free to move naturally and expressively; let the performance develop on its own instead of holding the initial pose. Motion starts immediately at normal real-time speed. Preserve the same person, striped clothing, setting, lighting, and framing. Keep the camera locked.\n\nAvoid: identity replacement, extra limbs or fingers, severe face or hand anatomy failure, abrupt cuts, scene changes, flicker, morphing, cartoon or CGI look",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": false
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "939f22baa07bc5eb1ab60b90b64b073b1abb528a2cdb2d4d4928763e7a4f4734",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "WOFJLb66CHcz6ynAr40z",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T15:40:34Z",
+  "completed_at": "2026-07-21T15:41:49Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5387084,
+    "sha256": "57c2fcf844dc3cce307d59f25c94e0af09897652663eb32b1555b7f6fce6d602"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "error": null,
+  "experiment_id": "portrait-permissive-v1"
+}

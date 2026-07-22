@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-veo-safe-v1/veo-3.1-lite/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-veo-safe-v1/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Create a photorealistic image-to-video continuation of the provided frame. Start exactly from the source image and let the visible moment develop naturally with expressive, coherent motion. Preserve the same person, clothing, setting, lighting, framing, and visual continuity. Keep the camera fixed. Use natural timing and realistic motion.\n\nAvoid: identity change, severe anatomy failure, cuts, scene changes, flicker, morphing, cartoon or CGI look",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "39a8e5a4adcb6f017f13f76cdc7ea4cb8bb1e5a22712302b418dbc75c16bbf27",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3imyNsUEPfC7ljTTEiIN",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T15:56:15Z",
+  "completed_at": "2026-07-21T15:58:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4219700,
+    "sha256": "c36c6a340ef0094d1ecccb34101cfc8e698dee92296476a6e6e4d6146e9e778f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "experiment_id": "portrait-permissive-veo-safe-v1"
+}

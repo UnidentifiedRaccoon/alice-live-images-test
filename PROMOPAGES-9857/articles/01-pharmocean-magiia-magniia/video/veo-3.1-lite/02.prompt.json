@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "routing": {
+    "primary_class": "portrait_closeup",
+    "graphic_kind": null,
+    "graphic_kinds": [],
+    "camera_state": "A"
+  },
+  "motion": {
+    "plan_id": "single-natural-blink",
+    "action_complete_by_seconds": 1.0
+  },
+  "prompt": {
+    "positive": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the centered tight close-up of a woman looking directly at the camera with wide blue-gray eyes, a clenched-teeth grimace, brown hair in a bun, and both splayed hands raised beside her cheeks. Preserve her exact identity, facial proportions, eye color and gaze, hairstyle, navy-and-white striped top, the anatomy and original positions of every visible finger, the softly blurred indoor background, lighting, crop, composition, and aspect ratio.\n\nThe first frame already shows a tense posed gesture, not the start of speech or a larger hand action. During the clip, she maintains the same expression and hand pose while completing one small natural blink. By the final frames, her eyes have returned to the same direct gaze and her face and hands are steady in their original positions.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nOnly subtle natural breathing is visible in her shoulders. Natural lighting and colors, realistic physics, coherent facial and hand anatomy, smooth temporal consistency, stable fine details, photorealistic motion.",
+    "negative": "Speaking, opening the mouth wider, exaggerated expression, large head turn, hands moving toward or away from the face, changed identity or facial proportions, asymmetric eyes, altered gaze, deformed hands, extra or missing fingers, fused fingers, changed hand pose, changed hairstyle, invented wind, altered striped clothing, automatic reframing, invented off-frame anatomy, camera drift or orbit, crop, zoom, shake, flicker, morphing, duplication, disappearing features, motion artifacts, unfinished action, cartoon or CGI look",
+    "source_model_id": "alibaba/wan-2.2",
+    "embed_negative_in_positive": true
+  },
+  "target": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "seed": 9681,
+    "last_frame_is_source": false
+  },
+  "generator": "project clipmaker agent",
+  "source_catalog": "PROMOPAGES-9857/video-prompts.json"
+}

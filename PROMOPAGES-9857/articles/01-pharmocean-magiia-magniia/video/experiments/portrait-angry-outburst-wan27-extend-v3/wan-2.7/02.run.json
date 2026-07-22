@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-wan27-extend-v3/wan-2.7/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-wan27-extend-v3/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Generate a single-shot video. Locked close-up from the exact input frame. The same visibly furious woman screams continuously at normal real-time speed and vigorously shakes both raised claw-like hands beside her face in fast repeated side-to-side motions. Her hands stay inside their original left and right frame areas and her fingers remain spread. She stays furious from the first through the final frame, never smiling or calming down. Keep her identity, clothing, camera, crop, background and lighting unchanged. Energetic natural motion, realistic mouth and hands, stable anatomy, photorealistic video.",
+    "duration": 3,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true,
+            "negative_prompt": "smile, laughter, cheerful or friendly expression, calming down, emotional softening or reversal, frozen hands, tiny or slow hand motion, weak performance, delayed action, hands lowering, crossing the face or leaving frame, closed fists, deformed hands, extra fingers, distorted mouth or teeth, identity change, camera movement, zoom, pan, tilt, reframing, cuts, second scene, slow motion, flicker, morphing, CGI look"
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "0b64d33c295363ddb279db0ede4d7a7009ac6fe1b6fa14e7cf80427ead7b9006",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "WlJQiXzWa9ujtEsunypu",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T11:37:12Z",
+  "completed_at": "2026-07-22T11:39:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 90,
+    "has_audio": true,
+    "bytes": 3146893,
+    "sha256": "5ef408a6c1cbd0aac6e0f7d255b5a00c50a696962816ded9c6fba017907ea919"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "error": null,
+  "experiment_id": "portrait-angry-outburst-wan27-extend-v3"
+}

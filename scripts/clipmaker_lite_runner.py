@@ -934,8 +934,8 @@ def draft_output_schema(job_id: str, selected_model_ids: list[str]) -> dict[str,
             "models",
         ],
         "properties": {
-            "schema_version": {"const": 1},
-            "job_id": {"const": job_id},
+            "schema_version": {"type": "integer", "const": 1},
+            "job_id": {"type": "string", "const": job_id},
             "image_reading": {
                 "type": "array",
                 "minItems": 1,

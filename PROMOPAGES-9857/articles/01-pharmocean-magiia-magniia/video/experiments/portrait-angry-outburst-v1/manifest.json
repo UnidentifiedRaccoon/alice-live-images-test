@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-angry-outburst-v1",
+  "updated_at": "2026-07-22T11:29:19Z",
+  "expected_outputs": 3,
+  "summary": {
+    "succeeded": 3
+  },
+  "outputs": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "target_duration_seconds": 3.2,
+      "status": "succeeded",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.2/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.2/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 473320,
+        "sha256": "356138ec4083dfa8b1b959ff1ce40c36b4d4e6bafb66a022e706a535af88016d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 3,
+      "status": "succeeded",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.7/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.7/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 90,
+        "has_audio": true,
+        "bytes": 3338784,
+        "sha256": "3bc02fa241f985e4165a12c62379cb13a446123a45c70326b12ca820b4d522d7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "target_duration_seconds": 4,
+      "status": "succeeded",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/veo-3.1-lite/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/veo-3.1-lite/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3606635,
+        "sha256": "e447fbc2c1869ba59b4a71bbc2677380c34dce6ea8849c65eed8351ad7b69984"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ],
+  "prompt_strategy": "model_specific",
+  "prompt_bundle_sha256_by_model": {
+    "alibaba/wan-2.2": "48b1c8623d728d44031c20fd040e0763a5a4196176700414eb8470d8612066d5",
+    "alibaba/wan-2.7": "b310c6a2a1a601cda25d15c2774aea261dfd36125731e5a9e80b950a2e8c129e",
+    "google/veo-3.1-lite": "b37e457a75e3ace1d7065491252e6ccd878016f72bf1aa7adfa486611d6ac5e6"
+  }
+}

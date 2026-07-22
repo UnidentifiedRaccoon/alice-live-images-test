@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v1/wan-2.2/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v1/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "prompt": "Create a lively photorealistic continuation of this exact first frame. In one continuous shot, the woman has an intense spontaneous emotional reaction toward the camera. Her face, mouth, head, shoulders, and raised hands are free to move naturally and expressively; let the performance develop on its own instead of holding the initial pose. Motion starts immediately at normal real-time speed. Preserve the same person, striped clothing, setting, lighting, and framing. Keep the camera locked.\n\nAvoid: identity replacement, extra limbs or fingers, severe face or hand anatomy failure, abrupt cuts, scene changes, flicker, morphing, cartoon or CGI look"
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "669f511a36f49023933a28d0c36b04788ddc967c86cd1b5f49e36e5f8ad6032a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "d78c61c15024487990d424ce406425c3",
+  "provider_session_hash": "promopages9856-a08feb7ce0bb",
+  "submitted_at": "2026-07-21T15:39:29Z",
+  "completed_at": "2026-07-21T15:41:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 426637,
+    "sha256": "5b2e84ee66d885ea84fa4a3ef9f0a52a740e5ec1f8220ee5f3903b9ddf83d8b4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "experiment_id": "portrait-permissive-v1",
+  "generation_runner": "project Wan adapter fallback after bundled skill SSE connection reset"
+}

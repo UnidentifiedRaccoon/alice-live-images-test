@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "routing": {
+    "primary_class": "portrait_closeup",
+    "graphic_kind": null,
+    "graphic_kinds": [],
+    "camera_state": "A"
+  },
+  "motion": {
+    "plan_id": "sustained-angry-outburst-provider-extended",
+    "action_complete_by_seconds": 2.6
+  },
+  "prompt": {
+    "positive": "Generate a single-shot video. Locked close-up from the exact input frame. The same visibly furious woman screams continuously at normal real-time speed and vigorously shakes both raised claw-like hands beside her face in fast repeated side-to-side motions. Her hands stay inside their original left and right frame areas and her fingers remain spread. She stays furious from the first through the final frame, never smiling or calming down. Keep her identity, clothing, camera, crop, background and lighting unchanged. Energetic natural motion, realistic mouth and hands, stable anatomy, photorealistic video.",
+    "negative": "smile, laughter, cheerful or friendly expression, calming down, emotional softening or reversal, frozen hands, tiny or slow hand motion, weak performance, delayed action, hands lowering, crossing the face or leaving frame, closed fists, deformed hands, extra fingers, distorted mouth or teeth, identity change, camera movement, zoom, pan, tilt, reframing, cuts, second scene, slow motion, flicker, morphing, CGI look",
+    "source_model_id": null,
+    "embed_negative_in_positive": false
+  },
+  "target": {
+    "duration_seconds": 3,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "generate_audio": false,
+    "seed": 9681,
+    "last_frame_is_source": false,
+    "prompt_extend": true
+  },
+  "generator": "project clipmaker agent",
+  "source_catalog": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-wan27-extend-v3/experiment.json",
+  "experiment_id": "portrait-angry-outburst-wan27-extend-v3",
+  "experiment": {
+    "objective": "Test a short motion-only Wan 2.7 prompt with provider prompt extension enabled after detailed controlled prompts suppressed hand motion or introduced facial drift.",
+    "prompt_strategy": "model_specific",
+    "prompt_bundle_sha256": "b3648388ccca311e2596120e3884df3c87fe7258bbea4da45582a59650eb3def",
+    "common_review_window_seconds": 3.0
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "05-finance-ui",
+  "image_id": "64d62e4f16755434abec9873",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/veo-3.1-lite/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The provided first and last frames are intentionally identical. Treat them as one static flat-raster screenshot, not a live interface, and keep every intermediate frame identical too. Hold the complete financial screen unchanged from first through last frame. Preserve every Russian glyph, monetary value, date, percentage, checked state, icon, credit-card row, donut-chart arc, spacing, panel boundary, crop and aspect ratio in the same visual registration. No interaction, data animation, chart fill, recomputation or content change occurs. Keep the camera locked with no reframing. Crisp stable typography, unchanged values, exact chart geometry, clean edges and smooth temporal consistency.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png"
+        },
+        "frame_type": "first_frame"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png"
+        },
+        "frame_type": "last_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "negativePrompt": "scrolling, clicking, typing, hover changes, changed UI state, invented controls, altered monetary values, moving cards, changed chart values, redrawn donut series, chart rebuild, rewritten or unreadable Russian text, warped glyphs, changed dates, moving checkboxes, reframing, zoom, pan, flicker, morphing, blurred edges, motion artifacts",
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "G2HTsf7C82us95hPvzEA",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T14:08:58Z",
+  "completed_at": "2026-07-21T14:10:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 666420,
+    "sha256": "bd596d665029a137123600f421ca9d0c9e7e013ed077be28aeabd511638c02d9"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "request_sha256": "39d6977046121609ff4aca5b2688ba8b1d89a5d1fa5f4f5da60438e0bf590eb0",
+  "request_fingerprint_version": 2
+}

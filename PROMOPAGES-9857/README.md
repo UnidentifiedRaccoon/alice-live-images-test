@@ -79,3 +79,123 @@ python3 scripts/verify_promo_images.py
 
 Успешная проверка завершается статусом `PASS`. Флаг `--write-report` дополнительно
 перезаписывает `articles/verification-report.json` актуальным результатом.
+
+## Пайплайн видео для PROMOPAGES-9856
+
+Для сравнения моделей выбраны ровно пять изображений из разных статей и разных
+визуальных классов:
+
+| Sample | Статья / файл | Проверяемый риск |
+| --- | --- | --- |
+| `01-portrait-hands` | `01-pharmocean-magiia-magniia/02.jpeg` | лицо, зубы и две кисти |
+| `02-product-dropper` | `04-graceface-antivozrastnaia-syvorotka/05.png` | этикетка, стекло и капля |
+| `03-animal-step` | `06-4lapy-koshachii-napolnitel/03.jpeg` | один завершённый шаг и лапы |
+| `04-interior-water` | `13-ilinka-elitnyi-zhk/09.png` | архитектурная геометрия и вода |
+| `05-finance-ui` | `20-sravni-kreditnyi-reiting/04.png` | неизменный UI и читаемый текст |
+
+Исходный отбор зафиксирован в `video-samples.json`, а 15 проверенных prompt-пар
+для точной матрицы 5 × 3 — в `video-prompts.json`. Промпты подготовлены через
+проектный clipmaker с отдельным model spec для `alibaba/wan-2.2`,
+`alibaba/wan-2.7` и `google/veo-3.1-lite`.
+
+CLI валидирует полный декартов набор, SHA-256 исходников и модельные ограничения,
+после чего материализует артефакты рядом с каждой статьёй:
+
+```text
+articles/<article>/video/<model>/<image>.prompt.json
+articles/<article>/video/<model>/<image>.run.json
+articles/<article>/video/<model>/<image>.mp4
+```
+
+Общий статус всех 15 запусков хранится в `video-generation-manifest.json`.
+`run.json` содержит только безопасный request preview, provider job ID, статус,
+результат `ffprobe` и явную сверку факта с модельным контрактом;
+OAuth-заголовки и временные download URL не записываются. Сырой MP4 провайдера
+не ремультиплексируется: если endpoint проигнорировал `generate_audio: false`,
+это остаётся видимым в `media.has_audio` и `contract_check.warnings`.
+Ручной keyframe-аудит результата и обнаруженные нарушения prompt fidelity
+описаны в `video-generation-review.md`.
+Разбор причины замедленного движения и контракт real-time cadence для второй
+итерации находятся в `video-prompt-audit.md`.
+
+### Команды
+
+Из корня репозитория:
+
+```bash
+# Проверить каталоги и создать 15 prompt/run-пар.
+python3 scripts/video_generation_pipeline.py plan
+
+# Проверить точные provider payload без сетевых и платных запросов.
+python3 scripts/video_generation_pipeline.py run --dry-run
+
+# Реальная последовательная генерация всей матрицы или выбранной части.
+python3 scripts/video_generation_pipeline.py run
+python3 scripts/video_generation_pipeline.py run \
+  --sample 03-animal-step \
+  --model alibaba/wan-2.7
+
+# Повторный запуск продолжает сохранённые асинхронные job и пропускает готовые MP4
+# только при совпадении fingerprint provider request и SHA-256 source. Изменённый
+# prompt или source помечает старый output как stale; --force нужен для
+# сознательной повторной платной генерации. Смена API base URL сама по себе в
+# fingerprint не входит и также требует явного --force для новой генерации.
+python3 scripts/video_generation_pipeline.py verify
+```
+
+До завершения всей матрицы для проверки структуры можно использовать
+`verify --allow-incomplete`.
+
+Wan 2.2 отправляется во внутреннюю Gradio-демку с контрактом 97 кадров / 30 fps /
+720p. После temporal A/B базовая длительность Wan 2.7 для четырёх comparison-
+клипов равна нативным 3 секундам / 90 кадрам / 30 fps. Отдельный дословный
+portrait replay использует нативные 5 секунд / 150 кадров / 30 fps по условию
+эксперимента; это provider output, а не локальное растяжение или обрезка. Veo
+остаётся на нативных 4 секундах / 96 кадрах / 24 fps. В portrait replay обе
+модели получают только `first_frame` и один и тот же combined Wan 2.2 prompt.
+Поддерживаемый `last_frame` сейчас используется только для Veo flat hold;
+совпадение endpoints не считается гарантией статичных промежуточных кадров.
+Wan 2.7 и Veo 3.1 Lite отправляются в OpenRouter API через Eliza; нужен
+`ELIZA_OAUTH_TOKEN`, `ELIZA_TOKEN` либо уже настроенный
+`ANTHROPIC_AUTH_TOKEN`. По умолчанию используется
+`https://api.eliza.yandex.net/openrouter/v1`; адрес можно переопределить через
+`ELIZA_OPENROUTER_BASE_URL`. Пайплайн передаёт `X-Retries: 1`, скачивает MP4
+через авторизованный Eliza content endpoint и отключает AtlasCloud
+`prompt_extend` для Wan 2.7 по умолчанию. Изолированный experiment может явно
+включить его для короткого exploratory prompt; значение сохраняется в prompt-
+артефакте и входит в fingerprint фактического provider request. Живой
+Google/Veo route принудительно требует
+`enhancePrompt: true` и отклоняет `false`, поэтому переписывание Veo остаётся
+явно зафиксированным ограничением сравнения. Перед реальным запуском нужно
+перепроверить актуальные model metadata и стоимость: `run` создаёт внешние
+асинхронные jobs.
+
+Тесты пайплайна не делают сетевых запросов:
+
+```bash
+python3 -m unittest scripts/test_video_generation_pipeline.py
+```
+
+### Изолированные portrait experiments
+
+Model-specific итерации по женщине не меняют canonical `video/<model>/02.*` и
+живут в `articles/01-pharmocean-magiia-magniia/video/experiments/<experiment-id>/`.
+Каталог поддерживает общий combined prompt для controlled replay и отдельный
+`model_prompt` для нативного prompting каждой модели. Пример полного цикла:
+
+```bash
+python3 scripts/run_portrait_improvisation_experiment.py \
+  --catalog PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/experiment.json \
+  plan
+
+python3 scripts/run_portrait_improvisation_experiment.py \
+  --catalog PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/experiment.json \
+  run --dry-run
+
+python3 scripts/run_portrait_improvisation_experiment.py \
+  --catalog PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/experiment.json \
+  verify
+```
+
+Результаты итерации и два Wan 2.7 A/B-варианта разобраны в
+[`portrait-angry-outburst-v1/review.md`](articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/review.md).

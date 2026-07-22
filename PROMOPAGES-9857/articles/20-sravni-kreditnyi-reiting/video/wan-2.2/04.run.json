@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "05-finance-ui",
+  "image_id": "64d62e4f16755434abec9873",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/wan-2.2/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "prompt": "A faithful image-to-video continuation of the provided flat raster financial interface. Start exactly from the complete first frame. Preserve all readable Cyrillic text, the “Финансовый потенциал” header, every number and currency symbol, the 15.8% circular chart, the loan and income values, both selected credit-card rows, their amounts and dates, the blue checkboxes, icons, spacing, alignment and panel geometry in exact visual registration, together with the original layout, crop and aspect ratio. The content and state already shown remain unchanged. During the clip, hold the entire interface and chart completely steady without control activation, data animation or content change. By the final frames, the same UI state and chart geometry remain fully settled and stable. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Maintain crisp stable typography, unchanged values, exact circular-chart geometry, clean edges and smooth temporal consistency.\n\nAvoid: scrolling, clicking, typing, hover changes, changed UI state, invented controls, moving cards, chart fill animation, rescaled chart, redrawn ring segments, chart rebuild, rewritten or unreadable text, altered numbers, changed selection, missing icons, warped layout, zoom, pan, reframing, crop, flicker, morphing, duplicated elements, motion artifacts"
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "provider_job_id": "1087e066c82648d081668c068404e391",
+  "provider_session_hash": "promopages9856-54702de25e48",
+  "submitted_at": "2026-07-21T11:59:06Z",
+  "completed_at": "2026-07-21T12:00:44Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1216,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 291772,
+    "sha256": "769c53ba4aa70c05d4b5d5abc3dee1dddd942a74c84b8c5cbb3cd02b5851301d"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "request_sha256": "f44326aacadc159a7e758baf48a32f913867fdd1b1c52ed699db992785430b0b",
+  "request_fingerprint_version": 2
+}

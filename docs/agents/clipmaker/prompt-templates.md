@@ -54,9 +54,24 @@ identity, clothing, object type, or background to another workflow.
 
 Infer one small, physically plausible action that starts from the exact visible
 state and reaches a settled state within the selected spec's target duration.
-For a dynamic pose, animate only the final phase already in progress. For a
-still or fragile scene, prefer subtle settling over a new event. Extra duration
-is reserved for natural pacing and settling, not another story beat.
+Resolve one shared motion plan for the image before model-specific composition:
+the action, direction, amplitude, physical cause, completed state, camera state,
+and secondary motion stay the same across supported models. A model spec may
+change wording, density and timing syntax, but it must not silently replace a
+blink with breathing or a visible step with a vague settle. For a dynamic pose,
+animate only the final phase already in progress. For a still or fragile scene,
+prefer subtle settling over a new event. Extra duration expands the final hold;
+never use it to time-stretch a familiar real-world action unless the user asked
+for slow motion. A model spec may choose a shorter provider-supported native
+duration after a measured temporal-calibration A/B; never substitute an
+unverified `speed`, `fps` or motion-strength field.
+
+When the correct completed state is literally the source frame and the selected
+model spec confirms last-frame input, the runtime may reuse the source as the
+last frame. State that the endpoints are intentionally identical. Use this for
+reversible beats or a locked flat-raster hold, not for an action whose final
+state should differ. Endpoint equality does not guarantee static intermediate
+frames, so verify the rendered clip.
 
 Select exactly one canonical camera state A-E and use the least active module
 that serves the image. Module A explicitly means no camera motion. Use it for
@@ -87,6 +102,19 @@ character limit over the complete body.
 
 Runtime settings are supplied separately unless the selected spec or interface
 explicitly requires them in the prompt.
+
+Controlled cross-model prompt replay is an explicit evaluation mode, not normal
+prompt authoring. Enter it only when the user asks to run another model with the
+same already-materialized prompt. Copy the source model's Positive and Negative
+text byte-for-byte, record the source model ID, and preserve the source request's
+single combined transport as `Positive + "\n\nAvoid: " + Negative`. Do not add
+model-specific prose or a duration suffix unless the user explicitly requests
+one. Use the target model's supported native duration and never trim or retime
+the result. Do not add a last-frame input that was absent from the source run.
+Keep unavoidable target-adapter parameters explicit: for example,
+`prompt_extend: false` for the controlled Wan 2.7 route and the required
+`enhancePrompt: true` for Veo. Report provider-side rewriting as a confounder;
+identical submitted text does not imply identical inference.
 
 For flat graphics, classification alone never invents an animation intent.
 Valid direction must name a visible target and one operation allowed by its
@@ -169,8 +197,9 @@ exactly from [subject, visible state and scene]. Preserve [identity and key
 anchors], the original composition and aspect ratio.
 
 The first frame already shows [correct phase or interpretation]. During the
-clip, [one small physically plausible action]. By the final frames, [clear calm
-finished state].
+clip, motion begins immediately at normal real-time speed. [One small physically
+plausible action] completes by about [model-specific early completion time]. By
+the final frames, [clear calm finished state held for the rest of the shot].
 
 [One canonical camera module.]
 

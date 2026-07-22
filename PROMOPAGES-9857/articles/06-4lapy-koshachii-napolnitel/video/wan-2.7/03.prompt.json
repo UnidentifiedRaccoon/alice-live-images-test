@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "03-animal-step",
+  "image_id": "69a18ff37db58169c78ff2ae",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+    "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+    "width": 1000,
+    "height": 450
+  },
+  "routing": {
+    "primary_class": "animal",
+    "graphic_kind": null,
+    "graphic_kinds": [],
+    "camera_state": "A"
+  },
+  "motion": {
+    "plan_id": "single-forepaw-step",
+    "action_complete_by_seconds": 1.8
+  },
+  "prompt": {
+    "positive": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the gray tabby-and-white cat halfway out of the pale green litter box, facing frame right, with one front paw planted on the wooden floor and the other suspended mid-step. Preserve the coat pattern, face, eyes, ears, whiskers, visible limb count and overlaps, paw contacts, litter-box geometry, room, crop and aspect ratio.\n\nMotion begins immediately at normal real-time feline stepping speed. The raised front paw travels downward and slightly forward; its pads contact the wooden floor within the first second. The shoulder and chest follow the paw as one natural forward weight transfer completes by 1.8 seconds. No second step begins. The cat then pauses with both front paws grounded, its body still partly supported by the litter box and its gaze toward frame right.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nGenerate single shot. Realistic weight, momentum and ground contact, coherent feline anatomy, stable fur detail, smooth temporal consistency, photorealistic motion.",
+    "negative": "slow motion, time-stretched or delayed paw landing, prolonged easing, second step, continued walking, jumping, leaving frame, reversing direction, large head turn, changed coat pattern or face, invented hidden limbs, extra limbs, warped paws or legs, broken ground contact, floating cat, changed litter box, pan, zoom, reframing, crop, shake, flicker, morphing, duplication, motion artifacts",
+    "source_model_id": null,
+    "embed_negative_in_positive": false
+  },
+  "target": {
+    "duration_seconds": 3,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "seed": 9681,
+    "last_frame_is_source": false
+  },
+  "generator": "project clipmaker agent",
+  "source_catalog": "PROMOPAGES-9857/video-prompts.json"
+}

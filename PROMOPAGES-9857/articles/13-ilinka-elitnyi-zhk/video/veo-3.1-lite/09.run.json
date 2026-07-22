@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "04-interior-water",
+  "image_id": "648b2cd91acddb2339310767",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/video/veo-3.1-lite/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/video/veo-3.1-lite/09.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Motion begins immediately at normal real-time speed under normal gravity. The existing waterfall remains a continuous downward sheet. Its impact produces one narrow ripple immediately; the ripple travels outward across the nearby pool and loses amplitude after completing its readable spread by 2 seconds. The waterfall continues at the same rate for the rest of the shot, and underwater reflections respond synchronously to the water. Preserve the water level, turquoise tile grid, straight stone panels, vertical living wall, daybed and cushions, lighting, crop and composition. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Realistic fluid momentum and reflections, exact architectural geometry, smooth temporal consistency, photorealistic motion.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "negativePrompt": "slow-motion water, time-stretched flow, delayed ripple, waterfall stopping, surging or reversing, invented splashes, large waves, changing water level, moving furniture, changed room layout, warped stone panels, bent verticals, altered tile grid, changing foliage, incoherent or delayed reflections, new light sources, camera movement, reframing, shake, flicker, morphing",
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "gZnwvMoKmXFOXR0DYsdP",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T13:30:59Z",
+  "completed_at": "2026-07-21T13:33:33Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 14732524,
+    "sha256": "4f48a160dea4b62e1d885f78c958b32442b933143c664365ba824fc3864c6030"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "request_sha256": "7399bdd1b0115282302c24ad01ffea9ba210ce786e779043da9829ec82a95fcb",
+  "request_fingerprint_version": 2
+}

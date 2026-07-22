@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-schemafix-02-product-dropper-veo-3-1-lite",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "d510b2c1db77796d9b934b86fdd270126e67bf8411d5a1809d18542a7cb5a237",
+    "contract_fingerprint": "sha256:aba91674c3f790da6982d93d7467c92317047b47ca93a60f151b219ced01c1d7",
+    "instruction_bundle_sha256": "780fedf4f85f5e0bb61d1b24695323d648d5e7bae3c294592c3b8eade3aa4c6c",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "64a21ed539607f97bfe2d9617059c629a7079775e1bd7f994a14028e0b8e00cf"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ],
+    "inputs_sha256": "sha256:4da4d32e06ab552ebd2e4d3e7a99fe08e4fe25cad11cb564956287b44ec7a0c8",
+    "execution_fingerprint": "sha256:26ff7952bbf53fe43af19a4ae46f696c624e5696a9fbe7f31787e240e06e9734",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8a92-a395-7d33-8348-16327e24d1d1"
+    },
+    "authored_payload_sha256": "813c241034f887a7c9d2a08189356c65677308045c1567ef5771509b54c93b53",
+    "draft_file_sha256": "e2d15b0c464e48df766f693c62cfa719366de027d3f7058aa26a2ebc1d20bddf"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+      "bytes": 520650
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/04-graceface-antivozrastnaia-syvorotka/content.json",
+      "sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084",
+      "bytes": 17735,
+      "locator": {
+        "article_id": "04-graceface-antivozrastnaia-syvorotka",
+        "title": "Нашла лучшую антивозрастную сыворотку за смешные деньги",
+        "lead": "Теперь точно куплю в подарок маме.\nКак это ни обидно, мы все стареем. С возрастом приходится усиленно бороться за свою красоту. Кто-то начинает раньше, кто-то позже.\nПримерно до 37-38 лет я даже не думала, что меня тоже коснётся проблема старения. Дело в том, что у женщин моей семьи – отличная генетика. Бабушка всегда выглядела гораздо моложе своих лет (и у неё даже в возрасте за 80 были",
+        "image_id": "05",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.png",
+        "manifest_file_path": "articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "И совершенно случайно, во время сёрфинга по маркептплейсам, наткнулась на трюфельную сыворотку другого производителя. Вот она."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Омолаживающая сыворотка для лица с трюфелем от GRACEFACE привлекла внимание сразу по трём пунктам. Первый – разрекламированный трюфель в составе. Второй – красивый стеклянный флакон с пипеткой, выглядит дорого-богато. И третий – цена."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Матовый стеклянный флакон сыворотки стоит открытым; над ним по диагонали расположена пипетка с прозрачной жидкостью.",
+      "На кончике пипетки уже висит сформированная капля, поэтому естественное движение может продолжить именно её физическое поведение.",
+      "Рядом лежат целый и разрезанный чёрный трюфель, связывающие продукт с главным ингредиентом; композиция и остальные предметы статичны."
+    ],
+    "article_context": "Это body-изображение сразу после описания консистенции сыворотки — нежной, умеренно вязкой и полупрозрачной — и перед рассказом о хорошей переносимости кожей. Его функция — наглядно показать текстуру средства и одновременно подчеркнуть презентабельный флакон с трюфельным компонентом.",
+    "base_scene": "Открытый флакон и наклонённая над ним пипетка остаются центром предметной композиции. Капля прозрачной сыворотки на кончике постепенно набирает вес, вытягивается и отделяется, визуально раскрывая умеренную вязкость продукта."
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "В течение четырёх секунд камера выполняет очень медленный push-in к кончику пипетки. Капля постепенно увеличивается и вытягивается под собственным весом, демонстрируя вязкость; ближе к финалу она плавно отделяется и падает к белой поверхности, оставляя на кончике маленькую новую бусину. Флакон и трюфели остаются неподвижными.",
+      "positive_prompt": "A very slow push-in toward the pipette tip. The clear serum droplet gradually swells and stretches under gravity, then detaches near the end and falls smoothly toward the white surface while a tiny bead remains on the tip. Single continuous shot.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:377d3b5b39d11dfae100fec92785d47cd6fb69774c5ca50a6d2041b52f965de8"
+    }
+  ]
+}

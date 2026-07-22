@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-schemafix-03-animal-step-wan-2-7",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "d510b2c1db77796d9b934b86fdd270126e67bf8411d5a1809d18542a7cb5a237",
+    "contract_fingerprint": "sha256:28629c6d69267404200147e067c56c71c2ec80d2073c0f8ab1f1be49988d434d",
+    "instruction_bundle_sha256": "a88db35f7a4c3d7ab2aa0fb32ea01804a8d404e2b4f3e46728bb621ff5884d5f",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "64a21ed539607f97bfe2d9617059c629a7079775e1bd7f994a14028e0b8e00cf"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:fdcc2192887b65fcf5ffa20b37edc9ed05bbc249cf36d8d36a826f2a78125915",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "bytes": 301450
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "03",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "Если у вас дома живёт несколько кошек, выбирайте впитывающий наполнитель. Главное, помните, что лоток нужно регулярно чистить. Это не даст размножаться вредным бактериям",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "current_heading": {
+          "block_index": 11,
+          "level": 3,
+          "text": "Совет №3. Регулярно меняйте наполнитель в лотке"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "Независимо от типа наполнителя, раз в месяц обязательно проводите полную уборку и дезинфекцию лотка. Помните, что кошки — чистюли, и грязный лоток может стать причиной отказа от него."
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "heading",
+          "text": "Совет №4. Используйте силикагелевые наполнители"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:a71422802c458239015bc362ceb86cdff289417e2bac2bc685547fc1bea60a2b"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-03-animal-step-wan-2-7/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-03-animal-step-wan-2-7/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-03-animal-step-wan-2-7/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-03-animal-step-wan-2-7/result.json"
+  }
+}

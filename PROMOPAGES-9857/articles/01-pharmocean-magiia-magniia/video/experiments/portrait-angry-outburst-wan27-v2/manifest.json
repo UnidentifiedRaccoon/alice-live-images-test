@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-angry-outburst-wan27-v2",
+  "updated_at": "2026-07-22T11:34:36Z",
+  "expected_outputs": 1,
+  "summary": {
+    "succeeded": 1
+  },
+  "outputs": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 3,
+      "status": "succeeded",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-wan27-v2/wan-2.7/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-wan27-v2/wan-2.7/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-wan27-v2/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 90,
+        "has_audio": true,
+        "bytes": 3498114,
+        "sha256": "db8d104fe6117be5ae350327a02117745f3bcb28eec21903fc3a2be8129f077e"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": null
+    }
+  ],
+  "prompt_strategy": "model_specific",
+  "prompt_bundle_sha256_by_model": {
+    "alibaba/wan-2.7": "d736fc27894f466240c95629b77d5834435d38f99e5444565e7611c001a740e9"
+  }
+}

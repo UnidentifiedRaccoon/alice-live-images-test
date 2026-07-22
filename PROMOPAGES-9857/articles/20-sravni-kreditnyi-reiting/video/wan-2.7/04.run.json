@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "05-finance-ui",
+  "image_id": "64d62e4f16755434abec9873",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/wan-2.7/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/video/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Treat the provided frame as one static flat-raster screenshot, not a live interface. Hold the complete financial screen unchanged from the first frame through the final frame. Preserve every Russian glyph, ruble amount, date, percentage, checked state, icon, credit-card row, ring-chart arc, spacing, panel boundary, crop and aspect ratio in the same visual registration. No interaction, data animation, chart fill, recomputation or content change occurs. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Use crisp stable typography, unchanged values, exact chart geometry, clean edges and smooth temporal consistency. Generate single shot.",
+    "duration": 3,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "negative_prompt": "interface interaction or data animation, scrolling, clicking, typing, hover changes, changed UI state, invented controls, altered values, moving cards, changed chart values, redrawn chart ring, moving chart segment, altered chart label, rewritten or unreadable Russian text, warped numbers or currency symbols, moving panels, local parallax, zoom, pan, reframing, crop, flicker, morphing, unstable edges",
+            "prompt_extend": false
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "jWDK6PPJStTctLG8UORH",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T14:01:12Z",
+  "completed_at": "2026-07-21T14:02:24Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.0,
+    "width": 1858,
+    "height": 1116,
+    "fps": 30.0,
+    "frames": 90,
+    "has_audio": true,
+    "bytes": 865049,
+    "sha256": "41e39c27e757baa02de651680860bbd60918c8d3ff5ca5fca30ce6a1ceedd75e"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "request_sha256": "0a7a16d6e873db3bcc40f7cfc071af10a0d252106e253926a6c35387665a7e2a",
+  "request_fingerprint_version": 2
+}

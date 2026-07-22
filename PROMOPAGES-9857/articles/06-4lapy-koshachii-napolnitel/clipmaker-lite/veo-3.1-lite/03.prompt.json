@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-03-animal-step-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+    "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+    "width": 1000,
+    "height": 450
+  },
+  "prompt": {
+    "positive": "Fixed camera. The cat calmly completes its step out of the litter tray: the lowered front paw lands on the floor, its weight shifts forward, the other front paw follows, and it finishes standing relaxed beside the tray. Subtle head, whisker, and ear motion accompanies the smooth, unhurried movement in one continuous shot."
+  },
+  "target": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-03-animal-step-veo-3-1-lite/result.json",
+    "sha256": "012935700e0062e3082975fe8a13716b752d66acbd5ca9a750e374087e85e940",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.1.1",
+      "contract_fingerprint": "sha256:aba91674c3f790da6982d93d7467c92317047b47ca93a60f151b219ced01c1d7",
+      "instruction_bundle_sha256": "780fedf4f85f5e0bb61d1b24695323d648d5e7bae3c294592c3b8eade3aa4c6c",
+      "source_image_sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "article_context_sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a"
+    }
+  }
+}

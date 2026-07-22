@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "d510b2c1db77796d9b934b86fdd270126e67bf8411d5a1809d18542a7cb5a237",
+    "contract_fingerprint": "sha256:aba91674c3f790da6982d93d7467c92317047b47ca93a60f151b219ced01c1d7",
+    "instruction_bundle_sha256": "780fedf4f85f5e0bb61d1b24695323d648d5e7bae3c294592c3b8eade3aa4c6c",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "64a21ed539607f97bfe2d9617059c629a7079775e1bd7f994a14028e0b8e00cf"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:b0d695c2333c4d21d4475ba2c840eee694ccd6ec19188eafca25991ae1979891",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "bytes": 2536062
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/01-pharmocean-magiia-magniia/content.json",
+      "sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a",
+      "bytes": 27038,
+      "locator": {
+        "article_id": "01-pharmocean-magiia-magniia",
+        "title": "Магия Магния",
+        "lead": "Зачем нужен магний, каким бывает и какой магний лучше",
+        "image_id": "02",
+        "block_index": 3,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/01-pharmocean-magiia-magniia/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 2,
+          "type": "paragraph",
+          "text": "Магний традиционно считается «витамином от стресса», однако помимо успокаивающего и расслабляющего эффекта этот незаменимый макроэлемент взвалил на себя тысячу обязанностей: он участвует в создании ДНК, производстве белка, превращении еды в энергию, регуляции количества сахара в крови, контроле артериального давления, сокращении мышц, в том числе сердечных и выработке гормонов."
+        },
+        "nearest_text_after": {
+          "block_index": 4,
+          "type": "paragraph",
+          "text": "И это далеко не полный перечень его многочисленных функций!"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:377d3b5b39d11dfae100fec92785d47cd6fb69774c5ca50a6d2041b52f965de8"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite/result.json"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "prompt": {
+    "positive": "Slowly push in as the woman takes a shallow inhale and her anxious tension steadily builds. Her raised fingers curl slightly tighter toward her face, her jaw clenches, and one eyelid gives a brief subtle twitch near the end. Keep it one continuous restrained reaction, ending at the peak of tension."
+  },
+  "target": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-01-portrait-hands-veo-3-1-lite/result.json",
+    "sha256": "b18a75356708f958105f82567579e852b48b22095e18e92e25a1e3108582e651",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.1.1",
+      "contract_fingerprint": "sha256:aba91674c3f790da6982d93d7467c92317047b47ca93a60f151b219ced01c1d7",
+      "instruction_bundle_sha256": "780fedf4f85f5e0bb61d1b24695323d648d5e7bae3c294592c3b8eade3aa4c6c",
+      "source_image_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "article_context_sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a"
+    }
+  }
+}

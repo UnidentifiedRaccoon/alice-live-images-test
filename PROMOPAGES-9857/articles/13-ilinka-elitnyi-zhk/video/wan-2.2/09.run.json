@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "04-interior-water",
+  "image_id": "648b2cd91acddb2339310767",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/video/wan-2.2/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/video/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the frontal luxury pool interior with the vertical water curtain already falling into the turquoise tiled pool. Preserve the straight travertine walls, vertical living wall, round cream chaise and pillows, pool dimensions, water level, reflections, lighting, original composition and aspect ratio.\n\nThe first frame already shows a steady indoor cascade. During the clip, the falling water continues smoothly as one soft ripple spreads from the impact point and gradually dissipates. By the final frames, the pool surface is gently settled beneath the unchanged cascade.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nAllow only subtle, physically coherent shimmer in the visible water and its reflections. Natural lighting and colors, realistic fluid physics, exact architectural geometry, smooth temporal consistency, stable fine details, photorealistic motion.\n\nAvoid: moving furniture, opening doors or drawers, added windows, changing room layout, warped walls or pool edges, drifting verticals, changing water level, uncontrolled splashing, impossible flow, invented waves, detached or incoherent reflections, changing shadow direction, moving foliage, crop, reframing, camera motion, shake, flicker, morphing, duplication, disappearing objects, motion artifacts, unfinished action, cartoon or CGI look"
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "provider_job_id": "f60d84b4966c4ffb9d47e4dfa5f295be",
+  "provider_session_hash": "promopages9856-4a415c69937f",
+  "submitted_at": "2026-07-21T11:57:28Z",
+  "completed_at": "2026-07-21T11:59:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 454575,
+    "sha256": "c5206a40992a36df6d490b75f1b2291245c4c89dc74637176c21d26f9ff3374c"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "request_sha256": "109a7fe7bebe377308b3d2e26d52db68e059ed73f1a6e3bf86eace6280618ca8",
+  "request_fingerprint_version": 2
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-schemafix-03-animal-step-veo-3-1-lite",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "d510b2c1db77796d9b934b86fdd270126e67bf8411d5a1809d18542a7cb5a237",
+    "contract_fingerprint": "sha256:aba91674c3f790da6982d93d7467c92317047b47ca93a60f151b219ced01c1d7",
+    "instruction_bundle_sha256": "780fedf4f85f5e0bb61d1b24695323d648d5e7bae3c294592c3b8eade3aa4c6c",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "64a21ed539607f97bfe2d9617059c629a7079775e1bd7f994a14028e0b8e00cf"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ],
+    "inputs_sha256": "sha256:fdcc2192887b65fcf5ffa20b37edc9ed05bbc249cf36d8d36a826f2a78125915",
+    "execution_fingerprint": "sha256:58ca54e7dd678c1a8e4a2c47fba359335b2897f35c868d4c64cf287369e0f867",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8a93-285f-7280-9fb1-03e31aa4f59b"
+    },
+    "authored_payload_sha256": "e8aecf38be848db13aff9a4eb28f8ae537ad62820bb8c9a9dfcca72819a2f95b",
+    "draft_file_sha256": "49711eafa5a87fb2bc2e80ca9810cb0eb0648c84706fe449dc316f8a176bb4cf"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "bytes": 301450
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "03",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "Если у вас дома живёт несколько кошек, выбирайте впитывающий наполнитель. Главное, помните, что лоток нужно регулярно чистить. Это не даст размножаться вредным бактериям",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "current_heading": {
+          "block_index": 11,
+          "level": 3,
+          "text": "Совет №3. Регулярно меняйте наполнитель в лотке"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "Независимо от типа наполнителя, раз в месяц обязательно проводите полную уборку и дезинфекцию лотка. Помните, что кошки — чистюли, и грязный лоток может стать причиной отказа от него."
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "heading",
+          "text": "Совет №4. Используйте силикагелевые наполнители"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A gray tabby cat is midway through climbing out of a low, covered-edge litter tray, with one front paw reaching down toward the wooden floor.",
+      "The cat faces right and leans forward, so a continued step out of the tray is the clearest natural motion; its ears, whiskers, tail area, and nearby plant leaves permit subtle secondary movement."
+    ],
+    "article_context": "This article image illustrates the behavioral test for whether a new litter suits a cat: the animal uses the tray without hesitation and leaves calmly, signaling comfort and acceptance. Its local caption makes the cat’s natural, untroubled behavior the editorial focus.",
+    "base_scene": "A cat is already stepping out of the litter tray in a relaxed home setting. It continues the same deliberate exit, transferring its weight onto the floor and settling into a calm stance beside the tray, reinforcing that the litter feels comfortable and acceptable."
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over four seconds, keep the camera fixed while the cat completes one continuous exit from the tray. Its extended paw reaches the floor first, the body advances with a smooth weight shift, and the second front paw follows. The motion slows naturally as the cat ends balanced and relaxed beside the tray, with only slight head, ear, and whisker movement as secondary detail.",
+      "positive_prompt": "Fixed camera. The cat calmly completes its step out of the litter tray: the lowered front paw lands on the floor, its weight shifts forward, the other front paw follows, and it finishes standing relaxed beside the tray. Subtle head, whisker, and ear motion accompanies the smooth, unhurried movement in one continuous shot.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:377d3b5b39d11dfae100fec92785d47cd6fb69774c5ca50a6d2041b52f965de8"
+    }
+  ]
+}

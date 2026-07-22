@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-schemafix-05-finance-ui-wan-2-7",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "d510b2c1db77796d9b934b86fdd270126e67bf8411d5a1809d18542a7cb5a237",
+    "contract_fingerprint": "sha256:28629c6d69267404200147e067c56c71c2ec80d2073c0f8ab1f1be49988d434d",
+    "instruction_bundle_sha256": "a88db35f7a4c3d7ab2aa0fb32ea01804a8d404e2b4f3e46728bb621ff5884d5f",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "64a21ed539607f97bfe2d9617059c629a7079775e1bd7f994a14028e0b8e00cf"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ],
+    "inputs_sha256": "sha256:941dbea9ce0518712a6199f1276340afcead63d77d559667ac178e2652fbb0f8",
+    "execution_fingerprint": "sha256:558a44fe6981472441eff5df36fb70508e76e0ac3bc9a865fbc306a738d8e8b7",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8a93-ec0c-7ff2-a605-7882d7b9be21"
+    },
+    "authored_payload_sha256": "2921a3a22596c6297e5cacc62848bf57fb3140abca0accfdd253a03cd3186705",
+    "draft_file_sha256": "e40a40cfd9bf63a778f8a01af1cb66a2528d097ea81bc46e2660ccf982d0a82b"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+      "bytes": 70919
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "04",
+        "block_index": 15,
+        "role": "article_image",
+        "caption": "При доходе 100 тысяч рублей в месяц и наличии двух кредитных карт сервис покажет сумму до 2,49 млн рублей",
+        "file": "04.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        },
+        "nearest_text_before": {
+          "block_index": 14,
+          "type": "paragraph",
+          "text": "Чтобы узнать потенциальную сумму кредита, используйте сервис «Финансовый потенциал» от Сравни сразу после расчета кредитного рейтинга. Укажите размер официальной зарплаты, а сервис подскажет максимальную сумму кредита, ежемесячный платеж, примерную ставку и срок."
+        },
+        "nearest_text_after": {
+          "block_index": 16,
+          "type": "heading",
+          "text": "Предложит варианты, как повысить кредитный рейтинг"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Светлый экран сервиса «Финансовый потенциал» с круговой диаграммой слева и итоговыми показателями доступного кредита, платежа и дохода справа.",
+      "В нижней части показаны две кредитные карты с активными синими чекбоксами; фиолетовый сегмент диаграммы обозначает долю карт в платёжной нагрузке — 15,8%.",
+      "Композиция статична и интерфейсная; естественно анимируемые элементы — дуга диаграммы, её маркер и лёгкая реакция активных чекбоксов."
+    ],
+    "article_context": "Это иллюстрация внутри раздела о «Финансовом потенциале»: интерфейс показывает, какую сумму кредита и максимальный ежемесячный платёж сервис оценивает при доходе 100 000 ₽ и двух действующих кредитных картах. Редакционный акцент — на наглядном расчёте доступной суммы с учётом текущей долговой нагрузки.",
+    "base_scene": "Видимый экран финансового сервиса остаётся целостным и читаемым, а расчёт получает мягкое визуальное подтверждение: фиолетовый сегмент круговой диаграммы постепенно продвигается вперёд, подчёркивая связь между отмеченными кредитными картами и рассчитанным финансовым потенциалом."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный кадр: камера выполняет едва заметное плавное приближение к диаграмме и сумме кредита. Почти всю сцену фиолетовая дуга равномерно движется по часовой стрелке на небольшой угол, затем мягко останавливается; в финале два активных чекбокса дают один слабый синхронный световой отклик, визуально подтверждая, что обе карты учтены в расчёте.",
+      "positive_prompt": "Keep the interface fixed and readable. The purple arc on the circular chart advances smoothly clockwise at a measured pace, then settles with a gentle pulse; the two active blue checkmarks respond with one subtle synchronized glow. Use a very slow, slight push-in toward the chart and loan amount, ending naturally on the completed calculation.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:a71422802c458239015bc362ceb86cdff289417e2bac2bc685547fc1bea60a2b"
+    }
+  ]
+}

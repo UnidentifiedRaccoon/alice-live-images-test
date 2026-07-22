@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-permissive-v2",
+  "updated_at": "2026-07-21T15:51:41Z",
+  "expected_outputs": 3,
+  "shared_runtime_prompt_sha256": "8c35d02bd3c6b50b97b8da08d30b67b3c749661545c9d39783661b4bbb91e9eb",
+  "summary": {
+    "failed": 1,
+    "succeeded": 2
+  },
+  "outputs": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "target_duration_seconds": 3.2,
+      "status": "succeeded",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/wan-2.2/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/wan-2.2/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 435714,
+        "sha256": "4aa5f55be9e7c32535892f1454603237f94c80fe28aa15521c96fa423f2329b2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 5,
+      "status": "succeeded",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/wan-2.7/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/wan-2.7/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5204989,
+        "sha256": "cf099ba8d30a25998c9e28a417068ac8113c0e2c84172afed09dabefd79878d4"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "target_duration_seconds": 4,
+      "status": "failed",
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/veo-3.1-lite/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/veo-3.1-lite/02.run.json",
+      "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-permissive-v2/veo-3.1-lite/02.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job ib99DnpL0sYoNpbvFXIF failed with status failed: Video generation completed with no output (content may have been filtered)"
+    }
+  ]
+}

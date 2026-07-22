@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-permissive-veo-safe-v1",
+  "sample_id": "01-portrait-hands",
+  "objective": "Test the most neutral permissive Veo wording after the shared v1 and v2 prompts produced filtered outputs.",
+  "motion_plan_id": "open-generic-improvisation",
+  "camera_state": "A",
+  "shared_prompt": {
+    "positive": "Create a photorealistic image-to-video continuation of the provided frame. Start exactly from the source image and let the visible moment develop naturally with expressive, coherent motion. Preserve the same person, clothing, setting, lighting, framing, and visual continuity. Keep the camera fixed. Use natural timing and realistic motion.",
+    "negative": "identity change, severe anatomy failure, cuts, scene changes, flicker, morphing, cartoon or CGI look"
+  },
+  "transport": "positive + \\n\\nAvoid: + negative",
+  "frame_inputs": [
+    "first_frame"
+  ],
+  "common_review_window_seconds": 3.2,
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "target_duration_seconds": 3.2
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 5
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "target_duration_seconds": 4
+    }
+  ]
+}

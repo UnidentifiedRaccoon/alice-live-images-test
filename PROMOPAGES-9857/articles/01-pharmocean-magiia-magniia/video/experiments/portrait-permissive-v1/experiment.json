@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "experiment_id": "portrait-permissive-v1",
+  "sample_id": "01-portrait-hands",
+  "objective": "Compare useful model improvisation from the same permissive portrait prompt without prescribing a specific gesture, blink, mouth action, or final pose.",
+  "motion_plan_id": "open-expressive-improvisation",
+  "camera_state": "A",
+  "shared_prompt": {
+    "positive": "Create a lively photorealistic continuation of this exact first frame. In one continuous shot, the woman has an intense spontaneous emotional reaction toward the camera. Her face, mouth, head, shoulders, and raised hands are free to move naturally and expressively; let the performance develop on its own instead of holding the initial pose. Motion starts immediately at normal real-time speed. Preserve the same person, striped clothing, setting, lighting, and framing. Keep the camera locked.",
+    "negative": "identity replacement, extra limbs or fingers, severe face or hand anatomy failure, abrupt cuts, scene changes, flicker, morphing, cartoon or CGI look"
+  },
+  "transport": "positive + \\n\\nAvoid: + negative",
+  "frame_inputs": [
+    "first_frame"
+  ],
+  "common_review_window_seconds": 3.2,
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "target_duration_seconds": 3.2
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "target_duration_seconds": 5
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "target_duration_seconds": 4
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-03-animal-step-veo-3-1-lite",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 2,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "175156bd1d1a8c90794e9ab94bf69ec73964a2595a43e8e7d132668416beb25b",
+    "contract_fingerprint": "sha256:d8ad4727ad923037c5c5fcfee14196164e159e515183972b5e83fe41ef31f849",
+    "instruction_bundle_sha256": "707c9d0ec2ef2288d51b7de386fea9586b46d37b01170bd47db6157f4b59c98a",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "aa647fab11bd811fa2a09b81d0ddd0e7db1f5e6b12c484222239434cd77d1eba"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:fdcc2192887b65fcf5ffa20b37edc9ed05bbc249cf36d8d36a826f2a78125915",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "bytes": 301450
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "03",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "Если у вас дома живёт несколько кошек, выбирайте впитывающий наполнитель. Главное, помните, что лоток нужно регулярно чистить. Это не даст размножаться вредным бактериям",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "current_heading": {
+          "block_index": 11,
+          "level": 3,
+          "text": "Совет №3. Регулярно меняйте наполнитель в лотке"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "Независимо от типа наполнителя, раз в месяц обязательно проводите полную уборку и дезинфекцию лотка. Помните, что кошки — чистюли, и грязный лоток может стать причиной отказа от него."
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "heading",
+          "text": "Совет №4. Используйте силикагелевые наполнители"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:5d88ba1376cf5f102896a48830541026195f5d3221a915eda6a41dc96d32d9ae"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-03-animal-step-veo-3-1-lite/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-03-animal-step-veo-3-1-lite/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-03-animal-step-veo-3-1-lite/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-03-animal-step-veo-3-1-lite/result.json"
+  }
+}

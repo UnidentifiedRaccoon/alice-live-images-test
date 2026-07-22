@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.2/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "prompt": "A photorealistic continuation of the exact first frame. The woman immediately performs one continuous angry, frustrated outburst: she visibly shouts while rapidly shaking both raised claw-like hands in small synchronized motions within their original areas beside her face. Her motion is energetic, expressive, and natural. She finishes still visibly angry and frustrated, with both hands raised and the same emotional intensity, never smiling or calming down. Preserve her identity, striped clothing, background, lighting, composition, crop, and aspect ratio. Keep the camera completely locked with no reframing.\n\nAvoid: smiling, friendliness, calming down, emotional softening or reversal, passive or nearly static performance, closed-mouth reaction, unrelated second action, hands lowering or leaving their original areas, hands crossing or touching the face, asymmetric hand motion, changed finger pose, extra or fused fingers, face or hand deformation, identity or clothing change, background change, cuts, scene change, camera movement, reframing, crop, shake, flicker, morphing, duplication, cartoon or CGI look"
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "95722fd7f4f182c6c2403f25740cfcb42aec49cd6f138f7f29f248b22aaf3040",
+  "request_fingerprint_version": 2,
+  "provider_job_id": null,
+  "provider_session_hash": null,
+  "submitted_at": null,
+  "completed_at": "2026-07-22T11:28:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 473320,
+    "sha256": "356138ec4083dfa8b1b959ff1ce40c36b4d4e6bafb66a022e706a535af88016d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "experiment_id": "portrait-angry-outburst-v1",
+  "generation_runner": "wan-image-to-video skill"
+}

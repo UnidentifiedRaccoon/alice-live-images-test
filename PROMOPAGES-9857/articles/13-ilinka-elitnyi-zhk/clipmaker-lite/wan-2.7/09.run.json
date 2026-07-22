@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-04-interior-water-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/wan-2.7/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/wan-2.7/09.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Gentle ripples travel continuously across the pool, making the turquoise underwater reflections drift and shimmer over the tiles. A few leaves on the living wall sway almost imperceptibly. The camera makes a very slow push toward the water and daybed, settling into a calm view as the ripples softly diminish near the end.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+        "source_sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8df73a5025d9d55539b539cefef7f380246eb339b77d81c46342d9262de63b57",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "7IloVlIraZI6NidF7G7i",
+  "submitted_at": "2026-07-22T16:19:24Z",
+  "completed_at": "2026-07-22T16:20:43Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 23910119,
+    "sha256": "ba481f7dd9cdc28a75fd1f29179cae7bf9403702c5afc249716327e77eafd11b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio does not match the Lite request"
+    ]
+  },
+  "error": null
+}

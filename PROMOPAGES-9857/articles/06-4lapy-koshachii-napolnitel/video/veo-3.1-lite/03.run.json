@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "03-animal-step",
+  "image_id": "69a18ff37db58169c78ff2ae",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/veo-3.1-lite/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/video/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Motion begins immediately at normal real-time feline stepping speed. The cat’s raised front paw moves downward and slightly forward, and its pads contact the wooden floor within the first second. The shoulder and chest follow with one natural forward weight transfer completed by 1.8 seconds. No second step begins. The cat then pauses with both front paws grounded, its body still partly supported by the litter tray and its gaze toward frame right. Preserve the coat pattern, face, whiskers, visible limb count and overlaps, tray geometry, background, crop and composition. Keep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing. Realistic momentum and ground contact, coherent feline anatomy, stable fur detail, smooth temporal consistency, photorealistic motion.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "negativePrompt": "slow-motion pacing, time-stretched paw landing, delayed action, prolonged easing, second step, continued walking, jumping, turning around, cat leaving frame, changed direction, changed coat pattern, invented hidden limbs, extra limbs, duplicated paws, warped legs, unnatural gait, broken paw-floor contact, changed tray shape, moving background, camera drift, zoom, reframing, shake, flicker, morphing, motion smear",
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "bJBqOgbf1pIDTW99nFzV",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T13:29:05Z",
+  "completed_at": "2026-07-21T13:30:55Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3625688,
+    "sha256": "8258a297d237b8d7ef915620d8195044d41ba6e0ceedec8851164953f2940afa"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "request_sha256": "ed1512d2bf1999360745dea4b4829e37a6cbf4ceee4d260039c957298c777f1d",
+  "request_fingerprint_version": 2
+}

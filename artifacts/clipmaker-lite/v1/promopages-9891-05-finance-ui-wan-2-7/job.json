@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-05-finance-ui-wan-2-7",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 2,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "175156bd1d1a8c90794e9ab94bf69ec73964a2595a43e8e7d132668416beb25b",
+    "contract_fingerprint": "sha256:f3560a8b9c25d84c748d2e67773b34cc0c7c87dddd6c40317f57bbf0af2282fe",
+    "instruction_bundle_sha256": "a0cf2249aa019230516ad20a01460dfcc63310e1e28eb20ca7bf35856beddc04",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "aa647fab11bd811fa2a09b81d0ddd0e7db1f5e6b12c484222239434cd77d1eba"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:941dbea9ce0518712a6199f1276340afcead63d77d559667ac178e2652fbb0f8",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+      "bytes": 70919
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "04",
+        "block_index": 15,
+        "role": "article_image",
+        "caption": "При доходе 100 тысяч рублей в месяц и наличии двух кредитных карт сервис покажет сумму до 2,49 млн рублей",
+        "file": "04.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        },
+        "nearest_text_before": {
+          "block_index": 14,
+          "type": "paragraph",
+          "text": "Чтобы узнать потенциальную сумму кредита, используйте сервис «Финансовый потенциал» от Сравни сразу после расчета кредитного рейтинга. Укажите размер официальной зарплаты, а сервис подскажет максимальную сумму кредита, ежемесячный платеж, примерную ставку и срок."
+        },
+        "nearest_text_after": {
+          "block_index": 16,
+          "type": "heading",
+          "text": "Предложит варианты, как повысить кредитный рейтинг"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:3e308ad67e6ad13d868319c5744f2b0f050754e3e06cdb7257a68208b02aac65"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-05-finance-ui-wan-2-7/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-05-finance-ui-wan-2-7/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-05-finance-ui-wan-2-7/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-05-finance-ui-wan-2-7/result.json"
+  }
+}

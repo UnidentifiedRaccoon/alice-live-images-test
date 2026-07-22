@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-04-interior-water-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/veo-3.1-lite/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/veo-3.1-lite/09.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Hold the camera fixed. The wall cascade flows steadily into the pool, sending gentle overlapping ripples across the water toward the foreground. Turquoise underwater light reflections shimmer and drift naturally over the tiled basin while a few leaves beside the cascade move almost imperceptibly in the humid air. The ripples broaden and settle into a calm, softly undulating surface near the end.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+        "source_sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "aafbe7b5a46a9f679682e9a3b74d7e0bd83e28b2fa3aae4c427b36e99a022acf",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "jbh3AbWt6HFdLacy6gIk",
+  "submitted_at": "2026-07-22T16:44:53Z",
+  "completed_at": "2026-07-22T16:47:41Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 21101978,
+    "sha256": "d0bf46e5d7ad884dd8baabc1fa5abe7630c9f4817159124ca6f33697a1b0605a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null
+}

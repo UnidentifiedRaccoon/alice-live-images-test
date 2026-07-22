@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/wan-2.7/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A photorealistic image-to-video continuation of the provided frame. Start exactly from the centered tight close-up of a woman looking directly at the camera with wide blue-gray eyes, a clenched-teeth grimace, brown hair in a bun, and both splayed hands raised beside her cheeks. Preserve her exact identity, facial proportions, eye color and gaze, hairstyle, navy-and-white striped top, the anatomy and original positions of every visible finger, the softly blurred indoor background, lighting, crop, composition, and aspect ratio.\n\nThe first frame already shows a tense posed gesture, not the start of speech or a larger hand action. During the clip, she maintains the same expression and hand pose while completing one small natural blink. By the final frames, her eyes have returned to the same direct gaze and her face and hands are steady in their original positions.\n\nKeep the camera locked and the original composition stable. Preserve the full main subject and all key scene elements in frame. No zoom, orbit, pan, tilt or reframing.\n\nOnly subtle natural breathing is visible in her shoulders. Natural lighting and colors, realistic physics, coherent facial and hand anatomy, smooth temporal consistency, stable fine details, photorealistic motion.\n\nAvoid: Speaking, opening the mouth wider, exaggerated expression, large head turn, hands moving toward or away from the face, changed identity or facial proportions, asymmetric eyes, altered gaze, deformed hands, extra or missing fingers, fused fingers, changed hand pose, changed hairstyle, invented wind, altered striped clothing, automatic reframing, invented off-frame anatomy, camera drift or orbit, crop, zoom, shake, flicker, morphing, duplication, disappearing features, motion artifacts, unfinished action, cartoon or CGI look",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": false
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "n1LUAicYzuuf8XAXJjHd",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T15:05:24Z",
+  "completed_at": "2026-07-21T15:06:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3006757,
+    "sha256": "7d64f7fe1c8cb179afd8adc54d2757c4f8b10abebbaf8cd8112fd767294a0a9d"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "request_sha256": "19cf3f4274e4cc4634d90f08827fd9ea3cfa75315457c3c992bd4f9b43d864c0",
+  "request_fingerprint_version": 2
+}

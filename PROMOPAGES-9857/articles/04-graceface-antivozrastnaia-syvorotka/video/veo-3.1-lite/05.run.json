@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "02-product-dropper",
+  "image_id": "682b56a20cfd5f4e6d52c3a1",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/video/veo-3.1-lite/05.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/video/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Motion begins immediately at normal real-time speed. The existing compact solid serum drop stays attached to the pipette and makes one tiny surface-tension quiver: its lower edge shifts by only a few millimeters and rebounds once, without stretching into a thread. Within the first second it returns to the same compact rounded pendant shape. Hold that unchanged state for the rest of the shot. The bottle, pipette and truffles remain fixed; preserve the readable label, glass transparency, reflections, shadows, crop and composition. Keep the camera locked with no reframing. Realistic surface tension, stable product geometry and lettering, smooth temporal consistency, photorealistic motion.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "negativePrompt": "slow-motion pacing, delayed quiver, long drop, stretched neck, liquid thread, hollow loop or ring, drop detachment, falling or extra droplets, contact with truffle or shelf, pouring, splash, changed liquid volume, pipette or bottle motion, product rotation, warped label or glass, opaque glass, altered reflections, camera movement, reframing, flicker, morphing, duplicated objects",
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "provider_job_id": "sjdNf5VIBRwW1mfKiwTN",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-21T14:06:07Z",
+  "completed_at": "2026-07-21T14:07:23Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1035260,
+    "sha256": "7639d2bb59c3c43bd6d882377d433a88c076078d4c4b19e3c9d12b2b6be959e2"
+  },
+  "error": null,
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "request_sha256": "92eb3271909d52e4d3ec1ba5c566bef05456e00a1c4ccec4311ea1b4bf0f2792",
+  "request_fingerprint_version": 2
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-schemafix-05-finance-ui-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/wan-2.7/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Keep the interface fixed and readable. The purple arc on the circular chart advances smoothly clockwise at a measured pace, then settles with a gentle pulse; the two active blue checkmarks respond with one subtle synchronized glow. Use a very slow, slight push-in toward the chart and loan amount, ending naturally on the completed calculation.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+        "source_sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "6899d0601dc0ad5da829c29d5efd46982a6166f54015d70d5794e9f11f532fbb",
+  "request_fingerprint_version": 1,
+  "provider_job_id": "ZKnVvYNeidkDzLEsmdSS",
+  "submitted_at": "2026-07-22T16:47:43Z",
+  "completed_at": "2026-07-22T16:49:32Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1858,
+    "height": 1116,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4099167,
+    "sha256": "85ee260d61ed1028d4e801a55a6c51987e257c89d100787bc40dc14845eacee8"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio does not match the Lite request",
+      "resolution does not match the Lite request",
+      "aspect_ratio does not match the Lite request"
+    ]
+  },
+  "error": null
+}

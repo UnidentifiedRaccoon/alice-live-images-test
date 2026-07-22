@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-schemafix-02-product-dropper-wan-2-7",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.1.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "d510b2c1db77796d9b934b86fdd270126e67bf8411d5a1809d18542a7cb5a237",
+    "contract_fingerprint": "sha256:28629c6d69267404200147e067c56c71c2ec80d2073c0f8ab1f1be49988d434d",
+    "instruction_bundle_sha256": "a88db35f7a4c3d7ab2aa0fb32ea01804a8d404e2b4f3e46728bb621ff5884d5f",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "64a21ed539607f97bfe2d9617059c629a7079775e1bd7f994a14028e0b8e00cf"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "789221e25daaee14139e951d7a7d80b236cf9b4200b969b9e68bc6409f7bb913"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:4da4d32e06ab552ebd2e4d3e7a99fe08e4fe25cad11cb564956287b44ec7a0c8",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+      "bytes": 520650
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/04-graceface-antivozrastnaia-syvorotka/content.json",
+      "sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084",
+      "bytes": 17735,
+      "locator": {
+        "article_id": "04-graceface-antivozrastnaia-syvorotka",
+        "title": "Нашла лучшую антивозрастную сыворотку за смешные деньги",
+        "lead": "Теперь точно куплю в подарок маме.\nКак это ни обидно, мы все стареем. С возрастом приходится усиленно бороться за свою красоту. Кто-то начинает раньше, кто-то позже.\nПримерно до 37-38 лет я даже не думала, что меня тоже коснётся проблема старения. Дело в том, что у женщин моей семьи – отличная генетика. Бабушка всегда выглядела гораздо моложе своих лет (и у неё даже в возрасте за 80 были",
+        "image_id": "05",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.png",
+        "manifest_file_path": "articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "И совершенно случайно, во время сёрфинга по маркептплейсам, наткнулась на трюфельную сыворотку другого производителя. Вот она."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Омолаживающая сыворотка для лица с трюфелем от GRACEFACE привлекла внимание сразу по трём пунктам. Первый – разрекламированный трюфель в составе. Второй – красивый стеклянный флакон с пипеткой, выглядит дорого-богато. И третий – цена."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:a71422802c458239015bc362ceb86cdff289417e2bac2bc685547fc1bea60a2b"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-02-product-dropper-wan-2-7/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-02-product-dropper-wan-2-7/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-02-product-dropper-wan-2-7/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-schemafix-02-product-dropper-wan-2-7/result.json"
+  }
+}

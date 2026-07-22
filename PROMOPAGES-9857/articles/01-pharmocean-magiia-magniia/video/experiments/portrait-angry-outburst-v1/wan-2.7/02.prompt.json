@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9856",
+  "sample_id": "01-portrait-hands",
+  "image_id": "679ce42f5e5f9849fe542795",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "routing": {
+    "primary_class": "portrait_closeup",
+    "graphic_kind": null,
+    "graphic_kinds": [],
+    "camera_state": "A"
+  },
+  "motion": {
+    "plan_id": "sustained-angry-outburst",
+    "action_complete_by_seconds": 1.8
+  },
+  "prompt": {
+    "positive": "Generate a single-shot video. Continue directly from the provided frame. Preserve the same woman, wide-eyed tense expression, raised brows, teeth-baring mouth, hairstyle, striped top, both raised claw-like hands, lighting, background, crop and aspect ratio. Motion starts immediately at normal real-time speed. She performs one sustained angry, frustrated outburst: she visibly yells while both hands shake simultaneously in fast, tight side-to-side wrist and forearm oscillations, staying within their original left and right areas beside her face. Her eyes and brows retain the same angry emotional sign, her fingers retain their claw curvature, and the hands never lower, cross or leave their areas. The synchronized shout and hand shaking form one causal action that peaks and completes by about 1.8 seconds. She finishes with both hands still raised and her face equally angry and frustrated, with no smile, friendliness, softening or calming. Hold that tense final state for the remaining frames. Keep the camera locked and the original composition stable. No zoom, orbit, pan, tilt or reframing. Natural expressive mechanics, coherent mouth and hand anatomy, stable identity and background, smooth temporal consistency, photorealistic motion.",
+    "negative": "weak or nearly static motion, smile, friendliness, emotional softening, calming down, emotional reversal, laughter, hands lowering or leaving their original areas, unsynchronized hand motion, large arm swings, changed claw-like hand pose, deformed hands, extra fingers, head turn, camera motion, zoom, pan, tilt, reframing, crop change, cuts, second scene, slow motion, time-stretched action, flicker, morphing, identity change, motion artifacts, CGI look",
+    "source_model_id": null,
+    "embed_negative_in_positive": false
+  },
+  "target": {
+    "duration_seconds": 3,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "generate_audio": false,
+    "seed": 9681,
+    "last_frame_is_source": false
+  },
+  "generator": "project clipmaker agent",
+  "source_catalog": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/video/experiments/portrait-angry-outburst-v1/experiment.json",
+  "experiment_id": "portrait-angry-outburst-v1",
+  "experiment": {
+    "objective": "Apply model-specific I2V prompting to produce one continuous energetic angry outburst while preserving the original composition and the same angry or frustrated emotional sign through the final frame.",
+    "prompt_strategy": "model_specific",
+    "prompt_bundle_sha256": "b310c6a2a1a601cda25d15c2774aea261dfd36125731e5a9e80b950a2e8c129e",
+    "common_review_window_seconds": 3.0
+  }
+}
