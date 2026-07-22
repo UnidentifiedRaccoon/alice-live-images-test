@@ -35,7 +35,8 @@ Use `clipmaker-lite` only when the user explicitly selects this agent ID. It
 analyzes the image together with the article text and exact image position,
 prepares a short semantic scene brief, and plans each model independently.
 
-- Supported model IDs: `alibaba/wan-2.7`, `google/veo-3.1-lite`.
+- Supported model IDs: `alibaba/wan-2.2`, `alibaba/wan-2.7`,
+  `google/veo-3.1-lite`.
 - Entry point: [docs/agents/clipmaker-lite/README.md](docs/agents/clipmaker-lite/README.md)
 - Locked contract: [docs/agents/clipmaker-lite/contract.json](docs/agents/clipmaker-lite/contract.json)
 - Isolated runner: [scripts/clipmaker_lite_runner.py](scripts/clipmaker_lite_runner.py)

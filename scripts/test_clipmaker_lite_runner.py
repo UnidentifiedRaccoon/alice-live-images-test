@@ -26,9 +26,11 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
         models = lite / "models"
         models.mkdir(parents=True)
         readme = lite / "README.md"
+        wan22 = models / "alibaba-wan-2.2.md"
         wan = models / "alibaba-wan-2.7.md"
         veo = models / "google-veo-3.1-lite.md"
         readme.write_text("Lite base instruction.\n", encoding="utf-8")
+        wan22.write_text("Wan 2.2 three-second instruction.\n", encoding="utf-8")
         wan.write_text("Wan five-second instruction.\n", encoding="utf-8")
         veo.write_text("Veo four-second instruction.\n", encoding="utf-8")
 
@@ -99,6 +101,29 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 "sha256": runner.sha256_file(readme),
             },
             "models": {
+                "alibaba/wan-2.2": {
+                    "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+                    "spec_sha256": runner.sha256_file(wan22),
+                    "runtime": {
+                        "duration_seconds": 3.2,
+                        "resolution": "720p",
+                        "aspect_ratios": ["source"],
+                        "generate_audio": False,
+                        "frame_inputs": ["first_frame"],
+                        "provider": "wan-streamlit",
+                        "adapter": "wan-demo",
+                        "frames": 97,
+                        "fps": 30,
+                        "seed": 1,
+                        "loop": False,
+                        "last_frame": None,
+                        "prompt_expansion": {"mode": "not_exposed"},
+                        "negative_prompt_transport": {
+                            "mode": "combined_prompt",
+                            "separator": "\n\nAvoid: ",
+                        },
+                    },
+                },
                 "alibaba/wan-2.7": {
                     "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
                     "spec_sha256": runner.sha256_file(wan),
@@ -146,7 +171,9 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 {
                     "model_id": model_id,
                     "scene_plan": f"A duration-aware plan for {model_id}.",
-                    "positive_prompt": "The subject completes one continuous natural movement.",
+                    "positive_prompt": (
+                        f"The subject completes one continuous natural movement for {model_id}."
+                    ),
                     "negative_prompt": None,
                 }
                 for model_id in model_ids
@@ -211,6 +238,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             )
             bundle = (run / "instruction-bundle.md").read_text(encoding="utf-8")
             self.assertIn("Lite base instruction.", bundle)
+            self.assertIn("Wan 2.2 three-second instruction.", bundle)
             self.assertIn("Wan five-second instruction.", bundle)
             self.assertIn("Veo four-second instruction.", bundle)
             self.assertNotIn("docs/agents/clipmaker/", bundle)
@@ -224,9 +252,16 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             result = runner.read_json(result_path)
             self.assertEqual(result["producer"]["agent_id"], "clipmaker-lite")
             self.assertTrue(result["producer"]["contract_fingerprint"].startswith("sha256:"))
-            self.assertEqual([item["runtime"]["duration_seconds"] for item in result["models"]], [5, 4])
+            self.assertEqual(
+                [item["runtime"]["duration_seconds"] for item in result["models"]],
+                [3.2, 5, 4],
+            )
             self.assertEqual(
                 result["models"][0]["runtime"]["prompt_expansion"],
+                {"mode": "not_exposed"},
+            )
+            self.assertEqual(
+                result["models"][1]["runtime"]["prompt_expansion"],
                 {"parameter": "prompt_extend", "value": True},
             )
             self.assertNotIn("negative_prompt", result["models"][0])
@@ -265,14 +300,101 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             root, image, context = self.make_workspace(directory)
             run = runner.prepare_run(
                 root,
-                "wan-only",
+                "wan22-only",
                 image,
                 context,
-                model_ids=["alibaba/wan-2.7"],
+                model_ids=["alibaba/wan-2.2"],
             )
             bundle = (run / "instruction-bundle.md").read_text(encoding="utf-8")
-            self.assertIn("Wan five-second instruction.", bundle)
+            self.assertIn("Wan 2.2 three-second instruction.", bundle)
+            self.assertNotIn("Wan five-second instruction.", bundle)
             self.assertNotIn("Veo four-second instruction.", bundle)
+
+            result_path = self.run_with_fake(
+                root,
+                "wan22-only",
+                ["alibaba/wan-2.2"],
+            )
+            result = runner.read_json(result_path)
+            self.assertEqual(
+                [item["model_id"] for item in result["models"]],
+                ["alibaba/wan-2.2"],
+            )
+            self.assertEqual(result["models"][0]["runtime"]["frames"], 97)
+            self.assertEqual(
+                runner.provenance_summary(root, "wan22-only")["models"],
+                ["alibaba/wan-2.2"],
+            )
+
+    def test_wan22_spec_cannot_fall_back_to_wan27_spec(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            contract_path = root / runner.CONTRACT_PATH
+            contract = runner.read_json(contract_path)
+            wan27_spec = root / runner.MODEL_SPEC_PATHS["alibaba/wan-2.7"]
+            contract["models"]["alibaba/wan-2.2"]["spec_path"] = (
+                runner.MODEL_SPEC_PATHS["alibaba/wan-2.7"]
+            )
+            contract["models"]["alibaba/wan-2.2"]["spec_sha256"] = runner.sha256_file(
+                wan27_spec
+            )
+            contract_path.write_text(json.dumps(contract), encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                runner.LiteRunnerError,
+                "spec_path must be exactly",
+            ):
+                runner.prepare_run(
+                    root,
+                    "wan22-spec-fallback",
+                    image,
+                    context,
+                    model_ids=["alibaba/wan-2.2"],
+                )
+            self.assertFalse((root / runner.OUTPUT_NAMESPACE).exists())
+
+    def test_replay_metadata_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            runner.prepare_run(
+                root,
+                "wan22-replay",
+                image,
+                context,
+                model_ids=["alibaba/wan-2.2"],
+            )
+
+            def replay_executor(request, execution_policy, author_model, timeout):
+                draft = json.loads(
+                    self.draft_bytes("wan22-replay", ["alibaba/wan-2.2"])
+                )
+                draft["models"][0]["prompt_source_model_id"] = "alibaba/wan-2.7"
+                execution = self.fake_executor("wan22-replay", ["alibaba/wan-2.2"])(
+                    request,
+                    execution_policy,
+                    author_model,
+                    timeout,
+                )
+                execution["draft_bytes"] = json.dumps(draft).encode("utf-8")
+                return execution
+
+            with mock.patch.object(
+                runner,
+                "execute_codex_agent",
+                side_effect=replay_executor,
+            ):
+                with self.assertRaisesRegex(
+                    runner.LiteRunnerError,
+                    "contains forbidden keys",
+                ):
+                    runner.run_agent(
+                        root,
+                        "wan22-replay",
+                        external_processing_approved=True,
+                    )
+            self.assertFalse(
+                (root / runner.OUTPUT_NAMESPACE / "wan22-replay/result.json").exists()
+            )
 
     def test_changed_instruction_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

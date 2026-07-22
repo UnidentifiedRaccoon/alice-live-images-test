@@ -31,15 +31,23 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertIn("scripts/clipmaker_lite_runner.py", text)
         self.assertIn("ask which contract to use", text)
 
-    def test_v1_has_only_two_model_specs(self) -> None:
+    def test_v1_has_exactly_three_model_specs(self) -> None:
         self.assertEqual(
             [path.name for path in sorted(MODELS.glob("*.md"))],
-            ["alibaba-wan-2.7.md", "google-veo-3.1-lite.md"],
+            [
+                "alibaba-wan-2.2.md",
+                "alibaba-wan-2.7.md",
+                "google-veo-3.1-lite.md",
+            ],
         )
 
     def test_model_durations_and_expansion(self) -> None:
+        wan22 = (MODELS / "alibaba-wan-2.2.md").read_text(encoding="utf-8")
         wan = (MODELS / "alibaba-wan-2.7.md").read_text(encoding="utf-8")
         veo = (MODELS / "google-veo-3.1-lite.md").read_text(encoding="utf-8")
+        self.assertIn("| Planning duration | `3.2 s` |", wan22)
+        self.assertIn("Prompt expansion | Not exposed", wan22)
+        self.assertIn("межмодельный replay запрещены", wan22)
         self.assertIn("| Duration | `5 s` |", wan)
         self.assertIn("`prompt_extend: true`", wan)
         self.assertIn("| Duration | `4 s` |", veo)
@@ -61,7 +69,12 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertEqual(contract["input_binding"]["context_root"], "PROMOPAGES-9884")
         self.assertEqual(contract["runner"]["sha256"], sha256_file(RUNNER))
         self.assertEqual(contract["base_instruction"]["sha256"], sha256_file(README))
+        self.assertEqual(
+            list(contract["models"]),
+            ["alibaba/wan-2.2", "alibaba/wan-2.7", "google/veo-3.1-lite"],
+        )
         for model_id, filename in (
+            ("alibaba/wan-2.2", "alibaba-wan-2.2.md"),
             ("alibaba/wan-2.7", "alibaba-wan-2.7.md"),
             ("google/veo-3.1-lite", "google-veo-3.1-lite.md"),
         ):
@@ -69,6 +82,18 @@ class ClipmakerLiteContractTest(unittest.TestCase):
                 contract["models"][model_id]["spec_sha256"],
                 sha256_file(MODELS / filename),
             )
+        wan22_runtime = contract["models"]["alibaba/wan-2.2"]["runtime"]
+        self.assertEqual(wan22_runtime["duration_seconds"], 3.2)
+        self.assertEqual(wan22_runtime["resolution"], "720p")
+        self.assertEqual(wan22_runtime["aspect_ratios"], ["source"])
+        self.assertEqual(wan22_runtime["provider"], "wan-streamlit")
+        self.assertEqual(wan22_runtime["adapter"], "wan-demo")
+        self.assertEqual((wan22_runtime["frames"], wan22_runtime["fps"]), (97, 30))
+        self.assertEqual(wan22_runtime["prompt_expansion"], {"mode": "not_exposed"})
+        self.assertEqual(
+            wan22_runtime["negative_prompt_transport"],
+            {"mode": "combined_prompt", "separator": "\n\nAvoid: "},
+        )
         self.assertEqual(contract["models"]["alibaba/wan-2.7"]["runtime"]["duration_seconds"], 5)
         self.assertEqual(contract["models"]["google/veo-3.1-lite"]["runtime"]["duration_seconds"], 4)
 
@@ -83,6 +108,7 @@ class ClipmakerLiteContractTest(unittest.TestCase):
             self.assertIn(heading, text)
         self.assertIn("PROMOPAGES-9884", text)
         self.assertIn("Нет общего deadline", text)
+        self.assertIn("Межмодельный replay", text)
 
     def test_heavy_clipmaker_contract_is_not_imported(self) -> None:
         documents = [README, CONTRACT, *sorted(MODELS.glob("*.md"))]
