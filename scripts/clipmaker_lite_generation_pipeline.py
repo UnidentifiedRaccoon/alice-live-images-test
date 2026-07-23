@@ -385,9 +385,11 @@ def load_lite_job(root: Path, entry: MatrixEntry) -> LiteJob:
     negative: str | None = None
     if "negative_prompt" in model:
         candidate = model["negative_prompt"]
-        if not isinstance(candidate, str):
-            raise LiteGenerationError(f"Stamped negative prompt must be a string: {entry.run_id}")
-        if candidate.strip():
+        if candidate is not None:
+            if not isinstance(candidate, str) or not candidate.strip():
+                raise LiteGenerationError(
+                    f"Stamped negative prompt must be null or a non-empty string: {entry.run_id}"
+                )
             negative = candidate
 
     return LiteJob(

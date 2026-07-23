@@ -148,11 +148,11 @@ class ClipmakerLiteGenerationPipelineTest(unittest.TestCase):
             with self.assertRaisesRegex(pipeline.LiteGenerationError, "Unexpected Lite producer"):
                 pipeline.load_lite_job(self.root, entry)
 
-    def test_native_runtime_and_optional_negative_parameter(self) -> None:
+    def test_native_runtime_and_explicit_null_negative_parameter(self) -> None:
         wan = next(entry for entry in pipeline.MATRIX if entry.model_id == "alibaba/wan-2.7")
         veo = next(entry for entry in pipeline.MATRIX if entry.model_id == "google/veo-3.1-lite")
         self._write_result(wan, negative_marker="exact wan repair")
-        self._write_result(veo, negative_marker="   ")
+        self._write_result(veo, negative_marker=None)
         with mock.patch.object(
             pipeline.clipmaker_lite_runner,
             "provenance_summary",
@@ -180,6 +180,20 @@ class ClipmakerLiteGenerationPipelineTest(unittest.TestCase):
         self.assertEqual(wan_payload["prompt"], f"positive::{wan.run_id}")
         self.assertIn("image_url", wan_payload["frame_images"][0])
         self.assertNotIn("image_url", pipeline.sanitized_request(wan_job)["frame_images"][0])
+
+    def test_blank_negative_prompt_is_rejected(self) -> None:
+        entry = pipeline.MATRIX[0]
+        self._write_result(entry, negative_marker="   ")
+        with mock.patch.object(
+            pipeline.clipmaker_lite_runner,
+            "provenance_summary",
+            side_effect=self._provenance,
+        ):
+            with self.assertRaisesRegex(
+                pipeline.LiteGenerationError,
+                "null or a non-empty string",
+            ):
+                pipeline.load_lite_job(self.root, entry)
 
     def test_dry_run_revalidates_each_job_and_never_calls_transport(self) -> None:
         with mock.patch.object(
