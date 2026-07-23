@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "prompt": {
+    "positive": "Fixed camera, single continuous shot. The woman’s lower eyelid begins to twitch subtly as her eyes stay wide; tension builds through her clenched jaw, raised shoulders, and fingers curling tighter beside her face. She then releases a short controlled breath, her fingers loosen slightly and her shoulders drop a little, ending still visibly strained.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-01-portrait-hands-veo-3-1-lite/result.json",
+    "sha256": "64c36abef90e3c5b00677b9e8ad883442ff726a7304599b29a8582b4858c449a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.2.1",
+      "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+      "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+      "source_image_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "article_context_sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a"
+    }
+  }
+}

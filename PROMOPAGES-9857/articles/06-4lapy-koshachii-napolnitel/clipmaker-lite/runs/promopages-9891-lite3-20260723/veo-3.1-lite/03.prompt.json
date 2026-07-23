@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+    "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+    "width": 1000,
+    "height": 450
+  },
+  "prompt": {
+    "positive": "Fixed camera. The cat calmly steps out of the litter tray toward the right, places the extended front paw on the floor, brings the other front paw over the rim, and shifts its weight forward in one smooth, confident motion. Its head tracks slightly ahead while the ears, whiskers, and tail move subtly with the step, ending naturally mid-walk beside the tray.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-03-animal-step-veo-3-1-lite/result.json",
+    "sha256": "69207c46033a9ae11e3a4e09dd1ffb873810fce6051e0b56b3484a18e5e76e57",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.2.1",
+      "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+      "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+      "source_image_sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "article_context_sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a"
+    }
+  }
+}

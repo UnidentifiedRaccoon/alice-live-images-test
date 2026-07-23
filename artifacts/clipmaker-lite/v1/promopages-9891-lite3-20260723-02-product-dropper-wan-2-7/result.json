@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-02-product-dropper-wan-2-7",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:7b60cf0b92de6c0ee1264ca48b78a669f78f3c452b754806861e5b753b4bf914",
+    "instruction_bundle_sha256": "18bf2e4b643a8c20cdb092b6f937b1e18b56bcab6ca339f35246f00c7adc2c93",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ],
+    "inputs_sha256": "sha256:4da4d32e06ab552ebd2e4d3e7a99fe08e4fe25cad11cb564956287b44ec7a0c8",
+    "execution_fingerprint": "sha256:2678b32f14fa22e0439690b7594a4a1678152a7f4a5ab33727424b33befbe59f",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bda-ed7c-7581-9d12-09e208eeddfd"
+    },
+    "authored_payload_sha256": "b150e6432ab780b69bea9fb8741658d04d33c10acf4339c3078fecf8f4f069e5",
+    "draft_file_sha256": "493f9290fd88a6072e4ad7bff32a1d88222a35e1064164f2337c315639ecc26b"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+      "bytes": 520650
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/04-graceface-antivozrastnaia-syvorotka/content.json",
+      "sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084",
+      "bytes": 17735,
+      "locator": {
+        "article_id": "04-graceface-antivozrastnaia-syvorotka",
+        "title": "Нашла лучшую антивозрастную сыворотку за смешные деньги",
+        "lead": "Теперь точно куплю в подарок маме.\nКак это ни обидно, мы все стареем. С возрастом приходится усиленно бороться за свою красоту. Кто-то начинает раньше, кто-то позже.\nПримерно до 37-38 лет я даже не думала, что меня тоже коснётся проблема старения. Дело в том, что у женщин моей семьи – отличная генетика. Бабушка всегда выглядела гораздо моложе своих лет (и у неё даже в возрасте за 80 были",
+        "image_id": "05",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.png",
+        "manifest_file_path": "articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "И совершенно случайно, во время сёрфинга по маркептплейсам, наткнулась на трюфельную сыворотку другого производителя. Вот она."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Омолаживающая сыворотка для лица с трюфелем от GRACEFACE привлекла внимание сразу по трём пунктам. Первый – разрекламированный трюфель в составе. Второй – красивый стеклянный флакон с пипеткой, выглядит дорого-богато. И третий – цена."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A frosted glass GRACEFACE truffle-extract serum bottle stands open beside black truffles, with a gold-collared glass dropper suspended diagonally above them.",
+      "A clear serum droplet already hangs from the pipette tip; the bottle label, warm liquid, reflective gold collar, and hard cast shadows form a clean premium studio composition."
+    ],
+    "article_context": "This body image is the product reveal immediately after the author discovers an affordable alternative to luxury truffle serum. It introduces the GRACEFACE bottle and dropper as a polished, premium-looking product, setting up the following discussion of its truffle ingredient, glass packaging, and low price.",
+    "base_scene": "The open serum bottle, suspended dropper, and truffles remain the clear product tableau while the serum’s texture becomes the focus. The hanging droplet gradually gathers at the pipette tip, stretches under gravity, and falls toward the truffles, giving the still product reveal a controlled sense of use and tactile richness."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Over the full five seconds, use one continuous gravity-driven serum action with a fixed camera. The existing bead swells gradually and stretches into a thin neck, detaching late in the shot and falling toward the truffles; the motion resolves as a fresh, much smaller bead starts to collect at the pipette tip.",
+      "positive_prompt": "Keep the camera fixed. Clear serum slowly gathers at the pipette tip, elongates under gravity, then detaches and falls toward the truffles near the end; a new tiny bead begins forming on the tip. Preserve the calm product-display composition.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:27177eaccae6c05c4fec69846a53796827dfdb44ca5f9fe7cedeb38a60f0f6df"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "01-portrait-hands",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Her anxious tension builds continuously: both hands tremble slightly near her cheeks as the curled fingers tighten inward, her brows lift and facial muscles tense, then one eyelid gives two brief involuntary twitches near the end. Keep the camera fixed in the close frontal framing, ending on her strained, alarmed expression.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b3d236778fb30d70f6ca07c90546b800ba714de0079fe95850fa5f4b60cefa1f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "mcgKqSaukfCnAolpRUus",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:15:07Z",
+  "completed_at": "2026-07-22T22:17:14Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4309139,
+    "sha256": "2c8f6ee381a8f2d6b364e0c41cf53e197227d433a839ac6fcffb2507f7e80fb5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-wan-2-7",
+  "lite_result_sha256": "1212bf063c9841c3256376d967e952c025c7637bc4a824ae11ebd9f36a341a15"
+}

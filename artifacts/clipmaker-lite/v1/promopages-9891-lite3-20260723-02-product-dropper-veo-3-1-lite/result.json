@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-02-product-dropper-veo-3-1-lite",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+    "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ],
+    "inputs_sha256": "sha256:4da4d32e06ab552ebd2e4d3e7a99fe08e4fe25cad11cb564956287b44ec7a0c8",
+    "execution_fingerprint": "sha256:28880cda5347ce49ea5cee580e723894157febf3565a616d994d01ae8d5ea8aa",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bda-f0e3-7783-bb7b-e2c923b8ce01"
+    },
+    "authored_payload_sha256": "794396b502aea783f36c2aae04a588ee57542ed6d724f6f757fa2c4380254dd9",
+    "draft_file_sha256": "85e6f2f7c1f61b716be790a3ea99a888bf85f11b795cabd60c0cf1bb543439b9"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+      "bytes": 520650
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/04-graceface-antivozrastnaia-syvorotka/content.json",
+      "sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084",
+      "bytes": 17735,
+      "locator": {
+        "article_id": "04-graceface-antivozrastnaia-syvorotka",
+        "title": "Нашла лучшую антивозрастную сыворотку за смешные деньги",
+        "lead": "Теперь точно куплю в подарок маме.\nКак это ни обидно, мы все стареем. С возрастом приходится усиленно бороться за свою красоту. Кто-то начинает раньше, кто-то позже.\nПримерно до 37-38 лет я даже не думала, что меня тоже коснётся проблема старения. Дело в том, что у женщин моей семьи – отличная генетика. Бабушка всегда выглядела гораздо моложе своих лет (и у неё даже в возрасте за 80 были",
+        "image_id": "05",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.png",
+        "manifest_file_path": "articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "И совершенно случайно, во время сёрфинга по маркептплейсам, наткнулась на трюфельную сыворотку другого производителя. Вот она."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Омолаживающая сыворотка для лица с трюфелем от GRACEFACE привлекла внимание сразу по трём пунктам. Первый – разрекламированный трюфель в составе. Второй – красивый стеклянный флакон с пипеткой, выглядит дорого-богато. И третий – цена."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "An open frosted-glass GRACEFACE truffle serum bottle stands beside whole and sliced black truffles, with its gold-and-ivory dropper suspended diagonally above them.",
+      "A clear serum bead hangs from the pipette tip; the bottle, label, reflective gold collar, and truffle textures are the key visible details suitable for restrained product motion."
+    ],
+    "article_context": "The image introduces the GRACEFACE truffle face serum at the article’s product-reveal moment. It supports the author’s focus on the premium-looking dropper bottle, truffle ingredient, and unexpectedly affordable price.",
+    "base_scene": "A polished product still begins with the open serum bottle, raised glass pipette, and truffles clearly presented. The suspended serum drop slowly develops and releases, turning the static product reveal into a tactile demonstration of the serum’s delicate, moderately viscous consistency."
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over four seconds, use one restrained push-in while the hanging serum bead slowly grows and elongates, emphasizing its moderate viscosity. Near the end it releases, drops a short distance, and settles as a glossy bead on the white surface; all product elements remain stable and the final frame keeps the label and truffles prominent.",
+      "positive_prompt": "Slow, subtle camera push-in. The clear serum at the pipette tip gradually swells and stretches, then detaches near the end and falls onto the white surface, settling into a small glossy bead. Keep the bottle, dropper, and truffles otherwise still in one continuous product shot.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:ef79319f7f7882b7a0be153265c8594ab6651290c1b48603b2c7edd729ba347b"
+    }
+  ]
+}

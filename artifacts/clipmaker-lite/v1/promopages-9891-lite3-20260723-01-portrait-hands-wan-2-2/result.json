@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-01-portrait-hands-wan-2-2",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+    "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "376e0e3723a2f138d72d9bba31433d3c8a6f1ef960ae3eeddce6c05908977ebf"
+      }
+    ],
+    "inputs_sha256": "sha256:b0d695c2333c4d21d4475ba2c840eee694ccd6ec19188eafca25991ae1979891",
+    "execution_fingerprint": "sha256:a60f212ee6ab3c46ab346590a1535eeeed51d627228cc11eea3e532e9eb9d22e",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bda-76b8-7e83-ab3b-072635bbb2d2"
+    },
+    "authored_payload_sha256": "01269acf1e2180af8cedce8ae4983aca4634ade25517e84bb4608bd194ca3226",
+    "draft_file_sha256": "0a45e5739c80c9b165a95efa7618b7066269a0855f7468bf4042aab6973b0529"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "bytes": 2536062
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/01-pharmocean-magiia-magniia/content.json",
+      "sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a",
+      "bytes": 27038,
+      "locator": {
+        "article_id": "01-pharmocean-magiia-magniia",
+        "title": "Магия Магния",
+        "lead": "Зачем нужен магний, каким бывает и какой магний лучше",
+        "image_id": "02",
+        "block_index": 3,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/01-pharmocean-magiia-magniia/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 2,
+          "type": "paragraph",
+          "text": "Магний традиционно считается «витамином от стресса», однако помимо успокаивающего и расслабляющего эффекта этот незаменимый макроэлемент взвалил на себя тысячу обязанностей: он участвует в создании ДНК, производстве белка, превращении еды в энергию, регуляции количества сахара в крови, контроле артериального давления, сокращении мышц, в том числе сердечных и выработке гормонов."
+        },
+        "nearest_text_after": {
+          "block_index": 4,
+          "type": "paragraph",
+          "text": "И это далеко не полный перечень его многочисленных функций!"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Tight frontal portrait of a visibly tense woman staring forward with wide eyes and clenched teeth.",
+      "Both hands are raised close to her face with spread, curved fingers, creating a strong symmetrical gesture that can naturally tighten and relax.",
+      "The fixed close framing and softly blurred indoor background favor subtle facial and hand motion rather than camera movement."
+    ],
+    "article_context": "The image functions as a body illustration in the section about magnesium deficiency, following a list of early symptoms such as fatigue, muscle weakness, cramps, and nervous tics. Its editorial focus is the visible strain and irritability that can accompany deficiency, preparing for the following explanation that bodily signs may be a warning signal.",
+    "base_scene": "A tense woman faces the viewer with wide eyes, clenched teeth, and both hands raised beside her face. Her strain intensifies through one continuous physical reaction: her fingers curl tighter and her jaw briefly tenses before the tension eases slightly, conveying the body signaling stress or discomfort."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Use a fixed camera for the 3.2-second close-up. Begin immediately with a small coordinated increase in tension: fingers curl inward, jaw tightens, and brows rise. Let the expression peak around the latter half, then resolve with a brief blink and a slight release in the fingers and jaw near the end, maintaining one continuous stress reaction.",
+      "positive_prompt": "Fixed close-up. The woman’s raised fingers slowly curl tighter as her jaw clenches and her eyebrows lift with mounting tension; a brief natural blink follows, then her hands and jaw loosen slightly while she keeps looking straight ahead.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:8210acb3dd54600be5eb1d9162205494d01347cb4cc21e281a20634540ca8457"
+    }
+  ]
+}

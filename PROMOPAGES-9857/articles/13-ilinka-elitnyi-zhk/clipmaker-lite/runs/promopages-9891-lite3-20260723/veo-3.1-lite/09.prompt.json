@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+    "sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+    "width": 1600,
+    "height": 900
+  },
+  "prompt": {
+    "positive": "A very slow camera push toward the pool. The narrow waterfall streams steadily down the wall, creating expanding ripples across the water while the underwater light reflections shimmer gently. Keep the motion calm and continuous, with the ripples naturally spreading through the foreground by the end.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-04-interior-water-veo-3-1-lite/result.json",
+    "sha256": "718f0387354a253d442de89372e044c61048f81bb16ac167b2da384c63d5c4c5",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.2.1",
+      "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+      "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+      "source_image_sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+      "article_context_sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c"
+    }
+  }
+}

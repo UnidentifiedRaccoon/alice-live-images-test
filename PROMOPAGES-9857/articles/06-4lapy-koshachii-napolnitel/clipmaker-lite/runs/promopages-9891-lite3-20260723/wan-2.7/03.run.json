@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "03-animal-step",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The cat calmly steps down from the litter box, places the extended front paw on the floor, shifts its weight forward, then brings the other paws down and walks one measured step toward the right. Its head stays low and alert, with subtle ear, whisker, and tail movement. Fixed camera.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f00ef10e5fc4cfd335528bc258e044c27944479d185d82e5cc513b550dce1a6a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ppY8mJyRnnOkOEUOZJm4",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:18:32Z",
+  "completed_at": "2026-07-22T22:19:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2146,
+    "height": 966,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5193228,
+    "sha256": "539f12a91fd0d59352200e49cfe381f9d5c9bdb3674ead9568a173212e5b19ca"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-wan-2-7",
+  "lite_result_sha256": "b91b3286fb348b17ae46cd0df8399ff5501ff885c08601c4fcc4ac5d5fe13878"
+}

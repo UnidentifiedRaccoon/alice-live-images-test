@@ -496,6 +496,108 @@ class VideoGenerationPipelineTest(unittest.TestCase):
             self.assertEqual(stale["status"], "stale")
             self.assertIn("--force", stale["error"])
 
+    def test_wan_resume_can_disable_submit_after_missing_session(self) -> None:
+        sample = {
+            "source_path": "PROMOPAGES-9857/articles/fake/01.png",
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "exact prompt",
+            "negative_prompt": None,
+        }
+        resume = {
+            "provider_job_id": "existing-event",
+            "provider_session_hash": "existing-session",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "result.mp4"
+            with (
+                patch.object(
+                    pipeline,
+                    "wan_wait_for_result",
+                    side_effect=pipeline.PipelineError("session_not_found"),
+                ),
+                patch.object(pipeline, "upload_wan_image") as upload,
+                patch.object(pipeline, "http_json") as submit,
+            ):
+                with self.assertRaisesRegex(pipeline.PipelineError, "session_not_found"):
+                    pipeline.wan_generate(
+                        sample,
+                        prompt,
+                        destination,
+                        "https://wan.invalid",
+                        "https://wan-stream.invalid",
+                        10,
+                        resume,
+                        lambda *_args: self.fail("resume must not submit"),
+                        allow_resubmit_after_missing_session=False,
+                    )
+            upload.assert_not_called()
+            submit.assert_not_called()
+
+    def test_wan_marks_submitting_after_upload_and_before_queue_join(self) -> None:
+        sample = {
+            "source_path": "PROMOPAGES-9857/articles/fake/01.png",
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "exact prompt",
+            "negative_prompt": None,
+        }
+        events: list[str] = []
+
+        def upload(*_args: object, **_kwargs: object) -> str:
+            events.append("upload")
+            return "/provider/upload/01.png"
+
+        def submit(*_args: object, **_kwargs: object) -> dict[str, str]:
+            self.assertEqual(events, ["upload", "submitting"])
+            events.append("queue-join")
+            return {"event_id": "event-1"}
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "result.mp4"
+            with (
+                patch.object(pipeline, "upload_wan_image", side_effect=upload),
+                patch.object(pipeline, "http_json", side_effect=submit),
+                patch.object(
+                    pipeline,
+                    "wan_wait_for_result",
+                    return_value="https://wan.invalid/result.mp4",
+                ),
+                patch.object(pipeline, "http_download"),
+            ):
+                pipeline.wan_generate(
+                    sample,
+                    prompt,
+                    destination,
+                    "https://wan.invalid",
+                    "https://wan-stream.invalid",
+                    10,
+                    None,
+                    lambda *_args: events.append("submitted"),
+                    allow_resubmit_after_missing_session=False,
+                    on_submitting=lambda: events.append("submitting"),
+                )
+
+        self.assertEqual(events[:4], ["upload", "submitting", "queue-join", "submitted"])
+
+    def test_wan_upload_validates_the_exact_bytes_before_network(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            image_path = Path(directory) / "source.png"
+            image_path.write_bytes(b"exact source bytes")
+            with patch.object(pipeline, "urlopen") as urlopen:
+                with self.assertRaisesRegex(
+                    pipeline.PipelineError,
+                    "upload source digest changed",
+                ):
+                    pipeline.upload_wan_image(
+                        "https://wan.invalid",
+                        image_path,
+                        expected_sha256="0" * 64,
+                    )
+            urlopen.assert_not_called()
+
     def test_tracked_openrouter_prompts_keep_shared_real_time_motion_plan(self) -> None:
         samples, prompts = pipeline.validate_catalogs(
             pipeline.DEFAULT_SAMPLES,

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "02-product-dropper",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/05.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "prompt": "Fixed camera. The clear serum droplet at the pipette tip slowly elongates under gravity, narrows into a glossy thread, then detaches and falls straight down, leaving a tiny fresh bead forming at the tip by the end. The pipette and product arrangement stay still; subtle highlights glide through the viscous liquid."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "903be741c572a412e09d6f1b52369f7e6fd7ce5ce197b9b820060ae67354fb38",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1eae66e7e6884baa97aec8924a77ef28",
+  "provider_session_hash": "promopages9856-f213cdb22907",
+  "submitted_at": "2026-07-22T22:10:46Z",
+  "completed_at": "2026-07-22T22:11:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1200,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 148491,
+    "sha256": "4e4523ca1f6fed7b90acc32e260962d393e4840f6c4f819bf96675ccfae96312"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-wan-2-2",
+  "lite_result_sha256": "ad291e9717a1e8b6d1a03c4df38155a96b2988ebc08a8e6d448578a812785f0e"
+}

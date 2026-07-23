@@ -90,6 +90,10 @@ class PipelineError(RuntimeError):
     """A user-actionable pipeline failure."""
 
 
+class ProviderTerminalError(PipelineError):
+    """The provider reported a definitive terminal job failure."""
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
@@ -449,12 +453,15 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
     model_id = prompt["model_id"]
     config = MODEL_CONFIGS[model_id]
     if config["adapter"] == "wan-demo":
+        runtime_prompt = prompt["positive_prompt"]
+        if prompt.get("negative_prompt"):
+            runtime_prompt = f"{runtime_prompt}\n\nAvoid: {prompt['negative_prompt']}"
         return {
             "endpoint": "/gradio_api/queue/join",
             "model": model_id,
             "input": {
                 "source_path": sample["source_path"],
-                "prompt": f"{prompt['positive_prompt']}\n\nAvoid: {prompt['negative_prompt']}",
+                "prompt": runtime_prompt,
             },
             "runtime": {
                 "resolution": config["resolution"],
@@ -466,7 +473,7 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
         }
 
     runtime_prompt = prompt["positive_prompt"]
-    if prompt.get("embed_negative_in_positive"):
+    if prompt.get("embed_negative_in_positive") and prompt.get("negative_prompt"):
         runtime_prompt = f"{runtime_prompt}\n\nAvoid: {prompt['negative_prompt']}"
 
     payload: dict[str, Any] = {
@@ -495,7 +502,7 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
         )
     if model_id == "alibaba/wan-2.7":
         parameters: dict[str, Any] = {"prompt_extend": prompt.get("prompt_extend", False)}
-        if not prompt.get("embed_negative_in_positive"):
+        if not prompt.get("embed_negative_in_positive") and prompt.get("negative_prompt"):
             parameters["negative_prompt"] = prompt["negative_prompt"]
         payload["provider"] = {
             "options": {
@@ -506,7 +513,7 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
         }
     elif model_id == "google/veo-3.1-lite":
         parameters = {"enhancePrompt": True}
-        if not prompt.get("embed_negative_in_positive"):
+        if not prompt.get("embed_negative_in_positive") and prompt.get("negative_prompt"):
             parameters["negativePrompt"] = prompt["negative_prompt"]
         payload["provider"] = {
             "options": {
@@ -576,7 +583,13 @@ def http_download(url: str, destination: Path, headers: dict[str, str] | None = 
     raise PipelineError(safe_error(f"Download failed after 3 attempts: {last_error}"))
 
 
-def upload_wan_image(base_url: str, image_path: Path, timeout: int = 120) -> str:
+def upload_wan_image(
+    base_url: str,
+    image_path: Path,
+    timeout: int = 120,
+    *,
+    expected_sha256: str | None = None,
+) -> str:
     boundary = f"----promopages-{uuid.uuid4().hex}"
     mime_type = mimetypes.guess_type(image_path.name)[0] or "application/octet-stream"
     prefix = (
@@ -584,7 +597,14 @@ def upload_wan_image(base_url: str, image_path: Path, timeout: int = 120) -> str
         f'Content-Disposition: form-data; name="files"; filename="{image_path.name}"\r\n'
         f"Content-Type: {mime_type}\r\n\r\n"
     ).encode("utf-8")
-    body = prefix + image_path.read_bytes() + f"\r\n--{boundary}--\r\n".encode("ascii")
+    image_bytes = image_path.read_bytes()
+    if expected_sha256 is not None:
+        uploaded_sha256 = hashlib.sha256(image_bytes).hexdigest()
+        if uploaded_sha256 != expected_sha256:
+            raise PipelineError(
+                f"Wan upload source digest changed: expected {expected_sha256}, got {uploaded_sha256}"
+            )
+    body = prefix + image_bytes + f"\r\n--{boundary}--\r\n".encode("ascii")
     request = Request(
         f"{base_url.rstrip('/')}/gradio_api/upload",
         data=body,
@@ -638,18 +658,22 @@ def wan_wait_for_result(stream_base_url: str, session_hash: str, event_id: str, 
                         print(f"  Wan started; eta={data.get('eta')}", flush=True)
                     if message == "process_completed" and data.get("event_id") == event_id:
                         if not data.get("success"):
-                            raise PipelineError(safe_error((data.get("output") or {}).get("error") or data))
+                            raise ProviderTerminalError(
+                                safe_error((data.get("output") or {}).get("error") or data)
+                            )
                         output_data = (data.get("output") or {}).get("data") or []
                         result = output_data[0] if output_data else None
                         if not isinstance(result, dict):
-                            raise PipelineError("Wan completed without a video result")
+                            raise ProviderTerminalError("Wan completed without a video result")
                         if result.get("url"):
                             return result["url"]
                         if result.get("path"):
                             return urljoin(stream_base_url.rstrip("/") + "/", f"gradio_api/file={result['path']}")
-                        raise PipelineError("Wan result has neither url nor path")
+                        raise ProviderTerminalError("Wan result has neither url nor path")
                     if message in {"unexpected_error", "close_stream"}:
-                        raise PipelineError(safe_error(f"Wan stream ended before completion: {data}"))
+                        raise ProviderTerminalError(
+                            safe_error(f"Wan stream ended before completion: {data}")
+                        )
         except PipelineError:
             raise
         except (HTTPError, URLError, OSError) as exc:
@@ -674,6 +698,9 @@ def wan_generate(
     timeout: int,
     resume: dict[str, Any] | None,
     on_submitted: Callable[[str, str], None],
+    *,
+    allow_resubmit_after_missing_session: bool = True,
+    on_submitting: Callable[[], None] | None = None,
 ) -> None:
     event_id = (resume or {}).get("provider_job_id")
     session_hash = (resume or {}).get("provider_session_hash")
@@ -681,7 +708,11 @@ def wan_generate(
     while True:
         if not event_id or not session_hash:
             image_path = ROOT / sample["source_path"]
-            server_path = upload_wan_image(base_url, image_path)
+            server_path = upload_wan_image(
+                base_url,
+                image_path,
+                expected_sha256=sample.get("sha256"),
+            )
             mime_type = mimetypes.guess_type(image_path.name)[0] or "image/jpeg"
             config = MODEL_CONFIGS[prompt["model_id"]]
             file_data = {
@@ -691,7 +722,9 @@ def wan_generate(
                 "is_stream": False,
                 "meta": {"_type": "gradio.FileData"},
             }
-            combined_prompt = f"{prompt['positive_prompt']}\n\nAvoid: {prompt['negative_prompt']}"
+            combined_prompt = prompt["positive_prompt"]
+            if prompt.get("negative_prompt"):
+                combined_prompt = f"{combined_prompt}\n\nAvoid: {prompt['negative_prompt']}"
             session_hash = f"promopages9856-{uuid.uuid4().hex[:12]}"
             payload = {
                 "data": [
@@ -709,6 +742,8 @@ def wan_generate(
                 "trigger_id": 19,
                 "session_hash": session_hash,
             }
+            if on_submitting is not None:
+                on_submitting()
             response = http_json("POST", f"{base_url.rstrip('/')}/gradio_api/queue/join", payload, timeout=120)
             event_id = response.get("event_id") if isinstance(response, dict) else None
             if not event_id:
@@ -718,7 +753,11 @@ def wan_generate(
             video_url = wan_wait_for_result(stream_base_url, session_hash, event_id, timeout)
             break
         except PipelineError as exc:
-            if "session_not_found" not in str(exc).lower() or resubmitted_after_missing_session:
+            if (
+                "session_not_found" not in str(exc).lower()
+                or resubmitted_after_missing_session
+                or not allow_resubmit_after_missing_session
+            ):
                 raise
             print("  Wan session was dropped; resubmitting this item once", flush=True)
             resubmitted_after_missing_session = True
@@ -841,7 +880,7 @@ def eliza_poll(
         if status in TERMINAL_FAILURE:
             detail = find_error_detail(response)
             suffix = f": {detail}" if detail else ""
-            raise PipelineError(
+            raise ProviderTerminalError(
                 safe_error(f"Eliza/OpenRouter job {job_id} failed with status {status}{suffix}")
             )
         time.sleep(interval)

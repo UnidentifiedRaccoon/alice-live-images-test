@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "02-product-dropper",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/05.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Slow, subtle camera push-in. The clear serum at the pipette tip gradually swells and stretches, then detaches near the end and falls onto the white surface, settling into a small glossy bead. Keep the bottle, dropper, and truffles otherwise still in one continuous product shot.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b49527b7b98f8e4267dccecba82ad484ea6e3029b54af7a71537436c8bc37597",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "BMGeOzWysGhf6Va4VOnJ",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:26:21Z",
+  "completed_at": "2026-07-22T22:28:07Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1221012,
+    "sha256": "42a7947804419ffb88dc2bf0c75716b1755f7adb03c8b20bb31d2de8303bc9ad"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-veo-3-1-lite",
+  "lite_result_sha256": "7e01189ab684d7cc71dc4f0400fdedd56fc1f71a87804fa42579db748f727dba"
+}

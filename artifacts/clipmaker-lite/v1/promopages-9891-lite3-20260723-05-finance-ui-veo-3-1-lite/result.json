@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+    "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ],
+    "inputs_sha256": "sha256:941dbea9ce0518712a6199f1276340afcead63d77d559667ac178e2652fbb0f8",
+    "execution_fingerprint": "sha256:16e4b4688037053de5804839b9a4cde60be995648ba2b5b6a2de520c5722ce93",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bdb-da21-7df3-913c-351d69e8f33e"
+    },
+    "authored_payload_sha256": "513cbaf6eeb814e13baefba52159356f7ee0e4f51175cd154781dae0eda64611",
+    "draft_file_sha256": "1cc8b10c0296013e18818f4ecb4a7f35e5f042125fb8500459f93dd45d30ea88"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+      "bytes": 70919
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "04",
+        "block_index": 15,
+        "role": "article_image",
+        "caption": "При доходе 100 тысяч рублей в месяц и наличии двух кредитных карт сервис покажет сумму до 2,49 млн рублей",
+        "file": "04.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        },
+        "nearest_text_before": {
+          "block_index": 14,
+          "type": "paragraph",
+          "text": "Чтобы узнать потенциальную сумму кредита, используйте сервис «Финансовый потенциал» от Сравни сразу после расчета кредитного рейтинга. Укажите размер официальной зарплаты, а сервис подскажет максимальную сумму кредита, ежемесячный платеж, примерную ставку и срок."
+        },
+        "nearest_text_after": {
+          "block_index": 16,
+          "type": "heading",
+          "text": "Предложит варианты, как повысить кредитный рейтинг"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Широкий статичный интерфейс «Финансовый потенциал» с круговой диаграммой нагрузки, расчётом доступной суммы кредита, допустимого платежа и указанного дохода.",
+      "В нижней части показаны две кредитные карты с активными синими чекбоксами; пояснение прямо связывает их включение с расчётом платёжной нагрузки.",
+      "Главные подвижные элементы интерфейса — один чекбокс, фиолетовая дуга диаграммы и числовой показатель доступной суммы."
+    ],
+    "article_context": "Это body-изображение под разделом о расчёте потенциальной суммы кредита. Оно наглядно показывает, как сервис связывает официальный доход и действующие кредитные карты с доступной суммой и максимально допустимым ежемесячным платежом; следующий раздел переводит внимание к улучшению финансового положения.",
+    "base_scene": "Экран сервиса начинается в показанном состоянии с двумя учтёнными кредитными картами. Отключение одной карты запускает единое причинное обновление: её отметка снимается, цветная доля круговой диаграммы плавно сокращается, а доступная сумма кредита увеличивается, демонстрируя влияние текущей долговой нагрузки на финансовый потенциал."
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный неподвижный shot. В начале нижний активный чекбокс мягко снимается; сразу вслед за этим фиолетовая дуга нагрузки непрерывно уменьшается, а сумма доступного кредита плавно пересчитывается вверх. Все три изменения воспринимаются как один отклик интерфейса и естественно завершаются к концу ролика.",
+      "positive_prompt": "Keep the camera fixed on the interface. The lower credit card checkbox smoothly switches off; in the same continuous response, the purple gauge arc retracts clockwise and the available credit amount counts upward, easing into its updated value near the end. All other UI elements remain still.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:ef79319f7f7882b7a0be153265c8594ab6651290c1b48603b2c7edd729ba347b"
+    }
+  ]
+}

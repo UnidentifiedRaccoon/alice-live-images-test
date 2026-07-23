@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "02-product-dropper",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/05.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Keep the camera fixed. Clear serum slowly gathers at the pipette tip, elongates under gravity, then detaches and falls toward the truffles near the end; a new tiny bead begins forming on the tip. Preserve the calm product-display composition.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "4554a88324903aadc8194f200769133b1c8b81701f4b7410607a31fa53647fd2",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "eJYvxGPwrBw5ZICVEMO7",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:17:15Z",
+  "completed_at": "2026-07-22T22:18:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1820,
+    "height": 1138,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1543704,
+    "sha256": "87dbe2e6ef620c8523bfceb105ed6ead9b75386cffbcfd8ae3c39e740aa05c71"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-wan-2-7",
+  "lite_result_sha256": "91ab21853c08d7c45019147d3366b45a847aea9bf81cb8d36d1c87002aa110d0"
+}

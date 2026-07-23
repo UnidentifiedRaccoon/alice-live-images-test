@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+    "sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+    "width": 1280,
+    "height": 800
+  },
+  "prompt": {
+    "positive": "Fixed camera. The clear serum droplet at the pipette tip slowly elongates under gravity, narrows into a glossy thread, then detaches and falls straight down, leaving a tiny fresh bead forming at the tip by the end. The pipette and product arrangement stay still; subtle highlights glide through the viscous liquid.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-02-product-dropper-wan-2-2/result.json",
+    "sha256": "ad291e9717a1e8b6d1a03c4df38155a96b2988ebc08a8e6d448578a812785f0e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.2.1",
+      "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+      "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+      "source_image_sha256": "d8f32e5b4953b00d118abfe53468b4359ba56dd31d2aa69b935c10d76f310835",
+      "article_context_sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084"
+    }
+  }
+}

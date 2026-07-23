@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+    "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+    "width": 1000,
+    "height": 450
+  },
+  "prompt": {
+    "positive": "The cat calmly steps out of the litter box to the right, placing its lowered front paw on the floor and smoothly shifting its weight forward. Its other front paw follows over the rim as the head tracks the movement, ending balanced in a natural walking stance. Fixed camera.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-03-animal-step-wan-2-2/result.json",
+    "sha256": "97e93335576bf43616a8f790832d89fc139527d8d382da64c5cc1f7cd8e61fb0",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.2.1",
+      "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+      "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+      "source_image_sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "article_context_sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-01-portrait-hands-wan-2-7",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:7b60cf0b92de6c0ee1264ca48b78a669f78f3c452b754806861e5b753b4bf914",
+    "instruction_bundle_sha256": "18bf2e4b643a8c20cdb092b6f937b1e18b56bcab6ca339f35246f00c7adc2c93",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ],
+    "inputs_sha256": "sha256:b0d695c2333c4d21d4475ba2c840eee694ccd6ec19188eafca25991ae1979891",
+    "execution_fingerprint": "sha256:a70f7357a42b53ddef4f9e53e60d2bb96b1575f0fdb233d0701fb062e9292d7e",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bda-e68e-73d3-9439-46b3aebfa20a"
+    },
+    "authored_payload_sha256": "49b6092353ce7cdc496bb6d85aec803617d51bea2d85f04f1187b3098bdc7704",
+    "draft_file_sha256": "d8e4616c98b9c24073300804844a5ec82ec3164fbff41882b5164e6d89b76663"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "bytes": 2536062
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/01-pharmocean-magiia-magniia/content.json",
+      "sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a",
+      "bytes": 27038,
+      "locator": {
+        "article_id": "01-pharmocean-magiia-magniia",
+        "title": "Магия Магния",
+        "lead": "Зачем нужен магний, каким бывает и какой магний лучше",
+        "image_id": "02",
+        "block_index": 3,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/01-pharmocean-magiia-magniia/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 2,
+          "type": "paragraph",
+          "text": "Магний традиционно считается «витамином от стресса», однако помимо успокаивающего и расслабляющего эффекта этот незаменимый макроэлемент взвалил на себя тысячу обязанностей: он участвует в создании ДНК, производстве белка, превращении еды в энергию, регуляции количества сахара в крови, контроле артериального давления, сокращении мышц, в том числе сердечных и выработке гормонов."
+        },
+        "nearest_text_after": {
+          "block_index": 4,
+          "type": "paragraph",
+          "text": "И это далеко не полный перечень его многочисленных функций!"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Крупный фронтальный портрет женщины с широко раскрытыми глазами, сжатыми зубами и поднятыми по обе стороны лица руками.",
+      "Растопыренные согнутые пальцы, веки, брови и напряжённая мимика допускают естественное движение; неподвижный размытый фон удерживает внимание на симптоме стресса."
+    ],
+    "article_context": "Это body-изображение в разделе «Признаки дефицита магния»: оно визуализирует раздражительность и нервное напряжение после перечня ранних симптомов и подводит к фразе о дёргающемся глазе как сигнале возможного дефицита.",
+    "base_scene": "Крупный план начинается с уже напряжённого выражения лица и поднятых у щёк рук. Напряжение постепенно усиливается: пальцы сжимаются, мышцы лица напрягаются, появляется короткое непроизвольное подёргивание века, после чего героиня остаётся явно встревоженной."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "В течение пяти секунд камера остаётся неподвижной. Лёгкая дрожь обеих рук постепенно переходит в более сильное сгибание пальцев, одновременно усиливается напряжение бровей и челюсти; ближе к концу одно веко дважды коротко дёргается. Движение естественно затухает на читаемом состоянии тревоги без отдельного второго действия.",
+      "positive_prompt": "Her anxious tension builds continuously: both hands tremble slightly near her cheeks as the curled fingers tighten inward, her brows lift and facial muscles tense, then one eyelid gives two brief involuntary twitches near the end. Keep the camera fixed in the close frontal framing, ending on her strained, alarmed expression.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:27177eaccae6c05c4fec69846a53796827dfdb44ca5f9fe7cedeb38a60f0f6df"
+    }
+  ]
+}
