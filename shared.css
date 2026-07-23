@@ -119,6 +119,8 @@ body {
 button,
 a,
 input,
+select,
+textarea,
 video {
   font: inherit;
 }
@@ -130,7 +132,9 @@ button {
 button,
 a,
 summary,
-input[type="range"] {
+input[type="range"],
+select,
+textarea {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
@@ -151,7 +155,7 @@ a {
   background: var(--accent-dark);
 }
 
-:where(a, button, summary, input):focus-visible {
+:where(a, button, summary, input, select, textarea):focus-visible {
   outline: 0.1875rem solid var(--accent);
   outline-offset: 0.1875rem;
 }
@@ -237,7 +241,7 @@ a {
 .viewSwitch {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   order: 3;
   width: 100%;
   border-top: 0.0625rem solid var(--line);
