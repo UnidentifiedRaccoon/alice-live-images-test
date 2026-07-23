@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "03-animal-step",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "prompt": "The cat calmly steps out of the litter box to the right, placing its lowered front paw on the floor and smoothly shifting its weight forward. Its other front paw follows over the rim as the head tracks the movement, ending balanced in a natural walking stance. Fixed camera."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "a25b6a55ca5b7f995c0a48272a6cd485f1634d56f1ff899c111a77f1aab5aab4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "788832f31a2541aeae392e15002f63e6",
+  "provider_session_hash": "promopages9856-f2338f046358",
+  "submitted_at": "2026-07-22T22:11:46Z",
+  "completed_at": "2026-07-22T22:12:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1408,
+    "height": 624,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 393297,
+    "sha256": "a4431ec49f62b42eecb938994f3ba9475d86e5e473ff039a3eb7d9df525fed84"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-wan-2-2",
+  "lite_result_sha256": "97e93335576bf43616a8f790832d89fc139527d8d382da64c5cc1f7cd8e61fb0"
+}

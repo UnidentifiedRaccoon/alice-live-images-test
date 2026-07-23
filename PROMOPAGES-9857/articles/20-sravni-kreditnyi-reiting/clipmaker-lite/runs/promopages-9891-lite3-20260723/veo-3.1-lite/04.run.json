@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "05-finance-ui",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Keep the camera fixed on the interface. The lower credit card checkbox smoothly switches off; in the same continuous response, the purple gauge arc retracts clockwise and the available credit amount counts upward, easing into its updated value near the end. All other UI elements remain still.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a30bfdecd4c6155803cec37b013f71203c9ad6b09b11232c8628ce0d6512cda1",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "FRP1YR3ES9MQtuu8G4Nb",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:32:21Z",
+  "completed_at": "2026-07-22T22:34:00Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 690989,
+    "sha256": "2bf02ded218f4d91460c43bb08e6040cc635846bb9d6b5fb6a5ce2b91a59dcfa"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite",
+  "lite_result_sha256": "2e4fbb460d3590623e129f5b17922d24b2455f3b1fb035078064b35a1a807796"
+}

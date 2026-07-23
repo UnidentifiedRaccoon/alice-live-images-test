@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "04-interior-water",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/09.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Keep the camera fixed. The narrow waterfall pours steadily into the pool for the full shot, sending overlapping ripples across the turquoise water. Underwater light shimmers and refracts over the tiled walls while the nearest leaves sway faintly in the humid air; the ripples gradually soften toward the end.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "02ed7c661953f05549f9544fd4f1b811478f61fcfd6724a8fa813cd7fd39988b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "OUExFOCitZoiO8AoOKMF",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:19:55Z",
+  "completed_at": "2026-07-22T22:21:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 13558133,
+    "sha256": "670be47b18967c8ed2f4da018620aa8e4285e9f565b52b30db8599e9dd1ff95b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-wan-2-7",
+  "lite_result_sha256": "abe27aa81f462b7f52b1a6cfe34870209ebab12f20599d353948d81144d9eba6"
+}

@@ -176,6 +176,67 @@ Google/Veo route принудительно требует
 python3 -m unittest scripts/test_video_generation_pipeline.py
 ```
 
+## Native batch bridge Clipmaker Lite
+
+`scripts/clipmaker_lite_batch_pipeline.py` обслуживает отдельную матрицу 5 × 3
+из verified singleton results агента `clipmaker-lite`. Перед каждым новым
+provider submit worker повторно проверяет provenance, точный `model_id`, SHA-256
+исходника и Lite `result.json`, а также неизменность materialized provider
+request. Bridge не создаёт и не переписывает prompts: провайдеру передаётся
+ровно `positive_prompt` и только реально присутствующий `negative_prompt` из
+Lite result.
+
+```bash
+# Проверить 15 Lite results и materialized batch без provider calls.
+python3 scripts/clipmaker_lite_batch_pipeline.py plan
+
+# Проверить provider requests без сетевых и платных submit.
+python3 scripts/clipmaker_lite_batch_pipeline.py run --dry-run --concurrency 3
+
+# Реальный запуск требует отдельного явного разрешения на внешнюю обработку.
+python3 scripts/clipmaker_lite_batch_pipeline.py run \
+  --concurrency 3 \
+  --allow-external-processing
+
+# Проверка структуры и уже имеющихся результатов незавершённой матрицы.
+python3 scripts/clipmaker_lite_batch_pipeline.py verify --allow-incomplete
+```
+
+`--concurrency 3` — глобальный лимит активных Eliza/OpenRouter jobs, общий для
+Wan 2.7 и Veo 3.1 Lite. Один слот занят от начала submit до завершения polling,
+скачивания MP4, строгой media verification и атомарной записи финального
+`.run.json`. Это rolling queue: CLI не отправляет десять платных запросов
+одновременно, а добавляет следующую задачу только после освобождения одного из
+трёх слотов. Неоднозначный `submit-unknown` или временно недоступный active job
+не освобождает слот до конца запуска. `--concurrency 1` возвращает прежнюю
+последовательную обработку выбранной матрицы в исходном порядке; уже активные
+или неоднозначные provider jobs всегда проверяются раньше новых submit.
+Фильтры `--run-id` и `--model` не скрывают такие jobs: unresolved jobs из этой
+же batch-матрицы автоматически учитываются в глобальной ёмкости и resume queue.
+
+Wan 2.2 идёт через отдельную последовательную очередь с concurrency 1 и не
+учитывается в Eliza/OpenRouter лимите. Aggregate manifest атомарно обновляет
+только coordinator-поток. Состояния `submitted` и `running` продолжают polling
+с сохранённым provider job ID; `submitting` после restart переводится в
+`submit-unknown`, который запрещает автоматический повтор платного submit.
+Один сбой не останавливает остальные jobs, если не указан `--fail-fast`.
+Несоответствие MP4 runtime-контракту сохраняется как `verification-failed` с
+фактическими media metadata и списком нарушенных проверок.
+Для Wan состояние `preparing` охватывает upload картинки, а `submitting`
+записывается непосредственно перед `queue/join`: заведомая upload-ошибка не
+считается неоднозначным платным submit и не блокирует следующие Wan jobs.
+
+`--force` в native Lite bridge намеренно запрещён: повторная платная генерация
+должна использовать новый batch namespace и не может перезаписать прежний
+`.run.json` или MP4. Для старых run-файлов, где provider mismatch исторически
+был записан вместе со статусом `succeeded`, aggregate manifest показывает
+effective status `verification-failed`, не изменяя сами прежние артефакты.
+
+Runtime contracts этой Lite-матрицы остаются model-specific: Wan 2.2 —
+720p-class, 97 кадров при 30 fps и без аудио; Wan 2.7 — 5 секунд, 1080p,
+`prompt_extend: true` и без аудио; Veo 3.1 Lite — 4 секунды, 1080p,
+`enhancePrompt: true` и без аудио.
+
 ### Изолированные portrait experiments
 
 Model-specific итерации по женщине не меняют canonical `video/<model>/02.*` и

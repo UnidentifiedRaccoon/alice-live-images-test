@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "03-animal-step",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/03.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. The cat calmly steps out of the litter tray toward the right, places the extended front paw on the floor, brings the other front paw over the rim, and shifts its weight forward in one smooth, confident motion. Its head tracks slightly ahead while the ears, whiskers, and tail move subtly with the step, ending naturally mid-walk beside the tray.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2a3fc63157e3f03378cff3958f560c6da4e9f0df6f2333ba7c498fa6d7b7f009",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "oar7FT6G03EZZrYijnCi",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:28:10Z",
+  "completed_at": "2026-07-22T22:30:08Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 7227535,
+    "sha256": "f8caa4e9f29dc24702f3728f2ee7b7b903977f316c91cf828fb1c5c0dfd41a49"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-veo-3-1-lite",
+  "lite_result_sha256": "69207c46033a9ae11e3a4e09dd1ffb873810fce6051e0b56b3484a18e5e76e57"
+}

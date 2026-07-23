@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+    "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:941dbea9ce0518712a6199f1276340afcead63d77d559667ac178e2652fbb0f8",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+      "bytes": 70919
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "04",
+        "block_index": 15,
+        "role": "article_image",
+        "caption": "При доходе 100 тысяч рублей в месяц и наличии двух кредитных карт сервис покажет сумму до 2,49 млн рублей",
+        "file": "04.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        },
+        "nearest_text_before": {
+          "block_index": 14,
+          "type": "paragraph",
+          "text": "Чтобы узнать потенциальную сумму кредита, используйте сервис «Финансовый потенциал» от Сравни сразу после расчета кредитного рейтинга. Укажите размер официальной зарплаты, а сервис подскажет максимальную сумму кредита, ежемесячный платеж, примерную ставку и срок."
+        },
+        "nearest_text_after": {
+          "block_index": 16,
+          "type": "heading",
+          "text": "Предложит варианты, как повысить кредитный рейтинг"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:ef79319f7f7882b7a0be153265c8594ab6651290c1b48603b2c7edd729ba347b"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite/result.json"
+  }
+}

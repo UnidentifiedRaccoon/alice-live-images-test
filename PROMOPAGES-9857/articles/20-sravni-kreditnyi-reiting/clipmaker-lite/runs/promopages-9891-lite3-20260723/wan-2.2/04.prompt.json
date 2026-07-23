@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+    "sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+    "width": 1098,
+    "height": 659
+  },
+  "prompt": {
+    "positive": "A single fixed shot of the financial dashboard. A soft blue highlight travels clockwise along the existing blue arc of the circular chart at a steady pace, then the arc gives one subtle confirmation pulse while the displayed loan amount and monthly payment briefly brighten and settle. Keep all numbers, labels, cards, checkboxes, and layout unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-05-finance-ui-wan-2-2/result.json",
+    "sha256": "b25a38f82c600719c7843ed1f173fa63c07ded165f45da14af530fd58259a2cc",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "1.2.1",
+      "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+      "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+      "source_image_sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+      "article_context_sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b"
+    }
+  }
+}

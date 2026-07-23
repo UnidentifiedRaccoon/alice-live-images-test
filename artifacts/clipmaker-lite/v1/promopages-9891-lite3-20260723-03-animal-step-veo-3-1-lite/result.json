@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-03-animal-step-veo-3-1-lite",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:29b0d045bf9f57537ca747190149b9af38702efa1bcbedc53aacd12b3ea0eb4e",
+    "instruction_bundle_sha256": "c9ad20c846172b2c73aa8d59afad9818318b3f7c4158c06944040e805ca8f577",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e7de2c5fd6190c493b2d563bcce917f1c5cacd817fb2acd7a933736a61080b05"
+      }
+    ],
+    "inputs_sha256": "sha256:fdcc2192887b65fcf5ffa20b37edc9ed05bbc249cf36d8d36a826f2a78125915",
+    "execution_fingerprint": "sha256:810e75f2cb54df5b21cccbcc6b1ca92cbbadb96971bf0fc26772accd66b33e76",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bdb-6aa0-7e42-85b0-48543353661f"
+    },
+    "authored_payload_sha256": "3f80e040a3f2d3074198c80838a8cb44f836ebb6b195e5d5a130bc2828d2e7dd",
+    "draft_file_sha256": "a7e83ef2ff57fe822f678515f110ebf59f546e41944019c040d0f8b8d6545925"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "bytes": 301450
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "03",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "Если у вас дома живёт несколько кошек, выбирайте впитывающий наполнитель. Главное, помните, что лоток нужно регулярно чистить. Это не даст размножаться вредным бактериям",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "current_heading": {
+          "block_index": 11,
+          "level": 3,
+          "text": "Совет №3. Регулярно меняйте наполнитель в лотке"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "Независимо от типа наполнителя, раз в месяц обязательно проводите полную уборку и дезинфекцию лотка. Помните, что кошки — чистюли, и грязный лоток может стать причиной отказа от него."
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "heading",
+          "text": "Совет №4. Используйте силикагелевые наполнители"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Серая полосатая кошка с белой грудью выходит из небольшого лотка; одна передняя лапа уже вытянута к полу, корпус направлен вправо.",
+      "Поза допускает естественное продолжение одного шага: перенос веса вперёд, постановку лапы и выход второй передней лапы.",
+      "Домашняя обстановка неподвижна; небольшое движение головы, ушей, усов и хвоста может сопровождать основной шаг."
+    ],
+    "article_context": "Это body-изображение после совета о натуральных абсорбентах. Оно показывает поведение питомца как практический критерий подходящего наполнителя: кошка спокойно воспользовалась лотком и уверенно выходит из него, что поддерживает акцент статьи на комфорте и принятии наполнителя.",
+    "base_scene": "Кошка начинает движение, уже перенося переднюю лапу через край лотка. Она спокойно и уверенно завершает выход, последовательно ставит передние лапы на пол и переносит вес вперёд, передавая естественное принятие лотка без колебаний."
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "В течение четырёх секунд при неподвижной камере кошка плавно продолжает уже начатый выход вправо: ставит вытянутую переднюю лапу на пол, переносит через бортик вторую переднюю лапу и подаёт корпус вперёд. Голова слегка следует направлению движения, уши, усы и хвост реагируют с малой естественной амплитудой. К финалу кошка оказывается устойчиво рядом с лотком и естественно продолжает шаг, без отдельной паузы.",
+      "positive_prompt": "Fixed camera. The cat calmly steps out of the litter tray toward the right, places the extended front paw on the floor, brings the other front paw over the rim, and shifts its weight forward in one smooth, confident motion. Its head tracks slightly ahead while the ears, whiskers, and tail move subtly with the step, ending naturally mid-walk beside the tray.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:ef79319f7f7882b7a0be153265c8594ab6651290c1b48603b2c7edd729ba347b"
+    }
+  ]
+}

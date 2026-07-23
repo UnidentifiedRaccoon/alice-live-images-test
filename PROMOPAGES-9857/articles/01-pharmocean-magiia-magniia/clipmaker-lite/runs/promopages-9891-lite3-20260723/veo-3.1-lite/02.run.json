@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "01-portrait-hands",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera, single continuous shot. The woman’s lower eyelid begins to twitch subtly as her eyes stay wide; tension builds through her clenched jaw, raised shoulders, and fingers curling tighter beside her face. She then releases a short controlled breath, her fingers loosen slightly and her shoulders drop a little, ending still visibly strained.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "ea1ee1a06a9bda65495c6e3d4551ca444f953abcae11fff0a8ede50f31671272",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "PepC15lhIREo7DNRao2V",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:24:31Z",
+  "completed_at": "2026-07-22T22:26:19Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3538862,
+    "sha256": "eedd32586f3ed3e8f242e5b1f47f02a8cee880c0bf12122093a97c9ca1897ba1"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-veo-3-1-lite",
+  "lite_result_sha256": "64c36abef90e3c5b00677b9e8ad883442ff726a7304599b29a8582b4858c449a"
+}

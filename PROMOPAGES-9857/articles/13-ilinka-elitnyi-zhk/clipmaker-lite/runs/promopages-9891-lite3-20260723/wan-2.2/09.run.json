@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "04-interior-water",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "prompt": "The camera remains fixed as the narrow waterfall streams flow steadily into the pool. Soft ripples spread outward across the turquoise water, gently shifting the underwater light reflections; nearby leaves tremble almost imperceptibly from the moving air. The ripples settle into a calm, continuous shimmer by the end."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "6ec992b105a576bfddb7cd391338f36d591ff62a9fdc9704e204c0a2a22b6115",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1b1fbb343b7a48a1852ecf854f550bb1",
+  "provider_session_hash": "promopages9856-f841c5130d40",
+  "submitted_at": "2026-07-22T22:12:46Z",
+  "completed_at": "2026-07-22T22:13:47Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 439244,
+    "sha256": "ab2301ede6c4514cda4534ce1c7bd036a970b5dfa09466d905a82246f539e0a3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-wan-2-2",
+  "lite_result_sha256": "cb964d5399535af12b23c709f993cb58dc6cb21726fca381855959124b747aeb"
+}

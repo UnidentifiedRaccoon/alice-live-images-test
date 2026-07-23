@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "04-interior-water",
+  "image_id": "09",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/09.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/09.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "A very slow camera push toward the pool. The narrow waterfall streams steadily down the wall, creating expanding ripples across the water while the underwater light reflections shimmer gently. Keep the motion calm and continuous, with the ripples naturally spreading through the foreground by the end.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8873d331345668bd6fe78bc8bc7d72951c3580794b87a73aa2db84a36d075686",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "xKjC2Ou6YRIdPRq6Y872",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:30:12Z",
+  "completed_at": "2026-07-22T22:32:18Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 17457610,
+    "sha256": "83a3066f7529c524fc577d9b7e064f2d738ca0bedca741715eca8e7322340ff4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-veo-3-1-lite",
+  "lite_result_sha256": "718f0387354a253d442de89372e044c61048f81bb16ac167b2da384c63d5c4c5"
+}

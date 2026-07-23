@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "05-finance-ui",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "prompt": "A single fixed shot of the financial dashboard. A soft blue highlight travels clockwise along the existing blue arc of the circular chart at a steady pace, then the arc gives one subtle confirmation pulse while the displayed loan amount and monthly payment briefly brighten and settle. Keep all numbers, labels, cards, checkboxes, and layout unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "4c384c8c85ba622fb7b2f84c9b91fd84e338b5a919104ddc04150087a6c46b83",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "900b0f324cb84a98b0c52f0c6ea7ab4c",
+  "provider_session_hash": "promopages9856-b266de14a744",
+  "submitted_at": "2026-07-22T22:13:47Z",
+  "completed_at": "2026-07-22T22:14:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1216,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 192448,
+    "sha256": "d48d80d616d747a6a9b11b38585dd0af29270f561388bfa9b05c4ff9367cbc0c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-wan-2-2",
+  "lite_result_sha256": "b25a38f82c600719c7843ed1f173fa63c07ded165f45da14af530fd58259a2cc"
+}

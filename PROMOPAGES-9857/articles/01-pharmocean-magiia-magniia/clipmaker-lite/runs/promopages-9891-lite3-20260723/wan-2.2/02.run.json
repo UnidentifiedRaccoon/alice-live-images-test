@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "01-portrait-hands",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/02.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "prompt": "Fixed close-up. The woman’s raised fingers slowly curl tighter as her jaw clenches and her eyebrows lift with mounting tension; a brief natural blink follows, then her hands and jaw loosen slightly while she keeps looking straight ahead."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "ce0569cfef291f1b83bb84964efe17b66ed0f906f0500a3c12156fe65602b322",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "a29d4e4c4a5447779cd9d9042eedf337",
+  "provider_session_hash": "promopages9856-5bd095dccd45",
+  "submitted_at": "2026-07-22T22:09:46Z",
+  "completed_at": "2026-07-22T22:10:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 313961,
+    "sha256": "8a3cfee8f5e4aba8fe7e3b42cb2ce1492d49120d5a9eaab14ac460862ff9b0fc"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-wan-2-2",
+  "lite_result_sha256": "33b85dcaa5d1868b06184d5967eda77dd469089570f245acdd59d2662aaaf530"
+}

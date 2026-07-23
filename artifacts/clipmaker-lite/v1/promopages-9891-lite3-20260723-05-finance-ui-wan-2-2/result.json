@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-05-finance-ui-wan-2-2",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+    "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "376e0e3723a2f138d72d9bba31433d3c8a6f1ef960ae3eeddce6c05908977ebf"
+      }
+    ],
+    "inputs_sha256": "sha256:941dbea9ce0518712a6199f1276340afcead63d77d559667ac178e2652fbb0f8",
+    "execution_fingerprint": "sha256:eab3be1bf5489580977ba856016160c80a5c0280738bff7b24779ea83ba0e79f",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bdb-d7d3-79a1-9352-a8f8be3ae19f"
+    },
+    "authored_payload_sha256": "adbfb417ffad85fb9cb08041d21744845b7e28a8a57a35f28b88c6a60159c0e1",
+    "draft_file_sha256": "8b3cb62e12f4fe7e43e8576184a9750d1fb79161973ba944684078fa7a0c65d2"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "sha256": "531a18c9baf3bd63c53ee1edce03042009e8f5ade9023a015ac8a235320105ed",
+      "bytes": 70919
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "04",
+        "block_index": 15,
+        "role": "article_image",
+        "caption": "При доходе 100 тысяч рублей в месяц и наличии двух кредитных карт сервис покажет сумму до 2,49 млн рублей",
+        "file": "04.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        },
+        "nearest_text_before": {
+          "block_index": 14,
+          "type": "paragraph",
+          "text": "Чтобы узнать потенциальную сумму кредита, используйте сервис «Финансовый потенциал» от Сравни сразу после расчета кредитного рейтинга. Укажите размер официальной зарплаты, а сервис подскажет максимальную сумму кредита, ежемесячный платеж, примерную ставку и срок."
+        },
+        "nearest_text_after": {
+          "block_index": 16,
+          "type": "heading",
+          "text": "Предложит варианты, как повысить кредитный рейтинг"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Светлый интерфейс сервиса «Финансовый потенциал» с круговой диаграммой кредитной нагрузки, доступной суммой до 2 492 957 ₽, допустимым платежом до 44 250 ₽ в месяц и доходом 100 000 ₽ в месяц.",
+      "В нижней части показаны две выбранные кредитные карты; синий сектор диаграммы и голубые чекбоксы — естественные элементы для компактной интерфейсной анимации."
+    ],
+    "article_context": "Это body-изображение иллюстрирует раздел о «Финансовом потенциале»: после ввода дохода сервис учитывает действующие кредитные карты и наглядно показывает доступную сумму кредита и предельный ежемесячный платёж. Редакционный акцент — понятный автоматический расчёт финансовых возможностей при доходе 100 000 ₽ и двух кредитных картах.",
+    "base_scene": "Экран сервиса остаётся в исходной композиции с уже рассчитанными показателями. Короткая световая индикация проходит по синему сектору круговой диаграммы и мягко подтверждает связанные с ним итоговые значения, создавая ощущение завершения автоматического расчёта без изменения данных."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды камера неподвижна. Сразу после начала мягкий голубой блик равномерно проходит по существующему синему сектору диаграммы по часовой стрелке; ближе к финалу сектор один раз едва заметно пульсирует, а два итоговых показателя кратко усиливают яркость и возвращаются к исходному виду. Все значения и элементы интерфейса остаются неизменными.",
+      "positive_prompt": "A single fixed shot of the financial dashboard. A soft blue highlight travels clockwise along the existing blue arc of the circular chart at a steady pace, then the arc gives one subtle confirmation pulse while the displayed loan amount and monthly payment briefly brighten and settle. Keep all numbers, labels, cards, checkboxes, and layout unchanged.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:8210acb3dd54600be5eb1d9162205494d01347cb4cc21e281a20634540ca8457"
+    }
+  ]
+}

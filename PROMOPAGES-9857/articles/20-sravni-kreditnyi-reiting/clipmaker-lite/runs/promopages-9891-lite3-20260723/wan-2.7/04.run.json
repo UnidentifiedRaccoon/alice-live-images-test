@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "sample_id": "05-finance-ui",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/04.prompt.json",
+  "output_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Keep the camera fixed. The purple load arc gently advances a few degrees while the two checked card rows receive a soft sequential highlight; the loan amount and monthly payment subtly count into their displayed values, then settle as the arc stops. Preserve the clean, readable interface.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "67710964da8d4182feb4efbe6d684a953390d77fa3643ef12466c7bc5bbac006",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "gIT0QHO3KgbLiqK4dBE3",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-22T22:21:48Z",
+  "completed_at": "2026-07-22T22:24:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1858,
+    "height": 1116,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1816802,
+    "sha256": "d1f5fcd6dcd337d7b12ce6e7b1aa339a085364fefd22f2d1d1f81615cb486aa8"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": null,
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-wan-2-7",
+  "lite_result_sha256": "79d245b25379a9c39a152854f85ccd63a6140a288b23b0543bd62c0c38312a57"
+}

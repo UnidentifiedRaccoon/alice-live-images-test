@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-03-animal-step-wan-2-2",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+    "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "376e0e3723a2f138d72d9bba31433d3c8a6f1ef960ae3eeddce6c05908977ebf"
+      }
+    ],
+    "inputs_sha256": "sha256:fdcc2192887b65fcf5ffa20b37edc9ed05bbc249cf36d8d36a826f2a78125915",
+    "execution_fingerprint": "sha256:df3d36067a51cd5fddbddc7808ae5dc4d2b63a62bde040e657ecc2a15a9360f1",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bdb-6547-77b1-b452-75a04318c9d1"
+    },
+    "authored_payload_sha256": "4b7d38ac107eb49d7457eec481d3bd559496d6d6ae8b93dc8c81cd2d9ad147cb",
+    "draft_file_sha256": "b3f5577de227b539391448587e844326942c1f728f6975df7f0e7a2d995d5b16"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "sha256": "f31d778c510ed4bc9601667c4a40810e8e79d46db7cb624d263fa1fa5f7517c3",
+      "bytes": 301450
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "03",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "Если у вас дома живёт несколько кошек, выбирайте впитывающий наполнитель. Главное, помните, что лоток нужно регулярно чистить. Это не даст размножаться вредным бактериям",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+        "current_heading": {
+          "block_index": 11,
+          "level": 3,
+          "text": "Совет №3. Регулярно меняйте наполнитель в лотке"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "Независимо от типа наполнителя, раз в месяц обязательно проводите полную уборку и дезинфекцию лотка. Помните, что кошки — чистюли, и грязный лоток может стать причиной отказа от него."
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "heading",
+          "text": "Совет №4. Используйте силикагелевые наполнители"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Серая полосатая кошка с белой грудью находится в открытом лотке и движется вправо.",
+      "Одна передняя лапа уже опущена к полу, другая остаётся у края лотка; корпус наклонён вперёд, взгляд направлен по ходу движения.",
+      "Для естественной анимации подходят спокойный шаг, небольшой перенос веса, движение головы и хвоста; камера может оставаться неподвижной."
+    ],
+    "article_context": "Это body-изображение к совету о выборе наполнителя: оно показывает поведение кошки как практический признак того, что новый наполнитель ей подходит. Редакционный акцент — питомец спокойно и без колебаний пользуется лотком.",
+    "base_scene": "Кошка начинает выходить из лотка, уже перенеся вес вперёд и опустив одну переднюю лапу к полу. Она спокойно завершает шаг наружу, подтверждая естественное и комфортное отношение к лотку."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "В течение 3,2 секунды кошка без паузы продолжает уже начатый выход вправо: ставит опущенную переднюю лапу на пол, плавно переносит на неё вес и выводит вторую переднюю лапу через край лотка. Голова слегка следует направлению шага. Камера неподвижна; к финалу кошка устойчиво стоит передней частью корпуса на полу, сохраняя естественное продолжение ходьбы.",
+      "positive_prompt": "The cat calmly steps out of the litter box to the right, placing its lowered front paw on the floor and smoothly shifting its weight forward. Its other front paw follows over the rim as the head tracks the movement, ending balanced in a natural walking stance. Fixed camera.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:8210acb3dd54600be5eb1d9162205494d01347cb4cc21e281a20634540ca8457"
+    }
+  ]
+}

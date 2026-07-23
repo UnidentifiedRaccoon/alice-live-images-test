@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-04-interior-water-wan-2-7",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:7b60cf0b92de6c0ee1264ca48b78a669f78f3c452b754806861e5b753b4bf914",
+    "instruction_bundle_sha256": "18bf2e4b643a8c20cdb092b6f937b1e18b56bcab6ca339f35246f00c7adc2c93",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "6dc962e17893eb081d50e9af31e8016e67d40b60ca1a845f35b925cbebf0c0cd"
+      }
+    ],
+    "inputs_sha256": "sha256:b9dbb19de6f2571a2ee9061997422bb2a43745db2fe23f6569ca3929d63b67e2",
+    "execution_fingerprint": "sha256:24ccf94268a221bd0b94d8c81294d7b44a0afc6733661a9a2910128fa0b84a03",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "ccf63c3a58cef44281da4a54a3ec65c6a612e579991d6c9e754613f2fbc3299d",
+      "version": "codex-cli 0.145.0-alpha.30",
+      "requested_model": null,
+      "thread_id": "019f8bdb-689b-7773-b144-8f6fe84f45f9"
+    },
+    "authored_payload_sha256": "23f9e5584a40bc64b6c2e91b8019571b7559937a47910ea175210dc5f05b8678",
+    "draft_file_sha256": "258762e33970a7c1fe8ea667464d3eee75e10b88a0091ca6601a010116ad665f"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+      "bytes": 2609307
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/13-ilinka-elitnyi-zhk/content.json",
+      "sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c",
+      "bytes": 16974,
+      "locator": {
+        "article_id": "13-ilinka-elitnyi-zhk",
+        "title": "Показываем, что за элитный ЖК строят напротив Кремля",
+        "lead": "Рассказываем о премиальном комплексе «Царев сад» в историческом районе Москвы",
+        "image_id": "09",
+        "block_index": 28,
+        "role": "article_image",
+        "caption": "Площадь спа-комплекса — более 5000 кв. м, здесь есть процедурные кабинеты, фитнес-зал и парные помещения",
+        "file": "09.png",
+        "manifest_file_path": "articles/13-ilinka-elitnyi-zhk/09.png",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Всё необходимое — на территории комплекса"
+        },
+        "nearest_text_before": {
+          "block_index": 27,
+          "type": "paragraph",
+          "text": "Чтобы сыграть с единомышленниками в бильярд или расслабиться в сауне, необязательно выезжать за пределы комплекса. Прямо на территории «Резиденции 1864» есть спа-комплекс с фитнес-зоной и сауной, ресторан, бильярдная, кинотеатр, модные бутики и салоны красоты — всё, чтобы жить полной жизнью и не тратить время на дорогу."
+        },
+        "nearest_text_after": {
+          "block_index": 29,
+          "type": "paragraph",
+          "text": "«Резиденция 1864» уже готова для заселения. Вам не придется ждать окончания строительства — получите ключи сразу после покупки и можете заезжать в коллекционные апартаменты."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Современный крытый бассейн с бирюзовой подсветкой занимает передний план; справа расположена мягкая круглая лежанка, на стене — вертикальное озеленение.",
+      "Тонкий водопад слева уже льется в бассейн, поэтому естественное продолжение кадра — расходящиеся волны, мерцание подводного света и легкое движение ближайшей листвы."
+    ],
+    "article_context": "Изображение иллюстрирует раздел о собственной инфраструктуре «Резиденции 1864» и конкретно показывает премиальную спа-зону комплекса. Редакционный акцент — спокойный отдых у воды без необходимости покидать территорию комплекса.",
+    "base_scene": "Камерная спа-зона остается безлюдной и умиротворенной, а непрерывное движение воды оживляет пространство и подчеркивает ощущение приватного курортного комфорта внутри жилого комплекса."
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный статичный кадр: водопад слева равномерно льется в бассейн, от места падения воды почти всю сцену распространяются перекрывающиеся волны. Бирюзовые блики плавно скользят по воде и облицовке, ближайшая листва едва колышется. К финалу поток продолжается, а дальние круги естественно ослабевают, сохраняя ощущение тишины и приватности.",
+      "positive_prompt": "Keep the camera fixed. The narrow waterfall pours steadily into the pool for the full shot, sending overlapping ripples across the turquoise water. Underwater light shimmers and refracts over the tiled walls while the nearest leaves sway faintly in the humid air; the ripples gradually soften toward the end.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:27177eaccae6c05c4fec69846a53796827dfdb44ca5f9fe7cedeb38a60f0f6df"
+    }
+  ]
+}

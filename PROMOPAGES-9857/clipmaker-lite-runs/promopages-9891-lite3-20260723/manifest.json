@@ -1,0 +1,703 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9891",
+  "batch_id": "promopages-9891-lite3-20260723",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-07-23T08:11:12Z",
+  "expected_outputs": 15,
+  "summary": {
+    "succeeded": 10,
+    "verification-failed": 5
+  },
+  "conforming_outputs": 10,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-wan-2-2",
+      "sample_id": "01-portrait-hands",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/02.run.json",
+      "video_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 313961,
+        "sha256": "8a3cfee8f5e4aba8fe7e3b42cb2ce1492d49120d5a9eaab14ac460862ff9b0fc"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-wan-2-7",
+      "sample_id": "01-portrait-hands",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/02.run.json",
+      "video_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4309139,
+        "sha256": "2c8f6ee381a8f2d6b364e0c41cf53e197227d433a839ac6fcffb2507f7e80fb5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Recorded media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-01-portrait-hands-veo-3-1-lite",
+      "sample_id": "01-portrait-hands",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/02.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/02.run.json",
+      "video_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3538862,
+        "sha256": "eedd32586f3ed3e8f242e5b1f47f02a8cee880c0bf12122093a97c9ca1897ba1"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-wan-2-2",
+      "sample_id": "02-product-dropper",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/05.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/05.run.json",
+      "video_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1200,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 148491,
+        "sha256": "4e4523ca1f6fed7b90acc32e260962d393e4840f6c4f819bf96675ccfae96312"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-wan-2-7",
+      "sample_id": "02-product-dropper",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/05.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/05.run.json",
+      "video_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1820,
+        "height": 1138,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 1543704,
+        "sha256": "87dbe2e6ef620c8523bfceb105ed6ead9b75386cffbcfd8ae3c39e740aa05c71"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Recorded media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-02-product-dropper-veo-3-1-lite",
+      "sample_id": "02-product-dropper",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/05.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/05.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/05.run.json",
+      "video_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1221012,
+        "sha256": "42a7947804419ffb88dc2bf0c75716b1755f7adb03c8b20bb31d2de8303bc9ad"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-wan-2-2",
+      "sample_id": "03-animal-step",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/03.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/03.run.json",
+      "video_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1408,
+        "height": 624,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 393297,
+        "sha256": "a4431ec49f62b42eecb938994f3ba9475d86e5e473ff039a3eb7d9df525fed84"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-wan-2-7",
+      "sample_id": "03-animal-step",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/03.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/03.run.json",
+      "video_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2146,
+        "height": 966,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5193228,
+        "sha256": "539f12a91fd0d59352200e49cfe381f9d5c9bdb3674ead9568a173212e5b19ca"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Recorded media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-03-animal-step-veo-3-1-lite",
+      "sample_id": "03-animal-step",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/03.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/03.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/03.run.json",
+      "video_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 7227535,
+        "sha256": "f8caa4e9f29dc24702f3728f2ee7b7b903977f316c91cf828fb1c5c0dfd41a49"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-wan-2-2",
+      "sample_id": "04-interior-water",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/09.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/09.run.json",
+      "video_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1264,
+        "height": 704,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 439244,
+        "sha256": "ab2301ede6c4514cda4534ce1c7bd036a970b5dfa09466d905a82246f539e0a3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-wan-2-7",
+      "sample_id": "04-interior-water",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/09.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/09.run.json",
+      "video_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 13558133,
+        "sha256": "670be47b18967c8ed2f4da018620aa8e4285e9f565b52b30db8599e9dd1ff95b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio"
+        ]
+      },
+      "error": "Recorded media contract verification failed: audio"
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-04-interior-water-veo-3-1-lite",
+      "sample_id": "04-interior-water",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/09.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/09.run.json",
+      "video_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 17457610,
+        "sha256": "83a3066f7529c524fc577d9b7e064f2d738ca0bedca741715eca8e7322340ff4"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-wan-2-2",
+      "sample_id": "05-finance-ui",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/04.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/04.run.json",
+      "video_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1216,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 192448,
+        "sha256": "d48d80d616d747a6a9b11b38585dd0af29270f561388bfa9b05c4ff9367cbc0c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-wan-2-7",
+      "sample_id": "05-finance-ui",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/04.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/04.run.json",
+      "video_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1858,
+        "height": 1116,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 1816802,
+        "sha256": "d1f5fcd6dcd337d7b12ce6e7b1aa339a085364fefd22f2d1d1f81615cb486aa8"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Recorded media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9891-lite3-20260723-05-finance-ui-veo-3-1-lite",
+      "sample_id": "05-finance-ui",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/04.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": null,
+      "prompt_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/04.prompt.json",
+      "run_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/04.run.json",
+      "video_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/clipmaker-lite/runs/promopages-9891-lite3-20260723/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 690989,
+        "sha256": "2bf02ded218f4d91460c43bb08e6040cc635846bb9d6b5fb6a5ce2b91a59dcfa"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

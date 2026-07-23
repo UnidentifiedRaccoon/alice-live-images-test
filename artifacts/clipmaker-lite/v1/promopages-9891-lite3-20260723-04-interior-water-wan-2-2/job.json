@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9891-lite3-20260723-04-interior-water-wan-2-2",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "1.2.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 3,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "67b6ec33094c85a676cc1aca0f13d7d938d9a871f7473b9ff8a6a68571ff9961",
+    "contract_fingerprint": "sha256:96e48ae9191f58aa186dd09b1f31ae405bb83fd307c1baa2335ec960019e7122",
+    "instruction_bundle_sha256": "a582c2b4543e1881cf8320696ca42d30ef758c006158b41d06fae9d29515c424",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "51c2086115e80140bd97014bfeff5980eac601e941bfd561a458a63ebef3fa82"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b174ed2fa71cd74d1158faa9afdba1572fc22907006c969889ae47199f4baf11"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "376e0e3723a2f138d72d9bba31433d3c8a6f1ef960ae3eeddce6c05908977ebf"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:b9dbb19de6f2571a2ee9061997422bb2a43745db2fe23f6569ca3929d63b67e2",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/09.png",
+      "sha256": "10dd4f44ea0e4d5cf66f0c297840e802aaad7fcd675aeb5bcb24436cf59fa053",
+      "bytes": 2609307
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/13-ilinka-elitnyi-zhk/content.json",
+      "sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c",
+      "bytes": 16974,
+      "locator": {
+        "article_id": "13-ilinka-elitnyi-zhk",
+        "title": "Показываем, что за элитный ЖК строят напротив Кремля",
+        "lead": "Рассказываем о премиальном комплексе «Царев сад» в историческом районе Москвы",
+        "image_id": "09",
+        "block_index": 28,
+        "role": "article_image",
+        "caption": "Площадь спа-комплекса — более 5000 кв. м, здесь есть процедурные кабинеты, фитнес-зал и парные помещения",
+        "file": "09.png",
+        "manifest_file_path": "articles/13-ilinka-elitnyi-zhk/09.png",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Всё необходимое — на территории комплекса"
+        },
+        "nearest_text_before": {
+          "block_index": 27,
+          "type": "paragraph",
+          "text": "Чтобы сыграть с единомышленниками в бильярд или расслабиться в сауне, необязательно выезжать за пределы комплекса. Прямо на территории «Резиденции 1864» есть спа-комплекс с фитнес-зоной и сауной, ресторан, бильярдная, кинотеатр, модные бутики и салоны красоты — всё, чтобы жить полной жизнью и не тратить время на дорогу."
+        },
+        "nearest_text_after": {
+          "block_index": 29,
+          "type": "paragraph",
+          "text": "«Резиденция 1864» уже готова для заселения. Вам не придется ждать окончания строительства — получите ключи сразу после покупки и можете заезжать в коллекционные апартаменты."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:8210acb3dd54600be5eb1d9162205494d01347cb4cc21e281a20634540ca8457"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-04-interior-water-wan-2-2/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-04-interior-water-wan-2-2/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-04-interior-water-wan-2-2/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9891-lite3-20260723-04-interior-water-wan-2-2/result.json"
+  }
+}
