@@ -21,11 +21,16 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
 
         self.assertEqual(
             schema["properties"]["schema_version"],
-            {"type": "integer", "const": 1},
+            {"type": "integer", "const": runner.DRAFT_SCHEMA_VERSION},
         )
         self.assertEqual(
             schema["properties"]["job_id"],
             {"type": "string", "const": "schema-check"},
+        )
+        self.assertNotIn("base_scene", schema["properties"])
+        self.assertEqual(
+            schema["properties"]["structured_intent"]["required"],
+            list(runner.STRUCTURED_INTENT_KEYS),
         )
 
     def make_workspace(self, directory: str) -> tuple[Path, Path, Path]:
@@ -174,11 +179,16 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
     @staticmethod
     def draft_bytes(job_id: str, model_ids: list[str]) -> bytes:
         draft = {
-            "schema_version": 1,
+            "schema_version": runner.DRAFT_SCHEMA_VERSION,
             "job_id": job_id,
             "image_reading": ["A visible subject remains the compositional focus."],
             "article_context": "The image supports the nearby editorial point.",
-            "base_scene": "One continuous visible change develops from the source frame.",
+            "structured_intent": {
+                "editorial_meaning": "Support the nearby editorial point.",
+                "primary_action": "One visible change develops from the source frame.",
+                "terminal_state": "The change reaches an observable endpoint.",
+                "semantic_invariant": "The editorial state remains unchanged through the end.",
+            },
             "models": [
                 {
                     "model_id": model_id,
@@ -276,7 +286,11 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 result["models"][1]["runtime"]["prompt_expansion"],
                 {"parameter": "prompt_extend", "value": True},
             )
-            self.assertNotIn("negative_prompt", result["models"][0])
+            self.assertIsNone(result["models"][0]["negative_prompt"])
+            self.assertEqual(
+                result["analysis"]["structured_intent"]["terminal_state"],
+                "The change reaches an observable endpoint.",
+            )
             summary = runner.provenance_summary(root, "sample-run")
             self.assertTrue(summary["verified"])
             self.assertEqual(summary["agent_id"], "clipmaker-lite")
@@ -408,6 +422,23 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 (root / runner.OUTPUT_NAMESPACE / "wan22-replay/result.json").exists()
             )
 
+    def test_structured_intent_is_required_and_has_only_four_fields(self) -> None:
+        draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
+        draft["base_scene"] = "Legacy unstructured scene."
+        del draft["structured_intent"]
+        with self.assertRaisesRegex(runner.LiteRunnerError, "structured_intent"):
+            runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
+
+        draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
+        draft["structured_intent"]["scene_type"] = "portrait"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "forbidden keys"):
+            runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
+
+        draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
+        draft["structured_intent"]["terminal_state"] = "   "
+        with self.assertRaisesRegex(runner.LiteRunnerError, "terminal_state"):
+            runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
+
     def test_changed_instruction_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root, image, context = self.make_workspace(directory)
@@ -480,6 +511,49 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             result_path.write_text(json.dumps(result), encoding="utf-8")
             with self.assertRaisesRegex(runner.LiteRunnerError, "runtime were modified"):
                 runner.provenance_summary(root, "tampered-result")
+
+    def test_provenance_rejects_a_modified_terminal_state(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            run = runner.prepare_run(
+                root,
+                "tampered-intent",
+                image,
+                context,
+                model_ids=["alibaba/wan-2.2"],
+            )
+            result_path = self.run_with_fake(
+                root,
+                "tampered-intent",
+                ["alibaba/wan-2.2"],
+            )
+            result = runner.read_json(result_path)
+            result["analysis"]["structured_intent"]["terminal_state"] = (
+                "A different endpoint appears."
+            )
+            result_path.write_text(json.dumps(result), encoding="utf-8")
+            with self.assertRaisesRegex(runner.LiteRunnerError, "analysis differ"):
+                runner.provenance_summary(root, "tampered-intent")
+
+    def test_bound_request_requires_intent_before_model_plans(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            runner.prepare_run(
+                root,
+                "bound-intent",
+                image,
+                context,
+                model_ids=["google/veo-3.1-lite"],
+            )
+            job, selection, run = runner.validate_prepared_job(root, "bound-intent")
+            request = runner.build_agent_request(job, selection, run, root.resolve())
+            prompt = request["prompt"].decode("utf-8")
+            self.assertIn("write structured_intent before any model plan", prompt)
+            self.assertIn("Keep camera, timing, amplitude, scene type", prompt)
+            self.assertLess(
+                prompt.index("write structured_intent before any model plan"),
+                prompt.index("return only the JSON object"),
+            )
 
     def test_context_image_must_match_exactly(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

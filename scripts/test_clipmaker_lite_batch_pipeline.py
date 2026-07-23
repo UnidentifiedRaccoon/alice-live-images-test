@@ -20,11 +20,19 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         runtime = batch.contract()["models"][entry.model_id]["runtime"]
         return batch.LiteJob(
             entry=entry,
+            structured_intent={
+                "editorial_meaning": "Test editorial meaning.",
+                "primary_action": "One test action.",
+                "terminal_state": "The action reaches its test endpoint.",
+                "semantic_invariant": "The test meaning remains stable.",
+            },
             positive_prompt=f"exact Lite prompt for {entry.model_id}",
             negative_prompt=None,
-            result_path=f"artifacts/clipmaker-lite/v1/{entry.run_id}/result.json",
+            result_path=(
+                f"artifacts/clipmaker-lite/v1/{entry.planning_run_id}/result.json"
+            ),
             result_sha256="a" * 64,
-            provenance={"verified": True},
+            provenance={"verified": True, "models": list(batch.MODEL_IDS)},
             runtime=runtime,
         )
 
@@ -136,15 +144,23 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         values.update(overrides)
         return batch.ProviderOperations(**values)
 
-    def test_matrix_is_exactly_five_by_three_singleton_routes(self) -> None:
+    def test_matrix_has_five_shared_plans_and_fifteen_provider_runs(self) -> None:
+        self.assertEqual(batch.TICKET, "PROMOPAGES-9909")
+        self.assertEqual(batch.BATCH_ID, "promopages-9909-lite1-20260723")
         entries = batch.matrix()
         self.assertEqual(len(entries), 15)
-        self.assertEqual(len({entry.run_id for entry in entries}), 15)
+        self.assertEqual(len({entry.provider_run_id for entry in entries}), 15)
+        self.assertEqual(len({entry.planning_run_id for entry in entries}), 5)
         for sample in batch.SAMPLES:
+            sample_entries = [entry for entry in entries if entry.sample == sample]
             self.assertEqual(
-                {entry.model_id for entry in entries if entry.sample == sample},
-                set(batch.MODEL_IDS),
+                [entry.model_id for entry in sample_entries], list(batch.MODEL_IDS)
             )
+            self.assertEqual(
+                {entry.planning_run_id for entry in sample_entries},
+                {sample.planning_run_id},
+            )
+            self.assertEqual(len({entry.provider_run_id for entry in sample_entries}), 3)
 
     def test_artifacts_are_isolated_below_the_batch_namespace(self) -> None:
         for entry in batch.matrix():
@@ -161,6 +177,116 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         )
         self.assertEqual(preview["input"]["prompt"], job.positive_prompt)
         self.assertNotIn("Avoid:", preview["input"]["prompt"])
+        artifact = batch.prompt_artifact(job)
+        self.assertEqual(artifact["schema_version"], 2)
+        self.assertEqual(artifact["lite_run_id"], entry.planning_run_id)
+        self.assertEqual(artifact["provider_run_id"], entry.provider_run_id)
+        self.assertEqual(artifact["structured_intent"], job.structured_intent)
+        self.assertIsNone(artifact["prompt"]["negative"])
+        self.assertEqual(
+            artifact["lite_result"]["provenance"]["models"],
+            list(batch.MODEL_IDS),
+        )
+
+    def test_load_lite_job_requires_structured_intent_and_null_negative(self) -> None:
+        entries = batch.matrix()[:3]
+        entry = entries[0]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / entry.sample.source_path
+            source.parent.mkdir(parents=True)
+            source.write_bytes((batch.ROOT / entry.sample.source_path).read_bytes())
+            result_path = (
+                root
+                / batch.ARTIFACT_NAMESPACE
+                / entry.planning_run_id
+                / "result.json"
+            )
+            result_path.parent.mkdir(parents=True)
+            result = {
+                "schema_version": 2,
+                "job_id": entry.planning_run_id,
+                "producer": {"agent_id": batch.AGENT_ID},
+                "inputs": {
+                    "source_image": {
+                        "path": entry.sample.source_path,
+                        "sha256": entry.sample.source_sha256,
+                    },
+                    "article_context": {"path": entry.sample.context_path},
+                },
+                "analysis": {"structured_intent": self.lite_job(entry).structured_intent},
+                "models": [
+                    {
+                        "model_id": model_id,
+                        "positive_prompt": f"exact shared-result prompt for {model_id}",
+                        "negative_prompt": None,
+                        "runtime": batch.contract()["models"][model_id]["runtime"],
+                    }
+                    for model_id in batch.MODEL_IDS
+                ],
+            }
+            transport.atomic_write_json(result_path, result)
+            summary = {
+                "verified": True,
+                "agent_id": batch.AGENT_ID,
+                "models": list(batch.MODEL_IDS),
+                "source_image_sha256": entry.sample.source_sha256,
+                "result_path": (
+                    batch.ARTIFACT_NAMESPACE / entry.planning_run_id / "result.json"
+                ).as_posix(),
+            }
+            with mock.patch.object(
+                batch.clipmaker_lite_runner,
+                "provenance_summary",
+                return_value=summary,
+            ) as provenance:
+                jobs = [batch.load_lite_job(item, root) for item in entries]
+
+                self.assertEqual(
+                    [job.positive_prompt for job in jobs],
+                    [
+                        f"exact shared-result prompt for {model_id}"
+                        for model_id in batch.MODEL_IDS
+                    ],
+                )
+                self.assertEqual(
+                    {tuple(job.structured_intent.items()) for job in jobs},
+                    {tuple(jobs[0].structured_intent.items())},
+                )
+                self.assertEqual({job.result_path for job in jobs}, {summary["result_path"]})
+                self.assertEqual(len({job.result_sha256 for job in jobs}), 1)
+                self.assertEqual(
+                    [call.args[1] for call in provenance.call_args_list],
+                    [entry.planning_run_id] * 3,
+                )
+
+                result["models"][1]["negative_prompt"] = "historical repair"
+                transport.atomic_write_json(result_path, result)
+                with self.assertRaisesRegex(
+                    batch.BatchPipelineError,
+                    "baseline negative_prompt must be null",
+                ):
+                    batch.load_lite_job(entries[1], root)
+
+    def test_load_lite_job_rejects_incomplete_planning_provenance(self) -> None:
+        entry = batch.matrix()[0]
+        summary = {
+            "verified": True,
+            "agent_id": batch.AGENT_ID,
+            "models": [entry.model_id],
+            "source_image_sha256": entry.sample.source_sha256,
+        }
+        with mock.patch.object(
+            batch.clipmaker_lite_runner,
+            "provenance_summary",
+            return_value=summary,
+        ) as provenance:
+            with self.assertRaisesRegex(
+                batch.BatchPipelineError,
+                "producer/model set mismatch",
+            ):
+                batch.load_lite_job(entry)
+        provenance.assert_called_once_with(batch.ROOT, entry.planning_run_id)
 
     def test_provider_expansion_is_model_specific(self) -> None:
         entries = {entry.model_id: entry for entry in batch.matrix()[:3]}
@@ -191,6 +317,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             base = self.lite_job(entries[model_id])
             job = batch.LiteJob(
                 entry=base.entry,
+                structured_intent=base.structured_intent,
                 positive_prompt=base.positive_prompt,
                 negative_prompt=negative,
                 result_path=base.result_path,

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Run and verify the fresh 5x3 native Clipmaker Lite video batch.
+"""Run and verify the PROMOPAGES-9909 5x3 native Clipmaker Lite video batch.
 
-Every prompt consumed here must come from a current, singleton
-``clipmaker-lite`` result with verified runner provenance.  The bridge only
-transports that prompt to the matching provider route; it never authors,
-rewrites, or borrows prompts between models.
+Each source image has one current, verified ``clipmaker-lite`` planning result
+containing the shared structured intent and all three model plans.  The bridge
+expands those five planning results into 15 provider runs, selecting only the
+matching model plan without authoring, rewriting, or borrowing prompts.
 """
 
 from __future__ import annotations
@@ -30,8 +30,8 @@ from scripts import clipmaker_lite_runner  # noqa: E402
 from scripts import video_generation_pipeline as transport  # noqa: E402
 
 
-BATCH_ID = "promopages-9891-lite3-20260723"
-TICKET = "PROMOPAGES-9891"
+BATCH_ID = "promopages-9909-lite1-20260723"
+TICKET = "PROMOPAGES-9909"
 AGENT_ID = "clipmaker-lite"
 CONTRACT_PATH = ROOT / "docs/agents/clipmaker-lite/contract.json"
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
@@ -98,6 +98,12 @@ class Sample:
     def context_path(self) -> str:
         return f"PROMOPAGES-9884/articles/{self.article_slug}/content.json"
 
+    @property
+    def planning_run_id(self) -> str:
+        """The single Clipmaker Lite planning run shared by all model entries."""
+
+        return f"{BATCH_ID}-{self.sample_id}"
+
 
 @dataclass(frozen=True)
 class Entry:
@@ -105,13 +111,26 @@ class Entry:
     model_id: str
 
     @property
-    def run_id(self) -> str:
+    def provider_run_id(self) -> str:
+        """The provider-specific generation identity used by queue filters."""
+
         return f"{BATCH_ID}-{self.sample.sample_id}-{MODEL_SUFFIXES[self.model_id]}"
+
+    @property
+    def planning_run_id(self) -> str:
+        return self.sample.planning_run_id
+
+    @property
+    def run_id(self) -> str:
+        """Backward-compatible alias for the provider generation identity."""
+
+        return self.provider_run_id
 
 
 @dataclass(frozen=True)
 class LiteJob:
     entry: Entry
+    structured_intent: dict[str, str]
     positive_prompt: str
     negative_prompt: str | None
     result_path: str
@@ -257,60 +276,89 @@ def contract() -> dict[str, Any]:
 
 
 def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
+    planning_run_id = entry.planning_run_id
     try:
-        summary = clipmaker_lite_runner.provenance_summary(root, entry.run_id)
+        summary = clipmaker_lite_runner.provenance_summary(root, planning_run_id)
     except Exception as exc:
         raise BatchPipelineError(
-            f"Lite provenance failed for {entry.run_id}: {transport.safe_error(exc)}"
+            f"Lite provenance failed for {planning_run_id}: {transport.safe_error(exc)}"
         ) from exc
     if summary.get("verified") is not True:
-        raise BatchPipelineError(f"Lite provenance is not verified: {entry.run_id}")
-    if summary.get("agent_id") != AGENT_ID or summary.get("models") != [entry.model_id]:
-        raise BatchPipelineError(f"Lite producer/model mismatch: {entry.run_id}")
+        raise BatchPipelineError(f"Lite provenance is not verified: {planning_run_id}")
+    if summary.get("agent_id") != AGENT_ID or summary.get("models") != list(MODEL_IDS):
+        raise BatchPipelineError(
+            f"Lite producer/model set mismatch: {planning_run_id}"
+        )
     if summary.get("source_image_sha256") != entry.sample.source_sha256:
-        raise BatchPipelineError(f"Lite source digest mismatch: {entry.run_id}")
+        raise BatchPipelineError(f"Lite source digest mismatch: {planning_run_id}")
 
-    expected_result = (ARTIFACT_NAMESPACE / entry.run_id / "result.json").as_posix()
+    expected_result = (
+        ARTIFACT_NAMESPACE / planning_run_id / "result.json"
+    ).as_posix()
     if summary.get("result_path") != expected_result:
-        raise BatchPipelineError(f"Unexpected Lite result path: {entry.run_id}")
+        raise BatchPipelineError(f"Unexpected Lite result path: {planning_run_id}")
     result_path = root / expected_result
     result = read_json(result_path)
-    if not isinstance(result, dict) or result.get("job_id") != entry.run_id:
-        raise BatchPipelineError(f"Lite result identity mismatch: {entry.run_id}")
+    if not isinstance(result, dict) or result.get("job_id") != planning_run_id:
+        raise BatchPipelineError(f"Lite result identity mismatch: {planning_run_id}")
     producer = result.get("producer")
     if not isinstance(producer, dict) or producer.get("agent_id") != AGENT_ID:
-        raise BatchPipelineError(f"Lite result producer mismatch: {entry.run_id}")
+        raise BatchPipelineError(f"Lite result producer mismatch: {planning_run_id}")
     inputs = result.get("inputs")
     source = inputs.get("source_image") if isinstance(inputs, dict) else None
     article = inputs.get("article_context") if isinstance(inputs, dict) else None
     if not isinstance(source, dict) or not isinstance(article, dict):
-        raise BatchPipelineError(f"Lite result inputs are missing: {entry.run_id}")
+        raise BatchPipelineError(f"Lite result inputs are missing: {planning_run_id}")
     if source.get("path") != entry.sample.source_path or source.get("sha256") != entry.sample.source_sha256:
-        raise BatchPipelineError(f"Lite source binding mismatch: {entry.run_id}")
+        raise BatchPipelineError(f"Lite source binding mismatch: {planning_run_id}")
     if article.get("path") != entry.sample.context_path:
-        raise BatchPipelineError(f"Lite article binding mismatch: {entry.run_id}")
+        raise BatchPipelineError(f"Lite article binding mismatch: {planning_run_id}")
 
     source_path = root / entry.sample.source_path
     if not source_path.is_file() or sha256_file(source_path) != entry.sample.source_sha256:
         raise BatchPipelineError(f"Current source image mismatch: {entry.sample.source_path}")
     models = result.get("models")
-    if not isinstance(models, list) or len(models) != 1 or not isinstance(models[0], dict):
-        raise BatchPipelineError(f"Lite result must contain one model: {entry.run_id}")
-    model = models[0]
-    if model.get("model_id") != entry.model_id:
-        raise BatchPipelineError(f"Lite result model mismatch: {entry.run_id}")
+    if not isinstance(models, list) or any(not isinstance(model, dict) for model in models):
+        raise BatchPipelineError(f"Lite result models are invalid: {planning_run_id}")
+    result_model_ids = [model.get("model_id") for model in models]
+    if result_model_ids != list(MODEL_IDS):
+        raise BatchPipelineError(
+            f"Lite result must contain all canonical models: {planning_run_id}"
+        )
+    model = models[result_model_ids.index(entry.model_id)]
     runtime = model.get("runtime")
     expected_runtime = contract()["models"][entry.model_id]["runtime"]
     if runtime != expected_runtime:
-        raise BatchPipelineError(f"Lite runtime mismatch: {entry.run_id}")
+        raise BatchPipelineError(f"Lite runtime mismatch: {entry.provider_run_id}")
     positive = model.get("positive_prompt")
     if not isinstance(positive, str) or not positive.strip():
-        raise BatchPipelineError(f"Lite positive prompt is empty: {entry.run_id}")
+        raise BatchPipelineError(f"Lite positive prompt is empty: {entry.provider_run_id}")
+    analysis = result.get("analysis")
+    structured_intent = (
+        analysis.get("structured_intent") if isinstance(analysis, dict) else None
+    )
+    if not isinstance(structured_intent, dict) or set(structured_intent) != set(
+        clipmaker_lite_runner.STRUCTURED_INTENT_KEYS
+    ):
+        raise BatchPipelineError(f"Lite structured intent is invalid: {planning_run_id}")
+    if any(
+        not isinstance(structured_intent[key], str)
+        or not structured_intent[key].strip()
+        for key in clipmaker_lite_runner.STRUCTURED_INTENT_KEYS
+    ):
+        raise BatchPipelineError(f"Lite structured intent is empty: {planning_run_id}")
     negative = model.get("negative_prompt")
-    if negative is not None and (not isinstance(negative, str) or not negative.strip()):
-        raise BatchPipelineError(f"Lite negative prompt is invalid: {entry.run_id}")
+    if negative is not None:
+        raise BatchPipelineError(
+            "PROMOPAGES-9909 baseline negative_prompt must be null: "
+            f"{entry.provider_run_id}"
+        )
     return LiteJob(
         entry=entry,
+        structured_intent={
+            key: structured_intent[key].strip()
+            for key in clipmaker_lite_runner.STRUCTURED_INTENT_KEYS
+        },
         positive_prompt=positive,
         negative_prompt=negative,
         result_path=expected_result,
@@ -383,17 +431,19 @@ def safe_provenance(job: LiteJob) -> dict[str, Any]:
         "instruction_bundle_sha256": summary.get("instruction_bundle_sha256"),
         "source_image_sha256": summary.get("source_image_sha256"),
         "article_context_sha256": summary.get("article_context_sha256"),
+        "models": summary.get("models"),
     }
 
 
 def prompt_artifact(job: LiteJob) -> dict[str, Any]:
     prompt: dict[str, Any] = {"positive": job.positive_prompt, "negative": job.negative_prompt}
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "ticket": TICKET,
         "batch_id": BATCH_ID,
         "agent_id": AGENT_ID,
-        "lite_run_id": job.entry.run_id,
+        "lite_run_id": job.entry.planning_run_id,
+        "provider_run_id": job.entry.provider_run_id,
         "model_id": job.entry.model_id,
         "source": {
             "path": job.entry.sample.source_path,
@@ -401,6 +451,7 @@ def prompt_artifact(job: LiteJob) -> dict[str, Any]:
             "width": job.entry.sample.width,
             "height": job.entry.sample.height,
         },
+        "structured_intent": job.structured_intent,
         "prompt": prompt,
         "runtime": job.runtime,
         "lite_result": {
@@ -420,7 +471,8 @@ def initial_run(job: LiteJob, paths: dict[str, Path], root: Path = ROOT) -> dict
             "ticket": TICKET,
             "batch_id": BATCH_ID,
             "agent_id": AGENT_ID,
-            "lite_run_id": job.entry.run_id,
+            "lite_run_id": job.entry.planning_run_id,
+            "provider_run_id": job.entry.provider_run_id,
             "lite_result_sha256": job.result_sha256,
             "provider_may_be_active": False,
             "last_worker_failure": None,
@@ -448,7 +500,15 @@ def materialize_entry(entry: Entry, root: Path = ROOT) -> dict[str, Any]:
         transport.atomic_write_json(paths["run"], expected_run)
     else:
         run = read_json(paths["run"])
-        identity = ("ticket", "batch_id", "agent_id", "lite_run_id", "lite_result_sha256", "model_id")
+        identity = (
+            "ticket",
+            "batch_id",
+            "agent_id",
+            "lite_run_id",
+            "provider_run_id",
+            "lite_result_sha256",
+            "model_id",
+        )
         if any(run.get(key) != expected_run.get(key) for key in identity):
             raise BatchPipelineError(f"Immutable batch run identity changed: {paths['run']}")
         if run.get("request") is not None and run.get("request") != expected_request:
@@ -1076,7 +1136,8 @@ def manifest_document(
             conforming += 1
         outputs.append(
             {
-                "lite_run_id": row["entry"].run_id,
+                "lite_run_id": row["entry"].planning_run_id,
+                "provider_run_id": row["entry"].provider_run_id,
                 "sample_id": row["entry"].sample.sample_id,
                 "article_slug": row["entry"].sample.article_slug,
                 "source_path": row["entry"].sample.source_path,
@@ -1469,9 +1530,17 @@ def verify(
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
-    subparsers.add_parser("plan", help="verify 15 Lite results and materialize the batch")
+    subparsers.add_parser(
+        "plan",
+        help="verify 5 shared Lite results and materialize 15 provider entries",
+    )
     run = subparsers.add_parser("run", help="generate or resume the native 5x3 batch")
-    run.add_argument("--run-id", action="append", default=[])
+    run.add_argument(
+        "--run-id",
+        action="append",
+        default=[],
+        help="provider run ID; repeatable",
+    )
     run.add_argument("--model", action="append", default=[])
     run.add_argument("--dry-run", action="store_true")
     run.add_argument(
@@ -1518,7 +1587,10 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     try:
         if args.command == "plan":
             rows = materialize(root)
-            print(f"PASS: materialized {len(rows)} verified native Lite jobs for {BATCH_ID}")
+            print(
+                f"PASS: materialized {len(rows)} provider jobs from "
+                f"{len(SAMPLES)} verified Lite planning runs for {BATCH_ID}"
+            )
             return 0
         if args.command == "run":
             rows = materialize(root)
