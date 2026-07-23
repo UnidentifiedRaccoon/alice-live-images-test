@@ -175,6 +175,8 @@
 }
 
 .modelBadge,
+.authorBadge,
+.approachBadge,
 .agentLabel {
   display: inline-flex;
   align-items: center;
@@ -185,6 +187,23 @@
   font-size: var(--text-xs);
   font-weight: 700;
   white-space: nowrap;
+}
+
+.videoBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  justify-content: flex-end;
+  max-width: 26rem;
+}
+
+.authorBadge {
+  color: oklch(91% 0.115 326);
+  background: oklch(26% 0.07 326);
+}
+
+.approachBadge {
+  color: var(--review-media-muted);
 }
 
 .modelBadge {
@@ -206,6 +225,8 @@
   display: block;
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
   max-height: 70vh;
   object-fit: contain;
   background: oklch(12% 0.018 328);
@@ -284,12 +305,13 @@
 
 .clipNavigator {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(9rem, 0.7fr) auto minmax(0, 1fr) auto auto;
   gap: var(--space-xs);
   align-items: center;
 }
 
 .mediaButton,
+.groupFilterLabel select,
 .itemSelectLabel select {
   min-height: 2.75rem;
   border: 0.0625rem solid var(--review-media-line);
@@ -318,6 +340,21 @@
   min-width: 0;
   padding: 0 2.25rem 0 var(--space-sm);
   text-overflow: ellipsis;
+}
+
+.groupFilterLabel {
+  display: block;
+  min-width: 0;
+}
+
+.groupFilterLabel select {
+  width: 100%;
+  min-width: 0;
+  padding: 0 2.25rem 0 var(--space-sm);
+  color: var(--review-media-ink);
+  font-size: var(--text-sm);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .reviewPanel {
@@ -799,6 +836,7 @@
 
 @media (hover: hover) {
   .mediaButton:not(:disabled):hover,
+  .groupFilterLabel select:hover,
   .itemSelectLabel select:hover {
     border-color: var(--review-media-muted);
     background: oklch(32% 0.03 328);
@@ -915,17 +953,27 @@
 }
 
 @media (max-width: 35.99rem) {
+  .videoHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .videoBadges {
+    justify-content: flex-start;
+    max-width: none;
+  }
+
   .clipNavigator {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .itemSelectLabel {
+  .groupFilterLabel {
     grid-column: 1 / -1;
     grid-row: 1;
   }
 
-  .replayButton {
-    order: 3;
+  .itemSelectLabel {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
 
   .contextFragment {
@@ -940,6 +988,7 @@
 
 @media (pointer: coarse) {
   .mediaButton,
+  .groupFilterLabel select,
   .itemSelectLabel select,
   .submitButton {
     min-height: 3rem;

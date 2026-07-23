@@ -8,15 +8,15 @@
     <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
     <meta
       name="description"
-      content="Ручная разметка качества видеогенераций по контексту и итоговому промпту клипмейкера."
+      content="Ручная разметка качества видеогенераций по итоговому промпту клипмейкера и доступному контексту."
     />
     <title>Alice Live · Step №4 · Разметка качества</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../shared.css?v=10" />
-    <link rel="stylesheet" href="styles.css?v=2" />
+    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body class="reviewBody">
-    <a class="skipLink" href="#reviewForm">К форме оценки</a>
+    <a class="skipLink" href="#promptTitle">К форме оценки</a>
 
     <header class="siteHeader">
       <div class="siteHeaderInner">
@@ -52,7 +52,7 @@
           </a>
           <a
             aria-current="page"
-            href="./?v=1"
+            href="./?v=2"
             aria-label="Шаг 4. Разметка — оценка промптов и видеогенераций"
           >
             <span class="viewSwitchStep" lang="en">Step №4</span>
@@ -79,7 +79,7 @@
             class="progressTrack"
             role="progressbar"
             aria-valuemin="0"
-            aria-valuemax="15"
+            aria-valuemax="57"
             aria-valuenow="0"
             aria-labelledby="progressLabel"
           >
@@ -105,16 +105,27 @@
       </section>
 
       <section class="reviewWorkspace" id="reviewWorkspace" aria-label="Рабочее место разметки">
-        <section class="videoColumn" aria-labelledby="clipTitle">
+        <section class="videoColumn" id="videoColumn" aria-labelledby="clipTitle">
+          <p
+            class="visuallyHidden"
+            id="navigationStatus"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
           <header class="videoHeader">
             <div>
               <p class="videoFolio">
                 Видео <span id="currentNumber">01</span><span aria-hidden="true"> / </span
-                ><span class="visuallyHidden">из</span><span id="totalNumber">15</span>
+                ><span class="visuallyHidden">из</span><span id="totalNumber">57</span>
               </p>
               <h2 id="clipTitle" tabindex="-1">Загрузка видео…</h2>
             </div>
-            <span class="modelBadge" id="modelBadge">—</span>
+            <div class="videoBadges" aria-label="Источник промпта и модель">
+              <span class="authorBadge" id="authorBadge">Промпт · —</span>
+              <span class="approachBadge" id="approachBadge">—</span>
+              <span class="modelBadge" id="modelBadge">—</span>
+            </div>
           </header>
 
           <div class="videoStage" id="videoStage">
@@ -138,6 +149,10 @@
           <div class="technicalNotes" id="technicalNotes" aria-label="Технические пометки"></div>
 
           <div class="clipNavigator" aria-label="Переход между видеогенерациями">
+            <label class="groupFilterLabel" for="groupFilter">
+              <span class="visuallyHidden">Подход</span>
+              <select id="groupFilter" aria-label="Фильтр по подходу клипмейкера"></select>
+            </label>
             <button class="mediaButton" id="previousButton" type="button">← Назад</button>
             <label class="itemSelectLabel" for="itemSelect">
               <span class="visuallyHidden">Выбрать видеогенерацию</span>
@@ -150,15 +165,24 @@
           </div>
         </section>
 
-        <form class="reviewPanel" id="reviewForm" novalidate>
+        <form
+          class="reviewPanel"
+          id="reviewForm"
+          aria-label="Оценка текущей видеогенерации"
+          novalidate
+        >
           <div class="reviewPanelInner">
-            <section class="reviewSection contextSection" aria-labelledby="contextTitle">
-              <p class="sectionIndex">01 · Контекст</p>
+            <section
+              class="reviewSection contextSection"
+              id="contextSection"
+              aria-labelledby="contextTitle"
+            >
+              <p class="sectionIndex" id="contextIndex">01 · Контекст</p>
               <div class="sectionHeading">
                 <h2 id="contextTitle" tabindex="-1">Контекст у изображения</h2>
                 <a id="articleLink" target="_blank" rel="noopener noreferrer">Открыть статью ↗</a>
               </div>
-              <p class="contextScope">
+              <p class="contextScope" id="contextScope">
                 Клипмейкер получил полную статью. Ниже — точный фрагмент вокруг позиции
                 изображения, без исходного изображения.
               </p>
@@ -168,10 +192,10 @@
             </section>
 
             <section class="reviewSection promptSection" aria-labelledby="promptTitle">
-              <p class="sectionIndex">02 · Формулировка</p>
+              <p class="sectionIndex" id="promptIndex">02 · Формулировка</p>
               <div class="sectionHeading">
-                <h2 id="promptTitle">Итоговый промпт клипмейкера</h2>
-                <span class="agentLabel" id="agentLabel">clipmaker-lite</span>
+                <h2 id="promptTitle" tabindex="-1">Итоговый промпт клипмейкера</h2>
+                <span class="agentLabel" id="agentLabel">Промпт · clipmaker-lite</span>
               </div>
               <p class="providerNote" id="providerNote"></p>
 
@@ -194,8 +218,8 @@
               aria-describedby="ratingHint ratingError"
             >
               <legend>
-                <span class="sectionIndex">03 · Общая оценка</span>
-                <strong>Насколько результат соответствует контексту и промпту?</strong>
+                <span class="sectionIndex" id="ratingIndex">03 · Общая оценка</span>
+                <strong id="ratingQuestion">Насколько результат соответствует контексту и промпту?</strong>
               </legend>
               <p class="ratingHint" id="ratingHint">Выберите один обязательный вариант.</p>
               <div class="ratingOptions">
@@ -227,13 +251,13 @@
             </fieldset>
 
             <section class="reviewSection guideSection" aria-labelledby="guideTitle">
-              <p class="sectionIndex">04 · Ориентир</p>
+              <p class="sectionIndex" id="guideIndex">04 · Ориентир</p>
               <h2 id="guideTitle">Как написать полезный отзыв</h2>
               <ol class="guideList">
-                <li><strong>Намерение</strong><span>Какое действие или состояние заданы?</span></li>
+                <li><strong>Намерение</strong><span id="intentionGuide">Какое действие или состояние заданы?</span></li>
                 <li><strong>Результат</strong><span>Что происходит в видео и в какой момент?</span></li>
                 <li><strong>Восприятие</strong><span>Что делает результат хорошим или плохим?</span></li>
-                <li><strong>Связь с промптом</strong><span>Какая формулировка сработала или подвела?</span></li>
+                <li><strong>Связь с промптом</strong><span id="promptGuide">Какая формулировка сработала или подвела?</span></li>
                 <li><strong>Рекомендация</strong><span>Что сохранить, убрать или уточнить?</span></li>
               </ol>
               <p class="uncertaintyNote">
@@ -245,7 +269,7 @@
             <section class="reviewSection feedbackSection" aria-labelledby="feedbackLabel">
               <div class="feedbackHeading">
                 <div>
-                  <p class="sectionIndex">05 · Обратная связь</p>
+                  <p class="sectionIndex" id="feedbackIndex">05 · Обратная связь</p>
                   <label id="feedbackLabel" for="feedback">Развернутый отзыв</label>
                 </div>
                 <span id="feedbackRequirement">Обязателен для оценок 1 и 2</span>
@@ -279,8 +303,8 @@
       <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
     </main>
 
-    <script src="review-core.js?v=3"></script>
-    <script src="review-data.js?v=1"></script>
-    <script src="app.js?v=3"></script>
+    <script src="review-core.js?v=4"></script>
+    <script src="review-data.js?v=2"></script>
+    <script src="app.js?v=4"></script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "alice-live://schemas/clipmaker-quality-annotations/v1",
+  "$id": "alice-live://schemas/clipmaker-quality-annotations/v2",
   "title": "Clipmaker quality annotations",
   "type": "object",
   "additionalProperties": false,
@@ -16,27 +16,24 @@
     "drafts"
   ],
   "properties": {
-    "schema_version": { "const": 1 },
+    "schema_version": { "const": 2 },
     "artifact_kind": { "const": "clipmaker-quality-annotations" },
     "review_ticket": { "const": "PROMOPAGES-9897" },
     "dataset": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "id",
-        "source_ticket",
-        "batch_id",
-        "manifest_path",
-        "manifest_sha256",
-        "data_sha256"
-      ],
+      "required": ["id", "data_sha256", "sources"],
       "properties": {
         "id": { "type": "string", "minLength": 1 },
-        "source_ticket": { "type": ["string", "null"] },
-        "batch_id": { "type": "string", "minLength": 1 },
-        "manifest_path": { "type": "string", "minLength": 1 },
-        "manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-        "data_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        "data_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "minProperties": 1
+          }
+        }
       }
     },
     "session_started_at": { "type": "string", "format": "date-time" },
@@ -69,7 +66,12 @@
         "item_id",
         "video",
         "context_snapshot",
+        "context_status",
         "prompt_snapshot",
+        "prompt_author",
+        "review_group",
+        "approach",
+        "review_basis_sha256",
         "rating",
         "feedback",
         "agent_id",
@@ -86,17 +88,25 @@
         "annotation_id": { "type": "string", "minLength": 1 },
         "item_id": { "type": "string", "minLength": 1 },
         "video": { "$ref": "#/$defs/video" },
-        "context_snapshot": { "type": "object" },
+        "context_snapshot": { "type": ["object", "null"] },
+        "context_status": { "$ref": "#/$defs/contextStatus" },
         "prompt_snapshot": { "type": "object" },
+        "prompt_author": { "$ref": "#/$defs/promptAuthor" },
+        "review_group": { "$ref": "#/$defs/reviewGroup" },
+        "approach": { "$ref": "#/$defs/approach" },
+        "review_basis_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
         "rating": { "type": ["integer", "null"], "enum": [1, 2, 3, null] },
         "feedback": { "type": "string" },
         "agent_id": { "type": "string", "minLength": 1 },
         "model_id": { "type": "string", "minLength": 1 },
-        "run_id": { "type": "string", "minLength": 1 },
-        "batch_id": { "type": "string", "minLength": 1 },
-        "author_thread_id": { "type": "string", "minLength": 1 },
-        "generation_job_id": { "type": "string", "minLength": 1 },
-        "request_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "run_id": { "type": ["string", "null"], "minLength": 1 },
+        "batch_id": { "type": ["string", "null"], "minLength": 1 },
+        "author_thread_id": { "type": ["string", "null"], "minLength": 1 },
+        "generation_job_id": { "type": ["string", "null"], "minLength": 1 },
+        "request_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
         "provider_contract": { "type": "object" },
         "completed_at": { "type": ["string", "null"], "format": "date-time" },
         "updated_at": { "type": "string", "format": "date-time" }
@@ -143,6 +153,57 @@
         "id": { "type": "string", "minLength": 1 },
         "path": { "type": "string", "minLength": 1 },
         "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "promptAuthor": {
+      "type": "object",
+      "required": [
+        "id",
+        "label",
+        "contract_version",
+        "attribution_basis",
+        "provenance_verified"
+      ],
+      "properties": {
+        "id": { "type": "string", "enum": ["clipmaker-lite", "clipmaker-classic"] },
+        "label": { "type": "string", "minLength": 1 },
+        "contract_version": { "type": ["string", "null"], "minLength": 1 },
+        "attribution_basis": { "type": "string", "minLength": 1 },
+        "provenance_verified": { "type": "boolean" }
+      }
+    },
+    "contextStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["availability", "reason"],
+      "properties": {
+        "availability": {
+          "type": "string",
+          "enum": [
+            "shown",
+            "omitted_by_review_policy",
+            "not_available_in_artifacts"
+          ]
+        },
+        "reason": { "type": ["string", "null"], "minLength": 1 }
+      }
+    },
+    "reviewGroup": {
+      "type": "object",
+      "required": ["id", "label", "short_label", "order"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "short_label": { "type": "string", "minLength": 1 },
+        "order": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "approach": {
+      "type": "object",
+      "required": ["id", "label"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 }
       }
     }
   }

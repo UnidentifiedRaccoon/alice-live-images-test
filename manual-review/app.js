@@ -3,9 +3,12 @@ const reviewCore = window.qualityReviewCore;
 const reducedMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)") || {
   matches: false,
 };
+const desktopLayoutQuery = window.matchMedia?.("(min-width: 64rem)") || { matches: false };
 
 const elements = {
   workspace: document.querySelector("#reviewWorkspace"),
+  videoColumn: document.querySelector("#videoColumn"),
+  navigationStatus: document.querySelector("#navigationStatus"),
   datasetError: document.querySelector("#datasetError"),
   datasetErrorText: document.querySelector("#datasetErrorText"),
   progressLabel: document.querySelector("#progressLabel"),
@@ -16,6 +19,8 @@ const elements = {
   currentNumber: document.querySelector("#currentNumber"),
   totalNumber: document.querySelector("#totalNumber"),
   clipTitle: document.querySelector("#clipTitle"),
+  authorBadge: document.querySelector("#authorBadge"),
+  approachBadge: document.querySelector("#approachBadge"),
   modelBadge: document.querySelector("#modelBadge"),
   video: document.querySelector("#reviewVideo"),
   videoStage: document.querySelector("#videoStage"),
@@ -25,14 +30,20 @@ const elements = {
   previousButton: document.querySelector("#previousButton"),
   nextButton: document.querySelector("#nextButton"),
   replayButton: document.querySelector("#replayButton"),
+  groupFilter: document.querySelector("#groupFilter"),
   itemSelect: document.querySelector("#itemSelect"),
   form: document.querySelector("#reviewForm"),
   panel: document.querySelector("#reviewForm"),
   articleLink: document.querySelector("#articleLink"),
+  contextSection: document.querySelector("#contextSection"),
+  contextIndex: document.querySelector("#contextIndex"),
+  contextScope: document.querySelector("#contextScope"),
   articleIdentity: document.querySelector("#articleIdentity"),
   contextDetails: document.querySelector("#contextDetails"),
   contextFragments: document.querySelector("#contextFragments"),
   contextTitle: document.querySelector("#contextTitle"),
+  promptTitle: document.querySelector("#promptTitle"),
+  promptIndex: document.querySelector("#promptIndex"),
   agentLabel: document.querySelector("#agentLabel"),
   providerNote: document.querySelector("#providerNote"),
   positivePrompt: document.querySelector("#positivePrompt"),
@@ -40,9 +51,15 @@ const elements = {
   negativePrompt: document.querySelector("#negativePrompt"),
   negativePromptStatus: document.querySelector("#negativePromptStatus"),
   ratingFieldset: document.querySelector("#ratingFieldset"),
+  ratingIndex: document.querySelector("#ratingIndex"),
+  ratingQuestion: document.querySelector("#ratingQuestion"),
   ratingInputs: Array.from(document.querySelectorAll('input[name="rating"]')),
   ratingError: document.querySelector("#ratingError"),
   feedback: document.querySelector("#feedback"),
+  guideIndex: document.querySelector("#guideIndex"),
+  intentionGuide: document.querySelector("#intentionGuide"),
+  promptGuide: document.querySelector("#promptGuide"),
+  feedbackIndex: document.querySelector("#feedbackIndex"),
   feedbackRequirement: document.querySelector("#feedbackRequirement"),
   feedbackError: document.querySelector("#feedbackError"),
   autosaveStatus: document.querySelector("#autosaveStatus"),
@@ -62,19 +79,24 @@ const warningLabels = {
   aspect_ratio: "фактическое соотношение сторон отличается от запроса",
   duration: "фактическая длительность отличается от запроса",
 };
+const modelLabelFor = (modelId) =>
+  items.find((item) => item.model.id === modelId)?.model.label || modelId || "неизвестная модель";
 
 const isDatasetValid =
   reviewCore &&
   dataset &&
-  dataset.schema_version === 1 &&
+  dataset.schema_version === 2 &&
   typeof dataset.dataset_id === "string" &&
   Array.isArray(dataset.items) &&
   dataset.items.length > 0;
 
 let items = isDatasetValid ? dataset.items : [];
-let storageKey = isDatasetValid ? `alice-live:quality-review:v1:${dataset.dataset_id}` : "";
+let storageKey = isDatasetValid
+  ? `alice-live:quality-review:v2:${dataset.review_ticket}`
+  : "";
 let state;
 let activeIndex = 0;
+let activeGroupFilter = "all";
 let saveTimer = 0;
 let toastTimer = 0;
 let hasMediaError = false;
@@ -84,12 +106,24 @@ const nowIso = () => new Date().toISOString();
 
 const freshState = () => reviewCore.freshState(dataset, nowIso());
 const isValidRating = reviewCore?.isValidRating || (() => false);
-const normalizeState = (value) => reviewCore.normalizeState(value, dataset, nowIso());
+const normalizeState = (value) =>
+  (reviewCore.migrateState || reviewCore.normalizeState)(value, dataset, nowIso());
 
 const loadState = () => {
   try {
     const stored = window.localStorage.getItem(storageKey);
-    return stored ? normalizeState(JSON.parse(stored)) : freshState();
+    if (stored) return normalizeState(JSON.parse(stored));
+
+    for (const datasetId of dataset.supersedes_dataset_ids || []) {
+      const legacyKey = `alice-live:quality-review:v1:${datasetId}`;
+      const legacyState = window.localStorage.getItem(legacyKey);
+      if (!legacyState) continue;
+      const migrated = normalizeState(JSON.parse(legacyState));
+      window.localStorage.setItem(storageKey, JSON.stringify(migrated));
+      return migrated;
+    }
+
+    return freshState();
   } catch {
     storageAvailable = false;
     return freshState();
@@ -132,12 +166,14 @@ const entryFor = (itemId) => state.entries[itemId] || null;
 
 const ensureEntry = (itemId) => {
   if (!state.entries[itemId]) {
+    const item = items.find((candidate) => candidate.id === itemId);
     state.entries[itemId] = {
       rating: null,
       feedback: "",
       status: "draft",
       completedAt: null,
       updatedAt: nowIso(),
+      reviewBasisSha256: item?.review_basis_sha256 || null,
     };
   }
   return state.entries[itemId];
@@ -208,19 +244,84 @@ const itemStatus = (itemId) => {
   return "не оценено";
 };
 
+const itemGroupId = (item) => item.review_group?.id || "ungrouped";
+const contextAvailability = (item) =>
+  typeof item.context_status === "string"
+    ? item.context_status
+    : item.context_status?.availability || (item.context ? "shown" : "not_available_in_artifacts");
+
+const reviewGroups = () => {
+  const groups = new Map();
+  items.forEach((item) => {
+    const id = itemGroupId(item);
+    if (!groups.has(id)) {
+      const rawOrder = Number(item.review_group?.order);
+      groups.set(id, {
+        id,
+        label: item.review_group?.label || "Без группы",
+        shortLabel: item.review_group?.short_label || item.review_group?.label || "Без группы",
+        order: Number.isFinite(rawOrder) ? rawOrder : Number.MAX_SAFE_INTEGER,
+        count: 0,
+      });
+    }
+    groups.get(id).count += 1;
+  });
+  return Array.from(groups.values()).sort(
+    (left, right) => left.order - right.order || left.label.localeCompare(right.label, "ru"),
+  );
+};
+
+const visibleItemIndexes = () =>
+  items.reduce((indexes, item, index) => {
+    if (activeGroupFilter === "all" || itemGroupId(item) === activeGroupFilter) {
+      indexes.push(index);
+    }
+    return indexes;
+  }, []);
+
+const renderGroupFilter = () => {
+  const options = [];
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = `Все подходы · ${items.length}`;
+  allOption.selected = activeGroupFilter === "all";
+  options.push(allOption);
+
+  reviewGroups().forEach((group) => {
+    const option = document.createElement("option");
+    option.value = group.id;
+    option.textContent = `${group.label} · ${group.count}`;
+    option.selected = activeGroupFilter === group.id;
+    options.push(option);
+  });
+  elements.groupFilter.replaceChildren(...options);
+};
+
 const renderNavigatorOptions = () => {
   const selectedId = items[activeIndex]?.id;
-  elements.itemSelect.replaceChildren(
-    ...items.map((item, index) => {
+  const indexes = visibleItemIndexes();
+  const groups = reviewGroups().filter(
+    (group) => activeGroupFilter === "all" || group.id === activeGroupFilter,
+  );
+  const children = groups.map((group) => {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group.label;
+    indexes
+      .filter((index) => itemGroupId(items[index]) === group.id)
+      .forEach((index) => {
+        const item = items[index];
       const option = document.createElement("option");
       option.value = item.id;
-      option.textContent = `${String(index + 1).padStart(2, "0")} · ${item.model.label} · ${
+        option.textContent = `${String(index + 1).padStart(2, "0")} · ${item.prompt_author?.id || item.agent?.id || "—"} · ${item.model.label} · ${
         item.article.label || item.sample_id
       } · ${itemStatus(item.id)}`;
       option.selected = item.id === selectedId;
-      return option;
-    }),
-  );
+        optgroup.append(option);
+      });
+    return optgroup;
+  });
+  elements.itemSelect.replaceChildren(...children);
+  renderGroupFilter();
 };
 
 const renderVideoFacts = (item) => {
@@ -257,6 +358,33 @@ const technicalNote = (label, text, warning = false) => {
 const renderTechnicalNotes = (item) => {
   const notes = [];
   const expansion = item.prompt.prompt_expansion || { mode: "not_recorded" };
+
+  const availability = contextAvailability(item);
+  if (availability === "omitted_by_review_policy" || availability === "not_shown_by_review_policy") {
+    notes.push(
+      technicalNote(
+        "Контекст",
+        "Контекст статьи не показывается для этой исторической итерации. Оценивайте видео относительно промпта.",
+      ),
+    );
+  } else if (availability === "not_available_in_artifacts" || availability === "not_provided") {
+    notes.push(
+      technicalNote(
+        "Контекст",
+        "В исторических артефактах этой итерации нет контекста статьи. Оценивайте видео относительно промпта.",
+      ),
+    );
+  }
+
+  if (item.prompt.native_for_generation_model === false && item.prompt.source_model_id) {
+    notes.push(
+      technicalNote(
+        "Cross-model control",
+        `Промпт подготовлен для ${modelLabelFor(item.prompt.source_model_id)} → видео сгенерировано ${item.model.label}. Это перенос, а не нативная практика целевой модели.`,
+      ),
+    );
+  }
+
   if (expansion.mode === "enabled") {
     notes.push(
       technicalNote(
@@ -273,8 +401,29 @@ const renderTechnicalNotes = (item) => {
     );
   }
 
-  if (!item.provider_contract.conforms) {
-    const warningText = item.provider_contract.warnings
+  if (item.prompt.negative_transport === "embedded_in_positive") {
+    notes.push(
+      technicalNote(
+        "Prompt transport",
+        "Авторские основной и negative prompt показаны раздельно; в provider-запросе ограничения были добавлены к основному тексту через «Avoid:».",
+      ),
+    );
+  }
+
+  if (
+    item.prompt_author?.attribution_basis === "legacy-route-mapping" ||
+    item.prompt_author?.attribution_basis === "legacy_generator_field"
+  ) {
+    notes.push(
+      technicalNote(
+        "Атрибуция",
+        "Тег clipmaker-classic восстановлен по историческому маршруту «project clipmaker agent»; отдельного agent_id в старом артефакте нет.",
+      ),
+    );
+  }
+
+  if (item.provider_contract?.conforms === false) {
+    const warningText = (item.provider_contract.warnings || [])
       .map((warning) => warningLabels[warning] || warning)
       .join("; ");
     notes.push(
@@ -289,6 +438,28 @@ const renderTechnicalNotes = (item) => {
 };
 
 const renderContext = (item) => {
+  const hasContext = Boolean(item.context);
+  elements.contextSection.hidden = !hasContext;
+  elements.promptIndex.textContent = `${hasContext ? "02" : "01"} · Формулировка`;
+  elements.ratingIndex.textContent = `${hasContext ? "03" : "02"} · Общая оценка`;
+  elements.guideIndex.textContent = `${hasContext ? "04" : "03"} · Ориентир`;
+  elements.feedbackIndex.textContent = `${hasContext ? "05" : "04"} · Обратная связь`;
+  elements.ratingQuestion.textContent = hasContext
+    ? "Насколько результат соответствует контексту и промпту?"
+    : "Насколько результат соответствует промпту?";
+  elements.intentionGuide.textContent = hasContext
+    ? "Какое действие или состояние задают контекст и промпт?"
+    : "Какое действие или состояние задаёт промпт?";
+
+  if (!hasContext) {
+    elements.articleIdentity.replaceChildren();
+    elements.contextDetails.replaceChildren();
+    elements.contextFragments.replaceChildren();
+    elements.articleLink.hidden = true;
+    elements.articleLink.removeAttribute("href");
+    return;
+  }
+
   elements.articleIdentity.replaceChildren();
   const title = document.createElement("strong");
   const lead = document.createElement("span");
@@ -336,14 +507,16 @@ const renderContext = (item) => {
 };
 
 const renderPrompt = (item) => {
-  elements.agentLabel.textContent = `${item.agent.id} · ${item.agent.contract_version}`;
+  const author = item.prompt_author || item.agent || {};
+  const contractSuffix = author.contract_version ? ` · contract ${author.contract_version}` : "";
+  elements.agentLabel.textContent = `Промпт · ${author.id || "автор не указан"}${contractSuffix}`;
   elements.positivePrompt.textContent = item.prompt.positive;
   const expansion = item.prompt.prompt_expansion || {};
   const provider = item.prompt.provider || "provider не указан";
   elements.providerNote.textContent =
     expansion.mode === "enabled"
-      ? `Provider: ${provider}. Ниже показан output клипмейкера до возможного расширения ${expansion.parameter}.`
-      : `Provider: ${provider}. Ниже показан точный output клипмейкера.`;
+      ? `Provider: ${provider}. Ниже показан точный авторский output до возможного расширения ${expansion.parameter}.`
+      : `Provider: ${provider}. Ниже показан точный авторский output клипмейкера.`;
 
   const hasNegative = typeof item.prompt.negative === "string" && item.prompt.negative.trim();
   elements.negativePromptBlock.hidden = !hasNegative;
@@ -373,6 +546,8 @@ const syncUrl = (item) => {
   try {
     const url = new URL(window.location.href);
     url.searchParams.set("item", item.id);
+    if (activeGroupFilter === "all") url.searchParams.delete("group");
+    else url.searchParams.set("group", activeGroupFilter);
     window.history.replaceState({ item: item.id }, "", url);
   } catch {
     // Direct file previews can reject History API writes; local state still restores the item.
@@ -391,9 +566,20 @@ const renderActiveItem = ({ focusContext = false, persist = true } = {}) => {
   elements.currentNumber.textContent = String(activeIndex + 1).padStart(2, "0");
   elements.totalNumber.textContent = String(items.length);
   elements.clipTitle.textContent = item.article.label || item.sample_id;
+  const promptAuthorId = item.prompt_author?.id || item.agent?.id || "—";
+  elements.authorBadge.textContent = `Промпт · ${promptAuthorId}`;
+  elements.approachBadge.textContent =
+    item.approach?.label || item.review_group?.short_label || item.review_group?.label || "—";
   elements.modelBadge.textContent = item.model.label;
-  elements.previousButton.disabled = activeIndex === 0;
-  elements.nextButton.disabled = activeIndex === items.length - 1;
+  elements.navigationStatus.textContent =
+    `Видео ${activeIndex + 1} из ${items.length}. Промпт: ${promptAuthorId}. ` +
+    `Подход: ${elements.approachBadge.textContent}. Модель: ${item.model.label}. ` +
+    `${item.article.label || item.sample_id}.`;
+  const navigatorIndexes = visibleItemIndexes();
+  const navigatorPosition = navigatorIndexes.indexOf(activeIndex);
+  elements.previousButton.disabled = navigatorPosition <= 0;
+  elements.nextButton.disabled =
+    navigatorPosition < 0 || navigatorPosition === navigatorIndexes.length - 1;
 
   elements.video.pause();
   elements.video.removeAttribute("src");
@@ -414,8 +600,17 @@ const renderActiveItem = ({ focusContext = false, persist = true } = {}) => {
   syncUrl(item);
   if (persist) scheduleSave();
 
-  elements.panel.scrollTo({ top: 0, behavior: reducedMotionQuery.matches ? "auto" : "smooth" });
-  if (focusContext) elements.contextTitle.focus({ preventScroll: true });
+  const scrollBehavior = reducedMotionQuery.matches ? "auto" : "smooth";
+  if (desktopLayoutQuery.matches) {
+    elements.panel.scrollTo({ top: 0, behavior: scrollBehavior });
+    if (focusContext) {
+      (item.context ? elements.contextTitle : elements.promptTitle).focus({ preventScroll: true });
+    }
+  } else if (focusContext) {
+    const videoColumnTop = elements.videoColumn.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: videoColumnTop, behavior: scrollBehavior });
+    elements.clipTitle.focus({ preventScroll: true });
+  }
 };
 
 const navigateTo = (index, options = {}) => {
@@ -424,6 +619,13 @@ const navigateTo = (index, options = {}) => {
   persistState();
   activeIndex = boundedIndex;
   renderActiveItem(options);
+};
+
+const navigateWithinFilter = (offset) => {
+  const indexes = visibleItemIndexes();
+  const position = indexes.indexOf(activeIndex);
+  const target = indexes[position + offset];
+  if (typeof target === "number") navigateTo(target);
 };
 
 const validateCurrent = () => {
@@ -452,8 +654,16 @@ const validateCurrent = () => {
   return true;
 };
 
-const nextIncompleteIndex = () =>
-  reviewCore.nextIncompleteIndex(items, state.entries, activeIndex);
+const nextIncompleteIndex = () => {
+  const indexes = visibleItemIndexes();
+  const position = indexes.indexOf(activeIndex);
+  if (position < 0) return -1;
+  for (let offset = 1; offset <= indexes.length; offset += 1) {
+    const candidate = indexes[(position + offset) % indexes.length];
+    if (state.entries[items[candidate].id]?.status !== "completed") return candidate;
+  }
+  return -1;
+};
 
 const buildExport = () => reviewCore.buildExport(dataset, state, nowIso());
 
@@ -483,15 +693,23 @@ const initialize = () => {
     elements.datasetError.hidden = false;
     elements.exportButton.disabled = true;
     elements.datasetErrorText.textContent =
-      "review-data.js отсутствует или не соответствует schema_version 1. Пересоберите allowlist и перезагрузите страницу.";
+      "review-data.js отсутствует или не соответствует schema_version 2. Пересоберите allowlist и перезагрузите страницу.";
     return;
   }
 
   state = loadState();
-  const requestedItem = new URL(window.location.href).searchParams.get("item");
+  const requestUrl = new URL(window.location.href);
+  const requestedGroup = requestUrl.searchParams.get("group");
+  if (reviewGroups().some((group) => group.id === requestedGroup)) {
+    activeGroupFilter = requestedGroup;
+  }
+  const requestedItem = requestUrl.searchParams.get("item");
   const requestedIndex = items.findIndex((item) => item.id === requestedItem);
   const storedIndex = items.findIndex((item) => item.id === state.activeItemId);
   activeIndex = requestedIndex >= 0 ? requestedIndex : Math.max(storedIndex, 0);
+  if (!visibleItemIndexes().includes(activeIndex)) {
+    activeIndex = visibleItemIndexes()[0] ?? 0;
+  }
   elements.totalNumber.textContent = String(items.length);
   showStorageWarning();
   renderActiveItem();
@@ -515,8 +733,14 @@ elements.feedback.addEventListener("input", () => {
 });
 
 elements.feedback.addEventListener("change", persistState);
-elements.previousButton.addEventListener("click", () => navigateTo(activeIndex - 1));
-elements.nextButton.addEventListener("click", () => navigateTo(activeIndex + 1));
+elements.previousButton.addEventListener("click", () => navigateWithinFilter(-1));
+elements.nextButton.addEventListener("click", () => navigateWithinFilter(1));
+elements.groupFilter.addEventListener("change", () => {
+  activeGroupFilter = elements.groupFilter.value;
+  const indexes = visibleItemIndexes();
+  const targetIndex = indexes.includes(activeIndex) ? activeIndex : indexes[0];
+  if (typeof targetIndex === "number") navigateTo(targetIndex, { force: true });
+});
 elements.itemSelect.addEventListener("change", () => {
   const index = items.findIndex((item) => item.id === elements.itemSelect.value);
   if (index >= 0) navigateTo(index);
@@ -569,6 +793,14 @@ elements.form.addEventListener("submit", (event) => {
   if (nextIndex >= 0) {
     showToast("Оценка сохранена. Открываю следующую незавершённую генерацию.");
     navigateTo(nextIndex, { focusContext: true, force: true });
+  } else if (
+    activeGroupFilter !== "all" &&
+    items.some((candidate) => state.entries[candidate.id]?.status !== "completed")
+  ) {
+    elements.submitStatus.textContent =
+      "Все генерации в выбранном подходе оценены. Выберите другой подход или покажите весь набор.";
+    elements.submitButton.textContent = "Сохранить изменения";
+    showToast("Выбранный подход полностью оценён.");
   } else {
     elements.submitStatus.textContent = "Все генерации оценены. Результат готов к экспорту.";
     elements.submitButton.textContent = "Сохранить изменения";
@@ -586,7 +818,12 @@ document.addEventListener("visibilitychange", () => {
 window.addEventListener("storage", (event) => {
   if (event.key !== storageKey || !event.newValue) return;
   try {
-    const incoming = normalizeState(JSON.parse(event.newValue));
+    const rawIncoming = JSON.parse(event.newValue);
+    if (!reviewCore.isSameDatasetState(rawIncoming, dataset)) {
+      showToast("В другой вкладке открыта иная версия набора. Перезагрузите её перед продолжением.");
+      return;
+    }
+    const incoming = normalizeState(rawIncoming);
     const merged = reviewCore.mergeStates(state, incoming);
     if (!merged.hasIncomingChanges && !merged.needsWrite) return;
     const activeItem = items[activeIndex];

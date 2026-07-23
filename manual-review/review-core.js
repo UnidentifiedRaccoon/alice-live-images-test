@@ -5,7 +5,15 @@
 })(typeof window === "object" ? window : globalThis, function createQualityReviewCore() {
   "use strict";
 
+  const STATE_SCHEMA_VERSION = 2;
+
   const isValidRating = (value) => [1, 2, 3].includes(value);
+  const normalizeDateTime = (value, fallback = null) => {
+    if (typeof value !== "string") return fallback;
+    const milliseconds = Date.parse(value);
+    if (!Number.isFinite(milliseconds)) return fallback;
+    return new Date(milliseconds).toISOString();
+  };
   const entryHasContent = (entry) =>
     Boolean(entry && (isValidRating(entry.rating) || String(entry.feedback || "").trim()));
   const isCompletable = (entry) =>
@@ -16,7 +24,7 @@
     );
 
   const freshState = (dataset, timestamp) => ({
-    schemaVersion: 1,
+    schemaVersion: STATE_SCHEMA_VERSION,
     datasetId: dataset.dataset_id,
     sessionStartedAt: timestamp,
     savedAt: null,
@@ -24,47 +32,85 @@
     entries: {},
   });
 
-  const normalizeEntry = (value, timestamp) => {
+  const normalizeEntry = (value, timestamp, expectedBasisSha256 = null, trustLegacy = false) => {
     if (!value || typeof value !== "object") return null;
+    const reviewBasisSha256 = trustLegacy
+      ? expectedBasisSha256
+      : value.reviewBasisSha256;
+    if (expectedBasisSha256 && reviewBasisSha256 !== expectedBasisSha256) return null;
     const rating = Number(value.rating);
     const feedback = typeof value.feedback === "string" ? value.feedback : "";
-    const completed = value.status === "completed" && isCompletable({ rating, feedback });
+    const completedAt = normalizeDateTime(value.completedAt);
+    const completed =
+      value.status === "completed" && completedAt && isCompletable({ rating, feedback });
     return {
       rating: isValidRating(rating) ? rating : null,
       feedback,
       status: completed ? "completed" : "draft",
-      completedAt:
-        completed && typeof value.completedAt === "string" ? value.completedAt : null,
-      updatedAt: typeof value.updatedAt === "string" ? value.updatedAt : timestamp,
+      completedAt: completed ? completedAt : null,
+      updatedAt: normalizeDateTime(value.updatedAt, timestamp),
+      reviewBasisSha256: expectedBasisSha256 || null,
     };
   };
 
-  const normalizeState = (value, dataset, timestamp) => {
-    if (!value || value.datasetId !== dataset.dataset_id || value.schemaVersion !== 1) {
-      return freshState(dataset, timestamp);
-    }
-
-    const validItemIds = new Set(dataset.items.map((item) => item.id));
+  const normalizeCompatibleState = (value, dataset, timestamp, trustLegacy = false) => {
+    const itemsById = new Map(dataset.items.map((item) => [item.id, item]));
     const entries = {};
     if (value.entries && typeof value.entries === "object") {
       Object.entries(value.entries).forEach(([itemId, entry]) => {
-        const normalized = normalizeEntry(entry, timestamp);
-        if (validItemIds.has(itemId) && normalized) entries[itemId] = normalized;
+        const item = itemsById.get(itemId);
+        const normalized = item
+          ? normalizeEntry(entry, timestamp, item.review_basis_sha256, trustLegacy)
+          : null;
+        if (normalized) entries[itemId] = normalized;
       });
     }
 
     return {
-      schemaVersion: 1,
+      schemaVersion: STATE_SCHEMA_VERSION,
       datasetId: dataset.dataset_id,
-      sessionStartedAt:
-        typeof value.sessionStartedAt === "string" ? value.sessionStartedAt : timestamp,
-      savedAt: typeof value.savedAt === "string" ? value.savedAt : null,
-      activeItemId: validItemIds.has(value.activeItemId)
+      sessionStartedAt: normalizeDateTime(value.sessionStartedAt, timestamp),
+      savedAt: normalizeDateTime(value.savedAt),
+      activeItemId: itemsById.has(value.activeItemId)
         ? value.activeItemId
         : dataset.items[0]?.id || null,
       entries,
     };
   };
+
+  const migrateState = (value, dataset, timestamp) => {
+    if (!value || typeof value !== "object") return freshState(dataset, timestamp);
+
+    const isCurrentState =
+      value.schemaVersion === STATE_SCHEMA_VERSION && value.datasetId === dataset.dataset_id;
+    if (isCurrentState) return normalizeCompatibleState(value, dataset, timestamp);
+
+    // The v2 storage key is stable per review ticket. A later dataset revision may add
+    // items without invalidating unchanged annotations; the per-item basis hash decides
+    // which entries are still safe to carry forward.
+    if (value.schemaVersion === STATE_SCHEMA_VERSION) {
+      return normalizeCompatibleState(value, dataset, timestamp);
+    }
+
+    const supersededDatasetIds = Array.isArray(dataset.supersedes_dataset_ids)
+      ? dataset.supersedes_dataset_ids
+      : [];
+    const isSupportedLegacyState =
+      value.schemaVersion === 1 && supersededDatasetIds.includes(value.datasetId);
+    if (isSupportedLegacyState) {
+      return normalizeCompatibleState(value, dataset, timestamp, true);
+    }
+
+    return freshState(dataset, timestamp);
+  };
+
+  const normalizeState = migrateState;
+  const isSameDatasetState = (value, dataset) =>
+    Boolean(
+      value &&
+        value.schemaVersion === STATE_SCHEMA_VERSION &&
+        value.datasetId === dataset.dataset_id,
+    );
 
   const entryTime = (entry) => Date.parse(entry?.updatedAt || "") || 0;
   const serializeEntry = (entry) => JSON.stringify(entry);
@@ -129,23 +175,28 @@
   };
 
   const snapshotRecord = (dataset, item, entry) => ({
-    annotation_id: `${dataset.dataset_id}:${item.id}`,
+    annotation_id: `${dataset.review_ticket}:${item.id}`,
     item_id: item.id,
     video: {
       id: item.video.id,
       path: item.video.path,
       sha256: item.video.sha256,
     },
-    context_snapshot: item.context,
+    context_snapshot: item.context ?? null,
+    context_status: item.context_status,
     prompt_snapshot: item.prompt,
+    prompt_author: item.prompt_author,
+    review_group: item.review_group,
+    approach: item.approach,
+    review_basis_sha256: item.review_basis_sha256,
     rating: entry.rating,
     feedback: entry.feedback,
-    agent_id: item.agent.id,
+    agent_id: item.prompt_author?.id || item.agent?.id || null,
     model_id: item.model.id,
-    run_id: item.agent.planning_run_id,
-    batch_id: item.agent.batch_id,
-    author_thread_id: item.agent.author_thread_id,
-    generation_job_id: item.generation.job_id,
+    run_id: item.agent?.planning_run_id ?? null,
+    batch_id: item.agent?.batch_id ?? null,
+    author_thread_id: item.agent?.author_thread_id ?? null,
+    generation_job_id: item.generation?.job_id ?? null,
     request_sha256: item.generation.request_sha256,
     provider_contract: item.provider_contract,
     completed_at: entry.completedAt,
@@ -166,16 +217,13 @@
     });
 
     return {
-      schema_version: 1,
+      schema_version: 2,
       artifact_kind: "clipmaker-quality-annotations",
       review_ticket: dataset.review_ticket,
       dataset: {
         id: dataset.dataset_id,
-        source_ticket: dataset.source.ticket,
-        batch_id: dataset.source.batch_id,
-        manifest_path: dataset.source.manifest_path,
-        manifest_sha256: dataset.source.manifest_sha256,
-        data_sha256: dataset.source.data_sha256,
+        data_sha256: dataset.data_sha256,
+        sources: dataset.sources,
       },
       session_started_at: state.sessionStartedAt,
       exported_at: exportedAt,
@@ -194,8 +242,10 @@
     entryHasContent,
     freshState,
     isCompletable,
+    isSameDatasetState,
     isValidRating,
     mergeStates,
+    migrateState,
     nextIncompleteIndex,
     normalizeEntry,
     normalizeState,
