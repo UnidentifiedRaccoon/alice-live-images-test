@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f0f4" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <meta
+      name="description"
+      content="Ручная разметка качества видеогенераций по контексту и итоговому промпту клипмейкера."
+    />
+    <title>Alice Live · Step №4 · Разметка качества</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../shared.css?v=10" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body class="reviewBody">
+    <a class="skipLink" href="#reviewForm">К форме оценки</a>
+
+    <header class="siteHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../index.html?v=10" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+
+        <nav class="viewSwitch" aria-label="Шаги демо">
+          <a href="../index.html?v=10" aria-label="Шаг 1. Форматы — MP4 и анимированный WebP">
+            <span class="viewSwitchStep" lang="en">Step №1</span>
+            <strong class="viewSwitchTitle">Форматы</strong>
+            <span class="viewSwitchDescription">MP4 vs animated WebP</span>
+          </a>
+          <a
+            href="../generated-gallery.html?v=10"
+            aria-label="Шаг 2. Демо — Wan 2.2 на отобранных публикациях"
+          >
+            <span class="viewSwitchStep" lang="en">Step №2</span>
+            <strong class="viewSwitchTitle">Демо</strong>
+            <span class="viewSwitchDescription">Wan 2.2 на публикациях</span>
+          </a>
+          <a
+            href="../model-comparison-5s/?v=10"
+            aria-label="Шаг 3. Модели — Wan 2.7 и Veo 3.1 Lite"
+          >
+            <span class="viewSwitchStep" lang="en">Step №3</span>
+            <strong class="viewSwitchTitle">Модели</strong>
+            <span class="viewSwitchDescription">Wan 2.7 и Veo 3.1 Lite</span>
+          </a>
+          <a
+            aria-current="page"
+            href="./?v=1"
+            aria-label="Шаг 4. Разметка — оценка промптов и видеогенераций"
+          >
+            <span class="viewSwitchStep" lang="en">Step №4</span>
+            <strong class="viewSwitchTitle">Разметка</strong>
+            <span class="viewSwitchDescription">Промпт и результат</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="reviewApp" id="mainContent">
+      <header class="reviewTopbar">
+        <div class="reviewTitle">
+          <p class="eyebrow">Step №4 · PROMOPAGES-9897</p>
+          <h1>Разметка качества</h1>
+        </div>
+
+        <div class="reviewProgress" aria-labelledby="progressLabel">
+          <div class="progressCopy">
+            <p id="progressLabel">Подготавливаем набор…</p>
+            <p id="draftCount">Черновиков пока нет</p>
+          </div>
+          <div
+            class="progressTrack"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="15"
+            aria-valuenow="0"
+            aria-labelledby="progressLabel"
+          >
+            <span id="progressBar"></span>
+          </div>
+        </div>
+
+        <button
+          class="controlButton exportButton"
+          id="exportButton"
+          type="button"
+          aria-describedby="progressLabel"
+        >
+          Экспортировать JSON
+        </button>
+      </header>
+
+      <section class="datasetError" id="datasetError" role="alert" hidden>
+        <h2>Набор разметки не загрузился</h2>
+        <p id="datasetErrorText">
+          Проверьте, что review-data.js доступен, и перезагрузите страницу.
+        </p>
+      </section>
+
+      <section class="reviewWorkspace" id="reviewWorkspace" aria-label="Рабочее место разметки">
+        <section class="videoColumn" aria-labelledby="clipTitle">
+          <header class="videoHeader">
+            <div>
+              <p class="videoFolio">
+                Видео <span id="currentNumber">01</span><span aria-hidden="true"> / </span
+                ><span class="visuallyHidden">из</span><span id="totalNumber">15</span>
+              </p>
+              <h2 id="clipTitle" tabindex="-1">Загрузка видео…</h2>
+            </div>
+            <span class="modelBadge" id="modelBadge">—</span>
+          </header>
+
+          <div class="videoStage" id="videoStage">
+            <video
+              id="reviewVideo"
+              controls
+              loop
+              playsinline
+              preload="metadata"
+              aria-describedby="videoFacts mediaError"
+            >
+              Ваш браузер не поддерживает MP4-видео.
+            </video>
+            <div class="mediaError" id="mediaError" role="alert" hidden>
+              <strong>Видео не загрузилось.</strong>
+              <span>Завершение оценки заблокировано: проверьте файл и повторите попытку.</span>
+            </div>
+          </div>
+
+          <dl class="videoFacts" id="videoFacts" aria-label="Параметры генерации"></dl>
+          <div class="technicalNotes" id="technicalNotes" aria-label="Технические пометки"></div>
+
+          <div class="clipNavigator" aria-label="Переход между видеогенерациями">
+            <button class="mediaButton" id="previousButton" type="button">← Назад</button>
+            <label class="itemSelectLabel" for="itemSelect">
+              <span class="visuallyHidden">Выбрать видеогенерацию</span>
+              <select id="itemSelect"></select>
+            </label>
+            <button class="mediaButton replayButton" id="replayButton" type="button">
+              С начала
+            </button>
+            <button class="mediaButton" id="nextButton" type="button">Дальше →</button>
+          </div>
+        </section>
+
+        <form class="reviewPanel" id="reviewForm" novalidate>
+          <div class="reviewPanelInner">
+            <section class="reviewSection contextSection" aria-labelledby="contextTitle">
+              <p class="sectionIndex">01 · Контекст</p>
+              <div class="sectionHeading">
+                <h2 id="contextTitle" tabindex="-1">Контекст у изображения</h2>
+                <a id="articleLink" target="_blank" rel="noopener noreferrer">Открыть статью ↗</a>
+              </div>
+              <p class="contextScope">
+                Клипмейкер получил полную статью. Ниже — точный фрагмент вокруг позиции
+                изображения, без исходного изображения.
+              </p>
+              <div class="articleIdentity" id="articleIdentity"></div>
+              <dl class="contextDetails" id="contextDetails" hidden></dl>
+              <div class="contextFragments" id="contextFragments"></div>
+            </section>
+
+            <section class="reviewSection promptSection" aria-labelledby="promptTitle">
+              <p class="sectionIndex">02 · Формулировка</p>
+              <div class="sectionHeading">
+                <h2 id="promptTitle">Итоговый промпт клипмейкера</h2>
+                <span class="agentLabel" id="agentLabel">clipmaker-lite</span>
+              </div>
+              <p class="providerNote" id="providerNote"></p>
+
+              <div class="promptBlock">
+                <h3>Основной промпт</h3>
+                <p id="positivePrompt" lang="en"></p>
+              </div>
+              <div class="promptBlock promptBlockNegative" id="negativePromptBlock" hidden>
+                <h3>Ограничения / negative prompt</h3>
+                <p id="negativePrompt" lang="en"></p>
+              </div>
+              <p class="negativePromptStatus" id="negativePromptStatus">
+                Отдельный negative prompt не передавался.
+              </p>
+            </section>
+
+            <fieldset
+              class="reviewSection ratingSection"
+              id="ratingFieldset"
+              aria-describedby="ratingHint ratingError"
+            >
+              <legend>
+                <span class="sectionIndex">03 · Общая оценка</span>
+                <strong>Насколько результат соответствует контексту и промпту?</strong>
+              </legend>
+              <p class="ratingHint" id="ratingHint">Выберите один обязательный вариант.</p>
+              <div class="ratingOptions">
+                <div class="ratingOption ratingOptionBad">
+                  <input type="radio" name="rating" id="rating1" value="1" />
+                  <label for="rating1">
+                    <span class="ratingNumber">1</span>
+                    <span><strong>Плохо</strong><small>Нужен другой промпт или повтор</small></span>
+                  </label>
+                </div>
+                <div class="ratingOption ratingOptionOkay">
+                  <input type="radio" name="rating" id="rating2" value="2" />
+                  <label for="rating2">
+                    <span class="ratingNumber">2</span>
+                    <span><strong>Нормально</strong><small>Верно, но есть заметные проблемы</small></span>
+                  </label>
+                </div>
+                <div class="ratingOption ratingOptionGood">
+                  <input type="radio" name="rating" id="rating3" value="3" />
+                  <label for="rating3">
+                    <span class="ratingNumber">3</span>
+                    <span><strong>Хорошо</strong><small>Замысел выполнен без важных проблем</small></span>
+                  </label>
+                </div>
+              </div>
+              <p class="fieldError" id="ratingError" role="alert" hidden>
+                Выберите общую оценку: «Плохо», «Нормально» или «Хорошо».
+              </p>
+            </fieldset>
+
+            <section class="reviewSection guideSection" aria-labelledby="guideTitle">
+              <p class="sectionIndex">04 · Ориентир</p>
+              <h2 id="guideTitle">Как написать полезный отзыв</h2>
+              <ol class="guideList">
+                <li><strong>Намерение</strong><span>Какое действие или состояние заданы?</span></li>
+                <li><strong>Результат</strong><span>Что происходит в видео и в какой момент?</span></li>
+                <li><strong>Восприятие</strong><span>Что делает результат хорошим или плохим?</span></li>
+                <li><strong>Связь с промптом</strong><span>Какая формулировка сработала или подвела?</span></li>
+                <li><strong>Рекомендация</strong><span>Что сохранить, убрать или уточнить?</span></li>
+              </ol>
+              <p class="uncertaintyNote">
+                Если причина неочевидна, так и напишите. Точное наблюдение полезнее
+                неподтверждённой догадки.
+              </p>
+            </section>
+
+            <section class="reviewSection feedbackSection" aria-labelledby="feedbackLabel">
+              <div class="feedbackHeading">
+                <div>
+                  <p class="sectionIndex">05 · Обратная связь</p>
+                  <label id="feedbackLabel" for="feedback">Развернутый отзыв</label>
+                </div>
+                <span id="feedbackRequirement">Обязателен для оценок 1 и 2</span>
+              </div>
+              <textarea
+                id="feedback"
+                rows="9"
+                spellcheck="true"
+                aria-describedby="feedbackRequirement feedbackError autosaveStatus"
+                placeholder="Например: на 00:02 кошка делает второй шаг, хотя промпт просит остановиться после первого…"
+              ></textarea>
+              <p class="fieldError" id="feedbackError" role="alert" hidden>
+                Для этой оценки нужен отзыв: опишите наблюдение и связь с промптом.
+              </p>
+              <div class="draftMeta">
+                <p id="autosaveStatus" aria-live="polite">Черновик сохраняется автоматически.</p>
+                <p class="storageNotice" id="storageNotice" role="alert" hidden></p>
+              </div>
+            </section>
+
+            <footer class="formFooter">
+              <p class="submitStatus" id="submitStatus" aria-live="polite"></p>
+              <button class="submitButton" id="submitButton" type="submit">
+                Сохранить оценку и перейти дальше
+              </button>
+            </footer>
+          </div>
+        </form>
+      </section>
+
+      <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
+    </main>
+
+    <script src="review-core.js?v=3"></script>
+    <script src="review-data.js?v=1"></script>
+    <script src="app.js?v=3"></script>
+  </body>
+</html>
