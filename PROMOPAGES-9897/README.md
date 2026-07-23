@@ -95,6 +95,17 @@ python3 -m unittest discover -s scripts -p 'test_*.py'
 python3 scripts/clipmaker_lite_batch_pipeline.py verify --allow-contract-warnings
 ```
 
+## Результат разметки
+
+- [`analysis/clipmaker-quality-annotations-2026-07-23.json`](analysis/clipmaker-quality-annotations-2026-07-23.json)
+  — полный экспорт: 57 завершённых оценок, 0 черновиков;
+- [`analysis/clipmaker-review-report-2026-07-23.md`](analysis/clipmaker-review-report-2026-07-23.md)
+  — количественный и качественный анализ, ограничения, рекомендации и дизайн
+  следующего эксперимента.
+
+SHA-256 исходного экспорта:
+`a419d4eaca60a2996d2c8534ed74bfc071085ba5918825fc70074b62ef2c8d34`.
+
 ## Локальный просмотр
 
 Из корня репозитория:
