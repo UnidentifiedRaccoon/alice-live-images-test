@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9929",
+  "sample_id": "14-miuz-wan22-prompt-replay",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The two hanging teardrop pearls begin a small, even pendulum swing in opposite phases, their highlights sliding across the curved surfaces. Fixed camera. By the final frames both pearls return close to vertical with only a faint residual sway.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "840be12a80d2b83c83ded85a8c4930c58736be37c8c85134be70d77d1cb48580",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3YKmmeFIZEgWkMBdQtLX",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T16:04:16Z",
+  "completed_at": "2026-07-26T16:05:59Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2509371,
+    "sha256": "bb40f662b294d9db6e37676ac0515749b35af835447a521db9704dcdd5bf708f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "experiment_id": "promopages-9929-case14-wan22-prompt-v1",
+  "canonical_lite_artifact": false,
+  "provider_run_id": "promopages-9929-case14-wan22-prompt-v1-veo-3-1-lite",
+  "prompt_source_model_id": "alibaba/wan-2.2",
+  "prompt_source_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi"
+}

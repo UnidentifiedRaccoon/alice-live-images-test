@@ -9,6 +9,9 @@
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
   ];
+  const EXPERIMENT_ARTICLE_NUMBER = "14";
+  const EXPERIMENT_PROMPT_SOURCE_MODEL_ID = MODEL_ORDER[0];
+  const EXPERIMENT_TARGET_MODEL_ORDER = MODEL_ORDER.slice(1);
   const MODEL_PRESENTATION = {
     "alibaba/wan-2.2": {
       name: "Wan 2.2",
@@ -65,6 +68,31 @@
     if (!condition) throw new Error(message);
   };
 
+  const hasOwn = (object, property) =>
+    Object.prototype.hasOwnProperty.call(object, property);
+
+  const validateOutput = (articleNumber, output, videoPaths, contextLabel) => {
+    assert(output && typeof output === "object", `У ${articleNumber} / ${contextLabel} нет данных.`);
+    assert(output.video_path, `У ${articleNumber} / ${contextLabel} нет MP4.`);
+    assert(
+      !videoPaths.has(output.video_path),
+      `Путь MP4 повторяется: ${output.video_path}.`,
+    );
+    assert(
+      typeof output.positive_prompt === "string" && output.positive_prompt.trim(),
+      `У ${articleNumber} / ${contextLabel} пустой positive prompt.`,
+    );
+    assert(
+      Number(output.media?.width) > 0 && Number(output.media?.height) > 0,
+      `У ${articleNumber} / ${contextLabel} нет геометрии видео.`,
+    );
+    assert(
+      Number(output.media?.duration_seconds) > 0 && Number(output.media?.bytes) > 0,
+      `У ${articleNumber} / ${contextLabel} нет метаданных видео.`,
+    );
+    videoPaths.add(output.video_path);
+  };
+
   const validateManifest = (manifest) => {
     assert(manifest && typeof manifest === "object", "Манифест имеет неверный формат.");
     assert(
@@ -85,8 +113,10 @@
     const expectedNumbers = Array.from({ length: EXPECTED_ARTICLE_COUNT }, (_, index) =>
       String(index + 1).padStart(2, "0"),
     );
-    const videoPaths = new Set();
+    const canonicalVideoPaths = new Set();
+    const allVideoPaths = new Set();
     let promptCount = 0;
+    let comparisonOutputCount = 0;
 
     manifest.articles.forEach((article, articleIndex) => {
       assert(
@@ -116,32 +146,115 @@
       MODEL_ORDER.forEach((modelId) => {
         const output = outputsByModel.get(modelId);
         assert(output, `У кейса ${article.article_number} нет модели ${modelId}.`);
-        assert(output.video_path, `У ${article.article_number} / ${modelId} нет MP4.`);
-        assert(
-          typeof output.positive_prompt === "string" && output.positive_prompt.trim(),
-          `У ${article.article_number} / ${modelId} пустой positive prompt.`,
-        );
-        assert(
-          Number(output.media?.width) > 0 && Number(output.media?.height) > 0,
-          `У ${article.article_number} / ${modelId} нет геометрии видео.`,
-        );
-        assert(
-          Number(output.media?.duration_seconds) > 0 && Number(output.media?.bytes) > 0,
-          `У ${article.article_number} / ${modelId} нет метаданных видео.`,
-        );
-        videoPaths.add(output.video_path);
+        validateOutput(article.article_number, output, allVideoPaths, modelId);
+        canonicalVideoPaths.add(output.video_path);
         promptCount += 1;
+      });
+
+      const hasComparisonOutputs = hasOwn(article, "comparison_outputs");
+      if (!hasComparisonOutputs) return;
+
+      assert(
+        article.article_number === EXPERIMENT_ARTICLE_NUMBER,
+        `Экспериментальные ролики допустимы только у кейса ${EXPERIMENT_ARTICLE_NUMBER}.`,
+      );
+      assert(
+        Array.isArray(article.comparison_outputs) &&
+          article.comparison_outputs.length === EXPERIMENT_TARGET_MODEL_ORDER.length,
+        `У кейса ${EXPERIMENT_ARTICLE_NUMBER} должно быть два экспериментальных ролика.`,
+      );
+      comparisonOutputCount += article.comparison_outputs.length;
+
+      const comparisonsByModel = new Map(
+        article.comparison_outputs.map((output) => [output.model_id, output]),
+      );
+      assert(
+        comparisonsByModel.size === EXPERIMENT_TARGET_MODEL_ORDER.length,
+        `У кейса ${EXPERIMENT_ARTICLE_NUMBER} повторяются экспериментальные модели.`,
+      );
+      const referencePrompt = outputsByModel.get(EXPERIMENT_PROMPT_SOURCE_MODEL_ID).positive_prompt;
+
+      EXPERIMENT_TARGET_MODEL_ORDER.forEach((modelId) => {
+        const output = comparisonsByModel.get(modelId);
+        assert(
+          output,
+          `У эксперимента кейса ${EXPERIMENT_ARTICLE_NUMBER} нет модели ${modelId}.`,
+        );
+        assert(
+          output.prompt_source_model_id === EXPERIMENT_PROMPT_SOURCE_MODEL_ID,
+          `У ${EXPERIMENT_ARTICLE_NUMBER} / ${modelId} неверный источник prompt.`,
+        );
+        assert(
+          output.positive_prompt === referencePrompt,
+          `У ${EXPERIMENT_ARTICLE_NUMBER} / ${modelId} изменён prompt Wan 2.2.`,
+        );
+        validateOutput(
+          article.article_number,
+          output,
+          allVideoPaths,
+          `${modelId} · prompt Wan 2.2`,
+        );
       });
     });
 
-    assert(videoPaths.size === EXPECTED_OUTPUT_COUNT, "Пути выбранных MP4 повторяются.");
+    assert(
+      canonicalVideoPaths.size === EXPECTED_OUTPUT_COUNT,
+      "Пути выбранных canonical MP4 повторяются.",
+    );
     assert(promptCount === EXPECTED_OUTPUT_COUNT, "Проверены не все 60 positive prompts.");
+    if (comparisonOutputCount > 0) {
+      assert(
+        manifest.comparison_output_count === EXPERIMENT_TARGET_MODEL_ORDER.length,
+        `В манифесте должно быть заявлено два экспериментальных ролика.`,
+      );
+      assert(
+        comparisonOutputCount === manifest.comparison_output_count,
+        `Число экспериментальных роликов не совпадает с comparison_output_count.`,
+      );
+    } else if (hasOwn(manifest, "comparison_output_count")) {
+      assert(
+        manifest.comparison_output_count === 0,
+        `comparison_output_count задан без экспериментальных роликов.`,
+      );
+    }
 
     return manifest.articles.map((article) => {
       const outputsByModel = new Map(article.outputs.map((output) => [output.model_id, output]));
+      const normalizedOutputs = MODEL_ORDER.map((modelId) => outputsByModel.get(modelId));
+      if (!hasOwn(article, "comparison_outputs")) {
+        return { ...article, outputs: normalizedOutputs, displayOutputs: normalizedOutputs };
+      }
+
+      const comparisonsByModel = new Map(
+        article.comparison_outputs.map((output) => [output.model_id, output]),
+      );
+      const displayOutputs = [
+        {
+          ...outputsByModel.get(EXPERIMENT_PROMPT_SOURCE_MODEL_ID),
+          showcaseLabel: "Референс · свой prompt",
+          showcaseVariant: "reference",
+        },
+      ];
+      EXPERIMENT_TARGET_MODEL_ORDER.forEach((modelId) => {
+        displayOutputs.push({
+          ...outputsByModel.get(modelId),
+          showcaseLabel: "Свой prompt",
+          showcaseVariant: "baseline",
+        });
+        displayOutputs.push({
+          ...comparisonsByModel.get(modelId),
+          showcaseLabel: "Prompt Wan 2.2",
+          showcaseVariant: "comparison",
+        });
+      });
+
       return {
         ...article,
-        outputs: MODEL_ORDER.map((modelId) => outputsByModel.get(modelId)),
+        outputs: normalizedOutputs,
+        comparison_outputs: EXPERIMENT_TARGET_MODEL_ORDER.map((modelId) =>
+          comparisonsByModel.get(modelId),
+        ),
+        displayOutputs,
       };
     });
   };
@@ -211,9 +324,18 @@
     const presentation = MODEL_PRESENTATION[output.model_id];
     const titleId = `model-${article.article_number}-${modelIndex + 1}`;
     const videoUrl = asAssetUrl(output.video_path);
+    const promptLabel = output.showcaseLabel
+      ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
+      : "";
+    const variant = output.showcaseVariant || "canonical";
+    const accessibleVariant = output.showcaseLabel ? ` · ${output.showcaseLabel}` : "";
 
     return `
-      <article class="mediaPanel modelPanel" aria-labelledby="${titleId}">
+      <article
+        class="mediaPanel modelPanel"
+        data-output-kind="${escapeHtml(variant)}"
+        aria-labelledby="${titleId}"
+      >
         <div
           class="mediaStage"
           style="--media-aspect: ${output.media.width} / ${output.media.height}"
@@ -227,7 +349,7 @@
             controls
             playsinline
             preload="metadata"
-            aria-label="${escapeHtml(presentation.name)}: результат для статьи «${escapeHtml(article.title)}»"
+            aria-label="${escapeHtml(presentation.name + accessibleVariant)}: результат для статьи «${escapeHtml(article.title)}»"
           >
             Ваш браузер не поддерживает MP4-видео.
           </video>
@@ -238,6 +360,7 @@
 
         <div class="panelIdentity">
           <div>
+            ${promptLabel}
             <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
             <h3 id="${titleId}">${escapeHtml(presentation.name)}</h3>
             <code class="modelId">${escapeHtml(output.model_id)}</code>
@@ -286,21 +409,46 @@
 
   const monitorSelectedVideos = (article, sequence) => {
     const videos = [...elements.caseViewport.querySelectorAll("video")];
+    const videoCount = videos.length;
     const playAllButton = elements.caseViewport.querySelector("[data-play-all]");
     const sourceToggle = elements.caseViewport.querySelector("[data-source-toggle]");
     const sourcePanel = elements.caseViewport.querySelector("[data-source-panel]");
     const ready = new Set();
     const failed = new Set();
+    const mutedBeforeCoordinatedPlayback = new Map();
+    let coordinatedPlaybackActive = false;
+
+    const restoreCoordinatedMuteState = () => {
+      if (!coordinatedPlaybackActive) return;
+      videos.forEach((video) => {
+        if (mutedBeforeCoordinatedPlayback.has(video)) {
+          video.muted = mutedBeforeCoordinatedPlayback.get(video);
+        }
+      });
+      mutedBeforeCoordinatedPlayback.clear();
+      coordinatedPlaybackActive = false;
+    };
+
+    const muteCoordinatedPlayback = () => {
+      restoreCoordinatedMuteState();
+      videos.forEach((video) => {
+        mutedBeforeCoordinatedPlayback.set(video, video.muted);
+        video.muted = true;
+      });
+      coordinatedPlaybackActive = true;
+    };
 
     const setPlaybackState = () => {
       if (!playAllButton || sequence !== renderSequence) return;
       const anyPlaying = videos.some((video) => !video.paused && !video.ended);
+      if (!anyPlaying) restoreCoordinatedMuteState();
       playAllButton.setAttribute("aria-pressed", String(anyPlaying));
       playAllButton.textContent = anyPlaying ? "Пауза всех" : "Воспроизвести все";
     };
 
     const pauseAll = () => {
       videos.forEach((video) => video.pause());
+      restoreCoordinatedMuteState();
       setPlaybackState();
     };
 
@@ -309,17 +457,21 @@
 
       if (videos.some((video) => !video.paused && !video.ended)) {
         pauseAll();
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}: три видео на паузе.`;
+        elements.navigatorStatus.textContent =
+          `Кейс ${article.article_number}: ${videoCount} видео на паузе.`;
         return;
       }
 
       playAllButton.disabled = true;
-      elements.navigatorStatus.textContent = `Кейс ${article.article_number}: запускаем три видео…`;
+      elements.navigatorStatus.textContent =
+        `Кейс ${article.article_number}: запускаем ${videoCount} видео…`;
       videos.forEach((video) => {
         video.pause();
         video.currentTime = 0;
       });
-      // Keep all play() calls in the original click gesture so media with audio is allowed.
+      // A coordinated comparison is visual: prevent provider audio tracks from overlapping.
+      muteCoordinatedPlayback();
+      // Keep all play() calls in the original click gesture for consistent browser behavior.
       const results = await Promise.allSettled(videos.map((video) => video.play()));
       if (sequence !== renderSequence) return;
 
@@ -333,7 +485,7 @@
 
       setPlaybackState();
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}: три видео запущены одновременно.`;
+        `Кейс ${article.article_number}: ${videoCount} видео запущены одновременно без звука.`;
     };
 
     const announce = () => {
@@ -346,11 +498,13 @@
       }
 
       if (failed.size > 0) {
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}: загружено ${ready.size} из 3, ошибок — ${failed.size}.`;
+        elements.navigatorStatus.textContent = `Кейс ${article.article_number}: загружено ${ready.size} из ${videoCount}, ошибок — ${failed.size}.`;
       } else if (ready.size === videos.length) {
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}: три видео подключены. Остальные 57 не загружаются.`;
+        elements.navigatorStatus.textContent =
+          `Кейс ${article.article_number}: ${videoCount} видео подключены. Другие кейсы не загружаются.`;
       } else {
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}: загружаем метаданные · ${ready.size} из 3.`;
+        elements.navigatorStatus.textContent =
+          `Кейс ${article.article_number}: загружаем метаданные · ${ready.size} из ${videoCount}.`;
       }
     };
 
@@ -408,6 +562,8 @@
     const nextIndex = Math.min(Math.max(index, 0), articles.length - 1);
     const article = articles[nextIndex];
     const sequence = ++renderSequence;
+    const displayOutputs = article.displayOutputs || article.outputs;
+    const gridClass = displayOutputs.length > MODEL_ORDER.length ? " hasExperiment" : "";
 
     detachCurrentVideos();
     activeIndex = nextIndex;
@@ -442,8 +598,8 @@
           </button>
         </div>
         ${renderSource(article)}
-        <div class="modelGrid">
-          ${article.outputs
+        <div class="modelGrid${gridClass}">
+          ${displayOutputs
             .map((output, modelIndex) => renderModel(article, output, modelIndex))
             .join("")}
         </div>

@@ -13,7 +13,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
         paths = pages.collect_site_paths(ROOT)
         total_bytes = pages.site_size(ROOT, paths)
 
-        self.assertEqual(len(paths), 246)
+        self.assertEqual(len(paths), 248)
         self.assertGreater(total_bytes, 900_000_000)
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
         self.assertIn(Path("clipmaker-lite/index.html"), paths)
