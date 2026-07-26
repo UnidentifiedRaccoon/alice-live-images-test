@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "02-nanoplast-kak-unimat-bol",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+      "prompt": "Fixed camera. The red pain glow on the woman's shoulder steadily contracts and softens while her resting hand makes one small, gentle release of pressure. By the final frames the glow is faint and localized, her relieved shoulder pose remains clear, and the product packaging stays motionless and readable."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "c20ad779e6e8c8f3d04943597aae6a6f85772ee047e4a09d7f4352d4838812d0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "311c263df1d045d596f6915751322a10",
+  "provider_session_hash": "promopages9856-a3ae555909f6",
+  "submitted_at": "2026-07-24T15:43:35Z",
+  "completed_at": "2026-07-24T15:47:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1328,
+    "height": 656,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 386198,
+    "sha256": "fd4c66ca7d827c3805136f97bec8c3f24b6b6eef18539cc9e7a173563f03f366"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol-wan-2-2",
+  "lite_result_sha256": "eda83f8b4be4de0d1a92dfff1d52163bb2cd286582f1ffd6412b75d1f8358fbd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

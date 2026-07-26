@@ -1,0 +1,2286 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-07-26T11:30:08Z",
+  "expected_outputs": 60,
+  "summary": {
+    "provider-failed": 2,
+    "verification-failed": 20,
+    "succeeded": 22,
+    "dry-run": 16
+  },
+  "conforming_outputs": 22,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia-wan-2-2",
+      "sample_id": "01-pharmocean-magiia-magniia",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia-wan-2-7",
+      "sample_id": "01-pharmocean-magiia-magniia",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1930,
+        "height": 1074,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4795965,
+        "sha256": "606b1b5f1dfa930bcd47abebab768ba9d4066dc4df9a1d410ca92b78ea477268"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia-veo-3-1-lite",
+      "sample_id": "01-pharmocean-magiia-magniia",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3333373,
+        "sha256": "fba1c93cf08a37e35410e8a1acb4b065b4ce844c407b17d7c27202e2a5e88c4a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol-wan-2-2",
+      "sample_id": "02-nanoplast-kak-unimat-bol",
+      "article_slug": "02-nanoplast-kak-unimat-bol",
+      "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1328,
+        "height": 656,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 386198,
+        "sha256": "fd4c66ca7d827c3805136f97bec8c3f24b6b6eef18539cc9e7a173563f03f366"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol-wan-2-7",
+      "sample_id": "02-nanoplast-kak-unimat-bol",
+      "article_slug": "02-nanoplast-kak-unimat-bol",
+      "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2036,
+        "height": 1018,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2834246,
+        "sha256": "77208e605615e9880aab2b61a64eaa904e9c084a80892b4902b86b6e488187ef"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol-veo-3-1-lite",
+      "sample_id": "02-nanoplast-kak-unimat-bol",
+      "article_slug": "02-nanoplast-kak-unimat-bol",
+      "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/02-nanoplast-kak-unimat-bol/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2378567,
+        "sha256": "56e0cb35d153f558af075c2533f0e56ef2522bcb998def519e39068976b41702"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni-wan-2-2",
+      "sample_id": "03-zov-resheniia-dlia-kuhni",
+      "article_slug": "03-zov-resheniia-dlia-kuhni",
+      "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1216,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 319718,
+        "sha256": "702248e1fe6f863dd47af30f1fe515cc274e514096adb23a495e58e28fbf7499"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni-wan-2-7",
+      "sample_id": "03-zov-resheniia-dlia-kuhni",
+      "article_slug": "03-zov-resheniia-dlia-kuhni",
+      "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1858,
+        "height": 1114,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 9691318,
+        "sha256": "94a73205b71ad2e75a617c29541ff52227fbd83ee85bde3a63fa1e8a3ac1388e"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni-veo-3-1-lite",
+      "sample_id": "03-zov-resheniia-dlia-kuhni",
+      "article_slug": "03-zov-resheniia-dlia-kuhni",
+      "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5921323,
+        "sha256": "21b7d272500639030cac4c4ae6c7d315f037052aaec6d0718edaf5730ba7b909"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka-wan-2-2",
+      "sample_id": "04-graceface-antivozrastnaia-syvorotka",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka-wan-2-7",
+      "sample_id": "04-graceface-antivozrastnaia-syvorotka",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1820,
+        "height": 1138,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3906288,
+        "sha256": "e740875f2df6ef1a6c45f4670519dd894d07b48c5c09a3fd68deb7ef146809d1"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka-veo-3-1-lite",
+      "sample_id": "04-graceface-antivozrastnaia-syvorotka",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/04-graceface-antivozrastnaia-syvorotka/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2857871,
+        "sha256": "650377db0ba381a3a18a27ddfe1fe3d98d9c7b1f21c1fc170740044a5acef241"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin-wan-2-2",
+      "sample_id": "05-5ka-zhaloba-na-magazin",
+      "article_slug": "05-5ka-zhaloba-na-magazin",
+      "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin-wan-2-7",
+      "sample_id": "05-5ka-zhaloba-na-magazin",
+      "article_slug": "05-5ka-zhaloba-na-magazin",
+      "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 8882578,
+        "sha256": "81e092fed07848fa624a2f7d24ce42bc9647ebd2b5df1166ccfe9ca222f710ee"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin-veo-3-1-lite",
+      "sample_id": "05-5ka-zhaloba-na-magazin",
+      "article_slug": "05-5ka-zhaloba-na-magazin",
+      "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 7503206,
+        "sha256": "c47b48d140655046d42bb7f77b856eef53796c5ef39dac84af95170e6c095c47"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel-wan-2-2",
+      "sample_id": "06-4lapy-koshachii-napolnitel",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel-wan-2-7",
+      "sample_id": "06-4lapy-koshachii-napolnitel",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1662,
+        "height": 1246,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 6250805,
+        "sha256": "07db24eca8faebd5bd100383cd1ea094cf5919547063a209e0d6d9e61ac2d55d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel-veo-3-1-lite",
+      "sample_id": "06-4lapy-koshachii-napolnitel",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4334536,
+        "sha256": "37eeb56164f735e36bb244ea5f468790b2891160d5c7ceab5252cfd27c20c70b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d-wan-2-2",
+      "sample_id": "07-aquadetrim-deficit-vitamina-d",
+      "article_slug": "07-aquadetrim-deficit-vitamina-d",
+      "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d-wan-2-7",
+      "sample_id": "07-aquadetrim-deficit-vitamina-d",
+      "article_slug": "07-aquadetrim-deficit-vitamina-d",
+      "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3139146,
+        "sha256": "d06ec6f7f2e279973bd16a38992fa8da1001e916f7ae5227b1f83fce6bd4365f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d-veo-3-1-lite",
+      "sample_id": "07-aquadetrim-deficit-vitamina-d",
+      "article_slug": "07-aquadetrim-deficit-vitamina-d",
+      "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2058078,
+        "sha256": "c0e0a6b23d6123306c76f22581c965fe4ca5cf24dcec77c8244c9d2a2c23272e"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip-wan-2-2",
+      "sample_id": "08-tochka-ooo-ili-ip",
+      "article_slug": "08-tochka-ooo-ili-ip",
+      "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip-wan-2-7",
+      "sample_id": "08-tochka-ooo-ili-ip",
+      "article_slug": "08-tochka-ooo-ili-ip",
+      "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3018562,
+        "sha256": "f8f7f96961a58eecb0128c6208189fd7a567b238cac14dc7fa2676e22cd81987"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip-veo-3-1-lite",
+      "sample_id": "08-tochka-ooo-ili-ip",
+      "article_slug": "08-tochka-ooo-ili-ip",
+      "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/08-tochka-ooo-ili-ip/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4120839,
+        "sha256": "74ac500ed26d1aa983bd56bca52dc181ed3e7b18df9c5a44585683eaed4a95d0"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye-wan-2-2",
+      "sample_id": "09-dream-island-semeinye-vyhodnye",
+      "article_slug": "09-dream-island-semeinye-vyhodnye",
+      "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye-wan-2-7",
+      "sample_id": "09-dream-island-semeinye-vyhodnye",
+      "article_slug": "09-dream-island-semeinye-vyhodnye",
+      "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 10529124,
+        "sha256": "95c838022219790624d72282cabef0ba8b20dd9abecf286632c96ecf4dcb6839"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye-veo-3-1-lite",
+      "sample_id": "09-dream-island-semeinye-vyhodnye",
+      "article_slug": "09-dream-island-semeinye-vyhodnye",
+      "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 8825004,
+        "sha256": "1a51fcc0116b174c696f128ba0057f92846c59992226be9b97078b6c3bc902f2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx-wan-2-2",
+      "sample_id": "10-exeed-rx",
+      "article_slug": "10-exeed-rx",
+      "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx-wan-2-7",
+      "sample_id": "10-exeed-rx",
+      "article_slug": "10-exeed-rx",
+      "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3400475,
+        "sha256": "7acd401c78c0a4e8ff57a6099afe7f8d71208002f91b30e74744c49e6c603c4b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx-veo-3-1-lite",
+      "sample_id": "10-exeed-rx",
+      "article_slug": "10-exeed-rx",
+      "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1671267,
+        "sha256": "0fec833ea9d2f5c78825c7609b886f5583507ddf2b4b2e77594b86da391db120"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula-wan-2-2",
+      "sample_id": "11-ostin-vesenniaia-kapsula",
+      "article_slug": "11-ostin-vesenniaia-kapsula",
+      "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula-wan-2-7",
+      "sample_id": "11-ostin-vesenniaia-kapsula",
+      "article_slug": "11-ostin-vesenniaia-kapsula",
+      "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2388,
+        "height": 868,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5374714,
+        "sha256": "8267606d715520e74d4a7c0094e390bb56aff1909889d71bbc057c74ecd075f3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula-veo-3-1-lite",
+      "sample_id": "11-ostin-vesenniaia-kapsula",
+      "article_slug": "11-ostin-vesenniaia-kapsula",
+      "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5547725,
+        "sha256": "2b9adc3e0a7d2060472b39019e6c9c512114deede5d52814eb5b8455295aaf1d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta-wan-2-2",
+      "sample_id": "12-mars-podarki-na-8-marta",
+      "article_slug": "12-mars-podarki-na-8-marta",
+      "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta-wan-2-7",
+      "sample_id": "12-mars-podarki-na-8-marta",
+      "article_slug": "12-mars-podarki-na-8-marta",
+      "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3578425,
+        "sha256": "6ea00a42449ec5cb7957f2fd362eb593904bf360070fc350ae5a95779e72d19f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta-veo-3-1-lite",
+      "sample_id": "12-mars-podarki-na-8-marta",
+      "article_slug": "12-mars-podarki-na-8-marta",
+      "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1814470,
+        "sha256": "1d0007cd71a1f15f81a9d01d16739839d53d911c7f7b96fc078fa501c3ab9eeb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk-wan-2-2",
+      "sample_id": "13-ilinka-elitnyi-zhk",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk-wan-2-7",
+      "sample_id": "13-ilinka-elitnyi-zhk",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 7033654,
+        "sha256": "bade56387a1751881fc72e5b9ab71049f04f543246a787d7de8103dc0ae72fc9"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk-veo-3-1-lite",
+      "sample_id": "13-ilinka-elitnyi-zhk",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3304443,
+        "sha256": "c53fe57add59e427795af3863c59a7254bbd7882d8eb2843238c1854b6c8c084"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi-wan-2-2",
+      "sample_id": "14-miuz-modnye-sergi",
+      "article_slug": "14-miuz-modnye-sergi",
+      "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi-wan-2-7",
+      "sample_id": "14-miuz-modnye-sergi",
+      "article_slug": "14-miuz-modnye-sergi",
+      "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 12339623,
+        "sha256": "f819867af4b519db5e2682e8c38ba3ac7ce3849e9cca09192c7e2bf43e2b84f5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio"
+        ]
+      },
+      "error": "Media contract verification failed: audio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi-veo-3-1-lite",
+      "sample_id": "14-miuz-modnye-sergi",
+      "article_slug": "14-miuz-modnye-sergi",
+      "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5262085,
+        "sha256": "d4232b534bd85460f08d8fc7169366e7359e9b1099acf40702c0090c8fb0456f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki-wan-2-2",
+      "sample_id": "15-ozon-gruzoperevozki",
+      "article_slug": "15-ozon-gruzoperevozki",
+      "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki-wan-2-7",
+      "sample_id": "15-ozon-gruzoperevozki",
+      "article_slug": "15-ozon-gruzoperevozki",
+      "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2036,
+        "height": 1018,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3970680,
+        "sha256": "1f779ca6afb6a223bf2be581a5668cfbd7d63ccd4f2c2d724b8d9537f4ccba9a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki-veo-3-1-lite",
+      "sample_id": "15-ozon-gruzoperevozki",
+      "article_slug": "15-ozon-gruzoperevozki",
+      "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3900439,
+        "sha256": "acb993e633c4c7af6867635cff1d2b49ca5736f710794bf87f912651da952b74"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy-wan-2-2",
+      "sample_id": "16-ekonika-letnie-trendy",
+      "article_slug": "16-ekonika-letnie-trendy",
+      "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy-wan-2-7",
+      "sample_id": "16-ekonika-letnie-trendy",
+      "article_slug": "16-ekonika-letnie-trendy",
+      "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5474766,
+        "sha256": "3d7b57a915c1eaf6fc9e4f7d11cc0d8113266d144880d0d73f8de7086a5ce720"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio"
+        ]
+      },
+      "error": "Media contract verification failed: audio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy-veo-3-1-lite",
+      "sample_id": "16-ekonika-letnie-trendy",
+      "article_slug": "16-ekonika-letnie-trendy",
+      "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4384608,
+        "sha256": "2d8aeec533a22d8ee91bc15f480b7ba3b4f48abb2af3de27a102228888597d32"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira-wan-2-2",
+      "sample_id": "17-level-michurinskiy-kvartira",
+      "article_slug": "17-level-michurinskiy-kvartira",
+      "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira-wan-2-7",
+      "sample_id": "17-level-michurinskiy-kvartira",
+      "article_slug": "17-level-michurinskiy-kvartira",
+      "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 16241256,
+        "sha256": "7fd7d2dedfa2803876de49c1e92b16cbe6c6106f3387c055c70bbe1a57f62bca"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio"
+        ]
+      },
+      "error": "Media contract verification failed: audio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira-veo-3-1-lite",
+      "sample_id": "17-level-michurinskiy-kvartira",
+      "article_slug": "17-level-michurinskiy-kvartira",
+      "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 8089927,
+        "sha256": "30f71c8932aa1044a101ed33cdd2555bacb1ebb77fd9d2fda1a8b0b02ca8a350"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos-wan-2-2",
+      "sample_id": "18-dalan-sredstva-dlia-volos",
+      "article_slug": "18-dalan-sredstva-dlia-volos",
+      "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos-wan-2-7",
+      "sample_id": "18-dalan-sredstva-dlia-volos",
+      "article_slug": "18-dalan-sredstva-dlia-volos",
+      "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1246,
+        "height": 1662,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4775837,
+        "sha256": "3ff935e0318004c2e113acfc1e92560e1be6eeafa842bfde171ecf58a4c4b8bb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "3:4",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos-veo-3-1-lite",
+      "sample_id": "18-dalan-sredstva-dlia-volos",
+      "article_slug": "18-dalan-sredstva-dlia-volos",
+      "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1080,
+        "height": 1920,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4629467,
+        "sha256": "875d7304b13da26cf0778cc8a8f20c0086e2d53f5816f879103428159cdb2810"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "9:16",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii-wan-2-2",
+      "sample_id": "19-level-travel-otpusk-v-turcii",
+      "article_slug": "19-level-travel-otpusk-v-turcii",
+      "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii-wan-2-7",
+      "sample_id": "19-level-travel-otpusk-v-turcii",
+      "article_slug": "19-level-travel-otpusk-v-turcii",
+      "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1632,
+        "height": 1270,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 8282516,
+        "sha256": "4910592aeba5379b8f825b779610dc87b96caabbc61055bf34c22d8ad4d0c896"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii-veo-3-1-lite",
+      "sample_id": "19-level-travel-otpusk-v-turcii",
+      "article_slug": "19-level-travel-otpusk-v-turcii",
+      "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4241115,
+        "sha256": "830a16849cf476cce2a7f51b1323ffb42250ebcc760183453717bf8b41f1abe3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting-wan-2-2",
+      "sample_id": "20-sravni-kreditnyi-reiting",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "dry-run",
+      "recorded_status": "dry-run",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.2/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting-wan-2-7",
+      "sample_id": "20-sravni-kreditnyi-reiting",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2933933,
+        "sha256": "e6b644fe40a75e64dc45639fa9e31c176931ec31039aadf5b9fc44cfe07080fd"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+      "provider_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting-veo-3-1-lite",
+      "sample_id": "20-sravni-kreditnyi-reiting",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1994338,
+        "sha256": "4d1e70e8e6c3a29afe22ca3331cc31ef436adccc7342f6bdb0757c54ef7d4ec2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

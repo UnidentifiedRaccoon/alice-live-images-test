@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+    "sha256": "4f3de7c82a207ff044907ac459598119297ff9bb919901b856f9dea708b0212d",
+    "width": 1254,
+    "height": 836
+  },
+  "structured_intent": {
+    "editorial_meaning": "Онлайн-проверка кредитного рейтинга помогает заранее и без лишнего напряжения получить полезную финансовую информацию.",
+    "primary_action": "Мужчина слегка поднимает и наклоняет смартфон к себе, продолжая следить за экраном.",
+    "terminal_state": "Смартфон устойчиво расположен немного выше и ближе к линии взгляда, а мужчина по-прежнему смотрит на него с спокойной улыбкой.",
+    "semantic_invariant": "Мужчина остаётся расслабленным, заинтересованным и довольным взаимодействием со смартфоном."
+  },
+  "prompt": {
+    "positive": "The man gently lifts and tilts the phone toward his gaze, his eyes tracking the screen as his smile softly brightens. Keep the camera fixed. End with the phone settled slightly higher and the man still relaxed, pleased, and looking at it.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting/result.json",
+    "sha256": "7e3a189e1b94e6392d6cf4c7345b646ce0df2ee4a686a11954a166ce7ab4d515",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "4f3de7c82a207ff044907ac459598119297ff9bb919901b856f9dea708b0212d",
+      "article_context_sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

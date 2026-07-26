@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "20-sravni-kreditnyi-reiting",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The man gently lifts and tilts the phone toward his gaze, his eyes tracking the screen as his smile softly brightens. Keep the camera fixed. End with the phone settled slightly higher and the man still relaxed, pleased, and looking at it.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "149c6365d949685fc87880044216fc18e4353117a29a476fca3fb6b39d49eb12",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "C1SxdLmT7d01LBA1LPFE",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:39:52Z",
+  "completed_at": "2026-07-24T17:41:39Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1994338,
+    "sha256": "4d1e70e8e6c3a29afe22ca3331cc31ef436adccc7342f6bdb0757c54ef7d4ec2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting-veo-3-1-lite",
+  "lite_result_sha256": "7e3a189e1b94e6392d6cf4c7345b646ce0df2ee4a686a11954a166ce7ab4d515",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

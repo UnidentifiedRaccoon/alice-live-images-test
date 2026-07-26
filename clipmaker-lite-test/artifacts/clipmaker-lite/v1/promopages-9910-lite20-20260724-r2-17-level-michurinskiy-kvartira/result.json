@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:fbc796ce54e8a1e65a76327455099d7eeabb617209a918aae4bc075715635503",
+    "execution_fingerprint": "sha256:21c9d93af2e0d361351f3e4aee42522106d0fbe8b54fb23181d84765af478796",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b8-3a83-7120-91c9-3e54cde0a3d1"
+    },
+    "authored_payload_sha256": "be6ceda3cc7ff46d1d23145474e8ba98b5beb0ed9658ff062d090523a120848b",
+    "draft_file_sha256": "97e14e66784b19482c7d04fb5886b786ced6eedf02ab622327ea18b2972faa39"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+      "sha256": "d5a32f8570d436600c4e9baf6ec36f94c09d1608df1f46ebd62d6ef7ff79b078",
+      "bytes": 222655
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/17-level-michurinskiy-kvartira/content.json",
+      "sha256": "d7de6650747663d9abe428c3eaba863d54afdc18ffff79265347663f67308b40",
+      "bytes": 13689,
+      "locator": {
+        "article_id": "17-level-michurinskiy-kvartira",
+        "title": "Трехсторонняя квартира: уникальный вид из каждой комнаты",
+        "lead": "Редкие форматы квартиры. Рассказываем, чем порадуют жителей в Level Мичуринский",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/17-level-michurinskiy-kvartira/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Мечтаете о светлой квартире с живописным видом из окна? Level Group опережает ожидания: в вашем доме всегда будет солнце, а Москва — как на ладони. Подробнее о решении рассказали в статье."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A cluster of slender, geometrically varied residential towers rises above dense green trees, with the tallest red-framed tower dominating the right side.",
+      "Strong low sunlight already produces bright reflections on the central glass façades; foliage and small clouds are the only other visibly plausible moving elements.",
+      "The wide composition contrasts monumental architecture with abundant greenery and keeps every tower clearly readable."
+    ],
+    "article_context": "This body image introduces the section on additional reasons to choose Level Michurinsky and specifically illustrates its expressive architecture by SPEECH, while the surrounding article frames the complex as a distinctive residential landmark in a green Moscow district.",
+    "structured_intent": {
+      "editorial_meaning": "Emphasize Level Michurinsky as an expressive architectural landmark that stands prominently within a green setting.",
+      "primary_action": "The existing sunlight reflection travels upward across the central glass façades.",
+      "terminal_state": "A concentrated bright reflection is visibly established on the upper floors of the central towers.",
+      "semantic_invariant": "The distinctive tower ensemble remains the dominant, recognizable architectural subject within its green surroundings."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For 3.2 seconds, keep the camera fixed and begin the existing façade reflection moving immediately. Let the concentrated band of light travel upward at a steady, restrained pace across the central towers, reaching a clear bright highlight near their upper floors close to the end. Preserve the buildings’ geometry and the architectural ensemble as the dominant subject throughout.",
+      "positive_prompt": "A bright sun reflection glides steadily upward across the central glass façades and reaches a crisp highlight near their upper floors by the final frames. Fixed camera; the towers remain continuously sharp and recognizable.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Use the five seconds for one gradual optical push toward the central cluster, motivated by the distinctive façade forms. At the same time, the existing sunlight reflection develops continuously and climbs across the glass surfaces at an even pace. Near the end it gathers into a concentrated upper-floor highlight, with all towers still legible and the expressive architecture remaining the focus.",
+      "positive_prompt": "Slowly push toward the central towers as the existing sunlight reflection climbs across their glass façades, ending as a concentrated highlight on the upper floors. Keep the full architectural ensemble recognizable.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Across four seconds, make a subtle forward drift aimed at the angular central tower. Let the visible sun glint sweep upward over that façade in one continuous, moderate movement, becoming a clear bright reflection on the upper floors near the final frame. Maintain the recognizable skyline and its architectural prominence against the greenery.",
+      "positive_prompt": "A subtle forward camera drift centers the angular middle tower while the existing sun glint sweeps upward over its façade, finishing as a bright upper-floor reflection. The tower cluster stays fully visible and recognizable.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

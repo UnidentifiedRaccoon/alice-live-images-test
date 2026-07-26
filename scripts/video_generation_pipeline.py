@@ -24,22 +24,93 @@ from fractions import Fraction
 from pathlib import Path
 from typing import Any, Callable, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode, urljoin, urlparse
+from urllib.parse import quote, urlencode, urljoin, urlparse
 from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class PipelineError(RuntimeError):
+    """A user-actionable pipeline failure."""
+
+
+class ProviderTerminalError(PipelineError):
+    """The provider reported a definitive terminal job failure."""
+
+
+GENERATION_ROUTES_PATH = ROOT / "docs/agents/clipmaker-lite/generation-routes.json"
+
+
+def _load_generation_routes(path: Path = GENERATION_ROUTES_PATH) -> dict[str, Any]:
+    """Load and validate the fixed normal-run routes without network discovery."""
+
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            document = json.load(handle)
+    except FileNotFoundError as exc:
+        raise PipelineError(f"Generation route registry does not exist: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise PipelineError(f"Invalid generation route registry {path}: {exc}") from exc
+    if not isinstance(document, dict) or document.get("schema_version") != 1:
+        raise PipelineError("Generation route registry must use schema_version 1")
+    policy = document.get("policy")
+    if not isinstance(policy, dict) or policy.get("resolution") != "exact-model-id":
+        raise PipelineError("Generation routes must resolve by exact model_id")
+    if policy.get("automatic_fallback") is not False:
+        raise PipelineError("Generation routes must disable automatic fallback")
+    if policy.get("normal_run_discovery") is not False:
+        raise PipelineError("Generation routes must disable normal-run discovery")
+    routes = document.get("models")
+    if not isinstance(routes, dict) or not routes:
+        raise PipelineError("Generation route registry must contain a non-empty models object")
+    for model_id, route in routes.items():
+        if not isinstance(model_id, str) or not isinstance(route, dict):
+            raise PipelineError("Generation route entries must map model IDs to objects")
+        if route.get("adapter") not in {"wan-demo", "eliza-openrouter"}:
+            raise PipelineError(f"Unsupported adapter in generation route for {model_id}")
+        paths = route.get("paths")
+        if not isinstance(paths, dict) or not paths:
+            raise PipelineError(f"Generation route for {model_id} has no paths")
+        for name, value in paths.items():
+            if not isinstance(value, str) or not value.startswith("/"):
+                raise PipelineError(
+                    f"Generation route path {model_id}.{name} must start with /"
+                )
+    return document
+
+
+GENERATION_ROUTE_DOCUMENT = _load_generation_routes()
+GENERATION_ROUTES: dict[str, dict[str, Any]] = GENERATION_ROUTE_DOCUMENT["models"]
+
+
+def route_for_model(model_id: str) -> dict[str, Any]:
+    """Return the one configured route; never discover or substitute a model."""
+
+    route = GENERATION_ROUTES.get(model_id)
+    if route is None:
+        raise PipelineError(f"No exact generation route for model_id: {model_id}")
+    return route
+
+
 DEFAULT_SAMPLES = ROOT / "PROMOPAGES-9857/video-samples.json"
 DEFAULT_PROMPTS = ROOT / "PROMOPAGES-9857/video-prompts.json"
 DEFAULT_MANIFEST = ROOT / "PROMOPAGES-9857/video-generation-manifest.json"
-DEFAULT_WAN_BASE_URL = "https://wan-streamlit.dod.yandex.net"
-DEFAULT_WAN_STREAM_BASE_URL = "http://wan-streamlit.dod.yandex.net"
-DEFAULT_ELIZA_BASE_URL = "https://api.eliza.yandex.net/openrouter/v1"
+_WAN_ROUTE = route_for_model("alibaba/wan-2.2")
+DEFAULT_WAN_BASE_URL = _WAN_ROUTE["default_base_url"]
+DEFAULT_WAN_STREAM_BASE_URL = _WAN_ROUTE["default_stream_base_url"]
+WAN_UPLOAD_ENDPOINT = _WAN_ROUTE["paths"]["upload"]
+WAN_LEGACY_ENDPOINT = _WAN_ROUTE["paths"]["submit"]
+WAN_STREAM_ENDPOINT = _WAN_ROUTE["paths"]["events"]
+WAN_FILE_PREFIX = _WAN_ROUTE["paths"]["file_prefix"]
+WAN_NAMED_ENDPOINT = _WAN_ROUTE["diagnostic_only"]["submit_path"]
+WAN_NAMED_SESSION_MARKER = "named-api:text2video"
+WAN_DOD_HOST_SUFFIX = ".dod.yandex.net"
+DEFAULT_ELIZA_BASE_URL = route_for_model("alibaba/wan-2.7")["default_base_url"]
 
-MODEL_CONFIGS: dict[str, dict[str, Any]] = {
+_MODEL_RUNTIME_CONFIGS: dict[str, dict[str, Any]] = {
     "alibaba/wan-2.2": {
         "directory": "wan-2.2",
-        "adapter": "wan-demo",
         "duration": 3.2,
         "durations": [3.2],
         "resolution": "720p",
@@ -51,27 +122,40 @@ MODEL_CONFIGS: dict[str, dict[str, Any]] = {
     },
     "alibaba/wan-2.7": {
         "directory": "wan-2.7",
-        "adapter": "eliza-openrouter",
         "duration": 3,
         "durations": list(range(2, 11)),
         "resolution": "1080p",
         "aspect_ratios": ["16:9", "9:16", "1:1", "4:3", "3:4"],
         "seed": 9681,
         "generate_audio": False,
-        "provider": "atlas-cloud",
         "negative_limit": 500,
     },
     "google/veo-3.1-lite": {
         "directory": "veo-3.1-lite",
-        "adapter": "eliza-openrouter",
         "duration": 4,
         "durations": [4, 6, 8],
         "resolution": "1080p",
         "aspect_ratios": ["16:9", "9:16"],
         "seed": 9681,
         "generate_audio": False,
-        "provider": "google-vertex",
     },
+}
+
+if set(_MODEL_RUNTIME_CONFIGS) != set(GENERATION_ROUTES):
+    raise PipelineError(
+        "Runtime model configs and exact generation routes must contain the same model IDs"
+    )
+MODEL_CONFIGS: dict[str, dict[str, Any]] = {
+    model_id: {
+        **runtime,
+        "adapter": route_for_model(model_id)["adapter"],
+        **(
+            {"provider": route_for_model(model_id)["provider_key"]}
+            if "provider_key" in route_for_model(model_id)
+            else {}
+        ),
+    }
+    for model_id, runtime in _MODEL_RUNTIME_CONFIGS.items()
 }
 
 EXPECTED_SAMPLE_COUNT = 5
@@ -80,18 +164,12 @@ REQUEST_FINGERPRINT_VERSION = 2
 TERMINAL_SUCCESS = {"completed", "succeeded", "success", "done"}
 TERMINAL_FAILURE = {"failed", "error", "cancelled", "canceled", "expired"}
 SECRET_RE = re.compile(
-    r"(?i)(authorization\s*[:=]\s*(?:bearer|oauth)\s+)[^\s,;]+|"
-    r"((?:access[_-]?token|api[_-]?key|token)\s*[:=]\s*)[^\s,;]+"
+    r"(?i)([\"']?authorization[\"']?\s*[:=]\s*[\"']?(?:bearer|oauth)\s+)"
+    r"[^\"'\s,;}]+|"
+    r"([\"']?(?:access[_-]?token|api[_-]?key|token)[\"']?\s*[:=]\s*[\"']?)"
+    r"[^\"'\s,;}]+"
 )
 EXPERIMENT_ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
-
-
-class PipelineError(RuntimeError):
-    """A user-actionable pipeline failure."""
-
-
-class ProviderTerminalError(PipelineError):
-    """The provider reported a definitive terminal job failure."""
 
 
 def utc_now() -> str:
@@ -129,9 +207,75 @@ def sha256_file(path: Path) -> str:
 
 def safe_error(error: BaseException | str) -> str:
     message = str(error)
+    for env_name in ("DOD_TOKEN", "YA_TOKEN"):
+        secret = os.environ.get(env_name)
+        if secret:
+            message = message.replace(secret, "[REDACTED]")
     message = SECRET_RE.sub(lambda match: f"{match.group(1) or match.group(2)}[REDACTED]", message)
     message = re.sub(r"([?&](?:token|key|signature|sig|auth)=)[^&\s]+", r"\1[REDACTED]", message, flags=re.I)
     return message[:2000]
+
+
+def _url_origin(url: str) -> tuple[str, str, int] | None:
+    """Return a normalized HTTP origin, rejecting malformed URLs."""
+
+    try:
+        parsed = urlparse(url)
+        if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+            return None
+        port = parsed.port
+    except ValueError:
+        return None
+    if port is None:
+        port = 443 if parsed.scheme == "https" else 80
+    return parsed.scheme, parsed.hostname.lower(), port
+
+
+def is_trusted_wan_dod_url(url: str) -> bool:
+    """Allow OAuth only over TLS to the internal DOD host namespace."""
+
+    origin = _url_origin(url)
+    if origin is None:
+        return False
+    scheme, hostname, port = origin
+    return scheme == "https" and port == 443 and hostname.endswith(WAN_DOD_HOST_SUFFIX)
+
+
+def wan_named_headers(base_url: str) -> dict[str, str]:
+    """Build ephemeral headers for the authenticated Wan named API."""
+
+    if not is_trusted_wan_dod_url(base_url):
+        raise PipelineError(
+            "Wan named API credentials may only be sent to HTTPS *.dod.yandex.net"
+        )
+    token = os.environ.get("DOD_TOKEN") or os.environ.get("YA_TOKEN")
+    if not token:
+        raise PipelineError("Set DOD_TOKEN or YA_TOKEN before a real Wan named API run")
+    return {
+        "Authorization": f"OAuth {token}",
+        "X-Dod-Autostart": "true",
+        "X-Requested-With": "bot",
+    }
+
+
+def _request_with_scoped_headers(
+    url: str,
+    *,
+    method: str,
+    headers: dict[str, str] | None = None,
+    data: bytes | None = None,
+) -> Request:
+    """Create a request whose supplied headers are not copied on redirects."""
+
+    request = Request(url, data=data, method=method)
+    for key, value in (headers or {}).items():
+        request.add_unredirected_header(key, value)
+    return request
+
+
+def _same_origin(first_url: str, second_url: str) -> bool:
+    first = _url_origin(first_url)
+    return first is not None and first == _url_origin(second_url)
 
 
 def relative(path: Path, root: Path = ROOT) -> str:
@@ -449,15 +593,29 @@ def materialize_plan(
     return rows
 
 
-def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
+def build_request_preview(
+    sample: dict,
+    prompt: dict,
+    *,
+    wan_submit_mode: str | None = None,
+) -> dict[str, Any]:
     model_id = prompt["model_id"]
     config = MODEL_CONFIGS[model_id]
+    route = route_for_model(model_id)
     if config["adapter"] == "wan-demo":
+        if wan_submit_mode not in {None, "legacy", "named"}:
+            raise PipelineError(
+                f"Unsupported explicit Wan preview mode: {wan_submit_mode}"
+            )
         runtime_prompt = prompt["positive_prompt"]
         if prompt.get("negative_prompt"):
             runtime_prompt = f"{runtime_prompt}\n\nAvoid: {prompt['negative_prompt']}"
         return {
-            "endpoint": "/gradio_api/queue/join",
+            "endpoint": (
+                route["diagnostic_only"]["submit_path"]
+                if wan_submit_mode == "named"
+                else route["paths"]["submit"]
+            ),
             "model": model_id,
             "input": {
                 "source_path": sample["source_path"],
@@ -500,13 +658,14 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
                 "frame_type": "last_frame",
             }
         )
+    provider_key = route["provider_key"]
     if model_id == "alibaba/wan-2.7":
         parameters: dict[str, Any] = {"prompt_extend": prompt.get("prompt_extend", False)}
         if not prompt.get("embed_negative_in_positive") and prompt.get("negative_prompt"):
             parameters["negative_prompt"] = prompt["negative_prompt"]
         payload["provider"] = {
             "options": {
-                "atlas-cloud": {
+                provider_key: {
                     "parameters": parameters
                 }
             }
@@ -517,7 +676,7 @@ def build_request_preview(sample: dict, prompt: dict) -> dict[str, Any]:
             parameters["negativePrompt"] = prompt["negative_prompt"]
         payload["provider"] = {
             "options": {
-                "google-vertex": {
+                provider_key: {
                     # The live Eliza/Google route rejects enhancePrompt=false.
                     "parameters": parameters
                 }
@@ -534,10 +693,12 @@ def http_json(
     timeout: int = 120,
 ) -> Any:
     body = None if payload is None else json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    request_headers = {"Accept": "application/json", **(headers or {})}
+    request_headers = {"Accept": "application/json"}
     if body is not None:
         request_headers["Content-Type"] = "application/json"
     request = Request(url, data=body, headers=request_headers, method=method)
+    for key, value in (headers or {}).items():
+        request.add_unredirected_header(key, value)
     try:
         with urlopen(request, timeout=timeout) as response:
             raw = response.read().decode("utf-8", errors="replace")
@@ -556,7 +717,11 @@ def http_download(url: str, destination: Path, headers: dict[str, str] | None = 
     destination.parent.mkdir(parents=True, exist_ok=True)
     last_error: BaseException | None = None
     for attempt in range(1, 4):
-        request = Request(url, headers=headers or {}, method="GET")
+        request = _request_with_scoped_headers(
+            url,
+            method="GET",
+            headers=headers,
+        )
         temp_path: Path | None = None
         try:
             with urlopen(request, timeout=timeout) as response, tempfile.NamedTemporaryFile(
@@ -589,6 +754,7 @@ def upload_wan_image(
     timeout: int = 120,
     *,
     expected_sha256: str | None = None,
+    headers: dict[str, str] | None = None,
 ) -> str:
     boundary = f"----promopages-{uuid.uuid4().hex}"
     mime_type = mimetypes.guess_type(image_path.name)[0] or "application/octet-stream"
@@ -605,11 +771,15 @@ def upload_wan_image(
                 f"Wan upload source digest changed: expected {expected_sha256}, got {uploaded_sha256}"
             )
     body = prefix + image_bytes + f"\r\n--{boundary}--\r\n".encode("ascii")
-    request = Request(
-        f"{base_url.rstrip('/')}/gradio_api/upload",
+    request = _request_with_scoped_headers(
+        f"{base_url.rstrip('/')}{WAN_UPLOAD_ENDPOINT}",
         data=body,
-        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+        headers=headers,
         method="POST",
+    )
+    request.add_header(
+        "Content-Type",
+        f"multipart/form-data; boundary={boundary}",
     )
     try:
         with urlopen(request, timeout=timeout) as response:
@@ -634,7 +804,7 @@ def parse_sse_data(event_block: str) -> dict[str, Any] | None:
 
 def wan_wait_for_result(stream_base_url: str, session_hash: str, event_id: str, timeout: int) -> str:
     query = urlencode({"session_hash": session_hash})
-    stream_url = f"{stream_base_url.rstrip('/')}/gradio_api/queue/data?{query}"
+    stream_url = f"{stream_base_url.rstrip('/')}{WAN_STREAM_ENDPOINT}?{query}"
     deadline = time.monotonic() + timeout
     reconnects = 0
     while time.monotonic() < deadline:
@@ -668,7 +838,10 @@ def wan_wait_for_result(stream_base_url: str, session_hash: str, event_id: str, 
                         if result.get("url"):
                             return result["url"]
                         if result.get("path"):
-                            return urljoin(stream_base_url.rstrip("/") + "/", f"gradio_api/file={result['path']}")
+                            return urljoin(
+                                stream_base_url.rstrip("/") + "/",
+                                f"{WAN_FILE_PREFIX.lstrip('/')}{result['path']}",
+                            )
                         raise ProviderTerminalError("Wan result has neither url nor path")
                     if message in {"unexpected_error", "close_stream"}:
                         raise ProviderTerminalError(
@@ -689,6 +862,156 @@ def wan_wait_for_result(stream_base_url: str, session_hash: str, event_id: str, 
     raise PipelineError(f"Wan job did not finish within {timeout} seconds")
 
 
+def _named_file_result(value: Any) -> dict[str, Any] | None:
+    if isinstance(value, dict):
+        if isinstance(value.get("url"), str) or isinstance(value.get("path"), str):
+            return value
+        for nested in value.values():
+            result = _named_file_result(nested)
+            if result is not None:
+                return result
+    if isinstance(value, list):
+        for nested in value:
+            result = _named_file_result(nested)
+            if result is not None:
+                return result
+    return None
+
+
+def wan_wait_for_named_result(
+    base_url: str,
+    event_id: str,
+    timeout: int,
+    *,
+    headers: dict[str, str] | None = None,
+) -> str:
+    """Wait for the documented Gradio named-endpoint SSE result."""
+
+    if not is_trusted_wan_dod_url(base_url):
+        raise PipelineError(
+            "Wan named API credentials may only be sent to HTTPS *.dod.yandex.net"
+        )
+    request_headers = wan_named_headers(base_url) if headers is None else headers
+    result_path = _WAN_ROUTE["diagnostic_only"]["events_path_template"].format(
+        event_id=quote(str(event_id), safe="")
+    )
+    result_url = f"{base_url.rstrip('/')}{result_path}"
+    deadline = time.monotonic() + timeout
+    reconnects = 0
+    while time.monotonic() < deadline:
+        request = _request_with_scoped_headers(
+            result_url,
+            method="GET",
+            headers=request_headers,
+        )
+        try:
+            with urlopen(
+                request,
+                timeout=max(1, int(deadline - time.monotonic())),
+            ) as response:
+                event_lines: list[str] = []
+
+                def consume(lines: list[str]) -> str | None:
+                    event_name = next(
+                        (
+                            line[6:].strip()
+                            for line in lines
+                            if line.startswith("event:")
+                        ),
+                        "",
+                    )
+                    data_lines = [
+                        line[5:].strip()
+                        for line in lines
+                        if line.startswith("data:")
+                    ]
+                    payload: Any = None
+                    if data_lines and data_lines != ["null"]:
+                        try:
+                            payload = json.loads("\n".join(data_lines))
+                        except json.JSONDecodeError as exc:
+                            raise PipelineError("Wan named SSE returned invalid JSON") from exc
+                    if event_name in {"error", "unexpected_error"}:
+                        raise ProviderTerminalError(
+                            safe_error(
+                                f"Wan named endpoint failed: "
+                                f"{payload if payload is not None else 'no error detail'}"
+                            )
+                        )
+                    if event_name == "complete" and payload is None:
+                        raise ProviderTerminalError(
+                            "Wan named endpoint completed without a video result"
+                        )
+                    if payload is None:
+                        return None
+                    if event_name != "complete":
+                        return None
+                    result = _named_file_result(payload)
+                    if result is None:
+                        raise ProviderTerminalError(
+                            "Wan named endpoint completed without a video result"
+                        )
+                    if isinstance(result.get("url"), str) and result["url"]:
+                        video_url = urljoin(
+                            base_url.rstrip("/") + "/",
+                            result["url"],
+                        )
+                        if _url_origin(video_url) is None:
+                            raise ProviderTerminalError(
+                                "Wan named result URL is not HTTP(S)"
+                            )
+                        return video_url
+                    path = result.get("path")
+                    if isinstance(path, str) and path:
+                        return urljoin(
+                            base_url.rstrip("/") + "/",
+                            f"gradio_api/file={quote(path, safe='/')}",
+                        )
+                    raise ProviderTerminalError(
+                        "Wan named result has neither url nor path"
+                    )
+
+                for raw_line in response:
+                    line = raw_line.decode("utf-8", errors="replace").rstrip("\r\n")
+                    if line:
+                        event_lines.append(line)
+                        continue
+                    if not event_lines:
+                        continue
+                    video_url = consume(event_lines)
+                    event_lines = []
+                    if video_url:
+                        return video_url
+                if event_lines:
+                    video_url = consume(event_lines)
+                    if video_url:
+                        return video_url
+        except PipelineError:
+            raise
+        except (HTTPError, URLError, OSError) as exc:
+            reconnects += 1
+            if time.monotonic() >= deadline:
+                raise PipelineError(
+                    safe_error(
+                        f"Wan named SSE failed after {reconnects} connection(s): {exc}"
+                    )
+                ) from exc
+            print(
+                "  Wan named stream interrupted; reconnecting to the same event "
+                f"({reconnects})",
+                flush=True,
+            )
+            time.sleep(min(5, reconnects))
+            continue
+        reconnects += 1
+        print(
+            f"  Wan named stream closed; reconnecting to the same event ({reconnects})",
+            flush=True,
+        )
+        time.sleep(min(5, reconnects))
+    raise PipelineError(f"Wan named job did not finish within {timeout} seconds")
+
+
 def wan_generate(
     sample: dict,
     prompt: dict,
@@ -701,9 +1024,25 @@ def wan_generate(
     *,
     allow_resubmit_after_missing_session: bool = True,
     on_submitting: Callable[[], None] | None = None,
+    submit_mode: str | None = None,
 ) -> None:
+    if submit_mode not in {None, "legacy", "named"}:
+        raise PipelineError(f"Unsupported explicit Wan submit mode: {submit_mode}")
     event_id = (resume or {}).get("provider_job_id")
     session_hash = (resume or {}).get("provider_session_hash")
+    resumed_named_job = session_hash == WAN_NAMED_SESSION_MARKER
+    if event_id and session_hash and submit_mode is not None:
+        resumed_mode = "named" if resumed_named_job else "legacy"
+        if submit_mode != resumed_mode:
+            raise PipelineError(
+                f"Wan resume route is {resumed_mode}, not requested {submit_mode}; "
+                "automatic route fallback is disabled"
+            )
+    # New normal runs always use the registry's proven legacy queue.  The named
+    # endpoint remains available only through an explicit diagnostic opt-in or
+    # to finish a receipt that was already submitted there.
+    named_api = resumed_named_job or (not event_id and submit_mode == "named")
+    named_request_headers = wan_named_headers(base_url) if named_api else None
     resubmitted_after_missing_session = False
     while True:
         if not event_id or not session_hash:
@@ -712,6 +1051,7 @@ def wan_generate(
                 base_url,
                 image_path,
                 expected_sha256=sample.get("sha256"),
+                headers=named_request_headers,
             )
             mime_type = mimetypes.guess_type(image_path.name)[0] or "image/jpeg"
             config = MODEL_CONFIGS[prompt["model_id"]]
@@ -725,35 +1065,71 @@ def wan_generate(
             combined_prompt = prompt["positive_prompt"]
             if prompt.get("negative_prompt"):
                 combined_prompt = f"{combined_prompt}\n\nAvoid: {prompt['negative_prompt']}"
-            session_hash = f"promopages9856-{uuid.uuid4().hex[:12]}"
-            payload = {
-                "data": [
-                    combined_prompt,
-                    file_data,
-                    config["resolution"],
-                    config["seed"],
-                    False,
-                    None,
-                    config["frames"],
-                    config["fps"],
-                ],
-                "event_data": None,
-                "fn_index": 0,
-                "trigger_id": 19,
-                "session_hash": session_hash,
+            values = {
+                "prompt": combined_prompt,
+                "image_file_data": file_data,
+                "resolution": config["resolution"],
+                "seed": config["seed"],
+                "loop": False,
+                "last_frame": None,
+                "frames": config["frames"],
+                "fps": config["fps"],
             }
+            data = [
+                values[name]
+                for name in _WAN_ROUTE["submit_payload"]["data_order"]
+            ]
             if on_submitting is not None:
                 on_submitting()
-            response = http_json("POST", f"{base_url.rstrip('/')}/gradio_api/queue/join", payload, timeout=120)
+            if named_api:
+                payload = {"data": data}
+                submit_url = f"{base_url.rstrip('/')}{WAN_NAMED_ENDPOINT}"
+                session_hash = WAN_NAMED_SESSION_MARKER
+            else:
+                session_hash = f"promopages9856-{uuid.uuid4().hex[:12]}"
+                payload = {
+                    "data": data,
+                    **_WAN_ROUTE["submit_payload"]["fixed"],
+                    "session_hash": session_hash,
+                }
+                submit_url = (
+                    f"{base_url.rstrip('/')}"
+                    f"{_WAN_ROUTE['paths']['submit']}"
+                )
+            response = http_json(
+                "POST",
+                submit_url,
+                payload,
+                headers=named_request_headers,
+                timeout=120,
+            )
             event_id = response.get("event_id") if isinstance(response, dict) else None
             if not event_id:
-                raise PipelineError("Wan queue/join did not return event_id")
+                route = "named endpoint" if named_api else "queue/join"
+                raise PipelineError(f"Wan {route} did not return event_id")
             on_submitted(event_id, session_hash)
         try:
-            video_url = wan_wait_for_result(stream_base_url, session_hash, event_id, timeout)
+            if named_api:
+                video_url = wan_wait_for_named_result(
+                    base_url,
+                    event_id,
+                    timeout,
+                    headers=named_request_headers,
+                )
+            else:
+                # Preserve resumability for receipts created by the legacy
+                # queue/join route before the named endpoint was exposed.
+                video_url = wan_wait_for_result(
+                    stream_base_url,
+                    session_hash,
+                    event_id,
+                    timeout,
+                )
             break
         except PipelineError as exc:
             if (
+                named_api
+                or
                 "session_not_found" not in str(exc).lower()
                 or resubmitted_after_missing_session
                 or not allow_resubmit_after_missing_session
@@ -763,7 +1139,17 @@ def wan_generate(
             resubmitted_after_missing_session = True
             event_id = None
             session_hash = None
-    http_download(video_url, destination, timeout=600)
+    download_headers = (
+        named_request_headers
+        if named_api and _same_origin(base_url, video_url)
+        else None
+    )
+    http_download(
+        video_url,
+        destination,
+        headers=download_headers,
+        timeout=600,
+    )
 
 
 def find_status(value: Any) -> str | None:
@@ -862,15 +1248,45 @@ def eliza_headers(token: str | None = None) -> dict[str, str]:
     return {"Authorization": f"OAuth {resolved}", "X-Retries": "1"}
 
 
+def generation_route_url(
+    base_url: str,
+    model_id: str,
+    path_name: str,
+    *,
+    job_id: str | None = None,
+) -> str:
+    """Build one URL from the exact route registry, never by endpoint probing."""
+
+    route = route_for_model(model_id)
+    paths = route["paths"]
+    if path_name not in paths:
+        raise PipelineError(f"Route {model_id} has no path named {path_name}")
+    path = paths[path_name]
+    if "{job_id}" in path:
+        if job_id is None:
+            raise PipelineError(f"Route path {model_id}.{path_name} requires job_id")
+        path = path.format(job_id=quote(str(job_id), safe=""))
+    elif job_id is not None:
+        raise PipelineError(f"Route path {model_id}.{path_name} does not accept job_id")
+    return f"{base_url.rstrip('/')}{path}"
+
+
 def eliza_poll(
     base_url: str,
     job_id: str,
     headers: dict[str, str],
     timeout: int,
     interval: float,
+    *,
+    model_id: str,
 ) -> dict[str, Any]:
     deadline = time.monotonic() + timeout
-    status_url = f"{base_url.rstrip('/')}/videos/{job_id}"
+    status_url = generation_route_url(
+        base_url,
+        model_id,
+        "status_template",
+        job_id=job_id,
+    )
     while time.monotonic() < deadline:
         response = http_json("GET", status_url, headers=headers, timeout=120)
         status = find_status(response)
@@ -898,16 +1314,35 @@ def eliza_generate(
     on_submitted: Callable[[str, str | None], None],
 ) -> None:
     headers = eliza_headers()
+    model_id = prompt["model_id"]
     job_id = (resume or {}).get("provider_job_id")
     if not job_id:
         payload = build_request_preview(sample, prompt)
-        response = http_json("POST", f"{base_url.rstrip('/')}/videos", payload, headers=headers, timeout=120)
+        response = http_json(
+            "POST",
+            generation_route_url(base_url, model_id, "submit"),
+            payload,
+            headers=headers,
+            timeout=120,
+        )
         job_id = find_job_id(response)
         if not job_id:
             raise PipelineError("Eliza/OpenRouter submit response did not contain a job ID")
         on_submitted(job_id, None)
-    eliza_poll(base_url, job_id, headers, timeout, poll_interval)
-    content_url = f"{base_url.rstrip('/')}/videos/{job_id}/content?index=0"
+    eliza_poll(
+        base_url,
+        job_id,
+        headers,
+        timeout,
+        poll_interval,
+        model_id=model_id,
+    )
+    content_url = generation_route_url(
+        base_url,
+        model_id,
+        "content_template",
+        job_id=job_id,
+    )
     http_download(content_url, destination, headers=headers, timeout=600)
 
 

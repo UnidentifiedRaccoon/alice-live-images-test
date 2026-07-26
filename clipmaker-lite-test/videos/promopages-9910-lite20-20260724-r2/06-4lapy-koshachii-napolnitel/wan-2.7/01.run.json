@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "06-4lapy-koshachii-napolnitel",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The cat slowly creeps forward under the rug, its head gently raising and carrying the soft edge as it advances. Fixed camera; end with more of its head exposed, still sheltered and watching attentively.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "7ad374e18bf79e8074d94c958ef2e620b4c0a64119e50fa23e855432e3423dd4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3hrq1ixSaGhd2vJfPRbA",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T16:50:42Z",
+  "completed_at": "2026-07-24T17:05:17Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6250805,
+    "sha256": "07db24eca8faebd5bd100383cd1ea094cf5919547063a209e0d6d9e61ac2d55d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel-wan-2-7",
+  "lite_result_sha256": "721c1740dc95b9075c0c2d4be15c6ac31b5263fc1e608f4e31c24b7c5a31c019",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

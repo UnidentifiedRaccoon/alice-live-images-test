@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "01-pharmocean-magiia-magniia",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+      "prompt": "Fixed overhead camera. A gentle breeze immediately sends one small, even ripple through the visible herb and cabbage leaves from left to right; the motion settles near the end with the leaves slightly shifted, while the central Mg Magnesium card stays fully visible and readable."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "00083903e8f2d405f68bb93cbfcfd751e42dc56773da3456ed36f10824abddd0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5ba25b549ef4471faf6b94ea07fef06c",
+  "provider_session_hash": "promopages9856-ba03fc296c0e",
+  "submitted_at": "2026-07-24T15:38:34Z",
+  "completed_at": "2026-07-24T15:43:35Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia-wan-2-2",
+  "lite_result_sha256": "1ffcfb596bfbb59398d99fa6b976f32631055365dd4f65675884833a10b7c963",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -194,7 +194,7 @@ MODEL_CONFIGS: dict[str, dict[str, Any]] = {
         "resolution": "1080p",
         "aspect_ratios": ["16:9", "9:16", "1:1", "4:3", "3:4"],
         "generate_audio": False,
-        "provider": "atlas-cloud",
+        "provider": provider_transport.route_for_model("alibaba/wan-2.7")["provider_key"],
         "prompt_expansion": {"parameter": "prompt_extend", "value": True},
         "negative_parameter": "negative_prompt",
     },
@@ -204,7 +204,7 @@ MODEL_CONFIGS: dict[str, dict[str, Any]] = {
         "resolution": "1080p",
         "aspect_ratios": ["16:9", "9:16"],
         "generate_audio": False,
-        "provider": "google-vertex",
+        "provider": provider_transport.route_for_model("google/veo-3.1-lite")["provider_key"],
         "prompt_expansion": {"parameter": "enhancePrompt", "value": True},
         "negative_parameter": "negativePrompt",
     },
@@ -768,7 +768,11 @@ def _run_one(
         try:
             response = provider_transport.http_json(
                 "POST",
-                f"{base_url.rstrip('/')}/videos",
+                provider_transport.generation_route_url(
+                    base_url,
+                    job.entry.model_id,
+                    "submit",
+                ),
                 provider_request(job),
                 headers=headers,
                 timeout=120,
@@ -806,9 +810,21 @@ def _run_one(
     run.update({"status": "running", "error": None})
     _persist_run(paths["run"], run)
     try:
-        provider_transport.eliza_poll(base_url, provider_job_id, headers, timeout, poll_interval)
+        provider_transport.eliza_poll(
+            base_url,
+            provider_job_id,
+            headers,
+            timeout,
+            poll_interval,
+            model_id=job.entry.model_id,
+        )
         provider_transport.http_download(
-            f"{base_url.rstrip('/')}/videos/{provider_job_id}/content?index=0",
+            provider_transport.generation_route_url(
+                base_url,
+                job.entry.model_id,
+                "content_template",
+                job_id=provider_job_id,
+            ),
             paths["video"],
             headers=headers,
             timeout=600,

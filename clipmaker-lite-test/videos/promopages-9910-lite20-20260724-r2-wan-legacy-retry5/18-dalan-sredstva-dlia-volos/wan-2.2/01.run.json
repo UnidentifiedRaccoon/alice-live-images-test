@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "18-dalan-sredstva-dlia-volos",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/18-dalan-sredstva-dlia-volos/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/18-dalan-sredstva-dlia-volos/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+      "prompt": "Fixed camera. A soft highlight moves steadily from left to right across the shampoo bottle, center sachet, and conditioner tube, then fades with all three labels crisp and fully visible."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "d2f71ba655dbec976dc89fefa384715070aa6bca64b62e39380500f212da74d8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9632fd2b05fa4423b024ede8062ffc39",
+  "provider_session_hash": "promopages9856-07b00fef3f47",
+  "submitted_at": "2026-07-24T17:11:05Z",
+  "completed_at": "2026-07-24T17:12:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 816,
+    "height": 1088,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 392728,
+    "sha256": "29da24ba5c52c5d435252b2de7874e671e14ff1180261065860356eba77501aa"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-18-dalan-sredstva-dlia-volos-wan-2-2",
+  "lite_result_sha256": "e8e5790c3f4f86f28fa17b6e84453fd9bd954e7bd4b024591ab16a6d1aafa674",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

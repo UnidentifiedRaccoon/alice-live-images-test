@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "16-ekonika-letnie-trendy",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "A subtle push-in follows the woman as she smoothly settles her weight onto one leg; her handbag arcs gently with the shift while a light breeze lifts her hair and blazer edge. End with the bag resting beside the stone support, her full silhouette and poised expression still clearly visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a06b04803e4ab017d8cf81652f6586f4d05cb8d73b05ae75545dfb9c46799d8f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "rphwRmyJfe1frGJtyx5f",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:26:32Z",
+  "completed_at": "2026-07-24T17:28:25Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4384608,
+    "sha256": "2d8aeec533a22d8ee91bc15f480b7ba3b4f48abb2af3de27a102228888597d32"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy-veo-3-1-lite",
+  "lite_result_sha256": "9592da51418eed42aa4aef7681dd572581b624a64d9eaeb70f75bae2258db575",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

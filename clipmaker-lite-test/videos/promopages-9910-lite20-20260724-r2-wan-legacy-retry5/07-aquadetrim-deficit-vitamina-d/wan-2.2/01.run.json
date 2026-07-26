@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "07-aquadetrim-deficit-vitamina-d",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/07-aquadetrim-deficit-vitamina-d/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/07-aquadetrim-deficit-vitamina-d/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+      "prompt": "Clouds drift gently outward from the sun at a steady pace while their edges softly reshape. The camera stays fixed; by the final frames, a wider clear-blue opening surrounds the still-visible sun and its rays shine slightly more clearly."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "2b638f154de4982ffca914b992e60741c7edc69a3096451dc1e4b8b0b3408cd4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "2990366938cf4b3ba526ebb4a7f0f532",
+  "provider_session_hash": "promopages9856-f0b56c40fe0c",
+  "submitted_at": "2026-07-24T16:55:27Z",
+  "completed_at": "2026-07-24T16:56:27Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 434215,
+    "sha256": "ced3d8cb9140d635198d98fcd59048645f16b1abc77fdf5ce7c001fba6a3da9d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-07-aquadetrim-deficit-vitamina-d-wan-2-2",
+  "lite_result_sha256": "229eef20b087d5d76fe6279d75d8866c31472531ecb0f854c21890c5608a7449",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

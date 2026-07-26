@@ -300,6 +300,39 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             self.assertTrue(receipt["external_processing_approved"])
             self.assertEqual(receipt["executor"]["thread_id"], "thread-test")
             self.assertEqual(receipt["executor"]["binary_path"], "/test/codex")
+            self.assertEqual(receipt["executor"]["requested_model"], "test-model")
+            self.assertEqual(
+                result["producer"]["execution"]["requested_model"],
+                "test-model",
+            )
+
+    def test_cli_default_author_model_is_recorded_as_null_without_guessing(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            run = runner.prepare_run(
+                root,
+                "default-author-model",
+                image,
+                context,
+                image_id="02",
+                model_ids=["alibaba/wan-2.7"],
+            )
+
+            result_path = self.run_with_fake(
+                root,
+                "default-author-model",
+                ["alibaba/wan-2.7"],
+            )
+
+            receipt = runner.read_json(run / "execution.json")
+            result = runner.read_json(result_path)
+            self.assertIsNone(receipt["executor"]["requested_model"])
+            self.assertIsNone(
+                result["producer"]["execution"]["requested_model"]
+            )
+            self.assertTrue(
+                runner.provenance_summary(root, "default-author-model")["verified"]
+            )
 
     def test_run_requires_explicit_external_processing_approval(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -692,6 +725,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
 
             command = commands[1]
             self.assertEqual(command[0], str(binary))
+            self.assertNotIn("--model", command)
             for flag in (
                 "--ephemeral",
                 "--ignore-user-config",
@@ -702,6 +736,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             ):
                 self.assertIn(flag, command)
             self.assertEqual(execution["executor"]["thread_id"], "thread-real")
+            self.assertIsNone(execution["executor"]["requested_model"])
             self.assertEqual(
                 execution["executor"]["attached_image_sha256"],
                 request["image_sha256"],

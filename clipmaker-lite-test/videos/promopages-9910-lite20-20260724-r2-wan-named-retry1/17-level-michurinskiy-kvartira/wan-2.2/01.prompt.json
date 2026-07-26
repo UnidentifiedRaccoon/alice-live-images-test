@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1-17-level-michurinskiy-kvartira-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+    "sha256": "d5a32f8570d436600c4e9baf6ec36f94c09d1608df1f46ebd62d6ef7ff79b078",
+    "width": 1200,
+    "height": 675
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize Level Michurinsky as an expressive architectural landmark that stands prominently within a green setting.",
+    "primary_action": "The existing sunlight reflection travels upward across the central glass façades.",
+    "terminal_state": "A concentrated bright reflection is visibly established on the upper floors of the central towers.",
+    "semantic_invariant": "The distinctive tower ensemble remains the dominant, recognizable architectural subject within its green surroundings."
+  },
+  "prompt": {
+    "positive": "A bright sun reflection glides steadily upward across the central glass façades and reaches a crisp highlight near their upper floors by the final frames. Fixed camera; the towers remain continuously sharp and recognizable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira/result.json",
+    "sha256": "07d0c50bb2f810c16c19d3c2dc174712ecad06cb2d5409455a7caa6e951771b6",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "d5a32f8570d436600c4e9baf6ec36f94c09d1608df1f46ebd62d6ef7ff79b078",
+      "article_context_sha256": "d7de6650747663d9abe428c3eaba863d54afdc18ffff79265347663f67308b40",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

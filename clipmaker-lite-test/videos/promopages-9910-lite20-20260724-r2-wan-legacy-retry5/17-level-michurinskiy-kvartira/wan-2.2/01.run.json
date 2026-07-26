@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "17-level-michurinskiy-kvartira",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/17-level-michurinskiy-kvartira/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/17-level-michurinskiy-kvartira/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+      "prompt": "A bright sun reflection glides steadily upward across the central glass façades and reaches a crisp highlight near their upper floors by the final frames. Fixed camera; the towers remain continuously sharp and recognizable."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "bd33cd3ea2aeeb516388ea2e6db41a2355eaa5589928ac10c5b207f28205e9c4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9f0acd862f00407a8cfddc6bf08aec6c",
+  "provider_session_hash": "promopages9856-5c7a012d17a6",
+  "submitted_at": "2026-07-24T17:10:04Z",
+  "completed_at": "2026-07-24T17:11:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 486281,
+    "sha256": "e2de3bb8a7b7df4091077dd5d6d363d98b07d953e6b003b99a673d29cc60d389"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-17-level-michurinskiy-kvartira-wan-2-2",
+  "lite_result_sha256": "07d0c50bb2f810c16c19d3c2dc174712ecad06cb2d5409455a7caa6e951771b6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

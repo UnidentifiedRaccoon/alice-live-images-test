@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:e89311f4fb0a8d00748f6d7e49632b8fe7920b67eeca383eadee655aca917e42",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+      "sha256": "7405154161aca78078f95474813f1927d0e203f80873077a5b8600bc21776dd6",
+      "bytes": 149561
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/14-miuz-modnye-sergi/content.json",
+      "sha256": "51d2288b9c95e4694ab42cd8fec36d0a2adb08360cf07c6019ad8075a10dc7e9",
+      "bytes": 16659,
+      "locator": {
+        "article_id": "14-miuz-modnye-sergi",
+        "title": "Топ-5 самых модных сережек этого сезона",
+        "lead": "Неделя моды осень-зима 2023/24 ясно дала понять – украшения должны быть яркими, крупными и акцентными. В этом сезоне серьги будут активно обращать на себя внимание, и для этого «все средства хороши»: объемное золото ярких оттенков, крупные сияющие камни и, конечно, жемчуг. Собрали для вас самые модные серьги, а дизайнеры MIUZ Diamonds уже предвосхитили ваши желания.\nИтак, вишлист этого года:\nВ",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/14-miuz-modnye-sergi/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Неделя моды осень-зима 2023/24 ясно дала понять – украшения должны быть яркими, крупными и акцентными. В этом сезоне серьги будут активно обращать на себя внимание, и для этого «все средства хороши»: объемное золото ярких оттенков, крупные сияющие камни и, конечно, жемчуг. Собрали для вас самые модные серьги, а дизайнеры MIUZ Diamonds уже предвосхитили ваши желания."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad"
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi/result.json"
+  }
+}

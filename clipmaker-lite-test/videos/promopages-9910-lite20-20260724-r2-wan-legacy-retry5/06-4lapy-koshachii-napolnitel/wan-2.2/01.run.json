@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "06-4lapy-koshachii-napolnitel",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/06-4lapy-koshachii-napolnitel/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/06-4lapy-koshachii-napolnitel/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+      "prompt": "The cat steadily nudges forward from beneath the rug, lifting the soft edge with its head. Keep the camera fixed and its alert gaze visible; by the end, its head is slightly farther out while its body remains sheltered."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "704093c74ecfffd7285efbb1358321a1deb2bd721dfb7f0353bbfccc91a9645c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "0ab57c3f5bb141e2814f38a5a574976a",
+  "provider_session_hash": "promopages9856-511da1218742",
+  "submitted_at": "2026-07-24T16:53:59Z",
+  "completed_at": "2026-07-24T16:55:27Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1088,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 308217,
+    "sha256": "09d270073338bf1ea939b054db235fb0e56e3a54bdd8f4a191f4f75c2fc3b9c4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-06-4lapy-koshachii-napolnitel-wan-2-2",
+  "lite_result_sha256": "721c1740dc95b9075c0c2d4be15c6ac31b5263fc1e608f4e31c24b7c5a31c019",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.request import HTTPRedirectHandler
 
 
 MODULE_PATH = Path(__file__).with_name("video_generation_pipeline.py")
@@ -167,6 +168,182 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         self.assertEqual(headers["Authorization"], "OAuth test-token")
         self.assertEqual(headers["X-Retries"], "1")
 
+    def test_generation_route_registry_is_exact_and_discovery_free(self) -> None:
+        policy = pipeline.GENERATION_ROUTE_DOCUMENT["policy"]
+        self.assertEqual(policy["resolution"], "exact-model-id")
+        self.assertFalse(policy["automatic_fallback"])
+        self.assertFalse(policy["normal_run_discovery"])
+        self.assertEqual(
+            set(policy["forbidden_discovery_paths"]),
+            {"/videos/models", "/gradio_api/info", "/config"},
+        )
+        self.assertEqual(set(pipeline.GENERATION_ROUTES), set(pipeline.MODEL_CONFIGS))
+        wan = pipeline.route_for_model("alibaba/wan-2.2")
+        self.assertEqual(wan["transport"], "gradio-legacy-queue")
+        self.assertEqual(wan["paths"]["upload"], "/gradio_api/upload")
+        self.assertEqual(wan["paths"]["submit"], "/gradio_api/queue/join")
+        self.assertEqual(wan["paths"]["events"], "/gradio_api/queue/data")
+        self.assertEqual(wan["capacity"], 1)
+        self.assertEqual(
+            pipeline.route_for_model("alibaba/wan-2.7")["provider_key"],
+            "atlas-cloud",
+        )
+        self.assertEqual(
+            pipeline.route_for_model("google/veo-3.1-lite")["provider_key"],
+            "google-vertex",
+        )
+        with self.assertRaisesRegex(pipeline.PipelineError, "No exact generation route"):
+            pipeline.route_for_model("alibaba/wan-latest")
+
+    def test_eliza_models_use_exact_fixed_routes_without_discovery(self) -> None:
+        sample = {
+            "source_url": "https://example.invalid/image.png",
+            "width": 1600,
+            "height": 900,
+        }
+        cases = (
+            ("alibaba/wan-2.7", 3, "atlas-cloud"),
+            ("google/veo-3.1-lite", 4, "google-vertex"),
+        )
+        for model_id, duration, provider_key in cases:
+            with self.subTest(model_id=model_id):
+                prompt = {
+                    "model_id": model_id,
+                    "positive_prompt": "move once",
+                    "negative_prompt": "flicker",
+                    "target_duration_seconds": duration,
+                }
+                requests: list[tuple[str, str, object | None]] = []
+
+                def request(
+                    method: str,
+                    url: str,
+                    payload: object | None = None,
+                    **_kwargs: object,
+                ) -> object:
+                    requests.append((method, url, payload))
+                    if method == "POST":
+                        return {"id": "job-123"}
+                    return {"status": "completed"}
+
+                with tempfile.TemporaryDirectory() as directory:
+                    destination = Path(directory) / "result.mp4"
+                    with patch.dict(
+                        pipeline.os.environ,
+                        {"ELIZA_OAUTH_TOKEN": "test-token"},
+                        clear=True,
+                    ):
+                        with (
+                            patch.object(pipeline, "http_json", side_effect=request),
+                            patch.object(pipeline, "http_download") as download,
+                        ):
+                            pipeline.eliza_generate(
+                                sample,
+                                prompt,
+                                destination,
+                                "https://eliza.invalid/openrouter/v1",
+                                30,
+                                0,
+                                None,
+                                lambda *_args: None,
+                            )
+                self.assertEqual(
+                    [(method, url) for method, url, _payload in requests],
+                    [
+                        ("POST", "https://eliza.invalid/openrouter/v1/videos"),
+                        (
+                            "GET",
+                            "https://eliza.invalid/openrouter/v1/videos/job-123",
+                        ),
+                    ],
+                )
+                payload = requests[0][2]
+                self.assertIsInstance(payload, dict)
+                assert isinstance(payload, dict)
+                self.assertEqual(payload["model"], model_id)
+                self.assertEqual(
+                    set(payload["provider"]["options"]),
+                    {provider_key},
+                )
+                download.assert_called_once_with(
+                    "https://eliza.invalid/openrouter/v1/videos/job-123/content?index=0",
+                    destination,
+                    headers={"Authorization": "OAuth test-token", "X-Retries": "1"},
+                    timeout=600,
+                )
+                forbidden = pipeline.GENERATION_ROUTE_DOCUMENT["policy"][
+                    "forbidden_discovery_paths"
+                ]
+                self.assertFalse(
+                    any(path in url for _method, url, _payload in requests for path in forbidden)
+                )
+
+    def test_wan_named_headers_prefer_dod_token_and_fall_back_to_ya_token(self) -> None:
+        base_url = "https://wan-streamlit.dod.yandex.net"
+        with patch.dict(
+            pipeline.os.environ,
+            {"DOD_TOKEN": "dod-test-token", "YA_TOKEN": "ya-test-token"},
+            clear=True,
+        ):
+            headers = pipeline.wan_named_headers(base_url)
+        self.assertEqual(headers["Authorization"], "OAuth dod-test-token")
+        self.assertEqual(headers["X-Dod-Autostart"], "true")
+        self.assertEqual(headers["X-Requested-With"], "bot")
+
+        with patch.dict(
+            pipeline.os.environ,
+            {"YA_TOKEN": "ya-test-token"},
+            clear=True,
+        ):
+            fallback = pipeline.wan_named_headers(base_url)
+        self.assertEqual(fallback["Authorization"], "OAuth ya-test-token")
+
+    def test_wan_named_headers_fail_closed_without_token_or_trusted_https_host(self) -> None:
+        with patch.dict(pipeline.os.environ, {}, clear=True):
+            with self.assertRaisesRegex(pipeline.PipelineError, "DOD_TOKEN or YA_TOKEN"):
+                pipeline.wan_named_headers(
+                    "https://wan-streamlit.dod.yandex.net"
+                )
+        with patch.dict(
+            pipeline.os.environ,
+            {"DOD_TOKEN": "must-not-leak"},
+            clear=True,
+        ):
+            for base_url in (
+                "http://wan-streamlit.dod.yandex.net",
+                "https://wan-streamlit.dod.yandex.net.evil.invalid",
+                "https://outside.invalid",
+            ):
+                with self.subTest(base_url=base_url):
+                    with self.assertRaisesRegex(
+                        pipeline.PipelineError,
+                        r"HTTPS \*\.dod\.yandex\.net",
+                    ):
+                        pipeline.wan_named_headers(base_url)
+
+    def test_scoped_wan_headers_are_not_forwarded_by_redirects(self) -> None:
+        headers = {
+            "Authorization": "OAuth redirect-test-token",
+            "X-Dod-Autostart": "true",
+            "X-Requested-With": "bot",
+        }
+        request = pipeline._request_with_scoped_headers(
+            "https://wan-streamlit.dod.yandex.net/gradio_api/file=result.mp4",
+            method="GET",
+            headers=headers,
+        )
+        redirected = HTTPRedirectHandler().redirect_request(
+            request,
+            None,
+            302,
+            "Found",
+            {},
+            "https://cdn.invalid/result.mp4",
+        )
+        self.assertIsNotNone(redirected)
+        for name in headers:
+            self.assertIsNone(redirected.get_header(name))
+
     def test_eliza_download_stays_on_authenticated_content_endpoint(self) -> None:
         headers = {"Authorization": "OAuth test-token", "X-Retries": "1"}
         with patch.object(pipeline, "eliza_headers", return_value=headers), patch.object(
@@ -176,7 +353,7 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         ), patch.object(pipeline, "http_download") as download:
             pipeline.eliza_generate(
                 {},
-                {},
+                {"model_id": "alibaba/wan-2.7"},
                 Path("result.mp4"),
                 "https://eliza.invalid/openrouter/v1",
                 30,
@@ -195,9 +372,82 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         sample = {"source_path": "image.jpeg", "width": 1000, "height": 450}
         prompt = {"model_id": "alibaba/wan-2.2", "positive_prompt": "one step", "negative_prompt": "flicker"}
         preview = pipeline.build_request_preview(sample, prompt)
+        self.assertEqual(preview["endpoint"], "/gradio_api/queue/join")
         self.assertEqual(preview["runtime"]["frames"], 97)
         self.assertEqual(preview["runtime"]["fps"], 30)
         self.assertIn("Avoid: flicker", preview["input"]["prompt"])
+
+    def test_wan_named_sse_returns_documented_file_url(self) -> None:
+        class Response:
+            def __enter__(self) -> "Response":
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                return None
+
+            def __iter__(self):
+                return iter(
+                    [
+                        b"event: complete\n",
+                        b'data: [{"url":"/gradio_api/file=result.mp4"}]\n',
+                        b"\n",
+                    ]
+                )
+
+        headers = {
+            "Authorization": "OAuth sse-test-token",
+            "X-Dod-Autostart": "true",
+            "X-Requested-With": "bot",
+        }
+
+        def open_sse(request, **_kwargs: object) -> Response:
+            request_headers = {
+                name.lower(): value for name, value in request.header_items()
+            }
+            for name, value in headers.items():
+                self.assertEqual(request_headers[name.lower()], value)
+            return Response()
+
+        with patch.object(pipeline, "urlopen", side_effect=open_sse):
+            result = pipeline.wan_wait_for_named_result(
+                "https://wan-streamlit.dod.yandex.net",
+                "event-1",
+                10,
+                headers=headers,
+            )
+        self.assertEqual(
+            result,
+            "https://wan-streamlit.dod.yandex.net/gradio_api/file=result.mp4",
+        )
+
+    def test_wan_named_sse_treats_null_completion_as_terminal_failure(self) -> None:
+        class Response:
+            def __enter__(self) -> "Response":
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                return None
+
+            def __iter__(self):
+                return iter(
+                    [
+                        b"event: complete\n",
+                        b"data: null\n",
+                        b"\n",
+                    ]
+                )
+
+        with patch.object(pipeline, "urlopen", return_value=Response()):
+            with self.assertRaisesRegex(
+                pipeline.ProviderTerminalError,
+                "completed without a video result",
+            ):
+                pipeline.wan_wait_for_named_result(
+                    "https://wan-streamlit.dod.yandex.net",
+                    "event-1",
+                    10,
+                    headers={"Authorization": "OAuth terminal-test-token"},
+                )
 
     def test_contract_check_records_provider_audio_nonconformance(self) -> None:
         media = {"duration_seconds": 3.0, "has_audio": True, "frames": 90, "fps": 30.0}
@@ -267,12 +517,21 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         self.assertTrue(artifact["target"]["prompt_extend"])
 
     def test_safe_error_redacts_credentials_and_signed_query_values(self) -> None:
-        message = pipeline.safe_error(
-            "Authorization: OAuth secret-value token=second https://x.invalid/a?signature=third&ok=1"
-        )
+        with patch.dict(
+            pipeline.os.environ,
+            {"DOD_TOKEN": "raw-dod-secret"},
+            clear=True,
+        ):
+            message = pipeline.safe_error(
+                'Authorization: OAuth secret-value token=second '
+                'https://x.invalid/a?signature=third&ok=1 '
+                '{"Authorization":"OAuth raw-dod-secret",'
+                '"detail":"raw-dod-secret"}'
+            )
         self.assertNotIn("secret-value", message)
         self.assertNotIn("second", message)
         self.assertNotIn("third", message)
+        self.assertNotIn("raw-dod-secret", message)
         self.assertIn("[REDACTED]", message)
 
     def test_result_helpers_accept_nested_openrouter_shapes(self) -> None:
@@ -535,37 +794,76 @@ class VideoGenerationPipelineTest(unittest.TestCase):
             upload.assert_not_called()
             submit.assert_not_called()
 
-    def test_wan_marks_submitting_after_upload_and_before_queue_join(self) -> None:
-        sample = {
-            "source_path": "PROMOPAGES-9857/articles/fake/01.png",
-        }
+    def test_wan_normal_run_uses_only_exact_legacy_route_and_payload(self) -> None:
+        sample = {"source_path": "PROMOPAGES-9857/articles/fake/01.png"}
         prompt = {
             "model_id": "alibaba/wan-2.2",
             "positive_prompt": "exact prompt",
-            "negative_prompt": None,
+            "negative_prompt": "flicker",
         }
-        events: list[str] = []
+        submitted: dict[str, str] = {}
 
-        def upload(*_args: object, **_kwargs: object) -> str:
-            events.append("upload")
-            return "/provider/upload/01.png"
-
-        def submit(*_args: object, **_kwargs: object) -> dict[str, str]:
-            self.assertEqual(events, ["upload", "submitting"])
-            events.append("queue-join")
+        def submit(
+            method: str,
+            url: str,
+            payload: dict[str, object],
+            **kwargs: object,
+        ) -> dict[str, str]:
+            self.assertEqual(method, "POST")
+            self.assertEqual(
+                url,
+                "https://wan.invalid/gradio_api/queue/join",
+            )
+            self.assertIsNone(kwargs["headers"])
+            self.assertEqual(payload["event_data"], None)
+            self.assertEqual(payload["fn_index"], 0)
+            self.assertEqual(payload["trigger_id"], 19)
+            self.assertIsInstance(payload["session_hash"], str)
+            self.assertEqual(
+                payload["data"],
+                [
+                    "exact prompt\n\nAvoid: flicker",
+                    {
+                        "path": "/provider/upload/01.png",
+                        "orig_name": "01.png",
+                        "mime_type": "image/png",
+                        "is_stream": False,
+                        "meta": {"_type": "gradio.FileData"},
+                    },
+                    "720p",
+                    1,
+                    False,
+                    None,
+                    97,
+                    30,
+                ],
+            )
+            self.assertIsInstance(payload["data"][3], int)
+            self.assertIsInstance(payload["data"][4], bool)
+            self.assertIsNone(payload["data"][5])
+            self.assertIsInstance(payload["data"][6], int)
+            self.assertIsInstance(payload["data"][7], int)
             return {"event_id": "event-1"}
+
+        def on_submitted(job_id: str, session_hash: str) -> None:
+            submitted.update(job_id=job_id, session_hash=session_hash)
 
         with tempfile.TemporaryDirectory() as directory:
             destination = Path(directory) / "result.mp4"
             with (
-                patch.object(pipeline, "upload_wan_image", side_effect=upload),
-                patch.object(pipeline, "http_json", side_effect=submit),
+                patch.object(
+                    pipeline,
+                    "upload_wan_image",
+                    return_value="/provider/upload/01.png",
+                ) as upload,
+                patch.object(pipeline, "http_json", side_effect=submit) as http_json,
                 patch.object(
                     pipeline,
                     "wan_wait_for_result",
-                    return_value="https://wan.invalid/result.mp4",
-                ),
-                patch.object(pipeline, "http_download"),
+                    return_value="https://wan-stream.invalid/result.mp4",
+                ) as wait_legacy,
+                patch.object(pipeline, "wan_wait_for_named_result") as wait_named,
+                patch.object(pipeline, "http_download") as download,
             ):
                 pipeline.wan_generate(
                     sample,
@@ -575,12 +873,235 @@ class VideoGenerationPipelineTest(unittest.TestCase):
                     "https://wan-stream.invalid",
                     10,
                     None,
-                    lambda *_args: events.append("submitted"),
+                    on_submitted,
                     allow_resubmit_after_missing_session=False,
-                    on_submitting=lambda: events.append("submitting"),
                 )
 
-        self.assertEqual(events[:4], ["upload", "submitting", "queue-join", "submitted"])
+        upload.assert_called_once()
+        self.assertIsNone(upload.call_args.kwargs["headers"])
+        http_json.assert_called_once()
+        wait_named.assert_not_called()
+        wait_legacy.assert_called_once_with(
+            "https://wan-stream.invalid",
+            submitted["session_hash"],
+            "event-1",
+            10,
+        )
+        download.assert_called_once_with(
+            "https://wan-stream.invalid/result.mp4",
+            destination,
+            headers=None,
+            timeout=600,
+        )
+
+    def test_wan_normal_route_failure_never_falls_back_to_named_endpoint(self) -> None:
+        sample = {"source_path": "PROMOPAGES-9857/articles/fake/01.png"}
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "exact prompt",
+            "negative_prompt": None,
+        }
+        requested_urls: list[str] = []
+
+        def fail_submit(
+            _method: str,
+            url: str,
+            _payload: object,
+            **_kwargs: object,
+        ) -> object:
+            requested_urls.append(url)
+            raise pipeline.PipelineError("legacy route rejected request")
+
+        with tempfile.TemporaryDirectory() as directory:
+            with (
+                patch.object(
+                    pipeline,
+                    "upload_wan_image",
+                    return_value="/provider/upload/01.png",
+                ),
+                patch.object(pipeline, "http_json", side_effect=fail_submit),
+                patch.object(pipeline, "wan_wait_for_named_result") as wait_named,
+            ):
+                with self.assertRaisesRegex(
+                    pipeline.PipelineError,
+                    "legacy route rejected request",
+                ):
+                    pipeline.wan_generate(
+                        sample,
+                        prompt,
+                        Path(directory) / "result.mp4",
+                        "https://wan.invalid",
+                        "https://wan-stream.invalid",
+                        10,
+                        None,
+                        lambda *_args: None,
+                        allow_resubmit_after_missing_session=False,
+                    )
+        self.assertEqual(
+            requested_urls,
+            ["https://wan.invalid/gradio_api/queue/join"],
+        )
+        wait_named.assert_not_called()
+
+    def test_wan_marks_submitting_after_upload_and_before_named_submit(self) -> None:
+        sample = {
+            "source_path": "PROMOPAGES-9857/articles/fake/01.png",
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "exact prompt",
+            "negative_prompt": None,
+        }
+        events: list[str] = []
+        receipt: dict[str, str] = {}
+        expected_headers = {
+            "Authorization": "OAuth named-test-token",
+            "X-Dod-Autostart": "true",
+            "X-Requested-With": "bot",
+        }
+
+        def upload(*_args: object, **kwargs: object) -> str:
+            self.assertEqual(kwargs["headers"], expected_headers)
+            events.append("upload")
+            return "/provider/upload/01.png"
+
+        def submit(*args: object, **kwargs: object) -> dict[str, str]:
+            self.assertEqual(events, ["upload", "submitting"])
+            self.assertEqual(kwargs["headers"], expected_headers)
+            payload = args[2]
+            self.assertEqual(
+                payload["data"],
+                [
+                    "exact prompt",
+                    {
+                        "path": "/provider/upload/01.png",
+                        "orig_name": "01.png",
+                        "mime_type": "image/png",
+                        "is_stream": False,
+                        "meta": {"_type": "gradio.FileData"},
+                    },
+                    "720p",
+                    1,
+                    False,
+                    None,
+                    97,
+                    30,
+                ],
+            )
+            self.assertIsInstance(payload["data"][6], int)
+            self.assertIsInstance(payload["data"][7], int)
+            events.append("named-submit")
+            return {"event_id": "event-1"}
+
+        def on_submitted(job_id: str, session_hash: str) -> None:
+            events.append("submitted")
+            receipt.update(
+                {
+                    "provider_job_id": job_id,
+                    "provider_session_hash": session_hash,
+                }
+            )
+
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "result.mp4"
+            with patch.dict(
+                pipeline.os.environ,
+                {"DOD_TOKEN": "named-test-token"},
+                clear=True,
+            ):
+                with (
+                    patch.object(pipeline, "upload_wan_image", side_effect=upload),
+                    patch.object(pipeline, "http_json", side_effect=submit),
+                    patch.object(
+                        pipeline,
+                        "wan_wait_for_named_result",
+                        return_value=(
+                            "https://wan-streamlit.dod.yandex.net/result.mp4"
+                        ),
+                    ) as wait_named,
+                    patch.object(pipeline, "http_download") as download,
+                ):
+                    pipeline.wan_generate(
+                        sample,
+                        prompt,
+                        destination,
+                        "https://wan-streamlit.dod.yandex.net",
+                        "https://wan-stream.invalid",
+                        10,
+                        None,
+                        on_submitted,
+                        allow_resubmit_after_missing_session=False,
+                        on_submitting=lambda: events.append("submitting"),
+                        submit_mode="named",
+                    )
+
+        self.assertEqual(events[:4], ["upload", "submitting", "named-submit", "submitted"])
+        wait_named.assert_called_once_with(
+            "https://wan-streamlit.dod.yandex.net",
+            "event-1",
+            10,
+            headers=expected_headers,
+        )
+        download.assert_called_once_with(
+            "https://wan-streamlit.dod.yandex.net/result.mp4",
+            destination,
+            headers=expected_headers,
+            timeout=600,
+        )
+        serialized_receipt = json.dumps(receipt)
+        self.assertNotIn("named-test-token", serialized_receipt)
+        self.assertNotIn("Authorization", serialized_receipt)
+
+    def test_wan_named_download_does_not_send_oauth_to_cross_host_result(self) -> None:
+        sample = {"source_path": "PROMOPAGES-9857/articles/fake/01.png"}
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "exact prompt",
+            "negative_prompt": None,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            destination = Path(directory) / "result.mp4"
+            with patch.dict(
+                pipeline.os.environ,
+                {"DOD_TOKEN": "cross-host-test-token"},
+                clear=True,
+            ):
+                with (
+                    patch.object(
+                        pipeline,
+                        "upload_wan_image",
+                        return_value="/provider/upload/01.png",
+                    ),
+                    patch.object(
+                        pipeline,
+                        "http_json",
+                        return_value={"event_id": "event-1"},
+                    ),
+                    patch.object(
+                        pipeline,
+                        "wan_wait_for_named_result",
+                        return_value="https://cdn.invalid/result.mp4",
+                    ),
+                    patch.object(pipeline, "http_download") as download,
+                ):
+                    pipeline.wan_generate(
+                        sample,
+                        prompt,
+                        destination,
+                        "https://wan-streamlit.dod.yandex.net",
+                        "https://wan-stream.invalid",
+                        10,
+                        None,
+                        lambda *_args: None,
+                        allow_resubmit_after_missing_session=False,
+                        submit_mode="named",
+                    )
+        download.assert_called_once_with(
+            "https://cdn.invalid/result.mp4",
+            destination,
+            headers=None,
+            timeout=600,
+        )
 
     def test_wan_upload_validates_the_exact_bytes_before_network(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -597,6 +1118,73 @@ class VideoGenerationPipelineTest(unittest.TestCase):
                         expected_sha256="0" * 64,
                     )
             urlopen.assert_not_called()
+
+    def test_wan_legacy_upload_uses_exact_registry_path(self) -> None:
+        class Response:
+            def __enter__(self) -> "Response":
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                return None
+
+            def read(self) -> bytes:
+                return b'["/provider/upload/source.png"]'
+
+        def open_upload(request, **_kwargs: object) -> Response:
+            self.assertEqual(
+                request.full_url,
+                "https://wan.invalid/gradio_api/upload",
+            )
+            self.assertEqual(request.get_method(), "POST")
+            self.assertIsNone(request.get_header("Authorization"))
+            return Response()
+
+        with tempfile.TemporaryDirectory() as directory:
+            image_path = Path(directory) / "source.png"
+            image_path.write_bytes(b"source bytes")
+            with patch.object(pipeline, "urlopen", side_effect=open_upload):
+                result = pipeline.upload_wan_image(
+                    "https://wan.invalid",
+                    image_path,
+                )
+        self.assertEqual(result, "/provider/upload/source.png")
+
+    def test_wan_legacy_sse_uses_exact_registry_paths(self) -> None:
+        event = {
+            "msg": "process_completed",
+            "event_id": "event-1",
+            "success": True,
+            "output": {"data": [{"path": "tmp/result.mp4"}]},
+        }
+
+        class Response:
+            def __enter__(self) -> "Response":
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                return None
+
+            def __iter__(self):
+                return iter([f"data: {json.dumps(event)}\n".encode(), b"\n"])
+
+        def open_stream(request, **_kwargs: object) -> Response:
+            self.assertEqual(
+                request.full_url,
+                "http://wan-stream.invalid/gradio_api/queue/data?session_hash=session-1",
+            )
+            return Response()
+
+        with patch.object(pipeline, "urlopen", side_effect=open_stream):
+            result = pipeline.wan_wait_for_result(
+                "http://wan-stream.invalid",
+                "session-1",
+                "event-1",
+                10,
+            )
+        self.assertEqual(
+            result,
+            "http://wan-stream.invalid/gradio_api/file=tmp/result.mp4",
+        )
 
     def test_tracked_openrouter_prompts_keep_shared_real_time_motion_plan(self) -> None:
         samples, prompts = pipeline.validate_catalogs(

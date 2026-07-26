@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "13-ilinka-elitnyi-zhk",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A steady breeze travels gradually across the autumn canopy, creating one broad natural sway as the Kremlin stays unobstructed; near the end the branches return toward rest with the leaves still faintly trembling.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "ecde60a266dbbf33355f0e7035f0da5bdb9ebd3c82e1a7c397057b56817748f9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "AhDFyYDNJ7GeoCAamQYT",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:15:24Z",
+  "completed_at": "2026-07-24T17:25:21Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 7033654,
+    "sha256": "bade56387a1751881fc72e5b9ab71049f04f543246a787d7de8103dc0ae72fc9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk-wan-2-7",
+  "lite_result_sha256": "0e12ba066910ab33e6812acd8458dc272e378e8a9514f0eb2bc4617eca5f0ba6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

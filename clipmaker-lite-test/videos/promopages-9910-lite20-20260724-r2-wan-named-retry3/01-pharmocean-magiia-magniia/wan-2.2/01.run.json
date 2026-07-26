@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "01-pharmocean-magiia-magniia",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-named-retry3/01-pharmocean-magiia-magniia/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-named-retry3/01-pharmocean-magiia-magniia/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/call/text2video",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+      "prompt": "Fixed overhead camera. A gentle breeze immediately sends one small, even ripple through the visible herb and cabbage leaves from left to right; the motion settles near the end with the leaves slightly shifted, while the central Mg Magnesium card stays fully visible and readable."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "b77acbf3aefc4f1cea6d338d49ec723b97a438483d364dfc25a9bf5a4fb03042",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "d94d4b65660a4183aec5fef0bd0f959c",
+  "provider_session_hash": "named-api:text2video",
+  "submitted_at": "2026-07-24T17:02:50Z",
+  "completed_at": "2026-07-24T17:04:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 213373,
+    "sha256": "3222c2bbde15ca3021b84280f542f1ab5d678f59555170bb6d39dc7f6b4d3782"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry3",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry3-01-pharmocean-magiia-magniia-wan-2-2",
+  "lite_result_sha256": "1ffcfb596bfbb59398d99fa6b976f32631055365dd4f65675884833a10b7c963",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

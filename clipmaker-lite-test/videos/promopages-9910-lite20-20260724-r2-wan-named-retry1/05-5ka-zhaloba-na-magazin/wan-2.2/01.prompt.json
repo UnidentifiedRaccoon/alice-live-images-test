@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1-05-5ka-zhaloba-na-magazin-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+    "sha256": "227d8ba385c3dc3c7a4cfc9971f45b8069319be49624dceadaf141e470f19479",
+    "width": 2047,
+    "height": 1365
+  },
+  "structured_intent": {
+    "editorial_meaning": "Обращение покупателя приводит к быстрой и конкретной проверке товара непосредственно в магазине.",
+    "primary_action": "Покупательница проверяет информацию на упаковке товара.",
+    "terminal_state": "Упаковка устойчиво удерживается над корзиной этикеткой к покупательнице после завершения проверки.",
+    "semantic_invariant": "Покупательница до конца остаётся сосредоточенной на внимательной проверке товара."
+  },
+  "prompt": {
+    "positive": "The woman immediately tilts the package slightly to inspect its label while glancing once from her phone to the package. Fixed camera. By the final frames, she holds the package steady above the basket with the label facing her, still focused on checking it.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin/result.json",
+    "sha256": "fec69791b195e72a567619dc365cb472a1e898b00f3b2e5c4784932be011f004",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "227d8ba385c3dc3c7a4cfc9971f45b8069319be49624dceadaf141e470f19479",
+      "article_context_sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:61a4f620cf02edcbaf84ca99df89c1c279a293a133760f2d6c1ec79362bdc20d",
+    "execution_fingerprint": "sha256:be45b80816e4955c3c70c7822d15ae38167205b93d9e8fc47e3472f92c51b8fe",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b8-53f4-7070-9971-12919757a1e4"
+    },
+    "authored_payload_sha256": "0cde6eeb44f06aacdd1a35290d740bcbd6db8794a4c3fe4d39b811790bb66efa",
+    "draft_file_sha256": "e50decfb5e1b96e45db77c8a4bb786f43e6ad3be90ee933bd5fbfc3bccfbb968"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+      "sha256": "ca6b66f4598578182b7d66f149ae3cedd789cd9561cf68fb7ae6b833277eca30",
+      "bytes": 104309
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/18-dalan-sredstva-dlia-volos/content.json",
+      "sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249",
+      "bytes": 16157,
+      "locator": {
+        "article_id": "18-dalan-sredstva-dlia-volos",
+        "title": "Правда и мифы о турецких средствах для волос",
+        "lead": "Проверила на себе шампунь и кондиционер из Турции от Dalan. Вот что вышло",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Привет! Меня зовут Маша, и я обычно изучаю составы, прежде чем покупать что-то для волос. Люблю сравнивать цены и искать варианты, где качество не требует серьезных трат."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "В открытой картонной коробке аккуратно выставлены шампунь, кондиционер и небольшая упаковка уходового средства Dalan d’Olive.",
+      "Главные продукты и их этикетки обращены к камере; оливковая графика на коробке поддерживает натуральный образ набора.",
+      "Сами предметы неподвижны; естественно анимировать мягкое отражение света на упаковках, не меняя их расположение и надписи."
+    ],
+    "article_context": "Обложка представляет тестируемый турецкий набор Dalan d’Olive как доступную альтернативу дорогому профессиональному уходу и сразу подчёркивает его презентабельную подарочную упаковку.",
+    "structured_intent": {
+      "editorial_meaning": "Оживление подчёркивает презентабельность полного набора Dalan d’Olive и поддерживает рассказ о привлекательном знакомстве с доступным турецким уходом.",
+      "primary_action": "Мягкое отражение света последовательно проходит по трём средствам набора.",
+      "terminal_state": "Все три средства остаются полностью видимыми и узнаваемыми, с равномерно подсвеченными фронтальными этикетками.",
+      "semantic_invariant": "Набор всё время воспринимается как целостный, аккуратно упакованный и привлекательный продукт для ухода или подарка."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды камера неподвижна. Мягкий узкий блик сразу начинает проходить слева направо по трём упаковкам в компактном ровном темпе. К последним кадрам он слабеет на тюбике кондиционера; набор остаётся аккуратно выставленным, а все этикетки — читаемыми.",
+      "positive_prompt": "Fixed camera. A soft highlight moves steadily from left to right across the shampoo bottle, center sachet, and conditioner tube, then fades with all three labels crisp and fully visible.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный статичный кадр использует более медленное непрерывное движение света: отражение зарождается на изгибе флакона, проходит через центральную упаковку и постепенно достигает тюбика. Свет мягко выравнивается ближе к финалу, оставляя весь подарочный комплект одновременно хорошо различимым и презентабельным.",
+      "positive_prompt": "A gentle light reflection travels slowly across the three products from the shampoo bottle to the conditioner tube. Keep the camera fixed; finish with the complete gift set evenly illuminated and every label clearly visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "За четыре секунды при неподвижной камере мягкий естественный блик плавно скользит по фронтальным этикеткам слева направо, объединяя три средства в единый комплект. В финале отражение рассеивается, и все упаковки остаются вертикальными, узнаваемыми и равномерно освещёнными.",
+      "positive_prompt": "Fixed camera as a soft natural highlight glides across the product labels from left to right, subtly emphasizing the complete set. End with the bottles and sachet evenly lit, upright, and clearly recognizable.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

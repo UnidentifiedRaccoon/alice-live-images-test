@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+    "sha256": "ca6b66f4598578182b7d66f149ae3cedd789cd9561cf68fb7ae6b833277eca30",
+    "width": 750,
+    "height": 1000
+  },
+  "structured_intent": {
+    "editorial_meaning": "Оживление подчёркивает презентабельность полного набора Dalan d’Olive и поддерживает рассказ о привлекательном знакомстве с доступным турецким уходом.",
+    "primary_action": "Мягкое отражение света последовательно проходит по трём средствам набора.",
+    "terminal_state": "Все три средства остаются полностью видимыми и узнаваемыми, с равномерно подсвеченными фронтальными этикетками.",
+    "semantic_invariant": "Набор всё время воспринимается как целостный, аккуратно упакованный и привлекательный продукт для ухода или подарка."
+  },
+  "prompt": {
+    "positive": "Fixed camera as a soft natural highlight glides across the product labels from left to right, subtly emphasizing the complete set. End with the bottles and sachet evenly lit, upright, and clearly recognizable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos/result.json",
+    "sha256": "e8e5790c3f4f86f28fa17b6e84453fd9bd954e7bd4b024591ab16a6d1aafa674",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "ca6b66f4598578182b7d66f149ae3cedd789cd9561cf68fb7ae6b833277eca30",
+      "article_context_sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

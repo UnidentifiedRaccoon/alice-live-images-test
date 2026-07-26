@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "09-dream-island-semeinye-vyhodnye",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/09-dream-island-semeinye-vyhodnye/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The fountain builds in a gentle continuous swell while the surrounding arcing jets flow rhythmically and warm reflections ripple across the pool. A slow subtle push toward the illuminated castle ends with the fountain forming a bright, symmetrical crown of water.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "75a3242d8e4efc8939b2d20a80699a42cb6ed9ee4af8825aa04125d3fb2e51bd",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Ge7i6PawDZMVJKtOLHly",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:06:02Z",
+  "completed_at": "2026-07-24T17:14:18Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 10529124,
+    "sha256": "95c838022219790624d72282cabef0ba8b20dd9abecf286632c96ecf4dcb6839"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye-wan-2-7",
+  "lite_result_sha256": "bdc76fce2c4e81fb6d0b115ef2ef5db3b0051ab5d6a3a26039fef45857b4bf47",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

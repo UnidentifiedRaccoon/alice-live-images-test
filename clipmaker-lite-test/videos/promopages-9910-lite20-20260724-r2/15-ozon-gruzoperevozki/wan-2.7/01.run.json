@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "15-ozon-gruzoperevozki",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/15-ozon-gruzoperevozki/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The truck drives steadily forward to the left across the platform, wheels rotating naturally as the floating ruble coins turn gently; it gradually slows and finishes fully visible in a firm stop on the platform.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b2bff4c21d498195b24c43bc56f46bd771385a447df44f9a6245621dcb7db446",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "rjWO4u6NTu84BQXSC5Q2",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:20:34Z",
+  "completed_at": "2026-07-24T17:26:28Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2036,
+    "height": 1018,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3970680,
+    "sha256": "1f779ca6afb6a223bf2be581a5668cfbd7d63ccd4f2c2d724b8d9537f4ccba9a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki-wan-2-7",
+  "lite_result_sha256": "4083a9c4d767fa1d88e275f19ec8a4675b8a33130efe9367fefca75750ea17ba",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "09-dream-island-semeinye-vyhodnye",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/09-dream-island-semeinye-vyhodnye/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/09-dream-island-semeinye-vyhodnye/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+      "prompt": "The central fountain rises steadily as the surrounding water arcs flow in smooth symmetrical streams, their reflections shimmering across the pool. Fixed camera; by the final frames the fountain forms a full, balanced crown of water in front of the castle."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "f49e8b01161aefa413c7162bfc8ae1423934d83d80647428fd872e9cd34c116e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5bda76284a0c419bbae86483f8cc16cb",
+  "provider_session_hash": "promopages9856-5c69436a4a41",
+  "submitted_at": "2026-07-24T16:57:27Z",
+  "completed_at": "2026-07-24T16:58:27Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 415317,
+    "sha256": "e7658d9be7d589184e61f5beee80ce4c35cc72aa3608af06cc74ea282dbe796b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-09-dream-island-semeinye-vyhodnye-wan-2-2",
+  "lite_result_sha256": "bdc76fce2c4e81fb6d0b115ef2ef5db3b0051ab5d6a3a26039fef45857b4bf47",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

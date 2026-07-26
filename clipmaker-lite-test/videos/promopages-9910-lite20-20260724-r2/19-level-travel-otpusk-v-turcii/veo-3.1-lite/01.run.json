@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "19-level-travel-otpusk-v-turcii",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/19-level-travel-otpusk-v-turcii/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With a fixed camera focused on the open book, a gentle breeze lifts a single right-hand page and turns it left in one fluid motion. By the last frame the page rests flat on the newly opened spread, preserving the calm vacation-planning mood.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "87205b64eaa44f82bb6df6183d688d201188460c7f30eeb406fc614c35b1ce08",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "pmN47yhVnDSff2s00HTe",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:37:59Z",
+  "completed_at": "2026-07-24T17:39:48Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4241115,
+    "sha256": "830a16849cf476cce2a7f51b1323ffb42250ebcc760183453717bf8b41f1abe3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii-veo-3-1-lite",
+  "lite_result_sha256": "5e08fbc5c585f5128619f0ac82492a8cbeeb5b2697a6c898135a4d08102d94b7",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

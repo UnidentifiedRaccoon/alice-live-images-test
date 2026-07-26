@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "20-sravni-kreditnyi-reiting",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/20-sravni-kreditnyi-reiting/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/20-sravni-kreditnyi-reiting/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+      "prompt": "He steadily tilts the phone slightly upward toward himself, following it with his eyes as his warm smile gently broadens. Fixed camera. By the final frame, the phone has settled higher and he remains relaxed and pleased, still looking at it."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "e70403549a9e6ed51dc9972f384d932432fb1373738131f7461299aae57d71d3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "72846ff569cc449db9601fcbf6df8a45",
+  "provider_session_hash": "promopages9856-3b572ac25e8c",
+  "submitted_at": "2026-07-24T17:13:41Z",
+  "completed_at": "2026-07-24T17:14:40Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 223349,
+    "sha256": "764647b8548d664156a1f1075a3999b12ca62236c29ceb4b90ea6b2fcc9a896c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-20-sravni-kreditnyi-reiting-wan-2-2",
+  "lite_result_sha256": "7e3a189e1b94e6392d6cf4c7345b646ce0df2ee4a686a11954a166ce7ab4d515",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

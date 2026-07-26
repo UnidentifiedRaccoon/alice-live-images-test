@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "10-exeed-rx",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/10-exeed-rx/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/10-exeed-rx/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+      "prompt": "Fixed camera. A soft, narrow reflection glides steadily from left to right across the existing dashboard glass, briefly accenting the navigation display without altering any interface content. It reaches the far-right edge and gently fades by the final frame; every displayed number, icon, glyph, and control remains unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "a99b9070551fb37272fc9d12108297c2a47ee46475eba5310884f13a7046da8d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "f257295584694992a63efb86d0cacc59",
+  "provider_session_hash": "promopages9856-b6c932e3cddf",
+  "submitted_at": "2026-07-24T16:58:27Z",
+  "completed_at": "2026-07-24T16:59:26Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 102484,
+    "sha256": "37301b5bc49e7907a02e380bebe507b3d3c17287b87011c2a2baa47f14851042"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-10-exeed-rx-wan-2-2",
+  "lite_result_sha256": "00bb6299f048ad751cea7d34107c52039c195947cf7168d4864ddc53b511c6ec",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+    "sha256": "36b7feb6fc302e9df8ccfc47c5374018327aec1ec861b97ebae919c02e0f4b93",
+    "width": 1600,
+    "height": 1200
+  },
+  "structured_intent": {
+    "editorial_meaning": "Комфорт кошки зависит от её индивидуального поведения и склонности зарываться, поэтому условия в лотке стоит подстраивать под питомца.",
+    "primary_action": "Кошка постепенно продвигается вперёд из-под мягкого коврика.",
+    "terminal_state": "В последнем кадре голова кошки немного сильнее выступает из-под коврика, при этом тело остаётся под ним.",
+    "semantic_invariant": "Кошка до конца остаётся частично укрытой и настороженно-любопытной, а движение воспринимается как поиск комфортного положения."
+  },
+  "prompt": {
+    "positive": "The cat slowly creeps forward under the rug, its head gently raising and carrying the soft edge as it advances. Fixed camera; end with more of its head exposed, still sheltered and watching attentively.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel/result.json",
+    "sha256": "721c1740dc95b9075c0c2d4be15c6ac31b5263fc1e608f4e31c24b7c5a31c019",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "36b7feb6fc302e9df8ccfc47c5374018327aec1ec861b97ebae919c02e0f4b93",
+      "article_context_sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

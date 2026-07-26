@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:d220081e5b82897371d65b3b5b383623f6e295afe386e5e43984832adeddc848",
+    "execution_fingerprint": "sha256:c54cb0f6de15fdcd764a946556965da68aea35fcc6ab9bda5f03a0da61970441",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b8-a15a-7881-a608-fcaab78e360c"
+    },
+    "authored_payload_sha256": "809f34ee2e448f6fbd06e2d35edcb04a32c1402611db41459a974a792918de0c",
+    "draft_file_sha256": "c86a49bdd9f09039d43dfc3030406505e6f3a060072c0cecac231f7718a82ba3"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+      "sha256": "4f3de7c82a207ff044907ac459598119297ff9bb919901b856f9dea708b0212d",
+      "bytes": 513177
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Мужчина расслабленно сидит на диване, смотрит на смартфон в правой руке и улыбается.",
+      "Смартфон и лицо хорошо видны; поза спокойная, левая рука лежит на спинке дивана.",
+      "Для естественной анимации подходят небольшой наклон смартфона, движение взгляда и мягкая реакция улыбкой без сложных жестов."
+    ],
+    "article_context": "Обложка вводит тему удобной предварительной проверки кредитного рейтинга через онлайн-сервис: спокойный пользователь изучает информацию на смартфоне и получает понятный, обнадёживающий результат до обращения в банк.",
+    "structured_intent": {
+      "editorial_meaning": "Онлайн-проверка кредитного рейтинга помогает заранее и без лишнего напряжения получить полезную финансовую информацию.",
+      "primary_action": "Мужчина слегка поднимает и наклоняет смартфон к себе, продолжая следить за экраном.",
+      "terminal_state": "Смартфон устойчиво расположен немного выше и ближе к линии взгляда, а мужчина по-прежнему смотрит на него с спокойной улыбкой.",
+      "semantic_invariant": "Мужчина остаётся расслабленным, заинтересованным и довольным взаимодействием со смартфоном."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Неподвижная камера. С первых кадров мужчина одним ровным движением слегка наклоняет смартфон вверх к себе; взгляд синхронно следует за экраном, а улыбка немного усиливается. Движение небольшой амплитуды завершается ближе к концу: телефон устойчиво расположен чуть выше, мужчина продолжает спокойно и довольно смотреть на него.",
+      "positive_prompt": "He steadily tilts the phone slightly upward toward himself, following it with his eyes as his warm smile gently broadens. Fixed camera. By the final frame, the phone has settled higher and he remains relaxed and pleased, still looking at it.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Неподвижная камера удерживает мужчину и смартфон в центре внимания. На протяжении большей части пяти секунд он плавно меняет угол телефона, немного поднимая его к линии взгляда; глаза непрерывно следят за экраном, улыбка постепенно становится заметнее. К финалу движение естественно затихает, телефон остаётся чуть выше, а расслабленное довольство сохраняется.",
+      "positive_prompt": "The man slowly angles the phone upward toward himself while his gaze follows the screen and his smile gradually grows. Fixed camera. He finishes with the phone resting slightly higher, still calmly focused on it with a pleased smile.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Неподвижный четырёхсекундный кадр. Мужчина мягко поднимает и поворачивает смартфон немного ближе к линии взгляда; глаза следуют за ним, улыбка плавно усиливается без смены эмоции. В последних кадрах телефон останавливается чуть выше исходного положения, мужчина остаётся расслабленным и довольным.",
+      "positive_prompt": "The man gently lifts and tilts the phone toward his gaze, his eyes tracking the screen as his smile softly brightens. Keep the camera fixed. End with the phone settled slightly higher and the man still relaxed, pleased, and looking at it.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

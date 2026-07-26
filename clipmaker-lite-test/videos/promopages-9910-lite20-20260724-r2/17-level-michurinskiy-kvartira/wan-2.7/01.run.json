@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "17-level-michurinskiy-kvartira",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Slowly push toward the central towers as the existing sunlight reflection climbs across their glass façades, ending as a concentrated highlight on the upper floors. Keep the full architectural ensemble recognizable.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "faafcbe56a14e58f52f5a15c8eb8234a64ffb965268b75c8d74d0f5d443fff79",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "mhgkCtOfJZGRzxBmG6xD",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:27:38Z",
+  "completed_at": "2026-07-24T17:38:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 16241256,
+    "sha256": "7fd7d2dedfa2803876de49c1e92b16cbe6c6106f3387c055c70bbe1a57f62bca"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira-wan-2-7",
+  "lite_result_sha256": "07d0c50bb2f810c16c19d3c2dc174712ecad06cb2d5409455a7caa6e951771b6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
