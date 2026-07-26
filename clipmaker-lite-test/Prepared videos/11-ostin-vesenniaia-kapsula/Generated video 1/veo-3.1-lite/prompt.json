@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+    "sha256": "05eec59a6435737d7d801af082bca264d531dcad32341b1e23a793ccbf1d5512",
+    "width": 4500,
+    "height": 1636
+  },
+  "structured_intent": {
+    "editorial_meaning": "Лена Тронина уверенно и непосредственно представляет новую коллекцию O’STIN как основу стильной весенней капсулы.",
+    "primary_action": "Героиня плавно переносит вес и слегка разворачивается в сторону рейла с коллекцией.",
+    "terminal_state": "Героиня устойчиво стоит в расслабленной позе в три четверти, сохраняя лёгкую уверенную улыбку, а рейл с одеждой остаётся ясно видимым.",
+    "semantic_invariant": "Героиня до последнего кадра остаётся спокойной, уверенной и непосредственной представительницей коллекции O’STIN."
+  },
+  "prompt": {
+    "positive": "The woman makes one smooth weight shift and gently angles her shoulders and gaze toward the clothing rack, keeping her hands in her pockets and her poised, friendly expression. The camera slowly pushes toward her as her hair and the garments sway slightly. She finishes in a relaxed three-quarter stance with the collection still clearly framed.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula/result.json",
+    "sha256": "fe7ad0075ccb18ec2cd61006a6df3021b1afe6c7bdd6d8dd24ed19aa6a0fa190",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "05eec59a6435737d7d801af082bca264d531dcad32341b1e23a793ccbf1d5512",
+      "article_context_sha256": "bf64a1c30bd54854d2f96edd2c6ba93474865ad684d2e6acc720ed45abb85de3",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
