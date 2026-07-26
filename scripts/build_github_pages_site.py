@@ -114,7 +114,11 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
         relative_paths.add(
             _safe_relative_path(article["selected_image"]["source_path"])
         )
-        for output in article["outputs"]:
+        outputs = [
+            *article["outputs"],
+            *article.get("comparison_outputs", []),
+        ]
+        for output in outputs:
             relative_paths.add(_safe_relative_path(output["video_path"]))
 
     for relative_path in relative_paths:

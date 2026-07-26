@@ -340,6 +340,32 @@
   line-height: 1.35;
 }
 
+.promptLabel {
+  display: inline-block;
+  margin-bottom: var(--space-sm);
+  border-left: 0.1875rem solid currentColor;
+  padding: var(--space-2xs) var(--space-xs);
+  color: var(--ink-soft);
+  background: var(--surface-strong);
+  font-size: var(--text-xs);
+  font-weight: 750;
+  letter-spacing: 0.025em;
+  line-height: 1.35;
+}
+
+.modelPanel[data-output-kind="reference"] {
+  border-top-color: var(--ink-soft);
+}
+
+.modelPanel[data-output-kind="comparison"] {
+  border-top-color: var(--accent);
+}
+
+.modelPanel[data-output-kind="comparison"] .promptLabel {
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+}
+
 .modelCost {
   align-self: start;
   color: var(--accent-dark);
@@ -459,6 +485,13 @@
 @media (min-width: 72rem) {
   .modelGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80rem) {
+  .modelGrid.hasExperiment {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-2xl) var(--space-md);
   }
 }
 

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9929",
+  "experiment_id": "promopages-9929-case14-wan22-prompt-v1",
+  "canonical_lite_artifact": false,
+  "article_number": "14",
+  "article_slug": "14-miuz-modnye-sergi",
+  "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+  "prompt_source": {
+    "agent_id": "clipmaker-lite",
+    "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+    "model_id": "alibaba/wan-2.2",
+    "positive_prompt_sha256": "71352fa20f1bbba882c9900a9656aafd0764fc93d71ca5c6a4cf06c02b82a5ad"
+  },
+  "expected_outputs": 2,
+  "summary": {
+    "verification-failed": 1,
+    "succeeded": 1
+  },
+  "outputs": [
+    {
+      "provider_run_id": "promopages-9929-case14-wan22-prompt-v1-wan-2-7",
+      "model_id": "alibaba/wan-2.7",
+      "comparison_variant": "wan-2.2-prompt-replay",
+      "canonical_lite_artifact": false,
+      "prompt_source_model_id": "alibaba/wan-2.2",
+      "prompt_source_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+      "runtime_prompt_sha256": "71352fa20f1bbba882c9900a9656aafd0764fc93d71ca5c6a4cf06c02b82a5ad",
+      "provider_prompt_expansion": {
+        "prompt_extend": true
+      },
+      "scene_plan": "For 3.2 seconds, keep the camera fixed on the full collage. Start the two lower pendant pearls moving immediately in compact, even arcs, slightly out of phase so their individual suspension remains readable. Let the motion naturally lose amplitude, ending near vertical in the final frames without becoming fully static too early.",
+      "positive_prompt": "The two hanging teardrop pearls begin a small, even pendulum swing in opposite phases, their highlights sliding across the curved surfaces. Fixed camera. By the final frames both pearls return close to vertical with only a faint residual sway.",
+      "negative_prompt": null,
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 7730799,
+        "sha256": "46c8081ee68b4ef84b546a3b38e2ebe9a6ff6922c7e186af8dd69792a4ac6fba"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": "Media contract verification failed"
+    },
+    {
+      "provider_run_id": "promopages-9929-case14-wan22-prompt-v1-veo-3-1-lite",
+      "model_id": "google/veo-3.1-lite",
+      "comparison_variant": "wan-2.2-prompt-replay",
+      "canonical_lite_artifact": false,
+      "prompt_source_model_id": "alibaba/wan-2.2",
+      "prompt_source_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+      "runtime_prompt_sha256": "71352fa20f1bbba882c9900a9656aafd0764fc93d71ca5c6a4cf06c02b82a5ad",
+      "provider_prompt_expansion": {
+        "enhancePrompt": true
+      },
+      "scene_plan": "For 3.2 seconds, keep the camera fixed on the full collage. Start the two lower pendant pearls moving immediately in compact, even arcs, slightly out of phase so their individual suspension remains readable. Let the motion naturally lose amplitude, ending near vertical in the final frames without becoming fully static too early.",
+      "positive_prompt": "The two hanging teardrop pearls begin a small, even pendulum swing in opposite phases, their highlights sliding across the curved surfaces. Fixed camera. By the final frames both pearls return close to vertical with only a faint residual sway.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/videos/promopages-9929-case14-wan22-prompt-v1/14-miuz-modnye-sergi/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2509371,
+        "sha256": "bb40f662b294d9db6e37676ac0515749b35af835447a521db9704dcdd5bf708f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

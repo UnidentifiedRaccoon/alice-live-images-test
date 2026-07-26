@@ -27,6 +27,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
+from scripts import clipmaker_lite_case14_prompt_experiment as case14_experiment  # noqa: E402
 from scripts import clipmaker_lite_runner as runner  # noqa: E402
 from scripts import video_generation_pipeline as transport  # noqa: E402
 
@@ -986,6 +987,76 @@ def build_final_manifest(articles: Iterable[Article], updated_at: str | None = N
     for output in all_outputs:
         status = str(output.get("status") or "missing")
         status_summary[status] = status_summary.get(status, 0) + 1
+    comparison_output_count = 0
+    experiment_path = ROOT / case14_experiment.MANIFEST_PATH
+    if experiment_path.is_file():
+        experiment = read_json(experiment_path)
+        comparison_outputs = (
+            experiment.get("outputs") if isinstance(experiment, dict) else None
+        )
+        if (
+            not isinstance(experiment, dict)
+            or experiment.get("experiment_id") != case14_experiment.EXPERIMENT_ID
+            or experiment.get("canonical_lite_artifact") is not False
+            or experiment.get("expected_outputs") != len(case14_experiment.TARGET_MODEL_IDS)
+            or not isinstance(comparison_outputs, list)
+            or len(comparison_outputs) != len(case14_experiment.TARGET_MODEL_IDS)
+        ):
+            raise PipelineError("Case-14 comparison experiment manifest is invalid")
+        case14 = next(
+            (
+                article
+                for article in article_records
+                if article.get("article_number") == case14_experiment.ARTICLE_NUMBER
+            ),
+            None,
+        )
+        if not isinstance(case14, dict):
+            raise PipelineError("Case-14 comparison target is missing")
+        baseline = case14.get("outputs")
+        reference = (
+            next(
+                (
+                    output
+                    for output in baseline
+                    if output.get("model_id") == case14_experiment.SOURCE_MODEL_ID
+                ),
+                None,
+            )
+            if isinstance(baseline, list)
+            else None
+        )
+        reference_prompt = (
+            reference.get("positive_prompt") if isinstance(reference, dict) else None
+        )
+        if (
+            not isinstance(reference_prompt, str)
+            or hashlib.sha256(reference_prompt.encode("utf-8")).hexdigest()
+            != case14_experiment.EXPECTED_PROMPT_SHA256
+        ):
+            raise PipelineError("Case-14 Wan 2.2 reference prompt changed")
+        if [output.get("model_id") for output in comparison_outputs] != list(
+            case14_experiment.TARGET_MODEL_IDS
+        ):
+            raise PipelineError("Case-14 comparison model order changed")
+        for output in comparison_outputs:
+            if (
+                output.get("canonical_lite_artifact") is not False
+                or output.get("prompt_source_model_id")
+                != case14_experiment.SOURCE_MODEL_ID
+                or output.get("runtime_prompt_sha256")
+                != case14_experiment.EXPECTED_PROMPT_SHA256
+                or output.get("positive_prompt") != reference_prompt
+            ):
+                raise PipelineError("Case-14 comparison prompt binding changed")
+            error = final_output_acceptance_error(
+                output,
+                allow_contract_warnings=True,
+            )
+            if error:
+                raise PipelineError(f"Case-14 comparison output is invalid: {error}")
+        case14["comparison_outputs"] = comparison_outputs
+        comparison_output_count = len(comparison_outputs)
     return {
         "schema_version": 1,
         "ticket": TICKET,
@@ -995,6 +1066,7 @@ def build_final_manifest(articles: Iterable[Article], updated_at: str | None = N
         "article_count": len(article_records),
         "models": list(MODEL_IDS),
         "expected_outputs": len(article_records) * len(MODEL_IDS),
+        "comparison_output_count": comparison_output_count,
         "status_summary": status_summary,
         "dataset_manifest": DATASET_MANIFEST_REL.as_posix(),
         "generation_manifests": [
