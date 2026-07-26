@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "12-mars-podarki-na-8-marta",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/12-mars-podarki-na-8-marta/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The gift box moves gradually into the recipient’s palm while their fingers curl around it and the giver slowly eases their support. A subtle push-in keeps the box centered; the recipient holds the closed gift securely at the end, with the giver’s fingertips still touching the lid.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b69ba43c2ea4b6ee1b4350051c0ee080d54e5c0d330e2f25901d573ad8ffbb16",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "adIsGVbojzLRGUlyND1h",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:13:54Z",
+  "completed_at": "2026-07-24T17:18:38Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3578425,
+    "sha256": "6ea00a42449ec5cb7957f2fd362eb593904bf360070fc350ae5a95779e72d19f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta-wan-2-7",
+  "lite_result_sha256": "c9fac9dbf6f429712f12a952946da7d853145919f3b92a5f3f7549d471eccd76",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:4e5766363cf15536813ff02bef09d686dc84569b7c12e235785246c1a121b8ff",
+    "execution_fingerprint": "sha256:882553085b4410ee643a05a99aa1a97407186ead139a85fd59bec85ca8b2b876",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b5-c584-7f50-b012-e2990907af3a"
+    },
+    "authored_payload_sha256": "db26766b439d3dcb35c8b416b802b8dff6d3ea5feece2b7b49219929f6f9ef4b",
+    "draft_file_sha256": "231dfc8c16f6b858067b38e619c05f8f3d0b9055c13428612ec5e481840060f6"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+      "sha256": "28350e991e8e6279a8f33685c0a8e6bff5f6c4878f4f0c2d1dee534ee307d4cb",
+      "bytes": 204849
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/03-zov-resheniia-dlia-kuhni/content.json",
+      "sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064",
+      "bytes": 17582,
+      "locator": {
+        "article_id": "03-zov-resheniia-dlia-kuhni",
+        "title": "5 решений для кухни, которая радует каждый день",
+        "lead": "Простые идеи для дизайна, которые выглядят стильно и реально помогают в быту",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "📌 Дизайнерские приемы, которые делают дом стильным и функциональным"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Фронтальный общий план современной кухни-столовой: серый остров с гладкими фасадами без ручек, деревянная реечная стена, встроенная техника и обеденная группа.",
+      "Интерьер неподвижен; естественно анимировать уже видимый тёплый солнечный свет и мягкие тени на полу, мебели и правой стене.",
+      "Композиционный центр — лаконичный остров и рабочая зона; порядок и чистые геометрические линии поддерживают тему удобной, продуманной кухни."
+    ],
+    "article_context": "Обложка задаёт общий тезис статьи: современная кухня объединяет выразительный дизайн с продуманной повседневной функциональностью. Акцент — на цельном, спокойном и свободном от визуального шума пространстве с фасадами без ручек.",
+    "structured_intent": {
+      "editorial_meaning": "Продуманная кухня может одновременно выглядеть цельно и стильно и оставаться комфортным, организованным пространством для каждого дня.",
+      "primary_action": "Тёплый естественный свет постепенно проходит через кухню и подчёркивает её гладкие, упорядоченные поверхности.",
+      "terminal_state": "Полоса солнечного света достигает фасадов кухонного острова, а интерьер сохраняет исходный порядок и композицию.",
+      "semantic_invariant": "Кухня до последнего кадра остаётся спокойной, чистой, цельной и визуально свободной от лишних деталей."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "За 3,2 секунды видимый солнечный свет сразу начинает мягко смещаться влево по полу и нижним фасадам; тени стульев синхронно проходят небольшое расстояние. Камера неподвижна, чтобы сохранить строгую геометрию интерьера. К финалу световой рисунок достигает острова и естественно замедляется, а кухня остаётся такой же аккуратной и функциональной.",
+      "positive_prompt": "Warm sunlight glides gently leftward across the floor and lower cabinet fronts as soft chair shadows shift with it. Fixed camera. By the final frames, the light settles across the kitchen island, leaving the orderly kitchen calm and unchanged.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундная сцена строится на постепенном прохождении широкой полосы солнечного света от правой стороны пола к острову. Тени обеденных стульев плавно следуют за светом почти всю длительность. Одновременно камера выполняет один очень медленный наезд к острову, подчёркивая гладкие фасады без ручек. В последних кадрах свет ложится на нижнюю часть острова и движение естественно затихает без изменения предметов или планировки.",
+      "positive_prompt": "A broad band of warm sunlight slowly travels across the floor toward the handleless kitchen island, carrying the soft chair shadows with it. The camera makes a subtle steady push toward the island. The light reaches and rests across its lower fronts by the final frame, while the composed kitchen remains orderly.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "В течение четырёх секунд тёплая полоса света равномерно проходит от правой стены через обеденную зону к острову, а мягкие тени стульев непрерывно скользят по полу. Широкий фронтальный кадр остаётся фиксированным, сохраняя остров и рабочую зону постоянно видимыми. К последнему кадру край света касается острова, подчёркивая цельность и порядок интерьера.",
+      "positive_prompt": "Warm afternoon light sweeps slowly from the right wall across the dining area toward the kitchen island, and the chair shadows slide smoothly over the floor. Hold a fixed wide view. In the last frame, the sunlit edge reaches the island and the clean, organized space remains serene and unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

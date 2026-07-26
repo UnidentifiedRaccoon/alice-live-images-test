@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:e05b7cc0c160c41a31f91e8bedec5c2bf38ef1f58839b86578c744e8b8ac504b",
+    "execution_fingerprint": "sha256:d744b0d04ed26528fdd688641dc79f3568914777527d002d93a0f2fce649ae92",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b6-42c7-7fa0-a35d-d0821d9dd2db"
+    },
+    "authored_payload_sha256": "edc00f334266d5c2402d411fc66f1cd05ff5286596e70c9956fac0970d43c63a",
+    "draft_file_sha256": "bc086303961da9b19ff117252e1c199f27bb65ef08b0d0e4afe961c9b47efc99"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+      "sha256": "227d8ba385c3dc3c7a4cfc9971f45b8069319be49624dceadaf141e470f19479",
+      "bytes": 1038087
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/05-5ka-zhaloba-na-magazin/content.json",
+      "sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e",
+      "bytes": 17645,
+      "locator": {
+        "article_id": "05-5ka-zhaloba-na-magazin",
+        "title": "Вот что будет, если пожаловаться на магазин «Пятёрочка»",
+        "lead": "Рассказываем, какой путь проходит обращение в службу поддержки «Пятёрочки»",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "💌 Рассказываем, какой путь проходит обращение в службу поддержки «Пятёрочки»"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Покупательница стоит у холодильной витрины, держит упаковку продукта над корзиной и смотрит в смартфон.",
+      "Главные подвижные элементы — упаковка в одной руке, смартфон в другой, взгляд и небольшой перенос веса; холодильная витрина и товары формируют стабильный фон."
+    ],
+    "article_context": "Изображение иллюстрирует раздел о быстрых мерах после обращения: проверку срока годности товара на полке можно провести сразу. Акцент — внимательная проверка продукции как конкретный и оперативный результат обратной связи покупателя.",
+    "structured_intent": {
+      "editorial_meaning": "Обращение покупателя приводит к быстрой и конкретной проверке товара непосредственно в магазине.",
+      "primary_action": "Покупательница проверяет информацию на упаковке товара.",
+      "terminal_state": "Упаковка устойчиво удерживается над корзиной этикеткой к покупательнице после завершения проверки.",
+      "semantic_invariant": "Покупательница до конца остаётся сосредоточенной на внимательной проверке товара."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Неподвижная камера сохраняет покупательницу и товар полностью видимыми. Сразу начинается компактная проверка: она умеренно наклоняет упаковку, переводит взгляд со смартфона на этикетку и к концу удерживает товар неподвижно над корзиной, продолжая сосредоточенную проверку.",
+      "positive_prompt": "The woman immediately tilts the package slightly to inspect its label while glancing once from her phone to the package. Fixed camera. By the final frames, she holds the package steady above the basket with the label facing her, still focused on checking it.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "В фиксированном общем плане действие развивается почти все пять секунд: покупательница плавно поворачивает упаковку к себе, переводит на неё взгляд со смартфона и слегка переносит вес к тележке. Движение естественно затихает у финала, когда товар устойчиво удерживается над корзиной этикеткой к ней; внимание остаётся на проверке.",
+      "positive_prompt": "The woman slowly angles the package to read its label, shifting her gaze from the phone to the package as her weight settles beside the cart. Fixed camera. She finishes holding the package steady above the basket with the label clearly oriented toward her, remaining focused on the check.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный фиксированный кадр сосредоточен на одном ясном моменте: женщина мягко разворачивает упаковку для чтения и переводит взгляд со смартфона на этикетку. К концу упаковка неподвижна над корзиной и обращена к ней, а сосредоточенность сохраняется.",
+      "positive_prompt": "With the camera fixed, the woman gently turns the package toward herself and shifts her attention from the phone to its label. By the last frame, the package is held steady above the basket with the label facing her, and she remains intent on checking it.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

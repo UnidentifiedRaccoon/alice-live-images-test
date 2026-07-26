@@ -39,12 +39,28 @@ prepares a short semantic scene brief, and plans each model independently.
   `google/veo-3.1-lite`.
 - Entry point: [docs/agents/clipmaker-lite/README.md](docs/agents/clipmaker-lite/README.md)
 - Locked contract: [docs/agents/clipmaker-lite/contract.json](docs/agents/clipmaker-lite/contract.json)
+- Generation routes: [docs/agents/clipmaker-lite/generation-routes.json](docs/agents/clipmaker-lite/generation-routes.json)
 - Isolated runner: [scripts/clipmaker_lite_runner.py](scripts/clipmaker_lite_runner.py)
 
 Before analysis, the Lite runner must prepare the run and its exact instruction
 bundle. The runner then invokes an isolated Codex execution, captures its
 structured response and stamps the result. Do not author an external
 `draft.json`, write provenance/runtime manually, or bypass the execution receipt.
+The Codex authoring model is a runtime choice and must never be fixed, listed or
+validated by the locked contract. Any model supported by the selected CLI, or
+the CLI default, is allowed; record only the requested value in the execution
+receipt without guessing the resolved backend model.
+
+For routine generation, resolve transport only by the exact `model_id` in the
+generation route registry. Do not query model catalogs, `/videos/models`,
+`/gradio_api/info` or `/config`, and do not probe or fall back to another route.
+Route discovery is allowed only in an explicitly requested diagnostic run.
+Any instruction to recheck metadata or cost means validating the local route
+registry and operator-provided budget; it never authorizes live model discovery.
+Start the three route pools together: Gradio/Wan 2.2 uses one slot, Eliza/Wan
+2.7 uses three, and Eliza/Veo 3.1 Lite uses three. These are independent limits,
+not one shared Eliza queue; only the coordinator may write the aggregate
+manifest.
 
 ## Interface design
 

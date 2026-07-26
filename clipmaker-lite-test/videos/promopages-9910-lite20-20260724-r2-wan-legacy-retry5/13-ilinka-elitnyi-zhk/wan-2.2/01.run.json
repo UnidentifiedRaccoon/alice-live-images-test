@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "13-ilinka-elitnyi-zhk",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/13-ilinka-elitnyi-zhk/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/13-ilinka-elitnyi-zhk/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png",
+      "prompt": "A light breeze immediately ripples through the autumn treetops in one compact, gentle sway while the Kremlin remains clearly visible; by the final frames the leaves ease into a slight residual flutter."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "c3b243fba58b57ce4f33a4c04c2827a4ac75b1f98323d1a71abcc140c18880fa",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "425fa0e6b38b42809fc284546e21ff10",
+  "provider_session_hash": "promopages9856-cbf6131d2c1f",
+  "submitted_at": "2026-07-24T17:02:31Z",
+  "completed_at": "2026-07-24T17:03:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 944,
+    "height": 944,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 364093,
+    "sha256": "2fad27b3ea90897c37d9977135d2b70de70af5429eb67f5556947d92dd71529d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-13-ilinka-elitnyi-zhk-wan-2-2",
+  "lite_result_sha256": "0e12ba066910ab33e6812acd8458dc272e378e8a9514f0eb2bc4617eca5f0ba6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

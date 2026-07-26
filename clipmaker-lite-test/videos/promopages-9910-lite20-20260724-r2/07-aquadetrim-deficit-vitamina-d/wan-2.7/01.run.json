@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "07-aquadetrim-deficit-vitamina-d",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/07-aquadetrim-deficit-vitamina-d/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Cloud banks glide slowly away from the sun as their soft contours evolve in the breeze. Keep the camera fixed and the sun continuously visible; end with a broader patch of clear blue sky around it and gently strengthened rays.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "d250dfeccd5283559d849625cc1d9fe4e7027a68d1995cdd49f8d141ef60942d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "rYagV04t1iJFYg8nVtSf",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T16:53:25Z",
+  "completed_at": "2026-07-24T17:13:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3139146,
+    "sha256": "d06ec6f7f2e279973bd16a38992fa8da1001e916f7ae5227b1f83fce6bd4365f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d-wan-2-7",
+  "lite_result_sha256": "229eef20b087d5d76fe6279d75d8866c31472531ecb0f854c21890c5608a7449",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

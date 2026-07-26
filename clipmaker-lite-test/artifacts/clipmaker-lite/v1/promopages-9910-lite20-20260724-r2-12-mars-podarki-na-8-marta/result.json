@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-12-mars-podarki-na-8-marta",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:b489e165f3ae567bcc84bf1338bb38d68dbd8bd40d1baff82f028713ada3b9e5",
+    "execution_fingerprint": "sha256:f093b06fc2981feddbfa2cb5a4db4213ac7aa41198929faad24aa6eb8d94eab6",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b7-49c7-7c53-a1f3-94c0a017b1ff"
+    },
+    "authored_payload_sha256": "e80af52a112b5c8186418e21d28684f61262569cb5198e62fc2ce55fb8b6a0c5",
+    "draft_file_sha256": "bf39c9b78c3bad4f809a9af24af52ad9d70af834d3fd21e15938d4520c0dea57"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg",
+      "sha256": "a0f9c099180aff3f4b9dbf9deca540e36fe797998f00fe232d71aa0c28714577",
+      "bytes": 2411451
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/12-mars-podarki-na-8-marta/content.json",
+      "sha256": "b81293f85a15bc1c24f689a7252112450a9767fe75717a9e12841134a5b36ef7",
+      "bytes": 20278,
+      "locator": {
+        "article_id": "12-mars-podarki-na-8-marta",
+        "title": "20 вариантов подарков на 8 Марта для самых разных женщин",
+        "lead": "",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/12-mars-podarki-na-8-marta/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Статья для мужчин, которые хотят порадовать любимых подарками и весенним настроением ⬇️"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Крупный план: человек в светлой одежде передает небольшую закрытую картонную коробку в раскрытую ладонь другого человека.",
+      "Коробка и соприкасающиеся с ней руки находятся в центре кадра; лица не видны, фон мягко размыт.",
+      "Реалистично подвижны кисти и пальцы; смысловые детали — закрытая крышка коробки и бережная поддержка подарка обеими сторонами."
+    ],
+    "article_context": "Обложка статьи о персонально подобранных подарках к 8 Марта. Кадр визуально вводит тему заботливого вручения: важен сам теплый жест передачи подарка, а не раскрытие содержимого коробки.",
+    "structured_intent": {
+      "editorial_meaning": "Продуманный подарок выражает личное внимание и заботу о женщине, которую хотят порадовать к 8 Марта.",
+      "primary_action": "Один человек бережно передает закрытую подарочную коробку в ладонь другого.",
+      "terminal_state": "Получатель надежно держит закрытую коробку, пока рука дарителя сохраняет легкое завершающее касание.",
+      "semantic_invariant": "Передача остается теплым и заботливым жестом; подарок не открывают и не роняют."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "За 3,2 секунды при неподвижной камере верхние руки сразу мягко опускают закрытую коробку на несколько сантиметров в нижнюю ладонь. Получатель одним плавным движением обхватывает коробку пальцами, а передающий ослабляет поддержку без резкого отдергивания. К финалу коробка устойчиво лежит в ладони получателя, верхняя рука лишь легко касается крышки; жест остается теплым и заботливым.",
+      "positive_prompt": "The giver gently lowers the closed gift box into the recipient’s open palm as the recipient’s fingers close around it. Fixed camera; by the final frames the recipient securely holds the box while the giver’s hand rests lightly on top.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный вариант развивает передачу почти весь ролик: коробка плавно смещается вперед и чуть вниз, нижняя ладонь принимает ее вес, пальцы постепенно смыкаются, а верхняя рука медленно ослабляет хват. Очень легкое приближение камеры акцентирует коробку и контакт рук. В последних кадрах получатель надежно держит закрытый подарок, а пальцы передающего сохраняют легкое касание крышки, поддерживая ощущение личной заботы.",
+      "positive_prompt": "The gift box moves gradually into the recipient’s palm while their fingers curl around it and the giver slowly eases their support. A subtle push-in keeps the box centered; the recipient holds the closed gift securely at the end, with the giver’s fingertips still touching the lid.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "В течение четырех секунд при фиксированной камере коробка ровно перемещается в ожидающую ладонь. Пальцы получателя мягко смыкаются вокруг ее основания одновременно с постепенным расслаблением руки передающего. Движение затихает у конца: закрытая коробка надежно удерживается получателем, а легкое касание второй руки сохраняет эмоциональную связь жеста.",
+      "positive_prompt": "With the camera fixed on the gift, the giver smoothly places the closed box into the waiting palm. The recipient’s fingers close gently as the giver relaxes their grip; in the last frame the box is secure in the recipient’s hand and both remain connected by a light touch.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

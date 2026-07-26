@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1-08-tochka-ooo-ili-ip-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/01.jpeg",
+    "sha256": "a14ba8f184b27ddff0baec009be01bfc1e416bd481c12594ddea71bb0d8ff235",
+    "width": 2000,
+    "height": 1333
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation underscores the financial pressure and personal risk that make the choice of business structure consequential, supporting the article’s case for using an LLC when personal assets need protection.",
+    "primary_action": "The man shifts his weight forward over the counter in one continuous movement.",
+    "terminal_state": "He is settled in a slightly closer forward-leaning stance with both hands still planted on the counter.",
+    "semantic_invariant": "He remains tense, apprehensive, and burdened by the decision through the final frame."
+  },
+  "prompt": {
+    "positive": "The man steadily shifts his weight slightly forward, tightening his shoulders while keeping both hands planted on the counter and his tense gaze fixed ahead. Fixed camera. By the final frames he holds the closer, rigid stance, still visibly anxious.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-08-tochka-ooo-ili-ip/result.json",
+    "sha256": "b03a058480ce81c1f353382de00c0ef469fb646243c88e6fdee8c86d15fcac35",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "a14ba8f184b27ddff0baec009be01bfc1e416bd481c12594ddea71bb0d8ff235",
+      "article_context_sha256": "24d0fba8a293283a86e2daa0954db7390849cc7236a1fc9ae4018b8f19ac591c",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

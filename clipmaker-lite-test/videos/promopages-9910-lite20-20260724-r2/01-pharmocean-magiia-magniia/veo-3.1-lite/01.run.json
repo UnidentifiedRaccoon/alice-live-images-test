@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "01-pharmocean-magiia-magniia",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/01-pharmocean-magiia-magniia/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Keep the overhead camera fixed as a light breeze sweeps left to right through the herbs and leafy vegetables in one smooth ripple. The leaves gradually come to rest slightly repositioned by the final frame, with the Mg Magnesium card continuously unobstructed and readable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b29676dec468e3109ff67300740b97ff7d372a93ac5ff76463311c9783a7835d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "GdubF72PlLCCAbDdoWVi",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T16:27:37Z",
+  "completed_at": "2026-07-24T16:29:57Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3333373,
+    "sha256": "fba1c93cf08a37e35410e8a1acb4b065b4ce844c407b17d7c27202e2a5e88c4a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia-veo-3-1-lite",
+  "lite_result_sha256": "1ffcfb596bfbb59398d99fa6b976f32631055365dd4f65675884833a10b7c963",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

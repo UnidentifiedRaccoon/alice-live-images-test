@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:80c8660f7e3a3f5997ad6f54d949416af8968b2eb7dd0a3c04f16c1c6a7ed018",
+    "execution_fingerprint": "sha256:2695d3b72e2b0100d43f7c026785b51139dc1bb2d355550f0258e71ec544e9f3",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b6-be04-79d1-9890-dc9af28dbbdc"
+    },
+    "authored_payload_sha256": "bd59cba12baf24357138effb1f035bccb5736538239cb0096da98a1018523252",
+    "draft_file_sha256": "6f21e75e5ebe7d3d9a0487a570e6272c42a1dd3251344094de90b10e0b0df717"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+      "sha256": "b294de8b2cf85c5ec94ed5aee4e4fc7239a1f7e4731e3c9296cac70f9be344c5",
+      "bytes": 98944
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/07-aquadetrim-deficit-vitamina-d/content.json",
+      "sha256": "0a82562e329d4e4cc667d02064d7f7b78c1d9435e19ef9a354fd78913f50c62c",
+      "bytes": 21678,
+      "locator": {
+        "article_id": "07-aquadetrim-deficit-vitamina-d",
+        "title": "Дефицит витамина D. Краткий чек-лист",
+        "lead": "Что влияет на уровень витамина D и кто подвержен его дефициту — краткий чек-лист",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Нехватка витамина D по праву считается болезнью современности: им страдает практически половина всего населения планеты, а в России — как минимум 70% жителей страны [1], [2]. Гиповитаминоз D может протекать незаметно и сопровождаться легкой усталостью, ухудшением памяти и внимания, сонливостью днем и бессонницей ночью, а в тяжелых случаях — привести к более «ощутимым» последствиям — снижению минеральной плотности костей (остеопорозу), болям в мышцах и суставах."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Яркое солнце с выраженными лучами находится справа от центра в голубом небе, окружённом крупными белыми кучевыми облаками.",
+      "Солнце уже открыто; естественно подвижны облака, их мягкие края и световые лучи, тогда как композиционный центр должен оставаться узнаваемым."
+    ],
+    "article_context": "Обложка визуально связывает тему чек-листа о дефиците витамина D с солнечным светом как главным естественным источником витамина; акцент — на ценности солнечного воздействия без обещания, что одного солнца всегда достаточно.",
+    "structured_intent": {
+      "editorial_meaning": "Солнечный свет важен для поддержания уровня витамина D и служит отправной точкой для осознанной проверки факторов его дефицита.",
+      "primary_action": "Окружающие солнце облака плавно расходятся под действием ветра.",
+      "terminal_state": "Вокруг солнца образуется более широкий участок чистого голубого неба, а его лучи становятся немного отчётливее.",
+      "semantic_invariant": "Солнце остаётся видимым и сохраняет роль устойчивого символа естественного источника витамина D до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Для 3,2 секунды камера неподвижна. Облака сразу начинают небольшое ровное расхождение от солнца, их края едва меняются под ветром. К концу вокруг непрерывно видимого солнца образуется немного более широкое чистое пространство, а лучи становятся чуть отчётливее; движение естественно затихает без отдельного события.",
+      "positive_prompt": "Clouds drift gently outward from the sun at a steady pace while their edges softly reshape. The camera stays fixed; by the final frames, a wider clear-blue opening surrounds the still-visible sun and its rays shine slightly more clearly.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный неподвижный кадр использует более протяжённый дрейф: крупные облачные массы плавно расходятся от солнечного диска, а их границы непрерывно и мягко перестраиваются. Процесс развивается почти весь ролик и заканчивается широкой голубой просветлённой зоной вокруг солнца с немного усиленными лучами.",
+      "positive_prompt": "Cloud banks glide slowly away from the sun as their soft contours evolve in the breeze. Keep the camera fixed and the sun continuously visible; end with a broader patch of clear blue sky around it and gently strengthened rays.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "На четыре секунды — сфокусированное умеренное расхождение ближайших облаков при фиксированной камере. Облачные края слегка клубятся, не отвлекая от солнца. В финальном кадре солнце остаётся на прежнем месте, окружённое заметно более широким голубым просветом и мягко проявившимися лучами.",
+      "positive_prompt": "With a fixed camera, the clouds steadily drift away from the sun and their edges billow subtly. Keep the sun visible throughout, ending with a noticeably wider blue opening around it and softly clearer rays.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

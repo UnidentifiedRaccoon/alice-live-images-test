@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+    "sha256": "693f753d0db395bc541830be8fb68ac95ab3275cab2d615ee606bddcedc42fbb",
+    "width": 1999,
+    "height": 1334
+  },
+  "structured_intent": {
+    "editorial_meaning": "The integrated digital cockpit embodies technology that supports the driver clearly and unobtrusively, reinforcing the article’s promise that EXEED RX makes driving easier.",
+    "primary_action": "A single soft reflection passes across the existing panoramic dashboard glass.",
+    "terminal_state": "The reflection has crossed the full display and faded at the right edge, leaving the original interface unchanged.",
+    "semantic_invariant": "The cockpit remains a calm, premium driver-assistance display, with all interface content and state unchanged through the final frame."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A restrained highlight sweeps smoothly from left to right over the curved dashboard glass, subtly emphasizing the central navigation interface while every displayed value, icon, glyph, and control remains unchanged. The highlight clears the right edge and fades by the last frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-10-exeed-rx/result.json",
+    "sha256": "00bb6299f048ad751cea7d34107c52039c195947cf7168d4864ddc53b511c6ec",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "693f753d0db395bc541830be8fb68ac95ab3275cab2d615ee606bddcedc42fbb",
+      "article_context_sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

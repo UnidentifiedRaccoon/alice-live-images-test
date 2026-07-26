@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+    "sha256": "7405154161aca78078f95474813f1927d0e203f80873077a5b8600bc21776dd6",
+    "width": 1200,
+    "height": 675
+  },
+  "structured_intent": {
+    "editorial_meaning": "Pearls remain an enduring fashion choice, equally suited to classic pendant earrings and bold statement styling.",
+    "primary_action": "The hanging teardrop pearls sway gently like pendulums.",
+    "terminal_state": "The pendant pearls finish close to their vertical resting position with only a slight residual sway.",
+    "semantic_invariant": "The collage continues to present pearl earrings as confident, desirable statement jewelry through the final frame."
+  },
+  "prompt": {
+    "positive": "The hanging teardrop pearls sway gently like pendulums in alternating arcs while soft highlights travel over their surfaces. The camera makes a slow minimal push toward the pearl earrings. Near the end, both pendants ease back toward vertical with a delicate residual motion.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi/result.json",
+    "sha256": "b481b4aadf675a7c09e2c34c93459292acc0a7371c26cfba55b0898f5b5d13c7",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "7405154161aca78078f95474813f1927d0e203f80873077a5b8600bc21776dd6",
+      "article_context_sha256": "51d2288b9c95e4694ab42cd8fec36d0a2adb08360cf07c6019ad8075a10dc7e9",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

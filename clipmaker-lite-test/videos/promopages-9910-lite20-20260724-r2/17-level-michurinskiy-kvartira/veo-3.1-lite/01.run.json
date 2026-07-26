@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "17-level-michurinskiy-kvartira",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/17-level-michurinskiy-kvartira/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "A subtle forward camera drift centers the angular middle tower while the existing sun glint sweeps upward over its façade, finishing as a bright upper-floor reflection. The tower cluster stays fully visible and recognizable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9e2174ade3091de9e513a9bdbe68eb05c63b0f22173c12fa802afefb9a5fc8f1",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "0tkHMaHcwKIiCIEdiH1L",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:28:28Z",
+  "completed_at": "2026-07-24T17:30:37Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 8089927,
+    "sha256": "30f71c8932aa1044a101ed33cdd2555bacb1ebb77fd9d2fda1a8b0b02ca8a350"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-17-level-michurinskiy-kvartira-veo-3-1-lite",
+  "lite_result_sha256": "07d0c50bb2f810c16c19d3c2dc174712ecad06cb2d5409455a7caa6e951771b6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

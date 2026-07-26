@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "16-ekonika-letnie-trendy",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/16-ekonika-letnie-trendy/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman gradually transfers her weight into a more settled fashion pose as a light breeze moves her hair and blazer edges; the handbag follows with a gentle pendulum swing and comes to rest beside the stone support. A slow subtle push-in keeps her full silhouette and accessories visible, ending on the same poised holiday confidence.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "bf1edf9aec7c0738de783c4c7c5644b080a0c8366fad5a26daf20b9c9ac46de9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "yX1Ts4z4xN1wr06bmnz1",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:25:51Z",
+  "completed_at": "2026-07-24T17:33:39Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5474766,
+    "sha256": "3d7b57a915c1eaf6fc9e4f7d11cc0d8113266d144880d0d73f8de7086a5ce720"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy-wan-2-7",
+  "lite_result_sha256": "9592da51418eed42aa4aef7681dd572581b624a64d9eaeb70f75bae2258db575",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "14-miuz-modnye-sergi",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/14-miuz-modnye-sergi/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The hanging teardrop pearls sway gently like pendulums in alternating arcs while soft highlights travel over their surfaces. The camera makes a slow minimal push toward the pearl earrings. Near the end, both pendants ease back toward vertical with a delicate residual motion.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "fa3c3cbb4a10dd2343fb481b90963e2302f06e3db273934a3b65cd9a626e68e9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "m8ipkjUvl6qlhaSzRyzY",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:17:41Z",
+  "completed_at": "2026-07-24T17:25:48Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 12339623,
+    "sha256": "f819867af4b519db5e2682e8c38ba3ac7ce3849e9cca09192c7e2bf43e2b84f5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi-wan-2-7",
+  "lite_result_sha256": "b481b4aadf675a7c09e2c34c93459292acc0a7371c26cfba55b0898f5b5d13c7",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

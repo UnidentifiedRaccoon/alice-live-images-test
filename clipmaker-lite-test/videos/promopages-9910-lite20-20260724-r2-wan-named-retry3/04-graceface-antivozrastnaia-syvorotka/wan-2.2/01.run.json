@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "04-graceface-antivozrastnaia-syvorotka",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-named-retry3/04-graceface-antivozrastnaia-syvorotka/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-named-retry3/04-graceface-antivozrastnaia-syvorotka/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/call/text2video",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+      "prompt": "The woman makes one slow natural blink, immediately reopening her eye to the same steady forward gaze by the final frames. Fixed camera; her calm neutral expression remains unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "9f96fcc3e20fe1edae85964673b49cbcf21254a94ea213c8d765ba157245df07",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "35aecd9e242d4c1fa5b138d19f2a1930",
+  "provider_session_hash": "named-api:text2video",
+  "submitted_at": "2026-07-24T17:04:49Z",
+  "completed_at": "2026-07-24T17:06:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1200,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 235936,
+    "sha256": "830d0d1676ba53d6506cff16405a6364063b5cde4ada4bc757b6da48f49a82a5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry3",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry3-04-graceface-antivozrastnaia-syvorotka-wan-2-2",
+  "lite_result_sha256": "958913f58262267a16b24c61c100d9573cbdac41826c206244b321fc3d915dda",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

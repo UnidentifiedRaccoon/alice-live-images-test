@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "06-4lapy-koshachii-napolnitel",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/06-4lapy-koshachii-napolnitel/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With a fixed camera, the cat gently pushes forward beneath the rug, making the soft edge rise and settle around its head. End with its head slightly more exposed while it remains tucked underneath and alert.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5e568d2a98f3d39f9818be02fcc46c9d7b43467b82c6bb49d7cab8112c4df867",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bzk7z9zXPXbPbQDxYf18",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T16:52:07Z",
+  "completed_at": "2026-07-24T16:54:25Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4334536,
+    "sha256": "37eeb56164f735e36bb244ea5f468790b2891160d5c7ceab5252cfd27c20c70b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-06-4lapy-koshachii-napolnitel-veo-3-1-lite",
+  "lite_result_sha256": "721c1740dc95b9075c0c2d4be15c6ac31b5263fc1e608f4e31c24b7c5a31c019",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

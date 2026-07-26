@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "13-ilinka-elitnyi-zhk",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/13-ilinka-elitnyi-zhk/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed on the Spasskaya Tower, a gentle breeze rolls through the autumn trees in a smooth wave; the foliage settles to a soft flutter by the last frame while the landmark remains fully visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "41caf8211bb4e47fe137bed6fd64ef2682b5972a647bdb359c379c129b2af334",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "IVJ58r3jVqLTE9GpcXPL",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:15:51Z",
+  "completed_at": "2026-07-24T17:17:39Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3304443,
+    "sha256": "c53fe57add59e427795af3863c59a7254bbd7882d8eb2843238c1854b6c8c084"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-13-ilinka-elitnyi-zhk-veo-3-1-lite",
+  "lite_result_sha256": "0e12ba066910ab33e6812acd8458dc272e378e8a9514f0eb2bc4617eca5f0ba6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

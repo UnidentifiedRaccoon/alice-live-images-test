@@ -45,6 +45,8 @@ MODEL_IDS = (
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
 )
+PLANNING_BATCH_ID = BATCH_ID
+PLANNING_MODEL_IDS = MODEL_IDS
 MODEL_SUFFIXES = {
     "alibaba/wan-2.2": "wan-2-2",
     "alibaba/wan-2.7": "wan-2-7",
@@ -56,8 +58,22 @@ MODEL_DIRECTORIES = {
     "google/veo-3.1-lite": "veo-3.1-lite",
 }
 WAN_MODEL_ID = "alibaba/wan-2.2"
-ELIZA_MODEL_IDS = {"alibaba/wan-2.7", "google/veo-3.1-lite"}
-DEFAULT_ELIZA_CONCURRENCY = 3
+WAN_27_MODEL_ID = "alibaba/wan-2.7"
+VEO_31_MODEL_ID = "google/veo-3.1-lite"
+ELIZA_MODEL_IDS = {WAN_27_MODEL_ID, VEO_31_MODEL_ID}
+DEFAULT_WAN_22_CONCURRENCY = int(
+    transport.route_for_model(WAN_MODEL_ID)["capacity"]
+)
+DEFAULT_WAN_27_CONCURRENCY = int(
+    transport.route_for_model(WAN_27_MODEL_ID)["capacity"]
+)
+DEFAULT_VEO_31_CONCURRENCY = int(
+    transport.route_for_model(VEO_31_MODEL_ID)["capacity"]
+)
+DEFAULT_ELIZA_CONCURRENCY = DEFAULT_WAN_27_CONCURRENCY
+# Only isolated historical/diagnostic wrappers may override this.  Normal
+# batches leave it unset and therefore use the registry's legacy Wan route.
+WAN_SUBMIT_MODE: str | None = None
 BLOCKED_STATUSES = {
     "stale",
     "failed",
@@ -102,7 +118,7 @@ class Sample:
     def planning_run_id(self) -> str:
         """The single Clipmaker Lite planning run shared by all model entries."""
 
-        return f"{BATCH_ID}-{self.sample_id}"
+        return f"{PLANNING_BATCH_ID}-{self.sample_id}"
 
 
 @dataclass(frozen=True)
@@ -148,6 +164,28 @@ class WorkerResult:
     status: str
     error: str | None = None
     holds_provider_slot: bool = False
+
+
+@dataclass(frozen=True)
+class ProviderPoolLimits:
+    """Independent local capacities for the three paid provider routes."""
+
+    wan_22: int = DEFAULT_WAN_22_CONCURRENCY
+    wan_27: int = DEFAULT_WAN_27_CONCURRENCY
+    veo_31: int = DEFAULT_VEO_31_CONCURRENCY
+
+    def for_model(self, model_id: str) -> int:
+        if model_id == WAN_MODEL_ID:
+            return self.wan_22
+        if model_id == WAN_27_MODEL_ID:
+            return self.wan_27
+        if model_id == VEO_31_MODEL_ID:
+            return self.veo_31
+        raise BatchPipelineError(f"Unsupported provider route: {model_id}")
+
+    @property
+    def total(self) -> int:
+        return self.wan_22 + self.wan_27 + self.veo_31
 
 
 @dataclass(frozen=True)
@@ -225,6 +263,40 @@ def positive_int(value: str) -> int:
     return parsed
 
 
+def capped_concurrency(value: str, maximum: int, route: str) -> int:
+    parsed = positive_int(value)
+    if parsed > maximum:
+        raise argparse.ArgumentTypeError(
+            f"{route} concurrency must not exceed {maximum}"
+        )
+    return parsed
+
+
+def provider_pool_limits(args: argparse.Namespace) -> ProviderPoolLimits:
+    """Resolve route-local limits, retaining ``--concurrency`` as a fallback."""
+
+    legacy_eliza = getattr(args, "concurrency", DEFAULT_ELIZA_CONCURRENCY)
+    if legacy_eliza is None:
+        legacy_eliza = DEFAULT_ELIZA_CONCURRENCY
+    limits = ProviderPoolLimits(
+        wan_22=(
+            getattr(args, "wan22_concurrency", None)
+            or DEFAULT_WAN_22_CONCURRENCY
+        ),
+        wan_27=getattr(args, "wan27_concurrency", None) or legacy_eliza,
+        veo_31=getattr(args, "veo31_concurrency", None) or legacy_eliza,
+    )
+    maximums = ProviderPoolLimits()
+    for model_id in MODEL_IDS:
+        limit = limits.for_model(model_id)
+        maximum = maximums.for_model(model_id)
+        if limit < 1 or limit > maximum:
+            raise BatchPipelineError(
+                f"{model_id} concurrency must be between 1 and {maximum}"
+            )
+    return limits
+
+
 def default_provider_operations() -> ProviderOperations:
     return ProviderOperations(
         eliza_headers=transport.eliza_headers,
@@ -237,7 +309,17 @@ def default_provider_operations() -> ProviderOperations:
 
 
 def adapter_for(row: dict[str, Any]) -> str:
-    return transport.MODEL_CONFIGS[row["entry"].model_id]["adapter"]
+    return transport.route_for_model(row["entry"].model_id)["adapter"]
+
+
+def provider_request_preview(sample: dict[str, Any], prompt: dict[str, Any]) -> dict[str, Any]:
+    """Materialize the normal route, or an explicit isolated diagnostic route."""
+
+    return transport.build_request_preview(
+        sample,
+        prompt,
+        wan_submit_mode=WAN_SUBMIT_MODE,
+    )
 
 
 def read_json(path: Path) -> Any:
@@ -285,7 +367,9 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
         ) from exc
     if summary.get("verified") is not True:
         raise BatchPipelineError(f"Lite provenance is not verified: {planning_run_id}")
-    if summary.get("agent_id") != AGENT_ID or summary.get("models") != list(MODEL_IDS):
+    if summary.get("agent_id") != AGENT_ID or summary.get("models") != list(
+        PLANNING_MODEL_IDS
+    ):
         raise BatchPipelineError(
             f"Lite producer/model set mismatch: {planning_run_id}"
         )
@@ -321,7 +405,7 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
     if not isinstance(models, list) or any(not isinstance(model, dict) for model in models):
         raise BatchPipelineError(f"Lite result models are invalid: {planning_run_id}")
     result_model_ids = [model.get("model_id") for model in models]
-    if result_model_ids != list(MODEL_IDS):
+    if result_model_ids != list(PLANNING_MODEL_IDS):
         raise BatchPipelineError(
             f"Lite result must contain all canonical models: {planning_run_id}"
         )
@@ -494,7 +578,7 @@ def materialize_entry(entry: Entry, root: Path = ROOT) -> dict[str, Any]:
         transport.atomic_write_json(paths["prompt"], expected_prompt)
 
     expected_run = initial_run(job, paths, root)
-    expected_request = transport.build_request_preview(sample, prompt)
+    expected_request = provider_request_preview(sample, prompt)
     expected_fingerprint = transport.request_fingerprint(expected_request, sample)
     if not paths["run"].is_file():
         transport.atomic_write_json(paths["run"], expected_run)
@@ -765,7 +849,8 @@ def _run_eliza_worker(
     resume: bool,
 ) -> WorkerResult:
     paths = row["paths"]
-    request = transport.build_request_preview(row["sample"], row["prompt"])
+    model_id = row["entry"].model_id
+    request = provider_request_preview(row["sample"], row["prompt"])
     try:
         headers = operations.eliza_headers()
     except Exception as exc:
@@ -796,7 +881,11 @@ def _run_eliza_worker(
         try:
             response = operations.http_json(
                 "POST",
-                f"{args.eliza_base_url.rstrip('/')}/videos",
+                transport.generation_route_url(
+                    args.eliza_base_url,
+                    model_id,
+                    "submit",
+                ),
                 request,
                 headers=headers,
                 timeout=120,
@@ -855,9 +944,15 @@ def _run_eliza_worker(
             headers,
             args.timeout,
             args.poll_interval,
+            model_id=model_id,
         )
         operations.http_download(
-            f"{args.eliza_base_url.rstrip('/')}/videos/{job_id}/content?index=0",
+            transport.generation_route_url(
+                args.eliza_base_url,
+                model_id,
+                "content_template",
+                job_id=str(job_id),
+            ),
             paths["video"],
             headers=headers,
             timeout=600,
@@ -880,10 +975,10 @@ def _run_wan_worker(
 
     def on_submitting() -> None:
         # Upload can be slow. Revalidate the complete immutable Lite binding
-        # again after upload and immediately before the paid queue/join POST.
+        # again after upload and immediately before the paid fixed-route POST.
         fresh = materialize_entry(row["entry"], root)
-        fresh_request = transport.build_request_preview(fresh["sample"], fresh["prompt"])
-        current_request = transport.build_request_preview(row["sample"], row["prompt"])
+        fresh_request = provider_request_preview(fresh["sample"], fresh["prompt"])
+        current_request = provider_request_preview(row["sample"], row["prompt"])
         if fresh_request != current_request:
             raise BatchPipelineError("Wan provider request changed after source upload")
         run.update(
@@ -934,6 +1029,7 @@ def _run_wan_worker(
             on_submitted,
             allow_resubmit_after_missing_session=False,
             on_submitting=on_submitting,
+            submit_mode=getattr(args, "wan_submit_mode", WAN_SUBMIT_MODE),
         )
     except Exception as exc:
         return _provider_failure(row, run, exc)
@@ -966,7 +1062,7 @@ def run_provider_worker(
             status="revalidation-failed",
             error="Run artifact is not a JSON object",
         )
-    request = transport.build_request_preview(row["sample"], row["prompt"])
+    request = provider_request_preview(row["sample"], row["prompt"])
     fingerprint = transport.request_fingerprint(request, row["sample"])
     status = run.get("status")
     force = bool(getattr(args, "force", False))
@@ -1117,6 +1213,32 @@ def effective_run_status(run: dict[str, Any]) -> str:
     return status
 
 
+def complete_media_is_accepted(
+    status: Any,
+    contract_check: Any,
+    *,
+    allow_contract_warnings: bool,
+) -> bool:
+    """Accept only a conforming success or an explicitly allowed raw MP4.
+
+    This is an acceptance policy for verification, not a status rewrite.  A
+    provider file that violates the requested media contract remains
+    ``verification-failed`` with ``conforms: false`` in every receipt and
+    manifest.
+    """
+
+    if not isinstance(contract_check, dict):
+        return False
+    conforms = contract_check.get("conforms")
+    if status == "succeeded" and conforms is True:
+        return True
+    return (
+        allow_contract_warnings
+        and status in {"succeeded", "verification-failed"}
+        and conforms is False
+    )
+
+
 def manifest_document(
     rows: list[dict[str, Any]],
     root: Path = ROOT,
@@ -1175,7 +1297,17 @@ def manifest_document(
 
 
 def write_manifest(rows: list[dict[str, Any]], root: Path = ROOT) -> None:
-    transport.atomic_write_json(root / MANIFEST_PATH, manifest_document(rows, root))
+    path = root / MANIFEST_PATH
+    if path.is_file():
+        existing = read_json(path)
+        updated_at = existing.get("updated_at") if isinstance(existing, dict) else None
+        if isinstance(updated_at, str) and existing == manifest_document(
+            rows,
+            root,
+            updated_at,
+        ):
+            return
+    transport.atomic_write_json(path, manifest_document(rows, root))
 
 
 def select_rows(rows: list[dict[str, Any]], run_ids: Iterable[str], models: Iterable[str]) -> list[dict[str, Any]]:
@@ -1323,6 +1455,110 @@ def run_bounded_queue(
     return failures
 
 
+def run_provider_pools(
+    rows: Iterable[dict[str, Any]],
+    limits: ProviderPoolLimits,
+    worker: Worker,
+    on_complete: CompletionHandler,
+    *,
+    fail_fast: bool,
+) -> int:
+    """Run Wan 2.2, Wan 2.7 and Veo in independent rolling windows.
+
+    Provider workers run concurrently, but this function remains the only
+    coordinator: completion callbacks (and therefore aggregate-manifest
+    writes) always happen on the thread that called this function.  An
+    ambiguous result reserves capacity only in the route that produced it.
+    """
+
+    maximums = ProviderPoolLimits()
+    route_rows: dict[str, list[dict[str, Any]]] = {
+        model_id: [] for model_id in MODEL_IDS
+    }
+    for row in rows:
+        model_id = row["entry"].model_id
+        if model_id not in route_rows:
+            raise BatchPipelineError(f"Unsupported provider route: {model_id}")
+        route_rows[model_id].append(row)
+    for model_id in MODEL_IDS:
+        limit = limits.for_model(model_id)
+        maximum = maximums.for_model(model_id)
+        if limit < 1 or limit > maximum:
+            raise BatchPipelineError(
+                f"{model_id} concurrency must be between 1 and {maximum}"
+            )
+
+    states: dict[str, dict[str, Any]] = {
+        model_id: {
+            "iterator": iter(route_rows[model_id]),
+            "active": 0,
+            "reserved": 0,
+            "exhausted": False,
+        }
+        for model_id in MODEL_IDS
+    }
+    pending: dict[Future[WorkerResult], tuple[str, dict[str, Any], int]] = {}
+    failures = 0
+    stop_scheduling = False
+    sequence = 0
+
+    def fill_route(executor: ThreadPoolExecutor, model_id: str) -> None:
+        nonlocal sequence
+        state = states[model_id]
+        capacity = limits.for_model(model_id)
+        while (
+            not stop_scheduling
+            and not state["exhausted"]
+            and state["active"] + state["reserved"] < capacity
+        ):
+            try:
+                row = next(state["iterator"])
+            except StopIteration:
+                state["exhausted"] = True
+                return
+            future = executor.submit(worker, row)
+            pending[future] = (model_id, row, sequence)
+            sequence += 1
+            state["active"] += 1
+
+    with ThreadPoolExecutor(
+        max_workers=limits.total,
+        thread_name_prefix="clipmaker-lite-provider",
+    ) as executor:
+        for model_id in MODEL_IDS:
+            fill_route(executor, model_id)
+        while pending:
+            done, _ = wait(tuple(pending), return_when=FIRST_COMPLETED)
+            completed: list[tuple[int, str, WorkerResult]] = []
+            batch_failed = False
+            for future in done:
+                model_id, original, submitted_order = pending.pop(future)
+                states[model_id]["active"] -= 1
+                try:
+                    result = future.result()
+                except Exception as exc:  # Keep unrelated routes resumable.
+                    result = _uncaught_worker_failure(original, exc)
+                completed.append((submitted_order, model_id, result))
+                batch_failed = batch_failed or result.failed
+
+            # A set of futures has no stable order. Preserve submission order
+            # within each observed completion batch for deterministic receipts.
+            for _, model_id, result in sorted(completed):
+                on_complete(result)
+                if result.failed:
+                    failures += 1
+                if result.holds_provider_slot:
+                    states[model_id]["reserved"] += 1
+            if batch_failed and fail_fast:
+                # Existing paid jobs still complete; no new provider submits
+                # are admitted in any route after the first observed failure.
+                stop_scheduling = True
+            if not stop_scheduling:
+                for model_id in MODEL_IDS:
+                    fill_route(executor, model_id)
+    return failures
+
+
 def _provider_queue_priority(row: dict[str, Any]) -> int:
     """Account for ambiguous/active jobs before any new paid submit."""
 
@@ -1413,8 +1649,6 @@ def run_selected(
             flush=True,
         )
 
-    wan_rows = [row for row in selected if row["entry"].model_id == WAN_MODEL_ID]
-    eliza_rows = [row for row in selected if row["entry"].model_id in ELIZA_MODEL_IDS]
     supported_models = {WAN_MODEL_ID, *ELIZA_MODEL_IDS}
     unsupported = [
         row for row in selected if row["entry"].model_id not in supported_models
@@ -1425,35 +1659,21 @@ def run_selected(
             + ", ".join(row["entry"].model_id for row in unsupported)
         )
 
-    if args.concurrency == 1:
-        serial_rows = sorted(selected, key=_provider_queue_priority)
-        return run_matrix_order_serial(
-            serial_rows,
-            worker,
-            on_complete,
-            fail_fast=args.fail_fast,
+    # Stable sort promotes resumable jobs within their own provider route;
+    # new jobs retain matrix order.  The three routes start together.
+    selected.sort(
+        key=lambda row: (
+            MODEL_IDS.index(row["entry"].model_id),
+            _provider_queue_priority(row),
         )
-
-    wan_rows.sort(key=_provider_queue_priority)
-    failures = run_serial_queue(
-        wan_rows,
+    )
+    return run_provider_pools(
+        selected,
+        provider_pool_limits(args),
         worker,
         on_complete,
         fail_fast=args.fail_fast,
     )
-    if failures and args.fail_fast:
-        return failures
-
-    # Stable sort only promotes resumable jobs; new jobs retain matrix order.
-    eliza_rows.sort(key=_provider_queue_priority)
-    failures += run_bounded_queue(
-        eliza_rows,
-        args.concurrency,
-        worker,
-        on_complete,
-        fail_fast=args.fail_fast,
-    )
-    return failures
 
 
 def verify(
@@ -1463,7 +1683,7 @@ def verify(
 ) -> tuple[bool, list[str]]:
     errors: list[str] = []
     rows: list[dict[str, Any]] = []
-    succeeded = 0
+    accepted_complete = 0
     for entry in matrix():
         try:
             row = materialize_entry(entry, root)
@@ -1475,7 +1695,7 @@ def verify(
         run = read_json(paths["run"])
         if read_json(paths["prompt"]) != prompt_artifact(row["job"]):
             errors.append(f"Prompt differs from verified Lite result: {entry.run_id}")
-        expected_request = transport.build_request_preview(row["sample"], row["prompt"])
+        expected_request = provider_request_preview(row["sample"], row["prompt"])
         expected_fingerprint = transport.request_fingerprint(expected_request, row["sample"])
         if run.get("request") is not None and run.get("request") != expected_request:
             errors.append(f"Provider request mismatch: {entry.run_id}")
@@ -1486,10 +1706,6 @@ def verify(
             if not allow_incomplete:
                 errors.append(f"Not succeeded ({status}): {entry.run_id}")
             continue
-        if status == "succeeded":
-            succeeded += 1
-        elif not allow_incomplete:
-            errors.append(f"Not succeeded ({status}): {entry.run_id}")
         if not paths["video"].is_file():
             if status == "succeeded" or not allow_incomplete:
                 errors.append(f"{status} run has no MP4: {entry.run_id}")
@@ -1499,21 +1715,28 @@ def verify(
         except transport.PipelineError as exc:
             errors.append(str(exc))
             continue
-        if run.get("media") != media:
+        recorded_media_matches = run.get("media") == media
+        if not recorded_media_matches:
             errors.append(f"Recorded media mismatch: {entry.run_id}")
         expected_contract = strict_media_contract(entry, media)
-        if run.get("contract_check") != expected_contract:
+        recorded_contract_matches = run.get("contract_check") == expected_contract
+        if not recorded_contract_matches:
             errors.append(f"Recorded contract check mismatch: {entry.run_id}")
         if status == "verification-failed" and expected_contract["conforms"]:
             errors.append(f"Failed verification now conforms: {entry.run_id}")
-        if (
-            status == "succeeded"
-            and not expected_contract["conforms"]
-            and not allow_contract_warnings
+        elif complete_media_is_accepted(
+            status,
+            expected_contract,
+            allow_contract_warnings=allow_contract_warnings,
         ):
+            if recorded_media_matches and recorded_contract_matches:
+                accepted_complete += 1
+        elif not allow_incomplete and not expected_contract["conforms"]:
             errors.append(
                 f"Media contract failed ({', '.join(expected_contract['warnings'])}): {entry.run_id}"
             )
+        elif not allow_incomplete:
+            errors.append(f"Not succeeded ({status}): {entry.run_id}")
     manifest_path = root / MANIFEST_PATH
     if not manifest_path.is_file():
         errors.append(f"Missing batch manifest: {MANIFEST_PATH}")
@@ -1522,8 +1745,10 @@ def verify(
         updated_at = manifest.get("updated_at") if isinstance(manifest, dict) else None
         if not isinstance(updated_at, str) or manifest != manifest_document(rows, root, updated_at):
             errors.append("Batch manifest does not match the materialized run artifacts")
-    if not allow_incomplete and succeeded != len(matrix()):
-        errors.append(f"Expected {len(matrix())} succeeded outputs, got {succeeded}")
+    if not allow_incomplete and accepted_complete != len(matrix()):
+        errors.append(
+            f"Expected {len(matrix())} accepted complete outputs, got {accepted_complete}"
+        )
     return not errors, errors
 
 
@@ -1551,14 +1776,50 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--fail-fast", action="store_true")
     run.add_argument(
         "--concurrency",
-        type=positive_int,
+        type=lambda value: capped_concurrency(
+            value,
+            DEFAULT_ELIZA_CONCURRENCY,
+            "Eliza route",
+        ),
         default=DEFAULT_ELIZA_CONCURRENCY,
         metavar="N",
         help=(
-            "global active-job limit shared by Wan 2.7 and Veo 3.1 Lite "
-            "through Eliza/OpenRouter (default: 3); jobs enter a rolling "
-            "queue instead of ten simultaneous paid submits; Wan 2.2 remains serial"
+            "deprecated shared fallback for each Eliza route (default: 3); "
+            "use --wan27-concurrency and --veo31-concurrency for independent limits"
         ),
+    )
+    run.add_argument(
+        "--wan22-concurrency",
+        type=lambda value: capped_concurrency(
+            value,
+            DEFAULT_WAN_22_CONCURRENCY,
+            "Wan 2.2",
+        ),
+        default=None,
+        metavar="N",
+        help="Wan 2.2 / Gradio route limit (default and maximum: 1)",
+    )
+    run.add_argument(
+        "--wan27-concurrency",
+        type=lambda value: capped_concurrency(
+            value,
+            DEFAULT_WAN_27_CONCURRENCY,
+            "Wan 2.7",
+        ),
+        default=None,
+        metavar="N",
+        help="Wan 2.7 / atlas-cloud route limit (default and maximum: 3)",
+    )
+    run.add_argument(
+        "--veo31-concurrency",
+        type=lambda value: capped_concurrency(
+            value,
+            DEFAULT_VEO_31_CONCURRENCY,
+            "Veo 3.1 Lite",
+        ),
+        default=None,
+        metavar="N",
+        help="Veo 3.1 Lite / google-vertex route limit (default and maximum: 3)",
     )
     run.add_argument("--timeout", type=int, default=1800)
     run.add_argument("--poll-interval", type=float, default=10.0)

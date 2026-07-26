@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "resolution": "exact-model-id",
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "forbidden_discovery_paths": [
+      "/videos/models",
+      "/gradio_api/info",
+      "/config"
+    ]
+  },
+  "models": {
+    "alibaba/wan-2.2": {
+      "adapter": "wan-demo",
+      "transport": "gradio-legacy-queue",
+      "default_base_url": "https://wan-streamlit.dod.yandex.net",
+      "default_stream_base_url": "http://wan-streamlit.dod.yandex.net",
+      "capacity": 1,
+      "paths": {
+        "upload": "/gradio_api/upload",
+        "submit": "/gradio_api/queue/join",
+        "events": "/gradio_api/queue/data",
+        "file_prefix": "/gradio_api/file="
+      },
+      "submit_payload": {
+        "data_order": [
+          "prompt",
+          "image_file_data",
+          "resolution",
+          "seed",
+          "loop",
+          "last_frame",
+          "frames",
+          "fps"
+        ],
+        "fixed": {
+          "event_data": null,
+          "fn_index": 0,
+          "trigger_id": 19
+        }
+      },
+      "diagnostic_only": {
+        "transport": "gradio-named-endpoint",
+        "submit_path": "/gradio_api/call/text2video",
+        "events_path_template": "/gradio_api/call/text2video/{event_id}"
+      }
+    },
+    "alibaba/wan-2.7": {
+      "adapter": "eliza-openrouter",
+      "transport": "eliza-video-jobs",
+      "default_base_url": "https://api.eliza.yandex.net/openrouter/v1",
+      "capacity": 3,
+      "provider_key": "atlas-cloud",
+      "paths": {
+        "submit": "/videos",
+        "status_template": "/videos/{job_id}",
+        "content_template": "/videos/{job_id}/content?index=0"
+      }
+    },
+    "google/veo-3.1-lite": {
+      "adapter": "eliza-openrouter",
+      "transport": "eliza-video-jobs",
+      "default_base_url": "https://api.eliza.yandex.net/openrouter/v1",
+      "capacity": 3,
+      "provider_key": "google-vertex",
+      "paths": {
+        "submit": "/videos",
+        "status_template": "/videos/{job_id}",
+        "content_template": "/videos/{job_id}/content?index=0"
+      }
+    }
+  }
+}

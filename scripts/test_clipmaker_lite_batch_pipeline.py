@@ -16,6 +16,30 @@ from scripts import video_generation_pipeline as transport
 
 
 class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
+    def test_write_manifest_does_not_refresh_timestamp_when_unchanged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            path = root / batch.MANIFEST_PATH
+            existing = {"updated_at": "2026-07-24T00:00:00Z", "payload": "stable"}
+            transport.atomic_write_json(path, existing)
+
+            def document(
+                rows: list[dict[str, object]],
+                manifest_root: Path,
+                updated_at: str | None = None,
+            ) -> dict[str, object]:
+                self.assertEqual(rows, [])
+                self.assertEqual(manifest_root, root)
+                return {"updated_at": updated_at or "new", "payload": "stable"}
+
+            with (
+                mock.patch.object(batch, "manifest_document", side_effect=document),
+                mock.patch.object(transport, "atomic_write_json") as atomic_write,
+            ):
+                batch.write_manifest([], root)
+
+            atomic_write.assert_not_called()
+
     def lite_job(self, entry: batch.Entry) -> batch.LiteJob:
         runtime = batch.contract()["models"][entry.model_id]["runtime"]
         return batch.LiteJob(
@@ -42,6 +66,9 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             "force": False,
             "fail_fast": False,
             "concurrency": 3,
+            "wan22_concurrency": None,
+            "wan27_concurrency": None,
+            "veo31_concurrency": None,
             "timeout": 30,
             "poll_interval": 0.0,
             "allow_external_processing": True,
@@ -143,6 +170,12 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         }
         values.update(overrides)
         return batch.ProviderOperations(**values)
+
+    def scheduler_row(self, model_id: str, identifier: str) -> dict[str, object]:
+        return {
+            "entry": argparse.Namespace(model_id=model_id, run_id=identifier),
+            "id": identifier,
+        }
 
     def test_matrix_has_five_shared_plans_and_fifteen_provider_runs(self) -> None:
         self.assertEqual(batch.TICKET, "PROMOPAGES-9909")
@@ -364,6 +397,184 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         self.assertLessEqual(maximum, 3)
         self.assertGreater(maximum, 1)
 
+    def test_provider_pools_overlap_at_independent_one_three_three_caps(self) -> None:
+        rows: list[dict[str, object]] = []
+        counts = {
+            batch.WAN_MODEL_ID: 2,
+            batch.WAN_27_MODEL_ID: 4,
+            batch.VEO_31_MODEL_ID: 4,
+        }
+        limits = batch.ProviderPoolLimits()
+        first_wave = threading.Barrier(limits.total)
+        lock = threading.Lock()
+        active = {model_id: 0 for model_id in batch.MODEL_IDS}
+        maximum = {model_id: 0 for model_id in batch.MODEL_IDS}
+        callback_threads: set[int] = set()
+        coordinator = threading.get_ident()
+
+        for model_id, count in counts.items():
+            for index in range(count):
+                row = self.scheduler_row(model_id, f"{model_id}:{index}")
+                row["first_wave"] = index < limits.for_model(model_id)
+                rows.append(row)
+
+        def worker(row: dict[str, object]) -> batch.WorkerResult:
+            model_id = row["entry"].model_id
+            with lock:
+                active[model_id] += 1
+                maximum[model_id] = max(maximum[model_id], active[model_id])
+            if row["first_wave"]:
+                first_wave.wait(timeout=5)
+            time.sleep(0.005)
+            with lock:
+                active[model_id] -= 1
+            return batch.WorkerResult(row, False, "succeeded")
+
+        failures = batch.run_provider_pools(
+            rows,
+            limits,
+            worker,
+            lambda _result: callback_threads.add(threading.get_ident()),
+            fail_fast=False,
+        )
+
+        self.assertEqual(failures, 0)
+        self.assertEqual(
+            maximum,
+            {
+                batch.WAN_MODEL_ID: 1,
+                batch.WAN_27_MODEL_ID: 3,
+                batch.VEO_31_MODEL_ID: 3,
+            },
+        )
+        self.assertEqual(callback_threads, {coordinator})
+
+    def test_ambiguous_jobs_reserve_only_their_provider_route(self) -> None:
+        rows: list[dict[str, object]] = []
+        for model_id, count in (
+            (batch.WAN_MODEL_ID, 2),
+            (batch.WAN_27_MODEL_ID, 5),
+            (batch.VEO_31_MODEL_ID, 5),
+        ):
+            for index in range(count):
+                row = self.scheduler_row(model_id, f"{model_id}:{index}")
+                row["ambiguous"] = (
+                    model_id == batch.WAN_27_MODEL_ID and index < 3
+                )
+                rows.append(row)
+        started: dict[str, list[str]] = {model_id: [] for model_id in batch.MODEL_IDS}
+
+        def worker(row: dict[str, object]) -> batch.WorkerResult:
+            model_id = row["entry"].model_id
+            started[model_id].append(row["id"])
+            ambiguous = bool(row["ambiguous"])
+            return batch.WorkerResult(
+                row,
+                ambiguous,
+                "submit-unknown" if ambiguous else "succeeded",
+                "timeout" if ambiguous else None,
+                holds_provider_slot=ambiguous,
+            )
+
+        failures = batch.run_provider_pools(
+            rows,
+            batch.ProviderPoolLimits(),
+            worker,
+            lambda _result: None,
+            fail_fast=False,
+        )
+
+        self.assertEqual(failures, 3)
+        self.assertEqual(len(started[batch.WAN_27_MODEL_ID]), 3)
+        self.assertEqual(len(started[batch.WAN_MODEL_ID]), 2)
+        self.assertEqual(len(started[batch.VEO_31_MODEL_ID]), 5)
+
+    def test_provider_failure_is_route_local_without_fail_fast(self) -> None:
+        rows = [
+            self.scheduler_row(model_id, f"{model_id}:{index}")
+            for model_id in batch.MODEL_IDS
+            for index in range(4)
+        ]
+        started: list[str] = []
+
+        def worker(row: dict[str, object]) -> batch.WorkerResult:
+            started.append(row["id"])
+            failed = row["id"] == f"{batch.WAN_27_MODEL_ID}:0"
+            return batch.WorkerResult(
+                row,
+                failed,
+                "provider-failed" if failed else "succeeded",
+            )
+
+        failures = batch.run_provider_pools(
+            rows,
+            batch.ProviderPoolLimits(),
+            worker,
+            lambda _result: None,
+            fail_fast=False,
+        )
+
+        self.assertEqual(failures, 1)
+        self.assertEqual(set(started), {row["id"] for row in rows})
+
+    def test_provider_pool_fail_fast_stops_new_submits_and_drains_inflight(self) -> None:
+        rows = [
+            self.scheduler_row(model_id, f"{model_id}:{index}")
+            for model_id in batch.MODEL_IDS
+            for index in range(6)
+        ]
+        limits = batch.ProviderPoolLimits()
+        initial_workers = threading.Barrier(limits.total)
+        release_inflight = threading.Event()
+        failure_observed = threading.Event()
+        lock = threading.Lock()
+        started: list[str] = []
+        completed: list[str] = []
+        outcome: list[int] = []
+
+        def worker(row: dict[str, object]) -> batch.WorkerResult:
+            with lock:
+                started.append(row["id"])
+            initial_workers.wait(timeout=5)
+            failed = row["id"] == f"{batch.WAN_27_MODEL_ID}:0"
+            if not failed:
+                release_inflight.wait(timeout=5)
+            return batch.WorkerResult(
+                row,
+                failed,
+                "provider-failed" if failed else "succeeded",
+            )
+
+        def on_complete(result: batch.WorkerResult) -> None:
+            completed.append(result.row["id"])
+            if result.failed:
+                failure_observed.set()
+
+        def coordinate() -> None:
+            outcome.append(
+                batch.run_provider_pools(
+                    rows,
+                    limits,
+                    worker,
+                    on_complete,
+                    fail_fast=True,
+                )
+            )
+
+        coordinator = threading.Thread(target=coordinate)
+        coordinator.start()
+        self.assertTrue(failure_observed.wait(timeout=5))
+        with lock:
+            self.assertEqual(len(started), limits.total)
+        release_inflight.set()
+        coordinator.join(timeout=5)
+
+        self.assertFalse(coordinator.is_alive())
+        self.assertEqual(outcome, [1])
+        self.assertEqual(len(completed), limits.total)
+        with lock:
+            self.assertEqual(len(started), limits.total)
+
     def test_eliza_failure_does_not_cancel_other_jobs_without_fail_fast(self) -> None:
         rows = [{"id": index} for index in range(10)]
         processed: list[int] = []
@@ -552,7 +763,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         self.assertEqual(failures, 0)
         self.assertEqual(started, [entry.run_id for entry in batch.matrix()])
 
-    def test_run_selected_concurrency_one_uses_full_matrix_order(self) -> None:
+    def test_run_selected_concurrency_one_keeps_one_slot_per_eliza_route(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             rows = [
@@ -585,7 +796,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
                 )
 
             self.assertEqual(failures, 0)
-            self.assertEqual(started, [entry.run_id for entry in batch.matrix()])
+            self.assertEqual(set(started), {entry.run_id for entry in batch.matrix()})
 
     def test_manifest_completion_callback_runs_only_on_coordinator_thread(self) -> None:
         rows = [{"id": index} for index in range(4)]
@@ -609,13 +820,13 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
         self.assertNotIn(coordinator, worker_threads)
         self.assertEqual(completion_threads, {coordinator})
 
-    def test_filters_cannot_ignore_unresolved_jobs_when_reserving_global_slots(self) -> None:
+    def test_filters_cannot_ignore_unresolved_jobs_in_the_selected_route(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             entries = [
                 entry
                 for entry in batch.matrix()
-                if entry.model_id in batch.ELIZA_MODEL_IDS
+                if entry.model_id == batch.WAN_27_MODEL_ID
             ][:4]
             rows: list[dict[str, object]] = []
             for index, entry in enumerate(entries):
@@ -1002,6 +1213,111 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             self.assertIn("duration", final["contract_check"]["warnings"])
             self.assertIn("audio", final["contract_check"]["warnings"])
 
+    def test_verify_accepts_complete_raw_mp4_only_with_explicit_warnings_flag(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "google/veo-3.1-lite")
+            entry = row["entry"]
+            media = {
+                **self.valid_media("google/veo-3.1-lite"),
+                "width": 1280,
+                "height": 720,
+                "has_audio": True,
+            }
+            check = batch.strict_media_contract(entry, media)
+            self.assertFalse(check["conforms"])
+            row["paths"]["video"].write_bytes(b"raw provider mp4")
+            transport.atomic_write_json(row["paths"]["prompt"], batch.prompt_artifact(row["job"]))
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "verification-failed",
+                    "media": media,
+                    "contract_check": check,
+                    "error": "Media contract verification failed",
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            manifest_path = Path("manifest.json")
+
+            with (
+                mock.patch.object(batch, "matrix", return_value=(entry,)),
+                mock.patch.object(batch, "materialize_entry", return_value=row),
+                mock.patch.object(batch, "MANIFEST_PATH", manifest_path),
+                mock.patch.object(transport, "ffprobe_media", return_value=media),
+            ):
+                transport.atomic_write_json(
+                    root / manifest_path,
+                    batch.manifest_document([row], root, "fixed"),
+                )
+                strict_ok, strict_errors = batch.verify(root)
+                warning_ok, warning_errors = batch.verify(
+                    root,
+                    allow_contract_warnings=True,
+                )
+
+            self.assertFalse(strict_ok)
+            self.assertTrue(any("Media contract failed" in error for error in strict_errors))
+            self.assertTrue(warning_ok, warning_errors)
+            persisted = transport.read_json(row["paths"]["run"])
+            self.assertEqual(persisted["status"], "verification-failed")
+            self.assertFalse(persisted["contract_check"]["conforms"])
+            self.assertEqual(persisted["contract_check"]["warnings"], check["warnings"])
+
+    def test_verify_warning_flag_does_not_accept_missing_raw_mp4(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "google/veo-3.1-lite")
+            entry = row["entry"]
+            media = {
+                **self.valid_media("google/veo-3.1-lite"),
+                "has_audio": True,
+            }
+            check = batch.strict_media_contract(entry, media)
+            transport.atomic_write_json(row["paths"]["prompt"], batch.prompt_artifact(row["job"]))
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "verification-failed",
+                    "media": media,
+                    "contract_check": check,
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            manifest_path = Path("manifest.json")
+
+            with (
+                mock.patch.object(batch, "matrix", return_value=(entry,)),
+                mock.patch.object(batch, "materialize_entry", return_value=row),
+                mock.patch.object(batch, "MANIFEST_PATH", manifest_path),
+            ):
+                transport.atomic_write_json(
+                    root / manifest_path,
+                    batch.manifest_document([row], root, "fixed"),
+                )
+                ok, errors = batch.verify(root, allow_contract_warnings=True)
+
+            self.assertFalse(ok)
+            self.assertTrue(any("has no MP4" in error for error in errors))
+
+    def test_complete_media_acceptance_never_accepts_incomplete_statuses(self) -> None:
+        failed_check = {"conforms": False, "warnings": ["audio"]}
+        self.assertTrue(
+            batch.complete_media_is_accepted(
+                "verification-failed",
+                failed_check,
+                allow_contract_warnings=True,
+            )
+        )
+        for status in ("dry-run", "running", "provider-failed"):
+            self.assertFalse(
+                batch.complete_media_is_accepted(
+                    status,
+                    failed_check,
+                    allow_contract_warnings=True,
+                )
+            )
+
     def test_missing_audio_probe_field_fails_strict_contract(self) -> None:
         entry = next(
             item for item in batch.matrix() if item.model_id == "google/veo-3.1-lite"
@@ -1081,15 +1397,38 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             persisted = transport.read_json(row["paths"]["run"])
             self.assertEqual(persisted["status"], "succeeded")
 
-    def test_concurrency_cli_defaults_to_three_and_accepts_one(self) -> None:
+    def test_concurrency_cli_resolves_independent_route_limits(self) -> None:
         parser = batch.build_parser()
-        self.assertEqual(parser.parse_args(["run", "--dry-run"]).concurrency, 3)
+        defaults = parser.parse_args(["run", "--dry-run"])
         self.assertEqual(
-            parser.parse_args(["run", "--dry-run", "--concurrency", "1"]).concurrency,
-            1,
+            batch.provider_pool_limits(defaults),
+            batch.ProviderPoolLimits(wan_22=1, wan_27=3, veo_31=3),
+        )
+        legacy = parser.parse_args(["run", "--dry-run", "--concurrency", "1"])
+        self.assertEqual(
+            batch.provider_pool_limits(legacy),
+            batch.ProviderPoolLimits(wan_22=1, wan_27=1, veo_31=1),
+        )
+        overrides = parser.parse_args(
+            [
+                "run",
+                "--dry-run",
+                "--concurrency",
+                "1",
+                "--wan27-concurrency",
+                "2",
+                "--veo31-concurrency",
+                "3",
+            ]
+        )
+        self.assertEqual(
+            batch.provider_pool_limits(overrides),
+            batch.ProviderPoolLimits(wan_22=1, wan_27=2, veo_31=3),
         )
         with self.assertRaises(argparse.ArgumentTypeError):
             batch.positive_int("0")
+        with self.assertRaises(SystemExit):
+            parser.parse_args(["run", "--dry-run", "--wan27-concurrency", "4"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "20-sravni-kreditnyi-reiting",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/20-sravni-kreditnyi-reiting/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The man slowly angles the phone upward toward himself while his gaze follows the screen and his smile gradually grows. Fixed camera. He finishes with the phone resting slightly higher, still calmly focused on it with a pleased smile.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "0cdfa979707fa65bbef6232534f940881a078df106155ab8b6781df9e9d1d4c0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "KiwSY2qN42OnA5QHrHfi",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:38:04Z",
+  "completed_at": "2026-07-24T17:40:43Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2933933,
+    "sha256": "e6b644fe40a75e64dc45639fa9e31c176931ec31039aadf5b9fc44cfe07080fd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting-wan-2-7",
+  "lite_result_sha256": "7e3a189e1b94e6392d6cf4c7345b646ce0df2ee4a686a11954a166ce7ab4d515",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

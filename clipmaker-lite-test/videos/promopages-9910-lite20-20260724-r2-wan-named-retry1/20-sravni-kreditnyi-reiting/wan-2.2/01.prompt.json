@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1-20-sravni-kreditnyi-reiting-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+    "sha256": "4f3de7c82a207ff044907ac459598119297ff9bb919901b856f9dea708b0212d",
+    "width": 1254,
+    "height": 836
+  },
+  "structured_intent": {
+    "editorial_meaning": "Онлайн-проверка кредитного рейтинга помогает заранее и без лишнего напряжения получить полезную финансовую информацию.",
+    "primary_action": "Мужчина слегка поднимает и наклоняет смартфон к себе, продолжая следить за экраном.",
+    "terminal_state": "Смартфон устойчиво расположен немного выше и ближе к линии взгляда, а мужчина по-прежнему смотрит на него с спокойной улыбкой.",
+    "semantic_invariant": "Мужчина остаётся расслабленным, заинтересованным и довольным взаимодействием со смартфоном."
+  },
+  "prompt": {
+    "positive": "He steadily tilts the phone slightly upward toward himself, following it with his eyes as his warm smile gently broadens. Fixed camera. By the final frame, the phone has settled higher and he remains relaxed and pleased, still looking at it.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-20-sravni-kreditnyi-reiting/result.json",
+    "sha256": "7e3a189e1b94e6392d6cf4c7345b646ce0df2ee4a686a11954a166ce7ab4d515",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "4f3de7c82a207ff044907ac459598119297ff9bb919901b856f9dea708b0212d",
+      "article_context_sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

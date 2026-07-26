@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "10-exeed-rx",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/10-exeed-rx/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. A restrained highlight sweeps smoothly from left to right over the curved dashboard glass, subtly emphasizing the central navigation interface while every displayed value, icon, glyph, and control remains unchanged. The highlight clears the right edge and fades by the last frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3b2dedc14684fb0f7f6b4454afa3111946002e2424aea49a535b6d4a8c0bf282",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "iARRgcS8BZuuOBOHiiMs",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:10:25Z",
+  "completed_at": "2026-07-24T17:12:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1671267,
+    "sha256": "0fec833ea9d2f5c78825c7609b886f5583507ddf2b4b2e77594b86da391db120"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx-veo-3-1-lite",
+  "lite_result_sha256": "00bb6299f048ad751cea7d34107c52039c195947cf7168d4864ddc53b511c6ec",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

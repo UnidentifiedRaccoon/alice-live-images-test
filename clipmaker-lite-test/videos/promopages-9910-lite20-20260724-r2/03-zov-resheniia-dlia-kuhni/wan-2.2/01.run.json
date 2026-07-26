@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "03-zov-resheniia-dlia-kuhni",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/03-zov-resheniia-dlia-kuhni/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+      "prompt": "Warm sunlight glides gently leftward across the floor and lower cabinet fronts as soft chair shadows shift with it. Fixed camera. By the final frames, the light settles across the kitchen island, leaving the orderly kitchen calm and unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "36c0c0066bd6be04f413f028028f1d2697fb0aa468ab3f1cf8cd6f15db0bc497",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3a9d401336bc4ee7b0c51d4b6c9401ed",
+  "provider_session_hash": "promopages9856-3f9f9be055e7",
+  "submitted_at": "2026-07-24T15:47:05Z",
+  "completed_at": "2026-07-24T15:48:44Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1216,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 319718,
+    "sha256": "702248e1fe6f863dd47af30f1fe515cc274e514096adb23a495e58e28fbf7499"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni-wan-2-2",
+  "lite_result_sha256": "8f485aed421368b335c44534d07a382a6f5ee670dedaf40a3cb1e7ab49fac6c0",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

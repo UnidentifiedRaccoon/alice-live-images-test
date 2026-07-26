@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "18-dalan-sredstva-dlia-volos",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera as a soft natural highlight glides across the product labels from left to right, subtly emphasizing the complete set. End with the bottles and sachet evenly lit, upright, and clearly recognizable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "9:16",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8657ab6b453a060a86fde858d6e068cac79fa7b267c1b20f8442f949b6a576e9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6sOAJMBNVa12m8E09ho8",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:33:43Z",
+  "completed_at": "2026-07-24T17:35:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1080,
+    "height": 1920,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4629467,
+    "sha256": "875d7304b13da26cf0778cc8a8f20c0086e2d53f5816f879103428159cdb2810"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos-veo-3-1-lite",
+  "lite_result_sha256": "e8e5790c3f4f86f28fa17b6e84453fd9bd954e7bd4b024591ab16a6d1aafa674",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

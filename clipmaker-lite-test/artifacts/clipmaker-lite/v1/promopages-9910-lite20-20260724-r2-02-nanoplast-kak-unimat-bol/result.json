@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:f436e8c34955f241743bddfc6b03cadef146f9fde2b14e6e29166e47f3a3dad9",
+    "execution_fingerprint": "sha256:239116867e9adb5b45148c591b38dd1053f2e96ed05901b9bf8e17e51d12ffbc",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b5-c587-75a2-b69b-4c0d03f28ff9"
+    },
+    "authored_payload_sha256": "50f61d3ca1d167f2c637b46d802623caf9f83f8ab2c7b38e7109672839079ee3",
+    "draft_file_sha256": "5a90c450e0b5e2a44a1e9c93b8772c195e8bdfbbe3fc4492abec4a30b78e6c0c"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+      "sha256": "18877935b369c97871fb27c1f37cd5086996d2e55fb90c6911366a08d2057ce4",
+      "bytes": 1107539
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/02-nanoplast-kak-unimat-bol/content.json",
+      "sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478",
+      "bytes": 17499,
+      "locator": {
+        "article_id": "02-nanoplast-kak-unimat-bol",
+        "title": "Как унимать боль в суставах: советы пожилым и не только",
+        "lead": "Рассказываем, как повысить качество жизни с гель-бальзамом и пластырем",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.png",
+        "manifest_file_path": "articles/02-nanoplast-kak-unimat-bol/01.png",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "С возрастом подвижность нашего тела уменьшается: появляются боли в суставах и мышцах, которые иногда мешают полноценной жизни. Но и молодые люди не застрахованы от проблем, особенно в случае сидячей работы."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Женщина держится одной рукой за плечо; локальное красное свечение обозначает болезненную область.",
+      "Справа крупно и полностью видимы упаковка и тюбик геля-бальзама «Нанопласт Артроген» на спокойном голубом фоне.",
+      "Композиция рекламная: болезненная зона и продукт разделены по сторонам кадра, а ключевые надписи на упаковке читаемы."
+    ],
+    "article_context": "Это body-изображение завершает раздел о профилактике и вводит раздел о быстром снятии боли натуральными средствами. Оно связывает видимую боль в плече с гелем-бальзамом «Нанопласт Артроген» как предлагаемым способом постепенно уменьшить дискомфорт.",
+    "structured_intent": {
+      "editorial_meaning": "Предлагаемое средство связано с постепенным облегчением локальной боли и возвращением комфорта движения.",
+      "primary_action": "Красное обозначение боли на плече постепенно уменьшается, пока удерживающая плечо рука расслабляется.",
+      "terminal_state": "В последнем кадре красная зона стала маленькой и бледной, плечо и лежащая на нем рука выглядят менее напряженными, а продукт остается отчетливо видимым.",
+      "semantic_invariant": "На протяжении сцены сохраняется смысл мягкого облегчения боли без ее внезапного исчезновения, а продукт остается явно связан с этим облегчением."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "За 3,2 секунды при неподвижной камере красная зона сразу начинает плавно сужаться и терять интенсивность. Одновременно лежащая на плече рука одним небольшим движением ослабляет нажим без повторного жеста. К финалу остается лишь слабое локальное свечение, поза передает облегчение, а упаковка и тюбик все время неподвижны и узнаваемы.",
+      "positive_prompt": "Fixed camera. The red pain glow on the woman's shoulder steadily contracts and softens while her resting hand makes one small, gentle release of pressure. By the final frames the glow is faint and localized, her relieved shoulder pose remains clear, and the product packaging stays motionless and readable.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "В течение пяти секунд камера остается неподвижной. Красное свечение медленно отступает от краев к центру болезненной зоны и постепенно бледнеет почти всю сцену; рука одним непрерывным умеренным движением становится менее напряженной. Ближе к концу плечо выглядит расслабленнее, сохраняется только слабый след покраснения, продукт остается стабильным и читаемым.",
+      "positive_prompt": "With a fixed camera, the red shoulder glow gradually recedes inward and fades as the woman's hand slowly eases its pressure in one continuous motion. End with only a faint trace of redness and a visibly relaxed shoulder, while both product packages remain still and clearly readable.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырехсекундный неподвижный кадр фокусируется на одном плавном процессе: красная болезненная область равномерно сокращается к центру и тускнеет, пока рука один раз мягко расслабляется на плече. В последних кадрах плечо выглядит менее напряженным и остается небольшое бледное покраснение; упаковка и тюбик не двигаются и не меняются.",
+      "positive_prompt": "Fixed camera. The shoulder's red pain glow smoothly shrinks toward its center and dims while the woman's hand gently relaxes once against the shoulder. Finish with a relaxed shoulder and a small, faint remnant of redness; keep the product box and tube continuously visible, still, and readable.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

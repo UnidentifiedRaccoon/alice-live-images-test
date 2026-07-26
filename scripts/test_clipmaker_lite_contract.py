@@ -8,6 +8,8 @@ import json
 import unittest
 from pathlib import Path
 
+from scripts import clipmaker_lite_runner as runner
+
 
 ROOT = Path(__file__).resolve().parents[1]
 AGENTS = ROOT / "AGENTS.md"
@@ -28,6 +30,7 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertIn("## clipmaker-classic", text)
         self.assertIn("## clipmaker-lite", text)
         self.assertIn("docs/agents/clipmaker-lite/README.md", text)
+        self.assertIn("docs/agents/clipmaker-lite/generation-routes.json", text)
         self.assertIn("scripts/clipmaker_lite_runner.py", text)
         self.assertIn("ask which contract to use", text)
 
@@ -56,7 +59,7 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.0")
+        self.assertEqual(contract["contract_version"], "2.0.1")
         self.assertEqual(contract["runner"]["runner_version"], 4)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
@@ -98,6 +101,55 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         )
         self.assertEqual(contract["models"]["alibaba/wan-2.7"]["runtime"]["duration_seconds"], 5)
         self.assertEqual(contract["models"]["google/veo-3.1-lite"]["runtime"]["duration_seconds"], 4)
+
+    def test_codex_authoring_model_is_not_fixed_by_contract(self) -> None:
+        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        execution = contract["execution"]
+
+        def nested_keys(value: object) -> set[str]:
+            if isinstance(value, dict):
+                return set(value) | {
+                    key
+                    for child in value.values()
+                    for key in nested_keys(child)
+                }
+            if isinstance(value, list):
+                return {
+                    key
+                    for child in value
+                    for key in nested_keys(child)
+                }
+            return set()
+
+        self.assertTrue(
+            {
+                "author_model",
+                "requested_model",
+                "model",
+                "model_id",
+                "model_policy",
+                "allowed_models",
+                "required_model",
+            }.isdisjoint(nested_keys(execution))
+        )
+
+        parser = runner.build_parser()
+        cli_default = parser.parse_args(
+            ["run", "--run-id", "sample", "--allow-external-processing"]
+        )
+        self.assertIsNone(cli_default.author_model)
+
+        arbitrary = parser.parse_args(
+            [
+                "run",
+                "--run-id",
+                "sample",
+                "--author-model",
+                "provider/future-codex-model",
+                "--allow-external-processing",
+            ]
+        )
+        self.assertEqual(arbitrary.author_model, "provider/future-codex-model")
 
     def test_workflow_is_context_aware_and_model_specific(self) -> None:
         text = README.read_text(encoding="utf-8")

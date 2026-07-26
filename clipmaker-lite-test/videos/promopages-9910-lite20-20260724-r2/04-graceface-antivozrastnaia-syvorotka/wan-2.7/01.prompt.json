@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+    "sha256": "570d2d99f5b5402716db8445f5d22cba712c0ef2a78316b15cb93e8da56c6e7a",
+    "width": 1280,
+    "height": 800
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть честный личный взгляд на естественные возрастные изменения кожи, с которых начинается поиск подходящего ухода.",
+    "primary_action": "Женщина один раз естественно моргает.",
+    "terminal_state": "Глаз снова полностью открыт и сохраняет устойчивый взгляд вперёд.",
+    "semantic_invariant": "Спокойное нейтральное выражение и честный акцент на естественной текстуре кожи сохраняются до конца."
+  },
+  "prompt": {
+    "positive": "The woman slowly completes one relaxed blink while keeping her face still, then settles into the same open, steady forward gaze in the final frame. Fixed camera and unchanged calm expression.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-04-graceface-antivozrastnaia-syvorotka/result.json",
+    "sha256": "958913f58262267a16b24c61c100d9573cbdac41826c206244b321fc3d915dda",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "570d2d99f5b5402716db8445f5d22cba712c0ef2a78316b15cb93e8da56c6e7a",
+      "article_context_sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:85f176a0b1e9b1617deb6d7da70a75c733590b60b3956069f24bc8db8a244d7b",
+    "execution_fingerprint": "sha256:482c700833a348473d0b31db94be653132ddbd73026ac3994b71630db07415b1",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b7-d0e5-7000-b2fe-81365f4f9e0f"
+    },
+    "authored_payload_sha256": "2adf14ff06669b470cd232f0c84dfc278923fdcd5fb67896b18519b6903b54b4",
+    "draft_file_sha256": "b178ca6b273834e91683f6d30a8cbe5ba10865f9766932b86f53a6bc70f5ae30"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+      "sha256": "102ff32e54931017ea7f561c4ac834e8999d5003623f83e8f646a067fc2fe1d2",
+      "bytes": 1423458
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/15-ozon-gruzoperevozki/content.json",
+      "sha256": "8db6b2f4574873e79637ffe61bc460949ff25245764c809a789b02b5d083cdc1",
+      "bytes": 11537,
+      "locator": {
+        "article_id": "15-ozon-gruzoperevozki",
+        "title": "Грузоперевозки с предсказуемым доходом? Что? Да!",
+        "lead": "Станьте частью логистики крупного маркетплейса",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.png",
+        "manifest_file_path": "articles/15-ozon-gruzoperevozki/01.png",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Задержки выплат, неравномерная загрузка, бесконечный поиск заказов — кажется, что при работе на грузовом авто всех этих проблем не избежать. Вот только с Вози Ozon всё по-другому: вы сами выбираете удобные рейсы и устанавливаете цену за поездку."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Стилизованный синий грузовик Ozon стоит на приподнятой платформе, развернувшись кабиной влево; слева видны брендированные коробки, вокруг — две монеты с символом рубля.",
+      "Грузовик и его колёса допускают естественное поступательное движение; монеты могут слегка поворачиваться как подчинённый акцент дохода, при этом надпись и композиция должны оставаться читаемыми."
+    ],
+    "article_context": "Обложка статьи представляет «Вози Ozon» как платформу, где грузоперевозчик получает доступ к стабильной загрузке и предсказуемому заработку; движение грузовика должно сразу поддержать обещание работающей логистики.",
+    "structured_intent": {
+      "editorial_meaning": "Работающая логистика Ozon превращает грузовой автомобиль в источник регулярных рейсов и предсказуемого дохода.",
+      "primary_action": "Грузовик плавно продвигается вперёд по платформе.",
+      "terminal_state": "Грузовик завершает продвижение полной остановкой, оставаясь целиком видимым на платформе.",
+      "semantic_invariant": "Грузовик остаётся узнаваемым символом надёжной перевозки и заработка через «Вози Ozon»."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды грузовик сразу начинает короткое плавное движение влево по платформе с естественным вращением колёс. Камера неподвижна и удерживает грузовик главным объектом; монеты лишь слегка поворачиваются как вторичный акцент. Ближе к финалу машина мягко замедляется и полностью останавливается, оставаясь целиком видимой и безопасно размещённой на платформе.",
+      "positive_prompt": "The truck rolls smoothly forward to the left at a steady moderate speed, its wheels turning naturally, then eases to a clear stop while remaining fully visible on the platform; the floating ruble coins make a subtle continuous turn.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный вариант использует более длинный равномерный проезд грузовика влево: движение начинается сразу, развивается большую часть сцены и постепенно затухает без рывка. Камера остаётся фиксированной, чтобы сохранить ясность брендовой композиции; монеты медленно вращаются в поддержку темы заработка. В конце грузовик уверенно стоит на платформе и остаётся полностью узнаваемым.",
+      "positive_prompt": "The truck drives steadily forward to the left across the platform, wheels rotating naturally as the floating ruble coins turn gently; it gradually slows and finishes fully visible in a firm stop on the platform.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "За четыре секунды грузовик совершает компактный плавный проезд влево с ровным вращением колёс. Неподвижная камера сохраняет в кадре машину, коробки и брендинг, а лёгкий поворот монет остаётся подчинённым движению перевозки. К последним кадрам грузовик естественно замедляется и останавливается целиком в пределах платформы.",
+      "positive_prompt": "With a fixed camera, the truck moves smoothly forward to the left, its wheels turning at an even pace while the ruble coins rotate subtly; near the end it decelerates into a complete stop, fully visible on the platform.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

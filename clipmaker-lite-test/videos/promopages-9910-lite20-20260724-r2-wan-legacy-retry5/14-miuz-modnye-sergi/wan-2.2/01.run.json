@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "14-miuz-modnye-sergi",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/14-miuz-modnye-sergi/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/14-miuz-modnye-sergi/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+      "prompt": "The two hanging teardrop pearls begin a small, even pendulum swing in opposite phases, their highlights sliding across the curved surfaces. Fixed camera. By the final frames both pearls return close to vertical with only a faint residual sway."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "becd7bdbfffbec494cc73c4d52710041ddaa63eae4c55ab3c1ebec00038161ff",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5a6fa21193604da08dd9897e7b700934",
+  "provider_session_hash": "promopages9856-2bdb767de598",
+  "submitted_at": "2026-07-24T17:03:31Z",
+  "completed_at": "2026-07-24T17:05:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 426659,
+    "sha256": "efba61ee9e923a413c260fe6a12bb0b762fd18a079bb400f27509e572bfe380e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-14-miuz-modnye-sergi-wan-2-2",
+  "lite_result_sha256": "b481b4aadf675a7c09e2c34c93459292acc0a7371c26cfba55b0898f5b5d13c7",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

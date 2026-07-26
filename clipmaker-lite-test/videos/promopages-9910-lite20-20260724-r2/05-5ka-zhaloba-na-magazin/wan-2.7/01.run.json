@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "05-5ka-zhaloba-na-magazin",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/05-5ka-zhaloba-na-magazin/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman slowly angles the package to read its label, shifting her gaze from the phone to the package as her weight settles beside the cart. Fixed camera. She finishes holding the package steady above the basket with the label clearly oriented toward her, remaining focused on the check.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "70a35e4166818465dd5fb51c191879f9a8e0ae3a21a73ec43695c68a73140797",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7hp0nFGmKncWpG7IRHKL",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T16:47:11Z",
+  "completed_at": "2026-07-24T16:50:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 8882578,
+    "sha256": "81e092fed07848fa624a2f7d24ce42bc9647ebd2b5df1166ccfe9ca222f710ee"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-05-5ka-zhaloba-na-magazin-wan-2-7",
+  "lite_result_sha256": "fec69791b195e72a567619dc365cb472a1e898b00f3b2e5c4784932be011f004",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

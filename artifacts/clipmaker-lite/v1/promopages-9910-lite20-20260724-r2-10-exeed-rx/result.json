@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9910-lite20-20260724-r2-10-exeed-rx",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.1",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "896ffa2ff030c6a6957bffb645384fcf78f19b782dcf97c58b0355d307728efe",
+    "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+    "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:c0cd19fa63f7a77dd1591bb861bf579d1c71c99d5aa292472076dc5f8336c423",
+    "execution_fingerprint": "sha256:ce6ca3da0e3b75e1fc0fca1967b418a1412997da284a18f80ef9ddf6cab18f15",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "a2b6198fd61327f54542716bd96e588c5b10789522fee4bbacaeff1aa7836efb",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019f94b7-262d-7ba2-831f-d70ee36c4282"
+    },
+    "authored_payload_sha256": "66705e5189489acb9d4a0839260213f7272f05e07ecd9ef7ae235d46b16641d4",
+    "draft_file_sha256": "eae0b923b4bd091ecc0541bdfc6e3b2317595151e12d9716d229233e569f31e7"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+      "sha256": "693f753d0db395bc541830be8fb68ac95ab3275cab2d615ee606bddcedc42fbb",
+      "bytes": 139183
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/10-exeed-rx/content.json",
+      "sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d",
+      "bytes": 26034,
+      "locator": {
+        "article_id": "10-exeed-rx",
+        "title": "7 фактов об EXEED RX, в котором продуманы все детали",
+        "lead": "Здесь технологии значительно облегчают вождение.",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "articles/10-exeed-rx/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "😎⚡️ Здесь мощность не увеличивает расходы на топливо, а технологии значительно облегчают вождение."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A wide, curved digital dashboard display dominates the interior, showing driving, navigation, and vehicle-status interfaces.",
+      "The vehicle is stationary at 0 km/h; the warm cabin lighting and blue ambient accents create a calm premium atmosphere.",
+      "Because the visible subject is UI, only a subtle optical accent can move; all displayed text, numbers, icons, controls, and layout must remain unchanged."
+    ],
+    "article_context": "The image supports the article’s focus on EXEED RX driver-assistance technology: the panoramic digital cockpit presents navigation and vehicle information as an integrated aid that makes driving easier. Its role is to emphasize advanced, calm, premium assistance without depicting a change in the interface state.",
+    "structured_intent": {
+      "editorial_meaning": "The integrated digital cockpit embodies technology that supports the driver clearly and unobtrusively, reinforcing the article’s promise that EXEED RX makes driving easier.",
+      "primary_action": "A single soft reflection passes across the existing panoramic dashboard glass.",
+      "terminal_state": "The reflection has crossed the full display and faded at the right edge, leaving the original interface unchanged.",
+      "semantic_invariant": "The cockpit remains a calm, premium driver-assistance display, with all interface content and state unchanged through the final frame."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For 3.2 seconds, keep the camera completely fixed. Begin the restrained glass reflection immediately at the left side of the panoramic panel, move it evenly across the central navigation area, and let it reach the right edge near the end. Finish with the reflection softly faded while the original UI remains fully intact and readable.",
+      "positive_prompt": "Fixed camera. A soft, narrow reflection glides steadily from left to right across the existing dashboard glass, briefly accenting the navigation display without altering any interface content. It reaches the far-right edge and gently fades by the final frame; every displayed number, icon, glyph, and control remains unchanged.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:d2831e63dced78bb9b586f31818c0159812a5fb799b37204c7640bd7b8ebdaad",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Use the full five seconds for one gradual optical sweep. Hold the camera fixed as a broad, low-intensity reflection starts at the left edge, crosses the instrument and navigation areas at an even pace, then thins and dissipates at the far right close to the ending. The interface state, values, text, icons, and controls never change.",
+      "positive_prompt": "Fixed camera. A broad, soft reflection travels slowly across the dashboard glass from left to right, drawing attention to the integrated navigation and driver-information display while all UI content stays unchanged. The reflection reaches the right edge and dissipates softly in the final frame.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:35fae7f01045255c9ad3baa81a729ad84899ba7e483406dac2e537a1969d5b0b",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Across four seconds, use a fixed camera and one controlled optical highlight. Start it promptly on the left, guide it smoothly across the curved panel and central navigation area, and have it clear the right edge near the end. The final frame shows the original stable dashboard after the highlight has faded, with no UI-state changes.",
+      "positive_prompt": "Fixed camera. A restrained highlight sweeps smoothly from left to right over the curved dashboard glass, subtly emphasizing the central navigation interface while every displayed value, icon, glyph, and control remains unchanged. The highlight clears the right edge and fades by the last frame.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:f442cdd068c982b30309e09b8430956cf048a7b3db9679a841f63c3664ab8f87",
+      "negative_prompt": null
+    }
+  ]
+}

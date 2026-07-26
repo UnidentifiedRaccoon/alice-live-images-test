@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "16-ekonika-letnie-trendy",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/16-ekonika-letnie-trendy/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2-wan-legacy-retry5/16-ekonika-letnie-trendy/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg",
+      "prompt": "The woman smoothly shifts her weight onto her straight leg while keeping her poised expression; the white handbag makes one small natural swing and settles beside the stone support. Fixed camera, with her full figure and accessories visible through the final frame."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "22d26441c360cf80d822628d63099a7fe1fd42d1ae0a1b66fa312b04e21b5864",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "28dfef5321a94ea2a3b44302f65017d2",
+  "provider_session_hash": "promopages9856-7cfa34b0cc0d",
+  "submitted_at": "2026-07-24T17:08:04Z",
+  "completed_at": "2026-07-24T17:10:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 294172,
+    "sha256": "fb76f94c25cd0f48b30ecf3a3b471341c9396c98373bfdda826d8688729c6fce"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-16-ekonika-letnie-trendy",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-16-ekonika-letnie-trendy-wan-2-2",
+  "lite_result_sha256": "9592da51418eed42aa4aef7681dd572581b624a64d9eaeb70f75bae2258db575",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

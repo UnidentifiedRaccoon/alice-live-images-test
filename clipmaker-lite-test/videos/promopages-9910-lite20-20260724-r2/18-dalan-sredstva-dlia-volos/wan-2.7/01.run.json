@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "18-dalan-sredstva-dlia-volos",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/18-dalan-sredstva-dlia-volos/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A gentle light reflection travels slowly across the three products from the shampoo bottle to the conditioner tube. Keep the camera fixed; finish with the complete gift set evenly illuminated and every label clearly visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "3:4",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "166b9a8c241fcf82d14d2f7fde4719b5b017a4b521d9f2cada004947d15c2950",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "pPCSGK9jMqayDfCFKMbD",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:30:39Z",
+  "completed_at": "2026-07-24T17:37:56Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1246,
+    "height": 1662,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4775837,
+    "sha256": "3ff935e0318004c2e113acfc1e92560e1be6eeafa842bfde171ecf58a4c4b8bb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "3:4",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-18-dalan-sredstva-dlia-volos-wan-2-7",
+  "lite_result_sha256": "e8e5790c3f4f86f28fa17b6e84453fd9bd954e7bd4b024591ab16a6d1aafa674",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

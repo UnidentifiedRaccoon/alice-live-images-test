@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+    "sha256": "102ff32e54931017ea7f561c4ac834e8999d5003623f83e8f646a067fc2fe1d2",
+    "width": 1600,
+    "height": 800
+  },
+  "structured_intent": {
+    "editorial_meaning": "Работающая логистика Ozon превращает грузовой автомобиль в источник регулярных рейсов и предсказуемого дохода.",
+    "primary_action": "Грузовик плавно продвигается вперёд по платформе.",
+    "terminal_state": "Грузовик завершает продвижение полной остановкой, оставаясь целиком видимым на платформе.",
+    "semantic_invariant": "Грузовик остаётся узнаваемым символом надёжной перевозки и заработка через «Вози Ozon»."
+  },
+  "prompt": {
+    "positive": "The truck rolls smoothly forward to the left at a steady moderate speed, its wheels turning naturally, then eases to a clear stop while remaining fully visible on the platform; the floating ruble coins make a subtle continuous turn.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-15-ozon-gruzoperevozki/result.json",
+    "sha256": "4083a9c4d767fa1d88e275f19ec8a4675b8a33130efe9367fefca75750ea17ba",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "102ff32e54931017ea7f561c4ac834e8999d5003623f83e8f646a067fc2fe1d2",
+      "article_context_sha256": "8db6b2f4574873e79637ffe61bc460949ff25245764c809a789b02b5d083cdc1",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

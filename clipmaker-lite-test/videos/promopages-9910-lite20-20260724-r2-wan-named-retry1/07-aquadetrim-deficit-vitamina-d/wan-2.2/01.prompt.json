@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-named-retry1-07-aquadetrim-deficit-vitamina-d-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+    "sha256": "b294de8b2cf85c5ec94ed5aee4e4fc7239a1f7e4731e3c9296cac70f9be344c5",
+    "width": 1200,
+    "height": 801
+  },
+  "structured_intent": {
+    "editorial_meaning": "Солнечный свет важен для поддержания уровня витамина D и служит отправной точкой для осознанной проверки факторов его дефицита.",
+    "primary_action": "Окружающие солнце облака плавно расходятся под действием ветра.",
+    "terminal_state": "Вокруг солнца образуется более широкий участок чистого голубого неба, а его лучи становятся немного отчётливее.",
+    "semantic_invariant": "Солнце остаётся видимым и сохраняет роль устойчивого символа естественного источника витамина D до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Clouds drift gently outward from the sun at a steady pace while their edges softly reshape. The camera stays fixed; by the final frames, a wider clear-blue opening surrounds the still-visible sun and its rays shine slightly more clearly.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-07-aquadetrim-deficit-vitamina-d/result.json",
+    "sha256": "229eef20b087d5d76fe6279d75d8866c31472531ecb0f854c21890c5608a7449",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "b294de8b2cf85c5ec94ed5aee4e4fc7239a1f7e4731e3c9296cac70f9be344c5",
+      "article_context_sha256": "0a82562e329d4e4cc667d02064d7f7b78c1d9435e19ef9a354fd78913f50c62c",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

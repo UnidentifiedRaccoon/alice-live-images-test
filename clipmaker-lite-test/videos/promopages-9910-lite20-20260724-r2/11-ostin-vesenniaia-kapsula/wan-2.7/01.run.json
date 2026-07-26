@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9910",
+  "sample_id": "11-ostin-vesenniaia-kapsula",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/videos/promopages-9910-lite20-20260724-r2/11-ostin-vesenniaia-kapsula/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman gradually shifts her weight and turns into a relaxed three-quarter pose toward the clothing rack while keeping both hands in her pockets and a calm, confident smile. A slow, subtle camera push centers attention on her and the collection. By the final frame she is settled in the new pose, with the rack clearly visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "968a0d338e30b1bfe02978d030c944bb9ef92d9e3335c53edec89eba57ab2649",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "12oyXFDivvYxiBt7ojxM",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-24T17:12:13Z",
+  "completed_at": "2026-07-24T17:13:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2388,
+    "height": 868,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5374714,
+    "sha256": "8267606d715520e74d4a7c0094e390bb56aff1909889d71bbc057c74ecd075f3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-11-ostin-vesenniaia-kapsula-wan-2-7",
+  "lite_result_sha256": "fe7ad0075ccb18ec2cd61006a6df3021b1afe6c7bdd6d8dd24ed19aa6a0fa190",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
