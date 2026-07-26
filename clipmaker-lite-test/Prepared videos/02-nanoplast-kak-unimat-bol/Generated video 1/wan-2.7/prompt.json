@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+    "sha256": "18877935b369c97871fb27c1f37cd5086996d2e55fb90c6911366a08d2057ce4",
+    "width": 1600,
+    "height": 800
+  },
+  "structured_intent": {
+    "editorial_meaning": "Предлагаемое средство связано с постепенным облегчением локальной боли и возвращением комфорта движения.",
+    "primary_action": "Красное обозначение боли на плече постепенно уменьшается, пока удерживающая плечо рука расслабляется.",
+    "terminal_state": "В последнем кадре красная зона стала маленькой и бледной, плечо и лежащая на нем рука выглядят менее напряженными, а продукт остается отчетливо видимым.",
+    "semantic_invariant": "На протяжении сцены сохраняется смысл мягкого облегчения боли без ее внезапного исчезновения, а продукт остается явно связан с этим облегчением."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, the red shoulder glow gradually recedes inward and fades as the woman's hand slowly eases its pressure in one continuous motion. End with only a faint trace of redness and a visibly relaxed shoulder, while both product packages remain still and clearly readable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-02-nanoplast-kak-unimat-bol/result.json",
+    "sha256": "eda83f8b4be4de0d1a92dfff1d52163bb2cd286582f1ffd6412b75d1f8358fbd",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "18877935b369c97871fb27c1f37cd5086996d2e55fb90c6911366a08d2057ce4",
+      "article_context_sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

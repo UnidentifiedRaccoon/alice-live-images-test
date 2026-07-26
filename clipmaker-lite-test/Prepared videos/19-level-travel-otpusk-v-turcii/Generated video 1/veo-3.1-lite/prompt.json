@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+    "sha256": "ccbe39ee916e85fe7730a9622f9ee20cef5d34c87f58ca686f015ed6ddbaaa01",
+    "width": 1152,
+    "height": 896
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойное изучение полезных советов помогает заранее подготовиться к летнему отдыху в Турции.",
+    "primary_action": "Лёгкий пляжный ветер перелистывает одну страницу раскрытой книги.",
+    "terminal_state": "Перелистнутая страница полностью лежит на левой стороне, а книга остаётся открытой на новом развороте.",
+    "semantic_invariant": "Сцена до конца сохраняет ощущение спокойного, продуманного предвкушения пляжного отпуска."
+  },
+  "prompt": {
+    "positive": "With a fixed camera focused on the open book, a gentle breeze lifts a single right-hand page and turns it left in one fluid motion. By the last frame the page rests flat on the newly opened spread, preserving the calm vacation-planning mood.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-19-level-travel-otpusk-v-turcii/result.json",
+    "sha256": "5e08fbc5c585f5128619f0ac82492a8cbeeb5b2697a6c898135a4d08102d94b7",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "ccbe39ee916e85fe7730a9622f9ee20cef5d34c87f58ca686f015ed6ddbaaa01",
+      "article_context_sha256": "0d8f2c81586814f1c9ff1bd0ea0292094d903f4347ba83f8609df3820c81f182",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

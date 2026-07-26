@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-wan-legacy-retry5-01-pharmocean-magiia-magniia-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+    "sha256": "f0e6854db524bd5b06c5caf0ed2e2ee244b5117666a73c6e7afa39df084c49c6",
+    "width": 1200,
+    "height": 668
+  },
+  "structured_intent": {
+    "editorial_meaning": "Магний можно получать из разнообразных повседневных продуктов, представленных в кадре.",
+    "primary_action": "Лёгкий поток воздуха непрерывно колышет видимую зелень и листовые овощи.",
+    "terminal_state": "Колебание листьев затихло, и они лежат в слегка изменённом положении вокруг по-прежнему открытой карточки Mg.",
+    "semantic_invariant": "Продукты остаются узнаваемыми источниками магния, а центральная карточка Mg сохраняется видимой и читаемой до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Fixed overhead camera. A gentle breeze immediately sends one small, even ripple through the visible herb and cabbage leaves from left to right; the motion settles near the end with the leaves slightly shifted, while the central Mg Magnesium card stays fully visible and readable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-01-pharmocean-magiia-magniia/result.json",
+    "sha256": "1ffcfb596bfbb59398d99fa6b976f32631055365dd4f65675884833a10b7c963",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "f0e6854db524bd5b06c5caf0ed2e2ee244b5117666a73c6e7afa39df084c49c6",
+      "article_context_sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

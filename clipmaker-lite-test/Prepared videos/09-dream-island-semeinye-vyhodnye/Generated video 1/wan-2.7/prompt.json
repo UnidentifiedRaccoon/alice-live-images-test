@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+    "sha256": "f9a3404f773c56133a5a1db8c8a459c162ae473e92ae540d967b3929a789a366",
+    "width": 5000,
+    "height": 3334
+  },
+  "structured_intent": {
+    "editorial_meaning": "Оживление поддерживает финальный тезис статьи о праздничной и волшебной атмосфере парка, где семья создаёт общие счастливые воспоминания.",
+    "primary_action": "Подсвеченные струи фонтана плавно усиливаются и складываются в согласованный водный рисунок.",
+    "terminal_state": "Фонтан образует перед полностью видимым замком устойчивую симметричную корону из центральной струи и окружающих водяных дуг.",
+    "semantic_invariant": "Освещённый замок сохраняет ощущение семейного праздника и волшебства до последнего кадра."
+  },
+  "prompt": {
+    "positive": "The fountain builds in a gentle continuous swell while the surrounding arcing jets flow rhythmically and warm reflections ripple across the pool. A slow subtle push toward the illuminated castle ends with the fountain forming a bright, symmetrical crown of water.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-09-dream-island-semeinye-vyhodnye/result.json",
+    "sha256": "bdc76fce2c4e81fb6d0b115ef2ef5db3b0051ab5d6a3a26039fef45857b4bf47",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "f9a3404f773c56133a5a1db8c8a459c162ae473e92ae540d967b3929a789a366",
+      "article_context_sha256": "47c2112a5b1ed0b96ec4b50d9922b650e281333b00dc6e1f5d0a4e87a805c2f3",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

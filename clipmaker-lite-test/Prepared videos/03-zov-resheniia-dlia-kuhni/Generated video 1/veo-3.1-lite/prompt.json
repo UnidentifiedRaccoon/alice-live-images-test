@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9910",
+  "batch_id": "promopages-9910-lite20-20260724-r2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni",
+  "provider_run_id": "promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+    "sha256": "28350e991e8e6279a8f33685c0a8e6bff5f6c4878f4f0c2d1dee534ee307d4cb",
+    "width": 1600,
+    "height": 960
+  },
+  "structured_intent": {
+    "editorial_meaning": "Продуманная кухня может одновременно выглядеть цельно и стильно и оставаться комфортным, организованным пространством для каждого дня.",
+    "primary_action": "Тёплый естественный свет постепенно проходит через кухню и подчёркивает её гладкие, упорядоченные поверхности.",
+    "terminal_state": "Полоса солнечного света достигает фасадов кухонного острова, а интерьер сохраняет исходный порядок и композицию.",
+    "semantic_invariant": "Кухня до последнего кадра остаётся спокойной, чистой, цельной и визуально свободной от лишних деталей."
+  },
+  "prompt": {
+    "positive": "Warm afternoon light sweeps slowly from the right wall across the dining area toward the kitchen island, and the chair shadows slide smoothly over the floor. Hold a fixed wide view. In the last frame, the sunlit edge reaches the island and the clean, organized space remains serene and unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9910-lite20-20260724-r2-03-zov-resheniia-dlia-kuhni/result.json",
+    "sha256": "8f485aed421368b335c44534d07a382a6f5ee670dedaf40a3cb1e7ab49fac6c0",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.1",
+      "contract_fingerprint": "sha256:f80b2579a1af5377e091f9ef2b443828ad156676264fa85525f85eb10e3bcc23",
+      "instruction_bundle_sha256": "590cba99850421e1bab25991cb49c837fb304651d3733acdc6ddb1909d067a46",
+      "source_image_sha256": "28350e991e8e6279a8f33685c0a8e6bff5f6c4878f4f0c2d1dee534ee307d4cb",
+      "article_context_sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
