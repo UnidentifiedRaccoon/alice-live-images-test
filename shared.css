@@ -241,10 +241,12 @@ a {
 .viewSwitch {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(4.5rem, 1fr));
   order: 3;
+  overflow-x: auto;
   width: 100%;
   border-top: 0.0625rem solid var(--line);
+  scrollbar-color: var(--line-strong) transparent;
 }
 
 .viewSwitch a {
@@ -373,16 +375,23 @@ a {
 
 @media (min-width: 48rem) {
   .siteHeaderInner {
-    grid-template-columns: auto minmax(0, 1fr);
     width: min(92.5rem, 100%);
-    min-height: 4.5rem;
     padding-right: max(var(--space-lg), env(safe-area-inset-right));
     padding-left: max(var(--space-lg), env(safe-area-inset-left));
+  }
+}
+
+@media (min-width: 64rem) {
+  .siteHeaderInner {
+    grid-template-columns: auto minmax(0, 1fr);
+    min-height: 4.5rem;
   }
 
   .viewSwitch {
     grid-column: 2;
+    grid-template-columns: repeat(5, auto);
     order: initial;
+    overflow: visible;
     justify-self: end;
     width: auto;
     border-top: 0;
