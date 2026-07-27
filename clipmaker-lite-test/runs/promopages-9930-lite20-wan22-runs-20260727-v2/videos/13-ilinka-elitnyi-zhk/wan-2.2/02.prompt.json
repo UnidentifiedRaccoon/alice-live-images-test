@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-13-ilinka-elitnyi-zhk-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+    "sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+    "width": 1600,
+    "height": 1066
+  },
+  "structured_intent": {
+    "editorial_meaning": "The residence appears composed and enduring within the greenery and historic urban fabric of central Moscow, supporting the article’s claim that its architecture harmonizes with the city.",
+    "primary_action": "A light breeze gently moves the foreground foliage.",
+    "terminal_state": "The foliage has eased toward a gentle resting position while the main façade remains unobstructed and clearly recognizable.",
+    "semantic_invariant": "The residential façade remains the stable, dominant architectural subject and continues to feel integrated into its surroundings."
+  },
+  "prompt": {
+    "positive": "A light breeze gently sways the foreground leaves and thin branches in one continuous motion while the camera stays fixed on the residence. The movement eases near the end, with the façade still fully visible and dominant.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02/result.json",
+    "sha256": "5370732693288ec8d6c9fc498c69ce7978ca5d1dbbbf06361ac8d9716d0ebe06",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+      "article_context_sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

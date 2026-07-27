@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-18-dalan-sredstva-dlia-volos-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+    "sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+    "width": 554,
+    "height": 641
+  },
+  "structured_intent": {
+    "editorial_meaning": "Аккуратная подарочная подача набора создает приятное впечатление еще до использования и поддерживает ощущение качественного оригинального продукта.",
+    "primary_action": "Мягкий световой акцент последовательно проходит по бутылочкам и вложенной открытке.",
+    "terminal_state": "Световой акцент оказывается на передней бутылочке, при этом обе бутылочки и открытка остаются отчетливо видимыми в открытой коробке.",
+    "semantic_invariant": "Набор остается аккуратно собранным, презентабельным и воспринимается как готовый подарок."
+  },
+  "prompt": {
+    "positive": "A soft natural highlight glides steadily from left to right across the two bottles and the enclosed card, briefly revealing their subtle sheen. Keep the camera fixed; by the final frames, the highlight rests gently on the front bottle and the complete gift set remains clearly visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02/result.json",
+    "sha256": "727f6ce626eea86c4e3b6ffefd7fad0ad9a36a1062164c369d4d7f4e52c6d217",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+      "article_context_sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-05-5ka-zhaloba-na-magazin-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+    "sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+    "width": 2560,
+    "height": 1706
+  },
+  "structured_intent": {
+    "editorial_meaning": "Внимание покупателя к товарам в магазине может выявить проблему и стать отправной точкой для обращения, которое попадёт в систему поддержки.",
+    "primary_action": "Женщина внимательно переводит взгляд вдоль товаров на холодильной полке.",
+    "terminal_state": "В последнем кадре взгляд женщины остановлен на конкретном товаре или его этикетке.",
+    "semantic_invariant": "Пара остаётся сосредоточенной на проверке ассортимента, сохраняя спокойную внимательность до конца."
+  },
+  "prompt": {
+    "positive": "The woman slowly turns her head and tracks her gaze to the right along the refrigerated shelf, then settles on one product label with sustained attentive concern. The man and cart remain still beside her. Fixed camera.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02/result.json",
+    "sha256": "3106c679387da106d051d176d46a70539fd2b10b0ac3726bb7c4f1788401f6d2",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+      "article_context_sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

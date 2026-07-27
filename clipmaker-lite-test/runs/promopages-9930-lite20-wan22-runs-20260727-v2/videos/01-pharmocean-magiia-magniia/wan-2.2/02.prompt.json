@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-01-pharmocean-magiia-magniia-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation reinforces stress as a recognizable sign of bodily strain within an article explaining magnesium’s calming role and its wider importance to health.",
+    "primary_action": "The woman lowers both raised hands slightly away from her face.",
+    "terminal_state": "Both hands hover near shoulder level, clear of her face, while her wide-eyed, clenched-teeth expression remains visible.",
+    "semantic_invariant": "She remains visibly stressed and overwhelmed through the last frame."
+  },
+  "prompt": {
+    "positive": "With the camera fixed, she slowly lowers both tense hands a short distance away from her face while keeping her eyes wide and teeth clenched. By the final frames, her hands hover near shoulder level and her stressed expression remains unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02/result.json",
+    "sha256": "c01cfd9f5f5956e5b9054c38e8c12ae46901e00b750d6a2be3da292ae2d5151c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "article_context_sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

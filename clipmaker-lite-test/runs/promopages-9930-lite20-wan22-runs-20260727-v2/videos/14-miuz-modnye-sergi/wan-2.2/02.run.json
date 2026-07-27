@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "14-miuz-modnye-sergi-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/02.jpeg",
+      "prompt": "A narrow specular highlight travels smoothly from left to right across the visible metal contours of the silver and gold earrings. Keep the camera fixed and the model still; by the final frames, the glint reaches the rightmost gold pair and gently fades, leaving every earring in its original position and shape."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "8497f30501e3deec40d82f592b0dc1838162aac06297f02af7a17b55b37a3400",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "805f854e5a7b49bd8983edc839c1a447",
+  "provider_session_hash": "promopages9856-a82df6e35093",
+  "submitted_at": "2026-07-27T11:29:14Z",
+  "completed_at": "2026-07-27T11:30:15Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 513507,
+    "sha256": "feb61cb6d640bfcf9bf8a93db1c588d9735ea0da645ecbef312c74671beeaeb0"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-14-miuz-modnye-sergi-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-14-miuz-modnye-sergi-02-wan-2-2",
+  "lite_result_sha256": "42547d5d34a0746fddce188047d1230fea3a636968635a29484e7a94b4b7c754",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

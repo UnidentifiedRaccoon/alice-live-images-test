@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "20-sravni-kreditnyi-reiting-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+      "prompt": "Fixed camera. A soft highlight glides once across the existing credit-rating gauge at a steady pace, then fades into a subtle glow over its green segment; the needle, all text, numbers, icons, controls, and layout remain unchanged in the final frame."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "5d49db8756669c02e6d442224fd0712278bd75e79e8e4430fe1595f5a022f857",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "2714ecb204824711803b7ff51a618796",
+  "provider_session_hash": "promopages9856-1dc60e6f3882",
+  "submitted_at": "2026-07-27T11:36:50Z",
+  "completed_at": "2026-07-27T11:38:21Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1520,
+    "height": 576,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 212200,
+    "sha256": "94d681c3f78dc9e732a644e49b39122ae598b5c6dede24d65ea2cad9640410e9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-20-sravni-kreditnyi-reiting-03-wan-2-2",
+  "lite_result_sha256": "3f3bf586a94050718b5e08c9caa3440970be6711c9e011b7ad82c8c6c2c4ba54",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

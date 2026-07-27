@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "18-dalan-sredstva-dlia-volos-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+      "prompt": "A soft natural highlight glides steadily from left to right across the two bottles and the enclosed card, briefly revealing their subtle sheen. Keep the camera fixed; by the final frames, the highlight rests gently on the front bottle and the complete gift set remains clearly visible."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "c463e729c113911b7fe9460f8a58a7b0ac2398cf0161a6c670a2012e187ca96a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cd3c9075975f434088909fd9ca23b2a1",
+  "provider_session_hash": "promopages9856-1259399c0ad6",
+  "submitted_at": "2026-07-27T11:33:47Z",
+  "completed_at": "2026-07-27T11:35:18Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 880,
+    "height": 1008,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 261472,
+    "sha256": "932c30a97808448378363f59af8a496b8ae0ceabab678eb89763de15e32d13c7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-18-dalan-sredstva-dlia-volos-02-wan-2-2",
+  "lite_result_sha256": "727f6ce626eea86c4e3b6ffefd7fad0ad9a36a1062164c369d4d7f4e52c6d217",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

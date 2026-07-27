@@ -7,8 +7,10 @@
   const EXPECTED_ARTICLE_COUNT = 20;
   const EXPECTED_BASE_OUTPUT_COUNT = 60;
   const EXPECTED_ADDITIONAL_IMAGE_COUNT = 20;
-  const EXPECTED_ADDITIONAL_OUTPUT_COUNT = 40;
+  const EXPECTED_ADDITIONAL_OUTPUT_COUNT = 60;
   const EXPECTED_UNIQUE_IMAGE_COUNT = 40;
+  const EXPECTED_CANONICAL_OUTPUT_COUNT = 120;
+  const EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2;
   const MODEL_ORDER = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -17,7 +19,7 @@
   const EXPERIMENT_ARTICLE_NUMBER = "14";
   const EXPERIMENT_PROMPT_SOURCE_MODEL_ID = MODEL_ORDER[0];
   const EXPERIMENT_TARGET_MODEL_ORDER = MODEL_ORDER.slice(1);
-  const ADDITIONAL_MODEL_ORDER = MODEL_ORDER.slice(1);
+  const ADDITIONAL_MODEL_ORDER = MODEL_ORDER;
   const RAW_REPOSITORY_BASE =
     "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/";
   const MODEL_PRESENTATION = {
@@ -236,21 +238,14 @@
       promptCount === EXPECTED_BASE_OUTPUT_COUNT,
       "Проверены не все 60 базовых positive prompts.",
     );
-    if (comparisonOutputCount > 0) {
-      assert(
-        manifest.comparison_output_count === EXPERIMENT_TARGET_MODEL_ORDER.length,
-        `В манифесте должно быть заявлено два экспериментальных ролика.`,
-      );
-      assert(
-        comparisonOutputCount === manifest.comparison_output_count,
-        `Число экспериментальных роликов не совпадает с comparison_output_count.`,
-      );
-    } else if (hasOwn(manifest, "comparison_output_count")) {
-      assert(
-        manifest.comparison_output_count === 0,
-        `comparison_output_count задан без экспериментальных роликов.`,
-      );
-    }
+    assert(
+      manifest.comparison_output_count === EXPECTED_EXPERIMENT_OUTPUT_COUNT,
+      `В манифесте должно быть заявлено два экспериментальных ролика.`,
+    );
+    assert(
+      comparisonOutputCount === EXPECTED_EXPERIMENT_OUTPUT_COUNT,
+      `Проверено экспериментальных роликов: ${comparisonOutputCount}, ожидалось 2.`,
+    );
 
     return manifest.articles.map((article) => {
       const outputsByModel = new Map(article.outputs.map((output) => [output.model_id, output]));
@@ -305,11 +300,11 @@
     );
     assert(
       manifest.expected_outputs === EXPECTED_ADDITIONAL_OUTPUT_COUNT,
-      `В дополнительном манифесте заявлено роликов: ${manifest.expected_outputs ?? "—"}, ожидалось 40.`,
+      `В дополнительном манифесте заявлено роликов: ${manifest.expected_outputs ?? "—"}, ожидалось 60.`,
     );
     assert(
       JSON.stringify(manifest.models) === JSON.stringify(ADDITIONAL_MODEL_ORDER),
-      "Дополнительный манифест должен содержать только Wan 2.7 и Veo 3.1 Lite.",
+      "Дополнительный манифест должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
     );
     assert(
       Array.isArray(manifest.articles) && manifest.articles.length === EXPECTED_ARTICLE_COUNT,
@@ -318,7 +313,7 @@
     assert(
       Array.isArray(manifest.outputs) &&
         manifest.outputs.length === EXPECTED_ADDITIONAL_OUTPUT_COUNT,
-      "В дополнительном манифесте должен быть плоский список из 40 роликов.",
+      "В дополнительном манифесте должен быть плоский список из 60 роликов.",
     );
 
     const baseBySlug = new Map(baseArticles.map((article) => [article.article_slug, article]));
@@ -365,7 +360,7 @@
 
         assert(
           Array.isArray(record.outputs) && record.outputs.length === ADDITIONAL_MODEL_ORDER.length,
-          `У ${article.article_number}/${image.image_id} должно быть два ролика.`,
+          `У ${article.article_number}/${image.image_id} должно быть три ролика.`,
         );
         const outputsByModel = new Map(record.outputs.map((output) => [output.model_id, output]));
         assert(
@@ -404,7 +399,7 @@
     assert(
       outputCount === EXPECTED_ADDITIONAL_OUTPUT_COUNT &&
         videoPaths.size === EXPECTED_ADDITIONAL_OUTPUT_COUNT,
-      "Проверены не все 40 уникальных дополнительных MP4 и positive prompts.",
+      "Проверены не все 60 уникальных дополнительных MP4 и positive prompts.",
     );
     return normalizedArticles;
   };
@@ -432,6 +427,19 @@
     assert(
       totalImages === EXPECTED_UNIQUE_IMAGE_COUNT,
       `После объединения найдено уникальных изображений: ${totalImages}, ожидалось 40.`,
+    );
+    const canonicalOutputCount = merged.reduce(
+      (articleTotal, article) =>
+        articleTotal +
+        article.images.reduce(
+          (imageTotal, imageRecord) => imageTotal + imageRecord.outputs.length,
+          0,
+        ),
+      0,
+    );
+    assert(
+      canonicalOutputCount === EXPECTED_CANONICAL_OUTPUT_COUNT,
+      `После объединения найдено canonical роликов: ${canonicalOutputCount}, ожидалось 120.`,
     );
     return merged;
   };

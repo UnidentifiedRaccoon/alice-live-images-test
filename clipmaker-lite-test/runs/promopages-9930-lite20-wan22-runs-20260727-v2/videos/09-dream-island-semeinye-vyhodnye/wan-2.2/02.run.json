@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "09-dream-island-semeinye-vyhodnye-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+      "prompt": "The ride car glides smoothly a short distance downward along its swing arc at a moderate speed; passengers lean subtly with the motion while raised arms remain up and joyful smiles hold. Fixed camera. By the final frames, the car reaches the lower point of this short arc and gently slows, with the excited family group still clearly visible."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "762b9811fc10bbb26a32be6860ad85cbf0167878cb2762f6341d4a8a45b185c2",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "c7449e95ff0f4dd59141c9c34eb5fdff",
+  "provider_session_hash": "promopages9856-4c206ac58600",
+  "submitted_at": "2026-07-27T11:24:07Z",
+  "completed_at": "2026-07-27T11:25:08Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 499018,
+    "sha256": "577cc7428d586b6a5eb0db811573bbd9ec20c131a8799c06a20d6ed731955014"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-09-dream-island-semeinye-vyhodnye-02-wan-2-2",
+  "lite_result_sha256": "4ccafd07fbd31ee9c411df706c2f621e35bc34077352e450a869cec73c6a3437",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

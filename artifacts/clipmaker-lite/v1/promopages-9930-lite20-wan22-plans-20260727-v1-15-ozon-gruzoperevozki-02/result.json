@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ],
+    "inputs_sha256": "sha256:889cb77667e701629b89c68e5b3450dd2ff75a7463b98b5dafe928e78abb2fc4",
+    "execution_fingerprint": "sha256:0783ef04326727d1f20a51294cbabc7ea4ac413d2bed3abb440bde0a728341a3",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa333-0a15-7a40-91f7-73747d9be284"
+    },
+    "authored_payload_sha256": "2c9d435e6e9834a12c44cd61fb3681c5a68bfa5c66ce98a5160867936b50dc52",
+    "draft_file_sha256": "5109e2d99e4f78ce74fce4793d2cb61a6ba6e65a42b48485c59dde8af602f7fd"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+      "sha256": "3110ee3c3dfdcb681ee41e9fa739a24677ac57c4d76bcaeea9c936f04ecba885",
+      "bytes": 712492
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/15-ozon-gruzoperevozki/content.json",
+      "sha256": "8db6b2f4574873e79637ffe61bc460949ff25245764c809a789b02b5d083cdc1",
+      "bytes": 11537,
+      "locator": {
+        "article_id": "15-ozon-gruzoperevozki",
+        "title": "Грузоперевозки с предсказуемым доходом? Что? Да!",
+        "lead": "Станьте частью логистики крупного маркетплейса",
+        "image_id": "02",
+        "block_index": 14,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.png",
+        "manifest_file_path": "articles/15-ozon-gruzoperevozki/02.png",
+        "current_heading": {
+          "block_index": 7,
+          "level": 2,
+          "text": "Почему стоит попробовать Вози Ozon"
+        },
+        "nearest_text_before": {
+          "block_index": 13,
+          "type": "paragraph",
+          "text": "Удобное мобильное приложение. С ним вы всегда будете в курсе новых заказов, сможете быстро на них реагировать и управлять рейсами прямо с телефона."
+        },
+        "nearest_text_after": {
+          "block_index": 15,
+          "type": "heading",
+          "text": "Как начать работать на платформе"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "На статичном голубом фоне показан смартфон с экраном списка торгов и вынесенной на передний план карточкой грузового лота.",
+      "Главные смысловые детали карточки — маршрут между хабами, дата, параметры груза, температурный режим и существующие синие плашки шага и максимальной ставки.",
+      "Это интерфейс приложения: текст, числа, даты, значки, расположение элементов и состояние контролов должны оставаться неизменными."
+    ],
+    "article_context": "Изображение завершает блок о преимуществах удобного мобильного приложения и наглядно показывает, что перевозчик может изучать параметры лота и ставку прямо с телефона; редакционный акцент — быстрое и понятное управление доступными рейсами.",
+    "structured_intent": {
+      "editorial_meaning": "Мобильное приложение позволяет быстро оценить условия грузового лота и управлять выбором рейса прямо с телефона.",
+      "primary_action": "Существующие элементы ставки на карточке лота получают единый мягкий оптический акцент.",
+      "terminal_state": "В последнем кадре плашки ставки остаются слегка визуально выделенными, а все данные и состояние интерфейса неизменны.",
+      "semantic_invariant": "Карточка остаётся неизменным предложением рейса с теми же условиями и доступным пользователю выбором."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "В течение 3,2 секунды камера остаётся неподвижной. Сразу начинается один мягкий синий оптический pulse на уже существующих плашках шага и максимальной ставки в передней карточке: яркость плавно нарастает, аккуратно проходит по обеим плашкам и к последним кадрам затухает до лёгкого устойчивого акцента. Все элементы интерфейса, данные и компоновка остаются неизменными.",
+      "positive_prompt": "Fixed camera. A single soft blue optical pulse gently brightens across the existing bid badges on the foreground lot card, then settles into a subtle steady emphasis by the final frames. Keep all UI text, numbers, glyphs, controls, and layout unchanged.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-09-dream-island-semeinye-vyhodnye-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+    "sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+    "width": 2400,
+    "height": 1600
+  },
+  "structured_intent": {
+    "editorial_meaning": "Совместное катание в «Острове Мечты» дарит семье искреннюю радость и яркие общие впечатления.",
+    "primary_action": "Кабина аттракциона плавно проходит нисходящий участок дуги качания вместе с пассажирами.",
+    "terminal_state": "Кабина достигает нижней точки короткого участка дуги и слегка замедляется, а улыбающиеся пассажиры с поднятыми руками остаются отчётливо видны.",
+    "semantic_invariant": "Пассажиры остаются радостными и вовлечёнными в совместное семейное развлечение до последнего кадра."
+  },
+  "prompt": {
+    "positive": "The ride car glides smoothly a short distance downward along its swing arc at a moderate speed; passengers lean subtly with the motion while raised arms remain up and joyful smiles hold. Fixed camera. By the final frames, the car reaches the lower point of this short arc and gently slows, with the excited family group still clearly visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02/result.json",
+    "sha256": "4ccafd07fbd31ee9c411df706c2f621e35bc34077352e450a869cec73c6a3437",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+      "article_context_sha256": "47c2112a5b1ed0b96ec4b50d9922b650e281333b00dc6e1f5d0a4e87a805c2f3",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

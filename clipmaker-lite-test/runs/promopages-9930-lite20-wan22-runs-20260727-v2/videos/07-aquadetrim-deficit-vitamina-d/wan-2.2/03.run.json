@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "07-aquadetrim-deficit-vitamina-d-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+      "prompt": "A steady wind sweeps across the hillside from left to right, bending the grass in one continuous wave while the camera remains fixed on the red house. By the final frames the gust eases and the grass stays gently angled, with the house fully visible beneath the unchanged overcast sky."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "4045731b1db29d9cfe4f1fe316da540b75a3f1cb4ed4cd9f8cfaa02520c96b86",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "2cb37c06e5df45a580484fbeb697f8af",
+  "provider_session_hash": "promopages9856-efbfccef7e4f",
+  "submitted_at": "2026-07-27T11:22:06Z",
+  "completed_at": "2026-07-27T11:23:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1200,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 368474,
+    "sha256": "1cbfee25384b46ccb58a754d91196b0f912a14fa292958acb494da75d2ba376b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-07-aquadetrim-deficit-vitamina-d-03-wan-2-2",
+  "lite_result_sha256": "fd2e9635abee876aa5f7c462ae5dd51efc35a3af7df250568fad1eb7d31c12bf",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

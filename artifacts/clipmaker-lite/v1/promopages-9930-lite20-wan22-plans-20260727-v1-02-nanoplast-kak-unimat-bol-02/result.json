@@ -1,0 +1,130 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ],
+    "inputs_sha256": "sha256:2f9391ec9cbc010ec095cdab7b71ff56b393f16785ee80bb66f78e201ae9f288",
+    "execution_fingerprint": "sha256:8c62778117f0a380162b77000ac02d2491f2fd57ee248223178b6e8585f449f6",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa332-621b-7bd1-b9d5-cfeba90eaf25"
+    },
+    "authored_payload_sha256": "19aad517fe5de53f80e72d77ac6553f91fb786fea1a6eedb2285fd17cb71efb7",
+    "draft_file_sha256": "2e457773a400462344151a2f252b5b8495b4085a0454160fc3562a878fe79b15"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+      "sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+      "bytes": 1653873
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/02-nanoplast-kak-unimat-bol/content.json",
+      "sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478",
+      "bytes": 17499,
+      "locator": {
+        "article_id": "02-nanoplast-kak-unimat-bol",
+        "title": "Как унимать боль в суставах: советы пожилым и не только",
+        "lead": "Рассказываем, как повысить качество жизни с гель-бальзамом и пластырем",
+        "image_id": "02",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.png",
+        "manifest_file_path": "articles/02-nanoplast-kak-unimat-bol/02.png",
+        "current_heading": {
+          "block_index": 10,
+          "level": 2,
+          "text": "Как поддерживать здоровье опорно-двигательного аппарата"
+        },
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "✅ Избегайте травм. Соблюдайте правила безопасности при занятиях спортом и подбирайте удобную обувь с хорошей амортизацией, которая не будет перегружать позвоночник и суставы ног. Если у вас тяжелая физическая работа, перед ней нужно выполнять упражнения на растяжку мышц."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "heading",
+          "text": "Как быстро и надолго снимать боль — даже хроническую"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Четыре женщины старшего возраста выполняют упражнения на ковриках перед зеркалом в светлом зале.",
+      "Они находятся в приподнятом положении корпуса с согнутыми коленями; руки неподвижно удерживаются за головой.",
+      "Коврики, гантели и зеркальные отражения формируют устойчивую групповую композицию, подходящую для небольшого контролируемого движения."
+    ],
+    "article_context": "Изображение стоит после рекомендаций о физической активности, разминке и безопасных упражнениях и перед разделом об облегчении боли. Оно поддерживает профилактический акцент статьи: умеренные занятия помогают сохранять подвижность и укреплять мышцы.",
+    "structured_intent": {
+      "editorial_meaning": "Умеренная физическая активность помогает поддерживать подвижность суставов и укреплять мышцы в любом возрасте.",
+      "primary_action": "Женщины выполняют один контролируемый подъём верхней части корпуса во время упражнения.",
+      "terminal_state": "Женщины завершают движение в устойчивом положении с корпусом немного выше исходного.",
+      "semantic_invariant": "Групповая тренировка остаётся спокойной, безопасной и посильной до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный 3,2-секундный кадр с неподвижной камерой. Женщины сразу начинают один медленный синхронный подъём плеч и верхней части корпуса небольшой амплитуды, не двигая руками. Движение развивается ровно без повторов и к последним кадрам мягко останавливается в устойчивом, немного более высоком положении.",
+      "positive_prompt": "With hands held still behind their heads, the women make one slow, controlled abdominal curl, lifting their shoulders slightly and steadily together. Fixed camera. They finish in a stable higher position, still calmly engaged in the exercise.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": null
+    }
+  ]
+}

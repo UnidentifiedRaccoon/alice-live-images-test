@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "17-level-michurinskiy-kvartira-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png",
+      "prompt": "A light breeze moves steadily across the park canopy and gently carries the visible fountain mist to the right as subtle ripples spread over the pond. Make a minimal slow push toward the fountain; by the final frames, the mist forms a soft rightward plume while the panoramic park-and-city view remains open and calm."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "ce9ed93576e3216b4950cb03fef590b50d9fb50d8d8906141182e1cb8c7cc4ee",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7189493e34e847099aacdf60d92a1f77",
+  "provider_session_hash": "promopages9856-34b232a87ac0",
+  "submitted_at": "2026-07-27T11:32:17Z",
+  "completed_at": "2026-07-27T11:33:47Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1376,
+    "height": 640,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 403759,
+    "sha256": "8b399ba047f6fa0257bb7c968f6d8f674fb25b36a7d2775a472c3006474cd600"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-17-level-michurinskiy-kvartira-02-wan-2-2",
+  "lite_result_sha256": "17ebb910ceb7983c347e95ca84405b142a0a78c07c94e549ba12e3604df32960",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

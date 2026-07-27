@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "08-tochka-ooo-ili-ip-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+      "prompt": "The red pen moves steadily across the current form line as the person completes one short handwritten entry, while the other hand keeps the paperwork still. Fixed camera; the tablet display remains unchanged. By the final frames, the pen reaches the end of the line and pauses above the completed entry, with both people still focused on the registration documents."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "bc518abd94c7aa0367bb25d0c76c8778de8814ba805a40d6ed3663ad3defa04a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6041fd6dd9bb45faaa86de854471c688",
+  "provider_session_hash": "promopages9856-3319651d1a0d",
+  "submitted_at": "2026-07-27T11:23:06Z",
+  "completed_at": "2026-07-27T11:24:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 295080,
+    "sha256": "a7fbae5e2ed4c48287bbb7847facb0fb56179d71cd398a88d8ed8f1bdd466e7c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-08-tochka-ooo-ili-ip-02-wan-2-2",
+  "lite_result_sha256": "fe8571bcff05a509cefc60cb72fee979d43b2de77090a27568dd985be476ff77",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

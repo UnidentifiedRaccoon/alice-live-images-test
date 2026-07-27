@@ -162,7 +162,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertEqual(len(selected_assets), 80 + comparison_count)
         self.assertFalse(selected_assets - tracked, selected_assets - tracked)
 
-    def test_additional_manifest_contains_20_unique_images_by_two_models(self):
+    def test_additional_manifest_contains_20_unique_images_by_three_models(self):
         if self.additional_manifest is None:
             self.skipTest("Final PROMOPAGES-9930 manifest has not been produced yet")
 
@@ -170,10 +170,10 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertEqual(manifest["ticket"], "PROMOPAGES-9930")
         self.assertEqual(manifest["article_count"], 20)
         self.assertEqual(manifest["image_count"], 20)
-        self.assertEqual(manifest["expected_outputs"], 40)
-        self.assertEqual(manifest["models"], MODEL_IDS[1:])
+        self.assertEqual(manifest["expected_outputs"], 60)
+        self.assertEqual(manifest["models"], MODEL_IDS)
         self.assertEqual(len(manifest["articles"]), 20)
-        self.assertEqual(len(manifest["outputs"]), 40)
+        self.assertEqual(len(manifest["outputs"]), 60)
 
         base_digests = {
             article["selected_image"]["sha256"] for article in self.manifest["articles"]
@@ -195,7 +195,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                 source_paths.add(image["source_path"])
 
                 outputs = record["outputs"]
-                self.assertEqual([output["model_id"] for output in outputs], MODEL_IDS[1:])
+                self.assertEqual([output["model_id"] for output in outputs], MODEL_IDS)
                 for output in outputs:
                     self.assertIn(output["status"], {"succeeded", "verification-failed"})
                     self.assertTrue(output["positive_prompt"].strip())
@@ -207,9 +207,17 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
 
         self.assertEqual(len(source_digests), 20)
         self.assertEqual(len(source_paths), 20)
-        self.assertEqual(len(video_paths), 40)
-        self.assertEqual(output_count, 40)
+        self.assertEqual(len(video_paths), 60)
+        self.assertEqual(output_count, 60)
         self.assertEqual(20 + len(source_digests), 40)
+        self.assertEqual(len(self.manifest["outputs"]) + len(manifest["outputs"]), 120)
+        self.assertEqual(
+            sum(
+                len(article.get("comparison_outputs", []))
+                for article in self.manifest["articles"]
+            ),
+            2,
+        )
 
     def test_all_demo_pages_keep_step_four_and_add_step_five(self):
         step_pattern = re.compile(r'<span class="viewSwitchStep" lang="en">Step №(\d+)</span>')
@@ -220,7 +228,8 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                 self.assertEqual(step_pattern.findall(html), ["1", "2", "3", "4", "5"])
                 self.assertIn('<strong class="viewSwitchTitle">Разметка</strong>', html)
                 self.assertIn('<strong class="viewSwitchTitle">Clipmaker Lite</strong>', html)
-                self.assertIn("40 изображений", html)
+                self.assertIn("40 изображений · 3 модели", html)
+                self.assertNotIn("40 изображений · 2–3 модели", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
 
     def test_showcase_uses_manifest_and_only_renders_active_videos(self):
@@ -233,8 +242,11 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         )
         self.assertIn("promopages-9930-manifest.json", app)
         self.assertIn("EXPECTED_ADDITIONAL_IMAGE_COUNT = 20", app)
-        self.assertIn("EXPECTED_ADDITIONAL_OUTPUT_COUNT = 40", app)
+        self.assertIn("EXPECTED_ADDITIONAL_OUTPUT_COUNT = 60", app)
         self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 40", app)
+        self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 120", app)
+        self.assertIn("EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2", app)
+        self.assertIn("const ADDITIONAL_MODEL_ORDER = MODEL_ORDER;", app)
         self.assertIn("repository-raw", app)
         self.assertIn("raw.githubusercontent.com", app)
         self.assertIn('preload="metadata"', app)
@@ -257,7 +269,8 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn("100 + 2", html)
+        self.assertIn("120 + 2", html)
+        self.assertIn('src="app.js?v=5"', html)
         self.assertIn('id="imageSelect"', html)
         self.assertIn('id="previousImage"', html)
         self.assertIn('id="nextImage"', html)

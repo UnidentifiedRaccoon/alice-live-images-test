@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "03-zov-resheniia-dlia-kuhni-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+      "prompt": "The raised built-in outlet module on the right countertop smoothly retracts straight down at an even pace until it sits flush with the surface in the final frames. A very subtle push-in keeps the module clearly visible; the countertop ends clean and unobstructed."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "5838c508872ba7204b648b10161d08480cc07047ff604d56f804395ae80866f7",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "a9909b7268464e678fbc407355635578",
+  "provider_session_hash": "promopages9856-13ed17f358c1",
+  "submitted_at": "2026-07-27T11:17:05Z",
+  "completed_at": "2026-07-27T11:18:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 197459,
+    "sha256": "3a6d9a1a3b84e3310ad725443128d4ff61b357148e9ea57104776c8c317d2796"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-03-zov-resheniia-dlia-kuhni-03-wan-2-2",
+  "lite_result_sha256": "05b1a70f064d37054b402877cd80f119a25d2449214d257090b919303c7da600",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "01-pharmocean-magiia-magniia-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v1/videos/01-pharmocean-magiia-magniia/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v1/videos/01-pharmocean-magiia-magniia/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "prompt": "With the camera fixed, she slowly lowers both tense hands a short distance away from her face while keeping her eyes wide and teeth clenched. By the final frames, her hands hover near shoulder level and her stressed expression remains unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "e58cfb8f86a99b6ea4288d26fb1e867f5d9eb8800b464067560767f07d453770",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "402c2935aadb41298baf3e05a1337f5c",
+  "provider_session_hash": "promopages9856-c536396c4038",
+  "submitted_at": "2026-07-27T11:07:27Z",
+  "completed_at": "2026-07-27T11:12:28Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v1-01-pharmocean-magiia-magniia-02-wan-2-2",
+  "lite_result_sha256": "c01cfd9f5f5956e5b9054c38e8c12ae46901e00b750d6a2be3da292ae2d5151c",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

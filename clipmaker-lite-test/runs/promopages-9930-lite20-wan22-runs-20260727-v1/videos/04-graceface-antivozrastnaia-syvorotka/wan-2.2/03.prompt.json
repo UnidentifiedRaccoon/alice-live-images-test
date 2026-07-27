@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png",
+    "sha256": "0bf4eb79ddca3f760f4c1e887648b5967f0f863c955eb7b6f461949337892a2e",
+    "width": 1280,
+    "height": 800
+  },
+  "structured_intent": {
+    "editorial_meaning": "Оживление подчёркивает тревожное осознание героиней заметных возрастных изменений кожи, которое побуждает её искать более подходящий уход.",
+    "primary_action": "Женщина внимательно переводит взгляд по своему отражению и сосредотачивается на проблемной области щеки.",
+    "terminal_state": "В последнем кадре её взгляд неподвижно сфокусирован на щеке, а выражение лица остаётся явно обеспокоенным.",
+    "semantic_invariant": "Она до конца остаётся обеспокоенной состоянием кожи и критически оценивает своё отражение."
+  },
+  "prompt": {
+    "positive": "She slowly scans her reflection with her eyes, then settles her gaze on her cheek as her brow tightens slightly. Her hand and the mirror remain still, and she ends visibly concerned. Fixed camera.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03/result.json",
+    "sha256": "6f7e16438ffca813bb0b37b4756cc6caf91769a22e47a45551bc91aace0554a0",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "0bf4eb79ddca3f760f4c1e887648b5967f0f863c955eb7b6f461949337892a2e",
+      "article_context_sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

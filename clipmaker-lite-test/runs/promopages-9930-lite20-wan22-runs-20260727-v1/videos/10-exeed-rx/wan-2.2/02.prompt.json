@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v1-10-exeed-rx-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+    "sha256": "9bf1b886665d89dd34b9137d205331c749fa53257cf6a1d69e8b21eaf8c074d3",
+    "width": 1600,
+    "height": 900
+  },
+  "structured_intent": {
+    "editorial_meaning": "EXEED RX сочетает выразительный дизайн с практичной уверенностью в повседневном движении.",
+    "primary_action": "Автомобиль ровно едет вперёд по городской эстакаде.",
+    "terminal_state": "К последнему кадру автомобиль заметно продвинулся по своей полосе и сохраняет устойчивое направленное движение.",
+    "semantic_invariant": "EXEED RX остаётся уверенным, премиальным и практичным автомобилем без ощущения компромисса между стилем и удобством."
+  },
+  "prompt": {
+    "positive": "The EXEED RX drives steadily left along its lane as the wheels rotate and the bridge scenery flows smoothly past. Track the car with one subtle lateral camera move, keeping it continuously clear and prominent. By the final frames, it has advanced several meters with a stable, composed stance and uninterrupted forward motion.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02/result.json",
+    "sha256": "530d86485af5d418e78352129aaf336edb8b65fb417c260e6efdc32716dac7de",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "9bf1b886665d89dd34b9137d205331c749fa53257cf6a1d69e8b21eaf8c074d3",
+      "article_context_sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

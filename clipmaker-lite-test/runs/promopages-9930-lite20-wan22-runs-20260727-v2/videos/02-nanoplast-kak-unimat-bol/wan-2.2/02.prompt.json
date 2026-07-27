@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-02-nanoplast-kak-unimat-bol-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+    "sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+    "width": 1600,
+    "height": 900
+  },
+  "structured_intent": {
+    "editorial_meaning": "Умеренная физическая активность помогает поддерживать подвижность суставов и укреплять мышцы в любом возрасте.",
+    "primary_action": "Женщины выполняют один контролируемый подъём верхней части корпуса во время упражнения.",
+    "terminal_state": "Женщины завершают движение в устойчивом положении с корпусом немного выше исходного.",
+    "semantic_invariant": "Групповая тренировка остаётся спокойной, безопасной и посильной до последнего кадра."
+  },
+  "prompt": {
+    "positive": "With hands held still behind their heads, the women make one slow, controlled abdominal curl, lifting their shoulders slightly and steadily together. Fixed camera. They finish in a stable higher position, still calmly engaged in the exercise.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02/result.json",
+    "sha256": "6cf8ca2e03619b556229e41fcc4160cc6850b6a928341c277dd2dfd538c3de03",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+      "article_context_sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

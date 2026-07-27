@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "06-4lapy-koshachii-napolnitel-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+      "prompt": "The cat calmly sniffs across the litter surface, moving its nose slightly forward and to one side as its whiskers twitch. Fixed camera. By the final frames, its nose rests close to the granules and it remains relaxed and interested."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "5137e9fae478952b38e0376ca9ffebb81178942caff88c422464cda9f593b6cf",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "e91b5b813241474ab6d244575f6bb610",
+  "provider_session_hash": "promopages9856-adfaa7dc6663",
+  "submitted_at": "2026-07-27T11:20:36Z",
+  "completed_at": "2026-07-27T11:22:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 944,
+    "height": 944,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 357162,
+    "sha256": "688241a2436b215e8bf8be6c07dc967e64094f0e9ddf46e03ccf43466530d143"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-06-4lapy-koshachii-napolnitel-02-wan-2-2",
+  "lite_result_sha256": "f3536b695da2939916358266606ad4a9fe96cc351ebe7b165f4953d9d3122d7c",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
