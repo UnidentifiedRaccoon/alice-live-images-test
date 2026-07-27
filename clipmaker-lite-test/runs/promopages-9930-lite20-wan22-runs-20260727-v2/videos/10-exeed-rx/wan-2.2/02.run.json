@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "10-exeed-rx-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+      "prompt": "The EXEED RX drives steadily left along its lane as the wheels rotate and the bridge scenery flows smoothly past. Track the car with one subtle lateral camera move, keeping it continuously clear and prominent. By the final frames, it has advanced several meters with a stable, composed stance and uninterrupted forward motion."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "33c4839e978b628434f131a8e6253432ccdde23571b7a68d7a5654858d9ea967",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "fa64b619fe56474baf6f3e8abb4ff4b5",
+  "provider_session_hash": "promopages9856-96a4de373e5a",
+  "submitted_at": "2026-07-27T11:25:08Z",
+  "completed_at": "2026-07-27T11:26:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 483498,
+    "sha256": "4e01b6c2b3b5c0cbf3808a81c94d7913f392bc3c7ce8c04f484e01f5f32558c5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-10-exeed-rx-02-wan-2-2",
+  "lite_result_sha256": "530d86485af5d418e78352129aaf336edb8b65fb417c260e6efdc32716dac7de",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

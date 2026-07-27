@@ -1,0 +1,129 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ],
+    "inputs_sha256": "sha256:43a8ff7ac4cd016829efe1be032800877e1bd4cddc36e7f38fe15368517ee407",
+    "execution_fingerprint": "sha256:8dd1ad2c8ba9dd45e330e5081eca4530c80a000cdb58ff2b5d834637799e5bfb",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa332-b4ae-78a3-aa32-cbb08a784aea"
+    },
+    "authored_payload_sha256": "277e4a2160a63adb8f9a7fbcba1fefacaae6506bafc44714f0d397d26dc7afb9",
+    "draft_file_sha256": "28bbcaabae25b12178b8074d20c06b05c3153270dcea141ee27353763b7f46bc"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+      "sha256": "af38d39f1f7690a802a4bcae49c81e043f071e77336147577e1cf321d4ac4078",
+      "bytes": 416675
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "02",
+        "block_index": 7,
+        "role": "article_image",
+        "caption": "Чтобы понять, подходит ли питомцу новый наполнитель, обратите внимание на его поведение. Если кошка без колебаний использует лоток, спокойно закапывает свои экскременты и не пытается справлять нужду в других местах, это хороший знак",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+        "current_heading": {
+          "block_index": 4,
+          "level": 3,
+          "text": "Совет №1. Выбирайте наполнители с активированным углём или другими натуральными абсорбентами"
+        },
+        "nearest_text_before": {
+          "block_index": 6,
+          "type": "paragraph",
+          "text": "Комкующийся наполнитель ДОМОСЕДЫ с гранулами активированного угля и ароматом трав впитывает влагу подобно губке. Благодаря этому свойству лоток остается свежим дольше обычного, а значит, подойдёт даже для самых привередливых кошек."
+        },
+        "nearest_text_after": {
+          "block_index": 8,
+          "type": "heading",
+          "text": "Совет №2. Обратите внимание на наполнители с добавлением ароматизаторов"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Полосатая кошка спокойно наклонила голову над открытым лотком и обнюхивает светлый гранулированный наполнитель.",
+      "Крупный план удерживает морду, усы и поверхность наполнителя; естественно подвижны голова, нос и усы."
+    ],
+    "article_context": "Изображение сопровождает совет о наполнителях с натуральными абсорбентами и показывает, как по спокойному поведению кошки понять, что новый наполнитель ей подходит.",
+    "structured_intent": {
+      "editorial_meaning": "Спокойный интерес кошки к наполнителю служит признаком того, что он комфортен и подходит питомцу.",
+      "primary_action": "Кошка спокойно обнюхивает поверхность наполнителя.",
+      "terminal_state": "Нос кошки останавливается близко к гранулам, а её поза остаётся спокойной и заинтересованной.",
+      "semantic_invariant": "Кошка до конца остаётся расслабленной и принимает наполнитель без признаков отторжения."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды кошка без колебаний продолжает исследовать наполнитель: сразу начинает медленно вести носом над гранулами, слегка смещает голову в сторону, усы естественно подрагивают. Камера неподвижна, чтобы сохранить крупный план поведения и поверхности лотка. К финалу нос останавливается близко к наполнителю, а поза остаётся спокойной и заинтересованной.",
+      "positive_prompt": "The cat calmly sniffs across the litter surface, moving its nose slightly forward and to one side as its whiskers twitch. Fixed camera. By the final frames, its nose rests close to the granules and it remains relaxed and interested.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "13-ilinka-elitnyi-zhk-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+      "prompt": "A light breeze gently sways the foreground leaves and thin branches in one continuous motion while the camera stays fixed on the residence. The movement eases near the end, with the façade still fully visible and dominant."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "92f6a00da9729e88542112f849e827fd91a10bc3404bd482113ae93ef43b0b40",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "047c2fde1a9741c3a3f811d05c7bc290",
+  "provider_session_hash": "promopages9856-3ceeda0d9149",
+  "submitted_at": "2026-07-27T11:28:14Z",
+  "completed_at": "2026-07-27T11:29:14Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 441885,
+    "sha256": "889776ea04793b07a43320f3f04b16461d1f01b6564a9a282a8f8732c27f0c96"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-13-ilinka-elitnyi-zhk-02-wan-2-2",
+  "lite_result_sha256": "5370732693288ec8d6c9fc498c69ce7978ca5d1dbbbf06361ac8d9716d0ebe06",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

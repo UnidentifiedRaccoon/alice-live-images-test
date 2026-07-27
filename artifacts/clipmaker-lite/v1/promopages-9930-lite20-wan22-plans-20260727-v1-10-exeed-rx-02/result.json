@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ],
+    "inputs_sha256": "sha256:dbe08b827d6795758a1681d28d305b46a75d0aba00dfa08c4a542056ba87fc3e",
+    "execution_fingerprint": "sha256:9903f422f5ebec3f720c743da9bb8ad6442faee8e56f5fce41c870dd604464fa",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa32d-e64f-7d80-8a1e-e8e86890026e"
+    },
+    "authored_payload_sha256": "347db403b11a01dfb25477163370d42ef6810682a0580a3a7d1744366541a40a",
+    "draft_file_sha256": "48e23a709a6694a71ee5cfb95299797e2762b3a983ddf0e93987e9dd90f6a887"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+      "sha256": "9bf1b886665d89dd34b9137d205331c749fa53257cf6a1d69e8b21eaf8c074d3",
+      "bytes": 156610
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/10-exeed-rx/content.json",
+      "sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d",
+      "bytes": 26034,
+      "locator": {
+        "article_id": "10-exeed-rx",
+        "title": "7 фактов об EXEED RX, в котором продуманы все детали",
+        "lead": "Здесь технологии значительно облегчают вождение.",
+        "image_id": "02",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/10-exeed-rx/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "В EXEED RX выбирать не придется, этот автомобиль объединяет стиль, мощность и удобство, не заставляя вас отказываться от чего-то важного. Рассказываем о семи неоспоримых преимуществах премиального кросс-купе."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "Эффектный, но практичный дизайн"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Серый EXEED RX показан в переднем трёхчетвертном ракурсе на городской эстакаде; автомобиль ориентирован и движется влево.",
+      "Кузов и водитель остаются отчётливо видимыми, колёса вращаются, а размытая дорога и мостовой фон поддерживают ощущение ровного хода."
+    ],
+    "article_context": "Изображение открывает переход от общего тезиса статьи об EXEED RX без компромиссов к разделу об эффектном, но практичном дизайне. Движущийся кросс-купе демонстрирует выразительный силуэт в реальной городской поездке, соединяя стиль с повседневной применимостью.",
+    "structured_intent": {
+      "editorial_meaning": "EXEED RX сочетает выразительный дизайн с практичной уверенностью в повседневном движении.",
+      "primary_action": "Автомобиль ровно едет вперёд по городской эстакаде.",
+      "terminal_state": "К последнему кадру автомобиль заметно продвинулся по своей полосе и сохраняет устойчивое направленное движение.",
+      "semantic_invariant": "EXEED RX остаётся уверенным, премиальным и практичным автомобилем без ощущения компромисса между стилем и удобством."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный 3,2-секундный проезд начинается сразу: автомобиль ровно движется влево с умеренной скоростью, колёса естественно вращаются, дорожное полотно и элементы моста плавно смещаются назад. Камера выполняет одно лёгкое боковое сопровождение, удерживая EXEED RX главным и постоянно узнаваемым объектом. К финальным кадрам машина заметно проходит несколько метров по своей полосе, сохраняя устойчивый ход и собранный силуэт без дополнительного манёвра.",
+      "positive_prompt": "The EXEED RX drives steadily left along its lane as the wheels rotate and the bridge scenery flows smoothly past. Track the car with one subtle lateral camera move, keeping it continuously clear and prominent. By the final frames, it has advanced several meters with a stable, composed stance and uninterrupted forward motion.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": null
+    }
+  ]
+}

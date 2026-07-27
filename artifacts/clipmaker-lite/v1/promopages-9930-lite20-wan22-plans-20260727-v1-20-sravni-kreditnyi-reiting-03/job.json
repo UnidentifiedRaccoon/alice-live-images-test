@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:ae51285a1ff3cef8b3bc3e4e810b5efdf2336d92567420f0d45b58bcdb1da6df",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+      "sha256": "a05883165528b8100d5b5f82e4d92622c52c01b643e774ccbd9439c5210fa77e",
+      "bytes": 169080
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "03",
+        "block_index": 11,
+        "role": "article_image",
+        "caption": "Ввести данные достаточно один раз — далее они будут обновляться автоматически каждый месяц",
+        "file": "03.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/03.png",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "Отследит ваш кредитный рейтинг"
+        },
+        "nearest_text_before": {
+          "block_index": 10,
+          "type": "paragraph",
+          "text": "Узнать свой кредитный рейтинг можно в сервисе Сравни. Для этого нужно войти на сайт с помощью номера телефона и авторизоваться на сайте через Госуслуги — все данные подгрузятся автоматически."
+        },
+        "nearest_text_after": {
+          "block_index": 12,
+          "type": "heading",
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03/result.json"
+  }
+}

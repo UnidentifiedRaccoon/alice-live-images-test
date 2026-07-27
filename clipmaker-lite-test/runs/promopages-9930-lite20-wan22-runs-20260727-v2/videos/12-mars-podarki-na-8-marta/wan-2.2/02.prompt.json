@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-12-mars-podarki-na-8-marta-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+    "sha256": "f840b7fe0de8c5464ca79918066bccadc33cf786bdaece49ba8644eed2339f46",
+    "width": 1999,
+    "height": 1334
+  },
+  "structured_intent": {
+    "editorial_meaning": "Тщательно выбранный аромат становится приятным личным подарком и сохраняет романтическую связь с дарителем.",
+    "primary_action": "Женщина подносит флакон немного ближе и спокойно вдыхает аромат.",
+    "terminal_state": "Флакон остановлен рядом с лицом, глаза женщины закрыты, а её мягкая улыбка стала чуть заметнее.",
+    "semantic_invariant": "Она до последнего кадра остаётся расслабленной и довольной ароматом, воспринимая его как приятный личный подарок."
+  },
+  "prompt": {
+    "positive": "She slowly lifts the perfume bottle slightly closer without touching her face, takes a gentle breath with her eyes closed, and her soft smile subtly deepens. Fixed camera; by the final frame she is calmly savoring the scent, with the bottle clearly visible beside her face.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02/result.json",
+    "sha256": "c701802c820c9818cca8966056e0ef26e4b62d3187cdd1901d87983d3da34d6b",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "f840b7fe0de8c5464ca79918066bccadc33cf786bdaece49ba8644eed2339f46",
+      "article_context_sha256": "b81293f85a15bc1c24f689a7252112450a9767fe75717a9e12841134a5b36ef7",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

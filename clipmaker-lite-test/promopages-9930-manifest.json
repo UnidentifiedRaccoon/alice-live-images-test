@@ -2,9 +2,9 @@
   "schema_version": 1,
   "manifest_role": "one-new-image-per-article-extension",
   "ticket": "PROMOPAGES-9930",
-  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "batch_id": "promopages-9930-lite20-all-models-20260727-v1",
   "agent_id": "clipmaker-lite",
-  "updated_at": "2026-07-26T20:20:43Z",
+  "updated_at": "2026-07-27T11:38:39Z",
   "extends_manifest": "clipmaker-lite-test/manifest.json",
   "merge_contract": {
     "article_key": [
@@ -24,28 +24,35 @@
     "preserve_base_outputs": true
   },
   "models": [
+    "alibaba/wan-2.2",
     "alibaba/wan-2.7",
     "google/veo-3.1-lite"
   ],
   "article_count": 20,
   "image_count": 20,
   "new_unique_image_count": 20,
-  "expected_outputs": 40,
+  "expected_outputs": 60,
   "cost": {
     "currency": "USD",
-    "base_estimate_usd": 14.0,
+    "original_20x2_estimate_usd": 14.0,
+    "wan22_addon_budget_reservation_usd": 6.0,
     "hard_budget_cap_usd": 20.0,
-    "accounting_cost_per_output_usd": 0.35,
-    "planned_paid_submissions": 40,
-    "maximum_paid_submissions": 40,
-    "maximum_estimated_cost_usd": 14.0,
-    "cap_headroom_usd": 6.0,
+    "maximum_reserved_total_usd": 20.0,
+    "wan22_exact_usd_unit_cost_known": false,
+    "wan22_local_display_estimate_rub_per_output": [
+      8,
+      10
+    ],
+    "wan22_planned_paid_submissions": 20,
+    "wan22_maximum_paid_submissions": 21,
+    "wan22_intentional_retry_allowance": 1,
+    "failed_canary_batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
     "automatic_paid_retries": false,
-    "retry_policy": "immutable entries may submit at most once; resume only polls an already submitted job, and any paid retry requires a separately budgeted namespace"
+    "retry_policy": "each immutable Wan 2.2 entry may submit at most once; resume only polls its recorded legacy session, and any intentional paid retry requires a new separately budgeted namespace"
   },
   "status_summary": {
-    "verification-failed": 20,
-    "succeeded": 20
+    "succeeded": 40,
+    "verification-failed": 20
   },
   "acceptance_policy": {
     "allow_contract_warnings": true,
@@ -54,10 +61,11 @@
       "verification-failed"
     ],
     "preserve_recorded_status": true,
-    "requires_mp4_and_media": true
+    "requires_mp4_and_media": true,
+    "wan22_requires_strict_conformance": true
   },
-  "accepted_output_count": 40,
-  "conforming_output_count": 20,
+  "accepted_output_count": 60,
+  "conforming_output_count": 40,
   "contract_warning_summary": {
     "output_count": 20,
     "by_model": {
@@ -147,6 +155,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "01-pharmocean-magiia-magniia",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+              "sample_id": "01-pharmocean-magiia-magniia-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-01-pharmocean-magiia-magniia-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "For the full 3.2-second fixed-camera shot, both hands begin lowering immediately and evenly in one small, symmetrical motion, staying separated from the face. The movement gently decelerates near the end; the final frame clearly shows both hands hovering around shoulder level while the woman remains visibly tense and overwhelmed.",
+              "positive_prompt": "With the camera fixed, she slowly lowers both tense hands a short distance away from her face while keeping her eyes wide and teeth clenched. By the final frames, her hands hover near shoulder level and her stressed expression remains unchanged.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/01-pharmocean-magiia-magniia/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/01-pharmocean-magiia-magniia/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/01-pharmocean-magiia-magniia/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 331564,
+                "sha256": "02738fb2506760f0dff7a4fa5f8ec59e2f4df3b60e2ffcd82efaea06cc071f9d"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "01-pharmocean-magiia-magniia",
               "image_id": "02",
@@ -247,7 +305,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "The animation reinforces stress as a recognizable sign of bodily strain within an article explaining magnesium’s calming role and its wider importance to health.",
+              "primary_action": "The woman lowers both raised hands slightly away from her face.",
+              "terminal_state": "Both hands hover near shoulder level, clear of her face, while her wide-eyed, clenched-teeth expression remains visible.",
+              "semantic_invariant": "She remains visibly stressed and overwhelmed through the last frame."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-621e-74f3-96e1-0bd6475aa406"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+              "article_context_sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a"
+            }
+          }
         }
       ]
     },
@@ -326,6 +421,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "02-nanoplast-kak-unimat-bol",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+              "sample_id": "02-nanoplast-kak-unimat-bol-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-02-nanoplast-kak-unimat-bol-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Непрерывный 3,2-секундный кадр с неподвижной камерой. Женщины сразу начинают один медленный синхронный подъём плеч и верхней части корпуса небольшой амплитуды, не двигая руками. Движение развивается ровно без повторов и к последним кадрам мягко останавливается в устойчивом, немного более высоком положении.",
+              "positive_prompt": "With hands held still behind their heads, the women make one slow, controlled abdominal curl, lifting their shoulders slightly and steadily together. Fixed camera. They finish in a stable higher position, still calmly engaged in the exercise.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1264,
+                "height": 704,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 432038,
+                "sha256": "7578372ff21e01b4f3ebb33c8d59d523804e6b00406df66d344ac9e587992185"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "02-nanoplast-kak-unimat-bol",
               "image_id": "02",
@@ -424,7 +569,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Умеренная физическая активность помогает поддерживать подвижность суставов и укреплять мышцы в любом возрасте.",
+              "primary_action": "Женщины выполняют один контролируемый подъём верхней части корпуса во время упражнения.",
+              "terminal_state": "Женщины завершают движение в устойчивом положении с корпусом немного выше исходного.",
+              "semantic_invariant": "Групповая тренировка остаётся спокойной, безопасной и посильной до последнего кадра."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-621b-7bd1-b9d5-cfeba90eaf25"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+              "article_context_sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478"
+            }
+          }
         }
       ]
     },
@@ -503,6 +685,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "03-zov-resheniia-dlia-kuhni",
+              "image_id": "03",
+              "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+              "sample_id": "03-zov-resheniia-dlia-kuhni-03",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-03-zov-resheniia-dlia-kuhni-03-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Один непрерывный кадр на 3,2 секунды. Сразу начинается плавное вертикальное втягивание поднятого розеточного модуля в правой части столешницы. Камера выполняет едва заметное приближение к этой зоне, чтобы маленькое действие оставалось читаемым, не меняя общей фронтальной композиции. Модуль движется равномерно без рывка и к последним кадрам полностью уходит в столешницу, оставляя её ровной и свободной.",
+              "positive_prompt": "The raised built-in outlet module on the right countertop smoothly retracts straight down at an even pace until it sits flush with the surface in the final frames. A very subtle push-in keeps the module clearly visible; the countertop ends clean and unobstructed.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 197459,
+                "sha256": "3a6d9a1a3b84e3310ad725443128d4ff61b357148e9ea57104776c8c317d2796"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "03-zov-resheniia-dlia-kuhni",
               "image_id": "03",
@@ -603,7 +835,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Встроенная розетка помогает сохранить кухню функциональной и визуально аккуратной: после использования модуль исчезает из рабочей зоны вместе с лишними проводами.",
+              "primary_action": "Поднятый встроенный розеточный модуль убирается внутрь столешницы.",
+              "terminal_state": "Розеточный модуль полностью скрыт и находится заподлицо со столешницей.",
+              "semantic_invariant": "Кухня остаётся упорядоченным, комфортным пространством без видимых проводов и лишних деталей."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-621a-79f3-9c23-c04b09ff91ce"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+              "article_context_sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064"
+            }
+          }
         }
       ]
     },
@@ -682,6 +951,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+              "image_id": "03",
+              "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png",
+              "sample_id": "04-graceface-antivozrastnaia-syvorotka-03",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-04-graceface-antivozrastnaia-syvorotka-03-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "На протяжении 3,2 секунды камера неподвижна. Женщина без движения головы и рук медленно переводит взгляд по своему отражению к области щеки; к финалу взгляд останавливается, а нахмуренные брови чуть сильнее подчёркивают тревогу. Рука у лица и зеркало остаются неподвижными, заданная обеспокоенность сохраняется до последнего кадра.",
+              "positive_prompt": "She slowly scans her reflection with her eyes, then settles her gaze on her cheek as her brow tightens slightly. Her hand and the mirror remain still, and she ends visibly concerned. Fixed camera.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.2/03.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.2/03.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.2/03.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1200,
+                "height": 736,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 305133,
+                "sha256": "5156699e8c300813250294d610cc6dc7862c5da33455ef123f2df41f4cfdb750"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "04-graceface-antivozrastnaia-syvorotka",
               "image_id": "03",
@@ -782,7 +1101,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Оживление подчёркивает тревожное осознание героиней заметных возрастных изменений кожи, которое побуждает её искать более подходящий уход.",
+              "primary_action": "Женщина внимательно переводит взгляд по своему отражению и сосредотачивается на проблемной области щеки.",
+              "terminal_state": "В последнем кадре её взгляд неподвижно сфокусирован на щеке, а выражение лица остаётся явно обеспокоенным.",
+              "semantic_invariant": "Она до конца остаётся обеспокоенной состоянием кожи и критически оценивает своё отражение."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-a15a-7473-b573-5bae28947b82"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "0bf4eb79ddca3f760f4c1e887648b5967f0f863c955eb7b6f461949337892a2e",
+              "article_context_sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084"
+            }
+          }
         }
       ]
     },
@@ -861,6 +1217,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "05-5ka-zhaloba-na-magazin",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+              "sample_id": "05-5ka-zhaloba-na-magazin-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-05-5ka-zhaloba-na-magazin-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Непрерывный фиксированный кадр на 3,2 секунды. Женщина сразу начинает медленно переводить голову и взгляд вправо вдоль витрины, будто сверяет товары и ценники. Движение небольшой амплитуды идёт ровно и завершается ближе к концу: её взгляд останавливается на одной упаковке или этикетке, внимательная настороженность сохраняется. Мужчина и тележка остаются почти неподвижными, не создавая второго действия.",
+              "positive_prompt": "The woman slowly turns her head and tracks her gaze to the right along the refrigerated shelf, then settles on one product label with sustained attentive concern. The man and cart remain still beside her. Fixed camera.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 349356,
+                "sha256": "388b1a34088fe037e8ac0409b2d322436bd9801b372a2c0761f6248f6c0f9ff2"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "05-5ka-zhaloba-na-magazin",
               "image_id": "02",
@@ -961,7 +1367,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Внимание покупателя к товарам в магазине может выявить проблему и стать отправной точкой для обращения, которое попадёт в систему поддержки.",
+              "primary_action": "Женщина внимательно переводит взгляд вдоль товаров на холодильной полке.",
+              "terminal_state": "В последнем кадре взгляд женщины остановлен на конкретном товаре или его этикетке.",
+              "semantic_invariant": "Пара остаётся сосредоточенной на проверке ассортимента, сохраняя спокойную внимательность до конца."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-b208-7500-a10b-e750eb4c1887"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+              "article_context_sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e"
+            }
+          }
         }
       ]
     },
@@ -1040,6 +1483,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "06-4lapy-koshachii-napolnitel",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+              "sample_id": "06-4lapy-koshachii-napolnitel-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-06-4lapy-koshachii-napolnitel-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "На протяжении 3,2 секунды кошка без колебаний продолжает исследовать наполнитель: сразу начинает медленно вести носом над гранулами, слегка смещает голову в сторону, усы естественно подрагивают. Камера неподвижна, чтобы сохранить крупный план поведения и поверхности лотка. К финалу нос останавливается близко к наполнителю, а поза остаётся спокойной и заинтересованной.",
+              "positive_prompt": "The cat calmly sniffs across the litter surface, moving its nose slightly forward and to one side as its whiskers twitch. Fixed camera. By the final frames, its nose rests close to the granules and it remains relaxed and interested.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 944,
+                "height": 944,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 357162,
+                "sha256": "688241a2436b215e8bf8be6c07dc967e64094f0e9ddf46e03ccf43466530d143"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "06-4lapy-koshachii-napolnitel",
               "image_id": "02",
@@ -1139,7 +1632,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Спокойный интерес кошки к наполнителю служит признаком того, что он комфортен и подходит питомцу.",
+              "primary_action": "Кошка спокойно обнюхивает поверхность наполнителя.",
+              "terminal_state": "Нос кошки останавливается близко к гранулам, а её поза остаётся спокойной и заинтересованной.",
+              "semantic_invariant": "Кошка до конца остаётся расслабленной и принимает наполнитель без признаков отторжения."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-b4ae-78a3-aa32-cbb08a784aea"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "af38d39f1f7690a802a4bcae49c81e043f071e77336147577e1cf321d4ac4078",
+              "article_context_sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a"
+            }
+          }
         }
       ]
     },
@@ -1218,6 +1748,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "07-aquadetrim-deficit-vitamina-d",
+              "image_id": "03",
+              "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+              "sample_id": "07-aquadetrim-deficit-vitamina-d-03",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-07-aquadetrim-deficit-vitamina-d-03-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Для 3,2-секундного непрерывного кадра камера неподвижна и удерживает дом в центре. Сразу начинается умеренный порыв слева направо: ближняя трава последовательно пригибается волной по склону, затем движение естественно ослабевает. К финальным кадрам трава остается слегка наклоненной и мягко колышется; дом непрерывно виден, а небо сохраняет плотную пасмурность.",
+              "positive_prompt": "A steady wind sweeps across the hillside from left to right, bending the grass in one continuous wave while the camera remains fixed on the red house. By the final frames the gust eases and the grass stays gently angled, with the house fully visible beneath the unchanged overcast sky.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1200,
+                "height": 736,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 368474,
+                "sha256": "1cbfee25384b46ccb58a754d91196b0f912a14fa292958acb494da75d2ba376b"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "07-aquadetrim-deficit-vitamina-d",
               "image_id": "03",
@@ -1318,7 +1898,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Малосолнечная северная среда помогает показать, почему место проживания может повышать риск дефицита витамина D.",
+              "primary_action": "Ветер одним непрерывным порывом проходит по траве на открытом склоне.",
+              "terminal_state": "После порыва трава остается слегка пригнутой, а красный дом полностью виден под неизменно облачным небом.",
+              "semantic_invariant": "Дом остается изолированным в прохладной пасмурной среде без появления солнечного света."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa32d-e64f-7401-9b47-9d6a80e0e3f4"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "70fe8232d0821f81d8ec937faf03876e55a8f89a882e4ba84d015efb9119066a",
+              "article_context_sha256": "0a82562e329d4e4cc667d02064d7f7b78c1d9435e19ef9a354fd78913f50c62c"
+            }
+          }
         }
       ]
     },
@@ -1397,6 +2014,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "08-tochka-ooo-ili-ip",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+              "sample_id": "08-tochka-ooo-ili-ip-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-08-tochka-ooo-ili-ip-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Непрерывный фиксированный кадр длительностью 3,2 секунды. Сразу начинается спокойное движение красной ручки слева направо по текущей строке формы; придерживающая документы рука лишь слегка корректирует нажим. Планшет и его экран остаются неподвижными и неизменными. К концу ручка достигает конца короткой записи и останавливается над строкой; документы, планшет и совместная сосредоточенность участников сохраняются в кадре.",
+              "positive_prompt": "The red pen moves steadily across the current form line as the person completes one short handwritten entry, while the other hand keeps the paperwork still. Fixed camera; the tablet display remains unchanged. By the final frames, the pen reaches the end of the line and pauses above the completed entry, with both people still focused on the registration documents.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 295080,
+                "sha256": "a7fbae5e2ed4c48287bbb7847facb0fb56179d71cd398a88d8ed8f1bdd466e7c"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "08-tochka-ooo-ili-ip",
               "image_id": "02",
@@ -1497,7 +2164,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Регистрация подходящей формы бизнеса показана как понятный процесс работы с документами при информационной поддержке.",
+              "primary_action": "Человек завершает одну короткую запись красной ручкой в регистрационной форме.",
+              "terminal_state": "Ручка достигает конца заполненной строки и останавливается над завершённой записью.",
+              "semantic_invariant": "Сцена до конца остаётся спокойным совместным оформлением бизнеса, а документы и информационная поддержка сохраняют центральное значение."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-fd78-7972-92ba-016d72be30f0"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "f834603785314f18c6444c26a0666b27d0715777789717229384fa717a53823f",
+              "article_context_sha256": "24d0fba8a293283a86e2daa0954db7390849cc7236a1fc9ae4018b8f19ac591c"
+            }
+          }
         }
       ]
     },
@@ -1576,6 +2280,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "09-dream-island-semeinye-vyhodnye",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+              "sample_id": "09-dream-island-semeinye-vyhodnye-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-09-dream-island-semeinye-vyhodnye-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "На протяжении 3,2 секунды кабина сразу начинает плавно проходить короткий нисходящий участок дуги с умеренной амплитудой. Камера неподвижна, чтобы движение аттракциона читалось относительно декораций. Пассажиры лишь слегка отклоняются по инерции, без новых или повторных жестов; поднятые руки и улыбки сохраняются. К финалу кабина достигает нижней точки выбранного короткого участка и мягко замедляется, а радостная семейная группа остаётся видимой.",
+              "positive_prompt": "The ride car glides smoothly a short distance downward along its swing arc at a moderate speed; passengers lean subtly with the motion while raised arms remain up and joyful smiles hold. Fixed camera. By the final frames, the car reaches the lower point of this short arc and gently slows, with the excited family group still clearly visible.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 499018,
+                "sha256": "577cc7428d586b6a5eb0db811573bbd9ec20c131a8799c06a20d6ed731955014"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "09-dream-island-semeinye-vyhodnye",
               "image_id": "02",
@@ -1676,7 +2430,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Совместное катание в «Острове Мечты» дарит семье искреннюю радость и яркие общие впечатления.",
+              "primary_action": "Кабина аттракциона плавно проходит нисходящий участок дуги качания вместе с пассажирами.",
+              "terminal_state": "Кабина достигает нижней точки короткого участка дуги и слегка замедляется, а улыбающиеся пассажиры с поднятыми руками остаются отчётливо видны.",
+              "semantic_invariant": "Пассажиры остаются радостными и вовлечёнными в совместное семейное развлечение до последнего кадра."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa32d-e64c-7380-a95b-e0ad0f1b6be2"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+              "article_context_sha256": "47c2112a5b1ed0b96ec4b50d9922b650e281333b00dc6e1f5d0a4e87a805c2f3"
+            }
+          }
         }
       ]
     },
@@ -1755,6 +2546,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "10-exeed-rx",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+              "sample_id": "10-exeed-rx-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-10-exeed-rx-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Непрерывный 3,2-секундный проезд начинается сразу: автомобиль ровно движется влево с умеренной скоростью, колёса естественно вращаются, дорожное полотно и элементы моста плавно смещаются назад. Камера выполняет одно лёгкое боковое сопровождение, удерживая EXEED RX главным и постоянно узнаваемым объектом. К финальным кадрам машина заметно проходит несколько метров по своей полосе, сохраняя устойчивый ход и собранный силуэт без дополнительного манёвра.",
+              "positive_prompt": "The EXEED RX drives steadily left along its lane as the wheels rotate and the bridge scenery flows smoothly past. Track the car with one subtle lateral camera move, keeping it continuously clear and prominent. By the final frames, it has advanced several meters with a stable, composed stance and uninterrupted forward motion.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1264,
+                "height": 704,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 483498,
+                "sha256": "4e01b6c2b3b5c0cbf3808a81c94d7913f392bc3c7ce8c04f484e01f5f32558c5"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "10-exeed-rx",
               "image_id": "02",
@@ -1853,7 +2694,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "EXEED RX сочетает выразительный дизайн с практичной уверенностью в повседневном движении.",
+              "primary_action": "Автомобиль ровно едет вперёд по городской эстакаде.",
+              "terminal_state": "К последнему кадру автомобиль заметно продвинулся по своей полосе и сохраняет устойчивое направленное движение.",
+              "semantic_invariant": "EXEED RX остаётся уверенным, премиальным и практичным автомобилем без ощущения компромисса между стилем и удобством."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa32d-e64f-7d80-8a1e-e8e86890026e"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "9bf1b886665d89dd34b9137d205331c749fa53257cf6a1d69e8b21eaf8c074d3",
+              "article_context_sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d"
+            }
+          }
         }
       ]
     },
@@ -1932,6 +2810,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "11-ostin-vesenniaia-kapsula",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+              "sample_id": "11-ostin-vesenniaia-kapsula-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-11-ostin-vesenniaia-kapsula-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-11-ostin-vesenniaia-kapsula-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Неподвижная камера сохраняет портретную композицию. С первых кадров женщина плавно и с небольшой амплитудой приподнимает подбородок, не отводя взгляд; рука за шеей остается неподвижной. Волосы и концы лент едва смещаются вслед за единым движением и естественно успокаиваются. К финалу подбородок немного поднят, взгляд по-прежнему направлен в камеру, а сдержанное уверенное выражение сохранено.",
+              "positive_prompt": "She slowly lifts her chin a little while maintaining direct eye contact and the same composed expression; her hand stays still behind her neck, and her hair and ribbon ends settle naturally. Fixed camera. By the final frame, her chin is slightly raised in a poised, confident portrait.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 944,
+                "height": 944,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 413036,
+                "sha256": "f0a187633ceb45e954743d450ff933f746fc273c9c03c489b11b1d5a730be287"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "11-ostin-vesenniaia-kapsula",
               "image_id": "02",
@@ -2031,7 +2959,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-11-ostin-vesenniaia-kapsula-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-11-ostin-vesenniaia-kapsula-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Оживление подчеркивает индивидуальность и спокойную уверенность героини как лица весенней коллекции O’STIN.",
+              "primary_action": "Героиня плавно приподнимает подбородок, сохраняя прямой взгляд.",
+              "terminal_state": "В последнем кадре подбородок слегка поднят, а взгляд остается направленным прямо в камеру.",
+              "semantic_invariant": "Сдержанная уверенность и непосредственный контакт со зрителем сохраняются до последнего кадра."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-11-ostin-vesenniaia-kapsula-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa32e-2e0f-7e22-adcf-0ab8f1e9d36c"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "370b9b469bbf9103c2fa8e4daa6a2bfa455db7f3747c68958424c6008589e1ee",
+              "article_context_sha256": "bf64a1c30bd54854d2f96edd2c6ba93474865ad684d2e6acc720ed45abb85de3"
+            }
+          }
         }
       ]
     },
@@ -2110,6 +3075,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "12-mars-podarki-na-8-marta",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+              "sample_id": "12-mars-podarki-na-8-marta-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-12-mars-podarki-na-8-marta-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Неподвижная камера сохраняет акцент на лице и флаконе. С первых кадров женщина плавно поднимает флакон немного ближе, не касаясь лица, и спокойно вдыхает аромат; движение кисти небольшой амплитуды развивается равномерно. Ближе к финалу рука останавливается, а улыбка едва заметно становится теплее. В последнем кадре глаза остаются закрытыми, выражение — спокойным и довольным, флакон хорошо виден рядом с лицом.",
+              "positive_prompt": "She slowly lifts the perfume bottle slightly closer without touching her face, takes a gentle breath with her eyes closed, and her soft smile subtly deepens. Fixed camera; by the final frame she is calmly savoring the scent, with the bottle clearly visible beside her face.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 377819,
+                "sha256": "b6f00726a0f270c75b8d7818881eb16c47655daf5a85f99867cc0b29ef1a7998"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "12-mars-podarki-na-8-marta",
               "image_id": "02",
@@ -2210,7 +3225,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Тщательно выбранный аромат становится приятным личным подарком и сохраняет романтическую связь с дарителем.",
+              "primary_action": "Женщина подносит флакон немного ближе и спокойно вдыхает аромат.",
+              "terminal_state": "Флакон остановлен рядом с лицом, глаза женщины закрыты, а её мягкая улыбка стала чуть заметнее.",
+              "semantic_invariant": "Она до последнего кадра остаётся расслабленной и довольной ароматом, воспринимая его как приятный личный подарок."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa32e-361a-74e1-a174-815944781dc9"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "f840b7fe0de8c5464ca79918066bccadc33cf786bdaece49ba8644eed2339f46",
+              "article_context_sha256": "b81293f85a15bc1c24f689a7252112450a9767fe75717a9e12841134a5b36ef7"
+            }
+          }
         }
       ]
     },
@@ -2289,6 +3341,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "13-ilinka-elitnyi-zhk",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+              "sample_id": "13-ilinka-elitnyi-zhk-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-13-ilinka-elitnyi-zhk-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "For the full 3.2-second fixed shot, a mild breeze begins immediately and moves the visible foreground foliage with small, coherent side-to-side displacement. The motion remains restrained so it frames rather than obscures the architecture, then naturally eases in the final moments with the leaves slightly settling and the entire main façade still clear.",
+              "positive_prompt": "A light breeze gently sways the foreground leaves and thin branches in one continuous motion while the camera stays fixed on the residence. The movement eases near the end, with the façade still fully visible and dominant.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1152,
+                "height": 768,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 441885,
+                "sha256": "889776ea04793b07a43320f3f04b16461d1f01b6564a9a282a8f8732c27f0c96"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "13-ilinka-elitnyi-zhk",
               "image_id": "02",
@@ -2389,7 +3491,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "The residence appears composed and enduring within the greenery and historic urban fabric of central Moscow, supporting the article’s claim that its architecture harmonizes with the city.",
+              "primary_action": "A light breeze gently moves the foreground foliage.",
+              "terminal_state": "The foliage has eased toward a gentle resting position while the main façade remains unobstructed and clearly recognizable.",
+              "semantic_invariant": "The residential façade remains the stable, dominant architectural subject and continues to feel integrated into its surroundings."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa32e-3f3c-75f3-9b7b-7188a5427aa8"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+              "article_context_sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c"
+            }
+          }
         }
       ]
     },
@@ -2468,6 +3607,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "14-miuz-modnye-sergi",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/02.jpeg",
+              "sample_id": "14-miuz-modnye-sergi-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-14-miuz-modnye-sergi-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-14-miuz-modnye-sergi-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "For the full 3.2-second fixed shot, a controlled band of reflected light begins immediately on the worn silver earring and moves steadily across the gold product earrings, tracing their broad organic curves without shifting the jewelry or the model. The sweep reaches the rightmost pair near the end and softly dissipates, with the original split layout and sculptural silhouettes fully intact.",
+              "positive_prompt": "A narrow specular highlight travels smoothly from left to right across the visible metal contours of the silver and gold earrings. Keep the camera fixed and the model still; by the final frames, the glint reaches the rightmost gold pair and gently fades, leaving every earring in its original position and shape.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1264,
+                "height": 704,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 513507,
+                "sha256": "feb61cb6d640bfcf9bf8a93db1c588d9735ea0da645ecbef312c74671beeaeb0"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "14-miuz-modnye-sergi",
               "image_id": "02",
@@ -2566,7 +3755,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-14-miuz-modnye-sergi-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-14-miuz-modnye-sergi-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Emphasize the bold scale, unconventional open silhouettes, and smooth reflective metal that make these earrings a statement trend.",
+              "primary_action": "A single traveling reflection sweeps across the visible metal surfaces of the earrings.",
+              "terminal_state": "The reflection has reached the rightmost gold earrings and faded, while all earrings retain their original positions and forms.",
+              "semantic_invariant": "The jewelry remains an oversized, sculptural fashion accent, with every design continuously recognizable and the model’s poised expression unchanged."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-14-miuz-modnye-sergi-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa332-fe1e-7632-8584-482999058efe"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "7188006307ec95e4638a8a0a484bd8155987d761713a6bd008bf0f48be6030a2",
+              "article_context_sha256": "51d2288b9c95e4694ab42cd8fec36d0a2adb08360cf07c6019ad8075a10dc7e9"
+            }
+          }
         }
       ]
     },
@@ -2645,6 +3871,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "15-ozon-gruzoperevozki",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+              "sample_id": "15-ozon-gruzoperevozki-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-15-ozon-gruzoperevozki-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "В течение 3,2 секунды камера остаётся неподвижной. Сразу начинается один мягкий синий оптический pulse на уже существующих плашках шага и максимальной ставки в передней карточке: яркость плавно нарастает, аккуратно проходит по обеим плашкам и к последним кадрам затухает до лёгкого устойчивого акцента. Все элементы интерфейса, данные и компоновка остаются неизменными.",
+              "positive_prompt": "Fixed camera. A single soft blue optical pulse gently brightens across the existing bid badges on the foreground lot card, then settles into a subtle steady emphasis by the final frames. Keep all UI text, numbers, glyphs, controls, and layout unchanged.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1200,
+                "height": 736,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 209188,
+                "sha256": "a649f40251c6b86215398626b998179feb058c7c4022c9a00309179674f34342"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "15-ozon-gruzoperevozki",
               "image_id": "02",
@@ -2745,7 +4021,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Мобильное приложение позволяет быстро оценить условия грузового лота и управлять выбором рейса прямо с телефона.",
+              "primary_action": "Существующие элементы ставки на карточке лота получают единый мягкий оптический акцент.",
+              "terminal_state": "В последнем кадре плашки ставки остаются слегка визуально выделенными, а все данные и состояние интерфейса неизменны.",
+              "semantic_invariant": "Карточка остаётся неизменным предложением рейса с теми же условиями и доступным пользователю выбором."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa333-0a15-7a40-91f7-73747d9be284"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "3110ee3c3dfdcb681ee41e9fa739a24677ac57c4d76bcaeea9c936f04ecba885",
+              "article_context_sha256": "8db6b2f4574873e79637ffe61bc460949ff25245764c809a789b02b5d083cdc1"
+            }
+          }
         }
       ]
     },
@@ -2824,6 +4137,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "16-ekonika-letnie-trendy",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+              "sample_id": "16-ekonika-letnie-trendy-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-16-ekonika-letnie-trendy-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Непрерывный 3,2-секундный кадр сверху с неподвижной камерой. Сразу начинается плавное смещение уже присутствующего пятнистого солнечного света слева направо; свет последовательно проходит по обеим босоножкам и выявляет рисунок тонких ремешков без движения самой обуви. К финалу освещение мягко выравнивается над обеими носочными композициями, пара остается целиком в кадре и в исходном симметричном положении.",
+              "positive_prompt": "Soft dappled sunlight drifts steadily across both sandals from left to right, tracing the thin circular straps while the camera remains fixed. By the final frames, the light settles evenly over both strap patterns, leaving the pair fully visible and aligned.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 944,
+                "height": 944,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 274607,
+                "sha256": "c48264f1e16e671272877897f9d0aeec4bf4b888e64411da27eb17e8c9761bbb"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "16-ekonika-letnie-trendy",
               "image_id": "02",
@@ -2923,7 +4286,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Тонкие ремешки делают базовые летние босоножки выразительнее и поддерживают ключевой тренд сезонной подборки.",
+              "primary_action": "Мягкий солнечный свет непрерывно скользит по паре босоножек, последовательно выделяя рисунок тонких ремешков.",
+              "terminal_state": "В последнем кадре обе круглые композиции ремешков равномерно освещены, а вся пара остается полностью видимой и выровненной.",
+              "semantic_invariant": "Обе босоножки сохраняют исходное симметричное расположение, а тонкие ремешки остаются главным визуальным акцентом."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa333-469d-7221-887c-7b58a5013854"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "ea1cc12a04703868c7890a2aad93abc11b368b413622345e0796a411ecb79a36",
+              "article_context_sha256": "d3c00fdd904da396637cdb22f5502dcae1de93fcf5ef320965705cdcab3ddbb9"
+            }
+          }
         }
       ]
     },
@@ -3002,6 +4402,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "17-level-michurinskiy-kvartira",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png",
+              "sample_id": "17-level-michurinskiy-kvartira-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-17-level-michurinskiy-kvartira-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "For the 3.2-second continuous shot, begin the breeze immediately at low amplitude, moving the treetops in a gentle coherent wave while the central fountain mist drifts slightly right and small ripples develop on the pond. Use one minimal, steady push toward the fountain as the focal target to add depth without losing the panoramic scale. Near the end, let the foliage motion soften while the fountain mist remains visibly shaped into a light rightward plume and the full green foreground and city skyline stay recognizable.",
+              "positive_prompt": "A light breeze moves steadily across the park canopy and gently carries the visible fountain mist to the right as subtle ripples spread over the pond. Make a minimal slow push toward the fountain; by the final frames, the mist forms a soft rightward plume while the panoramic park-and-city view remains open and calm.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1376,
+                "height": 640,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 403759,
+                "sha256": "8b399ba047f6fa0257bb7c968f6d8f674fb25b36a7d2775a472c3006474cd600"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "17-level-michurinskiy-kvartira",
               "image_id": "02",
@@ -3102,7 +4552,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "The animation emphasizes the expansive combination of greenery, water and cityscape presented as an everyday panoramic view from the residential complex.",
+              "primary_action": "A light breeze passes across the park, moving the tree canopy and carrying the fountain mist.",
+              "terminal_state": "The fountain mist is visibly drawn into a soft rightward plume while the surrounding canopy retains a gentle wind-shaped movement.",
+              "semantic_invariant": "The outlook remains spacious, tranquil and desirable, with the park and city continuously presented as one panoramic vista."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa333-497d-72a3-b3b6-2ae9da6a7c0e"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "458991e745aa6d74c991525512c7bacbdf6de11647d2313586fe3f3f94c60fcf",
+              "article_context_sha256": "d7de6650747663d9abe428c3eaba863d54afdc18ffff79265347663f67308b40"
+            }
+          }
         }
       ]
     },
@@ -3181,6 +4668,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "18-dalan-sredstva-dlia-volos",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+              "sample_id": "18-dalan-sredstva-dlia-volos-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-18-dalan-sredstva-dlia-volos-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "На протяжении 3,2 секунды камера неподвижна. Мягкий естественный блик сразу начинает плавно двигаться слева направо по двум бутылочкам и открытке, ненадолго проявляя их фактуру и блеск без изменения надписей или расположения предметов. К концу движение замедляется, а световой акцент остается на передней бутылочке; весь презентабельный набор продолжает быть отчетливо виден.",
+              "positive_prompt": "A soft natural highlight glides steadily from left to right across the two bottles and the enclosed card, briefly revealing their subtle sheen. Keep the camera fixed; by the final frames, the highlight rests gently on the front bottle and the complete gift set remains clearly visible.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 880,
+                "height": 1008,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 261472,
+                "sha256": "932c30a97808448378363f59af8a496b8ae0ceabab678eb89763de15e32d13c7"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "18-dalan-sredstva-dlia-volos",
               "image_id": "02",
@@ -3281,7 +4818,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Аккуратная подарочная подача набора создает приятное впечатление еще до использования и поддерживает ощущение качественного оригинального продукта.",
+              "primary_action": "Мягкий световой акцент последовательно проходит по бутылочкам и вложенной открытке.",
+              "terminal_state": "Световой акцент оказывается на передней бутылочке, при этом обе бутылочки и открытка остаются отчетливо видимыми в открытой коробке.",
+              "semantic_invariant": "Набор остается аккуратно собранным, презентабельным и воспринимается как готовый подарок."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa333-62e4-7621-9d30-694d9808ab99"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+              "article_context_sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249"
+            }
+          }
         }
       ]
     },
@@ -3360,6 +4934,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "19-level-travel-otpusk-v-turcii",
+              "image_id": "02",
+              "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+              "sample_id": "19-level-travel-otpusk-v-turcii-02",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-19-level-travel-otpusk-v-turcii-02-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "For the full 3.2-second fixed shot, apply one restrained optical accent to the existing 40 086 ₽ link: begin immediately with a faint blue pulse, increase its brightness smoothly without changing the glyphs or underline geometry, then ease into a stable gentle highlight near the end. No other table element moves or changes.",
+              "positive_prompt": "Fixed camera. A soft blue pulse gradually brightens the existing “40 086 ₽” price link and its underline, then settles into a clear gentle highlight by the final frames; all UI text, numbers, and layout remain unchanged.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.2/02.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.2/02.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.2/02.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1248,
+                "height": 720,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 253412,
+                "sha256": "6abc494a97f2dbeca23f4f196265f2809ba3ee3535ee997d6310607b7429c456"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "19-level-travel-otpusk-v-turcii",
               "image_id": "02",
@@ -3459,7 +5083,44 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02/result.json",
+            "structured_intent": {
+              "editorial_meaning": "The price calendar makes it easy to compare travel dates and identify a more affordable Turkey tour.",
+              "primary_action": "The lowest visible price receives a single soft optical emphasis.",
+              "terminal_state": "The 40 086 ₽ price is visibly but gently highlighted while every displayed value and interface element remains unchanged.",
+              "semantic_invariant": "The calendar remains a trustworthy, unchanged comparison of the displayed tour prices and durations."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa333-865d-7fb0-ab17-4445fef4dcd5"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+              "article_context_sha256": "0d8f2c81586814f1c9ff1bd0ea0292094d903f4347ba83f8609df3820c81f182"
+            }
+          }
         }
       ]
     },
@@ -3538,6 +5199,56 @@
             }
           },
           "outputs": [
+            {
+              "article_slug": "20-sravni-kreditnyi-reiting",
+              "image_id": "03",
+              "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+              "sample_id": "20-sravni-kreditnyi-reiting-03",
+              "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03",
+              "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-20-sravni-kreditnyi-reiting-03-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Неподвижная камера на весь 3,2-секундный кадр. Сразу начинается один мягкий блик, который равномерно проходит по дуге существующей шкалы слева направо, не двигая стрелку и не меняя сегменты. К финальным кадрам движение затухает, оставляя лёгкое свечение на зелёной части шкалы; весь текст, кнопки, значки и компоновка остаются без изменений.",
+              "positive_prompt": "Fixed camera. A soft highlight glides once across the existing credit-rating gauge at a steady pace, then fades into a subtle glow over its green segment; the needle, all text, numbers, icons, controls, and layout remain unchanged in the final frame.",
+              "negative_prompt": null,
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.mp4",
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 1520,
+                "height": 576,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 212200,
+                "sha256": "94d681c3f78dc9e732a644e49b39122ae598b5c6dede24d65ea2cad9640410e9"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "error": null
+            },
             {
               "article_slug": "20-sravni-kreditnyi-reiting",
               "image_id": "03",
@@ -3638,12 +5349,99 @@
               },
               "error": null
             }
-          ]
+          ],
+          "wan22_lite_planning": {
+            "run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03/result.json",
+            "structured_intent": {
+              "editorial_meaning": "Сервис наглядно показывает актуальный кредитный рейтинг и регулярно обновляет данные без повторного ввода.",
+              "primary_action": "Мягкий оптический акцент один раз проходит по существующей шкале кредитного рейтинга.",
+              "terminal_state": "Оптический акцент завершает проход, и зелёный сегмент шкалы остаётся слегка подсвеченным при неизменном положении стрелки.",
+              "semantic_invariant": "Интерфейс сохраняет исходные тексты, элементы, положение стрелки и состояние шкалы, продолжая передавать ощущение надёжного и понятного сервиса."
+            },
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.0.2",
+              "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+              "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+                "version": "codex-cli 0.146.0-alpha.3.1",
+                "requested_model": null,
+                "thread_id": "019fa333-984c-76b3-b85e-a795dc5fa1a5"
+              },
+              "models": [
+                "alibaba/wan-2.2"
+              ],
+              "source_image_sha256": "a05883165528b8100d5b5f82e4d92622c52c01b643e774ccbd9439c5210fa77e",
+              "article_context_sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b"
+            }
+          }
         }
       ]
     }
   ],
   "outputs": [
+    {
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+      "sample_id": "01-pharmocean-magiia-magniia-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-01-pharmocean-magiia-magniia-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-01-pharmocean-magiia-magniia-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For the full 3.2-second fixed-camera shot, both hands begin lowering immediately and evenly in one small, symmetrical motion, staying separated from the face. The movement gently decelerates near the end; the final frame clearly shows both hands hovering around shoulder level while the woman remains visibly tense and overwhelmed.",
+      "positive_prompt": "With the camera fixed, she slowly lowers both tense hands a short distance away from her face while keeping her eyes wide and teeth clenched. By the final frames, her hands hover near shoulder level and her stressed expression remains unchanged.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/01-pharmocean-magiia-magniia/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/01-pharmocean-magiia-magniia/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/01-pharmocean-magiia-magniia/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 331564,
+        "sha256": "02738fb2506760f0dff7a4fa5f8ec59e2f4df3b60e2ffcd82efaea06cc071f9d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
     {
       "article_slug": "01-pharmocean-magiia-magniia",
       "image_id": "02",
@@ -3749,6 +5547,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
       "sample_id": "02-nanoplast-kak-unimat-bol-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-02-nanoplast-kak-unimat-bol-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный 3,2-секундный кадр с неподвижной камерой. Женщины сразу начинают один медленный синхронный подъём плеч и верхней части корпуса небольшой амплитуды, не двигая руками. Движение развивается ровно без повторов и к последним кадрам мягко останавливается в устойчивом, немного более высоком положении.",
+      "positive_prompt": "With hands held still behind their heads, the women make one slow, controlled abdominal curl, lifting their shoulders slightly and steadily together. Fixed camera. They finish in a stable higher position, still calmly engaged in the exercise.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1264,
+        "height": 704,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 432038,
+        "sha256": "7578372ff21e01b4f3ebb33c8d59d523804e6b00406df66d344ac9e587992185"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "02-nanoplast-kak-unimat-bol",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+      "sample_id": "02-nanoplast-kak-unimat-bol-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -3834,6 +5682,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "03-zov-resheniia-dlia-kuhni",
+      "image_id": "03",
+      "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+      "sample_id": "03-zov-resheniia-dlia-kuhni-03",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-03-zov-resheniia-dlia-kuhni-03-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Один непрерывный кадр на 3,2 секунды. Сразу начинается плавное вертикальное втягивание поднятого розеточного модуля в правой части столешницы. Камера выполняет едва заметное приближение к этой зоне, чтобы маленькое действие оставалось читаемым, не меняя общей фронтальной композиции. Модуль движется равномерно без рывка и к последним кадрам полностью уходит в столешницу, оставляя её ровной и свободной.",
+      "positive_prompt": "The raised built-in outlet module on the right countertop smoothly retracts straight down at an even pace until it sits flush with the surface in the final frames. A very subtle push-in keeps the module clearly visible; the countertop ends clean and unobstructed.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/03-zov-resheniia-dlia-kuhni/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 197459,
+        "sha256": "3a6d9a1a3b84e3310ad725443128d4ff61b357148e9ea57104776c8c317d2796"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -3947,6 +5845,56 @@
       "image_id": "03",
       "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png",
       "sample_id": "04-graceface-antivozrastnaia-syvorotka-03",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-04-graceface-antivozrastnaia-syvorotka-03",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-04-graceface-antivozrastnaia-syvorotka-03-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды камера неподвижна. Женщина без движения головы и рук медленно переводит взгляд по своему отражению к области щеки; к финалу взгляд останавливается, а нахмуренные брови чуть сильнее подчёркивают тревогу. Рука у лица и зеркало остаются неподвижными, заданная обеспокоенность сохраняется до последнего кадра.",
+      "positive_prompt": "She slowly scans her reflection with her eyes, then settles her gaze on her cheek as her brow tightens slightly. Her hand and the mirror remain still, and she ends visibly concerned. Fixed camera.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1200,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 305133,
+        "sha256": "5156699e8c300813250294d610cc6dc7862c5da33455ef123f2df41f4cfdb750"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "image_id": "03",
+      "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png",
+      "sample_id": "04-graceface-antivozrastnaia-syvorotka-03",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-04-graceface-antivozrastnaia-syvorotka-03",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-04-graceface-antivozrastnaia-syvorotka-03-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -4034,6 +5982,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "05-5ka-zhaloba-na-magazin",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+      "sample_id": "05-5ka-zhaloba-na-magazin-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-05-5ka-zhaloba-na-magazin-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-05-5ka-zhaloba-na-magazin-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный фиксированный кадр на 3,2 секунды. Женщина сразу начинает медленно переводить голову и взгляд вправо вдоль витрины, будто сверяет товары и ценники. Движение небольшой амплитуды идёт ровно и завершается ближе к концу: её взгляд останавливается на одной упаковке или этикетке, внимательная настороженность сохраняется. Мужчина и тележка остаются почти неподвижными, не создавая второго действия.",
+      "positive_prompt": "The woman slowly turns her head and tracks her gaze to the right along the refrigerated shelf, then settles on one product label with sustained attentive concern. The man and cart remain still beside her. Fixed camera.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 349356,
+        "sha256": "388b1a34088fe037e8ac0409b2d322436bd9801b372a2c0761f6248f6c0f9ff2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -4147,6 +6145,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
       "sample_id": "06-4lapy-koshachii-napolnitel-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-06-4lapy-koshachii-napolnitel-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-06-4lapy-koshachii-napolnitel-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды кошка без колебаний продолжает исследовать наполнитель: сразу начинает медленно вести носом над гранулами, слегка смещает голову в сторону, усы естественно подрагивают. Камера неподвижна, чтобы сохранить крупный план поведения и поверхности лотка. К финалу нос останавливается близко к наполнителю, а поза остаётся спокойной и заинтересованной.",
+      "positive_prompt": "The cat calmly sniffs across the litter surface, moving its nose slightly forward and to one side as its whiskers twitch. Fixed camera. By the final frames, its nose rests close to the granules and it remains relaxed and interested.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 944,
+        "height": 944,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 357162,
+        "sha256": "688241a2436b215e8bf8be6c07dc967e64094f0e9ddf46e03ccf43466530d143"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+      "sample_id": "06-4lapy-koshachii-napolnitel-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -4233,6 +6281,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "07-aquadetrim-deficit-vitamina-d",
+      "image_id": "03",
+      "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+      "sample_id": "07-aquadetrim-deficit-vitamina-d-03",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-07-aquadetrim-deficit-vitamina-d-03-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Для 3,2-секундного непрерывного кадра камера неподвижна и удерживает дом в центре. Сразу начинается умеренный порыв слева направо: ближняя трава последовательно пригибается волной по склону, затем движение естественно ослабевает. К финальным кадрам трава остается слегка наклоненной и мягко колышется; дом непрерывно виден, а небо сохраняет плотную пасмурность.",
+      "positive_prompt": "A steady wind sweeps across the hillside from left to right, bending the grass in one continuous wave while the camera remains fixed on the red house. By the final frames the gust eases and the grass stays gently angled, with the house fully visible beneath the unchanged overcast sky.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/07-aquadetrim-deficit-vitamina-d/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1200,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 368474,
+        "sha256": "1cbfee25384b46ccb58a754d91196b0f912a14fa292958acb494da75d2ba376b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -4346,6 +6444,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
       "sample_id": "08-tochka-ooo-ili-ip-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-08-tochka-ooo-ili-ip-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный фиксированный кадр длительностью 3,2 секунды. Сразу начинается спокойное движение красной ручки слева направо по текущей строке формы; придерживающая документы рука лишь слегка корректирует нажим. Планшет и его экран остаются неподвижными и неизменными. К концу ручка достигает конца короткой записи и останавливается над строкой; документы, планшет и совместная сосредоточенность участников сохраняются в кадре.",
+      "positive_prompt": "The red pen moves steadily across the current form line as the person completes one short handwritten entry, while the other hand keeps the paperwork still. Fixed camera; the tablet display remains unchanged. By the final frames, the pen reaches the end of the line and pauses above the completed entry, with both people still focused on the registration documents.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/08-tochka-ooo-ili-ip/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 295080,
+        "sha256": "a7fbae5e2ed4c48287bbb7847facb0fb56179d71cd398a88d8ed8f1bdd466e7c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "08-tochka-ooo-ili-ip",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+      "sample_id": "08-tochka-ooo-ili-ip-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -4433,6 +6581,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "09-dream-island-semeinye-vyhodnye",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+      "sample_id": "09-dream-island-semeinye-vyhodnye-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-09-dream-island-semeinye-vyhodnye-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды кабина сразу начинает плавно проходить короткий нисходящий участок дуги с умеренной амплитудой. Камера неподвижна, чтобы движение аттракциона читалось относительно декораций. Пассажиры лишь слегка отклоняются по инерции, без новых или повторных жестов; поднятые руки и улыбки сохраняются. К финалу кабина достигает нижней точки выбранного короткого участка и мягко замедляется, а радостная семейная группа остаётся видимой.",
+      "positive_prompt": "The ride car glides smoothly a short distance downward along its swing arc at a moderate speed; passengers lean subtly with the motion while raised arms remain up and joyful smiles hold. Fixed camera. By the final frames, the car reaches the lower point of this short arc and gently slows, with the excited family group still clearly visible.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/09-dream-island-semeinye-vyhodnye/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 499018,
+        "sha256": "577cc7428d586b6a5eb0db811573bbd9ec20c131a8799c06a20d6ed731955014"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -4546,6 +6744,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
       "sample_id": "10-exeed-rx-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-10-exeed-rx-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-10-exeed-rx-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный 3,2-секундный проезд начинается сразу: автомобиль ровно движется влево с умеренной скоростью, колёса естественно вращаются, дорожное полотно и элементы моста плавно смещаются назад. Камера выполняет одно лёгкое боковое сопровождение, удерживая EXEED RX главным и постоянно узнаваемым объектом. К финальным кадрам машина заметно проходит несколько метров по своей полосе, сохраняя устойчивый ход и собранный силуэт без дополнительного манёвра.",
+      "positive_prompt": "The EXEED RX drives steadily left along its lane as the wheels rotate and the bridge scenery flows smoothly past. Track the car with one subtle lateral camera move, keeping it continuously clear and prominent. By the final frames, it has advanced several meters with a stable, composed stance and uninterrupted forward motion.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/10-exeed-rx/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1264,
+        "height": 704,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 483498,
+        "sha256": "4e01b6c2b3b5c0cbf3808a81c94d7913f392bc3c7ce8c04f484e01f5f32558c5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "10-exeed-rx",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+      "sample_id": "10-exeed-rx-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-10-exeed-rx-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-10-exeed-rx-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -4631,6 +6879,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "11-ostin-vesenniaia-kapsula",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+      "sample_id": "11-ostin-vesenniaia-kapsula-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-11-ostin-vesenniaia-kapsula-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-11-ostin-vesenniaia-kapsula-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Неподвижная камера сохраняет портретную композицию. С первых кадров женщина плавно и с небольшой амплитудой приподнимает подбородок, не отводя взгляд; рука за шеей остается неподвижной. Волосы и концы лент едва смещаются вслед за единым движением и естественно успокаиваются. К финалу подбородок немного поднят, взгляд по-прежнему направлен в камеру, а сдержанное уверенное выражение сохранено.",
+      "positive_prompt": "She slowly lifts her chin a little while maintaining direct eye contact and the same composed expression; her hand stays still behind her neck, and her hair and ribbon ends settle naturally. Fixed camera. By the final frame, her chin is slightly raised in a poised, confident portrait.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 944,
+        "height": 944,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 413036,
+        "sha256": "f0a187633ceb45e954743d450ff933f746fc273c9c03c489b11b1d5a730be287"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -4730,6 +7028,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "12-mars-podarki-na-8-marta",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+      "sample_id": "12-mars-podarki-na-8-marta-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-12-mars-podarki-na-8-marta-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Неподвижная камера сохраняет акцент на лице и флаконе. С первых кадров женщина плавно поднимает флакон немного ближе, не касаясь лица, и спокойно вдыхает аромат; движение кисти небольшой амплитуды развивается равномерно. Ближе к финалу рука останавливается, а улыбка едва заметно становится теплее. В последнем кадре глаза остаются закрытыми, выражение — спокойным и довольным, флакон хорошо виден рядом с лицом.",
+      "positive_prompt": "She slowly lifts the perfume bottle slightly closer without touching her face, takes a gentle breath with her eyes closed, and her soft smile subtly deepens. Fixed camera; by the final frame she is calmly savoring the scent, with the bottle clearly visible beside her face.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 377819,
+        "sha256": "b6f00726a0f270c75b8d7818881eb16c47655daf5a85f99867cc0b29ef1a7998"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -4843,6 +7191,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
       "sample_id": "13-ilinka-elitnyi-zhk-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-13-ilinka-elitnyi-zhk-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-13-ilinka-elitnyi-zhk-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For the full 3.2-second fixed shot, a mild breeze begins immediately and moves the visible foreground foliage with small, coherent side-to-side displacement. The motion remains restrained so it frames rather than obscures the architecture, then naturally eases in the final moments with the leaves slightly settling and the entire main façade still clear.",
+      "positive_prompt": "A light breeze gently sways the foreground leaves and thin branches in one continuous motion while the camera stays fixed on the residence. The movement eases near the end, with the façade still fully visible and dominant.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/13-ilinka-elitnyi-zhk/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1152,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 441885,
+        "sha256": "889776ea04793b07a43320f3f04b16461d1f01b6564a9a282a8f8732c27f0c96"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+      "sample_id": "13-ilinka-elitnyi-zhk-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -4943,6 +7341,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/02.jpeg",
       "sample_id": "14-miuz-modnye-sergi-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-14-miuz-modnye-sergi-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-14-miuz-modnye-sergi-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For the full 3.2-second fixed shot, a controlled band of reflected light begins immediately on the worn silver earring and moves steadily across the gold product earrings, tracing their broad organic curves without shifting the jewelry or the model. The sweep reaches the rightmost pair near the end and softly dissipates, with the original split layout and sculptural silhouettes fully intact.",
+      "positive_prompt": "A narrow specular highlight travels smoothly from left to right across the visible metal contours of the silver and gold earrings. Keep the camera fixed and the model still; by the final frames, the glint reaches the rightmost gold pair and gently fades, leaving every earring in its original position and shape.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/14-miuz-modnye-sergi/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1264,
+        "height": 704,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 513507,
+        "sha256": "feb61cb6d640bfcf9bf8a93db1c588d9735ea0da645ecbef312c74671beeaeb0"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "14-miuz-modnye-sergi",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/02.jpeg",
+      "sample_id": "14-miuz-modnye-sergi-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-14-miuz-modnye-sergi-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-14-miuz-modnye-sergi-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -5028,6 +7476,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "15-ozon-gruzoperevozki",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+      "sample_id": "15-ozon-gruzoperevozki-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-15-ozon-gruzoperevozki-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "В течение 3,2 секунды камера остаётся неподвижной. Сразу начинается один мягкий синий оптический pulse на уже существующих плашках шага и максимальной ставки в передней карточке: яркость плавно нарастает, аккуратно проходит по обеим плашкам и к последним кадрам затухает до лёгкого устойчивого акцента. Все элементы интерфейса, данные и компоновка остаются неизменными.",
+      "positive_prompt": "Fixed camera. A single soft blue optical pulse gently brightens across the existing bid badges on the foreground lot card, then settles into a subtle steady emphasis by the final frames. Keep all UI text, numbers, glyphs, controls, and layout unchanged.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1200,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 209188,
+        "sha256": "a649f40251c6b86215398626b998179feb058c7c4022c9a00309179674f34342"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -5141,6 +7639,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
       "sample_id": "16-ekonika-letnie-trendy-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-16-ekonika-letnie-trendy-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Непрерывный 3,2-секундный кадр сверху с неподвижной камерой. Сразу начинается плавное смещение уже присутствующего пятнистого солнечного света слева направо; свет последовательно проходит по обеим босоножкам и выявляет рисунок тонких ремешков без движения самой обуви. К финалу освещение мягко выравнивается над обеими носочными композициями, пара остается целиком в кадре и в исходном симметричном положении.",
+      "positive_prompt": "Soft dappled sunlight drifts steadily across both sandals from left to right, tracing the thin circular straps while the camera remains fixed. By the final frames, the light settles evenly over both strap patterns, leaving the pair fully visible and aligned.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 944,
+        "height": 944,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 274607,
+        "sha256": "c48264f1e16e671272877897f9d0aeec4bf4b888e64411da27eb17e8c9761bbb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "16-ekonika-letnie-trendy",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+      "sample_id": "16-ekonika-letnie-trendy-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-16-ekonika-letnie-trendy-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-16-ekonika-letnie-trendy-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -5227,6 +7775,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "17-level-michurinskiy-kvartira",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png",
+      "sample_id": "17-level-michurinskiy-kvartira-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-17-level-michurinskiy-kvartira-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For the 3.2-second continuous shot, begin the breeze immediately at low amplitude, moving the treetops in a gentle coherent wave while the central fountain mist drifts slightly right and small ripples develop on the pond. Use one minimal, steady push toward the fountain as the focal target to add depth without losing the panoramic scale. Near the end, let the foliage motion soften while the fountain mist remains visibly shaped into a light rightward plume and the full green foreground and city skyline stay recognizable.",
+      "positive_prompt": "A light breeze moves steadily across the park canopy and gently carries the visible fountain mist to the right as subtle ripples spread over the pond. Make a minimal slow push toward the fountain; by the final frames, the mist forms a soft rightward plume while the panoramic park-and-city view remains open and calm.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/17-level-michurinskiy-kvartira/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1376,
+        "height": 640,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 403759,
+        "sha256": "8b399ba047f6fa0257bb7c968f6d8f674fb25b36a7d2775a472c3006474cd600"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -5340,6 +7938,56 @@
       "image_id": "02",
       "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
       "sample_id": "18-dalan-sredstva-dlia-volos-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-18-dalan-sredstva-dlia-volos-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-18-dalan-sredstva-dlia-volos-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды камера неподвижна. Мягкий естественный блик сразу начинает плавно двигаться слева направо по двум бутылочкам и открытке, ненадолго проявляя их фактуру и блеск без изменения надписей или расположения предметов. К концу движение замедляется, а световой акцент остается на передней бутылочке; весь презентабельный набор продолжает быть отчетливо виден.",
+      "positive_prompt": "A soft natural highlight glides steadily from left to right across the two bottles and the enclosed card, briefly revealing their subtle sheen. Keep the camera fixed; by the final frames, the highlight rests gently on the front bottle and the complete gift set remains clearly visible.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/18-dalan-sredstva-dlia-volos/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 880,
+        "height": 1008,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 261472,
+        "sha256": "932c30a97808448378363f59af8a496b8ae0ceabab678eb89763de15e32d13c7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "18-dalan-sredstva-dlia-volos",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+      "sample_id": "18-dalan-sredstva-dlia-volos-02",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -5427,6 +8075,56 @@
         "checks": {
           "duration": true,
           "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "19-level-travel-otpusk-v-turcii",
+      "image_id": "02",
+      "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+      "sample_id": "19-level-travel-otpusk-v-turcii-02",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-19-level-travel-otpusk-v-turcii-02-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For the full 3.2-second fixed shot, apply one restrained optical accent to the existing 40 086 ₽ link: begin immediately with a faint blue pulse, increase its brightness smoothly without changing the glyphs or underline geometry, then ease into a stable gentle highlight near the end. No other table element moves or changes.",
+      "positive_prompt": "Fixed camera. A soft blue pulse gradually brightens the existing “40 086 ₽” price link and its underline, then settles into a clear gentle highlight by the final frames; all UI text, numbers, and layout remain unchanged.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1248,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 253412,
+        "sha256": "6abc494a97f2dbeca23f4f196265f2809ba3ee3535ee997d6310607b7429c456"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
           "resolution": true,
           "aspect_ratio": true
         },
@@ -5539,6 +8237,56 @@
       "image_id": "03",
       "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
       "sample_id": "20-sravni-kreditnyi-reiting-03",
+      "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-20-sravni-kreditnyi-reiting-03",
+      "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-20-sravni-kreditnyi-reiting-03-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Неподвижная камера на весь 3,2-секундный кадр. Сразу начинается один мягкий блик, который равномерно проходит по дуге существующей шкалы слева направо, не двигая стрелку и не меняя сегменты. К финальным кадрам движение затухает, оставляя лёгкое свечение на зелёной части шкалы; весь текст, кнопки, значки и компоновка остаются без изменений.",
+      "positive_prompt": "Fixed camera. A soft highlight glides once across the existing credit-rating gauge at a steady pace, then fades into a subtle glow over its green segment; the needle, all text, numbers, icons, controls, and layout remain unchanged in the final frame.",
+      "negative_prompt": null,
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/20-sravni-kreditnyi-reiting/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 1520,
+        "height": 576,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 212200,
+        "sha256": "94d681c3f78dc9e732a644e49b39122ae598b5c6dede24d65ea2cad9640410e9"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "image_id": "03",
+      "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+      "sample_id": "20-sravni-kreditnyi-reiting-03",
       "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03",
       "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03-wan-2-7",
       "model_id": "alibaba/wan-2.7",
@@ -5634,5 +8382,21 @@
       },
       "error": null
     }
+  ],
+  "component_manifests": [
+    "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/components/promopages-9930-20x2-manifest.json",
+    "clipmaker-lite-test/promopages-9930-wan22-manifest.json"
+  ],
+  "planning_batch_ids": [
+    "promopages-9930-lite20-new-images-20260726-v2",
+    "promopages-9930-lite20-wan22-plans-20260727-v1"
+  ],
+  "generation_batch_ids": [
+    "promopages-9930-lite20-new-images-20260726-v2",
+    "promopages-9930-lite20-wan22-runs-20260727-v2"
+  ],
+  "generation_manifests": [
+    "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/generation-manifest.json",
+    "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/generation-manifest.json"
   ]
 }

@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-17-level-michurinskiy-kvartira-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png",
+    "sha256": "458991e745aa6d74c991525512c7bacbdf6de11647d2313586fe3f3f94c60fcf",
+    "width": 1200,
+    "height": 568
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation emphasizes the expansive combination of greenery, water and cityscape presented as an everyday panoramic view from the residential complex.",
+    "primary_action": "A light breeze passes across the park, moving the tree canopy and carrying the fountain mist.",
+    "terminal_state": "The fountain mist is visibly drawn into a soft rightward plume while the surrounding canopy retains a gentle wind-shaped movement.",
+    "semantic_invariant": "The outlook remains spacious, tranquil and desirable, with the park and city continuously presented as one panoramic vista."
+  },
+  "prompt": {
+    "positive": "A light breeze moves steadily across the park canopy and gently carries the visible fountain mist to the right as subtle ripples spread over the pond. Make a minimal slow push toward the fountain; by the final frames, the mist forms a soft rightward plume while the panoramic park-and-city view remains open and calm.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-17-level-michurinskiy-kvartira-02/result.json",
+    "sha256": "17ebb910ceb7983c347e95ca84405b142a0a78c07c94e549ba12e3604df32960",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "458991e745aa6d74c991525512c7bacbdf6de11647d2313586fe3f3f94c60fcf",
+      "article_context_sha256": "d7de6650747663d9abe428c3eaba863d54afdc18ffff79265347663f67308b40",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

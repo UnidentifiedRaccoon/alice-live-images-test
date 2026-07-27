@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v1-08-tochka-ooo-ili-ip-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+    "sha256": "f834603785314f18c6444c26a0666b27d0715777789717229384fa717a53823f",
+    "width": 1139,
+    "height": 759
+  },
+  "structured_intent": {
+    "editorial_meaning": "Регистрация подходящей формы бизнеса показана как понятный процесс работы с документами при информационной поддержке.",
+    "primary_action": "Человек завершает одну короткую запись красной ручкой в регистрационной форме.",
+    "terminal_state": "Ручка достигает конца заполненной строки и останавливается над завершённой записью.",
+    "semantic_invariant": "Сцена до конца остаётся спокойным совместным оформлением бизнеса, а документы и информационная поддержка сохраняют центральное значение."
+  },
+  "prompt": {
+    "positive": "The red pen moves steadily across the current form line as the person completes one short handwritten entry, while the other hand keeps the paperwork still. Fixed camera; the tablet display remains unchanged. By the final frames, the pen reaches the end of the line and pauses above the completed entry, with both people still focused on the registration documents.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-08-tochka-ooo-ili-ip-02/result.json",
+    "sha256": "fe8571bcff05a509cefc60cb72fee979d43b2de77090a27568dd985be476ff77",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "f834603785314f18c6444c26a0666b27d0715777789717229384fa717a53823f",
+      "article_context_sha256": "24d0fba8a293283a86e2daa0954db7390849cc7236a1fc9ae4018b8f19ac591c",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

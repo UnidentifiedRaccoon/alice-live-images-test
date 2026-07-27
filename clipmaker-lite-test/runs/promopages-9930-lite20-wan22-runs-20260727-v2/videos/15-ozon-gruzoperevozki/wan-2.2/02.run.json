@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "15-ozon-gruzoperevozki-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/15-ozon-gruzoperevozki/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+      "prompt": "Fixed camera. A single soft blue optical pulse gently brightens across the existing bid badges on the foreground lot card, then settles into a subtle steady emphasis by the final frames. Keep all UI text, numbers, glyphs, controls, and layout unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "fb088fd91e6761614b037361aabe9f74c0bcfb4ab09ed925645d585567381ea2",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "992f84a827184a84a618aebe00e35886",
+  "provider_session_hash": "promopages9856-dbaafe277c5b",
+  "submitted_at": "2026-07-27T11:30:16Z",
+  "completed_at": "2026-07-27T11:31:16Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1200,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 209188,
+    "sha256": "a649f40251c6b86215398626b998179feb058c7c4022c9a00309179674f34342"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-15-ozon-gruzoperevozki-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-15-ozon-gruzoperevozki-02-wan-2-2",
+  "lite_result_sha256": "2e9e939619bfaae049f062f16e1714c298882794d679a4d5a50c70eb260993ef",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

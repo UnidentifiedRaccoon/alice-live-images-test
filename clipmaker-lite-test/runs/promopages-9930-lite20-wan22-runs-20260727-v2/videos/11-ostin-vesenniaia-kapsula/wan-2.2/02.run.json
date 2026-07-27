@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "11-ostin-vesenniaia-kapsula-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+      "prompt": "She slowly lifts her chin a little while maintaining direct eye contact and the same composed expression; her hand stays still behind her neck, and her hair and ribbon ends settle naturally. Fixed camera. By the final frame, her chin is slightly raised in a poised, confident portrait."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "afc0b9045e3fc15aff9a89e8661e48207c509137d2da5e954f66a6dbd79ae148",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "17f59790d8b8424db6a7e39ec48e1b14",
+  "provider_session_hash": "promopages9856-e1c2ae3ef5a1",
+  "submitted_at": "2026-07-27T11:26:11Z",
+  "completed_at": "2026-07-27T11:27:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 944,
+    "height": 944,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 413036,
+    "sha256": "f0a187633ceb45e954743d450ff933f746fc273c9c03c489b11b1d5a730be287"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-11-ostin-vesenniaia-kapsula-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-11-ostin-vesenniaia-kapsula-02-wan-2-2",
+  "lite_result_sha256": "ba58062fc00329a57496632cf316e5717edffc951b8bdd0ed187ddf37bbe59b2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

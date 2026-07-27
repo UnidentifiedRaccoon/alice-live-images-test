@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-03-zov-resheniia-dlia-kuhni-03-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+    "sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+    "width": 1600,
+    "height": 1086
+  },
+  "structured_intent": {
+    "editorial_meaning": "Встроенная розетка помогает сохранить кухню функциональной и визуально аккуратной: после использования модуль исчезает из рабочей зоны вместе с лишними проводами.",
+    "primary_action": "Поднятый встроенный розеточный модуль убирается внутрь столешницы.",
+    "terminal_state": "Розеточный модуль полностью скрыт и находится заподлицо со столешницей.",
+    "semantic_invariant": "Кухня остаётся упорядоченным, комфортным пространством без видимых проводов и лишних деталей."
+  },
+  "prompt": {
+    "positive": "The raised built-in outlet module on the right countertop smoothly retracts straight down at an even pace until it sits flush with the surface in the final frames. A very subtle push-in keeps the module clearly visible; the countertop ends clean and unobstructed.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/result.json",
+    "sha256": "05b1a70f064d37054b402877cd80f119a25d2449214d257090b919303c7da600",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+      "article_context_sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

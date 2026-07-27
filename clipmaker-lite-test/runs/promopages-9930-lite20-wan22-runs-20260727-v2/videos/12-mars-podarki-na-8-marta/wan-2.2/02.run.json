@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "12-mars-podarki-na-8-marta-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/12-mars-podarki-na-8-marta/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+      "prompt": "She slowly lifts the perfume bottle slightly closer without touching her face, takes a gentle breath with her eyes closed, and her soft smile subtly deepens. Fixed camera; by the final frame she is calmly savoring the scent, with the bottle clearly visible beside her face."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "9046a6bfcceacdca8a70904fe4f257f267e5d543f5548627ec104348adb2bc56",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "b6e7eebce0de4efda919412941bb699b",
+  "provider_session_hash": "promopages9856-dd6b6d851418",
+  "submitted_at": "2026-07-27T11:27:13Z",
+  "completed_at": "2026-07-27T11:28:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1152,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 377819,
+    "sha256": "b6f00726a0f270c75b8d7818881eb16c47655daf5a85f99867cc0b29ef1a7998"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-12-mars-podarki-na-8-marta-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-12-mars-podarki-na-8-marta-02-wan-2-2",
+  "lite_result_sha256": "c701802c820c9818cca8966056e0ef26e4b62d3187cdd1901d87983d3da34d6b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

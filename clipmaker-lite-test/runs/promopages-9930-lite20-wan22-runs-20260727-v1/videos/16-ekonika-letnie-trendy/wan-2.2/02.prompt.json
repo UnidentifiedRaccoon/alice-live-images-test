@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v1-16-ekonika-letnie-trendy-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+    "sha256": "ea1cc12a04703868c7890a2aad93abc11b368b413622345e0796a411ecb79a36",
+    "width": 650,
+    "height": 650
+  },
+  "structured_intent": {
+    "editorial_meaning": "Тонкие ремешки делают базовые летние босоножки выразительнее и поддерживают ключевой тренд сезонной подборки.",
+    "primary_action": "Мягкий солнечный свет непрерывно скользит по паре босоножек, последовательно выделяя рисунок тонких ремешков.",
+    "terminal_state": "В последнем кадре обе круглые композиции ремешков равномерно освещены, а вся пара остается полностью видимой и выровненной.",
+    "semantic_invariant": "Обе босоножки сохраняют исходное симметричное расположение, а тонкие ремешки остаются главным визуальным акцентом."
+  },
+  "prompt": {
+    "positive": "Soft dappled sunlight drifts steadily across both sandals from left to right, tracing the thin circular straps while the camera remains fixed. By the final frames, the light settles evenly over both strap patterns, leaving the pair fully visible and aligned.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02/result.json",
+    "sha256": "9006540c358b25d49ffa55c644c8a2e4545132cbef6568e4046acc8cb0fc0d9f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "ea1cc12a04703868c7890a2aad93abc11b368b413622345e0796a411ecb79a36",
+      "article_context_sha256": "d3c00fdd904da396637cdb22f5502dcae1de93fcf5ef320965705cdcab3ddbb9",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

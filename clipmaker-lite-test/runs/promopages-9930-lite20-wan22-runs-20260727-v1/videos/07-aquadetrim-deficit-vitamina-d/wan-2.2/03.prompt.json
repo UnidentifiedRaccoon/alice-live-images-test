@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v1-07-aquadetrim-deficit-vitamina-d-03-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+    "sha256": "70fe8232d0821f81d8ec937faf03876e55a8f89a882e4ba84d015efb9119066a",
+    "width": 1200,
+    "height": 751
+  },
+  "structured_intent": {
+    "editorial_meaning": "Малосолнечная северная среда помогает показать, почему место проживания может повышать риск дефицита витамина D.",
+    "primary_action": "Ветер одним непрерывным порывом проходит по траве на открытом склоне.",
+    "terminal_state": "После порыва трава остается слегка пригнутой, а красный дом полностью виден под неизменно облачным небом.",
+    "semantic_invariant": "Дом остается изолированным в прохладной пасмурной среде без появления солнечного света."
+  },
+  "prompt": {
+    "positive": "A steady wind sweeps across the hillside from left to right, bending the grass in one continuous wave while the camera remains fixed on the red house. By the final frames the gust eases and the grass stays gently angled, with the house fully visible beneath the unchanged overcast sky.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-07-aquadetrim-deficit-vitamina-d-03/result.json",
+    "sha256": "fd2e9635abee876aa5f7c462ae5dd51efc35a3af7df250568fad1eb7d31c12bf",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "70fe8232d0821f81d8ec937faf03876e55a8f89a882e4ba84d015efb9119066a",
+      "article_context_sha256": "0a82562e329d4e4cc667d02064d7f7b78c1d9435e19ef9a354fd78913f50c62c",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

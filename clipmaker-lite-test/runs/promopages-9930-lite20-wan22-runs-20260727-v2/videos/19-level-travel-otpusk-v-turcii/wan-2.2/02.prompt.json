@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-19-level-travel-otpusk-v-turcii-02-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+    "sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+    "width": 1028,
+    "height": 594
+  },
+  "structured_intent": {
+    "editorial_meaning": "The price calendar makes it easy to compare travel dates and identify a more affordable Turkey tour.",
+    "primary_action": "The lowest visible price receives a single soft optical emphasis.",
+    "terminal_state": "The 40 086 ₽ price is visibly but gently highlighted while every displayed value and interface element remains unchanged.",
+    "semantic_invariant": "The calendar remains a trustworthy, unchanged comparison of the displayed tour prices and durations."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A soft blue pulse gradually brightens the existing “40 086 ₽” price link and its underline, then settles into a clear gentle highlight by the final frames; all UI text, numbers, and layout remain unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 3.2,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "wan-streamlit",
+    "adapter": "wan-demo",
+    "frames": 97,
+    "fps": 30,
+    "seed": 1,
+    "loop": false,
+    "last_frame": null,
+    "prompt_expansion": {
+      "mode": "not_exposed"
+    },
+    "negative_prompt_transport": {
+      "mode": "combined_prompt",
+      "separator": "\n\nAvoid: "
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-19-level-travel-otpusk-v-turcii-02/result.json",
+    "sha256": "07ef0c970f07ef87803c3e34ceb7ada71cfbba27f293780cf9e3cdf33586a3fe",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+      "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+      "source_image_sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+      "article_context_sha256": "0d8f2c81586814f1c9ff1bd0ea0292094d903f4347ba83f8609df3820c81f182",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  }
+}

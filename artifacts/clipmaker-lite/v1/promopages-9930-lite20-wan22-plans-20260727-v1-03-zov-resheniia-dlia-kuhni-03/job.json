@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:1b9a9f3a9fa9c3032f24042455b475d40c5014acdb7eb4c3aea5b62a32883d5f",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+      "sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+      "bytes": 234500
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/03-zov-resheniia-dlia-kuhni/content.json",
+      "sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064",
+      "bytes": 17582,
+      "locator": {
+        "article_id": "03-zov-resheniia-dlia-kuhni",
+        "title": "5 решений для кухни, которая радует каждый день",
+        "lead": "Простые идеи для дизайна, которые выглядят стильно и реально помогают в быту",
+        "image_id": "03",
+        "block_index": 12,
+        "role": "article_image",
+        "caption": "Встроенные розетки спрятаны так, чтобы на кухне не было лишних проводов и некрасивых отверстий в фартуке",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+        "current_heading": {
+          "block_index": 9,
+          "level": 2,
+          "text": "Встроенные розетки"
+        },
+        "nearest_text_before": {
+          "block_index": 11,
+          "type": "paragraph",
+          "text": "«ЗОВ» устанавливает встроенные розеточные блоки с защитой от воды и перегрева. Встроить их можно прямо в столешницу или в нижнюю часть навесного шкафа — там, где планируется активная готовка. Если вам понадобится подключить блендер или миксер, достаточно нажать на специальную область. После этого откроется панель с розетками. Закончили с готовкой — убрали прибор и закрыли выдвижной модуль."
+        },
+        "nearest_text_after": {
+          "block_index": 13,
+          "type": "heading",
+          "text": "Сушка внутри шкафа"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-wan22-plans-20260727-v1-03-zov-resheniia-dlia-kuhni-03/result.json"
+  }
+}

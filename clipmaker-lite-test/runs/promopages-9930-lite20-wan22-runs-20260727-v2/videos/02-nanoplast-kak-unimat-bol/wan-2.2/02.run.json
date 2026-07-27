@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "02-nanoplast-kak-unimat-bol-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+      "prompt": "With hands held still behind their heads, the women make one slow, controlled abdominal curl, lifting their shoulders slightly and steadily together. Fixed camera. They finish in a stable higher position, still calmly engaged in the exercise."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "530d8826826b44f326c6ceab89dcc3ec0c41561f4e6d3c321c366f69cf6d1f8a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "abd1800a2b91417885e34c9f5f307f32",
+  "provider_session_hash": "promopages9856-b5ff8d01532f",
+  "submitted_at": "2026-07-27T11:15:36Z",
+  "completed_at": "2026-07-27T11:17:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 1264,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 432038,
+    "sha256": "7578372ff21e01b4f3ebb33c8d59d523804e6b00406df66d344ac9e587992185"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-02-nanoplast-kak-unimat-bol-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-02-nanoplast-kak-unimat-bol-02-wan-2-2",
+  "lite_result_sha256": "6cf8ca2e03619b556229e41fcc4160cc6850b6a928341c277dd2dfd538c3de03",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

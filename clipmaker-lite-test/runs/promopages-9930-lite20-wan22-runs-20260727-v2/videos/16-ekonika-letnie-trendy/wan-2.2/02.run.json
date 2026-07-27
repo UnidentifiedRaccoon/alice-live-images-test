@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "16-ekonika-letnie-trendy-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-wan22-runs-20260727-v2/videos/16-ekonika-letnie-trendy/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+      "prompt": "Soft dappled sunlight drifts steadily across both sandals from left to right, tracing the thin circular straps while the camera remains fixed. By the final frames, the light settles evenly over both strap patterns, leaving the pair fully visible and aligned."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "b2da888a1dd17465c14b02d03e371e4187b1a6be36e3bfffab489a17e6a16f80",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9b01fd8d449e4f3f87c096dbc8bbb653",
+  "provider_session_hash": "promopages9856-1b8215162753",
+  "submitted_at": "2026-07-27T11:31:16Z",
+  "completed_at": "2026-07-27T11:32:17Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 944,
+    "height": 944,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 274607,
+    "sha256": "c48264f1e16e671272877897f9d0aeec4bf4b888e64411da27eb17e8c9761bbb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-wan22-runs-20260727-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-wan22-plans-20260727-v1-16-ekonika-letnie-trendy-02",
+  "provider_run_id": "promopages-9930-lite20-wan22-runs-20260727-v2-16-ekonika-letnie-trendy-02-wan-2-2",
+  "lite_result_sha256": "9006540c358b25d49ffa55c644c8a2e4545132cbef6568e4046acc8cb0fc0d9f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

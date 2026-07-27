@@ -1,0 +1,126 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-wan22-plans-20260727-v1-09-dream-island-semeinye-vyhodnye-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:24e70be5f454a00d6dbf1044963fffa04802a93b2b0f5699703e267fc617d878",
+    "instruction_bundle_sha256": "a5dcd0d99eebf5abe066a09b06f312afd97bbba7917fa36f6aa3f731cacc2f7b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      }
+    ],
+    "inputs_sha256": "sha256:d072b4357ec5e073bf66700ac1dd6756352a19328394c1e5b8a175512da10504",
+    "execution_fingerprint": "sha256:5f8887fc40e1d903d742f061ef10290f7d6f7c468a69a750e3a2c47592176c3a",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa32d-e64c-7380-a95b-e0ad0f1b6be2"
+    },
+    "authored_payload_sha256": "d0daadd7136f9cac4a5d6c50db29136f95b618d74cf2841f5114981e38d6b97d",
+    "draft_file_sha256": "64fbfd691a46de7a4913147b4e4362b371c4a5e5f4d33b06a3a3d0613787fd5c"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+      "sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+      "bytes": 6072250
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/09-dream-island-semeinye-vyhodnye/content.json",
+      "sha256": "47c2112a5b1ed0b96ec4b50d9922b650e281333b00dc6e1f5d0a4e87a805c2f3",
+      "bytes": 20616,
+      "locator": {
+        "article_id": "09-dream-island-semeinye-vyhodnye",
+        "title": "Как провести выходные семьей? Выбираю «Остров Мечты»!",
+        "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+        "image_id": "02",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "Самые искренние улыбки и яркие эмоции",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "Здесь можно с легкостью провести целый день. Территория парка разделена на 10 тематических зон, каждая - со своими уникальными декорациями, аттракционами и шоу с известными мультперсонажами."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "1 билет = 49 аттракционов + 5 шоу"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Красный пассажирский аттракцион с детьми и взрослыми движется по дуге внутри ярко освещённого крытого парка.",
+      "Несколько пассажиров улыбаются и держат руки поднятыми; главным подвижным элементом является сама кабина, а волосы и одежда могут слегка реагировать на её движение.",
+      "Диагональное положение кабины и опоры подчёркивает размах качания, при этом радостные лица и совместное участие семьи остаются смысловым центром."
+    ],
+    "article_context": "Это body-изображение после описания тематических зон и перед разделом о едином билете на аттракционы и шоу. Подпись акцентирует искренние улыбки и яркие эмоции, поэтому кадр иллюстрирует радость совместного семейного катания и разнообразие впечатлений в крытом парке.",
+    "structured_intent": {
+      "editorial_meaning": "Совместное катание в «Острове Мечты» дарит семье искреннюю радость и яркие общие впечатления.",
+      "primary_action": "Кабина аттракциона плавно проходит нисходящий участок дуги качания вместе с пассажирами.",
+      "terminal_state": "Кабина достигает нижней точки короткого участка дуги и слегка замедляется, а улыбающиеся пассажиры с поднятыми руками остаются отчётливо видны.",
+      "semantic_invariant": "Пассажиры остаются радостными и вовлечёнными в совместное семейное развлечение до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "На протяжении 3,2 секунды кабина сразу начинает плавно проходить короткий нисходящий участок дуги с умеренной амплитудой. Камера неподвижна, чтобы движение аттракциона читалось относительно декораций. Пассажиры лишь слегка отклоняются по инерции, без новых или повторных жестов; поднятые руки и улыбки сохраняются. К финалу кабина достигает нижней точки выбранного короткого участка и мягко замедляется, а радостная семейная группа остаётся видимой.",
+      "positive_prompt": "The ride car glides smoothly a short distance downward along its swing arc at a moderate speed; passengers lean subtly with the motion while raised arms remain up and joyful smiles hold. Fixed camera. By the final frames, the car reaches the lower point of this short arc and gently slows, with the excited family group still clearly visible.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": null
+    }
+  ]
+}
