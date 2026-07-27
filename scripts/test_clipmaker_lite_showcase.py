@@ -19,6 +19,10 @@ MODEL_IDS = [
 CASE14_WAN22_PROMPT_SHA256 = (
     "71352fa20f1bbba882c9900a9656aafd0764fc93d71ca5c6a4cf06c02b82a5ad"
 )
+CASE14_ELIZA_SEGMIND_MODEL_ID = "segmind/wan-2.2-i2v-flash"
+CASE14_ELIZA_SEGMIND_VIDEO_SHA256 = (
+    "c4ad82232afee3116fb7f6e60013f7df43c0275bd2325ae8c7a51cb1cb2db7e7"
+)
 NAVIGATION_PAGES = [
     ROOT / "index.html",
     ROOT / "generated-gallery.html",
@@ -52,6 +56,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         prompts = []
         video_paths = []
         comparison_paths = []
+        external_paths = []
         source_paths = []
 
         for article in articles:
@@ -121,16 +126,55 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                     self.assertGreater(output["media"]["bytes"], 0)
                     comparison_paths.append(video_path)
 
+            if "external_outputs" in article:
+                external_outputs = article["external_outputs"]
+                self.assertEqual(article["article_number"], "14")
+                self.assertEqual(len(external_outputs), 1)
+                output = external_outputs[0]
+                self.assertEqual(output["model_id"], CASE14_ELIZA_SEGMIND_MODEL_ID)
+                self.assertEqual(output["gateway"], "eliza")
+                self.assertEqual(output["provider"], "segmind")
+                self.assertEqual(output["route_label"], "Eliza → Segmind")
+                self.assertEqual(output["delivery"], "repository-raw")
+                self.assertEqual(output["actual_cost_usd"], 0.18)
+                self.assertEqual(output["request"]["prompt_extend"], False)
+                self.assertEqual(output["request"]["watermark"], False)
+                self.assertEqual(output["request"]["seed"], 220214)
+                self.assertTrue(output["positive_prompt"].strip())
+                self.assertTrue(output["negative_prompt"].strip())
+                self.assertEqual(output["media"]["width"], 1280)
+                self.assertEqual(output["media"]["height"], 720)
+                self.assertEqual(output["media"]["frames"], 150)
+                self.assertFalse(output["media"]["has_audio"])
+                self.assertEqual(output["visual_review"]["status"], "fidelity-failed")
+                self.assertTrue(output["visual_review"]["summary"].strip())
+                self.assertEqual(
+                    output["media"]["sha256"],
+                    CASE14_ELIZA_SEGMIND_VIDEO_SHA256,
+                )
+                video_path = output["video_path"]
+                self.assertTrue((ROOT / video_path).is_file(), video_path)
+                self.assertEqual(
+                    hashlib.sha256((ROOT / video_path).read_bytes()).hexdigest(),
+                    CASE14_ELIZA_SEGMIND_VIDEO_SHA256,
+                )
+                external_paths.append(video_path)
+
         self.assertEqual(len(prompts), 60)
         self.assertEqual(len(video_paths), 60)
         self.assertEqual(len(set(video_paths)), 60)
-        self.assertEqual(len(set(video_paths + comparison_paths)), 60 + len(comparison_paths))
+        self.assertEqual(
+            len(set(video_paths + comparison_paths + external_paths)),
+            60 + len(comparison_paths) + len(external_paths),
+        )
         self.assertEqual(len(source_paths), 20)
         if comparison_paths:
             self.assertEqual(manifest.get("comparison_output_count"), 2)
             self.assertEqual(len(comparison_paths), manifest["comparison_output_count"])
         elif "comparison_output_count" in manifest:
             self.assertEqual(manifest["comparison_output_count"], 0)
+        self.assertEqual(manifest.get("external_output_count"), 1)
+        self.assertEqual(len(external_paths), manifest["external_output_count"])
 
     def test_selected_assets_are_tracked(self):
         result = subprocess.run(
@@ -154,12 +198,21 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
             for article in self.manifest["articles"]
             for output in article.get("comparison_outputs", [])
         )
+        selected_assets.update(
+            output["video_path"]
+            for article in self.manifest["articles"]
+            for output in article.get("external_outputs", [])
+        )
 
         comparison_count = sum(
             len(article.get("comparison_outputs", []))
             for article in self.manifest["articles"]
         )
-        self.assertEqual(len(selected_assets), 80 + comparison_count)
+        external_count = sum(
+            len(article.get("external_outputs", []))
+            for article in self.manifest["articles"]
+        )
+        self.assertEqual(len(selected_assets), 80 + comparison_count + external_count)
         self.assertFalse(selected_assets - tracked, selected_assets - tracked)
 
     def test_additional_manifest_contains_20_unique_images_by_three_models(self):
@@ -218,6 +271,13 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
             ),
             2,
         )
+        self.assertEqual(
+            sum(
+                len(article.get("external_outputs", []))
+                for article in self.manifest["articles"]
+            ),
+            1,
+        )
 
     def test_all_demo_pages_keep_step_four_and_add_step_five(self):
         step_pattern = re.compile(r'<span class="viewSwitchStep" lang="en">Step №(\d+)</span>')
@@ -231,6 +291,15 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                 self.assertIn("40 изображений · 3 модели", html)
                 self.assertNotIn("40 изображений · 2–3 модели", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
+                self.assertEqual(
+                    len(
+                        re.findall(
+                            r'href="(?:\./\?v=5|(?:\.\./)?clipmaker-lite/\?v=5)"',
+                            html,
+                        )
+                    ),
+                    1,
+                )
 
     def test_showcase_uses_manifest_and_only_renders_active_videos(self):
         app = (ROOT / "clipmaker-lite" / "app.js").read_text(encoding="utf-8")
@@ -246,6 +315,8 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 40", app)
         self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 120", app)
         self.assertIn("EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2", app)
+        self.assertIn("EXPECTED_EXTERNAL_OUTPUT_COUNT = 1", app)
+        self.assertIn('const EXTERNAL_MODEL_ID = "segmind/wan-2.2-i2v-flash";', app)
         self.assertIn("const ADDITIONAL_MODEL_ORDER = MODEL_ORDER;", app)
         self.assertIn("repository-raw", app)
         self.assertIn("raw.githubusercontent.com", app)
@@ -265,12 +336,17 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn('showcaseLabel: "Референс · свой prompt"', app)
         self.assertIn('showcaseLabel: "Свой prompt"', app)
         self.assertIn('showcaseLabel: "Prompt Wan 2.2"', app)
+        self.assertIn('showcaseLabel: "Eliza → Segmind"', app)
+        self.assertIn("Visual review · fidelity failed.", app)
+        self.assertIn('cost: "$0.18"', app)
         self.assertIn("const videoCount = videos.length;", app)
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn("120 + 2", html)
-        self.assertIn('src="app.js?v=5"', html)
+        self.assertIn("120 + 3", html)
+        self.assertIn("Wan 2.2 Flash через Eliza → Segmind за $0.18", html)
+        self.assertIn('src="app.js?v=6"', html)
+        self.assertIn('href="styles.css?v=5"', html)
         self.assertIn('id="imageSelect"', html)
         self.assertIn('id="previousImage"', html)
         self.assertIn('id="nextImage"', html)
@@ -279,6 +355,8 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr));", styles)
         self.assertIn("grid-template-columns: repeat(5, minmax(0, 1fr));", styles)
         self.assertIn(".modelGrid.hasExperiment", styles)
+        self.assertIn(".modelGrid.hasExperiment.sixModels", styles)
+        self.assertIn('.modelPanel[data-output-kind="external"]', styles)
         self.assertIn(".modelGrid.twoModels", styles)
         self.assertIn(".sourcePanel[hidden]", styles)
 
