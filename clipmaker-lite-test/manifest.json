@@ -3,7 +3,7 @@
   "ticket": "PROMOPAGES-9910",
   "batch_id": "promopages-9910-lite20-20260724-r2",
   "agent_id": "clipmaker-lite",
-  "updated_at": "2026-07-26T11:29:51Z",
+  "updated_at": "2026-07-27T11:32:15Z",
   "article_count": 20,
   "models": [
     "alibaba/wan-2.2",
@@ -12,6 +12,7 @@
   ],
   "expected_outputs": 60,
   "comparison_output_count": 2,
+  "external_output_count": 1,
   "status_summary": {
     "succeeded": 40,
     "verification-failed": 20
@@ -3920,6 +3921,70 @@
             },
             "conforms": true,
             "warnings": []
+          },
+          "error": null
+        }
+      ],
+      "external_outputs": [
+        {
+          "provider_run_id": "57cb6be8aa69d77c38a8eecdf33bc82e",
+          "model_id": "segmind/wan-2.2-i2v-flash",
+          "comparison_variant": "eliza-segmind-route",
+          "canonical_lite_artifact": false,
+          "gateway": "eliza",
+          "provider": "segmind",
+          "route_label": "Eliza → Segmind",
+          "endpoint": "https://api.eliza.yandex.net/segmind/v1/wan-2.2-i2v-flash",
+          "scene_plan": "Keep the camera fixed and move only the two isolated lower-center teardrop pearl earrings in small, slightly out-of-phase pendulum swings. Preserve both fashion portraits, every other jewelry item, the background, and the collage layout. Let the motion settle close to vertical by the final frames.",
+          "positive_prompt": "Only the two isolated lower-center teardrop pearl earrings move. Each pearl begins a small, even pendulum swing, slightly out of phase, with highlights sliding naturally across the curved surfaces. The camera remains completely fixed. The two fashion portraits, faces, bodies, clothing, upper jewelry pair, white background, and collage layout remain unchanged and still. The swing gradually loses amplitude; by the final frames both pearls return close to vertical with only a faint residual sway.",
+          "negative_prompt": "camera movement, zoom, pan, tilt, crop, reframing, scene cuts, morphing, duplicated or missing jewelry, extra earrings or pearls, deformed pearls, warped metal, changing faces or bodies, blinking, head movement, moving clothing, changing background or collage layout, text, logos, watermark, flicker, jitter, blur, low detail",
+          "status": "succeeded",
+          "prompt_path": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.prompt.json",
+          "run_path": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.run.json",
+          "review_path": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.review.json",
+          "video_path": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.mp4",
+          "delivery": "repository-raw",
+          "actual_cost_usd": 0.18,
+          "latency_seconds": 53.6,
+          "request": {
+            "resolution": "720p",
+            "prompt_extend": false,
+            "watermark": false,
+            "seed": 220214
+          },
+          "media": {
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1280,
+            "height": 720,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": false,
+            "bytes": 6721807,
+            "sha256": "c4ad82232afee3116fb7f6e60013f7df43c0275bd2325ae8c7a51cb1cb2db7e7"
+          },
+          "contract_check": {
+            "requested": {
+              "resolution": "720p",
+              "prompt_extend": false,
+              "watermark": false,
+              "seed": 220214
+            },
+            "checks": {
+              "http_status": true,
+              "content_type": true,
+              "resolution": true,
+              "audio": true,
+              "frame_count": true,
+              "cost": true
+            },
+            "conforms": true,
+            "warnings": []
+          },
+          "visual_review": {
+            "status": "fidelity-failed",
+            "summary": "The route works technically, but non-target jewelry rotates and changes geometry."
           },
           "error": null
         }

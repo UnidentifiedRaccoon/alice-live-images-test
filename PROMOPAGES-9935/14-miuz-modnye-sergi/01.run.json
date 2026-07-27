@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9935",
+  "status": "succeeded",
+  "route": {
+    "provider": "segmind",
+    "gateway": "eliza",
+    "model": "wan-2.2-i2v-flash",
+    "endpoint": "https://api.eliza.yandex.net/segmind/v1/wan-2.2-i2v-flash",
+    "synchronous": true,
+    "automatic_retry": false
+  },
+  "source": {
+    "path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/77a13a75506331588ca2246531f92c25d33d692a/PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+    "sha256": "7405154161aca78078f95474813f1927d0e203f80873077a5b8600bc21776dd6",
+    "width": 1200,
+    "height": 675,
+    "content_review": "Public PromoPages editorial image; no NDA, credentials, logins, private customer data, or private user data. The fashion portraits already appear in the public source material."
+  },
+  "prompt_path": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.prompt.json",
+  "prompt_sha256": "4abfd7aec6c0e196c5adc2ab16ecb1dd534ae27f1747df6574c8f579ac8ae4c5",
+  "request": {
+    "parameters": {
+      "image": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/77a13a75506331588ca2246531f92c25d33d692a/PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+      "prompt": "Only the two isolated lower-center teardrop pearl earrings move. Each pearl begins a small, even pendulum swing, slightly out of phase, with highlights sliding naturally across the curved surfaces. The camera remains completely fixed. The two fashion portraits, faces, bodies, clothing, upper jewelry pair, white background, and collage layout remain unchanged and still. The swing gradually loses amplitude; by the final frames both pearls return close to vertical with only a faint residual sway.",
+      "negative_prompt": "camera movement, zoom, pan, tilt, crop, reframing, scene cuts, morphing, duplicated or missing jewelry, extra earrings or pearls, deformed pearls, warped metal, changing faces or bodies, blinking, head movement, moving clothing, changing background or collage layout, text, logos, watermark, flicker, jitter, blur, low detail",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    },
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "video/mp4, application/octet-stream",
+      "X-Retries": "1",
+      "X-Include-Cost": "true",
+      "Ya-Pool": null,
+      "Authorization": "[REDACTED]"
+    }
+  },
+  "attempt": {
+    "started_at": "2026-07-27T11:23:57Z",
+    "request_dispatched": true,
+    "single_attempt_guard": true,
+    "source_preflight": {
+      "status": 200,
+      "content_type": "image/jpeg",
+      "bytes": 149561,
+      "sha256": "7405154161aca78078f95474813f1927d0e203f80873077a5b8600bc21776dd6",
+      "immutable_commit_url": true
+    },
+    "finished_at": "2026-07-27T11:24:51Z",
+    "latency_seconds": 53.6
+  },
+  "response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "x_segmind_request_id": "57cb6be8aa69d77c38a8eecdf33bc82e",
+    "x_response_cost": {
+      "raw": "0.18",
+      "numeric": 0.18,
+      "currency": "USD"
+    }
+  },
+  "artifact": {
+    "path": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.mp4",
+    "bytes": 6721807,
+    "sha256": "c4ad82232afee3116fb7f6e60013f7df43c0275bd2325ae8c7a51cb1cb2db7e7"
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "duration_seconds": 5.0,
+    "size_bytes": 6721807,
+    "bit_rate_bps": 10754891,
+    "video": {
+      "codec": "h264",
+      "profile": "High",
+      "width": 1280,
+      "height": 720,
+      "avg_frame_rate": "30/1",
+      "avg_fps": 30.0,
+      "r_frame_rate": "30/1",
+      "r_fps": 30.0,
+      "nb_read_frames": 150,
+      "bit_rate_bps": 10749206
+    },
+    "has_audio": false,
+    "audio": null
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9935",
+  "artifact": "PROMOPAGES-9935/14-miuz-modnye-sergi/01.mp4",
+  "review_method": {
+    "source_comparison": "Compared the source image with decoded frames 0, 75, and 147 and a one-frame-per-second contact sheet.",
+    "technical_verification": "Re-ran scripts/segmind_wan22_case14.py verify, including ffprobe -count_frames and receipt digest checks."
+  },
+  "observations": {
+    "requested_motion": "The lower-center pearl earrings move, but the motion is dominated by rotation of the whole earring hardware rather than a compact pendulum-only sway of the pearls.",
+    "camera": "The framing remains fixed.",
+    "invariant_failures": [
+      "The upper-center jewelry pair rotates and changes apparent geometry even though it was required to remain still.",
+      "Additional earrings outside the lower-center target animate or change orientation.",
+      "The lower-center metal mounts rotate and change position instead of preserving exact product geometry."
+    ],
+    "stable_elements": [
+      "The overall collage layout remains recognizable.",
+      "The two fashion portraits and clothing remain substantially more stable than the jewelry."
+    ]
+  },
+  "verdict": {
+    "transport_contract": "pass",
+    "technical_pipeline_fit": "pass_with_external_processing_constraints",
+    "visual_fidelity_for_unattended_promopages_use": "fail",
+    "summary": "Eliza -> Segmind Wan 2.2 Flash is operational, fast, inexpensive, and returns a clean silent 720p MP4, but this case does not preserve non-target jewelry or exact product geometry well enough for unattended PromoPages generation."
+  },
+  "limitations": [
+    "The image and prompt are sent to an external hosted Segmind API.",
+    "The route is synchronous and non-idempotent; a retry can incur a second charge.",
+    "This result covers one case and cannot establish aggregate quality or reliability.",
+    "No second paid generation was performed to test prompt or seed sensitivity."
+  ]
+}

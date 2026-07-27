@@ -384,6 +384,10 @@
   line-height: 1.35;
 }
 
+.fidelityWarning {
+  display: block;
+}
+
 .modelPanel[data-output-kind="reference"] {
   border-top-color: var(--ink-soft);
 }
@@ -392,7 +396,16 @@
   border-top-color: var(--accent);
 }
 
+.modelPanel[data-output-kind="external"] {
+  border-top-color: var(--accent-dark);
+}
+
 .modelPanel[data-output-kind="comparison"] .promptLabel {
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+}
+
+.modelPanel[data-output-kind="external"] .promptLabel {
   color: var(--accent-dark);
   background: var(--accent-soft);
 }
@@ -532,6 +545,10 @@
   .modelGrid.hasExperiment {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-2xl) var(--space-md);
+  }
+
+  .modelGrid.hasExperiment.sixModels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

@@ -49,7 +49,19 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "manual-review/review-data.js",
                 'window.qualityReviewDataset = {"items": []};\n',
             )
-            write_text("clipmaker-lite-test/manifest.json", '{"articles": []}\n')
+            write_text(
+                "clipmaker-lite-test/manifest.json",
+                """{
+                  "articles": [{
+                    "selected_image": {"source_path": "raw/base.jpg"},
+                    "outputs": [],
+                    "external_outputs": [{
+                      "video_path": "raw/external.mp4",
+                      "delivery": "repository-raw"
+                    }]
+                  }]
+                }\n""",
+            )
             write_text(
                 "clipmaker-lite-test/promopages-9930-manifest.json",
                 """{
@@ -62,26 +74,32 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 }\n""",
             )
             source_path = root / "raw/source.jpg"
+            base_path = root / "raw/base.jpg"
             video_path = root / "raw/output.mp4"
+            external_video_path = root / "raw/external.mp4"
             source_path.parent.mkdir(parents=True, exist_ok=True)
             source_path.write_bytes(b"source")
+            base_path.write_bytes(b"base")
             video_path.write_bytes(b"video")
+            external_video_path.write_bytes(b"external-video")
 
             static_files = (
                 "clipmaker-lite-test/manifest.json",
                 "clipmaker-lite-test/promopages-9930-manifest.json",
             )
+            expected_site_files = {*static_files, "raw/base.jpg"}
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
             ):
                 paths = pages.collect_site_paths(root)
 
-            self.assertEqual({path.as_posix() for path in paths}, set(static_files))
+            self.assertEqual({path.as_posix() for path in paths}, expected_site_files)
             self.assertNotIn(Path("raw/source.jpg"), paths)
             self.assertNotIn(Path("raw/output.mp4"), paths)
+            self.assertNotIn(Path("raw/external.mp4"), paths)
 
-            video_path.unlink()
+            external_video_path.unlink()
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),

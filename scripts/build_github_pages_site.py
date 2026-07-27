@@ -108,6 +108,8 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
     for item in review["items"]:
         relative_paths.add(_safe_relative_path(item["video"]["path"]))
 
+    remote_repository_paths: set[Path] = set()
+
     lite_manifest = json.loads(
         (root / "clipmaker-lite-test" / "manifest.json").read_text(encoding="utf-8")
     )
@@ -121,6 +123,12 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
         ]
         for output in outputs:
             relative_paths.add(_safe_relative_path(output["video_path"]))
+        for output in article.get("external_outputs", []):
+            relative_path = _safe_relative_path(output["video_path"])
+            if output.get("delivery") == "repository-raw":
+                remote_repository_paths.add(relative_path)
+            else:
+                relative_paths.add(relative_path)
 
     # The Step 5 client uses stable raw-repository URLs for PROMOPAGES-9930 media.
     # Keep the compact manifest in Pages and validate every referenced repository
@@ -130,7 +138,6 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             encoding="utf-8"
         )
     )
-    remote_repository_paths: set[Path] = set()
     for article in additional_lite_manifest["articles"]:
         for image_record in article["images"]:
             remote_repository_paths.add(
