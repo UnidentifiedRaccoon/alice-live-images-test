@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "03-zov-resheniia-dlia-kuhni-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/03-zov-resheniia-dlia-kuhni/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/03-zov-resheniia-dlia-kuhni/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The sheer curtains drift inward in one smooth breeze and settle into a slight lingering sway near the end. A subtle rightward camera glide keeps the clean countertop and backsplash continuously in view, with the kitchen still orderly in the final frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "23b6dd05315fd8a04ee34ee8b3527e2937d01188e158a101f4bf007d8d2e5c4b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "hxG8fKkndzPvzoSfe37t",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:07:52Z",
+  "completed_at": "2026-07-26T20:09:41Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3772991,
+    "sha256": "1c1957b9f2aef9a9d87df9346c9c76cd2294967c9929affc1cc04084adf1134e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-03-zov-resheniia-dlia-kuhni-03",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-03-zov-resheniia-dlia-kuhni-03-veo-3-1-lite",
+  "lite_result_sha256": "5754ca5e7645feaba70b51b2adf16465334f46f9ecd6085a0c5f4fbcb7b3589e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

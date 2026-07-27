@@ -1,0 +1,154 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-19-level-travel-otpusk-v-turcii-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:044151369631333643fbad01af941aba662eab330fc2f4e87961dc2230cc50c8",
+    "execution_fingerprint": "sha256:88ba2a642236091d7fe37ada1f18adb37f602740c47db55f0ba3ee5a5c16640b",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa003-41fc-7613-982d-1c5b4dd18a3f"
+    },
+    "authored_payload_sha256": "5c28b466115df206f5635a4ff65eebb5799dbe2e36bc9cc37efcd25f329686f0",
+    "draft_file_sha256": "e5685be7213c5e754bde5ed00e49c2936f5b2620adaa75ee46478d8c182700ab"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+      "sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+      "bytes": 98198
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/19-level-travel-otpusk-v-turcii/content.json",
+      "sha256": "0d8f2c81586814f1c9ff1bd0ea0292094d903f4347ba83f8609df3820c81f182",
+      "bytes": 14616,
+      "locator": {
+        "article_id": "19-level-travel-otpusk-v-turcii",
+        "title": "Планируем отпуск в Турции: 5 лайфхаков от Level.Travel",
+        "lead": "Прежде чем бронировать тур на даты отпуска, стоит убедиться, что вы ничего не упустили. Например, знаете, как выбрать курорт в зависимости от типа пляжа, или умеете искать хороший отель по выгодной цене. Как научиться этим и другим лайфхакам перед поездкой в Турцию летом, читайте в статье от эксперта по путешествиям Level.Travel.\nКогда ехать в отпуск\nКупальный сезон в Турции достаточно длительный",
+        "image_id": "02",
+        "block_index": 5,
+        "role": "article_image",
+        "caption": "Найти самый выгодный тур поможет сервис «Календарь низких цен» — там вы сможете сравнить цены на туры в зависимости от дня вылета и продолжительности поездки",
+        "file": "02.png",
+        "manifest_file_path": "articles/19-level-travel-otpusk-v-turcii/02.png",
+        "current_heading": {
+          "block_index": 2,
+          "level": 2,
+          "text": "Когда ехать в отпуск"
+        },
+        "nearest_text_before": {
+          "block_index": 4,
+          "type": "paragraph",
+          "text": "Цены летом меняются от месяца к месяцу. Самые высокие обычно в июле. Если начало отпуска не привязано к конкретному числу, то воспользуйтесь календарем низких цен на сайте Level.Travel. С его помощью вы сможете отследить более выгодные предложения и определиться с конкретными датами вылета."
+        },
+        "nearest_text_after": {
+          "block_index": 6,
+          "type": "heading",
+          "text": "Как выбрать отель"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Статичный интерфейс с таблицей цен на туры в Турцию из Москвы: столбцы соответствуют месяцам с мая по август, строки — продолжительности поездки от 3 до 14 ночей.",
+      "Ключевые смысловые детали — синие кликабельные цены, включая наиболее низкие значения в мае, и неизменяемая сетка месяцев и продолжительности тура."
+    ],
+    "article_context": "Изображение иллюстрирует абзац о помесячном изменении стоимости летних туров и сервисе «Календарь низких цен»: таблица помогает сравнить цены по месяцу и продолжительности поездки, чтобы выбрать более выгодные даты отпуска в Турции.",
+    "structured_intent": {
+      "editorial_meaning": "Сравнение цен по месяцам и продолжительности поездки помогает найти более выгодные даты для тура в Турцию.",
+      "primary_action": "Мягкий оптический акцент проходит по существующим ценам и направляет внимание к более выгодным предложениям мая.",
+      "terminal_state": "В последнем кадре майский столбец мягко выделен, а все тексты, числа и расположение элементов остаются исходными.",
+      "semantic_invariant": "Таблица остается достоверным и неизменным сравнением исходных цен, месяцев и продолжительности поездки."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный статичный кадр интерфейса. Мягкий полупрозрачный синий блик начинает движение по существующим ссылкам-ценам без задержки, равномерно проходит слева направо почти всю сцену и к концу плавно ослабевает над столбцом мая, визуально подчеркивая выгодное сравнение. Никакие значения, надписи, элементы управления и геометрия таблицы не меняются.",
+      "positive_prompt": "Fixed camera. A soft blue optical sheen moves steadily across the existing linked prices from left to right, then gently settles on the May price column near the end. All text, numbers, underlines, spacing, and layout remain exactly unchanged in the final frame.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырехсекундный статичный кадр. Один сдержанный синий оптический импульс последовательно проходит по видимым ссылкам-ценам в ровном темпе и ближе к финалу сходится на столбце мая. В последнем кадре остается лишь мягкий акцент на майских ценах; текст, числа, подчеркивания, сетка и расположение интерфейса полностью исходные.",
+      "positive_prompt": "Fixed camera. A subtle blue pulse travels once through the existing price links and converges on the May column near the end. The last frame shows a gentle highlight on May while every word, number, underline, and UI position stays identical.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

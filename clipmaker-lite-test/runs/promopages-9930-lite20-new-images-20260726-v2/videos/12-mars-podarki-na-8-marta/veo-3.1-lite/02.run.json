@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "12-mars-podarki-na-8-marta-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/12-mars-podarki-na-8-marta/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/12-mars-podarki-na-8-marta/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, the woman takes one gentle breath of the perfume, subtly lifting her shoulders as her serene smile grows. The bottle stays steady and visible; by the final frame her shoulders settle and she continues savoring the scent with eyes closed.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "e533d4b42eb820f41d5c4a1f95e4c077f4ff571d872b523cfb21a64891cc92ae",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "MwlP38Ds78qgFzxdqe8Q",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:13:44Z",
+  "completed_at": "2026-07-26T20:15:33Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3084831,
+    "sha256": "ac84d11e4be4f9a5f76812a6bafaf06964f0c3e052623ec57bfea874579de1a9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02-veo-3-1-lite",
+  "lite_result_sha256": "4e35cfd06181b4dfd149fb0db6255d61bf89ad00a4b334403121467b0171f6b3",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

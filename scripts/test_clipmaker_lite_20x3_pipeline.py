@@ -16,6 +16,66 @@ from scripts import video_generation_pipeline as transport
 
 
 class ClipmakerLite20x3AcceptanceTest(unittest.TestCase):
+    def test_frozen_201_bundle_remains_authoritative_after_root_202(self) -> None:
+        root_contract = pipeline.read_json(
+            pipeline.ROOT / "docs/agents/clipmaker-lite/contract.json"
+        )
+        frozen_contract = pipeline.require_frozen_lite_bundle(pipeline.TEST_ROOT)
+
+        self.assertEqual(root_contract["contract_version"], "2.0.2")
+        self.assertEqual(frozen_contract["contract_version"], "2.0.1")
+        self.assertNotEqual(root_contract, frozen_contract)
+
+    def test_prepare_dataset_never_copies_current_lite_files_over_frozen_bundle(self) -> None:
+        with (
+            mock.patch.object(pipeline, "discover_articles", return_value=()),
+            mock.patch.object(pipeline, "copy_exact") as copy_exact,
+            mock.patch.object(pipeline, "require_frozen_lite_bundle") as require_frozen,
+            mock.patch.object(pipeline, "write_readme"),
+            mock.patch.object(pipeline.transport, "atomic_write_json"),
+        ):
+            pipeline.prepare_dataset(pipeline.ROOT)
+
+        destinations = {call.args[1] for call in copy_exact.call_args_list}
+        for relative_path in pipeline.FROZEN_LITE_FILES:
+            self.assertNotIn(pipeline.TEST_ROOT / relative_path, destinations)
+        require_frozen.assert_called_once_with(pipeline.TEST_ROOT)
+
+    def test_historical_native_binding_separates_frozen_planning_from_provider_root(self) -> None:
+        mutable_names = (
+            "BATCH_ID",
+            "PLANNING_BATCH_ID",
+            "MODEL_IDS",
+            "PLANNING_MODEL_IDS",
+            "TICKET",
+            "MANIFEST_PATH",
+            "CONTRACT_PATH",
+            "PLANNING_WORKSPACE",
+            "PLANNING_PROVENANCE_VERIFIER",
+            "SAMPLES",
+            "WAN_SUBMIT_MODE",
+            "artifact_paths",
+        )
+        with ExitStack() as stack:
+            for name in mutable_names:
+                stack.enter_context(
+                    mock.patch.object(
+                        pipeline.native,
+                        name,
+                        getattr(pipeline.native, name),
+                    )
+                )
+            pipeline.configure_native(())
+            self.assertEqual(pipeline.native.PLANNING_WORKSPACE, pipeline.TEST_ROOT)
+            self.assertIs(
+                pipeline.native.PLANNING_PROVENANCE_VERIFIER,
+                pipeline.frozen_provenance_summary,
+            )
+            self.assertEqual(
+                pipeline.native.CONTRACT_PATH,
+                pipeline.TEST_ROOT / "docs/agents/clipmaker-lite/contract.json",
+            )
+
     def test_generate_defaults_to_all_three_routes_and_forwards_pool_limits(self) -> None:
         with (
             mock.patch.object(pipeline, "configure_native") as configure,
@@ -206,6 +266,15 @@ class ClipmakerLite20x3AcceptanceTest(unittest.TestCase):
             transport.atomic_write_json(root / final_path, document)
             transport.atomic_write_json(root / retry_path, {"outputs": []})
             article = SimpleNamespace(sample=SimpleNamespace(planning_run_id="lite-run"))
+            for workspace in (root, root / "self-contained"):
+                result = (
+                    workspace
+                    / pipeline.native.ARTIFACT_NAMESPACE
+                    / "lite-run"
+                    / "result.json"
+                )
+                result.parent.mkdir(parents=True)
+                result.write_text("{}\n", encoding="utf-8")
 
             patches = (
                 mock.patch.object(pipeline, "ROOT", root),
@@ -223,8 +292,8 @@ class ClipmakerLite20x3AcceptanceTest(unittest.TestCase):
                     side_effect=lambda _articles: [],
                 ),
                 mock.patch.object(
-                    pipeline.runner,
-                    "provenance_summary",
+                    pipeline,
+                    "frozen_provenance_summary",
                     return_value={"verified": True},
                 ),
                 mock.patch.object(pipeline.native, "verify", return_value=(True, [])),

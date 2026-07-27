@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-03-zov-resheniia-dlia-kuhni-03",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-03-zov-resheniia-dlia-kuhni-03-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+    "sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+    "width": 1600,
+    "height": 1086
+  },
+  "structured_intent": {
+    "editorial_meaning": "Скрытые инженерные решения помогают сохранить рабочую зону кухни чистой, удобной и визуально цельной.",
+    "primary_action": "Лёгкий поток воздуха плавно колышет полупрозрачные шторы.",
+    "terminal_state": "В последнем кадре шторы сохраняют лишь небольшое остаточное покачивание, а рабочая поверхность остаётся полностью свободной и опрятной.",
+    "semantic_invariant": "Кухня до последнего кадра остаётся аккуратной, цельной и свободной от видимых проводов и лишних деталей."
+  },
+  "prompt": {
+    "positive": "A soft breeze steadily billows the sheer curtains at the left, then they ease into a gentle sway by the final frame. Slow push toward the clear countertop and backsplash, keeping the entire kitchen recognizable and uncluttered.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-03-zov-resheniia-dlia-kuhni-03/result.json",
+    "sha256": "5754ca5e7645feaba70b51b2adf16465334f46f9ecd6085a0c5f4fbcb7b3589e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+      "article_context_sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

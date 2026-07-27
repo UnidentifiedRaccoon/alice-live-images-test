@@ -1,9 +1,14 @@
 (() => {
   "use strict";
 
-  const MANIFEST_PATH = "../clipmaker-lite-test/manifest.json";
+  const BASE_MANIFEST_PATH = "../clipmaker-lite-test/manifest.json";
+  const ADDITIONAL_MANIFEST_PATH =
+    "../clipmaker-lite-test/promopages-9930-manifest.json";
   const EXPECTED_ARTICLE_COUNT = 20;
-  const EXPECTED_OUTPUT_COUNT = 60;
+  const EXPECTED_BASE_OUTPUT_COUNT = 60;
+  const EXPECTED_ADDITIONAL_IMAGE_COUNT = 20;
+  const EXPECTED_ADDITIONAL_OUTPUT_COUNT = 40;
+  const EXPECTED_UNIQUE_IMAGE_COUNT = 40;
   const MODEL_ORDER = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -12,6 +17,9 @@
   const EXPERIMENT_ARTICLE_NUMBER = "14";
   const EXPERIMENT_PROMPT_SOURCE_MODEL_ID = MODEL_ORDER[0];
   const EXPERIMENT_TARGET_MODEL_ORDER = MODEL_ORDER.slice(1);
+  const ADDITIONAL_MODEL_ORDER = MODEL_ORDER.slice(1);
+  const RAW_REPOSITORY_BASE =
+    "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/";
   const MODEL_PRESENTATION = {
     "alibaba/wan-2.2": {
       name: "Wan 2.2",
@@ -34,6 +42,11 @@
     previousCase: document.querySelector("#previousCase"),
     nextCase: document.querySelector("#nextCase"),
     caseSelect: document.querySelector("#caseSelect"),
+    currentImageNumber: document.querySelector("#currentImageNumber"),
+    totalImageNumber: document.querySelector("#totalImageNumber"),
+    previousImage: document.querySelector("#previousImage"),
+    nextImage: document.querySelector("#nextImage"),
+    imageSelect: document.querySelector("#imageSelect"),
     navigatorStatus: document.querySelector("#navigatorStatus"),
     datasetError: document.querySelector("#datasetError"),
     datasetErrorText: document.querySelector("#datasetErrorText"),
@@ -59,7 +72,21 @@
       return entities[character];
     });
 
-  const asAssetUrl = (repositoryPath) => `../${String(repositoryPath).replace(/^\/+/, "")}`;
+  const encodeRepositoryPath = (repositoryPath) =>
+    String(repositoryPath)
+      .replace(/^\/+/, "")
+      .split("/")
+      .map((part) => encodeURIComponent(part))
+      .join("/");
+
+  const asAssetUrl = (repositoryPath, delivery = "site") => {
+    const normalizedPath = String(repositoryPath).replace(/^\/+/, "");
+    const isPublishedPages = window.location.hostname.endsWith("github.io");
+    if (delivery === "repository-raw" && isPublishedPages) {
+      return `${RAW_REPOSITORY_BASE}${encodeRepositoryPath(normalizedPath)}`;
+    }
+    return `../${normalizedPath}`;
+  };
 
   const formatDuration = (seconds) => `${numberFormatter.format(seconds)}\u00a0с`;
   const formatMiB = (bytes) => `${numberFormatter.format(bytes / 1024 / 1024)}\u00a0МиБ`;
@@ -93,7 +120,7 @@
     videoPaths.add(output.video_path);
   };
 
-  const validateManifest = (manifest) => {
+  const validateBaseManifest = (manifest) => {
     assert(manifest && typeof manifest === "object", "Манифест имеет неверный формат.");
     assert(
       manifest.article_count === EXPECTED_ARTICLE_COUNT,
@@ -106,7 +133,7 @@
     );
     assert(Array.isArray(manifest.outputs), "В манифесте нет общего списка outputs.");
     assert(
-      manifest.outputs.length === EXPECTED_OUTPUT_COUNT,
+      manifest.outputs.length === EXPECTED_BASE_OUTPUT_COUNT,
       `Найдено роликов: ${manifest.outputs.length}, ожидалось 60.`,
     );
 
@@ -127,6 +154,10 @@
       assert(
         article.selected_image?.source_path,
         `У кейса ${article.article_number} нет исходного изображения.`,
+      );
+      assert(
+        article.selected_image.image_id === "01",
+        `У кейса ${article.article_number} базовым должно быть изображение 01.`,
       );
       assert(
         Number(article.selected_image.width) > 0 && Number(article.selected_image.height) > 0,
@@ -198,10 +229,13 @@
     });
 
     assert(
-      canonicalVideoPaths.size === EXPECTED_OUTPUT_COUNT,
+      canonicalVideoPaths.size === EXPECTED_BASE_OUTPUT_COUNT,
       "Пути выбранных canonical MP4 повторяются.",
     );
-    assert(promptCount === EXPECTED_OUTPUT_COUNT, "Проверены не все 60 positive prompts.");
+    assert(
+      promptCount === EXPECTED_BASE_OUTPUT_COUNT,
+      "Проверены не все 60 базовых positive prompts.",
+    );
     if (comparisonOutputCount > 0) {
       assert(
         manifest.comparison_output_count === EXPERIMENT_TARGET_MODEL_ORDER.length,
@@ -259,6 +293,149 @@
     });
   };
 
+  const validateAdditionalManifest = (manifest, baseArticles) => {
+    assert(manifest && typeof manifest === "object", "Дополнительный манифест имеет неверный формат.");
+    assert(
+      manifest.article_count === EXPECTED_ARTICLE_COUNT,
+      `В дополнительном манифесте заявлено статей: ${manifest.article_count ?? "—"}, ожидалось 20.`,
+    );
+    assert(
+      manifest.image_count === EXPECTED_ADDITIONAL_IMAGE_COUNT,
+      `В дополнительном манифесте заявлено изображений: ${manifest.image_count ?? "—"}, ожидалось 20.`,
+    );
+    assert(
+      manifest.expected_outputs === EXPECTED_ADDITIONAL_OUTPUT_COUNT,
+      `В дополнительном манифесте заявлено роликов: ${manifest.expected_outputs ?? "—"}, ожидалось 40.`,
+    );
+    assert(
+      JSON.stringify(manifest.models) === JSON.stringify(ADDITIONAL_MODEL_ORDER),
+      "Дополнительный манифест должен содержать только Wan 2.7 и Veo 3.1 Lite.",
+    );
+    assert(
+      Array.isArray(manifest.articles) && manifest.articles.length === EXPECTED_ARTICLE_COUNT,
+      "В дополнительном манифесте должен быть список из 20 статей.",
+    );
+    assert(
+      Array.isArray(manifest.outputs) &&
+        manifest.outputs.length === EXPECTED_ADDITIONAL_OUTPUT_COUNT,
+      "В дополнительном манифесте должен быть плоский список из 40 роликов.",
+    );
+
+    const baseBySlug = new Map(baseArticles.map((article) => [article.article_slug, article]));
+    const usedSourceDigests = new Set(
+      baseArticles.map((article) => article.selected_image.sha256),
+    );
+    const videoPaths = new Set();
+    let imageCount = 0;
+    let outputCount = 0;
+
+    const normalizedArticles = manifest.articles.map((article, articleIndex) => {
+      const baseArticle = baseBySlug.get(article.article_slug);
+      assert(baseArticle, `Неизвестная статья в дополнительном манифесте: ${article.article_slug}.`);
+      assert(
+        article.article_number === baseArticle.article_number,
+        `Неверный номер статьи ${article.article_slug}.`,
+      );
+      assert(
+        article.article_slug === baseArticles[articleIndex].article_slug,
+        `Нарушен порядок дополнительных статей около ${article.article_slug}.`,
+      );
+      assert(
+        Array.isArray(article.images) && article.images.length === 1,
+        `У статьи ${article.article_number} должно быть ровно одно дополнительное изображение.`,
+      );
+
+      const images = article.images.map((record) => {
+        const image = record?.image;
+        assert(image && typeof image === "object", `У ${article.article_number} есть пустая запись image.`);
+        assert(image.source_path, `У ${article.article_number}/${image.image_id ?? "—"} нет source_path.`);
+        assert(
+          Number(image.width) > 0 && Number(image.height) > 0,
+          `У ${article.article_number}/${image.image_id ?? "—"} нет геометрии исходника.`,
+        );
+        assert(
+          typeof image.sha256 === "string" && image.sha256.length === 64,
+          `У ${article.article_number}/${image.image_id ?? "—"} нет SHA-256.`,
+        );
+        assert(
+          !usedSourceDigests.has(image.sha256),
+          `Повторно включён уже обработанный или дублирующийся исходник: ${image.source_path}.`,
+        );
+        usedSourceDigests.add(image.sha256);
+
+        assert(
+          Array.isArray(record.outputs) && record.outputs.length === ADDITIONAL_MODEL_ORDER.length,
+          `У ${article.article_number}/${image.image_id} должно быть два ролика.`,
+        );
+        const outputsByModel = new Map(record.outputs.map((output) => [output.model_id, output]));
+        assert(
+          outputsByModel.size === ADDITIONAL_MODEL_ORDER.length,
+          `У ${article.article_number}/${image.image_id} повторяются модели.`,
+        );
+        const outputs = ADDITIONAL_MODEL_ORDER.map((modelId) => {
+          const output = outputsByModel.get(modelId);
+          assert(output, `У ${article.article_number}/${image.image_id} нет модели ${modelId}.`);
+          validateOutput(
+            article.article_number,
+            output,
+            videoPaths,
+            `${image.image_id} · ${modelId}`,
+          );
+          outputCount += 1;
+          return { ...output, delivery: "repository-raw" };
+        });
+
+        imageCount += 1;
+        return {
+          ...record,
+          image: { ...image, delivery: "repository-raw" },
+          outputs,
+          displayOutputs: outputs,
+        };
+      });
+
+      return { ...article, images };
+    });
+
+    assert(
+      imageCount === EXPECTED_ADDITIONAL_IMAGE_COUNT,
+      `Проверено дополнительных изображений: ${imageCount}, ожидалось 20.`,
+    );
+    assert(
+      outputCount === EXPECTED_ADDITIONAL_OUTPUT_COUNT &&
+        videoPaths.size === EXPECTED_ADDITIONAL_OUTPUT_COUNT,
+      "Проверены не все 40 уникальных дополнительных MP4 и positive prompts.",
+    );
+    return normalizedArticles;
+  };
+
+  const mergeArticleImages = (baseArticles, additionalArticles) => {
+    const additionalBySlug = new Map(
+      additionalArticles.map((article) => [article.article_slug, article]),
+    );
+    const merged = baseArticles.map((article) => {
+      const additional = additionalBySlug.get(article.article_slug);
+      assert(additional, `Нет дополнительных результатов для статьи ${article.article_slug}.`);
+      const firstImage = {
+        image: { ...article.selected_image, delivery: "site" },
+        outputs: article.outputs,
+        displayOutputs: article.displayOutputs,
+        comparison_outputs: article.comparison_outputs,
+        baseline: true,
+      };
+      return {
+        ...article,
+        images: [firstImage, ...additional.images],
+      };
+    });
+    const totalImages = merged.reduce((sum, article) => sum + article.images.length, 0);
+    assert(
+      totalImages === EXPECTED_UNIQUE_IMAGE_COUNT,
+      `После объединения найдено уникальных изображений: ${totalImages}, ожидалось 40.`,
+    );
+    return merged;
+  };
+
   const renderFacts = (facts) => `
     <dl class="mediaFacts">
       ${facts
@@ -274,12 +451,12 @@
     </dl>
   `;
 
-  const renderSource = (article) => {
-    const image = article.selected_image;
-    const imageUrl = asAssetUrl(image.source_path);
+  const renderSource = (article, imageRecord) => {
+    const image = imageRecord.image;
+    const imageUrl = asAssetUrl(image.source_path, image.delivery);
     const imageFile = image.file || image.source_path.split("/").pop();
-    const panelId = `sourcePanel-${article.article_number}`;
-    const titleId = `sourceTitle-${article.article_number}`;
+    const panelId = `sourcePanel-${article.article_number}-${image.image_id}`;
+    const titleId = `sourceTitle-${article.article_number}-${image.image_id}`;
 
     return `
       <article
@@ -314,21 +491,26 @@
         </div>
         ${renderFacts([
           ["Файл", imageFile],
+          ["Позиция", image.role || "изображение статьи"],
           ["Геометрия", `${image.width}×${image.height}`],
         ])}
       </article>
     `;
   };
 
-  const renderModel = (article, output, modelIndex) => {
+  const renderModel = (article, imageRecord, output, modelIndex) => {
     const presentation = MODEL_PRESENTATION[output.model_id];
-    const titleId = `model-${article.article_number}-${modelIndex + 1}`;
-    const videoUrl = asAssetUrl(output.video_path);
+    const titleId = `model-${article.article_number}-${imageRecord.image.image_id}-${modelIndex + 1}`;
+    const videoUrl = asAssetUrl(output.video_path, output.delivery);
     const promptLabel = output.showcaseLabel
       ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
       : "";
     const variant = output.showcaseVariant || "canonical";
     const accessibleVariant = output.showcaseLabel ? ` · ${output.showcaseLabel}` : "";
+    const contractWarning =
+      output.status === "verification-failed"
+        ? '<p class="contractWarning">Raw output · media contract warning</p>'
+        : "";
 
     return `
       <article
@@ -361,6 +543,7 @@
         <div class="panelIdentity">
           <div>
             ${promptLabel}
+            ${contractWarning}
             <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
             <h3 id="${titleId}">${escapeHtml(presentation.name)}</h3>
             <code class="modelId">${escapeHtml(output.model_id)}</code>
@@ -387,7 +570,9 @@
 
   let articles = [];
   let activeIndex = 0;
+  let activeImageIndex = 0;
   let renderSequence = 0;
+  const rememberedImageByArticle = new Map();
 
   const detachCurrentVideos = () => {
     elements.caseViewport.querySelectorAll("video").forEach((video) => {
@@ -397,17 +582,18 @@
     });
   };
 
-  const updateUrl = (articleNumber) => {
+  const updateUrl = (articleNumber, imageId) => {
     try {
       const url = new URL(window.location.href);
       url.searchParams.set("case", articleNumber);
+      url.searchParams.set("image", imageId);
       window.history.replaceState(null, "", url);
     } catch {
       // The comparison remains usable when history is unavailable (for example file://).
     }
   };
 
-  const monitorSelectedVideos = (article, sequence) => {
+  const monitorSelectedVideos = (article, imageRecord, sequence) => {
     const videos = [...elements.caseViewport.querySelectorAll("video")];
     const videoCount = videos.length;
     const playAllButton = elements.caseViewport.querySelector("[data-play-all]");
@@ -458,13 +644,13 @@
       if (videos.some((video) => !video.paused && !video.ended)) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}: ${videoCount} видео на паузе.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео на паузе.`;
         return;
       }
 
       playAllButton.disabled = true;
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}: запускаем ${videoCount} видео…`;
+        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: запускаем ${videoCount} видео…`;
       videos.forEach((video) => {
         video.pause();
         video.currentTime = 0;
@@ -479,13 +665,13 @@
       if (results.some((result) => result.status === "rejected")) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}: браузер не разрешил общее воспроизведение.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: браузер не разрешил общее воспроизведение.`;
         return;
       }
 
       setPlaybackState();
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}: ${videoCount} видео запущены одновременно без звука.`;
+        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео запущены одновременно без звука.`;
     };
 
     const announce = () => {
@@ -498,13 +684,13 @@
       }
 
       if (failed.size > 0) {
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}: загружено ${ready.size} из ${videoCount}, ошибок — ${failed.size}.`;
+        elements.navigatorStatus.textContent = `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружено ${ready.size} из ${videoCount}, ошибок — ${failed.size}.`;
       } else if (ready.size === videos.length) {
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}: ${videoCount} видео подключены. Другие кейсы не загружаются.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео подключены. Другие изображения не загружаются.`;
       } else {
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}: загружаем метаданные · ${ready.size} из ${videoCount}.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружаем метаданные · ${ready.size} из ${videoCount}.`;
       }
     };
 
@@ -558,21 +744,26 @@
     announce();
   };
 
-  const renderCase = (index) => {
-    const nextIndex = Math.min(Math.max(index, 0), articles.length - 1);
-    const article = articles[nextIndex];
+  const renderSelection = () => {
+    const article = articles[activeIndex];
+    const imageRecord = article.images[activeImageIndex];
     const sequence = ++renderSequence;
-    const displayOutputs = article.displayOutputs || article.outputs;
+    const displayOutputs = imageRecord.displayOutputs || imageRecord.outputs;
     const gridClass = displayOutputs.length > MODEL_ORDER.length ? " hasExperiment" : "";
+    const modelCountClass = displayOutputs.length === 2 ? " twoModels" : "";
 
     detachCurrentVideos();
-    activeIndex = nextIndex;
     elements.currentNumber.textContent = article.article_number;
     elements.totalNumber.textContent = String(articles.length);
     elements.caseTitle.textContent = article.title;
     elements.caseSelect.value = article.article_number;
     elements.previousCase.disabled = activeIndex === 0;
     elements.nextCase.disabled = activeIndex === articles.length - 1;
+    elements.currentImageNumber.textContent = String(activeImageIndex + 1);
+    elements.totalImageNumber.textContent = String(article.images.length);
+    elements.imageSelect.value = imageRecord.image.image_id;
+    elements.previousImage.disabled = activeImageIndex === 0;
+    elements.nextImage.disabled = activeImageIndex === article.images.length - 1;
     elements.caseViewport.setAttribute("aria-busy", "true");
     elements.caseViewport.innerHTML = `
       <div class="comparisonWorkspace">
@@ -592,22 +783,51 @@
             type="button"
             data-source-toggle
             aria-expanded="false"
-            aria-controls="sourcePanel-${article.article_number}"
+            aria-controls="sourcePanel-${article.article_number}-${imageRecord.image.image_id}"
           >
             Показать оригинал
           </button>
         </div>
-        ${renderSource(article)}
-        <div class="modelGrid${gridClass}">
+        ${renderSource(article, imageRecord)}
+        <div class="modelGrid${modelCountClass}${gridClass}">
           ${displayOutputs
-            .map((output, modelIndex) => renderModel(article, output, modelIndex))
+            .map((output, modelIndex) => renderModel(article, imageRecord, output, modelIndex))
             .join("")}
         </div>
       </div>
     `;
 
-    updateUrl(article.article_number);
-    monitorSelectedVideos(article, sequence);
+    rememberedImageByArticle.set(article.article_number, activeImageIndex);
+    updateUrl(article.article_number, imageRecord.image.image_id);
+    monitorSelectedVideos(article, imageRecord, sequence);
+  };
+
+  const renderImage = (index) => {
+    const article = articles[activeIndex];
+    activeImageIndex = Math.min(Math.max(index, 0), article.images.length - 1);
+    renderSelection();
+  };
+
+  const renderCase = (index, requestedImageId = null) => {
+    activeIndex = Math.min(Math.max(index, 0), articles.length - 1);
+    const article = articles[activeIndex];
+    elements.imageSelect.replaceChildren(
+      ...article.images.map((record, imageIndex) => {
+        const role = record.image.role === "cover" ? "обложка" : "в статье";
+        return new Option(
+          `${String(imageIndex + 1).padStart(2, "0")} · ${record.image.file} · ${role}`,
+          record.image.image_id,
+        );
+      }),
+    );
+    elements.imageSelect.disabled = false;
+
+    const requestedIndex = requestedImageId
+      ? article.images.findIndex((record) => record.image.image_id === requestedImageId)
+      : -1;
+    const rememberedIndex = rememberedImageByArticle.get(article.article_number) ?? 0;
+    activeImageIndex = requestedIndex >= 0 ? requestedIndex : rememberedIndex;
+    renderSelection();
   };
 
   const showError = (error) => {
@@ -622,11 +842,29 @@
 
   const initialise = async () => {
     try {
-      const response = await fetch(MANIFEST_PATH, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Манифест вернул HTTP ${response.status}.`);
+      const [baseResponse, additionalResponse] = await Promise.all([
+        fetch(BASE_MANIFEST_PATH, { cache: "no-store" }),
+        fetch(ADDITIONAL_MANIFEST_PATH, { cache: "no-store" }),
+      ]);
+      if (!baseResponse.ok) {
+        throw new Error(`Базовый манифест вернул HTTP ${baseResponse.status}.`);
+      }
+      if (!additionalResponse.ok) {
+        throw new Error(
+          `Манифест PROMOPAGES-9930 вернул HTTP ${additionalResponse.status}.`,
+        );
+      }
 
-      const manifest = await response.json();
-      articles = validateManifest(manifest);
+      const [baseManifest, additionalManifest] = await Promise.all([
+        baseResponse.json(),
+        additionalResponse.json(),
+      ]);
+      const baseArticles = validateBaseManifest(baseManifest);
+      const additionalArticles = validateAdditionalManifest(
+        additionalManifest,
+        baseArticles,
+      );
+      articles = mergeArticleImages(baseArticles, additionalArticles);
       elements.caseSelect.replaceChildren(
         ...articles.map(
           (article) =>
@@ -638,10 +876,11 @@
       elements.nextCase.disabled = false;
 
       const requestedCase = new URL(window.location.href).searchParams.get("case");
+      const requestedImage = new URL(window.location.href).searchParams.get("image");
       const requestedIndex = articles.findIndex(
         (article) => article.article_number === requestedCase,
       );
-      renderCase(requestedIndex >= 0 ? requestedIndex : 0);
+      renderCase(requestedIndex >= 0 ? requestedIndex : 0, requestedImage);
     } catch (error) {
       showError(error instanceof Error ? error : new Error("Неизвестная ошибка данных."));
     }
@@ -649,11 +888,20 @@
 
   elements.previousCase.addEventListener("click", () => renderCase(activeIndex - 1));
   elements.nextCase.addEventListener("click", () => renderCase(activeIndex + 1));
+  elements.previousImage.addEventListener("click", () => renderImage(activeImageIndex - 1));
+  elements.nextImage.addEventListener("click", () => renderImage(activeImageIndex + 1));
   elements.caseSelect.addEventListener("change", () => {
     const selectedIndex = articles.findIndex(
       (article) => article.article_number === elements.caseSelect.value,
     );
     if (selectedIndex >= 0) renderCase(selectedIndex);
+  });
+  elements.imageSelect.addEventListener("change", () => {
+    const article = articles[activeIndex];
+    const selectedIndex = article.images.findIndex(
+      (record) => record.image.image_id === elements.imageSelect.value,
+    );
+    if (selectedIndex >= 0) renderImage(selectedIndex);
   });
 
   initialise();

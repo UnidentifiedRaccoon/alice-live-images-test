@@ -36,6 +36,11 @@ AGENT_ID = "clipmaker-lite"
 CONTRACT_PATH = ROOT / "docs/agents/clipmaker-lite/contract.json"
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
 MANIFEST_PATH = Path("PROMOPAGES-9857/clipmaker-lite-runs") / BATCH_ID / "manifest.json"
+# Normally planning and provider artifacts share ``root``. Historical frozen
+# batches may bind planning provenance/results to a read-only workspace while
+# keeping provider receipts and MP4s in the current workspace.
+PLANNING_WORKSPACE: Path | None = None
+PLANNING_PROVENANCE_VERIFIER: Callable[[Path, str], dict[str, Any]] | None = None
 PUBLIC_SOURCE_BASE = (
     "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
     "alice-live-images-test/main/"
@@ -359,8 +364,13 @@ def contract() -> dict[str, Any]:
 
 def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
     planning_run_id = entry.planning_run_id
+    planning_root = (PLANNING_WORKSPACE or root).resolve()
+    provenance_verifier = (
+        PLANNING_PROVENANCE_VERIFIER
+        or clipmaker_lite_runner.provenance_summary
+    )
     try:
-        summary = clipmaker_lite_runner.provenance_summary(root, planning_run_id)
+        summary = provenance_verifier(planning_root, planning_run_id)
     except Exception as exc:
         raise BatchPipelineError(
             f"Lite provenance failed for {planning_run_id}: {transport.safe_error(exc)}"
@@ -381,7 +391,7 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
     ).as_posix()
     if summary.get("result_path") != expected_result:
         raise BatchPipelineError(f"Unexpected Lite result path: {planning_run_id}")
-    result_path = root / expected_result
+    result_path = planning_root / expected_result
     result = read_json(result_path)
     if not isinstance(result, dict) or result.get("job_id") != planning_run_id:
         raise BatchPipelineError(f"Lite result identity mismatch: {planning_run_id}")
@@ -398,9 +408,23 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
     if article.get("path") != entry.sample.context_path:
         raise BatchPipelineError(f"Lite article binding mismatch: {planning_run_id}")
 
-    source_path = root / entry.sample.source_path
-    if not source_path.is_file() or sha256_file(source_path) != entry.sample.source_sha256:
+    planning_source_path = planning_root / entry.sample.source_path
+    if (
+        not planning_source_path.is_file()
+        or sha256_file(planning_source_path) != entry.sample.source_sha256
+    ):
         raise BatchPipelineError(f"Current source image mismatch: {entry.sample.source_path}")
+    provider_source_path = root.resolve() / entry.sample.source_path
+    if (
+        provider_source_path != planning_source_path
+        and (
+            not provider_source_path.is_file()
+            or sha256_file(provider_source_path) != entry.sample.source_sha256
+        )
+    ):
+        raise BatchPipelineError(
+            f"Provider source image mismatch: {entry.sample.source_path}"
+        )
     models = result.get("models")
     if not isinstance(models, list) or any(not isinstance(model, dict) for model in models):
         raise BatchPipelineError(f"Lite result models are invalid: {planning_run_id}")

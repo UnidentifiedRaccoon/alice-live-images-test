@@ -8,6 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "clipmaker-lite-test" / "manifest.json"
+ADDITIONAL_MANIFEST_PATH = (
+    ROOT / "clipmaker-lite-test" / "promopages-9930-manifest.json"
+)
 MODEL_IDS = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -29,6 +32,11 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        cls.additional_manifest = None
+        if ADDITIONAL_MANIFEST_PATH.is_file():
+            cls.additional_manifest = json.loads(
+                ADDITIONAL_MANIFEST_PATH.read_text(encoding="utf-8")
+            )
 
     def test_manifest_contains_exact_20_by_3_dataset(self):
         manifest = self.manifest
@@ -52,6 +60,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
             self.assertEqual(len({output["model_id"] for output in outputs}), 3)
 
             source_path = article["selected_image"]["source_path"]
+            self.assertEqual(article["selected_image"]["image_id"], "01")
             self.assertNotIn("Prepared videos", source_path)
             self.assertTrue((ROOT / source_path).is_file(), source_path)
             source_paths.append(source_path)
@@ -153,6 +162,55 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertEqual(len(selected_assets), 80 + comparison_count)
         self.assertFalse(selected_assets - tracked, selected_assets - tracked)
 
+    def test_additional_manifest_contains_20_unique_images_by_two_models(self):
+        if self.additional_manifest is None:
+            self.skipTest("Final PROMOPAGES-9930 manifest has not been produced yet")
+
+        manifest = self.additional_manifest
+        self.assertEqual(manifest["ticket"], "PROMOPAGES-9930")
+        self.assertEqual(manifest["article_count"], 20)
+        self.assertEqual(manifest["image_count"], 20)
+        self.assertEqual(manifest["expected_outputs"], 40)
+        self.assertEqual(manifest["models"], MODEL_IDS[1:])
+        self.assertEqual(len(manifest["articles"]), 20)
+        self.assertEqual(len(manifest["outputs"]), 40)
+
+        base_digests = {
+            article["selected_image"]["sha256"] for article in self.manifest["articles"]
+        }
+        source_digests = set()
+        source_paths = set()
+        video_paths = set()
+        output_count = 0
+
+        for article in manifest["articles"]:
+            self.assertEqual(len(article["images"]), 1)
+            for record in article["images"]:
+                image = record["image"]
+                self.assertNotIn(image["sha256"], base_digests)
+                self.assertNotIn(image["sha256"], source_digests)
+                self.assertNotIn(image["source_path"], source_paths)
+                self.assertTrue((ROOT / image["source_path"]).is_file())
+                source_digests.add(image["sha256"])
+                source_paths.add(image["source_path"])
+
+                outputs = record["outputs"]
+                self.assertEqual([output["model_id"] for output in outputs], MODEL_IDS[1:])
+                for output in outputs:
+                    self.assertIn(output["status"], {"succeeded", "verification-failed"})
+                    self.assertTrue(output["positive_prompt"].strip())
+                    self.assertNotIn(output["video_path"], video_paths)
+                    self.assertTrue((ROOT / output["video_path"]).is_file())
+                    self.assertGreater(output["media"]["bytes"], 0)
+                    video_paths.add(output["video_path"])
+                    output_count += 1
+
+        self.assertEqual(len(source_digests), 20)
+        self.assertEqual(len(source_paths), 20)
+        self.assertEqual(len(video_paths), 40)
+        self.assertEqual(output_count, 40)
+        self.assertEqual(20 + len(source_digests), 40)
+
     def test_all_demo_pages_keep_step_four_and_add_step_five(self):
         step_pattern = re.compile(r'<span class="viewSwitchStep" lang="en">Step №(\d+)</span>')
 
@@ -162,13 +220,23 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                 self.assertEqual(step_pattern.findall(html), ["1", "2", "3", "4", "5"])
                 self.assertIn('<strong class="viewSwitchTitle">Разметка</strong>', html)
                 self.assertIn('<strong class="viewSwitchTitle">Clipmaker Lite</strong>', html)
+                self.assertIn("40 изображений", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
 
     def test_showcase_uses_manifest_and_only_renders_active_videos(self):
         app = (ROOT / "clipmaker-lite" / "app.js").read_text(encoding="utf-8")
         html = (ROOT / "clipmaker-lite" / "index.html").read_text(encoding="utf-8")
 
-        self.assertIn('const MANIFEST_PATH = "../clipmaker-lite-test/manifest.json";', app)
+        self.assertIn(
+            'const BASE_MANIFEST_PATH = "../clipmaker-lite-test/manifest.json";',
+            app,
+        )
+        self.assertIn("promopages-9930-manifest.json", app)
+        self.assertIn("EXPECTED_ADDITIONAL_IMAGE_COUNT = 20", app)
+        self.assertIn("EXPECTED_ADDITIONAL_OUTPUT_COUNT = 40", app)
+        self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 40", app)
+        self.assertIn("repository-raw", app)
+        self.assertIn("raw.githubusercontent.com", app)
         self.assertIn('preload="metadata"', app)
         self.assertIn('video.removeAttribute("src")', app)
         self.assertIn('elements.caseViewport.innerHTML = `', app)
@@ -189,12 +257,16 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn("60 + 2", html)
+        self.assertIn("100 + 2", html)
+        self.assertIn('id="imageSelect"', html)
+        self.assertIn('id="previousImage"', html)
+        self.assertIn('id="nextImage"', html)
 
         styles = (ROOT / "clipmaker-lite" / "styles.css").read_text(encoding="utf-8")
         self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr));", styles)
         self.assertIn("grid-template-columns: repeat(5, minmax(0, 1fr));", styles)
         self.assertIn(".modelGrid.hasExperiment", styles)
+        self.assertIn(".modelGrid.twoModels", styles)
         self.assertIn(".sourcePanel[hidden]", styles)
 
 

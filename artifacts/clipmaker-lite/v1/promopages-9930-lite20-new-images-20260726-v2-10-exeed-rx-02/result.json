@@ -1,0 +1,151 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-10-exeed-rx-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:dbe08b827d6795758a1681d28d305b46a75d0aba00dfa08c4a542056ba87fc3e",
+    "execution_fingerprint": "sha256:1ff7891d9aa711b40831b2bb31bb38b206a8ed06965c2d7f69a9d9a0f7b35796",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa001-d463-71d3-ac25-8ecffbe53428"
+    },
+    "authored_payload_sha256": "6ccae303efa520a83bf47a505daeff6bcb8ac77bfa4cd58b9f4a415b07dce3dc",
+    "draft_file_sha256": "2d669286e7d57ab6b8c74974525e0af649303f644c12e986f6cf4e0fbd289cd9"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+      "sha256": "9bf1b886665d89dd34b9137d205331c749fa53257cf6a1d69e8b21eaf8c074d3",
+      "bytes": 156610
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/10-exeed-rx/content.json",
+      "sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d",
+      "bytes": 26034,
+      "locator": {
+        "article_id": "10-exeed-rx",
+        "title": "7 фактов об EXEED RX, в котором продуманы все детали",
+        "lead": "Здесь технологии значительно облегчают вождение.",
+        "image_id": "02",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/10-exeed-rx/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "В EXEED RX выбирать не придется, этот автомобиль объединяет стиль, мощность и удобство, не заставляя вас отказываться от чего-то важного. Рассказываем о семи неоспоримых преимуществах премиального кросс-купе."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "Эффектный, но практичный дизайн"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Серый EXEED RX показан в передне-боковом ракурсе на городской магистрали; автомобиль направлен влево и полностью различим в кадре.",
+      "Размытое дорожное полотно уже передаёт скорость, а мост, ограждения и облака допускают естественный параллакс и лёгкое фоновое движение.",
+      "Главные смысловые детали — выразительный силуэт кросс-купе и уверенное положение автомобиля в полосе на фоне современной городской архитектуры."
+    ],
+    "article_context": "Изображение 02 открывает основной рассказ после тезиса об отказе от компромиссов и подводит к разделу об эффектном, но практичном дизайне. Движущийся по современному городскому мосту EXEED RX должен восприниматься как выразительный премиальный кросс-купе, естественно вписанный в повседневную поездку.",
+    "structured_intent": {
+      "editorial_meaning": "EXEED RX объединяет эффектный премиальный дизайн с практичностью и уверенностью в обычной городской поездке.",
+      "primary_action": "Автомобиль плавно и уверенно движется вперёд по своей полосе.",
+      "terminal_state": "Автомобиль достигает следующей арки моста, оставаясь полностью видимым и устойчиво расположенным в своей полосе.",
+      "semantic_invariant": "EXEED RX остаётся выразительным, практичным и уверенно контролируемым автомобилем без ощущения компромисса."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный боковой tracking shot: камера движется параллельно автомобилю и удерживает его главным объектом. RX сразу продолжает ровное движение влево, колёса вращаются с умеренной скоростью, дорожная разметка, ограждения и городской фон дают устойчивый параллакс. В течение большей части сцены автомобиль плавно проходит участок моста; ближе к концу достигает следующей арки, оставаясь полностью видимым, узнаваемым и устойчивым в своей полосе.",
+      "positive_prompt": "The EXEED RX cruises smoothly forward along its lane as the camera tracks beside it at matching speed; wheels rotate steadily and the bridge railings and skyline flow past with natural parallax. By the final frame, the car has reached the next bridge arch, remaining stable, fully visible, and confidently in lane.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный сфокусированный проезд с более компактной амплитудой: боковая камера синхронно сопровождает RX, пока автомобиль ровно скользит влево по полосе. Вращение колёс и проходящие дорожные линии создают читаемую динамику, а мост смещается умеренным параллаксом. К финалу машина оказывается выровнена относительно приближающейся арки, сохраняя стабильную траекторию и полную видимость.",
+      "positive_prompt": "Track alongside the EXEED RX as it glides forward through its lane; the wheels turn cleanly while the road and bridge sweep past in restrained parallax. End with the vehicle aligned beneath the approaching bridge arch, fully visible and holding a steady course.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "17-level-michurinskiy-kvartira-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/17-level-michurinskiy-kvartira/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/17-level-michurinskiy-kvartira/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The breeze sweeps from the foreground trees across the autumn park, gently shifting the fountain mist and rippling the ponds. Make a subtle forward drift toward the park; in the final frame, the far canopy is moving softly beneath the unobstructed skyline.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "0f8b3d0425bf79b592f0ddf8a4c8f9e8e0a223ebd7b3fabd34f776b02399dff5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "PdeDPOMcbQ3T4LgHlHE3",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:17:20Z",
+  "completed_at": "2026-07-26T20:19:24Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 15823293,
+    "sha256": "857bdd62b7e68a0a5da8c2bfd2c722d9e891c1b88a7b6ac8c67ef0ac44ed9375"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-17-level-michurinskiy-kvartira-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-17-level-michurinskiy-kvartira-02-veo-3-1-lite",
+  "lite_result_sha256": "b06d9ad5806efae03c0359a18164183d3a80304300e2ff6fcf615533312ed320",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

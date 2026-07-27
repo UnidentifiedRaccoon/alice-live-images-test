@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "09-dream-island-semeinye-vyhodnye-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/09-dream-island-semeinye-vyhodnye/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/09-dream-island-semeinye-vyhodnye/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The gondola glides down a short section of its pendulum arc while the riders lean together with the motion, still smiling with their raised arms held high. Fixed camera; it ends lower on the arc with the joyful group clearly visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c9080636a9a0d1b81ef24a8ef1126d4dce7495f7ffcdbad3860945dc44570c44",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "75p1BSAnBk4KQykrkbNI",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:11:44Z",
+  "completed_at": "2026-07-26T20:13:40Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 13506189,
+    "sha256": "85e0a43dc1d13b79f6cbb5b0bf014c0ee3f9e8a9b1fceb1416d6b7b489a93e0d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-09-dream-island-semeinye-vyhodnye-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-09-dream-island-semeinye-vyhodnye-02-veo-3-1-lite",
+  "lite_result_sha256": "58800a96cc23bc61b4163110d98be18f185cd292b86f9e698258a4dc3dd30cbd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

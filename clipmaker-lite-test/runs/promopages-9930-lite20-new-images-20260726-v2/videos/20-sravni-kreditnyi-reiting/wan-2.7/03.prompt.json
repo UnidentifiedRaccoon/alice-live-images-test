@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+    "sha256": "a05883165528b8100d5b5f82e4d92622c52c01b643e774ccbd9439c5210fa77e",
+    "width": 1240,
+    "height": 474
+  },
+  "structured_intent": {
+    "editorial_meaning": "Сервис позволяет спокойно и безопасно узнать персональный кредитный рейтинг, сохраняя данные актуальными без повторного ввода.",
+    "primary_action": "От центра существующей шкалы распространяется один мягкий оптический импульс.",
+    "terminal_state": "Оптический импульс затух, а шкала и весь экран остались полностью читаемыми и в исходном состоянии.",
+    "semantic_invariant": "Интерфейс продолжает показывать тот же неизменный сервис персонального кредитного рейтинга; все данные, тексты, элементы управления и положение стрелки сохраняются."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A soft optical pulse slowly expands once from the center of the credit-rating gauge and gently fades, ending with the gauge fully clear and unchanged. Keep the pointer, text, controls, layout, and illustrated person completely static.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03/result.json",
+    "sha256": "107203ea108ad77c99554eeed5c1bff5abe7e9219d20625f20cd5bc435e9f9c5",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "a05883165528b8100d5b5f82e4d92622c52c01b643e774ccbd9439c5210fa77e",
+      "article_context_sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

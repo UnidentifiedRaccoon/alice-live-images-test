@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "20-sravni-kreditnyi-reiting-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/20-sravni-kreditnyi-reiting/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/20-sravni-kreditnyi-reiting/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. A restrained glow pulse blooms around the gauge hub, expands smoothly, then fades near the end, leaving the entire credit-rating screen crisp and unchanged. The pointer, UI text, controls, layout, and person remain still.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f1f622e3ca9d997fbb280c7cb7eb18684c51e7000ec115607448f60ad0af164e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "AgsUc27zDZTgqokU10o3",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:19:07Z",
+  "completed_at": "2026-07-26T20:20:34Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1040767,
+    "sha256": "79911eb5444902bf25d02115668133fd8cb0cf66212cf79f1ac491da7c17fec8"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03-veo-3-1-lite",
+  "lite_result_sha256": "107203ea108ad77c99554eeed5c1bff5abe7e9219d20625f20cd5bc435e9f9c5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

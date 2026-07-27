@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+    "sha256": "f834603785314f18c6444c26a0666b27d0715777789717229384fa717a53823f",
+    "width": 1139,
+    "height": 759
+  },
+  "structured_intent": {
+    "editorial_meaning": "Совместное изучение условий и оформление документов делает регистрацию бизнеса понятным практическим процессом, особенно при работе с партнёрами.",
+    "primary_action": "Один участник последовательно заполняет строку регистрационной формы, пока второй сверяется с информацией на планшете.",
+    "terminal_state": "Строка формы заполнена, и карандаш остановлен у её конца, пока планшет остаётся в руках второго участника.",
+    "semantic_invariant": "Сцена до конца остаётся спокойной совместной работой над регистрацией бизнеса без изменения содержания документов или интерфейса."
+  },
+  "prompt": {
+    "positive": "Fixed camera. The left person writes smoothly along a single line of the paper form as the other person keeps the tablet steady. By the final frame, the entry is complete and the pencil rests at the line's endpoint; the tablet interface and visible text stay unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02/result.json",
+    "sha256": "efd9b95b82ca199f1159e7b3db0089adf8fca6e0f6ab5e33a7443bf5657330ab",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "f834603785314f18c6444c26a0666b27d0715777789717229384fa717a53823f",
+      "article_context_sha256": "24d0fba8a293283a86e2daa0954db7390849cc7236a1fc9ae4018b8f19ac591c",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

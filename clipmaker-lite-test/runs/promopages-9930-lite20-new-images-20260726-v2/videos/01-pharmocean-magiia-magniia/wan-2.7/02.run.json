@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "01-pharmocean-magiia-magniia-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/01-pharmocean-magiia-magniia/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/01-pharmocean-magiia-magniia/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. The woman slowly draws both raised hands outward as her fingers tighten, sustaining the wide-eyed, clenched-teeth tension. By the final frame her hands are slightly farther from her cheeks and held rigid while her overwhelmed expression remains.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8bf4f1344706123ed3c4e9dfd79771c2ce5e5a37ce94b3077d6333d9d6497ed5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "U88tL0R2cCzqmgYKh8W6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:02:28Z",
+  "completed_at": "2026-07-26T20:03:59Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3703581,
+    "sha256": "242b66c27d1023fd23c81a6f726d1286897e19ec05b397ecbbbf8fbfe6ccc8f6"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-01-pharmocean-magiia-magniia-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-01-pharmocean-magiia-magniia-02-wan-2-7",
+  "lite_result_sha256": "8dee22f6a6de543757e763732aaa99cfee6bd35d892ee44cc4315f1882b1570b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

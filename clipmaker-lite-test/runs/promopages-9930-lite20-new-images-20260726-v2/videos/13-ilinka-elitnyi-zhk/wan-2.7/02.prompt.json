@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+    "sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+    "width": 1600,
+    "height": 1066
+  },
+  "structured_intent": {
+    "editorial_meaning": "Показать, что премиальный комплекс органично вписан в историческую архитектуру и повседневную жизнь центра Москвы.",
+    "primary_action": "Городской автомобиль непрерывно движется по мосту перед жилым комплексом.",
+    "terminal_state": "К последнему кадру автомобиль достигает правой части моста, а фасад комплекса остаётся полностью читаемым.",
+    "semantic_invariant": "Монументальный комплекс остаётся главным, узнаваемым и гармонично встроенным в окружающий городской пейзаж."
+  },
+  "prompt": {
+    "positive": "Traffic moves steadily across the bridge from left to right as the camera makes a slow push toward the central facade. Keep the entire building recognizable; by the final frame, the leading car nears the right edge while the residence remains dominant within the cityscape.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02/result.json",
+    "sha256": "9d54f34ab029bd6e27bc0a6b83f2ad11714457aa7b00cd274026999e87d7d78a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+      "article_context_sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

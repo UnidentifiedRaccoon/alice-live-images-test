@@ -8,12 +8,12 @@
     <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
     <meta
       name="description"
-      content="Сравнение результатов Clipmaker Lite для 20 статей и prompt-эксперимент в кейсе 14."
+      content="Сравнение результатов Clipmaker Lite для 40 изображений из 20 статей."
     />
     <title>Alice Live · Step №5 · Clipmaker Lite</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../shared.css?v=11" />
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=4" />
   </head>
   <body>
     <a class="skipLink" href="#caseTitle">К выбранному кейсу</a>
@@ -60,12 +60,12 @@
           </a>
           <a
             aria-current="page"
-            href="./?v=2"
-            aria-label="Шаг 5. Clipmaker Lite — 20 кейсов и три модели"
+            href="./?v=3"
+            aria-label="Шаг 5. Clipmaker Lite — 40 изображений из 20 статей"
           >
             <span class="viewSwitchStep" lang="en">Step №5</span>
             <strong class="viewSwitchTitle">Clipmaker Lite</strong>
-            <span class="viewSwitchDescription">20 кейсов × 3 модели</span>
+            <span class="viewSwitchDescription">40 изображений · 2–3 модели</span>
           </a>
         </nav>
       </div>
@@ -74,13 +74,14 @@
     <main class="liteApp" id="mainContent">
       <header class="liteHero">
         <div class="liteHeroCopy">
-          <p class="eyebrow">Step №5 · PROMOPAGES-9929</p>
-          <h1>Clipmaker Lite.<br />Три модели.</h1>
+          <p class="eyebrow">Step №5 · PROMOPAGES-9929 + 9930</p>
+          <h1>Clipmaker Lite.<br />Два изображения.</h1>
           <p>
-            Для каждой статьи — один исходный кадр и три независимые генерации.
-            В кейсе 14 к ним добавлен контрольный прогон с prompt Wan 2.2.
-            Переключение кейса заменяет все показанные видео, поэтому коллекция
-            не загружается целиком.
+            Для каждой из 20 статей — базовое изображение 01 и одно дополнительное.
+            Базовые изображения сохраняют сравнение трёх моделей; дополнительные —
+            Wan 2.7 и Veo 3.1 Lite. Wan 2.2 временно исключён из новой генерации
+            из-за недоступного route. Переключение изображения заменяет все
+            показанные видео, поэтому коллекция не загружается целиком.
           </p>
         </div>
 
@@ -90,12 +91,12 @@
             <dd>20</dd>
           </div>
           <div>
-            <dt>Модели</dt>
-            <dd>3</dd>
+            <dt>Изображения</dt>
+            <dd>40</dd>
           </div>
           <div>
             <dt>Ролики</dt>
-            <dd>60 + 2</dd>
+            <dd>100 + 2</dd>
           </div>
         </dl>
       </header>
@@ -124,6 +125,27 @@
           </button>
         </div>
 
+        <div class="imageNavigator" aria-label="Выбор изображения статьи">
+          <p class="imageFolio">
+            Изображение <span id="currentImageNumber">—</span><span aria-hidden="true"> / </span
+            ><span class="visuallyHidden">из</span><span id="totalImageNumber">—</span>
+          </p>
+          <div class="imageControls">
+            <button class="controlButton" id="previousImage" type="button" disabled>
+              ← Предыдущее
+            </button>
+            <label class="caseSelectLabel" for="imageSelect">
+              <span class="visuallyHidden">Выберите изображение статьи</span>
+              <select id="imageSelect" disabled>
+                <option>Загрузка…</option>
+              </select>
+            </label>
+            <button class="controlButton strong" id="nextImage" type="button" disabled>
+              Следующее →
+            </button>
+          </div>
+        </div>
+
         <p class="navigatorStatus" id="navigatorStatus" role="status" aria-live="polite">
           Загружаем нормализованные данные…
         </p>
@@ -142,10 +164,10 @@
         aria-labelledby="caseTitle"
         aria-busy="true"
       >
-        <p class="loadingState">Проверяем 20 кейсов и готовим первое сравнение…</p>
+        <p class="loadingState">Проверяем 40 изображений и готовим первое сравнение…</p>
       </section>
     </main>
 
-    <script src="app.js?v=3" defer></script>
+    <script src="app.js?v=4" defer></script>
   </body>
 </html>

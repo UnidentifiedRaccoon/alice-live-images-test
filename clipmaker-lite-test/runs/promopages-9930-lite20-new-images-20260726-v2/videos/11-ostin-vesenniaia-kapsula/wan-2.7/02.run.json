@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "11-ostin-vesenniaia-kapsula-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/11-ostin-vesenniaia-kapsula/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "She slowly turns her chin a few degrees toward the light as loose strands of hair drift gently, then settles into a direct, self-assured gaze at the camera. Fixed camera; her hand remains still behind her neck, and her composed expression holds in the final frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f83ab664beaf39952fb25616a15ac828018d521512fcf3b359c2ac26907f2a6e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "phSTXl2W5aPuXFCqWxFr",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:12:28Z",
+  "completed_at": "2026-07-26T20:13:43Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4842552,
+    "sha256": "6dbf4335941dd43b9627fb7d783db636f9b408a752b74195bce3dec0bc7940b3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02-wan-2-7",
+  "lite_result_sha256": "9c71a9c52003800277c6ececaf9bb56363ae99508baf74b0f8c76aa07ed3daba",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

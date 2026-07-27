@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:ea9b2a289fe4e8985a4ef202fd3c0cad80ed816b3779e812c83d6ed54b05ac0d",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+      "sha256": "370b9b469bbf9103c2fa8e4daa6a2bfa455db7f3747c68958424c6008589e1ee",
+      "bytes": 122855
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/11-ostin-vesenniaia-kapsula/content.json",
+      "sha256": "bf64a1c30bd54854d2f96edd2c6ba93474865ad684d2e6acc720ed45abb85de3",
+      "bytes": 18876,
+      "locator": {
+        "article_id": "11-ostin-vesenniaia-kapsula",
+        "title": "Чек-лист: собираем стильную весеннюю капсулу в O’STIN",
+        "lead": "Многие девушки хаотично покупают вещи, а потом не понимают, как их интегрировать в гардероб. Как результат — перед выходом из дома всегда «‎нечего надеть»‎.\nO’STIN создал новую коллекцию, лицом которой стала актриса Лена Тронина. Ее образ, необычный стиль в сочетании с одеждой O’STIN стал прекрасным началом запуска весенней линейки бренда.\nВ новой коллекции многие вещи сочетаются между собой,",
+        "image_id": "02",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "Новую коллекцию O’STIN покажет актриса Лена Тронина — искренняя, непосредственная и самоироничная девушка",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "В новой коллекции многие вещи сочетаются между собой, поэтому из них можно собрать актуальную капсулу. Посмотрите, что можно надеть, чтобы чувствовать себя стильно, уверенно и комфортно вне зависимости от повода."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "Низ"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02/result.json"
+  }
+}

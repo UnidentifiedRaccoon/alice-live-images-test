@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-05-5ka-zhaloba-na-magazin-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:1db945f824da7f820685fc39bb0420304c1a6ff62d7b718e06e171ccd1e323af",
+    "execution_fingerprint": "sha256:c662d968d23389ebdb37108abfad2885187ed6b28a4ec72a14ab8e3afd2f21fa",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa001-01a8-79c1-b9a0-f62c40d21b04"
+    },
+    "authored_payload_sha256": "562edacd063e28ea4e46a3bc3054f74ad7f62722b4b54a8faa48cf9883d7090e",
+    "draft_file_sha256": "e9268c393714847826cf1ebbd9d4b0edba963c7fceec50449286ccd5363376c4"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+      "sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+      "bytes": 1387421
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/05-5ka-zhaloba-na-magazin/content.json",
+      "sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e",
+      "bytes": 17645,
+      "locator": {
+        "article_id": "05-5ka-zhaloba-na-magazin",
+        "title": "Вот что будет, если пожаловаться на магазин «Пятёрочка»",
+        "lead": "Рассказываем, какой путь проходит обращение в службу поддержки «Пятёрочки»",
+        "image_id": "02",
+        "block_index": 6,
+        "role": "article_image",
+        "caption": "В систему попадают не только прямые жалобы. Обращения создаются на основе низких оценок товаров, сигналов тайных покупателей и даже негативных комментариев в соцсетях — их отслеживает система мониторинга интернета",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "Первые секунды: обращение попадает в систему"
+        },
+        "nearest_text_before": {
+          "block_index": 5,
+          "type": "paragraph",
+          "text": "Любой звонок, сообщение в приложении, отзыв после визита сразу попадают в систему регистрации обращений. Там они получают уникальный номер и распределяются на ответственную группу — к тем, кто сможет быстрее всего решить вопрос. Срочные сигналы, связанные с пищевой безопасностью, обрабатываются в первую очередь. Например, если гость сообщит, что обнаружил на полках просроченные или испорченные продукты, их сразу уберут."
+        },
+        "nearest_text_after": {
+          "block_index": 7,
+          "type": "heading",
+          "text": "Первые минуты: анализ и распределение"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Пожилая пара стоит у заполненной сыром и молочными продуктами холодильной витрины; женщина внимательно смотрит на товары, мужчина держит тележку.",
+      "Главное естественно подвижное действие — спокойный перевод взгляда женщины вдоль полки с небольшим наклоном вперёд; мужчина и тележка могут оставаться почти неподвижными.",
+      "Холодильная витрина, ценники и упаковки формируют смысловой фокус на внимательной проверке товара покупателем."
+    ],
+    "article_context": "Изображение внутри раздела о первых секундах после регистрации обращения показывает покупателей, внимательно оценивающих товары в магазине. Оно связывает повседневное наблюдение за полкой с тезисом статьи: сигналы о проблемах поступают из разных каналов и запускают работу службы поддержки.",
+    "structured_intent": {
+      "editorial_meaning": "Внимательное отношение покупателей к товарам помогает замечать проблемы, сигналы о которых затем могут попасть в систему обращений и привести к конкретным действиям магазина.",
+      "primary_action": "Женщина внимательно просматривает ряд продуктов в холодильной витрине и выбирает один товар для более пристального осмотра.",
+      "terminal_state": "В последнем кадре женщина остановила взгляд на одной упаковке и внимательно её рассматривает.",
+      "semantic_invariant": "Женщина до последнего кадра сохраняет спокойную внимательность к состоянию и выбору товара."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный план с неподвижной камерой. Женщина без паузы начинает размеренно переводить взгляд вдоль ряда продуктов и постепенно немного наклоняется к витрине. Движение развивается почти всю сцену и мягко замедляется к финалу; мужчина удерживает тележку и остаётся спокойным вторичным присутствием. В последнем кадре взгляд женщины устойчиво сосредоточен на одной упаковке, а её внимательное отношение к товару сохраняется.",
+      "positive_prompt": "With a fixed camera, the woman steadily scans the refrigerated shelf from left to right, leaning slightly closer as she inspects the products. Her movement eases near the end, with her gaze settled attentively on one package in the final frame.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный focused moment с неподвижной камерой и меньшей траекторией взгляда. Женщина спокойно просматривает ближайший участок полки, одним непрерывным движением переводит взгляд и слегка подаётся к стеклу. Темп ровный, без жестов и речи. Ближе к концу движение прекращается естественно; финальный кадр показывает женщину неподвижно и внимательно рассматривающей выбранную упаковку.",
+      "positive_prompt": "Fixed camera. The woman makes a calm, focused visual check across the nearby row of products, shifting her gaze and leaning slightly toward the glass. By the final frame, she is still and attentively focused on one package.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-01-pharmocean-magiia-magniia-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-01-pharmocean-magiia-magniia-02-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+    "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+    "width": 2400,
+    "height": 1600
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation reinforces the article’s connection between magnesium and stress by presenting visible overwhelm as a relatable reason to understand the mineral’s importance.",
+    "primary_action": "The woman draws both raised hands slightly outward as her fingers tighten.",
+    "terminal_state": "Both hands are held slightly farther from her cheeks with tense fingers while her wide-eyed, clenched-teeth expression remains.",
+    "semantic_invariant": "She remains visibly stressed and overwhelmed through the last frame."
+  },
+  "prompt": {
+    "positive": "Fixed camera. The woman steadily pulls both raised hands a little away from her face, fingers curling with tension. End with her hands held farther beside her cheeks and the same wide-eyed, clenched-teeth stress intact.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-01-pharmocean-magiia-magniia-02/result.json",
+    "sha256": "8dee22f6a6de543757e763732aaa99cfee6bd35d892ee44cc4315f1882b1570b",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+      "article_context_sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

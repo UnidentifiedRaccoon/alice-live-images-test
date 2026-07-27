@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "04-graceface-antivozrastnaia-syvorotka-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/04-graceface-antivozrastnaia-syvorotka/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. The woman slowly tilts her head a little toward the mirror while her eyes carefully scan her reflection; her hands remain still. By the final frame she has settled into a closer viewing angle, still visibly concerned and focused on her skin.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "33de8e08d04e17cbe29fc009feb2fdd75dbb32cdeafcc85b1a956fb39228aaae",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "mFqVoP7GMLcKNAcvfYKz",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:07:50Z",
+  "completed_at": "2026-07-26T20:09:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1820,
+    "height": 1138,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6505903,
+    "sha256": "2614abca8f279e4e33984024e70fad4ed567807b2c3aa28e4459fb716dbac482"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-04-graceface-antivozrastnaia-syvorotka-03",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-04-graceface-antivozrastnaia-syvorotka-03-wan-2-7",
+  "lite_result_sha256": "c3261c8f4269863664de8523a863b2b557ec9ad0dca10c1d763ebc0fad1cadfd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

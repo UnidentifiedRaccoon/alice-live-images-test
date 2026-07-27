@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "10-exeed-rx-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/10-exeed-rx/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/10-exeed-rx/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The EXEED RX cruises smoothly forward along its lane as the camera tracks beside it at matching speed; wheels rotate steadily and the bridge railings and skyline flow past with natural parallax. By the final frame, the car has reached the next bridge arch, remaining stable, fully visible, and confidently in lane.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9cdac8e1323f444186f7fa7f6c8a6729013831b8eb55a0199313ba56340245ff",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "iMSQVUvvBuw11feUVe4K",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:11:53Z",
+  "completed_at": "2026-07-26T20:13:09Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 7086395,
+    "sha256": "0a9e1f018241b8932e1aedf85836f2ee66a5507ee5ad3afbdc3b9190c6e268e7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-10-exeed-rx-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-10-exeed-rx-02-wan-2-7",
+  "lite_result_sha256": "812e5568deddcf36ccefac3c0ebf46cad87be0d49ce343312fe3e8f0351e5cca",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

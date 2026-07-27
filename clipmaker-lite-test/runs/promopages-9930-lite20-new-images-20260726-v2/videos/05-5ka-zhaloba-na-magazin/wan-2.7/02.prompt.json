@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-05-5ka-zhaloba-na-magazin-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-05-5ka-zhaloba-na-magazin-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+    "sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+    "width": 2560,
+    "height": 1706
+  },
+  "structured_intent": {
+    "editorial_meaning": "Внимательное отношение покупателей к товарам помогает замечать проблемы, сигналы о которых затем могут попасть в систему обращений и привести к конкретным действиям магазина.",
+    "primary_action": "Женщина внимательно просматривает ряд продуктов в холодильной витрине и выбирает один товар для более пристального осмотра.",
+    "terminal_state": "В последнем кадре женщина остановила взгляд на одной упаковке и внимательно её рассматривает.",
+    "semantic_invariant": "Женщина до последнего кадра сохраняет спокойную внимательность к состоянию и выбору товара."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, the woman steadily scans the refrigerated shelf from left to right, leaning slightly closer as she inspects the products. Her movement eases near the end, with her gaze settled attentively on one package in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-05-5ka-zhaloba-na-magazin-02/result.json",
+    "sha256": "3e44bdf64cd13428cf0c480bb3b06d4552bc69d50236d18515e24970a6ea0cce",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+      "article_context_sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

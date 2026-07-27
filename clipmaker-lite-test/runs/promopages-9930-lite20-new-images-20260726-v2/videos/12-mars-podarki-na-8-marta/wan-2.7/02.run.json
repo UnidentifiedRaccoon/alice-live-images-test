@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "12-mars-podarki-na-8-marta-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/12-mars-podarki-na-8-marta/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/12-mars-podarki-na-8-marta/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman slowly inhales the perfume while keeping the bottle steady, her chest and shoulders rising subtly as a soft contented smile gradually deepens. Her hair and loose sleeve shift faintly in the air. Fixed camera; by the final frame she remains peacefully savoring the scent with eyes closed and the bottle clearly visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2e5f5880a4f74bb4fc5f10837b78e0cb5e9e478a91ce32f9cc7806c6a3339c35",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "MkVed6MDdjQ96BirROpp",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:12:58Z",
+  "completed_at": "2026-07-26T20:14:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4263363,
+    "sha256": "318c70b4a0b1e2cfaab58d5f80248f8130f1fb955b777af163d0ac547ca43351"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02-wan-2-7",
+  "lite_result_sha256": "4e35cfd06181b4dfd149fb0db6255d61bf89ad00a4b334403121467b0171f6b3",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

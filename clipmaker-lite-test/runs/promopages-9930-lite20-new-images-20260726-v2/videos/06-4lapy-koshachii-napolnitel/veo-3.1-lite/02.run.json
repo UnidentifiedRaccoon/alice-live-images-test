@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "06-4lapy-koshachii-napolnitel-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/06-4lapy-koshachii-napolnitel/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/06-4lapy-koshachii-napolnitel/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, the cat makes one short, calm sniffing pass over the litter, whiskers brushing the top layer and shifting a few granules. It ends still leaning comfortably over the tray, attentive to the settled litter.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "813586a93fc6ba219ebcc3012ebc154932dc973419062620367187f36e94b24d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "oM6NdGK7GOOK1LMyZrAx",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:09:48Z",
+  "completed_at": "2026-07-26T20:11:35Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 7184507,
+    "sha256": "24b8cbe452c286da0f3b410bc41242b22cced4d12fae10596ac12cf5bc4a5f22"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02-veo-3-1-lite",
+  "lite_result_sha256": "0cc31d9a5c8662c101fb921221e14602e5ed7413f26e516b91f55f9bf6849927",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

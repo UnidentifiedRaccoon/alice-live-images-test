@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "08-tochka-ooo-ili-ip-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/08-tochka-ooo-ili-ip/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/08-tochka-ooo-ili-ip/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. The left person steadily writes across one field on the paper form while the other person holds the tablet still. Near the end, the pencil completes the entry and pauses at the end of the line; the tablet page and all visible text remain unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2746ca6e30da4a0bf74180270223769df97837064cd67b1e57d83ea575988649",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CjtZuelWtvzaJSJnrAm0",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:10:33Z",
+  "completed_at": "2026-07-26T20:11:51Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1174,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6670253,
+    "sha256": "d64dba362e6612be25a1ae46b4fa5566ee107e3f9eb2640b9a758047223be52e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02-wan-2-7",
+  "lite_result_sha256": "efd9b95b82ca199f1159e7b3db0089adf8fca6e0f6ab5e33a7443bf5657330ab",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

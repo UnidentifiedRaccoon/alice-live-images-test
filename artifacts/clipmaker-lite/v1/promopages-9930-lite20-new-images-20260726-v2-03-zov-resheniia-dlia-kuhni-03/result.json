@@ -1,0 +1,154 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-03-zov-resheniia-dlia-kuhni-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:1b9a9f3a9fa9c3032f24042455b475d40c5014acdb7eb4c3aea5b62a32883d5f",
+    "execution_fingerprint": "sha256:6a16a0e4796d4c546ad8425d4128e98e4e027f04135e48519e31cd35357b832d",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa000-8288-7b20-ace5-1b8a7721c464"
+    },
+    "authored_payload_sha256": "810ca4afa2b22d17a1e5f17209f6029641c1f098de4f005fed6a556911bb991e",
+    "draft_file_sha256": "175f2c5cf25ca0f8af47ebe95478fd288b0c32571025678920d11bb958e3f275"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+      "sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+      "bytes": 234500
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/03-zov-resheniia-dlia-kuhni/content.json",
+      "sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064",
+      "bytes": 17582,
+      "locator": {
+        "article_id": "03-zov-resheniia-dlia-kuhni",
+        "title": "5 решений для кухни, которая радует каждый день",
+        "lead": "Простые идеи для дизайна, которые выглядят стильно и реально помогают в быту",
+        "image_id": "03",
+        "block_index": 12,
+        "role": "article_image",
+        "caption": "Встроенные розетки спрятаны так, чтобы на кухне не было лишних проводов и некрасивых отверстий в фартуке",
+        "file": "03.jpeg",
+        "manifest_file_path": "articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+        "current_heading": {
+          "block_index": 9,
+          "level": 2,
+          "text": "Встроенные розетки"
+        },
+        "nearest_text_before": {
+          "block_index": 11,
+          "type": "paragraph",
+          "text": "«ЗОВ» устанавливает встроенные розеточные блоки с защитой от воды и перегрева. Встроить их можно прямо в столешницу или в нижнюю часть навесного шкафа — там, где планируется активная готовка. Если вам понадобится подключить блендер или миксер, достаточно нажать на специальную область. После этого откроется панель с розетками. Закончили с готовкой — убрали прибор и закрыли выдвижной модуль."
+        },
+        "nearest_text_after": {
+          "block_index": 13,
+          "type": "heading",
+          "text": "Сушка внутри шкафа"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Просторная кухня с островом, деревянными и приглушённо-зелёными фасадами; столешница и каменный фартук остаются главными визуальными плоскостями.",
+      "Рабочая зона выглядит свободной от лишних проводов и заметных розеточных блоков; слева видны лёгкие полупрозрачные шторы, способные естественно двигаться."
+    ],
+    "article_context": "Врезанное в раздел о встроенных розетках изображение показывает цельный интерьер с чистой рабочей зоной: провода и розеточные отверстия не нарушают вид столешницы и фартука. Редакционный акцент — скрытые функциональные решения сохраняют кухню аккуратной и визуально спокойной.",
+    "structured_intent": {
+      "editorial_meaning": "Скрытые инженерные решения помогают сохранить рабочую зону кухни чистой, удобной и визуально цельной.",
+      "primary_action": "Лёгкий поток воздуха плавно колышет полупрозрачные шторы.",
+      "terminal_state": "В последнем кадре шторы сохраняют лишь небольшое остаточное покачивание, а рабочая поверхность остаётся полностью свободной и опрятной.",
+      "semantic_invariant": "Кухня до последнего кадра остаётся аккуратной, цельной и свободной от видимых проводов и лишних деталей."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный кадр: лёгкий поток воздуха сразу начинает плавно колыхать прозрачные шторы слева; движение развивается ровно и к концу ослабевает до небольшого покачивания. Одновременно камера медленно приближается к свободной столешнице и фартуку, чтобы подчеркнуть отсутствие проводов и визуального шума. В финале шторы ещё слегка отклонены, а чистая рабочая зона хорошо читается; планировка и аккуратное состояние кухни не меняются.",
+      "positive_prompt": "A soft breeze steadily billows the sheer curtains at the left, then they ease into a gentle sway by the final frame. Slow push toward the clear countertop and backsplash, keeping the entire kitchen recognizable and uncluttered.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный вариант с меньшей амплитудой: шторы одним мягким движением отклоняются внутрь комнаты и ближе к финалу переходят в едва заметное остаточное покачивание. Камера выполняет короткое плавное смещение вправо с фокусом на чистой линии столешницы и фартука. Последний кадр сохраняет свободную от проводов рабочую зону и исходную упорядоченность интерьера.",
+      "positive_prompt": "The sheer curtains drift inward in one smooth breeze and settle into a slight lingering sway near the end. A subtle rightward camera glide keeps the clean countertop and backsplash continuously in view, with the kitchen still orderly in the final frame.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

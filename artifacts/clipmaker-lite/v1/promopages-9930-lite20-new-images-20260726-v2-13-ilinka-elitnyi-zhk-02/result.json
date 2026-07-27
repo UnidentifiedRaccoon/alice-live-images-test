@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:a03c0243a5461045c62f82d925c93f9c02a77ae0440c15fc1c27ef43f23dff81",
+    "execution_fingerprint": "sha256:c183e8da5c538eff241b59d3c1043d7a9b6a22b1f877169f8f74123e8770bb2c",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa002-3fc3-7523-824f-fa2ea6d850e8"
+    },
+    "authored_payload_sha256": "022194156d38ab902f66c36926bcefd9b74d2cc9a8389c27e5e3462ddd23a595",
+    "draft_file_sha256": "cc9b5e155013f238f0f592ab3fced91a47d83048b608dcf38ff6605fad10ac67"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+      "sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+      "bytes": 596147
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/13-ilinka-elitnyi-zhk/content.json",
+      "sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c",
+      "bytes": 16974,
+      "locator": {
+        "article_id": "13-ilinka-elitnyi-zhk",
+        "title": "Показываем, что за элитный ЖК строят напротив Кремля",
+        "lead": "Рассказываем о премиальном комплексе «Царев сад» в историческом районе Москвы",
+        "image_id": "02",
+        "block_index": 5,
+        "role": "article_image",
+        "caption": "Архитектура «Резиденции 1864» продумана так, чтобы не выбиваться из облика города",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/13-ilinka-elitnyi-zhk/02.jpeg",
+        "current_heading": {
+          "block_index": 2,
+          "level": 2,
+          "text": "Расположение в центре Москвы"
+        },
+        "nearest_text_before": {
+          "block_index": 4,
+          "type": "paragraph",
+          "text": "«Резиденция 1864» стоит на Софийской набережной, прямо напротив Кремля, поэтому отсюда удобно добираться в любую точку города. Рядом любимые бутики, рестораны, музеи и памятники архитектуры — жители комплекса находятся в центре культурной жизни."
+        },
+        "nearest_text_after": {
+          "block_index": 6,
+          "type": "heading",
+          "text": "Вид на главные достопримечательности столицы"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Крупный светлокаменный жилой комплекс занимает центр кадра и сохраняет монументальный, геометрически строгий силуэт.",
+      "Перед фасадом проходят мост и городская дорога с несколькими автомобилями; внизу видна вода.",
+      "Зелёные ветви обрамляют здание справа и снизу, подчёркивая его включённость в существующий городской ландшафт."
+    ],
+    "article_context": "Это body-изображение в разделе о расположении комплекса в центре Москвы. Подпись акцентирует, что архитектура «Резиденции 1864» гармонично встроена в исторический городской облик; соседние абзацы связывают комплекс с Софийской набережной, Кремлём и культурной жизнью столицы.",
+    "structured_intent": {
+      "editorial_meaning": "Показать, что премиальный комплекс органично вписан в историческую архитектуру и повседневную жизнь центра Москвы.",
+      "primary_action": "Городской автомобиль непрерывно движется по мосту перед жилым комплексом.",
+      "terminal_state": "К последнему кадру автомобиль достигает правой части моста, а фасад комплекса остаётся полностью читаемым.",
+      "semantic_invariant": "Монументальный комплекс остаётся главным, узнаваемым и гармонично встроенным в окружающий городской пейзаж."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный проезд городского транспорта начинается сразу и равномерно развивается почти весь ролик. Камера медленно приближается к центральному фасаду, чтобы подчеркнуть его архитектурное соответствие окружению; ветви могут лишь слегка колыхаться как естественное вторичное движение. К финалу ведущий автомобиль доезжает почти до правого края, а комплекс остаётся целиком узнаваемым и главным объектом кадра.",
+      "positive_prompt": "Traffic moves steadily across the bridge from left to right as the camera makes a slow push toward the central facade. Keep the entire building recognizable; by the final frame, the leading car nears the right edge while the residence remains dominant within the cityscape.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Для четырёх секунд используется более компактное движение: один заметный автомобиль плавно проходит от средней части моста к правой стороне. Одновременное короткое мягкое приближение камеры удерживает фокус на центральном фасаде, не выводя комплекс из городского контекста. В последнем кадре автомобиль достигает правой части дороги, здание остаётся непрерывно видимым и архитектурно цельным.",
+      "positive_prompt": "A car travels smoothly from the middle of the bridge toward the right while the camera gently pushes in on the central facade. The building stays fully recognizable; in the final frame, the car reaches the right side and the residence remains clearly integrated with its urban surroundings.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

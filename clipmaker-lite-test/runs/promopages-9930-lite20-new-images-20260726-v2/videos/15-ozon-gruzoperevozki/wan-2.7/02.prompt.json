@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-15-ozon-gruzoperevozki-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-15-ozon-gruzoperevozki-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+    "sha256": "3110ee3c3dfdcb681ee41e9fa739a24677ac57c4d76bcaeea9c936f04ecba885",
+    "width": 1600,
+    "height": 981
+  },
+  "structured_intent": {
+    "editorial_meaning": "Мобильное приложение позволяет быстро заметить подходящий рейс и сразу оценить его условия и ставку.",
+    "primary_action": "Существующая кнопка ставки даёт один мягкий оптический pulse.",
+    "terminal_state": "Оптический акцент затухает, и кнопка возвращается к исходному виду при полностью неизменной карточке лота.",
+    "semantic_invariant": "Карточка остаётся предложением доступного рейса, а все сведения и состояние интерфейса сохраняются без изменений."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A soft blue pulse gradually brightens the existing bid button, gently peaks, then returns to its original appearance near the end. Every UI detail remains unchanged and fully readable in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-15-ozon-gruzoperevozki-02/result.json",
+    "sha256": "5f5161f910e0a229418f63324b2d4623da34c6e724d1b4f26c9ae3245b4abf3d",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "3110ee3c3dfdcb681ee41e9fa739a24677ac57c4d76bcaeea9c936f04ecba885",
+      "article_context_sha256": "8db6b2f4574873e79637ffe61bc460949ff25245764c809a789b02b5d083cdc1",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -53,6 +53,16 @@ SOURCE_IMAGE_ROOT = Path("PROMOPAGES-9857/articles")
 SOURCE_CONTEXT_ROOT = Path("PROMOPAGES-9884/articles")
 SOURCE_MANIFEST = SOURCE_IMAGE_ROOT / "manifest.csv"
 EXPECTED_ARTICLES = 20
+FROZEN_CONTRACT_VERSION = "2.0.1"
+FROZEN_LITE_FILES = (
+    Path("scripts/clipmaker_lite_runner.py"),
+    Path("docs/agents/clipmaker-lite/README.md"),
+    Path("docs/agents/clipmaker-lite/contract.json"),
+    Path("docs/agents/clipmaker-lite/generation-routes.json"),
+    Path("docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md"),
+    Path("docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md"),
+    Path("docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md"),
+)
 MODEL_IDS = native.MODEL_IDS
 WAN_RETRY_SAMPLE_IDS = (
     "01-pharmocean-magiia-magniia",
@@ -128,6 +138,75 @@ def read_json(path: Path) -> Any:
         raise PipelineError(f"Missing JSON file: {path}") from exc
     except json.JSONDecodeError as exc:
         raise PipelineError(f"Invalid JSON in {path}: {exc}") from exc
+
+
+def require_frozen_lite_bundle(workspace: Path = TEST_ROOT) -> dict[str, Any]:
+    """Validate the immutable 2.0.1 bundle without comparing it to root."""
+
+    workspace = workspace.resolve()
+    for relative_path in FROZEN_LITE_FILES:
+        path = workspace / relative_path
+        if not path.is_file() or path.is_symlink():
+            raise PipelineError(f"Frozen Lite file is missing or unsafe: {path}")
+    contract = read_json(
+        workspace / "docs/agents/clipmaker-lite/contract.json"
+    )
+    if not isinstance(contract, dict):
+        raise PipelineError("Historical Clipmaker Lite contract is not an object")
+    runner_record = contract.get("runner")
+    if (
+        contract.get("agent_id") != native.AGENT_ID
+        or contract.get("contract_version") != FROZEN_CONTRACT_VERSION
+        or not isinstance(runner_record, dict)
+        or runner_record.get("path") != "scripts/clipmaker_lite_runner.py"
+    ):
+        raise PipelineError("Unexpected historical Clipmaker Lite contract")
+    runner_path = workspace / runner_record["path"]
+    if sha256_file(runner_path) != runner_record.get("sha256"):
+        raise PipelineError("Frozen Clipmaker Lite runner digest mismatch")
+    return contract
+
+
+def frozen_provenance_summary(
+    workspace: Path, run_id: str
+) -> dict[str, Any]:
+    """Verify a historical receipt through the exact frozen runner CLI."""
+
+    workspace = workspace.resolve()
+    contract = require_frozen_lite_bundle(workspace)
+    if not run_id.startswith(f"{PLANNING_BATCH_ID}-"):
+        raise PipelineError(f"Run does not belong to the frozen batch: {run_id}")
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(workspace / "scripts/clipmaker_lite_runner.py"),
+            "provenance",
+            "--run-id",
+            run_id,
+        ],
+        cwd=workspace,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        timeout=120,
+        check=False,
+    )
+    if completed.returncode:
+        detail = transport.safe_error(completed.stderr or completed.stdout)
+        raise PipelineError(f"Frozen Lite provenance failed for {run_id}: {detail}")
+    try:
+        summary = json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        raise PipelineError(
+            f"Frozen Lite provenance returned invalid JSON for {run_id}"
+        ) from exc
+    if (
+        not isinstance(summary, dict)
+        or summary.get("verified") is not True
+        or summary.get("contract_version") != contract["contract_version"]
+    ):
+        raise PipelineError(f"Frozen Lite provenance is not verified: {run_id}")
+    return summary
 
 
 def relative(path: Path, root: Path = ROOT) -> str:
@@ -324,20 +403,16 @@ def prepare_dataset(root: Path = ROOT) -> tuple[Article, ...]:
         copy_exact(source_context, TEST_ROOT / article.context_path)
         for image in article.images:
             copy_exact(root / image["source_path"], root / image["copy_path"])
-    supporting_files = (
+    dataset_supporting_files = (
         SOURCE_MANIFEST,
         Path("PROMOPAGES-9857/README.md"),
         Path("PROMOPAGES-9884/README.md"),
-        Path("scripts/clipmaker_lite_runner.py"),
-        Path("docs/agents/clipmaker-lite/README.md"),
-        Path("docs/agents/clipmaker-lite/contract.json"),
-        Path("docs/agents/clipmaker-lite/generation-routes.json"),
-        Path("docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md"),
-        Path("docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md"),
-        Path("docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md"),
     )
-    for source_rel in supporting_files:
+    for source_rel in dataset_supporting_files:
         copy_exact(root / source_rel, TEST_ROOT / source_rel)
+    # The planning bundle is historical evidence, not a mirror of current
+    # root. In particular, never replace its 2.0.1 contract with root 2.0.2.
+    require_frozen_lite_bundle(TEST_ROOT)
     write_readme()
     transport.atomic_write_json(root / DATASET_MANIFEST_REL, dataset_document(articles))
     return articles
@@ -363,7 +438,9 @@ def configure_native(
     native.PLANNING_MODEL_IDS = MODEL_IDS
     native.TICKET = TICKET
     native.MANIFEST_PATH = manifest_path
-    native.CONTRACT_PATH = root / "docs/agents/clipmaker-lite/contract.json"
+    native.PLANNING_WORKSPACE = TEST_ROOT
+    native.PLANNING_PROVENANCE_VERIFIER = frozen_provenance_summary
+    native.CONTRACT_PATH = TEST_ROOT / "docs/agents/clipmaker-lite/contract.json"
     native.SAMPLES = tuple(article.sample for article in articles)
     # Route overrides are isolated to this historical batch bridge.  The
     # shared transport remains immutable and normal runs use registry routes.
@@ -429,7 +506,7 @@ def prepare_planning_runs(articles: Iterable[Article]) -> None:
 def run_one_planning(article: Article, timeout: int) -> tuple[str, str, str | None]:
     run_id = article.sample.planning_run_id
     try:
-        summary = runner.provenance_summary(ROOT, run_id)
+        summary = frozen_provenance_summary(TEST_ROOT, run_id)
         if summary.get("verified") is True:
             return run_id, "existing", None
     except Exception:
@@ -460,7 +537,7 @@ def run_one_planning(article: Article, timeout: int) -> tuple[str, str, str | No
             transport.safe_error(completed.stderr or completed.stdout),
         )
     try:
-        summary = runner.provenance_summary(ROOT, run_id)
+        summary = frozen_provenance_summary(TEST_ROOT, run_id)
     except Exception as exc:
         return run_id, "failed", transport.safe_error(exc)
     if summary.get("verified") is not True:
@@ -496,16 +573,20 @@ def run_planning_runs(articles: Iterable[Article], concurrency: int, timeout: in
 def sync_planning_artifacts(articles: Iterable[Article]) -> None:
     for article in articles:
         run_id = article.sample.planning_run_id
-        summary = runner.provenance_summary(ROOT, run_id)
+        summary = frozen_provenance_summary(TEST_ROOT, run_id)
         if summary.get("verified") is not True:
-            raise PipelineError(f"Canonical planning provenance failed: {run_id}")
-        source_dir = ROOT / native.ARTIFACT_NAMESPACE / run_id
-        destination_dir = TEST_ROOT / native.ARTIFACT_NAMESPACE / run_id
-        for source in sorted(path for path in source_dir.rglob("*") if path.is_file()):
-            copy_exact(source, destination_dir / source.relative_to(source_dir))
-        copied = runner.provenance_summary(TEST_ROOT, run_id)
-        if copied.get("verified") is not True:
-            raise PipelineError(f"Self-contained planning provenance failed: {run_id}")
+            raise PipelineError(f"Frozen planning provenance failed: {run_id}")
+        relative_result = native.ARTIFACT_NAMESPACE / run_id / "result.json"
+        canonical_result = ROOT / relative_result
+        frozen_result = TEST_ROOT / relative_result
+        if (
+            not canonical_result.is_file()
+            or not frozen_result.is_file()
+            or sha256_file(canonical_result) != sha256_file(frozen_result)
+        ):
+            raise PipelineError(
+                f"Canonical planning result differs from frozen authority: {run_id}"
+            )
 
 
 def materialize_generation(articles: Iterable[Article]) -> int:
@@ -899,12 +980,20 @@ def build_final_manifest(articles: Iterable[Article], updated_at: str | None = N
     for article in articles:
         sample = article.sample
         run_id = sample.planning_run_id
-        canonical_summary = runner.provenance_summary(ROOT, run_id)
-        copied_summary = runner.provenance_summary(TEST_ROOT, run_id)
+        canonical_summary = frozen_provenance_summary(TEST_ROOT, run_id)
+        copied_summary = canonical_summary
         if canonical_summary.get("verified") is not True or copied_summary.get("verified") is not True:
             raise PipelineError(f"Planning provenance failed: {run_id}")
         result_path = ROOT / native.ARTIFACT_NAMESPACE / run_id / "result.json"
-        result = read_json(result_path)
+        frozen_result_path = TEST_ROOT / native.ARTIFACT_NAMESPACE / run_id / "result.json"
+        if (
+            not result_path.is_file()
+            or sha256_file(result_path) != sha256_file(frozen_result_path)
+        ):
+            raise PipelineError(
+                f"Canonical planning result differs from frozen authority: {run_id}"
+            )
+        result = read_json(frozen_result_path)
         models = result.get("models")
         if not isinstance(models, list):
             raise PipelineError(f"Planning models are missing: {run_id}")
@@ -1212,14 +1301,26 @@ def verify_all(
     errors = verify_dataset(articles)
     for article in articles:
         run_id = article.sample.planning_run_id
-        for workspace, label in ((ROOT, "canonical"), (TEST_ROOT, "self-contained")):
-            try:
-                summary = runner.provenance_summary(workspace, run_id)
-            except Exception as exc:
-                errors.append(f"{label} provenance failed for {run_id}: {transport.safe_error(exc)}")
-                continue
-            if summary.get("verified") is not True:
-                errors.append(f"{label} provenance is not verified: {run_id}")
+        try:
+            summary = frozen_provenance_summary(TEST_ROOT, run_id)
+        except Exception as exc:
+            errors.append(
+                f"frozen provenance failed for {run_id}: {transport.safe_error(exc)}"
+            )
+            continue
+        if summary.get("verified") is not True:
+            errors.append(f"frozen provenance is not verified: {run_id}")
+        relative_result = native.ARTIFACT_NAMESPACE / run_id / "result.json"
+        canonical_result = ROOT / relative_result
+        frozen_result = TEST_ROOT / relative_result
+        if (
+            not canonical_result.is_file()
+            or not frozen_result.is_file()
+            or sha256_file(canonical_result) != sha256_file(frozen_result)
+        ):
+            errors.append(
+                f"Canonical planning result differs from frozen authority: {run_id}"
+            )
     retry1_manifest_exists = (ROOT / WAN_RETRY1_MANIFEST_REL).is_file()
     retry2_manifest_exists = (ROOT / WAN_RETRY2_MANIFEST_REL).is_file()
     retry3_manifest_exists = (ROOT / WAN_RETRY3_MANIFEST_REL).is_file()

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:43a8ff7ac4cd016829efe1be032800877e1bd4cddc36e7f38fe15368517ee407",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+      "sha256": "af38d39f1f7690a802a4bcae49c81e043f071e77336147577e1cf321d4ac4078",
+      "bytes": 416675
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+      "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a",
+      "bytes": 19987,
+      "locator": {
+        "article_id": "06-4lapy-koshachii-napolnitel",
+        "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+        "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+        "image_id": "02",
+        "block_index": 7,
+        "role": "article_image",
+        "caption": "Чтобы понять, подходит ли питомцу новый наполнитель, обратите внимание на его поведение. Если кошка без колебаний использует лоток, спокойно закапывает свои экскременты и не пытается справлять нужду в других местах, это хороший знак",
+        "file": "02.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+        "current_heading": {
+          "block_index": 4,
+          "level": 3,
+          "text": "Совет №1. Выбирайте наполнители с активированным углём или другими натуральными абсорбентами"
+        },
+        "nearest_text_before": {
+          "block_index": 6,
+          "type": "paragraph",
+          "text": "Комкующийся наполнитель ДОМОСЕДЫ с гранулами активированного угля и ароматом трав впитывает влагу подобно губке. Благодаря этому свойству лоток остается свежим дольше обычного, а значит, подойдёт даже для самых привередливых кошек."
+        },
+        "nearest_text_after": {
+          "block_index": 8,
+          "type": "heading",
+          "text": "Совет №2. Обратите внимание на наполнители с добавлением ароматизаторов"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02/result.json"
+  }
+}
