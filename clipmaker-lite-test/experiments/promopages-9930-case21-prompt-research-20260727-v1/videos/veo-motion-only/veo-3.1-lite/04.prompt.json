@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-veo-motion-only-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation reinforces the infographic’s explanation that a weakening central factor is associated with several noticeable downstream changes.",
+    "primary_action": "The visible central purple aura continuously contracts and fades inward.",
+    "terminal_state": "Only a small, faint purple halo remains around the central diagram.",
+    "semantic_invariant": "The infographic retains its original causal meaning, labels, symbols, arrows, and outcome relationships through the final frame."
+  },
+  "prompt": {
+    "positive": "Fixed camera. The central purple aura continuously contracts and fades from the outside inward, ending as a small faint halo. Keep every other element unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-veo-motion-only-20260727-v1/result.json",
+    "sha256": "df820159b155a45012f16d43d24c544dc8782882ed6118023118399989c03506",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d25e1656c4072a8f341a93fc8db32655f9534a3b5723b1df95b7e68278005afe",
+      "instruction_bundle_sha256": "d6af5b85f0c4afd8bdbc99ef163f26402ad006aa51e6fd74e5931065bfb55c5d",
+      "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

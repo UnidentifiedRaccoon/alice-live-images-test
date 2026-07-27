@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "model_id": "alibaba/wan-2.7",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-7",
+  "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b"
+  },
+  "artifact": {
+    "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.mp4",
+    "sha256": "12f7e4ae07bb607ac5849f14815df9053ae50ff6551ce8ec299c609ffb994b65"
+  },
+  "review_method": {
+    "source_comparison": "Compared the source image with nine evenly spaced decoded frames in the erosion-negative Wan 2.7 contact sheet.",
+    "technical_verification": "Rechecked the recorded MP4 digest, byte size, dimensions, duration, frame count, frame rate and audio flag."
+  },
+  "observations": {
+    "requested_motion": "The central purple aura should steadily erode outside-in and lose opacity, ending as a small faint halo without growth, bloom, pulse or rebound.",
+    "camera": "Fixed camera and full square framing throughout.",
+    "stable_elements": [
+      "All Cyrillic labels",
+      "Arrows and connector lines",
+      "Icons and scales",
+      "Progesterone molecule",
+      "Diagram topology",
+      "Full square framing"
+    ],
+    "invariant_failures": [
+      "The purple aura first intensifies and grows into a saturated bloom before fading; its area and opacity do not decrease monotonically."
+    ]
+  },
+  "verdict": {
+    "status": "fidelity-failed",
+    "summary": "The diagram remains legible, but the aura grows and brightens before it fades, contradicting the requested outside-in monotonic erosion."
+  }
+}

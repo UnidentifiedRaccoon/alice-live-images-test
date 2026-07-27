@@ -21,8 +21,8 @@ from urllib.parse import urlsplit
 
 
 SCHEMA_VERSION = "1.0"
-EXPECTED_ARTICLE_COUNT = 20
-EXPECTED_IMAGE_COUNT = 125
+EXPECTED_ARTICLE_COUNT = 21
+EXPECTED_IMAGE_COUNT = 133
 EXPECTED_ARTICLE_KEYS = tuple(
     f"{number:02d}" for number in range(1, EXPECTED_ARTICLE_COUNT + 1)
 )
@@ -664,7 +664,10 @@ def validate_exceptions(path: Path) -> tuple[int, int]:
         )
         article_number = value["article_number"]
         if not is_int(article_number) or not 1 <= article_number <= EXPECTED_ARTICLE_COUNT:
-            fail(f"{entry_context}.article_number must be an integer from 1 to 20")
+            fail(
+                f"{entry_context}.article_number must be an integer from 1 to "
+                f"{EXPECTED_ARTICLE_COUNT}"
+            )
         expected_key = f"{article_number:02d}"
         if value["article_key"] != expected_key:
             fail(

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "model_id": "alibaba/wan-2.2",
+  "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-2",
+  "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b"
+  },
+  "artifact": {
+    "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
+    "sha256": "98712af3715210cd1d6709deb3b409b81a8ea1d8c8b6f057f0271fabc529a2ec"
+  },
+  "review_method": {
+    "source_comparison": "Compared the source image with decoded frames at 0.1, 1.6 and 3.1 seconds and with a contact sheet.",
+    "technical_verification": "Rechecked the recorded ffprobe dimensions, duration, frame count, frame rate and absence of audio."
+  },
+  "observations": {
+    "requested_motion": "The purple aura around the progesterone molecule should continuously contract and lose intensity, ending as a small faint halo.",
+    "camera": "Fixed camera and full square framing throughout.",
+    "stable_elements": [
+      "All Cyrillic labels",
+      "Arrows and connector lines",
+      "Icons and scales",
+      "Progesterone molecule",
+      "Diagram topology",
+      "Full square framing"
+    ],
+    "invariant_failures": [
+      "The purple aura expands into a large circular, bokeh-like field midway through the clip before fading; the motion is not a continuous contraction."
+    ]
+  },
+  "verdict": {
+    "status": "fidelity-failed",
+    "summary": "Text and diagram geometry stay stable, but the purple aura expands into a large bokeh-like pulse before fading, contradicting the requested continuous contraction."
+  }
+}

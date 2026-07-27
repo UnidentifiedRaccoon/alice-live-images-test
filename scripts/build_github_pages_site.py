@@ -45,6 +45,7 @@ STATIC_FILES = (
     "clipmaker-lite/app.js",
     "clipmaker-lite-test/manifest.json",
     "clipmaker-lite-test/promopages-9930-manifest.json",
+    "clipmaker-lite-test/case-21-manifest.json",
 )
 
 STATIC_TREES = (
@@ -145,6 +146,31 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             )
             for output in image_record["outputs"]:
                 remote_repository_paths.add(_safe_relative_path(output["video_path"]))
+
+    # Case 21 is an independent one-image sidecar.  Its compact JSON is part of
+    # the Pages payload, while the source and all three videos stay on main and
+    # are delivered through raw.githubusercontent.com.
+    case_21_manifest = json.loads(
+        (root / "clipmaker-lite-test" / "case-21-manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    for article in case_21_manifest["articles"]:
+        for image_record in article["images"]:
+            image = image_record["image"]
+            if image.get("delivery") != "repository-raw":
+                raise ValueError(
+                    "Case 21 source image must use repository-raw delivery"
+                )
+            remote_repository_paths.add(_safe_relative_path(image["source_path"]))
+            for output in image_record["outputs"]:
+                if output.get("delivery") != "repository-raw":
+                    raise ValueError(
+                        "Case 21 outputs must use repository-raw delivery"
+                    )
+                remote_repository_paths.add(
+                    _safe_relative_path(output["video_path"])
+                )
 
     for relative_path in remote_repository_paths:
         source = root / relative_path

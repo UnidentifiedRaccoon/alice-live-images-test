@@ -31,9 +31,27 @@ class ClipmakerLiteCase14PromptExperimentTest(unittest.TestCase):
         self.assertEqual(self.source.provenance["verified"], True)
         self.assertEqual(self.source.provenance["agent_id"], "clipmaker-lite")
         self.assertEqual(
+            self.source.provenance["contract_version"],
+            experiment.FROZEN_CONTRACT_VERSION,
+        )
+        self.assertEqual(
             self.source.provenance["source_image_sha256"],
             experiment.SOURCE_SHA256,
         )
+        canonical = (
+            experiment.ROOT
+            / "artifacts/clipmaker-lite/v1"
+            / experiment.PLANNING_RUN_ID
+            / "result.json"
+        )
+        frozen = (
+            experiment.ROOT
+            / experiment.FROZEN_PLANNING_ROOT
+            / "artifacts/clipmaker-lite/v1"
+            / experiment.PLANNING_RUN_ID
+            / "result.json"
+        )
+        self.assertEqual(canonical.read_bytes(), frozen.read_bytes())
 
     def test_both_provider_requests_receive_the_same_input_prompt(self):
         previews = {}

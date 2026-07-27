@@ -25,6 +25,7 @@ from typing import Any
 
 
 SCHEMA_VERSION = "1.0"
+EXPECTED_ARTICLE_COUNT = 21
 DEFAULT_MANIFEST = Path("PROMOPAGES-9857/articles/manifest.csv")
 DEFAULT_OUTPUT_ROOT = Path("PROMOPAGES-9884")
 
@@ -46,6 +47,7 @@ TEXT_BLOCK_TYPES = {
     "header-three": "heading",
     "blockquote": "quote",
     "unordered-list-item": "list_item",
+    "ordered-list-item": "list_item",
     "legal": "legal",
 }
 
@@ -260,11 +262,13 @@ def _text_block(
     }
     if raw_type in HEADING_LEVELS:
         output["level"] = HEADING_LEVELS[raw_type]
-    if raw_type == "unordered-list-item":
+    if raw_type in {"ordered-list-item", "unordered-list-item"}:
         depth = raw_block.get("depth", 0)
         if not isinstance(depth, int) or depth < 0:
             raise ValueError(f"block {block_index} has invalid list depth")
-        output["list_style"] = "unordered"
+        output["list_style"] = (
+            "ordered" if raw_type == "ordered-list-item" else "unordered"
+        )
         output["depth"] = depth
     output["inline_styles"] = _inline_styles(raw_block, text)
     output["links"] = _links(raw_block, text, entity_map)
@@ -600,7 +604,9 @@ def load_manifest(path: Path) -> list[list[dict[str, str]]]:
     grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in rows:
         grouped[row["article_number"]].append(row)
-    expected = [f"{number:02d}" for number in range(1, 21)]
+    expected = [
+        f"{number:02d}" for number in range(1, EXPECTED_ARTICLE_COUNT + 1)
+    ]
     if sorted(grouped) != expected:
         raise ValueError(f"manifest article numbers differ: {sorted(grouped)}")
     return [grouped[key] for key in expected]
@@ -625,7 +631,10 @@ def collect(manifest_path: Path, output_root: Path) -> dict[str, Any]:
 
     for article_rows in grouped_rows:
         article_number, article_key, article_id, url = _article_identity(article_rows)
-        print(f"[{article_key}/20] {article_id}", flush=True)
+        print(
+            f"[{article_key}/{EXPECTED_ARTICLE_COUNT:02d}] {article_id}",
+            flush=True,
+        )
         html, final_url = fetch(url)
         page_data = extract_page_data(html)
         content, article_unresolved = build_article_content(

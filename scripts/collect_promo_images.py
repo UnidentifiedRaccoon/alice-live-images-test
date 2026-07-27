@@ -194,6 +194,14 @@ ARTICLES = (
         "kak-povysit-kreditnyi-reiting-uznaite-na-sravni-"
         "65f160d13bba425fc5fa82cc_0_0",
     ),
+    Article(
+        21,
+        "Марина Майер — Ваше золотое время после 35",
+        "21-maier-doctor-zolotoe-vremia",
+        "https://maier-doctor.promo.page/media/"
+        "35-vashe-zolotoe-vremia-chtoby-sohranit-molodost-"
+        "6a6328e396062011505ab621_0_0",
+    ),
 )
 
 FORMAT_EXTENSIONS = {

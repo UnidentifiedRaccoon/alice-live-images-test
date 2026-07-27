@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "prompt": "The soft purple aura around the progesterone molecule steadily contracts and fades at a moderate pace, ending as a faint compact glow around the still fully visible molecule. Fixed camera; all text, arrows, icons, and diagram geometry remain unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "6dc36da3ff5093eb8c6e9ea783e3c8fe44b92a38931aa1fba3ce50a5cc633097",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1ef6b4804ed643df8decafc75f38d772",
+  "provider_session_hash": "promopages9856-ee238bfd5c8e",
+  "submitted_at": "2026-07-27T14:18:00Z",
+  "completed_at": "2026-07-27T14:19:01Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 944,
+    "height": 944,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 247040,
+    "sha256": "98712af3715210cd1d6709deb3b409b81a8ea1d8c8b6f057f0271fabc529a2ec"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-2",
+  "lite_result_sha256": "c1a4453979a13ea9291efde8c2ef0491a9e4a08327d615ba4dc6699ce7bf1a39",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

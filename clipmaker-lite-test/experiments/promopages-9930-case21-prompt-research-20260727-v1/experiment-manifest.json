@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-prompt-research",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-prompt-research-20260727-v1",
+  "provider_batch_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1",
+  "updated_at": "2026-07-27T16:45:19Z",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 3.0,
+    "hard_budget_cap_usd": 3.0,
+    "reserved_stage1_usd": 2.2,
+    "unreserved_after_stage1_usd": 0.8,
+    "reservation_basis": {
+      "alibaba/wan-2.2": 0.5,
+      "alibaba/wan-2.7": 0.5,
+      "google/veo-3.1-lite": 0.2
+    },
+    "maximum_provider_entries": 5,
+    "maximum_submissions_per_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "Conservative operator reservations limit admitted entries; providers do not return actual billing metadata in these receipts."
+  },
+  "expected_outputs": 5,
+  "summary": {
+    "provider-failed": 1,
+    "verification-failed": 2,
+    "succeeded": 2
+  },
+  "planning_variants": [
+    {
+      "variant_id": "monotonic-positive",
+      "strategy": "first-frame-maximum with monotonic area and opacity decrease",
+      "planning_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+      "model_ids": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7"
+      ],
+      "negative_policy": "must-be-null",
+      "result_sha256": "addacbc3ef88d516b1a9d4ae564713ed71be5a16cb41623bc8256ec68d9c062a"
+    },
+    {
+      "variant_id": "erosion-negative",
+      "strategy": "outside-in erosion with observed-failure negative repair",
+      "planning_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+      "model_ids": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7"
+      ],
+      "negative_policy": "required-observed-repair",
+      "result_sha256": "a2934ffa723151b82b869d835934407dbbcea7ac384a270412e3adbe3fc71664"
+    },
+    {
+      "variant_id": "veo-motion-only",
+      "strategy": "benign literal motion-only diagnostic",
+      "planning_run_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+      "model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "negative_policy": "must-be-null",
+      "result_sha256": "df820159b155a45012f16d43d24c544dc8782882ed6118023118399989c03506"
+    }
+  ],
+  "controls": {
+    "primary": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8",
+    "retry": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b"
+  },
+  "inventory_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/inventory.json",
+  "generation_manifest_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/generation-manifest.json",
+  "outputs": [
+    {
+      "lite_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-2",
+      "sample_id": "21-maier-04-monotonic-positive",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
+      "variant_id": "monotonic-positive"
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-7",
+      "sample_id": "21-maier-04-monotonic-positive",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2569300,
+        "sha256": "ffadc7aad0077c344ca16e251ec12b41b2222b71061f876dfd701202fbe15277"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "variant_id": "monotonic-positive"
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-2",
+      "sample_id": "21-maier-04-erosion-negative",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 944,
+        "height": 944,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 241667,
+        "sha256": "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null,
+      "variant_id": "erosion-negative"
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-7",
+      "sample_id": "21-maier-04-erosion-negative",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2318997,
+        "sha256": "12f7e4ae07bb607ac5849f14815df9053ae50ff6551ce8ec299c609ffb994b65"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "variant_id": "erosion-negative"
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-veo-motion-only-veo-3-1-lite",
+      "sample_id": "21-maier-04-veo-motion-only",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1384917,
+        "sha256": "0c96252e39323c77bcc2853b236e133fdd812b519328d8985d3dd5f626e58574"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null,
+      "variant_id": "veo-motion-only"
+    }
+  ]
+}

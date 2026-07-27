@@ -1,0 +1,162 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:ef1b079f11829fb331216781a2593e0134e408e0d55fcd491b3a81020f6fea85",
+    "instruction_bundle_sha256": "36a7eca81f1fbce6ff4d180eb71082d74336cfe78bc2fe3ba16ca9e0a9e816ae",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      }
+    ],
+    "inputs_sha256": "sha256:49e0123bb0a4626c5ac4f82f6f33a0ce5ac720091bfb2fd166233e481fdff007",
+    "execution_fingerprint": "sha256:b9155821bfae421af175574697a2f8a30df0f8cd7003da8c352fc43b68563eaf",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa45c-87f4-77b1-aecb-1b31f6920b95"
+    },
+    "authored_payload_sha256": "b7f3ca4fb96e7fd7a71564a7a9a7f6a9ef5e575415610ad252c7ca0e1b25af5d",
+    "draft_file_sha256": "55a5ce2d10e085940b8b6d4aec6f88de7640470b1d4a1b1234aba4b47adf058c"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Controlled model-specific repair after observed aura expansion and unrelated infographic animation. Represent the central purple aura as a translucent overlay erased continuously from its outer boundary inward while opacity decreases; the source first frame is the maximum extent and the final frame is a small faint halo. Use a fixed camera and keep the remainder pixel-locked. Focus the positive prompt on outside-in erosion. Add a short model-specific negative_prompt using only observed failure outcomes: aura growth, bloom, pulse or rebound; battery fill change; scale needle motion; arrow recoloring; text or layout deformation. Follow each selected model's negative-prompt syntax."
+  },
+  "analysis": {
+    "image_reading": [
+      "A square Russian-language medical infographic connects ovaries to decreased progesterone, then estrogen dominance, with four symptom branches below.",
+      "A translucent purple aura surrounds the central progesterone molecule; all other elements are static labels, arrows, illustrations, and icons whose displayed state must remain unchanged."
+    ],
+    "article_context": "A body infographic explains the article’s causal framing: reduced progesterone and estrogen dominance are linked to weight changes, edema, irritability, and fatigue. The animation should emphasize the central decline without altering any medical labels, symbols, arrows, or symptom icons.",
+    "structured_intent": {
+      "editorial_meaning": "Visually reinforce the infographic’s explanation that declining progesterone is the central hormonal change associated with the listed symptoms.",
+      "primary_action": "The translucent purple overlay is continuously erased from its outer boundary inward as its opacity decreases.",
+      "terminal_state": "Only a small faint purple halo remains around the central progesterone molecule.",
+      "semantic_invariant": "The infographic’s causal relationships, wording, values, symbols, and symptom states remain unchanged through the last frame."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over 3.2 seconds, the maximum-size purple overlay begins receding immediately and erodes evenly outside-in at a steady compact pace while becoming more transparent. The camera remains fixed. By the final frames only a small faint halo remains around the molecule; the rest of the infographic stays pixel-locked throughout.",
+      "positive_prompt": "Fixed camera. Continuously erase the central purple aura from its outer boundary inward while steadily lowering its opacity, ending as a small faint halo around the molecule. Keep every other pixel locked.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": "Avoid aura growth, bloom, pulsing, or rebound; battery fill change; scale needle motion; arrow recoloring; text or layout deformation."
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Across five seconds, the purple overlay contracts through continuous boundary erosion rather than scaling or pulsing, with its opacity declining smoothly for most of the shot. The fixed camera holds the molecule as the focal target. Near the end the erosion settles into a small faint halo, while every label, arrow, icon, and surrounding graphic remains pixel-locked.",
+      "positive_prompt": "With a fixed camera, steadily erode the central purple aura outside-in and reduce its opacity throughout, finishing as a small faint halo around the molecule; keep the rest pixel-locked.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": "No aura growth, bloom, pulse, or rebound; no battery fill change, scale needle motion, arrow recoloring, text deformation, or layout deformation."
+    }
+  ]
+}

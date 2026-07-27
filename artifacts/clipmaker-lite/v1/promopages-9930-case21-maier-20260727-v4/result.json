@@ -1,0 +1,193 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-maier-20260727-v4",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:2f5170c29b75c85bf4a0f75d22a1548577b7ec87082ff42d159542d6098bdf09",
+    "instruction_bundle_sha256": "a95bd38b381ef6bd4975155077542919a617933738135f9c390dc12ed6503b90",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:bfaf535946a5fc3dd0bb1890c81d280889e38d8c7dbe3bf39231c888fe70c35a",
+    "execution_fingerprint": "sha256:d6577b7d49d06313654a31466a873091c81eec55884ce642200fb2dafa26acb3",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa3ca-9952-7f32-9328-3d109b793a0c"
+    },
+    "authored_payload_sha256": "bd04df26959771ef8684c4871c47872f7c3b233bfb1e03ed22d84f90c3e5ecf4",
+    "draft_file_sha256": "6e45eb4067e0181635f72126fcb4dc90b56c20c76319deab50018329197a4f93"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A static Russian-language medical infographic connects the ovaries to a progesterone molecule marked with a downward arrow, then to estrogen dominance and four symptom icons.",
+      "The central molecule is surrounded by a soft purple haze; black arrows and branching lines establish a clear left-to-right causal pathway.",
+      "All labels, symbols, molecular geometry, arrows, and symptom illustrations are essential to the diagram’s meaning and should remain unchanged."
+    ],
+    "article_context": "The body infographic appears immediately after the explanation that impaired ovarian nourishment can stop follicle growth and reduce hormone production, leading to weight changes, swelling, irritability, and fatigue. Its editorial role is to visualize declining progesterone as the central link between ovarian dysfunction and these symptoms.",
+    "structured_intent": {
+      "editorial_meaning": "Falling progesterone is presented as the link between reduced ovarian function, estrogen dominance, and a cluster of noticeable symptoms.",
+      "primary_action": "The purple hormone aura around the progesterone molecule continuously contracts and loses intensity.",
+      "terminal_state": "The progesterone molecule remains fully visible inside a small, faint purple halo.",
+      "semantic_invariant": "The infographic continues to communicate declining progesterone and its causal connection to the four symptoms, with all medical labels and relationships intact."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For 3.2 seconds, keep the camera fixed and begin the central purple aura’s decline immediately. Its edges draw inward and its opacity decreases smoothly with modest amplitude, reaching a faint compact halo near the final frames. The molecule and the complete infographic remain continuously readable and stationary.",
+      "positive_prompt": "The soft purple aura around the progesterone molecule steadily contracts and fades at a moderate pace, ending as a faint compact glow around the still fully visible molecule. Fixed camera; all text, arrows, icons, and diagram geometry remain unchanged.",
+      "runtime": {
+        "duration_seconds": 3.2,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "wan-streamlit",
+        "adapter": "wan-demo",
+        "frames": 97,
+        "fps": 30,
+        "seed": 1,
+        "loop": false,
+        "last_frame": null,
+        "prompt_expansion": {
+          "mode": "not_exposed"
+        },
+        "negative_prompt_transport": {
+          "mode": "combined_prompt",
+          "separator": "\n\nAvoid: "
+        }
+      },
+      "model_contract_fingerprint": "sha256:08f9a2d562448ae8ee4878c378c62d0819f66351571045c4f7b042496b4ef385",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Across five seconds, use the existing watercolor-like aura as a continuous visual metaphor for falling progesterone. Let it recede slowly from its diffuse outer edges toward the molecule while its saturation and opacity gently diminish, arriving near the end at a small faint halo. Preserve every label, arrow, icon, and structural relationship without movement.",
+      "positive_prompt": "With a fixed camera, the purple aura surrounding the progesterone molecule gradually recedes and loses intensity in one continuous motion, settling as a small faint halo by the end while the molecule and entire infographic remain unchanged and readable.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over four seconds, hold the full diagram in a fixed frame. The central purple aura contracts inward at an even pace while fading, with enough motion to remain visible throughout the shot. It reaches a restrained, faint halo in the final frames; the causal infographic stays intact and fully legible.",
+      "positive_prompt": "Fixed camera. Animate only the purple aura around the progesterone molecule: it smoothly shrinks inward and dims throughout the shot, ending as a faint narrow halo while every label, arrow, icon, and molecular line stays fixed and legible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

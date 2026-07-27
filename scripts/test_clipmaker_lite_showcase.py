@@ -11,6 +11,7 @@ MANIFEST_PATH = ROOT / "clipmaker-lite-test" / "manifest.json"
 ADDITIONAL_MANIFEST_PATH = (
     ROOT / "clipmaker-lite-test" / "promopages-9930-manifest.json"
 )
+CASE_21_MANIFEST_PATH = ROOT / "clipmaker-lite-test" / "case-21-manifest.json"
 MODEL_IDS = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -40,6 +41,11 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         if ADDITIONAL_MANIFEST_PATH.is_file():
             cls.additional_manifest = json.loads(
                 ADDITIONAL_MANIFEST_PATH.read_text(encoding="utf-8")
+            )
+        cls.case_21_manifest = None
+        if CASE_21_MANIFEST_PATH.is_file():
+            cls.case_21_manifest = json.loads(
+                CASE_21_MANIFEST_PATH.read_text(encoding="utf-8")
             )
 
     def test_manifest_contains_exact_20_by_3_dataset(self):
@@ -279,6 +285,81 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
             1,
         )
 
+    def test_case_21_sidecar_adds_one_raw_image_by_three_models(self):
+        if self.additional_manifest is None or self.case_21_manifest is None:
+            self.skipTest("Final case 21 sidecar has not been produced yet")
+
+        manifest = self.case_21_manifest
+        self.assertEqual(manifest["manifest_role"], "case-21-extension")
+        self.assertEqual(manifest["agent_id"], "clipmaker-lite")
+        self.assertEqual(manifest["article_count"], 1)
+        self.assertEqual(manifest["image_count"], 1)
+        self.assertEqual(manifest["expected_outputs"], 3)
+        self.assertEqual(manifest["models"], MODEL_IDS)
+        self.assertEqual(len(manifest["articles"]), 1)
+        self.assertEqual(len(manifest["outputs"]), 3)
+
+        article = manifest["articles"][0]
+        self.assertEqual(article["article_number"], "21")
+        self.assertTrue(article["article_slug"])
+        self.assertTrue(article["title"])
+        self.assertTrue(article["context_path"])
+        self.assertEqual(len(article["images"]), 1)
+
+        record = article["images"][0]
+        image = record["image"]
+        self.assertEqual(image["delivery"], "repository-raw")
+        self.assertEqual(len(image["sha256"]), 64)
+        self.assertGreater(image["width"], 0)
+        self.assertGreater(image["height"], 0)
+        source_path = ROOT / image["source_path"]
+        self.assertTrue(source_path.is_file(), image["source_path"])
+        self.assertEqual(
+            hashlib.sha256(source_path.read_bytes()).hexdigest(), image["sha256"]
+        )
+
+        previous_digests = {
+            article["selected_image"]["sha256"]
+            for article in self.manifest["articles"]
+        }
+        previous_digests.update(
+            image_record["image"]["sha256"]
+            for additional_article in self.additional_manifest["articles"]
+            for image_record in additional_article["images"]
+        )
+        self.assertNotIn(image["sha256"], previous_digests)
+
+        outputs = record["outputs"]
+        self.assertEqual([output["model_id"] for output in outputs], MODEL_IDS)
+        self.assertEqual(len({output["video_path"] for output in outputs}), 3)
+        for output in outputs:
+            self.assertEqual(output["delivery"], "repository-raw")
+            self.assertTrue(output["positive_prompt"].strip())
+            video_path = ROOT / output["video_path"]
+            self.assertTrue(video_path.is_file(), output["video_path"])
+            self.assertGreater(output["media"]["width"], 0)
+            self.assertGreater(output["media"]["height"], 0)
+            self.assertGreater(output["media"]["duration_seconds"], 0)
+            self.assertEqual(output["media"]["bytes"], video_path.stat().st_size)
+
+        flat_by_model = {
+            output["model_id"]: output for output in manifest["outputs"]
+        }
+        self.assertEqual(
+            flat_by_model,
+            {output["model_id"]: output for output in outputs},
+        )
+        self.assertEqual(
+            len(self.manifest["articles"]) + manifest["article_count"], 21
+        )
+        self.assertEqual(
+            len(self.manifest["outputs"])
+            + len(self.additional_manifest["outputs"])
+            + len(manifest["outputs"]),
+            123,
+        )
+        self.assertEqual(20 + self.additional_manifest["image_count"] + 1, 41)
+
     def test_all_demo_pages_keep_step_four_and_add_step_five(self):
         step_pattern = re.compile(r'<span class="viewSwitchStep" lang="en">Step №(\d+)</span>')
 
@@ -288,13 +369,13 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                 self.assertEqual(step_pattern.findall(html), ["1", "2", "3", "4", "5"])
                 self.assertIn('<strong class="viewSwitchTitle">Разметка</strong>', html)
                 self.assertIn('<strong class="viewSwitchTitle">Clipmaker Lite</strong>', html)
-                self.assertIn("40 изображений · 3 модели", html)
+                self.assertIn("41 изображение · 3 модели", html)
                 self.assertNotIn("40 изображений · 2–3 модели", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
                 self.assertEqual(
                     len(
                         re.findall(
-                            r'href="(?:\./\?v=5|(?:\.\./)?clipmaker-lite/\?v=5)"',
+                            r'href="(?:\./\?v=6|(?:\.\./)?clipmaker-lite/\?v=6)"',
                             html,
                         )
                     ),
@@ -310,10 +391,18 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
             app,
         )
         self.assertIn("promopages-9930-manifest.json", app)
+        self.assertIn("case-21-manifest.json", app)
+        self.assertIn("EXPECTED_BASE_ARTICLE_COUNT = 20", app)
+        self.assertIn("EXPECTED_BASE_OUTPUT_COUNT = 60", app)
+        self.assertIn("EXPECTED_ADDITIONAL_ARTICLE_COUNT = 20", app)
         self.assertIn("EXPECTED_ADDITIONAL_IMAGE_COUNT = 20", app)
         self.assertIn("EXPECTED_ADDITIONAL_OUTPUT_COUNT = 60", app)
-        self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 40", app)
-        self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 120", app)
+        self.assertIn("EXPECTED_CASE_21_ARTICLE_COUNT = 1", app)
+        self.assertIn("EXPECTED_CASE_21_IMAGE_COUNT = 1", app)
+        self.assertIn("EXPECTED_CASE_21_OUTPUT_COUNT = 3", app)
+        self.assertIn("EXPECTED_TOTAL_ARTICLE_COUNT = 21", app)
+        self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 41", app)
+        self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 123", app)
         self.assertIn("EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2", app)
         self.assertIn("EXPECTED_EXTERNAL_OUTPUT_COUNT = 1", app)
         self.assertIn('const EXTERNAL_MODEL_ID = "segmind/wan-2.2-i2v-flash";', app)
@@ -343,9 +432,13 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn("120 + 3", html)
-        self.assertIn("Wan 2.2 Flash через Eliza → Segmind за $0.18", html)
-        self.assertIn('src="app.js?v=6"', html)
+        self.assertIn("123 + 3", html)
+        self.assertIn("Историческая выборка из 20 статей и 40 изображений сохранена", html)
+        self.assertRegex(
+            html,
+            r"Wan 2\.2 Flash\s+через Eliza → Segmind за \$0\.18",
+        )
+        self.assertIn('src="app.js?v=7"', html)
         self.assertIn('href="styles.css?v=5"', html)
         self.assertIn('id="imageSelect"', html)
         self.assertIn('id="previousImage"', html)

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-opacity-only",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. Over five seconds, only the existing purple watercolor wash fades evenly within its exact first-frame footprint until barely visible. Its footprint and shape remain identical; every other element stays completely unchanged in the final frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true,
+            "negative_prompt": "No size change, expansion, contraction, bloom, pulse, rebound, dark rings, molecule rotation or deformation. No change to the battery, scale needle, arrows, text, icons, or layout."
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5d3c1ce44ec71281015aa2a6b1911780f7f1e287073c370c9f6f98129bb86929",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Zt988MXOTn9oQ1YA2VKT",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-27T16:56:57Z",
+  "completed_at": "2026-07-27T16:58:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2614579,
+    "sha256": "abcaaccf20ee93871db5201c5ab7759285f7dd78b84dd9d2c29999bc7c4f0dd7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+  "provider_run_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1-21-maier-04-opacity-only-wan-2-7",
+  "lite_result_sha256": "57caec79fa7390a07101fbe314dc66b11f448291e271adc5eca8d447332187db",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

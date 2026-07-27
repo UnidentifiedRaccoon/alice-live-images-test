@@ -43,7 +43,7 @@ MANIFEST_CLASSIFICATION_FIELDS = (
     "risk_notes",
 )
 
-EXPECTED_ARTICLE_COUNT = 20
+EXPECTED_ARTICLE_COUNT = 21
 
 
 def fail(message: str) -> None:

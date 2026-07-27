@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "submit-unknown",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. Animate only the purple aura around the progesterone molecule: it smoothly shrinks inward and dims throughout the shot, ending as a faint narrow halo while every label, arrow, icon, and molecular line stays fixed and legible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3b3786d0ab0ca431a273d3626921fd9877181665bcbb1ca58c36a37e365f4c0a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": null,
+  "provider_session_hash": null,
+  "submitted_at": null,
+  "completed_at": null,
+  "media": null,
+  "contract_check": null,
+  "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 403: {\"key\":\"OPENROUTER_FOX_KEY_2\",\"response\":{\"error\":{\"message\":\"The request is prohibited due to a violation of provider Terms Of Service.\",\"code\":403},\"user_id\":\"user_3Dz7IzLHuYAjrbJhvJLcN5L19mn\"},\"attempt_count\":1,\"elapsed_time_ms\":166,\"last_request_duration_ms\":166,\"request_id\":\"1785167688486377-17734509723684157683-fgj3gwlvspupq2he-BAL\"}",
+  "batch_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "provider_run_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1-21-maier-doctor-zolotoe-vremia-04-veo-3-1-lite",
+  "lite_result_sha256": "c1a4453979a13ea9291efde8c2ef0491a9e4a08327d615ba4dc6699ce7bf1a39",
+  "provider_may_be_active": true,
+  "last_worker_failure": null
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-veo-motion-only",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. The central purple aura continuously contracts and fades from the outside inward, ending as a small faint halo. Keep every other element unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dd2c007450f7011981c4a4122fcf7bd5f8c23efc0a36f5f8b629ccba8eb28148",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "eY0Q3KLhk4pquLehRtkO",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-27T16:33:38Z",
+  "completed_at": "2026-07-27T16:35:25Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1384917,
+    "sha256": "0c96252e39323c77bcc2853b236e133fdd812b519328d8985d3dd5f626e58574"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-veo-motion-only-veo-3-1-lite",
+  "lite_result_sha256": "df820159b155a45012f16d43d24c544dc8782882ed6118023118399989c03506",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

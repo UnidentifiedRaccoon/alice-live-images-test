@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With a fixed camera, the purple aura surrounding the progesterone molecule gradually recedes and loses intensity in one continuous motion, settling as a small faint halo by the end while the molecule and entire infographic remain unchanged and readable.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "d382ee035d4825f6033975681eb126315820965a1e56ca428ce7c40c2ef7d198",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "otQ6VeENtlac0qlDj09a",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-27T15:54:50Z",
+  "completed_at": "2026-07-27T15:56:09Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2253774,
+    "sha256": "5d7dd8073d77173da5da061e393c5b768533a152ec12a9d6214044a650fdef2a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "provider_run_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-7",
+  "lite_result_sha256": "c1a4453979a13ea9291efde8c2ef0491a9e4a08327d615ba4dc6699ce7bf1a39",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

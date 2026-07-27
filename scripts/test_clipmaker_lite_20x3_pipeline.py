@@ -16,6 +16,44 @@ from scripts import video_generation_pipeline as transport
 
 
 class ClipmakerLite20x3AcceptanceTest(unittest.TestCase):
+    def test_historical_source_manifest_projection_excludes_case_21(self) -> None:
+        projected = pipeline.historical_source_manifest_bytes(pipeline.ROOT)
+        frozen = (
+            pipeline.TEST_ROOT / pipeline.SOURCE_MANIFEST
+        ).read_bytes()
+        rows = pipeline.source_rows(pipeline.ROOT)
+
+        self.assertEqual(projected, frozen)
+        self.assertEqual(len(rows), pipeline.EXPECTED_SOURCE_ROWS)
+        self.assertTrue(
+            all(
+                row["article_number"] in pipeline.HISTORICAL_ARTICLE_KEYS
+                for row in rows.values()
+            )
+        )
+        self.assertFalse(
+            any(
+                path.startswith("articles/21-")
+                for path in rows
+            )
+        )
+
+    def test_case_14_external_output_rebuilds_from_verified_artifacts(self) -> None:
+        manifest = pipeline.read_json(
+            pipeline.ROOT / pipeline.FINAL_MANIFEST_REL
+        )
+        article = next(
+            article
+            for article in manifest["articles"]
+            if article["article_number"] == "14"
+        )
+
+        self.assertEqual(manifest["external_output_count"], 1)
+        self.assertEqual(
+            pipeline.case14_external_output(pipeline.ROOT),
+            article["external_outputs"][0],
+        )
+
     def test_frozen_201_bundle_remains_authoritative_after_root_202(self) -> None:
         root_contract = pipeline.read_json(
             pipeline.ROOT / "docs/agents/clipmaker-lite/contract.json"
