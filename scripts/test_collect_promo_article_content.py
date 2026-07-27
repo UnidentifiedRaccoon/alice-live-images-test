@@ -128,6 +128,26 @@ class CollectPromoArticleContentTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             collector.extract_page_data(b"<html>no embedded page data</html>")
 
+    def test_ordered_list_item_preserves_style_and_depth(self) -> None:
+        output = collector._text_block(
+            self.raw_block("ordered-list-item", "Numbered step", depth=1),
+            7,
+            {},
+        )
+
+        self.assertEqual(
+            output,
+            {
+                "type": "list_item",
+                "source_block_index": 7,
+                "text": "Numbered step",
+                "list_style": "ordered",
+                "depth": 1,
+                "inline_styles": [],
+                "links": [],
+            },
+        )
+
     def test_happy_path_preserves_metadata_text_ranges_images_and_cta(self) -> None:
         blocks = [
             self.raw_block(

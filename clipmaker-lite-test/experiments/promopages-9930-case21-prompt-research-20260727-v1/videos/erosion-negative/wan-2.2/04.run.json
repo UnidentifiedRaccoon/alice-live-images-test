@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-erosion-negative",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "prompt": "Fixed camera. Continuously erase the central purple aura from its outer boundary inward while steadily lowering its opacity, ending as a small faint halo around the molecule. Keep every other pixel locked.\n\nAvoid: Avoid aura growth, bloom, pulsing, or rebound; battery fill change; scale needle motion; arrow recoloring; text or layout deformation."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "367df96911f1ae3c473f07b50a837e680a51a14303e5f5f200b69bf06ed144e6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "f0dc4d48bf244400963b633a8c0be76e",
+  "provider_session_hash": "promopages9856-838204d3af57",
+  "submitted_at": "2026-07-27T16:42:43Z",
+  "completed_at": "2026-07-27T16:45:18Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 3.233,
+    "width": 944,
+    "height": 944,
+    "fps": 30.0,
+    "frames": 97,
+    "has_audio": false,
+    "bytes": 241667,
+    "sha256": "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 3.2,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 97,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-2",
+  "lite_result_sha256": "a2934ffa723151b82b869d835934407dbbcea7ac384a270412e3adbe3fc71664",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

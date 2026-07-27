@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+  "provider_run_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1-21-maier-04-opacity-only-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "Ослабление гормональной активности яичников связано с комплексом заметных изменений — весом, отёками, раздражительностью и усталостью.",
+    "primary_action": "Фиолетовая акварельная подложка вокруг молекулы равномерно теряет непрозрачность, не меняя своих границ.",
+    "terminal_state": "В последнем кадре фиолетовая подложка едва видна, но сохраняет точные исходные форму и площадь.",
+    "semantic_invariant": "Причинная схема снижения прогестерона и связанных с ним симптомов остаётся неизменной и однозначно читаемой."
+  },
+  "prompt": {
+    "positive": "Fixed camera. Over five seconds, only the existing purple watercolor wash fades evenly within its exact first-frame footprint until barely visible. Its footprint and shape remain identical; every other element stays completely unchanged in the final frame.",
+    "negative": "No size change, expansion, contraction, bloom, pulse, rebound, dark rings, molecule rotation or deformation. No change to the battery, scale needle, arrows, text, icons, or layout."
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-opacity-only-20260727-v1/result.json",
+    "sha256": "57caec79fa7390a07101fbe314dc66b11f448291e271adc5eca8d447332187db",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+      "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+      "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "models": [
+        "alibaba/wan-2.7"
+      ]
+    }
+  }
+}

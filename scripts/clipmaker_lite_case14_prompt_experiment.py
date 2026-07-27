@@ -15,6 +15,7 @@ import argparse
 import hashlib
 import json
 import os
+import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
@@ -27,13 +28,14 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts import clipmaker_lite_runner  # noqa: E402
 from scripts import video_generation_pipeline as transport  # noqa: E402
 
 
 TICKET = "PROMOPAGES-9929"
 EXPERIMENT_ID = "promopages-9929-case14-wan22-prompt-v1"
 PLANNING_RUN_ID = "promopages-9910-lite20-20260724-r2-14-miuz-modnye-sergi"
+FROZEN_PLANNING_ROOT = Path("clipmaker-lite-test")
+FROZEN_CONTRACT_VERSION = "2.0.1"
 SOURCE_MODEL_ID = "alibaba/wan-2.2"
 TARGET_MODEL_IDS = ("alibaba/wan-2.7", "google/veo-3.1-lite")
 MODEL_DIRECTORIES = {
@@ -112,11 +114,55 @@ def relative(path: Path, root: Path = ROOT) -> str:
         raise ExperimentError(f"Path escapes workspace: {path}") from exc
 
 
+def frozen_provenance_summary(
+    root: Path = ROOT,
+    run_id: str = PLANNING_RUN_ID,
+) -> dict[str, Any]:
+    """Verify the historical planning receipt with its frozen 2.0.1 runner."""
+
+    workspace = (root / FROZEN_PLANNING_ROOT).resolve()
+    runner_path = workspace / "scripts/clipmaker_lite_runner.py"
+    if not runner_path.is_file() or runner_path.is_symlink():
+        raise ExperimentError("Frozen Clipmaker Lite runner is missing or unsafe")
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(runner_path),
+            "provenance",
+            "--run-id",
+            run_id,
+        ],
+        cwd=workspace,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        timeout=120,
+        check=False,
+    )
+    if completed.returncode:
+        detail = transport.safe_error(completed.stderr or completed.stdout)
+        raise ExperimentError(f"Frozen Clipmaker Lite provenance failed: {detail}")
+    try:
+        provenance = json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        raise ExperimentError(
+            "Frozen Clipmaker Lite provenance returned invalid JSON"
+        ) from exc
+    if (
+        not isinstance(provenance, dict)
+        or provenance.get("verified") is not True
+        or provenance.get("agent_id") != "clipmaker-lite"
+        or provenance.get("contract_version") != FROZEN_CONTRACT_VERSION
+    ):
+        raise ExperimentError("Frozen Clipmaker Lite provenance is not verified")
+    return provenance
+
+
 def load_prompt_source(root: Path = ROOT) -> PromptSource:
     """Verify the canonical Lite run before extracting the Wan 2.2 prompt."""
 
     try:
-        provenance = clipmaker_lite_runner.provenance_summary(root, PLANNING_RUN_ID)
+        provenance = frozen_provenance_summary(root, PLANNING_RUN_ID)
     except Exception as exc:
         raise ExperimentError(
             f"Clipmaker Lite provenance failed: {transport.safe_error(exc)}"
@@ -140,6 +186,16 @@ def load_prompt_source(root: Path = ROOT) -> PromptSource:
     if provenance.get("result_path") != expected_result.as_posix():
         raise ExperimentError("Unexpected prompt source result path")
     result_path = root / expected_result
+    frozen_result_path = root / FROZEN_PLANNING_ROOT / expected_result
+    try:
+        if result_path.read_bytes() != frozen_result_path.read_bytes():
+            raise ExperimentError(
+                "Canonical planning result differs from frozen authority"
+            )
+    except OSError as exc:
+        raise ExperimentError(
+            f"Cannot compare canonical and frozen planning results: {exc}"
+        ) from exc
     result = read_json(result_path)
     inputs = result.get("inputs") if isinstance(result, dict) else None
     source_image = inputs.get("source_image") if isinstance(inputs, dict) else None

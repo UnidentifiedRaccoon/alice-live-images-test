@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "model_id": "google/veo-3.1-lite",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-veo-motion-only-veo-3-1-lite",
+  "lite_run_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b"
+  },
+  "artifact": {
+    "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.mp4",
+    "sha256": "0c96252e39323c77bcc2853b236e133fdd812b519328d8985d3dd5f626e58574"
+  },
+  "review_method": {
+    "source_comparison": "Compared the source image with nine evenly spaced decoded frames in the Veo motion-only contact sheet.",
+    "technical_verification": "Rechecked the recorded MP4 digest, byte size, dimensions, duration, frame count, frame rate and absence of audio."
+  },
+  "observations": {
+    "requested_motion": "The central purple aura should continuously contract and fade outside-in, ending as a small faint halo while every other element remains unchanged.",
+    "camera": "The camera stays fixed, but the square source is pillarboxed inside a 16:9 frame with black side bars.",
+    "stable_elements": [
+      "All Cyrillic labels",
+      "Arrows and connector lines",
+      "Icons and scales",
+      "Progesterone molecule",
+      "Diagram topology"
+    ],
+    "invariant_failures": [
+      "The purple aura first intensifies and expands into a large saturated bloom before fading; the motion is not a continuous contraction.",
+      "The square source is presented with black pillarbox bars in a 16:9 frame instead of retaining source framing."
+    ]
+  },
+  "verdict": {
+    "status": "fidelity-failed",
+    "summary": "The aura grows and brightens before fading, and the square infographic is pillarboxed in 16:9; the result fails the requested motion and framing fidelity."
+  }
+}

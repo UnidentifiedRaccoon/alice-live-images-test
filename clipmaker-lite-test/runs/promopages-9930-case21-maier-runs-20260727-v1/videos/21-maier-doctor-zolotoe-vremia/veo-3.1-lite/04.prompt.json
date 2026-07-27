@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "Falling progesterone is presented as the link between reduced ovarian function, estrogen dominance, and a cluster of noticeable symptoms.",
+    "primary_action": "The purple hormone aura around the progesterone molecule continuously contracts and loses intensity.",
+    "terminal_state": "The progesterone molecule remains fully visible inside a small, faint purple halo.",
+    "semantic_invariant": "The infographic continues to communicate declining progesterone and its causal connection to the four symptoms, with all medical labels and relationships intact."
+  },
+  "prompt": {
+    "positive": "Fixed camera. Animate only the purple aura around the progesterone molecule: it smoothly shrinks inward and dims throughout the shot, ending as a faint narrow halo while every label, arrow, icon, and molecular line stays fixed and legible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-maier-20260727-v4/result.json",
+    "sha256": "c1a4453979a13ea9291efde8c2ef0491a9e4a08327d615ba4dc6699ce7bf1a39",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:2f5170c29b75c85bf4a0f75d22a1548577b7ec87082ff42d159542d6098bdf09",
+      "instruction_bundle_sha256": "a95bd38b381ef6bd4975155077542919a617933738135f9c390dc12ed6503b90",
+      "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

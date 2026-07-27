@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-07-27T14:19:01Z",
+  "expected_outputs": 3,
+  "summary": {
+    "succeeded": 1,
+    "provider-failed": 1,
+    "submit-unknown": 1
+  },
+  "conforming_outputs": 1,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+      "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-2",
+      "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 944,
+        "height": 944,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 247040,
+        "sha256": "98712af3715210cd1d6709deb3b409b81a8ea1d8c8b6f057f0271fabc529a2ec"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+      "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-7",
+      "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job dapgT81alYO8sgkyVisw failed with status failed: Failed to download ***"
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+      "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-veo-3-1-lite",
+      "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "submit-unknown",
+      "recorded_status": "submit-unknown",
+      "provider_may_be_active": true,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 400: {\"key\":\"OPENROUTER_FOX_KEY_1\",\"response\":{\"error\":{\"message\":\"Received 404 status code when fetching image from URL: https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png\",\"code\":400}},\"attempt_count\":1,\"elapsed_time_ms\":1349,\"last_request_duration_ms\":1349,\"request_id\":\"1785161879930977-8456110058332309828-gze6iy57wssor74m-BAL\"}"
+    }
+  ]
+}

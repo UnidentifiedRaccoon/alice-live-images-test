@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-opacity-only-stage2",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+  "provider_batch_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "controls": {
+    "primary": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8",
+    "retry": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b",
+    "stage1_generation_core": "bbb230607f881491635dfab3e9a9d970d49eafdaabdbc1f2582d405076004f51"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_aggregate_budget_cap_usd": 3.0,
+    "hard_aggregate_budget_cap_usd": 3.0,
+    "reserved_stage1_usd": 2.2,
+    "reserved_stage2_usd": 0.5,
+    "reserved_aggregate_usd": 2.7,
+    "unreserved_after_stage2_usd": 0.3,
+    "stage2_model_id": "alibaba/wan-2.7",
+    "stage2_maximum_provider_entries": 1,
+    "maximum_submissions_per_stage2_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "The $0.50 stage-2 reservation is conservative operator metadata. Provider receipts do not expose actual billing."
+  },
+  "generation_policy": {
+    "exact_model_routes": true,
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "automatic_retries": false,
+    "force_allowed": false,
+    "stage2_maximum_submissions": 1,
+    "route_capacity": 1
+  },
+  "expected_outputs": 1,
+  "entries": [
+    {
+      "planning_run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+      "planning_result_sha256": "57caec79fa7390a07101fbe314dc66b11f448291e271adc5eca8d447332187db",
+      "provider_run_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1-21-maier-04-opacity-only-wan-2-7",
+      "sample_id": "21-maier-04-opacity-only",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "55461ef4956da39ad3ce460b7767e622f84fc65fc6702b7364bc9fad4488504e",
+      "negative_prompt_sha256": "6e1be31290b65be0ec77cf53a2e5fa5867c363e190007c28742a338cc2aefdf0",
+      "reservation_usd": 0.5,
+      "provider_source": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "request_sha256": "5d3c1ce44ec71281015aa2a6b1911780f7f1e287073c370c9f6f98129bb86929"
+    }
+  ]
+}

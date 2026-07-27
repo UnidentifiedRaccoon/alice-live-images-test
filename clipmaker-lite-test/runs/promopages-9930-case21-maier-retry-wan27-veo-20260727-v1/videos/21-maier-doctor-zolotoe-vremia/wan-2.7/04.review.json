@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "model_id": "alibaba/wan-2.7",
+  "provider_run_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-7",
+  "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b"
+  },
+  "artifact": {
+    "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+    "sha256": "5d7dd8073d77173da5da061e393c5b768533a152ec12a9d6214044a650fdef2a"
+  },
+  "review_method": {
+    "source_comparison": "Compared the source image with decoded frames at 0.1, 2.5 and 4.9 seconds and with a five-frame contact sheet.",
+    "technical_verification": "Rechecked the recorded ffprobe dimensions, duration, frame count, frame rate and audio presence."
+  },
+  "observations": {
+    "requested_motion": "The purple aura around the progesterone molecule should continuously contract and lose intensity, ending as a small faint halo while every other infographic element remains unchanged.",
+    "camera": "Fixed camera and full square framing throughout.",
+    "stable_elements": [
+      "All Cyrillic labels remain legible",
+      "Overall diagram topology",
+      "Progesterone molecule line structure",
+      "Full square framing"
+    ],
+    "invariant_failures": [
+      "The purple aura expands and darkens into a large field around the midpoint before shrinking, instead of continuously receding and dimming.",
+      "The battery changes from a low red charge to an almost full red charge.",
+      "The scale needle shifts during the clip.",
+      "The arrow from the ovaries to the molecule turns purple around the midpoint.",
+      "The provider added an audio track despite generate_audio=false and returned 1440x1440 instead of the requested 1080p route contract."
+    ]
+  },
+  "verdict": {
+    "status": "fidelity-failed",
+    "summary": "The output preserves readable labels and overall layout, but the aura first grows dramatically and unrelated infographic states also animate; it therefore fails the requested isolated continuous contraction."
+  }
+}

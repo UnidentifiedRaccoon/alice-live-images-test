@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import shutil
 import subprocess
@@ -29,6 +30,7 @@ if str(ROOT) not in sys.path:
 from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
 from scripts import clipmaker_lite_case14_prompt_experiment as case14_experiment  # noqa: E402
 from scripts import clipmaker_lite_runner as runner  # noqa: E402
+from scripts import segmind_wan22_case14 as case14_external  # noqa: E402
 from scripts import video_generation_pipeline as transport  # noqa: E402
 
 
@@ -53,6 +55,10 @@ SOURCE_IMAGE_ROOT = Path("PROMOPAGES-9857/articles")
 SOURCE_CONTEXT_ROOT = Path("PROMOPAGES-9884/articles")
 SOURCE_MANIFEST = SOURCE_IMAGE_ROOT / "manifest.csv"
 EXPECTED_ARTICLES = 20
+EXPECTED_SOURCE_ROWS = 125
+HISTORICAL_ARTICLE_KEYS = tuple(
+    f"{number:02d}" for number in range(1, EXPECTED_ARTICLES + 1)
+)
 FROZEN_CONTRACT_VERSION = "2.0.1"
 FROZEN_LITE_FILES = (
     Path("scripts/clipmaker_lite_runner.py"),
@@ -85,6 +91,13 @@ WAN_RETRY_SAMPLE_IDS = (
     "20-sravni-kreditnyi-reiting",
 )
 WAN_RETRY3_CANARY_SAMPLE_ID = WAN_RETRY_SAMPLE_IDS[0]
+CASE14_EXTERNAL_MODEL_ID = "segmind/wan-2.2-i2v-flash"
+CASE14_EXTERNAL_SCENE_PLAN = (
+    "Keep the camera fixed and move only the two isolated lower-center teardrop "
+    "pearl earrings in small, slightly out-of-phase pendulum swings. Preserve "
+    "both fashion portraits, every other jewelry item, the background, and the "
+    "collage layout. Let the motion settle close to vertical by the final frames."
+)
 
 
 class PipelineError(RuntimeError):
@@ -216,13 +229,58 @@ def relative(path: Path, root: Path = ROOT) -> str:
         raise PipelineError(f"Path escapes workspace: {path}") from exc
 
 
-def source_rows(root: Path = ROOT) -> dict[str, dict[str, str]]:
+def historical_source_manifest(
+    root: Path = ROOT,
+) -> tuple[tuple[str, ...], tuple[dict[str, str], ...]]:
     path = root / SOURCE_MANIFEST
     try:
         with path.open("r", encoding="utf-8", newline="") as handle:
-            rows = list(csv.DictReader(handle))
+            reader = csv.DictReader(handle)
+            fieldnames = tuple(reader.fieldnames or ())
+            rows = tuple(
+                row
+                for row in reader
+                if row.get("article_number") in HISTORICAL_ARTICLE_KEYS
+            )
     except OSError as exc:
         raise PipelineError(f"Cannot read {path}: {exc}") from exc
+    if not fieldnames:
+        raise PipelineError(f"Source manifest has no header: {path}")
+    if len(rows) != EXPECTED_SOURCE_ROWS:
+        raise PipelineError(
+            f"Expected {EXPECTED_SOURCE_ROWS} historical source rows, "
+            f"found {len(rows)}"
+        )
+    return fieldnames, rows
+
+
+def historical_source_manifest_bytes(root: Path = ROOT) -> bytes:
+    fieldnames, rows = historical_source_manifest(root)
+    stream = io.StringIO(newline="")
+    writer = csv.DictWriter(
+        stream,
+        fieldnames=fieldnames,
+        lineterminator="\n",
+    )
+    writer.writeheader()
+    writer.writerows(rows)
+    return stream.getvalue().encode("utf-8")
+
+
+def copy_historical_source_manifest(root: Path, destination: Path) -> None:
+    projected = historical_source_manifest_bytes(root)
+    if destination.is_file():
+        if destination.read_bytes() != projected:
+            raise PipelineError(f"Immutable historical manifest differs: {destination}")
+        return
+    if destination.exists():
+        raise PipelineError(f"Historical manifest target is not a file: {destination}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(projected)
+
+
+def source_rows(root: Path = ROOT) -> dict[str, dict[str, str]]:
+    _fieldnames, rows = historical_source_manifest(root)
     indexed: dict[str, dict[str, str]] = {}
     for row in rows:
         file_path = row.get("file_path", "")
@@ -234,7 +292,11 @@ def source_rows(root: Path = ROOT) -> dict[str, dict[str, str]]:
 
 def discover_articles(root: Path = ROOT) -> tuple[Article, ...]:
     rows = source_rows(root)
-    context_files = sorted((root / SOURCE_CONTEXT_ROOT).glob("*/content.json"))
+    context_files = [
+        path
+        for path in sorted((root / SOURCE_CONTEXT_ROOT).glob("*/content.json"))
+        if path.parent.name.split("-", 1)[0] in HISTORICAL_ARTICLE_KEYS
+    ]
     if len(context_files) != EXPECTED_ARTICLES:
         raise PipelineError(
             f"Expected {EXPECTED_ARTICLES} article contexts, found {len(context_files)}"
@@ -403,13 +465,18 @@ def prepare_dataset(root: Path = ROOT) -> tuple[Article, ...]:
         copy_exact(source_context, TEST_ROOT / article.context_path)
         for image in article.images:
             copy_exact(root / image["source_path"], root / image["copy_path"])
-    dataset_supporting_files = (
-        SOURCE_MANIFEST,
+    copy_historical_source_manifest(root, TEST_ROOT / SOURCE_MANIFEST)
+    # These tracked copies describe the frozen 20-article dataset. Aggregate
+    # root READMEs may grow with later cases, so never overwrite the historical
+    # copies while re-running this pipeline.
+    frozen_dataset_supporting_files = (
         Path("PROMOPAGES-9857/README.md"),
         Path("PROMOPAGES-9884/README.md"),
     )
-    for source_rel in dataset_supporting_files:
-        copy_exact(root / source_rel, TEST_ROOT / source_rel)
+    for relative_path in frozen_dataset_supporting_files:
+        path = TEST_ROOT / relative_path
+        if not path.is_file() or path.is_symlink():
+            raise PipelineError(f"Missing frozen dataset supporting file: {path}")
     # The planning bundle is historical evidence, not a mirror of current
     # root. In particular, never replace its 2.0.1 contract with root 2.0.2.
     require_frozen_lite_bundle(TEST_ROOT)
@@ -927,6 +994,135 @@ def select_wan_attempt(
     )
 
 
+def case14_external_output(root: Path = ROOT) -> dict[str, Any] | None:
+    required_paths = (
+        root / case14_external.PROMPT_PATH,
+        root / case14_external.RUN_PATH,
+        root / case14_external.VIDEO_PATH,
+        root / case14_external.OUTPUT_DIR / "01.review.json",
+    )
+    present = [path.is_file() and not path.is_symlink() for path in required_paths]
+    if not any(present):
+        return None
+    if not all(present):
+        missing = [
+            path.relative_to(root).as_posix()
+            for path, exists in zip(required_paths, present)
+            if not exists
+        ]
+        raise PipelineError(
+            "Case-14 external experiment is incomplete: " + ", ".join(missing)
+        )
+
+    try:
+        run = case14_external.verify(root)
+    except Exception as exc:
+        raise PipelineError(
+            "Case-14 external experiment verification failed: "
+            f"{case14_external.safe_error(exc)}"
+        ) from exc
+    prompt = read_json(root / case14_external.PROMPT_PATH)
+    review_path = case14_external.OUTPUT_DIR / "01.review.json"
+    review = read_json(root / review_path)
+    verdict = review.get("verdict") if isinstance(review, dict) else None
+    response = run.get("response") if isinstance(run, dict) else None
+    response_cost = (
+        response.get("x_response_cost") if isinstance(response, dict) else None
+    )
+    attempt = run.get("attempt") if isinstance(run, dict) else None
+    media = run.get("media") if isinstance(run, dict) else None
+    video = media.get("video") if isinstance(media, dict) else None
+    artifact = run.get("artifact") if isinstance(run, dict) else None
+    parameters = prompt.get("parameters") if isinstance(prompt, dict) else None
+    prompt_data = prompt.get("prompt") if isinstance(prompt, dict) else None
+    if (
+        not isinstance(verdict, dict)
+        or verdict.get("visual_fidelity_for_unattended_promopages_use") != "fail"
+        or not isinstance(verdict.get("manifest_summary"), str)
+        or not verdict["manifest_summary"]
+        or not isinstance(verdict.get("summary"), str)
+        or not verdict["summary"]
+        or not isinstance(response, dict)
+        or not isinstance(response_cost, dict)
+        or not isinstance(attempt, dict)
+        or not isinstance(media, dict)
+        or not isinstance(video, dict)
+        or not isinstance(artifact, dict)
+        or not isinstance(parameters, dict)
+        or not isinstance(prompt_data, dict)
+    ):
+        raise PipelineError("Case-14 external experiment metadata is incomplete")
+
+    checks = {
+        "http_status": response.get("http_status") == 200,
+        "content_type": response.get("content_type") == "video/mp4",
+        "resolution": (video.get("width"), video.get("height")) == (1280, 720),
+        "audio": media.get("has_audio") is False,
+        "frame_count": video.get("nb_read_frames") == 150,
+        "cost": (
+            response_cost.get("numeric") == 0.18
+            and response_cost.get("currency") == "USD"
+        ),
+    }
+    if not all(checks.values()):
+        raise PipelineError("Case-14 external experiment contract check changed")
+    return {
+        "provider_run_id": response.get("x_segmind_request_id"),
+        "model_id": CASE14_EXTERNAL_MODEL_ID,
+        "comparison_variant": "eliza-segmind-route",
+        "canonical_lite_artifact": False,
+        "gateway": "eliza",
+        "provider": "segmind",
+        "route_label": "Eliza → Segmind",
+        "endpoint": case14_external.ENDPOINT,
+        "scene_plan": CASE14_EXTERNAL_SCENE_PLAN,
+        "positive_prompt": prompt_data.get("positive"),
+        "negative_prompt": prompt_data.get("negative"),
+        "status": run.get("status"),
+        "prompt_path": case14_external.PROMPT_PATH.as_posix(),
+        "run_path": case14_external.RUN_PATH.as_posix(),
+        "review_path": review_path.as_posix(),
+        "video_path": case14_external.VIDEO_PATH.as_posix(),
+        "delivery": "repository-raw",
+        "actual_cost_usd": response_cost.get("numeric"),
+        "latency_seconds": attempt.get("latency_seconds"),
+        "request": {
+            "resolution": parameters.get("resolution"),
+            "prompt_extend": parameters.get("prompt_extend"),
+            "watermark": parameters.get("watermark"),
+            "seed": parameters.get("seed"),
+        },
+        "media": {
+            "container": media.get("container"),
+            "codec": video.get("codec"),
+            "duration_seconds": media.get("duration_seconds"),
+            "width": video.get("width"),
+            "height": video.get("height"),
+            "fps": video.get("avg_fps"),
+            "frames": video.get("nb_read_frames"),
+            "has_audio": media.get("has_audio"),
+            "bytes": artifact.get("bytes"),
+            "sha256": artifact.get("sha256"),
+        },
+        "contract_check": {
+            "requested": {
+                "resolution": parameters.get("resolution"),
+                "prompt_extend": parameters.get("prompt_extend"),
+                "watermark": parameters.get("watermark"),
+                "seed": parameters.get("seed"),
+            },
+            "checks": checks,
+            "conforms": True,
+            "warnings": [],
+        },
+        "visual_review": {
+            "status": "fidelity-failed",
+            "summary": verdict["manifest_summary"],
+        },
+        "error": None,
+    }
+
+
 def build_final_manifest(articles: Iterable[Article], updated_at: str | None = None) -> dict[str, Any]:
     articles = tuple(articles)
     configure_native(articles)
@@ -1146,7 +1342,22 @@ def build_final_manifest(articles: Iterable[Article], updated_at: str | None = N
                 raise PipelineError(f"Case-14 comparison output is invalid: {error}")
         case14["comparison_outputs"] = comparison_outputs
         comparison_output_count = len(comparison_outputs)
-    return {
+    external_output = case14_external_output(ROOT)
+    external_output_count = 0
+    if external_output is not None:
+        case14 = next(
+            (
+                article
+                for article in article_records
+                if article.get("article_number") == case14_experiment.ARTICLE_NUMBER
+            ),
+            None,
+        )
+        if not isinstance(case14, dict):
+            raise PipelineError("Case-14 external experiment target is missing")
+        case14["external_outputs"] = [external_output]
+        external_output_count = 1
+    document = {
         "schema_version": 1,
         "ticket": TICKET,
         "batch_id": BATCH_ID,
@@ -1172,6 +1383,9 @@ def build_final_manifest(articles: Iterable[Article], updated_at: str | None = N
         "articles": article_records,
         "outputs": all_outputs,
     }
+    if external_output_count:
+        document["external_output_count"] = external_output_count
+    return document
 
 
 def final_output_acceptance_error(

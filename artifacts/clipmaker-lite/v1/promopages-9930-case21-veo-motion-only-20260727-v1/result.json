@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d25e1656c4072a8f341a93fc8db32655f9534a3b5723b1df95b7e68278005afe",
+    "instruction_bundle_sha256": "d6af5b85f0c4afd8bdbc99ef163f26402ad006aa51e6fd74e5931065bfb55c5d",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:453231246d551f9f86278452e226e863b8ebdaac2bf6960795706fcb8f31112b",
+    "execution_fingerprint": "sha256:1e2be721325af6cebb039a583df4761034245259e634d47e8ddca65c3e9cadfc",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa45c-8b48-7b62-b4d2-85f9abd46b97"
+    },
+    "authored_payload_sha256": "d52e0576c1b12df5d405d19bd2b233d0d4a4ecd6ad3053740600dbde324a22aa",
+    "draft_file_sha256": "adf8c42506e051926806521c1c5afce5fa6415c548afa0e8c7d5b28d9c310fdc"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Benign motion-only experiment following the Veo model spec. The source image already defines the subject, so do not repeat medical domain nouns from the article in the generation prompt. Describe only the visible central purple aura: the first frame is its maximum extent, then it continuously shrinks and fades from the outside inward, ending as a small faint halo. Fixed camera; the rest of the infographic remains unchanged. Keep the prompt concise and negative_prompt null. This is prompt-quality research, not an instruction to bypass provider moderation; if the provider rejects this request, the Veo branch stops."
+  },
+  "analysis": {
+    "image_reading": [
+      "A static square infographic presents a left-to-right causal chain across the upper half and four labeled outcomes along the bottom.",
+      "The central chemical diagram is surrounded by a soft purple aura that is visibly separable from the otherwise fixed illustrations, arrows, labels, and layout."
+    ],
+    "article_context": "Body infographic placed after the explanation that declining activity leads to a cluster of noticeable changes; it visually connects the central decline with effects on weight, swelling, irritability, and fatigue.",
+    "structured_intent": {
+      "editorial_meaning": "The animation reinforces the infographic’s explanation that a weakening central factor is associated with several noticeable downstream changes.",
+      "primary_action": "The visible central purple aura continuously contracts and fades inward.",
+      "terminal_state": "Only a small, faint purple halo remains around the central diagram.",
+      "semantic_invariant": "The infographic retains its original causal meaning, labels, symbols, arrows, and outcome relationships through the final frame."
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over the full 4-second fixed shot, the purple aura begins at its maximum visible extent and steadily contracts inward while its outer edges fade. The motion remains continuous and moderate, reaching a small, faint halo near the end; all other infographic elements stay static and legible.",
+      "positive_prompt": "Fixed camera. The central purple aura continuously contracts and fades from the outside inward, ending as a small faint halo. Keep every other element unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

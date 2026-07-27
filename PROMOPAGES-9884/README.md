@@ -1,14 +1,14 @@
-# PROMOPAGES-9884 — текст 20 статей с позициями изображений
+# PROMOPAGES-9884 — текст 21 статьи с позициями изображений
 
 Набор дополняет выгрузку изображений из `PROMOPAGES-9857` контекстом статей.
-Для каждой из 20 статей создан UTF-8-файл `content.json`, где текстовые блоки и
-125 появлений изображений сохранены в исходном порядке.
+Для каждой из 21 статьи создан UTF-8-файл `content.json`, где текстовые блоки и
+133 появления изображений сохранены в исходном порядке.
 
 ## Состав
 
-- 20 статей и 20 файлов `content.json`;
-- 675 упорядоченных блоков: 550 текстовых и 125 `image`;
-- 125 `image`-блоков соответствуют 125 строкам исходного `manifest.csv`;
+- 21 статья и 21 файл `content.json`;
+- 778 упорядоченных блоков: 645 текстовых и 133 `image`;
+- 133 `image`-блока соответствуют 133 строкам исходного `manifest.csv`;
 - 76 inline-ссылок и 3 CTA с авторским текстом;
 - 1 явное исключение: у статьи 12 исходное поле `preview.snippet` пусто;
 - статус независимой проверки — `PASS`.
@@ -92,7 +92,7 @@ canonical/publication ID.
 | `paragraph` | `unstyled` | — |
 | `heading` | `header-two`, `header-three` | `level` |
 | `quote` | `blockquote` | — |
-| `list_item` | `unordered-list-item` | `list_style`, `depth` |
+| `list_item` | `ordered-list-item`, `unordered-list-item` | `list_style`, `depth` |
 | `legal` | `legal` | — |
 | `cta` | `swipeToSite.callToAction` | `url`, `source_block_index: null` |
 
@@ -153,7 +153,7 @@ python3 -m unittest scripts/test_collect_promo_article_content.py
 python3 scripts/verify_promo_article_content.py
 ```
 
-Сборщик делает сетевой read-only-запрос к 20 публичным статьям. Verifier сети не
+Сборщик делает сетевой read-only-запрос к 21 публичной статье. Verifier сети не
 использует: он повторно читает каждый JSON, проверяет UTF-8 и единую схему,
-сверяет все 125 image occurrences с manifest и сравнивает расчётный итог с
+сверяет все 133 image occurrences с manifest и сравнивает расчётный итог с
 `verification-report.json`.

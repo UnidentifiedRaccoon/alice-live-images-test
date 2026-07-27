@@ -44,6 +44,9 @@ EXPECTED_SELECTED_IMAGES = 20
 EXPECTED_SOURCE_DUPLICATES = 6
 EXPECTED_IMAGES = 20
 EXPECTED_OUTPUTS = EXPECTED_IMAGES * len(MODEL_IDS)
+HISTORICAL_ARTICLE_KEYS = tuple(
+    f"{number:02d}" for number in range(1, EXPECTED_ARTICLES + 1)
+)
 BASE_ESTIMATED_COST_USD = 14.0
 HARD_BUDGET_CAP_USD = 20.0
 ESTIMATED_COST_PER_OUTPUT_USD = BASE_ESTIMATED_COST_USD / EXPECTED_OUTPUTS
@@ -58,6 +61,15 @@ INVENTORY_MANIFEST_REL = BATCH_ROOT_REL / "inventory.json"
 GENERATION_MANIFEST_REL = BATCH_ROOT_REL / "generation-manifest.json"
 VERIFICATION_REPORT_REL = BATCH_ROOT_REL / "verification-report.json"
 FINAL_MANIFEST_REL = Path("clipmaker-lite-test/promopages-9930-manifest.json")
+FROZEN_FINAL_MANIFEST_REL = (
+    Path("clipmaker-lite-test/runs")
+    / "promopages-9930-lite20-wan22-runs-20260727-v2"
+    / "components"
+    / "promopages-9930-20x2-manifest.json"
+)
+FROZEN_FINAL_MANIFEST_SHA256 = (
+    "3f77dea1e6f6c687324a45127a2cc4a666348660204b1c9ab6b9ad135aafb9f7"
+)
 CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
 
@@ -157,7 +169,11 @@ def _source_rows(root: Path) -> dict[str, dict[str, str]]:
     path = root / SOURCE_MANIFEST_REL
     try:
         with path.open("r", encoding="utf-8", newline="") as handle:
-            rows = list(csv.DictReader(handle))
+            rows = [
+                row
+                for row in csv.DictReader(handle)
+                if row.get("article_number") in HISTORICAL_ARTICLE_KEYS
+            ]
     except OSError as exc:
         raise PipelineError(f"Cannot read {path}: {exc}") from exc
     if len(rows) != EXPECTED_SOURCE_ROWS:
@@ -248,7 +264,11 @@ def discover(root: Path = ROOT) -> tuple[tuple[Article, ...], tuple[Source, ...]
             f"Expected {EXPECTED_SELECTED_IMAGES} unique processed cover digests, "
             f"found {len(cover_sha256s)}"
         )
-    context_files = sorted((root / SOURCE_CONTEXT_ROOT).glob("*/content.json"))
+    context_files = [
+        path
+        for path in sorted((root / SOURCE_CONTEXT_ROOT).glob("*/content.json"))
+        if path.parent.name.split("-", 1)[0] in HISTORICAL_ARTICLE_KEYS
+    ]
     if len(context_files) != EXPECTED_ARTICLES:
         raise PipelineError(
             f"Expected {EXPECTED_ARTICLES} article contexts, found {len(context_files)}"
@@ -1258,10 +1278,20 @@ def verify_all(
     if not native_ok:
         errors.extend(native_errors)
 
-    final_path = root / FINAL_MANIFEST_REL
+    frozen_final_path = root / FROZEN_FINAL_MANIFEST_REL
+    final_path = (
+        frozen_final_path
+        if frozen_final_path.is_file()
+        else root / FINAL_MANIFEST_REL
+    )
+    if (
+        final_path == frozen_final_path
+        and sha256_file(final_path) != FROZEN_FINAL_MANIFEST_SHA256
+    ):
+        errors.append("Frozen 20x2 final manifest digest changed")
     if not final_path.is_file():
         if not allow_incomplete:
-            errors.append(f"Missing final manifest: {FINAL_MANIFEST_REL}")
+            errors.append(f"Missing final manifest: {final_path.relative_to(root)}")
     else:
         actual = read_json(final_path)
         updated_at = actual.get("updated_at") if isinstance(actual, dict) else None

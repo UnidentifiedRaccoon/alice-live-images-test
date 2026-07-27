@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-prompt-research-stage1",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-prompt-research-20260727-v1",
+  "provider_batch_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "controls": {
+    "primary": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8",
+    "retry": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 3.0,
+    "hard_budget_cap_usd": 3.0,
+    "reserved_stage1_usd": 2.2,
+    "unreserved_after_stage1_usd": 0.8,
+    "reservation_basis": {
+      "alibaba/wan-2.2": 0.5,
+      "alibaba/wan-2.7": 0.5,
+      "google/veo-3.1-lite": 0.2
+    },
+    "maximum_provider_entries": 5,
+    "maximum_submissions_per_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "Conservative operator reservations limit admitted entries; providers do not return actual billing metadata in these receipts."
+  },
+  "generation_policy": {
+    "exact_model_routes": true,
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "automatic_retries": false,
+    "force_allowed": false,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "veo_policy": "one benign diagnostic submit; stop on rejection"
+  },
+  "expected_outputs": 5,
+  "entries": [
+    {
+      "variant_id": "monotonic-positive",
+      "planning_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+      "planning_result_sha256": "addacbc3ef88d516b1a9d4ae564713ed71be5a16cb41623bc8256ec68d9c062a",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-2",
+      "sample_id": "21-maier-04-monotonic-positive",
+      "model_id": "alibaba/wan-2.2",
+      "positive_prompt_sha256": "f11add49916cdec6b336ee22fbdd568ee0e9137c9bd11ac64b7c85f1ca4c818d",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "provider_source": "local-upload",
+      "request_sha256": "2ce143baf261f74043a2f7083dd26ce03e6a8e32ce1f9ad962eebdda87f607c4"
+    },
+    {
+      "variant_id": "monotonic-positive",
+      "planning_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+      "planning_result_sha256": "addacbc3ef88d516b1a9d4ae564713ed71be5a16cb41623bc8256ec68d9c062a",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-7",
+      "sample_id": "21-maier-04-monotonic-positive",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "80a2f309b4be9d942e584836230e52d42232fca93c80ec95f67066613d8e51fe",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "provider_source": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "request_sha256": "f16bcfc1f5e06d7b10b1e336a492c954fcea84a512fd8fc993be4286eefac970"
+    },
+    {
+      "variant_id": "erosion-negative",
+      "planning_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+      "planning_result_sha256": "a2934ffa723151b82b869d835934407dbbcea7ac384a270412e3adbe3fc71664",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-2",
+      "sample_id": "21-maier-04-erosion-negative",
+      "model_id": "alibaba/wan-2.2",
+      "positive_prompt_sha256": "d7c5b87613657e7c8109e6f11d07d4080ee7990b5b6ac62152a940ea09233ca8",
+      "negative_prompt_sha256": "5a82d63bbae5936c07d50c2ace21cc600cf50e39a7712ddc031b9974e8263b77",
+      "reservation_usd": 0.5,
+      "provider_source": "local-upload",
+      "request_sha256": "367df96911f1ae3c473f07b50a837e680a51a14303e5f5f200b69bf06ed144e6"
+    },
+    {
+      "variant_id": "erosion-negative",
+      "planning_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+      "planning_result_sha256": "a2934ffa723151b82b869d835934407dbbcea7ac384a270412e3adbe3fc71664",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-7",
+      "sample_id": "21-maier-04-erosion-negative",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "49e53e2bde475b87a12c247a16a952de2ef115d7b16196a0d359ab85b16fdf3c",
+      "negative_prompt_sha256": "a299bf1736dd8d8596e46f0ddb87a5a7beee0beb8ff442daebce696746be9efb",
+      "reservation_usd": 0.5,
+      "provider_source": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "request_sha256": "f3d3fb960427ea6122b4c0ba5889ae308298e34656a57c48be32f21a821c2caf"
+    },
+    {
+      "variant_id": "veo-motion-only",
+      "planning_run_id": "promopages-9930-case21-veo-motion-only-20260727-v1",
+      "planning_result_sha256": "df820159b155a45012f16d43d24c544dc8782882ed6118023118399989c03506",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-veo-motion-only-veo-3-1-lite",
+      "sample_id": "21-maier-04-veo-motion-only",
+      "model_id": "google/veo-3.1-lite",
+      "positive_prompt_sha256": "cd6677cc8badc5705deb88756af4d0b3b19056fc75a2085e477e612be0e2eeb8",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.2,
+      "provider_source": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "request_sha256": "dd2c007450f7011981c4a4122fcf7bd5f8c23efc0a36f5f8b629ccba8eb28148"
+    }
+  ]
+}

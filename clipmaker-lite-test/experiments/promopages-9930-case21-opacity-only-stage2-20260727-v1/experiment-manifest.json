@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-opacity-only-stage2-result",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+  "provider_batch_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+  "updated_at": "2026-07-27T16:58:12Z",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_aggregate_budget_cap_usd": 3.0,
+    "hard_aggregate_budget_cap_usd": 3.0,
+    "reserved_stage1_usd": 2.2,
+    "reserved_stage2_usd": 0.5,
+    "reserved_aggregate_usd": 2.7,
+    "unreserved_after_stage2_usd": 0.3,
+    "stage2_model_id": "alibaba/wan-2.7",
+    "stage2_maximum_provider_entries": 1,
+    "maximum_submissions_per_stage2_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "The $0.50 stage-2 reservation is conservative operator metadata. Provider receipts do not expose actual billing."
+  },
+  "expected_outputs": 1,
+  "summary": {
+    "verification-failed": 1
+  },
+  "planning": {
+    "run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+    "result_sha256": "57caec79fa7390a07101fbe314dc66b11f448291e271adc5eca8d447332187db",
+    "model_ids": [
+      "alibaba/wan-2.7"
+    ],
+    "negative_policy": "required-observed-failure-repair"
+  },
+  "controls": {
+    "primary": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8",
+    "retry": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b",
+    "stage1_generation_core": "bbb230607f881491635dfab3e9a9d970d49eafdaabdbc1f2582d405076004f51"
+  },
+  "inventory_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/inventory.json",
+  "generation_manifest_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/generation-manifest.json",
+  "outputs": [
+    {
+      "lite_run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1-21-maier-04-opacity-only-wan-2-7",
+      "sample_id": "21-maier-04-opacity-only",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2614579,
+        "sha256": "abcaaccf20ee93871db5201c5ab7759285f7dd78b84dd9d2c29999bc7c4f0dd7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    }
+  ]
+}

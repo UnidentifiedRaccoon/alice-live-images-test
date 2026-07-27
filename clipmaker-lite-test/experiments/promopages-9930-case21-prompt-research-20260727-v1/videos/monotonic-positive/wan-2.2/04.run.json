@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-monotonic-positive",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "wan-demo",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/gradio_api/queue/join",
+    "model": "alibaba/wan-2.2",
+    "input": {
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "prompt": "Fixed camera. From the first frame, only the central purple aura contracts and fades at a steady monotonic rate from its initial maximum radius and opacity, ending as a thin faint halo. Every other element remains perfectly static and unchanged."
+    },
+    "runtime": {
+      "resolution": "720p",
+      "seed": 1,
+      "loop": false,
+      "frames": 97,
+      "fps": 30
+    }
+  },
+  "request_sha256": "2ce143baf261f74043a2f7083dd26ce03e6a8e32ce1f9ad962eebdda87f607c4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "822504a82e244c28a19731580fee02c2",
+  "provider_session_hash": "promopages9856-8002bbe36b1c",
+  "submitted_at": "2026-07-27T16:37:41Z",
+  "completed_at": "2026-07-27T16:42:42Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
+  "batch_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-2",
+  "lite_result_sha256": "addacbc3ef88d516b1a9d4ae564713ed71be5a16cb41623bc8256ec68d9c062a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

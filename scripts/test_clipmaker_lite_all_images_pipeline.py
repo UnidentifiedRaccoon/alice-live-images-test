@@ -55,6 +55,14 @@ class ClipmakerLiteAllImagesPipelineTest(unittest.TestCase):
         self.assertEqual(
             sum(len(article.images) for article in self.articles), 20
         )
+        self.assertEqual(
+            [article.number for article in self.articles],
+            [f"{number:02d}" for number in range(1, 21)],
+        )
+        self.assertNotIn(
+            "21-maier-doctor-zolotoe-vremia",
+            {article.slug for article in self.articles},
+        )
         self.assertTrue(all(len(article.images) == 1 for article in self.articles))
         self.assertEqual(
             [(source.article_number, source.image["image_id"]) for source in self.sources],
@@ -112,6 +120,15 @@ class ClipmakerLiteAllImagesPipelineTest(unittest.TestCase):
             Path("clipmaker-lite-test/promopages-9930-manifest.json"),
         )
         self.assertNotEqual(pipeline.FINAL_MANIFEST_REL, pipeline.BASE_MANIFEST_REL)
+        frozen_path = pipeline.ROOT / pipeline.FROZEN_FINAL_MANIFEST_REL
+        self.assertEqual(
+            pipeline.sha256_file(frozen_path),
+            pipeline.FROZEN_FINAL_MANIFEST_SHA256,
+        )
+        frozen = pipeline.read_json(frozen_path)
+        self.assertEqual(frozen["models"], list(pipeline.MODEL_IDS))
+        self.assertEqual(frozen["expected_outputs"], pipeline.EXPECTED_OUTPUTS)
+        self.assertEqual(len(frozen["outputs"]), pipeline.EXPECTED_OUTPUTS)
         self.assertIn(pipeline.BATCH_ID, pipeline.GENERATION_MANIFEST_REL.parts)
 
     def test_cost_envelope_stays_below_hard_cap_and_disables_paid_retries(self) -> None:

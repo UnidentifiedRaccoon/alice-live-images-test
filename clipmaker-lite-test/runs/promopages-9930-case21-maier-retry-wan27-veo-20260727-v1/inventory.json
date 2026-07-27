@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-explicit-provider-retry",
+  "ticket": "PROMOPAGES-9930",
+  "case_number": "21",
+  "agent_id": "clipmaker-lite",
+  "primary_batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+  "retry_batch_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1",
+  "planning_run_id": "promopages-9930-case21-maier-20260727-v4",
+  "models": [
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "expected_outputs": 2,
+  "excluded_models": [
+    "alibaba/wan-2.2"
+  ],
+  "cost": {
+    "currency": "USD",
+    "configured_budget_cap_usd": 1.0,
+    "hard_budget_cap_usd": 1.0,
+    "planned_paid_submissions": 2,
+    "maximum_paid_submissions": 2,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "authorization_scope": "one explicit submit each for alibaba/wan-2.7 and google/veo-3.1-lite in the retry namespace only",
+    "enforcement": "two immutable retry entries; terminal, stale, ambiguous, or failed entries cannot resubmit in this namespace"
+  },
+  "source": {
+    "image_id": "04",
+    "source_image_id": "6a6328f345a595396555e61a",
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "bytes": 642980,
+    "width": 1024,
+    "height": 1024,
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "provider_url_policy": {
+      "scheme": "https",
+      "hostname": "avatars.mds.yandex.net",
+      "variant": "orig",
+      "query_allowed": false,
+      "fragment_allowed": false
+    }
+  },
+  "retry_policy": {
+    "operator_initiated": true,
+    "requires_allow_external_processing": true,
+    "route_resolution": "exact-model-id",
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "automatic_retries": false,
+    "maximum_submissions_per_model_in_namespace": 1,
+    "primary_namespace_is_read_only": true,
+    "wan22_resubmit_forbidden": true
+  },
+  "primary_attempts": [
+    {
+      "attempt_number": 1,
+      "batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "request_sha256": "6dc36da3ff5093eb8c6e9ea783e3c8fe44b92a38931aa1fba3ce50a5cc633097",
+      "provider_job_id": "1ef6b4804ed643df8decafc75f38d772",
+      "submitted_at": "2026-07-27T14:18:00Z",
+      "completed_at": "2026-07-27T14:19:01Z",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
+      "selected_for_delivery": true,
+      "error": null
+    },
+    {
+      "attempt_number": 1,
+      "batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-7",
+      "model_id": "alibaba/wan-2.7",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "request_sha256": "0f14a4d89cabc49896127bf9de68d26fceef65e1f58f3da138fe1cb6bedbfab5",
+      "provider_job_id": "dapgT81alYO8sgkyVisw",
+      "submitted_at": "2026-07-27T14:18:03Z",
+      "completed_at": "2026-07-27T14:18:35Z",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+      "selected_for_delivery": false,
+      "error": "Eliza/OpenRouter job dapgT81alYO8sgkyVisw failed with status failed: Failed to download ***"
+    },
+    {
+      "attempt_number": 1,
+      "batch_id": "promopages-9930-case21-maier-runs-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-maier-runs-20260727-v1-21-maier-doctor-zolotoe-vremia-04-veo-3-1-lite",
+      "model_id": "google/veo-3.1-lite",
+      "status": "submit-unknown",
+      "recorded_status": "submit-unknown",
+      "provider_may_be_active": true,
+      "request_sha256": "dc54680297e97c5e377e79b117e6d039e3c7d28a857106d885b9ddaf4bc17e37",
+      "provider_job_id": null,
+      "submitted_at": null,
+      "completed_at": null,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
+      "selected_for_delivery": false,
+      "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 400: {\"key\":\"OPENROUTER_FOX_KEY_1\",\"response\":{\"error\":{\"message\":\"Received 404 status code when fetching image from URL: https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png\",\"code\":400}},\"attempt_count\":1,\"elapsed_time_ms\":1349,\"last_request_duration_ms\":1349,\"request_id\":\"1785161879930977-8456110058332309828-gze6iy57wssor74m-BAL\"}"
+    }
+  ],
+  "eligibility": {
+    "alibaba/wan-2.7": "explicit-retry-after-terminal-provider-download-failure",
+    "google/veo-3.1-lite": "explicit-retry-after-pre-job-raw-url-404",
+    "veo_rejection_proof": {
+      "http_status": 400,
+      "source_fetch_status": 404,
+      "attempt_count": 1,
+      "provider_job_created": false
+    }
+  }
+}

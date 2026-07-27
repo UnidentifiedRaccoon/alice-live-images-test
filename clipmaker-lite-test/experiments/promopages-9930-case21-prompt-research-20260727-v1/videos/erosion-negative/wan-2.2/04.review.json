@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "model_id": "alibaba/wan-2.2",
+  "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-2",
+  "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b"
+  },
+  "artifact": {
+    "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+    "sha256": "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+  },
+  "review_method": {
+    "source_comparison": "Compared the source with nine evenly spaced decoded frames and the 3x3 contact sheet.",
+    "technical_verification": "Rechecked the recorded duration, dimensions, frame count, audio flag, SHA-256, and motion-metrics receipt."
+  },
+  "observations": {
+    "requested_motion": "The purple aura should be erased outside-in and fade while every other pixel remains locked.",
+    "camera": "The camera and square framing remain fixed.",
+    "stable_elements": [
+      "Cyrillic labels remain broadly legible",
+      "The high-level diagram layout remains recognizable",
+      "Full square framing remains present"
+    ],
+    "invariant_failures": [
+      "The progesterone molecule rotates and is repeatedly redrawn instead of remaining pixel-locked.",
+      "The scale needle and battery state change during the clip.",
+      "The purple area finishes larger than it starts and has seven material monotonic-decrease violations."
+    ]
+  },
+  "verdict": {
+    "status": "fidelity-failed",
+    "summary": "The negative repair did not preserve the infographic: the molecule and state indicators animate, and the aura does not follow the requested fade."
+  }
+}
