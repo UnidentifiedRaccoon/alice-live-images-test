@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:46f596ab14233ed3279207c17d2878809b8c2bb67f7eb8cbccccd0e30f3fdf1e",
+    "execution_fingerprint": "sha256:08722b9dcadb9b6dcaa848dae2eb0a165752062f15e47e44ed3ae8bd4208caf1",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa002-f718-7f50-b898-b57f4e7d94bb"
+    },
+    "authored_payload_sha256": "6762b0a33917dfa47816529fef0d53e957ee5836db64310083c78e988e4ab2fb",
+    "draft_file_sha256": "1cbf5219e94c0bfc4ee1824bf8e09f0609203a526e74186b4cf360166431d9df"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+      "sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+      "bytes": 661899
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/18-dalan-sredstva-dlia-volos/content.json",
+      "sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249",
+      "bytes": 16157,
+      "locator": {
+        "article_id": "18-dalan-sredstva-dlia-volos",
+        "title": "Правда и мифы о турецких средствах для волос",
+        "lead": "Проверила на себе шампунь и кондиционер из Турции от Dalan. Вот что вышло",
+        "image_id": "02",
+        "block_index": 6,
+        "role": "article_image",
+        "caption": "Красивая коробка, а внутри еще яркая открытка с руководителем компании — вместе со стильными бутылочками все это выглядит очень презентабельно. Самое то для подарка.",
+        "file": "02.png",
+        "manifest_file_path": "articles/18-dalan-sredstva-dlia-volos/02.png",
+        "current_heading": {
+          "block_index": 3,
+          "level": 2,
+          "text": "Дает приятные эмоции уже до использования"
+        },
+        "nearest_text_before": {
+          "block_index": 5,
+          "type": "paragraph",
+          "text": "Больше всего меня зацепил запах. Пахнет натурально, оливками, но не едко и не приторно. Свежий, природный аромат, без химозной отдушки, которая бьет в нос. Просто приятный запах, который, как я поняла позже, потом еще долго держится на волосах."
+        },
+        "nearest_text_after": {
+          "block_index": 9,
+          "type": "heading",
+          "text": "Почувствовала результат сразу после первого применения"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Открытая крафтовая коробка содержит две зелёные бутылочки Dalan d’Olive и фирменную открытку; набор уже полностью разложен и представлен зрителю.",
+      "Композиция снята сверху под углом: бутылочки занимают центр и передний план, открытка закреплена у задней стенки, слева видны листья растения.",
+      "Естественно подвижны лёгкие блики на бутылочках и листья растения; упаковка, этикетки и открытка должны оставаться неподвижными и узнаваемыми."
+    ],
+    "article_context": "Изображение стоит внутри раздела о первом впечатлении от набора и подтверждает подпись: подарочная коробка, две стильные бутылочки и фирменная открытка выглядят презентабельно и подходят для подарка. Анимация должна подчеркнуть аккуратную премиальную подачу, не превращая распаковку в новое событие.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть, что набор производит приятное первое впечатление и выглядит как готовый презентабельный подарок.",
+      "primary_action": "Мягкий световой отблеск последовательно проходит по бутылочкам и фирменной открытке.",
+      "terminal_state": "В финальном кадре обе бутылочки имеют мягкий чистый блеск, открытка остаётся видимой, а исходная раскладка набора не меняется.",
+      "semantic_invariant": "Набор всё время остаётся аккуратно собранным, презентабельным и готовым для подарка."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный кадр: мягкий блик равномерно проходит по двум бутылочкам и открытке, а листья слева едва покачиваются. Камера медленно приближается к центру коробки, чтобы поддержать ощущение презентации подарка. К концу блик ослабевает, обе бутылочки и открытка остаются целиком видимыми, а исходная аккуратная раскладка сохраняется.",
+      "positive_prompt": "A soft highlight travels slowly across both bottles and the presentation card while the nearby leaves sway gently. The camera makes a gradual push toward the gift set, ending with both bottles and the card clearly framed and the complete arrangement intact.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный focused moment с неподвижной камерой: компактный мягкий световой отблеск проходит по бутылочкам и достигает открытки, сопровождаясь небольшим движением листьев. Движение развивается без паузы и завершается лёгким ровным сиянием на упаковке; набор остаётся полностью собранным, презентабельным и узнаваемым.",
+      "positive_prompt": "With a fixed camera, a clean soft reflection sweeps across the two bottles and reaches the presentation card as the plant leaves move slightly. End with a gentle sheen on the bottles, the card visible, and the gift arrangement unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

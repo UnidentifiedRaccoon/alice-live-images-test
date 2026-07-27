@@ -59,7 +59,7 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.1")
+        self.assertEqual(contract["contract_version"], "2.0.2")
         self.assertEqual(contract["runner"]["runner_version"], 4)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")

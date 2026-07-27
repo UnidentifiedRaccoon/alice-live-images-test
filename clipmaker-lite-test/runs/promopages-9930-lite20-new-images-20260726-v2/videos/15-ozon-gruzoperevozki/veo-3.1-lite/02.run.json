@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "15-ozon-gruzoperevozki-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/15-ozon-gruzoperevozki/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/15-ozon-gruzoperevozki/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. The existing blue bid button gives one gentle optical pulse, smoothly brightening and settling back to its original appearance by the final frame. All UI text, values, glyphs, and layout stay unchanged and readable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "27e3bcc35b73d518a60acfee7d1b502b62b8cbefb55290373dc7e9a40460b770",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1lKRI4THEqHQmroXhi5i",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:15:37Z",
+  "completed_at": "2026-07-26T20:17:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 751174,
+    "sha256": "652b5b347904c646f90e490a2aa1198d56a240ee72bdb33793ec4ee577772105"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-15-ozon-gruzoperevozki-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-15-ozon-gruzoperevozki-02-veo-3-1-lite",
+  "lite_result_sha256": "5f5161f910e0a229418f63324b2d4623da34c6e724d1b4f26c9ae3245b4abf3d",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

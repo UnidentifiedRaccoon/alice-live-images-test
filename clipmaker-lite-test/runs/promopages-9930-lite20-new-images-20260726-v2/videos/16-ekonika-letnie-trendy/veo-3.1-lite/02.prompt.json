@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-16-ekonika-letnie-trendy-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-16-ekonika-letnie-trendy-02-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+    "sha256": "ea1cc12a04703868c7890a2aad93abc11b368b413622345e0796a411ecb79a36",
+    "width": 650,
+    "height": 650
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть тонкие ремешки как ключевую деталь, которая делает летние босоножки выразительнее.",
+    "primary_action": "Солнечный свет постепенно проходит по паре и выявляет рисунок тонких ремешков.",
+    "terminal_state": "Свет одновременно выделяет плетеные зоны из ремешков в передней части обеих босоножек.",
+    "semantic_invariant": "Обе босоножки остаются полностью видимой, аккуратно расположенной парой, а тонкие ремешки сохраняют роль главного визуального акцента."
+  },
+  "prompt": {
+    "positive": "Fixed overhead view as dappled sunlight glides diagonally over the pair, briefly tracing the thin straps. Near the end, the bright area reaches both circular toe designs and remains there, with the sandals fully visible and aligned.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-16-ekonika-letnie-trendy-02/result.json",
+    "sha256": "8c179ae2c924dfbd3bc477e85d91534395afac89c6ed639a488cab9b57c77162",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "ea1cc12a04703868c7890a2aad93abc11b368b413622345e0796a411ecb79a36",
+      "article_context_sha256": "d3c00fdd904da396637cdb22f5502dcae1de93fcf5ef320965705cdcab3ddbb9",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

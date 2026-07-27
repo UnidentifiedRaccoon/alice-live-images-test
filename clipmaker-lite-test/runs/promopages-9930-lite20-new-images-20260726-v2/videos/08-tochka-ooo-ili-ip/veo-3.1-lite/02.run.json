@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "08-tochka-ooo-ili-ip-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/08-tochka-ooo-ili-ip/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/08-tochka-ooo-ili-ip/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. The left person writes smoothly along a single line of the paper form as the other person keeps the tablet steady. By the final frame, the entry is complete and the pencil rests at the line's endpoint; the tablet interface and visible text stay unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "826169ac84a7e4af474e569ee3623edd18dde00428b5239aa46ced538f78e350",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "c7oM5udTqAoOC4HeLsk2",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:11:39Z",
+  "completed_at": "2026-07-26T20:13:28Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3126985,
+    "sha256": "dbff80bd181565770410056856c68963a3e54e378bc7831557feea3b8105f861"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-08-tochka-ooo-ili-ip-02-veo-3-1-lite",
+  "lite_result_sha256": "efd9b95b82ca199f1159e7b3db0089adf8fca6e0f6ab5e33a7443bf5657330ab",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

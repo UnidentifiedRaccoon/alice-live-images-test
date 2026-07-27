@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-09-dream-island-semeinye-vyhodnye-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-09-dream-island-semeinye-vyhodnye-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+    "sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+    "width": 2400,
+    "height": 1600
+  },
+  "structured_intent": {
+    "editorial_meaning": "A family attraction creates sincere shared joy and vivid memories, supporting the article’s invitation to spend an exciting day together at Dream Island.",
+    "primary_action": "The amusement-ride gondola continues its pendulum downswing with the riders moving together.",
+    "terminal_state": "The gondola is visibly lower on its arc, with the smiling group still together and reacting enthusiastically.",
+    "semantic_invariant": "The riders remain visibly joyful, engaged, and together through the final frame."
+  },
+  "prompt": {
+    "positive": "The gondola sweeps steadily downward along its pendulum arc as the riders lean with the motion, keeping their joyful expressions and raised arms. Fixed camera; by the final frame the gondola reaches the lower part of the arc, still moving smoothly with the group visibly delighted.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-09-dream-island-semeinye-vyhodnye-02/result.json",
+    "sha256": "58800a96cc23bc61b4163110d98be18f185cd292b86f9e698258a4dc3dd30cbd",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+      "article_context_sha256": "47c2112a5b1ed0b96ec4b50d9922b650e281333b00dc6e1f5d0a4e87a805c2f3",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

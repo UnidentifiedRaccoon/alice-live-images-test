@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "18-dalan-sredstva-dlia-volos-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/18-dalan-sredstva-dlia-volos/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/18-dalan-sredstva-dlia-volos/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With a fixed camera, a clean soft reflection sweeps across the two bottles and reaches the presentation card as the plant leaves move slightly. End with a gentle sheen on the bottles, the card visible, and the gift arrangement unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "9:16",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "7ea509f144746f6be006664a7d1a692164f110bb6cf50a029ed96b4a5a487f39",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8Sa7eMOjRQrjYGbGlKnw",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:17:12Z",
+  "completed_at": "2026-07-26T20:19:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1080,
+    "height": 1920,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4498487,
+    "sha256": "b038558d48a7b92b4e1bba5d896272b95b107e4c381948d722ae496722d4e779"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02-veo-3-1-lite",
+  "lite_result_sha256": "ced1dc6d5017310e19f59f1891f742260ec090dad41c275aed46d17e00e609fc",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

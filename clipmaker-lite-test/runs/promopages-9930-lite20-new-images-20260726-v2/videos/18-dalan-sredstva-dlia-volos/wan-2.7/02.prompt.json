@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+    "sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+    "width": 554,
+    "height": 641
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть, что набор производит приятное первое впечатление и выглядит как готовый презентабельный подарок.",
+    "primary_action": "Мягкий световой отблеск последовательно проходит по бутылочкам и фирменной открытке.",
+    "terminal_state": "В финальном кадре обе бутылочки имеют мягкий чистый блеск, открытка остаётся видимой, а исходная раскладка набора не меняется.",
+    "semantic_invariant": "Набор всё время остаётся аккуратно собранным, презентабельным и готовым для подарка."
+  },
+  "prompt": {
+    "positive": "A soft highlight travels slowly across both bottles and the presentation card while the nearby leaves sway gently. The camera makes a gradual push toward the gift set, ending with both bottles and the card clearly framed and the complete arrangement intact.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-18-dalan-sredstva-dlia-volos-02/result.json",
+    "sha256": "ced1dc6d5017310e19f59f1891f742260ec090dad41c275aed46d17e00e609fc",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+      "article_context_sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

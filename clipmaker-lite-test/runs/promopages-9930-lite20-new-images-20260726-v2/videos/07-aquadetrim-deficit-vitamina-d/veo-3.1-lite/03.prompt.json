@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-07-aquadetrim-deficit-vitamina-d-03",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-07-aquadetrim-deficit-vitamina-d-03-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+    "sha256": "70fe8232d0821f81d8ec937faf03876e55a8f89a882e4ba84d015efb9119066a",
+    "width": 1200,
+    "height": 751
+  },
+  "structured_intent": {
+    "editorial_meaning": "Северное место проживания с пасмурной погодой и недостатком прямого солнечного света может повышать риск дефицита витамина D.",
+    "primary_action": "Ветер непрерывно прогоняет волну по траве вокруг дома.",
+    "terminal_state": "Ветровая волна достигает дальней стороны склона, а дом остается полностью видимым под сплошным облачным небом.",
+    "semantic_invariant": "Дом остается одиноким устойчивым жилищем в прохладной, пасмурной и малосолнечной местности."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, a cool gust travels across the hillside and bends the grass in one clear wave around the house as faint background mist slides laterally. In the final frame the wave reaches the far side of the slope, with the house still fully visible beneath the sunless sky.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-07-aquadetrim-deficit-vitamina-d-03/result.json",
+    "sha256": "77b6f1812adec48a0b4aab44571547216669636ec6af4707a25b9b405cf22678",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "70fe8232d0821f81d8ec937faf03876e55a8f89a882e4ba84d015efb9119066a",
+      "article_context_sha256": "0a82562e329d4e4cc667d02064d7f7b78c1d9435e19ef9a354fd78913f50c62c",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

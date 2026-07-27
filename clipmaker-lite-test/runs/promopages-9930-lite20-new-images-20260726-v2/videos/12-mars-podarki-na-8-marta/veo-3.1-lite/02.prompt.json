@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+    "sha256": "f840b7fe0de8c5464ca79918066bccadc33cf786bdaece49ba8644eed2339f46",
+    "width": 1999,
+    "height": 1334
+  },
+  "structured_intent": {
+    "editorial_meaning": "Тщательно выбранный аромат становится личным и эмоционально запоминающимся подарком для любительницы парфюмерии.",
+    "primary_action": "Женщина спокойно вдыхает аромат духов и постепенно проявляет удовольствие от него.",
+    "terminal_state": "Женщина остаётся с закрытыми глазами и мягкой довольной улыбкой, удерживая флакон устойчиво и видимо.",
+    "semantic_invariant": "До последнего кадра она остаётся расслабленной, довольной и сосредоточенной на аромате подаренных духов."
+  },
+  "prompt": {
+    "positive": "With the camera fixed, the woman takes one gentle breath of the perfume, subtly lifting her shoulders as her serene smile grows. The bottle stays steady and visible; by the final frame her shoulders settle and she continues savoring the scent with eyes closed.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-12-mars-podarki-na-8-marta-02/result.json",
+    "sha256": "4e35cfd06181b4dfd149fb0db6255d61bf89ad00a4b334403121467b0171f6b3",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "f840b7fe0de8c5464ca79918066bccadc33cf786bdaece49ba8644eed2339f46",
+      "article_context_sha256": "b81293f85a15bc1c24f689a7252112450a9767fe75717a9e12841134a5b36ef7",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

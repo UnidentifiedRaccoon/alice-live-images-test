@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "02-nanoplast-kak-unimat-bol-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/02-nanoplast-kak-unimat-bol/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The women complete one slow, controlled crunch repetition together, lowering their torsos moderately toward the mats and curling smoothly back up while their hands stay behind their heads. Fixed camera. By the final frame they hold the raised crunch position, steady and comfortably engaged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c270741a27d2a9bef5128727bc24eef54fd2927de3476d6920444aa5dee2fc69",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "zzBPymU3sFASaalBXg8i",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:07:50Z",
+  "completed_at": "2026-07-26T20:10:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3200770,
+    "sha256": "e6bfdfc2e54a632aee051102a6c16b2cd05536201fc2221f5e34cf4fdb6af24c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02-wan-2-7",
+  "lite_result_sha256": "7f9c78ea3f93aa030410f7a882140558c83629116a24e8339d0b24f1118f9d05",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -44,6 +44,7 @@ STATIC_FILES = (
     "clipmaker-lite/styles.css",
     "clipmaker-lite/app.js",
     "clipmaker-lite-test/manifest.json",
+    "clipmaker-lite-test/promopages-9930-manifest.json",
 )
 
 STATIC_TREES = (
@@ -120,6 +121,34 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
         ]
         for output in outputs:
             relative_paths.add(_safe_relative_path(output["video_path"]))
+
+    # The Step 5 client uses stable raw-repository URLs for PROMOPAGES-9930 media.
+    # Keep the compact manifest in Pages and validate every referenced repository
+    # artifact without copying the extension media into the Pages payload.
+    additional_lite_manifest = json.loads(
+        (root / "clipmaker-lite-test" / "promopages-9930-manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    remote_repository_paths: set[Path] = set()
+    for article in additional_lite_manifest["articles"]:
+        for image_record in article["images"]:
+            remote_repository_paths.add(
+                _safe_relative_path(image_record["image"]["source_path"])
+            )
+            for output in image_record["outputs"]:
+                remote_repository_paths.add(_safe_relative_path(output["video_path"]))
+
+    for relative_path in remote_repository_paths:
+        source = root / relative_path
+        if not source.is_file() or source.is_symlink():
+            raise FileNotFoundError(
+                f"Missing regular raw-repository media file: {relative_path}"
+            )
+        if source.stat().st_size > MAX_FILE_BYTES:
+            raise ValueError(
+                f"Raw-repository media exceeds GitHub's 100 MB file limit: {relative_path}"
+            )
 
     for relative_path in relative_paths:
         source = root / relative_path

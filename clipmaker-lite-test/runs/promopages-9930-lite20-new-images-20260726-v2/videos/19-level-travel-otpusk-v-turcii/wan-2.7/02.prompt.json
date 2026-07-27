@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-19-level-travel-otpusk-v-turcii-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-19-level-travel-otpusk-v-turcii-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+    "sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+    "width": 1028,
+    "height": 594
+  },
+  "structured_intent": {
+    "editorial_meaning": "Сравнение цен по месяцам и продолжительности поездки помогает найти более выгодные даты для тура в Турцию.",
+    "primary_action": "Мягкий оптический акцент проходит по существующим ценам и направляет внимание к более выгодным предложениям мая.",
+    "terminal_state": "В последнем кадре майский столбец мягко выделен, а все тексты, числа и расположение элементов остаются исходными.",
+    "semantic_invariant": "Таблица остается достоверным и неизменным сравнением исходных цен, месяцев и продолжительности поездки."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A soft blue optical sheen moves steadily across the existing linked prices from left to right, then gently settles on the May price column near the end. All text, numbers, underlines, spacing, and layout remain exactly unchanged in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-19-level-travel-otpusk-v-turcii-02/result.json",
+    "sha256": "37b756e501d5d92c3bd4339695759e3456554b16db2f4d8cee76c030ae89c1c6",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+      "article_context_sha256": "0d8f2c81586814f1c9ff1bd0ea0292094d903f4347ba83f8609df3820c81f182",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

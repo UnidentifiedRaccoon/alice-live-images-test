@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "13-ilinka-elitnyi-zhk-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/13-ilinka-elitnyi-zhk/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/13-ilinka-elitnyi-zhk/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Traffic moves steadily across the bridge from left to right as the camera makes a slow push toward the central facade. Keep the entire building recognizable; by the final frame, the leading car nears the right edge while the residence remains dominant within the cityscape.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "75ccdff262979d22ec3434b981c92f42ed200aad4731117fd8b9338a74e55253",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "zRuJ6JqyKsxMrZQc2qDG",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:13:12Z",
+  "completed_at": "2026-07-26T20:15:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1174,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 22884353,
+    "sha256": "925ccd662a8badc9a81fbc06da298d9240ea66f27d99bfc4235cbccfdcf0c012"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-13-ilinka-elitnyi-zhk-02-wan-2-7",
+  "lite_result_sha256": "9d54f34ab029bd6e27bc0a6b83f2ad11714457aa7b00cd274026999e87d7d78a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

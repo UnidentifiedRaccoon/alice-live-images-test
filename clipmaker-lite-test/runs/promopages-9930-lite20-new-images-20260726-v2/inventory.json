@@ -1,0 +1,871 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "models": [
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 20,
+  "source_manifest_row_count": 125,
+  "processed_cover_count": 20,
+  "source_duplicate_row_count": 6,
+  "image_count": 20,
+  "expected_outputs": 40,
+  "selection_rule": "for each article in numeric order, select the first image block after the cover whose SHA-256 matches neither any processed cover nor any image selected for an earlier article",
+  "cost": {
+    "currency": "USD",
+    "base_estimate_usd": 14.0,
+    "hard_budget_cap_usd": 20.0,
+    "accounting_cost_per_output_usd": 0.35,
+    "planned_paid_submissions": 40,
+    "maximum_paid_submissions": 40,
+    "maximum_estimated_cost_usd": 14.0,
+    "cap_headroom_usd": 6.0,
+    "automatic_paid_retries": false,
+    "retry_policy": "immutable entries may submit at most once; resume only polls an already submitted job, and any paid retry requires a separately budgeted namespace"
+  },
+  "articles": [
+    {
+      "article_number": "01",
+      "article_slug": "01-pharmocean-magiia-magniia",
+      "title": "Магия Магния",
+      "lead": "Зачем нужен магний, каким бывает и какой магний лучше",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/01-pharmocean-magiia-magniia/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/01-pharmocean-magiia-magniia/content.json",
+        "sha256": "859cd295cb7d6fde59765681c3862ef29f09ba6a70c7931dbe4cda66ef46c19a"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/01.jpeg",
+        "manifest_file_path": "articles/01-pharmocean-magiia-magniia/01.jpeg",
+        "sha256": "f0e6854db524bd5b06c5caf0ed2e2ee244b5117666a73c6e7afa39df084c49c6",
+        "width": 1200,
+        "height": 668,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/01-pharmocean-magiia-magniia/02.jpeg",
+          "manifest_file_path": "articles/01-pharmocean-magiia-magniia/02.jpeg",
+          "sha256": "dac18b13cd08c2403ca22b41b428eb1293acd6b0e35a02f8a7082ad00a77c68f",
+          "width": 2400,
+          "height": 1600,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "02",
+      "article_slug": "02-nanoplast-kak-unimat-bol",
+      "title": "Как унимать боль в суставах: советы пожилым и не только",
+      "lead": "Рассказываем, как повысить качество жизни с гель-бальзамом и пластырем",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/02-nanoplast-kak-unimat-bol/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/02-nanoplast-kak-unimat-bol/content.json",
+        "sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.png",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/01.png",
+        "manifest_file_path": "articles/02-nanoplast-kak-unimat-bol/01.png",
+        "sha256": "18877935b369c97871fb27c1f37cd5086996d2e55fb90c6911366a08d2057ce4",
+        "width": 1600,
+        "height": 800,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.png",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+          "manifest_file_path": "articles/02-nanoplast-kak-unimat-bol/02.png",
+          "sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+          "width": 1600,
+          "height": 900,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "03",
+      "article_slug": "03-zov-resheniia-dlia-kuhni",
+      "title": "5 решений для кухни, которая радует каждый день",
+      "lead": "Простые идеи для дизайна, которые выглядят стильно и реально помогают в быту",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/03-zov-resheniia-dlia-kuhni/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/03-zov-resheniia-dlia-kuhni/content.json",
+        "sha256": "21ea39a6b04c76186f60ee2e517a74dbb7a0170e35cf6b4354fd72e77cf79064"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+        "manifest_file_path": "articles/03-zov-resheniia-dlia-kuhni/01.jpeg",
+        "sha256": "28350e991e8e6279a8f33685c0a8e6bff5f6c4878f4f0c2d1dee534ee307d4cb",
+        "width": 1600,
+        "height": 960,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 3,
+          "image_id": "03",
+          "file": "03.jpeg",
+          "role": "article_image",
+          "caption": "Встроенные розетки спрятаны так, чтобы на кухне не было лишних проводов и некрасивых отверстий в фартуке",
+          "source_path": "PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+          "manifest_file_path": "articles/03-zov-resheniia-dlia-kuhni/03.jpeg",
+          "sha256": "df8f352729e9deb7546284bba1aa8fdb639e043d70c5e09922d1f6fd2699a8d2",
+          "width": 1600,
+          "height": 1086,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "04",
+      "article_slug": "04-graceface-antivozrastnaia-syvorotka",
+      "title": "Нашла лучшую антивозрастную сыворотку за смешные деньги",
+      "lead": "Теперь точно куплю в подарок маме.\nКак это ни обидно, мы все стареем. С возрастом приходится усиленно бороться за свою красоту. Кто-то начинает раньше, кто-то позже.\nПримерно до 37-38 лет я даже не думала, что меня тоже коснётся проблема старения. Дело в том, что у женщин моей семьи – отличная генетика. Бабушка всегда выглядела гораздо моложе своих лет (и у неё даже в возрасте за 80 были",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/04-graceface-antivozrastnaia-syvorotka/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/04-graceface-antivozrastnaia-syvorotka/content.json",
+        "sha256": "12176f529a5ee48ed8064b0ee1b791ab5783c52cfbd8515a4d8b68e067e8c084"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.png",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+        "manifest_file_path": "articles/04-graceface-antivozrastnaia-syvorotka/01.png",
+        "sha256": "570d2d99f5b5402716db8445f5d22cba712c0ef2a78316b15cb93e8da56c6e7a",
+        "width": 1280,
+        "height": 800,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 3,
+          "image_id": "03",
+          "file": "03.png",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/04-graceface-antivozrastnaia-syvorotka/03.png",
+          "manifest_file_path": "articles/04-graceface-antivozrastnaia-syvorotka/03.png",
+          "sha256": "0bf4eb79ddca3f760f4c1e887648b5967f0f863c955eb7b6f461949337892a2e",
+          "width": 1280,
+          "height": 800,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "05",
+      "article_slug": "05-5ka-zhaloba-na-magazin",
+      "title": "Вот что будет, если пожаловаться на магазин «Пятёрочка»",
+      "lead": "Рассказываем, какой путь проходит обращение в службу поддержки «Пятёрочки»",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/05-5ka-zhaloba-na-magazin/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/05-5ka-zhaloba-na-magazin/content.json",
+        "sha256": "28225cd63ed422c895f8a51dd8c03761f60882ff3390ce9fbe632d660c3b029e"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+        "manifest_file_path": "articles/05-5ka-zhaloba-na-magazin/01.jpeg",
+        "sha256": "227d8ba385c3dc3c7a4cfc9971f45b8069319be49624dceadaf141e470f19479",
+        "width": 2047,
+        "height": 1365,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "В систему попадают не только прямые жалобы. Обращения создаются на основе низких оценок товаров, сигналов тайных покупателей и даже негативных комментариев в соцсетях — их отслеживает система мониторинга интернета",
+          "source_path": "PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+          "manifest_file_path": "articles/05-5ka-zhaloba-na-magazin/02.jpeg",
+          "sha256": "165bc06c92906bc63310b4cfa99887879badc03b7afc27ccb1dc060d8e74d072",
+          "width": 2560,
+          "height": 1706,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "06",
+      "article_slug": "06-4lapy-koshachii-napolnitel",
+      "title": "Как убрать запах кошачьего туалета? Выбираем наполнитель",
+      "lead": "Подобрали варианты эффективных и комфортных для кошки наполнителей",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/06-4lapy-koshachii-napolnitel/content.json",
+        "sha256": "4360ca3f4c5eee1a46b4adaafddedb7a93a95ea51f1257a98c56974969d7c72a"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+        "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/01.jpeg",
+        "sha256": "36b7feb6fc302e9df8ccfc47c5374018327aec1ec861b97ebae919c02e0f4b93",
+        "width": 1600,
+        "height": 1200,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "Чтобы понять, подходит ли питомцу новый наполнитель, обратите внимание на его поведение. Если кошка без колебаний использует лоток, спокойно закапывает свои экскременты и не пытается справлять нужду в других местах, это хороший знак",
+          "source_path": "PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+          "manifest_file_path": "articles/06-4lapy-koshachii-napolnitel/02.jpeg",
+          "sha256": "af38d39f1f7690a802a4bcae49c81e043f071e77336147577e1cf321d4ac4078",
+          "width": 1024,
+          "height": 1024,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "07",
+      "article_slug": "07-aquadetrim-deficit-vitamina-d",
+      "title": "Дефицит витамина D. Краткий чек-лист",
+      "lead": "Что влияет на уровень витамина D и кто подвержен его дефициту — краткий чек-лист",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/07-aquadetrim-deficit-vitamina-d/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/07-aquadetrim-deficit-vitamina-d/content.json",
+        "sha256": "0a82562e329d4e4cc667d02064d7f7b78c1d9435e19ef9a354fd78913f50c62c"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+        "manifest_file_path": "articles/07-aquadetrim-deficit-vitamina-d/01.jpeg",
+        "sha256": "b294de8b2cf85c5ec94ed5aee4e4fc7239a1f7e4731e3c9296cac70f9be344c5",
+        "width": 1200,
+        "height": 801,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 3,
+          "image_id": "03",
+          "file": "03.jpeg",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+          "manifest_file_path": "articles/07-aquadetrim-deficit-vitamina-d/03.jpeg",
+          "sha256": "70fe8232d0821f81d8ec937faf03876e55a8f89a882e4ba84d015efb9119066a",
+          "width": 1200,
+          "height": 751,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "08",
+      "article_slug": "08-tochka-ooo-ili-ip",
+      "title": "3 ситуации, когда нужно открывать ООО, а не ИП",
+      "lead": "Чаще всего, когда говорят про регистрацию малого бизнеса, имеют в виду оформление ИП. Кажется, что оформить и вести его проще, чем ООО. Но иногда именно второй оказывается более удачным вариантом. В этой статье разберёмся, когда при запуске бизнеса вам больше подойдет ООО, а не ИП. Если хотите открыть бизнес с партнёрами Если вы с друзьями придумали идею для бизнеса и хотите вместе её воплотить, форма ИП может не подойти. При оформлении ИП владельцем компании может быть только один человек. Вам придётся выбирать, на кого записывать компанию. Это чревато спорами и разногласиями с будущими партнёрами. А если выбранный человек захочет выйти из бизнеса, нужно будет переоформлять документы. При регистрации ООО можно указать сразу несколько учредителей. Тогда все в равной степени будут считаться владельцами компании. Вы избежите споров, на кого записывать компанию. Также каждый из вас сможет в будущем легко отказаться от руководства без переоформления документов. Если не хотите рисковать сво",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/08-tochka-ooo-ili-ip/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/08-tochka-ooo-ili-ip/content.json",
+        "sha256": "24d0fba8a293283a86e2daa0954db7390849cc7236a1fc9ae4018b8f19ac591c"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/01.jpeg",
+        "manifest_file_path": "articles/08-tochka-ooo-ili-ip/01.jpeg",
+        "sha256": "a14ba8f184b27ddff0baec009be01bfc1e416bd481c12594ddea71bb0d8ff235",
+        "width": 2000,
+        "height": 1333,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/08-tochka-ooo-ili-ip/02.jpeg",
+          "manifest_file_path": "articles/08-tochka-ooo-ili-ip/02.jpeg",
+          "sha256": "f834603785314f18c6444c26a0666b27d0715777789717229384fa717a53823f",
+          "width": 1139,
+          "height": 759,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "09",
+      "article_slug": "09-dream-island-semeinye-vyhodnye",
+      "title": "Как провести выходные семьей? Выбираю «Остров Мечты»!",
+      "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/09-dream-island-semeinye-vyhodnye/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/09-dream-island-semeinye-vyhodnye/content.json",
+        "sha256": "47c2112a5b1ed0b96ec4b50d9922b650e281333b00dc6e1f5d0a4e87a805c2f3"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+        "manifest_file_path": "articles/09-dream-island-semeinye-vyhodnye/01.jpeg",
+        "sha256": "f9a3404f773c56133a5a1db8c8a459c162ae473e92ae540d967b3929a789a366",
+        "width": 5000,
+        "height": 3334,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "Самые искренние улыбки и яркие эмоции",
+          "source_path": "PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+          "manifest_file_path": "articles/09-dream-island-semeinye-vyhodnye/02.jpeg",
+          "sha256": "4abfe2ad80df35f6816076b7dbcfae74ec0a76faaaaf6c51497699bc60339409",
+          "width": 2400,
+          "height": 1600,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "10",
+      "article_slug": "10-exeed-rx",
+      "title": "7 фактов об EXEED RX, в котором продуманы все детали",
+      "lead": "Здесь технологии значительно облегчают вождение.",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/10-exeed-rx/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/10-exeed-rx/content.json",
+        "sha256": "1dba7101c8b4d14ade7cf82c8aca30b62054fb09c141974067fb6a024a7b6f3d"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/10-exeed-rx/01.jpeg",
+        "manifest_file_path": "articles/10-exeed-rx/01.jpeg",
+        "sha256": "693f753d0db395bc541830be8fb68ac95ab3275cab2d615ee606bddcedc42fbb",
+        "width": 1999,
+        "height": 1334,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/10-exeed-rx/02.jpeg",
+          "manifest_file_path": "articles/10-exeed-rx/02.jpeg",
+          "sha256": "9bf1b886665d89dd34b9137d205331c749fa53257cf6a1d69e8b21eaf8c074d3",
+          "width": 1600,
+          "height": 900,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "11",
+      "article_slug": "11-ostin-vesenniaia-kapsula",
+      "title": "Чек-лист: собираем стильную весеннюю капсулу в O’STIN",
+      "lead": "Многие девушки хаотично покупают вещи, а потом не понимают, как их интегрировать в гардероб. Как результат — перед выходом из дома всегда «‎нечего надеть»‎.\nO’STIN создал новую коллекцию, лицом которой стала актриса Лена Тронина. Ее образ, необычный стиль в сочетании с одеждой O’STIN стал прекрасным началом запуска весенней линейки бренда.\nВ новой коллекции многие вещи сочетаются между собой,",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/11-ostin-vesenniaia-kapsula/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/11-ostin-vesenniaia-kapsula/content.json",
+        "sha256": "bf64a1c30bd54854d2f96edd2c6ba93474865ad684d2e6acc720ed45abb85de3"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+        "manifest_file_path": "articles/11-ostin-vesenniaia-kapsula/01.jpeg",
+        "sha256": "05eec59a6435737d7d801af082bca264d531dcad32341b1e23a793ccbf1d5512",
+        "width": 4500,
+        "height": 1636,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "Новую коллекцию O’STIN покажет актриса Лена Тронина — искренняя, непосредственная и самоироничная девушка",
+          "source_path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+          "manifest_file_path": "articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+          "sha256": "370b9b469bbf9103c2fa8e4daa6a2bfa455db7f3747c68958424c6008589e1ee",
+          "width": 1280,
+          "height": 1280,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "12",
+      "article_slug": "12-mars-podarki-na-8-marta",
+      "title": "20 вариантов подарков на 8 Марта для самых разных женщин",
+      "lead": "",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/12-mars-podarki-na-8-marta/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/12-mars-podarki-na-8-marta/content.json",
+        "sha256": "b81293f85a15bc1c24f689a7252112450a9767fe75717a9e12841134a5b36ef7"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/01.jpeg",
+        "manifest_file_path": "articles/12-mars-podarki-na-8-marta/01.jpeg",
+        "sha256": "a0f9c099180aff3f4b9dbf9deca540e36fe797998f00fe232d71aa0c28714577",
+        "width": 4016,
+        "height": 4016,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.png",
+          "role": "article_image",
+          "caption": "Аромат, который подарите любимой, запомнится ей и станет романтичным напоминанием о вас",
+          "source_path": "PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/12-mars-podarki-na-8-marta/02.png",
+          "manifest_file_path": "articles/12-mars-podarki-na-8-marta/02.png",
+          "sha256": "f840b7fe0de8c5464ca79918066bccadc33cf786bdaece49ba8644eed2339f46",
+          "width": 1999,
+          "height": 1334,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "13",
+      "article_slug": "13-ilinka-elitnyi-zhk",
+      "title": "Показываем, что за элитный ЖК строят напротив Кремля",
+      "lead": "Рассказываем о премиальном комплексе «Царев сад» в историческом районе Москвы",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/13-ilinka-elitnyi-zhk/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/13-ilinka-elitnyi-zhk/content.json",
+        "sha256": "700ff43d87c96494025c293edb31389c08cf7bf05f4cc274cc9c0ca5d345a06c"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.png",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/01.png",
+        "manifest_file_path": "articles/13-ilinka-elitnyi-zhk/01.png",
+        "sha256": "c5474a8e84a57565df88a8250dafbeccd314b3e84f57679e91cccb73e9f15e88",
+        "width": 1080,
+        "height": 1080,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "Архитектура «Резиденции 1864» продумана так, чтобы не выбиваться из облика города",
+          "source_path": "PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/13-ilinka-elitnyi-zhk/02.jpeg",
+          "manifest_file_path": "articles/13-ilinka-elitnyi-zhk/02.jpeg",
+          "sha256": "91853ea4fcb8fc492ac309f0b6057afa3120569af8fb00149f6838ed2709a986",
+          "width": 1600,
+          "height": 1066,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "14",
+      "article_slug": "14-miuz-modnye-sergi",
+      "title": "Топ-5 самых модных сережек этого сезона",
+      "lead": "Неделя моды осень-зима 2023/24 ясно дала понять – украшения должны быть яркими, крупными и акцентными. В этом сезоне серьги будут активно обращать на себя внимание, и для этого «все средства хороши»: объемное золото ярких оттенков, крупные сияющие камни и, конечно, жемчуг. Собрали для вас самые модные серьги, а дизайнеры MIUZ Diamonds уже предвосхитили ваши желания.\nИтак, вишлист этого года:\nВ",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/14-miuz-modnye-sergi/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/14-miuz-modnye-sergi/content.json",
+        "sha256": "51d2288b9c95e4694ab42cd8fec36d0a2adb08360cf07c6019ad8075a10dc7e9"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/14-miuz-modnye-sergi/01.jpeg",
+        "manifest_file_path": "articles/14-miuz-modnye-sergi/01.jpeg",
+        "sha256": "7405154161aca78078f95474813f1927d0e203f80873077a5b8600bc21776dd6",
+        "width": 1200,
+        "height": 675,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "article_image",
+          "caption": "Фото с показа Missoni осень-зима 2023/2024; Серьги (E01-Y-60372-Z и E01-Y-60384-Z) из коллекции Vittoria",
+          "source_path": "PROMOPAGES-9857/articles/14-miuz-modnye-sergi/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/14-miuz-modnye-sergi/02.jpeg",
+          "manifest_file_path": "articles/14-miuz-modnye-sergi/02.jpeg",
+          "sha256": "7188006307ec95e4638a8a0a484bd8155987d761713a6bd008bf0f48be6030a2",
+          "width": 1200,
+          "height": 675,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "15",
+      "article_slug": "15-ozon-gruzoperevozki",
+      "title": "Грузоперевозки с предсказуемым доходом? Что? Да!",
+      "lead": "Станьте частью логистики крупного маркетплейса",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/15-ozon-gruzoperevozki/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/15-ozon-gruzoperevozki/content.json",
+        "sha256": "8db6b2f4574873e79637ffe61bc460949ff25245764c809a789b02b5d083cdc1"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.png",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/01.png",
+        "manifest_file_path": "articles/15-ozon-gruzoperevozki/01.png",
+        "sha256": "102ff32e54931017ea7f561c4ac834e8999d5003623f83e8f646a067fc2fe1d2",
+        "width": 1600,
+        "height": 800,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.png",
+          "role": "article_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/15-ozon-gruzoperevozki/02.png",
+          "manifest_file_path": "articles/15-ozon-gruzoperevozki/02.png",
+          "sha256": "3110ee3c3dfdcb681ee41e9fa739a24677ac57c4d76bcaeea9c936f04ecba885",
+          "width": 1600,
+          "height": 981,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "16",
+      "article_slug": "16-ekonika-letnie-trendy",
+      "title": "На летних каникулах: 5 трендов сезона",
+      "lead": "В чек-листе — тренды, с которыми вам не захочется расставаться все лето",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/16-ekonika-letnie-trendy/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/16-ekonika-letnie-trendy/content.json",
+        "sha256": "d3c00fdd904da396637cdb22f5502dcae1de93fcf5ef320965705cdcab3ddbb9"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/01.jpeg",
+        "manifest_file_path": "articles/16-ekonika-letnie-trendy/01.jpeg",
+        "sha256": "f725095d967ae97e34a085e8aefe26caa725c1eebe1983b13652f56356e7dead",
+        "width": 1080,
+        "height": 607,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.jpeg",
+          "role": "gallery_image",
+          "caption": "",
+          "source_path": "PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/16-ekonika-letnie-trendy/02.jpeg",
+          "manifest_file_path": "articles/16-ekonika-letnie-trendy/02.jpeg",
+          "sha256": "ea1cc12a04703868c7890a2aad93abc11b368b413622345e0796a411ecb79a36",
+          "width": 650,
+          "height": 650,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "17",
+      "article_slug": "17-level-michurinskiy-kvartira",
+      "title": "Трехсторонняя квартира: уникальный вид из каждой комнаты",
+      "lead": "Редкие форматы квартиры. Рассказываем, чем порадуют жителей в Level Мичуринский",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/17-level-michurinskiy-kvartira/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/17-level-michurinskiy-kvartira/content.json",
+        "sha256": "d7de6650747663d9abe428c3eaba863d54afdc18ffff79265347663f67308b40"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/01.jpeg",
+        "manifest_file_path": "articles/17-level-michurinskiy-kvartira/01.jpeg",
+        "sha256": "d5a32f8570d436600c4e9baf6ec36f94c09d1608df1f46ebd62d6ef7ff79b078",
+        "width": 1200,
+        "height": 675,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.png",
+          "role": "article_image",
+          "caption": "Панорамные виды открываются на парки и скверы, МГУ имени М. В. Ломоносова и деловой центр «Москва-Сити».",
+          "source_path": "PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/17-level-michurinskiy-kvartira/02.png",
+          "manifest_file_path": "articles/17-level-michurinskiy-kvartira/02.png",
+          "sha256": "458991e745aa6d74c991525512c7bacbdf6de11647d2313586fe3f3f94c60fcf",
+          "width": 1200,
+          "height": 568,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "18",
+      "article_slug": "18-dalan-sredstva-dlia-volos",
+      "title": "Правда и мифы о турецких средствах для волос",
+      "lead": "Проверила на себе шампунь и кондиционер из Турции от Dalan. Вот что вышло",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/18-dalan-sredstva-dlia-volos/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/18-dalan-sredstva-dlia-volos/content.json",
+        "sha256": "38c8eb04a86b55bf9b6dec15e38b08fb6bfe06456265debac349cef277dfa249"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+        "manifest_file_path": "articles/18-dalan-sredstva-dlia-volos/01.jpeg",
+        "sha256": "ca6b66f4598578182b7d66f149ae3cedd789cd9561cf68fb7ae6b833277eca30",
+        "width": 750,
+        "height": 1000,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.png",
+          "role": "article_image",
+          "caption": "Красивая коробка, а внутри еще яркая открытка с руководителем компании — вместе со стильными бутылочками все это выглядит очень презентабельно. Самое то для подарка.",
+          "source_path": "PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/18-dalan-sredstva-dlia-volos/02.png",
+          "manifest_file_path": "articles/18-dalan-sredstva-dlia-volos/02.png",
+          "sha256": "8dc8d51c74f6be418f6f33dac6c2b9b5cf8167f8b06040fd0095a87856f8c3d3",
+          "width": 554,
+          "height": 641,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "19",
+      "article_slug": "19-level-travel-otpusk-v-turcii",
+      "title": "Планируем отпуск в Турции: 5 лайфхаков от Level.Travel",
+      "lead": "Прежде чем бронировать тур на даты отпуска, стоит убедиться, что вы ничего не упустили. Например, знаете, как выбрать курорт в зависимости от типа пляжа, или умеете искать хороший отель по выгодной цене. Как научиться этим и другим лайфхакам перед поездкой в Турцию летом, читайте в статье от эксперта по путешествиям Level.Travel.\nКогда ехать в отпуск\nКупальный сезон в Турции достаточно длительный",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/19-level-travel-otpusk-v-turcii/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/19-level-travel-otpusk-v-turcii/content.json",
+        "sha256": "0d8f2c81586814f1c9ff1bd0ea0292094d903f4347ba83f8609df3820c81f182"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+        "manifest_file_path": "articles/19-level-travel-otpusk-v-turcii/01.jpeg",
+        "sha256": "ccbe39ee916e85fe7730a9622f9ee20cef5d34c87f58ca686f015ed6ddbaaa01",
+        "width": 1152,
+        "height": 896,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 2,
+          "image_id": "02",
+          "file": "02.png",
+          "role": "article_image",
+          "caption": "Найти самый выгодный тур поможет сервис «Календарь низких цен» — там вы сможете сравнить цены на туры в зависимости от дня вылета и продолжительности поездки",
+          "source_path": "PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png",
+          "manifest_file_path": "articles/19-level-travel-otpusk-v-turcii/02.png",
+          "sha256": "fc9e930a12046d234b70b58ac067350ec543684bbb69e5b0763fe6b619954b91",
+          "width": 1028,
+          "height": 594,
+          "duplicate_of": null
+        }
+      ]
+    },
+    {
+      "article_number": "20",
+      "article_slug": "20-sravni-kreditnyi-reiting",
+      "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+      "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+      "context": {
+        "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+        "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b"
+      },
+      "selected_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+        "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/01.jpeg",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/01.jpeg",
+        "sha256": "4f3de7c82a207ff044907ac459598119297ff9bb919901b856f9dea708b0212d",
+        "width": 1254,
+        "height": 836,
+        "duplicate_of": null
+      },
+      "new_unique_image_count": 1,
+      "images": [
+        {
+          "order": 3,
+          "image_id": "03",
+          "file": "03.png",
+          "role": "article_image",
+          "caption": "Ввести данные достаточно один раз — далее они будут обновляться автоматически каждый месяц",
+          "source_path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+          "copy_path": "clipmaker-lite-test/PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+          "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/03.png",
+          "sha256": "a05883165528b8100d5b5f82e4d92622c52c01b643e774ccbd9439c5210fa77e",
+          "width": 1240,
+          "height": 474,
+          "duplicate_of": null
+        }
+      ]
+    }
+  ]
+}

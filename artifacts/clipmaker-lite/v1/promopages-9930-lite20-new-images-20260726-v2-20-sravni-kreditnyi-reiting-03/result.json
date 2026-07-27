@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-20-sravni-kreditnyi-reiting-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:ae51285a1ff3cef8b3bc3e4e810b5efdf2336d92567420f0d45b58bcdb1da6df",
+    "execution_fingerprint": "sha256:1bc75418499e4cb78ed2323de7f3c44091d9bff136e2ccebd391b05e92a0f85b",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa003-4fce-7ea0-bb23-668825d0cb02"
+    },
+    "authored_payload_sha256": "fb741ce6c688f1bb673a3b4b2be8c5e2f74cdcf79f15a052b063531c2ceb4ce7",
+    "draft_file_sha256": "b5b7a6f126b5641a10554ade76f89d1bbb337c73a330e718502e0e261478f0bf"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/20-sravni-kreditnyi-reiting/03.png",
+      "sha256": "a05883165528b8100d5b5f82e4d92622c52c01b643e774ccbd9439c5210fa77e",
+      "bytes": 169080
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/20-sravni-kreditnyi-reiting/content.json",
+      "sha256": "bad2e96cc7affb4c7c5c7d6f51c59064ce327cb8295552284a2fc68580f3f04b",
+      "bytes": 16204,
+      "locator": {
+        "article_id": "20-sravni-kreditnyi-reiting",
+        "title": "Как повысить кредитный рейтинг, узнайте на Сравни",
+        "lead": "Неприятно, когда банк отказал в выдаче кредита, а вы уже представили, какой ремонт сделаете на кухне или почти записались на онлайн-курс. Понять, почему пришло такое решение, не получится — ни поддержка, ни сотрудники отделения не раскроют настоящую причину.\nВот бы был сервис, который заранее предскажет и объяснит ответ банка. Оказывается, он уже есть — это «Кредитный рейтинг» от финансового",
+        "image_id": "03",
+        "block_index": 11,
+        "role": "article_image",
+        "caption": "Ввести данные достаточно один раз — далее они будут обновляться автоматически каждый месяц",
+        "file": "03.png",
+        "manifest_file_path": "articles/20-sravni-kreditnyi-reiting/03.png",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "Отследит ваш кредитный рейтинг"
+        },
+        "nearest_text_before": {
+          "block_index": 10,
+          "type": "paragraph",
+          "text": "Узнать свой кредитный рейтинг можно в сервисе Сравни. Для этого нужно войти на сайт с помощью номера телефона и авторизоваться на сайте через Госуслуги — все данные подгрузятся автоматически."
+        },
+        "nearest_text_after": {
+          "block_index": 12,
+          "type": "heading",
+          "text": "Узнает, на какую сумму вам одобрят кредит"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Широкий экран сервиса с крупным заголовком «Персональный кредитный рейтинг», кнопкой перехода, пояснением об авторизации через Госуслуги и блоками доверия и безопасности.",
+      "Справа расположен иллюстрированный человек рядом с крупной шкалой кредитного рейтинга; стрелка шкалы и все элементы интерфейса находятся в статичном состоянии.",
+      "Безопасно подвижным элементом может быть только один мягкий оптический акцент вокруг уже существующего центра шкалы; текст, стрелка, цветовые сегменты, кнопки и компоновка должны остаться неизменными."
+    ],
+    "article_context": "Изображение стоит после объяснения, что рейтинг можно узнать через сервис Сравни с авторизацией через Госуслуги, и сопровождается подписью об однократном вводе данных и автоматическом ежемесячном обновлении. Его функция — показать понятный, бесплатный и защищённый вход в сервис персонального кредитного рейтинга; анимация должна лишь мягко привлечь внимание к индикатору, не меняя интерфейс и его смысл.",
+    "structured_intent": {
+      "editorial_meaning": "Сервис позволяет спокойно и безопасно узнать персональный кредитный рейтинг, сохраняя данные актуальными без повторного ввода.",
+      "primary_action": "От центра существующей шкалы распространяется один мягкий оптический импульс.",
+      "terminal_state": "Оптический импульс затух, а шкала и весь экран остались полностью читаемыми и в исходном состоянии.",
+      "semantic_invariant": "Интерфейс продолжает показывать тот же неизменный сервис персонального кредитного рейтинга; все данные, тексты, элементы управления и положение стрелки сохраняются."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Неподвижная камера на весь пятисекундный кадр. С первых мгновений в центре шкалы появляется очень слабое свечение, плавно расширяется вокруг оси стрелки большую часть сцены и затем мягко затухает. К концу шкала снова выглядит спокойно и полностью читаемо; положение стрелки, цветовые сектора, весь текст, кнопки, пиктограммы, персонаж и компоновка не меняются.",
+      "positive_prompt": "Fixed camera. A soft optical pulse slowly expands once from the center of the credit-rating gauge and gently fades, ending with the gauge fully clear and unchanged. Keep the pointer, text, controls, layout, and illustrated person completely static.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "В четырёхсекундном неподвижном кадре один сдержанный световой импульс быстро и плавно возникает у центральной оси шкалы, расширяется с небольшой амплитудой и затухает ближе к финалу. В последнем кадре экран остаётся чётким и исходным: стрелка и состояние шкалы не сдвинуты, интерфейсные надписи и элементы управления сохранены, иллюстрированный человек неподвижен.",
+      "positive_prompt": "Fixed camera. A restrained glow pulse blooms around the gauge hub, expands smoothly, then fades near the end, leaving the entire credit-rating screen crisp and unchanged. The pointer, UI text, controls, layout, and person remain still.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

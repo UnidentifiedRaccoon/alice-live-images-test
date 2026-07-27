@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/11-ostin-vesenniaia-kapsula/02.jpeg",
+    "sha256": "370b9b469bbf9103c2fa8e4daa6a2bfa455db7f3747c68958424c6008589e1ee",
+    "width": 1280,
+    "height": 1280
+  },
+  "structured_intent": {
+    "editorial_meaning": "Портрет передает индивидуальность, искренность и спокойную уверенность героини как основу выразительного весеннего образа O’STIN.",
+    "primary_action": "Героиня плавно меняет положение головы и утверждает прямой взгляд в камеру.",
+    "terminal_state": "Голова останавливается в новом положении, а героиня устойчиво смотрит прямо в камеру с тем же собранным выражением.",
+    "semantic_invariant": "Сдержанная, уверенная и немного дерзкая собранность героини сохраняется до последнего кадра."
+  },
+  "prompt": {
+    "positive": "She slowly turns her chin a few degrees toward the light as loose strands of hair drift gently, then settles into a direct, self-assured gaze at the camera. Fixed camera; her hand remains still behind her neck, and her composed expression holds in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-11-ostin-vesenniaia-kapsula-02/result.json",
+    "sha256": "9c71a9c52003800277c6ececaf9bb56363ae99508baf74b0f8c76aa07ed3daba",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "370b9b469bbf9103c2fa8e4daa6a2bfa455db7f3747c68958424c6008589e1ee",
+      "article_context_sha256": "bf64a1c30bd54854d2f96edd2c6ba93474865ad684d2e6acc720ed45abb85de3",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

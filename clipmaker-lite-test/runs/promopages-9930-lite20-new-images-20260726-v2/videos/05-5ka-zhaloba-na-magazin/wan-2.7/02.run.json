@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "05-5ka-zhaloba-na-magazin-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/05-5ka-zhaloba-na-magazin/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With a fixed camera, the woman steadily scans the refrigerated shelf from left to right, leaning slightly closer as she inspects the products. Her movement eases near the end, with her gaze settled attentively on one package in the final frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/05-5ka-zhaloba-na-magazin/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3806b2dbc9eb44c9bfdcb653fbcdf3c216c821eebbc1ac510c2bf35d94e8a0ab",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "DdHZKiBHCTxcgpZSpBo6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:09:10Z",
+  "completed_at": "2026-07-26T20:10:28Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6647631,
+    "sha256": "cd9e91fa78ca9f8d9f73876868a8700952af908bb0ddfcc8e4bd2891fb181475"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-05-5ka-zhaloba-na-magazin-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-05-5ka-zhaloba-na-magazin-02-wan-2-7",
+  "lite_result_sha256": "3e44bdf64cd13428cf0c480bb3b06d4552bc69d50236d18515e24970a6ea0cce",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

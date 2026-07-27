@@ -301,6 +301,77 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
                 ):
                     batch.load_lite_job(entries[1], root)
 
+    def test_load_lite_job_can_read_frozen_planning_from_separate_workspace(self) -> None:
+        entry = batch.matrix()[0]
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            planning_root = base / "planning"
+            provider_root = base / "provider"
+            for workspace in (planning_root, provider_root):
+                source = workspace / entry.sample.source_path
+                source.parent.mkdir(parents=True)
+                source.write_bytes((batch.ROOT / entry.sample.source_path).read_bytes())
+            result_path = (
+                planning_root
+                / batch.ARTIFACT_NAMESPACE
+                / entry.planning_run_id
+                / "result.json"
+            )
+            result_path.parent.mkdir(parents=True)
+            result = {
+                "schema_version": 2,
+                "job_id": entry.planning_run_id,
+                "producer": {"agent_id": batch.AGENT_ID},
+                "inputs": {
+                    "source_image": {
+                        "path": entry.sample.source_path,
+                        "sha256": entry.sample.source_sha256,
+                    },
+                    "article_context": {"path": entry.sample.context_path},
+                },
+                "analysis": {
+                    "structured_intent": self.lite_job(entry).structured_intent
+                },
+                "models": [
+                    {
+                        "model_id": model_id,
+                        "positive_prompt": f"frozen prompt for {model_id}",
+                        "negative_prompt": None,
+                        "runtime": batch.contract()["models"][model_id]["runtime"],
+                    }
+                    for model_id in batch.MODEL_IDS
+                ],
+            }
+            transport.atomic_write_json(result_path, result)
+            summary = {
+                "verified": True,
+                "agent_id": batch.AGENT_ID,
+                "models": list(batch.MODEL_IDS),
+                "source_image_sha256": entry.sample.source_sha256,
+                "result_path": (
+                    batch.ARTIFACT_NAMESPACE / entry.planning_run_id / "result.json"
+                ).as_posix(),
+            }
+            verifier = mock.Mock(return_value=summary)
+            with (
+                mock.patch.object(batch, "PLANNING_WORKSPACE", planning_root),
+                mock.patch.object(batch, "PLANNING_PROVENANCE_VERIFIER", verifier),
+            ):
+                job = batch.load_lite_job(entry, provider_root)
+
+            verifier.assert_called_once_with(
+                planning_root.resolve(), entry.planning_run_id
+            )
+            self.assertEqual(job.positive_prompt, "frozen prompt for alibaba/wan-2.2")
+            self.assertFalse(
+                (
+                    provider_root
+                    / batch.ARTIFACT_NAMESPACE
+                    / entry.planning_run_id
+                    / "result.json"
+                ).exists()
+            )
+
     def test_load_lite_job_rejects_incomplete_planning_provenance(self) -> None:
         entry = batch.matrix()[0]
         summary = {

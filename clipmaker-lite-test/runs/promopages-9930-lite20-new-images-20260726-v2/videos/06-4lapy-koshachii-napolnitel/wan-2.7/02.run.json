@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "06-4lapy-koshachii-napolnitel-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/06-4lapy-koshachii-napolnitel/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The cat steadily sniffs across the litter surface, gently nudging a few granules as its whiskers twitch. Fixed camera. By the final frame, it remains calmly engaged with its nose resting just above the settled litter.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/06-4lapy-koshachii-napolnitel/02.jpeg"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "ae1c60b64a79e64f81de414f35ed7163b231b013b369e8e3e6e439ac28be6cbb",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "hOY7WkdMGYj55fkcLwRX",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:09:13Z",
+  "completed_at": "2026-07-26T20:11:34Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 13018362,
+    "sha256": "85f7e755562ee83a3e4c3810031aaa369fabdaeb8273f08118e5949dca036a65"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-06-4lapy-koshachii-napolnitel-02-wan-2-7",
+  "lite_result_sha256": "0cc31d9a5c8662c101fb921221e14602e5ed7413f26e516b91f55f9bf6849927",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

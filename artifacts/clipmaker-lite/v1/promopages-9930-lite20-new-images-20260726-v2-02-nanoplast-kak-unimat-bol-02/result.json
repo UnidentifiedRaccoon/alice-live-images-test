@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+    "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:2f9391ec9cbc010ec095cdab7b71ff56b393f16785ee80bb66f78e201ae9f288",
+    "execution_fingerprint": "sha256:9931e394925cc66210071f9770587bdb6c5bbf078b053d338f963577eeb029cf",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa000-828c-7573-b66e-484d84e516a0"
+    },
+    "authored_payload_sha256": "edf90a02d4e9cbe18a37c46196ada5b9bbc6ece095286b8e7991f3d6976e0981",
+    "draft_file_sha256": "70ca3c4070207dcc48e07d49e87a10267140ff392a9b645ea33f930f45ef9e51"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+      "sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+      "bytes": 1653873
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/02-nanoplast-kak-unimat-bol/content.json",
+      "sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478",
+      "bytes": 17499,
+      "locator": {
+        "article_id": "02-nanoplast-kak-unimat-bol",
+        "title": "Как унимать боль в суставах: советы пожилым и не только",
+        "lead": "Рассказываем, как повысить качество жизни с гель-бальзамом и пластырем",
+        "image_id": "02",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "",
+        "file": "02.png",
+        "manifest_file_path": "articles/02-nanoplast-kak-unimat-bol/02.png",
+        "current_heading": {
+          "block_index": 10,
+          "level": 2,
+          "text": "Как поддерживать здоровье опорно-двигательного аппарата"
+        },
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "✅ Избегайте травм. Соблюдайте правила безопасности при занятиях спортом и подбирайте удобную обувь с хорошей амортизацией, которая не будет перегружать позвоночник и суставы ног. Если у вас тяжелая физическая работа, перед ней нужно выполнять упражнения на растяжку мышц."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "heading",
+          "text": "Как быстро и надолго снимать боль — даже хроническую"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Четыре взрослые женщины на ковриках выполняют упражнение на мышцы корпуса в светлом зале с зеркальной стеной.",
+      "Все участницы находятся в приподнятом положении корпуса, согнув колени и удерживая руки за головой; коврики и гантели остаются неподвижными.",
+      "Основной естественно подвижный элемент — синхронное контролируемое движение корпусов с небольшой амплитудой; отражения должны точно соответствовать участницам."
+    ],
+    "article_context": "Это body-изображение завершает раздел о комплексной профилактике и стоит сразу после советов заниматься спортом, поддерживать подвижность и разминаться. Оно иллюстрирует посильную регулярную физическую активность как способ сохранять свободу движений и поддерживать опорно-двигательный аппарат.",
+    "structured_intent": {
+      "editorial_meaning": "Регулярная посильная физическая активность помогает поддерживать подвижность, силу и комфорт движений.",
+      "primary_action": "Женщины синхронно выполняют одно контролируемое повторение скручивания корпуса.",
+      "terminal_state": "В последнем кадре женщины устойчиво находятся в приподнятой верхней фазе скручивания.",
+      "semantic_invariant": "Тренировка остается спокойной, безопасной и комфортной, без признаков боли или перенапряжения."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Пятисекундный непрерывный кадр с неподвижной камерой. Женщины сразу начинают медленно и синхронно опускать корпуса с умеренной амплитудой, затем плавно возвращаются в верхнюю фазу того же повторения. Руки остаются спокойно за головой, колени согнуты. К концу они устойчиво достигают приподнятого положения корпуса, сохраняя ощущение комфортной тренировки.",
+      "positive_prompt": "The women complete one slow, controlled crunch repetition together, lowering their torsos moderately toward the mats and curling smoothly back up while their hands stay behind their heads. Fixed camera. By the final frame they hold the raised crunch position, steady and comfortably engaged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный focused moment с неподвижной камерой и меньшей амплитудой. Участницы синхронно слегка отклоняют корпуса назад и без паузы плавно поднимаются в контролируемую верхнюю фазу одного скручивания. Последний кадр фиксирует устойчивое приподнятое положение и спокойную уверенность в движении.",
+      "positive_prompt": "With a fixed camera, the women perform one compact synchronized crunch: their torsos ease slightly downward, then curl back up at an even pace, hands remaining behind their heads. In the final frame they are settled in the raised crunch position, composed and moving comfortably.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59e58e44549fbd677c8c10ca17a09ce212a8679b52e1a4c36b4e5af517d1893a",
+      "negative_prompt": null
+    }
+  ]
+}

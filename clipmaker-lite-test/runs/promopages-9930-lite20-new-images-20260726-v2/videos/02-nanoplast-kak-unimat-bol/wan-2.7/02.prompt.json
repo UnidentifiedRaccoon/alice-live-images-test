@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/02-nanoplast-kak-unimat-bol/02.png",
+    "sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+    "width": 1600,
+    "height": 900
+  },
+  "structured_intent": {
+    "editorial_meaning": "Регулярная посильная физическая активность помогает поддерживать подвижность, силу и комфорт движений.",
+    "primary_action": "Женщины синхронно выполняют одно контролируемое повторение скручивания корпуса.",
+    "terminal_state": "В последнем кадре женщины устойчиво находятся в приподнятой верхней фазе скручивания.",
+    "semantic_invariant": "Тренировка остается спокойной, безопасной и комфортной, без признаков боли или перенапряжения."
+  },
+  "prompt": {
+    "positive": "The women complete one slow, controlled crunch repetition together, lowering their torsos moderately toward the mats and curling smoothly back up while their hands stay behind their heads. Fixed camera. By the final frame they hold the raised crunch position, steady and comfortably engaged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-lite20-new-images-20260726-v2-02-nanoplast-kak-unimat-bol-02/result.json",
+    "sha256": "7f9c78ea3f93aa030410f7a882140558c83629116a24e8339d0b24f1118f9d05",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:d6cef7e2bc78a4e83dec16a6e2ad5c71725f1b07a974dad5e19d95a657a79dca",
+      "instruction_bundle_sha256": "6220c2b456df67cc09df7afeff6297e3102d5c1e85752fcc370c68bd10884f38",
+      "source_image_sha256": "36280e853c7d2a8938717ade81363ecaa09786b90250377193f8848574bd2341",
+      "article_context_sha256": "ad38a17c411b92e73b942890e46d9e974b9df88d58a1a72ad376bb046caa2478",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

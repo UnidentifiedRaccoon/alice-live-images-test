@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "19-level-travel-otpusk-v-turcii-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-9930-lite20-new-images-20260726-v2/videos/19-level-travel-otpusk-v-turcii/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. A soft blue optical sheen moves steadily across the existing linked prices from left to right, then gently settles on the May price column near the end. All text, numbers, underlines, spacing, and layout remain exactly unchanged in the final frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/19-level-travel-otpusk-v-turcii/02.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c28da8ce496efea228eb59049321da7909c603ba4526e6fdc2124c6c9ff22b90",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "rG5lY3Yh6czEqx2ODvdz",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-26T20:17:16Z",
+  "completed_at": "2026-07-26T20:18:32Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1894,
+    "height": 1094,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1411334,
+    "sha256": "f999d3058b22af3b0aa4b681f4500ed3e947f2fa4c87e968ce757730ce3bc049"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-lite20-new-images-20260726-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-lite20-new-images-20260726-v2-19-level-travel-otpusk-v-turcii-02",
+  "provider_run_id": "promopages-9930-lite20-new-images-20260726-v2-19-level-travel-otpusk-v-turcii-02-wan-2-7",
+  "lite_result_sha256": "37b756e501d5d92c3bd4339695759e3456554b16db2f4d8cee76c030ae89c1c6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
