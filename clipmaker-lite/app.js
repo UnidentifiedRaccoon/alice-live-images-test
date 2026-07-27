@@ -4,12 +4,18 @@
   const BASE_MANIFEST_PATH = "../clipmaker-lite-test/manifest.json";
   const ADDITIONAL_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-9930-manifest.json";
-  const EXPECTED_ARTICLE_COUNT = 20;
+  const CASE_21_MANIFEST_PATH = "../clipmaker-lite-test/case-21-manifest.json";
+  const EXPECTED_BASE_ARTICLE_COUNT = 20;
   const EXPECTED_BASE_OUTPUT_COUNT = 60;
+  const EXPECTED_ADDITIONAL_ARTICLE_COUNT = 20;
   const EXPECTED_ADDITIONAL_IMAGE_COUNT = 20;
   const EXPECTED_ADDITIONAL_OUTPUT_COUNT = 60;
-  const EXPECTED_UNIQUE_IMAGE_COUNT = 40;
-  const EXPECTED_CANONICAL_OUTPUT_COUNT = 120;
+  const EXPECTED_CASE_21_ARTICLE_COUNT = 1;
+  const EXPECTED_CASE_21_IMAGE_COUNT = 1;
+  const EXPECTED_CASE_21_OUTPUT_COUNT = 3;
+  const EXPECTED_TOTAL_ARTICLE_COUNT = 21;
+  const EXPECTED_UNIQUE_IMAGE_COUNT = 41;
+  const EXPECTED_CANONICAL_OUTPUT_COUNT = 123;
   const EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2;
   const EXPECTED_EXTERNAL_OUTPUT_COUNT = 1;
   const MODEL_ORDER = [
@@ -131,12 +137,12 @@
   const validateBaseManifest = (manifest) => {
     assert(manifest && typeof manifest === "object", "Манифест имеет неверный формат.");
     assert(
-      manifest.article_count === EXPECTED_ARTICLE_COUNT,
+      manifest.article_count === EXPECTED_BASE_ARTICLE_COUNT,
       `В манифесте заявлено статей: ${manifest.article_count ?? "—"}, ожидалось 20.`,
     );
     assert(Array.isArray(manifest.articles), "В манифесте нет списка articles.");
     assert(
-      manifest.articles.length === EXPECTED_ARTICLE_COUNT,
+      manifest.articles.length === EXPECTED_BASE_ARTICLE_COUNT,
       `Найдено статей: ${manifest.articles.length}, ожидалось 20.`,
     );
     assert(Array.isArray(manifest.outputs), "В манифесте нет общего списка outputs.");
@@ -145,7 +151,7 @@
       `Найдено роликов: ${manifest.outputs.length}, ожидалось 60.`,
     );
 
-    const expectedNumbers = Array.from({ length: EXPECTED_ARTICLE_COUNT }, (_, index) =>
+    const expectedNumbers = Array.from({ length: EXPECTED_BASE_ARTICLE_COUNT }, (_, index) =>
       String(index + 1).padStart(2, "0"),
     );
     const canonicalVideoPaths = new Set();
@@ -358,7 +364,7 @@
   const validateAdditionalManifest = (manifest, baseArticles) => {
     assert(manifest && typeof manifest === "object", "Дополнительный манифест имеет неверный формат.");
     assert(
-      manifest.article_count === EXPECTED_ARTICLE_COUNT,
+      manifest.article_count === EXPECTED_ADDITIONAL_ARTICLE_COUNT,
       `В дополнительном манифесте заявлено статей: ${manifest.article_count ?? "—"}, ожидалось 20.`,
     );
     assert(
@@ -374,7 +380,8 @@
       "Дополнительный манифест должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
     );
     assert(
-      Array.isArray(manifest.articles) && manifest.articles.length === EXPECTED_ARTICLE_COUNT,
+      Array.isArray(manifest.articles) &&
+        manifest.articles.length === EXPECTED_ADDITIONAL_ARTICLE_COUNT,
       "В дополнительном манифесте должен быть список из 20 статей.",
     );
     assert(
@@ -471,7 +478,139 @@
     return normalizedArticles;
   };
 
-  const mergeArticleImages = (baseArticles, additionalArticles) => {
+  const validateCase21Manifest = (manifest, baseArticles, additionalArticles) => {
+    assert(manifest && typeof manifest === "object", "Манифест кейса 21 имеет неверный формат.");
+    assert(
+      manifest.manifest_role === "case-21-extension",
+      "Sidecar должен иметь manifest_role case-21-extension.",
+    );
+    assert(manifest.agent_id === "clipmaker-lite", "Кейс 21 должен быть создан clipmaker-lite.");
+    assert(
+      manifest.article_count === EXPECTED_CASE_21_ARTICLE_COUNT,
+      "В sidecar должна быть ровно одна статья.",
+    );
+    assert(
+      manifest.image_count === EXPECTED_CASE_21_IMAGE_COUNT,
+      "В sidecar должно быть ровно одно изображение.",
+    );
+    assert(
+      manifest.expected_outputs === EXPECTED_CASE_21_OUTPUT_COUNT,
+      "В sidecar должно быть заявлено три ролика.",
+    );
+    assert(
+      JSON.stringify(manifest.models) === JSON.stringify(MODEL_ORDER),
+      "Sidecar должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
+    );
+    assert(
+      Array.isArray(manifest.articles) &&
+        manifest.articles.length === EXPECTED_CASE_21_ARTICLE_COUNT,
+      "В sidecar должен быть список из одной статьи.",
+    );
+    assert(
+      Array.isArray(manifest.outputs) &&
+        manifest.outputs.length === EXPECTED_CASE_21_OUTPUT_COUNT,
+      "В sidecar должен быть плоский список из трёх роликов.",
+    );
+
+    const article = manifest.articles[0];
+    assert(article.article_number === "21", "Sidecar должен описывать кейс 21.");
+    assert(article.article_slug && article.title, "У кейса 21 нет slug или заголовка.");
+    assert(article.context_path, "У кейса 21 нет пути к контексту статьи.");
+    assert(
+      !baseArticles.some((baseArticle) => baseArticle.article_slug === article.article_slug),
+      `Slug кейса 21 уже занят: ${article.article_slug}.`,
+    );
+    assert(
+      Array.isArray(article.images) && article.images.length === EXPECTED_CASE_21_IMAGE_COUNT,
+      "У кейса 21 должно быть ровно одно выбранное изображение.",
+    );
+
+    const knownSourceDigests = new Set([
+      ...baseArticles.map((baseArticle) => baseArticle.selected_image.sha256),
+      ...additionalArticles.flatMap((additionalArticle) =>
+        additionalArticle.images.map((record) => record.image.sha256),
+      ),
+    ]);
+    const knownSourcePaths = new Set([
+      ...baseArticles.map((baseArticle) => baseArticle.selected_image.source_path),
+      ...additionalArticles.flatMap((additionalArticle) =>
+        additionalArticle.images.map((record) => record.image.source_path),
+      ),
+    ]);
+    const usedVideoPaths = new Set(
+      baseArticles.flatMap((baseArticle) => [
+        ...baseArticle.outputs,
+        ...(baseArticle.comparison_outputs || []),
+        ...(baseArticle.external_outputs || []),
+      ]).map((output) => output.video_path),
+    );
+    additionalArticles.forEach((additionalArticle) => {
+      additionalArticle.images.forEach((record) => {
+        record.outputs.forEach((output) => usedVideoPaths.add(output.video_path));
+      });
+    });
+
+    const record = article.images[0];
+    const image = record?.image;
+    assert(image && typeof image === "object", "У кейса 21 нет данных изображения.");
+    assert(image.image_id && image.source_path, "У изображения кейса 21 нет ID или source_path.");
+    assert(
+      Number(image.width) > 0 && Number(image.height) > 0,
+      "У изображения кейса 21 нет геометрии.",
+    );
+    assert(
+      typeof image.sha256 === "string" && image.sha256.length === 64,
+      "У изображения кейса 21 нет SHA-256.",
+    );
+    assert(image.delivery === "repository-raw", "Исходник кейса 21 должен доставляться из main.");
+    assert(!knownSourceDigests.has(image.sha256), "Исходник кейса 21 дублирует прежнюю выборку.");
+    assert(!knownSourcePaths.has(image.source_path), "Путь исходника кейса 21 уже использован.");
+    assert(
+      Array.isArray(record.outputs) && record.outputs.length === EXPECTED_CASE_21_OUTPUT_COUNT,
+      "У изображения кейса 21 должно быть три ролика.",
+    );
+
+    const outputsByModel = new Map(record.outputs.map((output) => [output.model_id, output]));
+    assert(outputsByModel.size === MODEL_ORDER.length, "У кейса 21 повторяются модели.");
+    const outputs = MODEL_ORDER.map((modelId) => {
+      const output = outputsByModel.get(modelId);
+      assert(output, `У кейса 21 нет модели ${modelId}.`);
+      assert(output.delivery === "repository-raw", `Ролик ${modelId} должен доставляться из main.`);
+      validateOutput("21", output, usedVideoPaths, modelId);
+      return output;
+    });
+
+    const flatOutputsByModel = new Map(
+      manifest.outputs.map((output) => [output.model_id, output]),
+    );
+    assert(flatOutputsByModel.size === MODEL_ORDER.length, "В плоском списке sidecar повторяются модели.");
+    MODEL_ORDER.forEach((modelId) => {
+      const flatOutput = flatOutputsByModel.get(modelId);
+      assert(flatOutput, `В плоском списке sidecar нет модели ${modelId}.`);
+      assert(flatOutput.delivery === "repository-raw", `Плоский output ${modelId} должен ссылаться на main.`);
+      const nestedOutput = outputsByModel.get(modelId);
+      assert(
+        JSON.stringify(flatOutput) === JSON.stringify(nestedOutput),
+        `Плоский output ${modelId} не совпадает с записью статьи.`,
+      );
+    });
+
+    return [
+      {
+        ...article,
+        images: [
+          {
+            ...record,
+            image,
+            outputs,
+            displayOutputs: outputs,
+          },
+        ],
+      },
+    ];
+  };
+
+  const mergeArticleImages = (baseArticles, additionalArticles, case21Articles) => {
     const additionalBySlug = new Map(
       additionalArticles.map((article) => [article.article_slug, article]),
     );
@@ -491,10 +630,15 @@
         images: [firstImage, ...additional.images],
       };
     });
+    merged.push(...case21Articles);
+    assert(
+      merged.length === EXPECTED_TOTAL_ARTICLE_COUNT,
+      `После объединения найдено кейсов: ${merged.length}, ожидалось 21.`,
+    );
     const totalImages = merged.reduce((sum, article) => sum + article.images.length, 0);
     assert(
       totalImages === EXPECTED_UNIQUE_IMAGE_COUNT,
-      `После объединения найдено уникальных изображений: ${totalImages}, ожидалось 40.`,
+      `После объединения найдено уникальных изображений: ${totalImages}, ожидалось 41.`,
     );
     const canonicalOutputCount = merged.reduce(
       (articleTotal, article) =>
@@ -507,7 +651,18 @@
     );
     assert(
       canonicalOutputCount === EXPECTED_CANONICAL_OUTPUT_COUNT,
-      `После объединения найдено canonical роликов: ${canonicalOutputCount}, ожидалось 120.`,
+      `После объединения найдено canonical роликов: ${canonicalOutputCount}, ожидалось 123.`,
+    );
+    const canonicalVideoPaths = new Set(
+      merged.flatMap((article) =>
+        article.images.flatMap((imageRecord) =>
+          imageRecord.outputs.map((output) => output.video_path),
+        ),
+      ),
+    );
+    assert(
+      canonicalVideoPaths.size === EXPECTED_CANONICAL_OUTPUT_COUNT,
+      "После объединения canonical MP4 должны быть уникальны.",
     );
     return merged;
   };
@@ -928,9 +1083,10 @@
 
   const initialise = async () => {
     try {
-      const [baseResponse, additionalResponse] = await Promise.all([
+      const [baseResponse, additionalResponse, case21Response] = await Promise.all([
         fetch(BASE_MANIFEST_PATH, { cache: "no-store" }),
         fetch(ADDITIONAL_MANIFEST_PATH, { cache: "no-store" }),
+        fetch(CASE_21_MANIFEST_PATH, { cache: "no-store" }),
       ]);
       if (!baseResponse.ok) {
         throw new Error(`Базовый манифест вернул HTTP ${baseResponse.status}.`);
@@ -940,17 +1096,26 @@
           `Манифест PROMOPAGES-9930 вернул HTTP ${additionalResponse.status}.`,
         );
       }
+      if (!case21Response.ok) {
+        throw new Error(`Манифест кейса 21 вернул HTTP ${case21Response.status}.`);
+      }
 
-      const [baseManifest, additionalManifest] = await Promise.all([
+      const [baseManifest, additionalManifest, case21Manifest] = await Promise.all([
         baseResponse.json(),
         additionalResponse.json(),
+        case21Response.json(),
       ]);
       const baseArticles = validateBaseManifest(baseManifest);
       const additionalArticles = validateAdditionalManifest(
         additionalManifest,
         baseArticles,
       );
-      articles = mergeArticleImages(baseArticles, additionalArticles);
+      const case21Articles = validateCase21Manifest(
+        case21Manifest,
+        baseArticles,
+        additionalArticles,
+      );
+      articles = mergeArticleImages(baseArticles, additionalArticles, case21Articles);
       elements.caseSelect.replaceChildren(
         ...articles.map(
           (article) =>
