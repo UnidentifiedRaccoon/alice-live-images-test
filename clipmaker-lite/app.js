@@ -11,12 +11,14 @@
   const EXPECTED_UNIQUE_IMAGE_COUNT = 40;
   const EXPECTED_CANONICAL_OUTPUT_COUNT = 120;
   const EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2;
+  const EXPECTED_EXTERNAL_OUTPUT_COUNT = 1;
   const MODEL_ORDER = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
   ];
   const EXPERIMENT_ARTICLE_NUMBER = "14";
+  const EXTERNAL_MODEL_ID = "segmind/wan-2.2-i2v-flash";
   const EXPERIMENT_PROMPT_SOURCE_MODEL_ID = MODEL_ORDER[0];
   const EXPERIMENT_TARGET_MODEL_ORDER = MODEL_ORDER.slice(1);
   const ADDITIONAL_MODEL_ORDER = MODEL_ORDER;
@@ -34,6 +36,10 @@
     "google/veo-3.1-lite": {
       name: "Veo 3.1 Lite",
       cost: "$0.20",
+    },
+    [EXTERNAL_MODEL_ID]: {
+      name: "Wan 2.2 Flash",
+      cost: "$0.18",
     },
   };
 
@@ -146,6 +152,7 @@
     const allVideoPaths = new Set();
     let promptCount = 0;
     let comparisonOutputCount = 0;
+    let externalOutputCount = 0;
 
     manifest.articles.forEach((article, articleIndex) => {
       assert(
@@ -185,7 +192,14 @@
       });
 
       const hasComparisonOutputs = hasOwn(article, "comparison_outputs");
-      if (!hasComparisonOutputs) return;
+      const hasExternalOutputs = hasOwn(article, "external_outputs");
+      if (!hasComparisonOutputs) {
+        assert(
+          !hasExternalOutputs,
+          `Внешний route без comparison experiment найден у кейса ${article.article_number}.`,
+        );
+        return;
+      }
 
       assert(
         article.article_number === EXPERIMENT_ARTICLE_NUMBER,
@@ -228,6 +242,45 @@
           `${modelId} · prompt Wan 2.2`,
         );
       });
+
+      assert(
+        Array.isArray(article.external_outputs) &&
+          article.external_outputs.length === EXPECTED_EXTERNAL_OUTPUT_COUNT,
+        `У кейса ${EXPERIMENT_ARTICLE_NUMBER} должен быть один внешний Eliza → Segmind ролик.`,
+      );
+      const externalOutput = article.external_outputs[0];
+      assert(
+        externalOutput.model_id === EXTERNAL_MODEL_ID,
+        `У внешнего ролика кейса ${EXPERIMENT_ARTICLE_NUMBER} неверный model ID.`,
+      );
+      assert(
+        externalOutput.gateway === "eliza" && externalOutput.provider === "segmind",
+        `У внешнего ролика кейса ${EXPERIMENT_ARTICLE_NUMBER} неверный route.`,
+      );
+      assert(
+        externalOutput.route_label === "Eliza → Segmind",
+        `У внешнего ролика кейса ${EXPERIMENT_ARTICLE_NUMBER} нет явной подписи route.`,
+      );
+      assert(
+        externalOutput.delivery === "repository-raw",
+        `Внешний ролик кейса ${EXPERIMENT_ARTICLE_NUMBER} должен доставляться из main.`,
+      );
+      assert(
+        externalOutput.actual_cost_usd === 0.18,
+        `У внешнего ролика кейса ${EXPERIMENT_ARTICLE_NUMBER} неверная стоимость.`,
+      );
+      assert(
+        externalOutput.visual_review?.status === "fidelity-failed" &&
+          externalOutput.visual_review.summary,
+        `У внешнего ролика кейса ${EXPERIMENT_ARTICLE_NUMBER} нет fidelity-review.`,
+      );
+      validateOutput(
+        article.article_number,
+        externalOutput,
+        allVideoPaths,
+        "Wan 2.2 Flash · Eliza → Segmind",
+      );
+      externalOutputCount += 1;
     });
 
     assert(
@@ -246,6 +299,14 @@
       comparisonOutputCount === EXPECTED_EXPERIMENT_OUTPUT_COUNT,
       `Проверено экспериментальных роликов: ${comparisonOutputCount}, ожидалось 2.`,
     );
+    assert(
+      manifest.external_output_count === EXPECTED_EXTERNAL_OUTPUT_COUNT,
+      `В манифесте должен быть заявлен один внешний Eliza → Segmind ролик.`,
+    );
+    assert(
+      externalOutputCount === EXPECTED_EXTERNAL_OUTPUT_COUNT,
+      `Проверено внешних роликов: ${externalOutputCount}, ожидался 1.`,
+    );
 
     return manifest.articles.map((article) => {
       const outputsByModel = new Map(article.outputs.map((output) => [output.model_id, output]));
@@ -262,6 +323,11 @@
           ...outputsByModel.get(EXPERIMENT_PROMPT_SOURCE_MODEL_ID),
           showcaseLabel: "Референс · свой prompt",
           showcaseVariant: "reference",
+        },
+        {
+          ...article.external_outputs[0],
+          showcaseLabel: "Eliza → Segmind",
+          showcaseVariant: "external",
         },
       ];
       EXPERIMENT_TARGET_MODEL_ORDER.forEach((modelId) => {
@@ -283,6 +349,7 @@
         comparison_outputs: EXPERIMENT_TARGET_MODEL_ORDER.map((modelId) =>
           comparisonsByModel.get(modelId),
         ),
+        external_outputs: article.external_outputs,
         displayOutputs,
       };
     });
@@ -416,6 +483,7 @@
         outputs: article.outputs,
         displayOutputs: article.displayOutputs,
         comparison_outputs: article.comparison_outputs,
+        external_outputs: article.external_outputs,
         baseline: true,
       };
       return {
@@ -508,6 +576,7 @@
 
   const renderModel = (article, imageRecord, output, modelIndex) => {
     const presentation = MODEL_PRESENTATION[output.model_id];
+    assert(presentation, `Нет presentation для ${output.model_id}.`);
     const titleId = `model-${article.article_number}-${imageRecord.image.image_id}-${modelIndex + 1}`;
     const videoUrl = asAssetUrl(output.video_path, output.delivery);
     const promptLabel = output.showcaseLabel
@@ -518,6 +587,10 @@
     const contractWarning =
       output.status === "verification-failed"
         ? '<p class="contractWarning">Raw output · media contract warning</p>'
+        : "";
+    const fidelityWarning =
+      output.visual_review?.status === "fidelity-failed"
+        ? `<p class="contractWarning fidelityWarning"><strong>Visual review · fidelity failed.</strong> ${escapeHtml(output.visual_review.summary)}</p>`
         : "";
 
     return `
@@ -552,6 +625,7 @@
           <div>
             ${promptLabel}
             ${contractWarning}
+            ${fidelityWarning}
             <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
             <h3 id="${titleId}">${escapeHtml(presentation.name)}</h3>
             <code class="modelId">${escapeHtml(output.model_id)}</code>
@@ -566,6 +640,9 @@
           ["Длительность", formatDuration(output.media.duration_seconds)],
           ["Геометрия", `${output.media.width}×${output.media.height}`],
           ["Размер", formatMiB(output.media.bytes)],
+          ...(output.route_label
+            ? [["Маршрут", output.route_label]]
+            : []),
         ])}
 
         <details class="promptDetails">
@@ -758,6 +835,7 @@
     const sequence = ++renderSequence;
     const displayOutputs = imageRecord.displayOutputs || imageRecord.outputs;
     const gridClass = displayOutputs.length > MODEL_ORDER.length ? " hasExperiment" : "";
+    const sixModelsClass = displayOutputs.length === 6 ? " sixModels" : "";
     const modelCountClass = displayOutputs.length === 2 ? " twoModels" : "";
 
     detachCurrentVideos();
@@ -797,7 +875,7 @@
           </button>
         </div>
         ${renderSource(article, imageRecord)}
-        <div class="modelGrid${modelCountClass}${gridClass}">
+        <div class="modelGrid${modelCountClass}${gridClass}${sixModelsClass}">
           ${displayOutputs
             .map((output, modelIndex) => renderModel(article, imageRecord, output, modelIndex))
             .join("")}
