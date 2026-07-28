@@ -295,9 +295,18 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertEqual(manifest["article_count"], 1)
         self.assertEqual(manifest["image_count"], 1)
         self.assertEqual(manifest["expected_outputs"], 3)
+        self.assertEqual(manifest["canonical_output_count"], 3)
+        self.assertEqual(manifest["research_output_count"], 4)
+        self.assertEqual(manifest["display_output_count"], 7)
+        self.assertEqual(manifest["attempt_count"], 11)
+        self.assertEqual(manifest["attempts_without_video_count"], 4)
+        self.assertEqual(manifest["available_output_count"], 7)
+        self.assertEqual(manifest["accepted_output_count"], 0)
+        self.assertEqual(manifest["visual_fidelity_failed_count"], 7)
         self.assertEqual(manifest["models"], MODEL_IDS)
         self.assertEqual(len(manifest["articles"]), 1)
         self.assertEqual(len(manifest["outputs"]), 3)
+        self.assertEqual(len(manifest["research_outputs"]), 4)
 
         article = manifest["articles"][0]
         self.assertEqual(article["article_number"], "21")
@@ -332,9 +341,16 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         outputs = record["outputs"]
         self.assertEqual([output["model_id"] for output in outputs], MODEL_IDS)
         self.assertEqual(len({output["video_path"] for output in outputs}), 3)
-        for output in outputs:
+        research_outputs = record["research_outputs"]
+        self.assertEqual(research_outputs, manifest["research_outputs"])
+        self.assertEqual(len(research_outputs), 4)
+        display_outputs = outputs + research_outputs
+        self.assertEqual(len({output["video_path"] for output in display_outputs}), 7)
+        for output in display_outputs:
             self.assertEqual(output["delivery"], "repository-raw")
             self.assertTrue(output["positive_prompt"].strip())
+            self.assertFalse(output["accepted"])
+            self.assertEqual(output["visual_review"]["status"], "fidelity-failed")
             video_path = ROOT / output["video_path"]
             self.assertTrue(video_path.is_file(), output["video_path"])
             self.assertGreater(output["media"]["width"], 0)
@@ -400,6 +416,9 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("EXPECTED_CASE_21_ARTICLE_COUNT = 1", app)
         self.assertIn("EXPECTED_CASE_21_IMAGE_COUNT = 1", app)
         self.assertIn("EXPECTED_CASE_21_OUTPUT_COUNT = 3", app)
+        self.assertIn("EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT = 4", app)
+        self.assertIn("EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT = 7", app)
+        self.assertIn("EXPECTED_CASE_21_ATTEMPT_COUNT = 11", app)
         self.assertIn("EXPECTED_TOTAL_ARTICLE_COUNT = 21", app)
         self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 41", app)
         self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 123", app)
@@ -432,14 +451,15 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn("123 + 3", html)
+        self.assertIn("123 + 7", html)
+        self.assertIn("все семь полученных MP4 из одиннадцати", html)
         self.assertIn("Историческая выборка из 20 статей и 40 изображений сохранена", html)
         self.assertRegex(
             html,
             r"Wan 2\.2 Flash\s+через Eliza → Segmind за \$0\.18",
         )
-        self.assertIn('src="app.js?v=7"', html)
-        self.assertIn('href="styles.css?v=5"', html)
+        self.assertIn('src="app.js?v=8"', html)
+        self.assertIn('href="styles.css?v=6"', html)
         self.assertIn('id="imageSelect"', html)
         self.assertIn('id="previousImage"', html)
         self.assertIn('id="nextImage"', html)
@@ -448,7 +468,9 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("grid-template-columns: repeat(3, minmax(0, 1fr));", styles)
         self.assertIn("grid-template-columns: repeat(5, minmax(0, 1fr));", styles)
         self.assertIn(".modelGrid.hasExperiment", styles)
-        self.assertIn(".modelGrid.hasExperiment.sixModels", styles)
+        self.assertIn(".modelGrid.hasExperiment.multiRow", styles)
+        self.assertIn('.modelPanel[data-output-kind="research"]', styles)
+        self.assertIn(".researchSummary", styles)
         self.assertIn('.modelPanel[data-output-kind="external"]', styles)
         self.assertIn(".modelGrid.twoModels", styles)
         self.assertIn(".sourcePanel[hidden]", styles)
