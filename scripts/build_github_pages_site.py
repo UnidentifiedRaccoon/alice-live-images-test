@@ -148,8 +148,9 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
                 remote_repository_paths.add(_safe_relative_path(output["video_path"]))
 
     # Case 21 is an independent one-image sidecar. Its compact JSON is part of
-    # the Pages payload, while the source and all seven available videos stay on
-    # main and are delivered through raw.githubusercontent.com.
+    # the Pages payload, while the source, seven historical videos and every
+    # available loop-experiment output stay on main and are delivered through
+    # raw.githubusercontent.com.
     case_21_manifest = json.loads(
         (root / "clipmaker-lite-test" / "case-21-manifest.json").read_text(
             encoding="utf-8"
@@ -175,6 +176,21 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
                 remote_repository_paths.add(
                     _safe_relative_path(output["video_path"])
                 )
+
+    loop_experiment = case_21_manifest.get("loop_experiment")
+    if loop_experiment is not None:
+        if not isinstance(loop_experiment, dict) or not isinstance(
+            loop_experiment.get("outputs"), list
+        ):
+            raise ValueError("Case 21 loop_experiment must contain an outputs list")
+        for output in loop_experiment["outputs"]:
+            if not isinstance(output, dict) or output.get("delivery") != "repository-raw":
+                raise ValueError(
+                    "Case 21 loop outputs must use repository-raw delivery"
+                )
+            remote_repository_paths.add(
+                _safe_relative_path(output.get("video_path"))
+            )
 
     for relative_path in remote_repository_paths:
         source = root / relative_path

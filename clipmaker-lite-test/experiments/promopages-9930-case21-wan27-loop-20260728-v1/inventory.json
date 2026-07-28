@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-wan27-loop-inventory",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+  "provider_batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "controls": {
+    "primary": {
+      "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1",
+      "sha256": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8"
+    },
+    "retry": {
+      "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1",
+      "sha256": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b"
+    },
+    "prompt_research": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1",
+      "sha256": "ead5a3a4a1137985b6b0abe4da86fb6a209231c1653f3d06de2dbcf76d219286"
+    },
+    "opacity_stage2": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1",
+      "sha256": "750294ab4ad2a6d72ced0afbab207c42c4c8b86edaa5085ac72e0a88b1356a5e"
+    }
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 5.0,
+    "hard_budget_cap_usd": 5.0,
+    "reservation_per_wan27_entry_usd": 0.5,
+    "initial_entry_count": 8,
+    "initial_reserved_usd": 4.0,
+    "contingency_slot_count": 2,
+    "contingency_reserved_usd": 1.0,
+    "maximum_provider_entries": 10,
+    "admitted_provider_entries": 8,
+    "contingency_entries_materialized": 0,
+    "maximum_submissions_per_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "Eight immutable entries reserve $4.00. Two $0.50 contingency slots remain unmaterialized and require a new explicit namespace."
+  },
+  "provider_transport_experiment": {
+    "profile": "non-canonical-loop-closure",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": false,
+    "reason": "The locked Lite v1 runtime contains only first_frame; this research transport repeats the exact source URL as last_frame to test loop closure.",
+    "last_frame_is_source": true,
+    "first_and_last_frame_urls_must_match": true
+  },
+  "generation_policy": {
+    "exact_model_id": "alibaba/wan-2.7",
+    "exact_route_only": true,
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "force_allowed": false,
+    "automatic_paid_retries": false,
+    "wan27_capacity": 3,
+    "staged_paid_generation": true,
+    "canary_variant_ids": [
+      "sync-cycle",
+      "local-icons",
+      "endpoint-first"
+    ],
+    "main_variant_ids": [
+      "mirror-midpoint",
+      "kinetic-compact",
+      "staggered-wave",
+      "simultaneous-microloops",
+      "preservation-repair"
+    ],
+    "main_requires_three_terminal_canary_mp4s": true
+  },
+  "expected_outputs": 8,
+  "entries": [
+    {
+      "variant_id": "sync-cycle",
+      "stage": "canary",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-sync-cycle-20260728-v1",
+      "planning_result_sha256": "0e46fd047b53ff0d94d128f8ea4a504a625fef2cdae768ee3c7027763e7337e9",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-sync-cycle-wan-2-7",
+      "sample_id": "21-maier-04-loop-sync-cycle",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "346c7f8356b2c0142dd359e41f37f6da30cf8a067f2abd695ba527bf64418a54",
+      "negative_prompt_sha256": "2a943804a284615d2589f3e2219d9a207d7300cec6b9f654ff10f8b37abcc5e2",
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "56c8894c4ad3b3543a8e3004e793329b76b13c8293908641f3aa78ca0cd8e1a8",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "mirror-midpoint",
+      "stage": "main",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-mirror-midpoint-20260728-v1",
+      "planning_result_sha256": "e7aa41fb1fad600f82814cb38f445fd683055c33edab5aacf6cfc027b3d50100",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-mirror-midpoint-wan-2-7",
+      "sample_id": "21-maier-04-loop-mirror-midpoint",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "679bbf407ad8c94d013f6ef92905258f31fa7ef855c40a82ca355b4c1c1911fa",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "79236e97c7908277a591f7ed4f0234169d68ca727b7cd84de28016b3c2d25f61",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "local-icons",
+      "stage": "canary",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-local-icons-20260728-v1",
+      "planning_result_sha256": "daee71fa697df600352442b8a681ea0a6aa26647ebcc54496853b6b82e72b881",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-local-icons-wan-2-7",
+      "sample_id": "21-maier-04-loop-local-icons",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "9a8ddf8a704feb358fd2a45b6cee4aff425fb1ebe59effe4cfe104c52e7bc552",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "610d16ca3bf39825b766ea05922c93e22e211aaa4ac2c7cf800f10b29f63922c",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "kinetic-compact",
+      "stage": "main",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-kinetic-compact-20260728-v1",
+      "planning_result_sha256": "ee4eac56d7d675cee8ea6d11a7f8c0b176e56e8b3cd976f22b3b5bb41b8ea3f2",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-kinetic-compact-wan-2-7",
+      "sample_id": "21-maier-04-loop-kinetic-compact",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "796761e44027ec8454070d084b73c4457870f0b20ac5e3bcb07ac42b35217526",
+      "negative_prompt_sha256": "f19610b6bad536cdcd66d577dc8f42a3ca8042d11156d6d634c875281335ec7d",
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "309fed6197a8838fca7b971d6a3621b3a69f8725fe7ea55d929c58a8bf77f13b",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "staggered-wave",
+      "stage": "main",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-staggered-wave-20260728-v1",
+      "planning_result_sha256": "f6b53836018916e65219da47f4e5abb641ed934c2ae340a30d42e4d14450b462",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-staggered-wave-wan-2-7",
+      "sample_id": "21-maier-04-loop-staggered-wave",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "7e8a44e7b3889201c543fd4386ce08b59fe422c32d8704d0c77bc63336625324",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "c7c5e4d04284693e853d4ac9707cf668822bd25551189c7317864066fbec11fc",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "simultaneous-microloops",
+      "stage": "main",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-simultaneous-microloops-20260728-v1",
+      "planning_result_sha256": "54e3e0c60ce5a3b3cf2c043b185b7c55e514170d4004f1ae87c3a4e956f28596",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-simultaneous-microloops-wan-2-7",
+      "sample_id": "21-maier-04-loop-simultaneous-microloops",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "519b3b75afebaa4aab9936a9b4a5e9bcfa9e875b9d02f0f84499f0bc28f2fde6",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "83c93d75c0c6b9bdd2360800e3f4bbdad58ace455f8576222b51b735405ef8c4",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "endpoint-first",
+      "stage": "canary",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-endpoint-first-20260728-v1",
+      "planning_result_sha256": "f4e4081fc3b1a6878cacced576c170e9e01c15c8b2f8b869db3c8984732d60ae",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-endpoint-first-wan-2-7",
+      "sample_id": "21-maier-04-loop-endpoint-first",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "150919fb9491de149bea29b8b8449415f83017f987530650ae1a0baca9f64e96",
+      "negative_prompt_sha256": "34ee4320433bfd0399452198975e175760688530f12b711a709a0e1af18b05ff",
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "46f0f2ca8bd9a65b57407f3efda28ae7e3b2d42be8c1a4e734c9a2acb86df9c0",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "preservation-repair",
+      "stage": "main",
+      "planning_run_id": "promopages-9930-case21-wan27-loop-preservation-repair-20260728-v1",
+      "planning_result_sha256": "3c5f975909f00b1332ecd7c8de5b7d2efe8912baa30f44d6c67a4fb9770b0398",
+      "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-preservation-repair-wan-2-7",
+      "sample_id": "21-maier-04-loop-preservation-repair",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "7548bcc6c60b182a2b4677a44342347fee967105534ccbdac81fedb6d74e22ce",
+      "negative_prompt_sha256": "12cb5a24d9e5d76400a1efe48af387498c36ab8499df866a08626c3ee1b58b70",
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "1e02fe9eb7d80d466c55d55bf5679dbd2c1589f2e798f416a1a9227a7c608b91",
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    }
+  ]
+}

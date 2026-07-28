@@ -16,6 +16,15 @@
   const EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT = 4;
   const EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT = 7;
   const EXPECTED_CASE_21_ATTEMPT_COUNT = 11;
+  const LOOP_MODEL_ID = "alibaba/wan-2.7";
+  const LOOP_REQUEST_CLASSIFICATION = "api-loop-closure-experiment";
+  const LOOP_REQUEST_MECHANISM = "same-source-first-and-last-frame";
+  const LOOP_FRAME_TYPES = ["first_frame", "last_frame"];
+  const LOOP_SEAM_PRESENTATION = {
+    "seam-passed": "Шов · проверен",
+    "seam-failed": "Шов · не прошёл проверку",
+    "seam-not-reviewed": "Шов · не проверен",
+  };
   const EXPECTED_TOTAL_ARTICLE_COUNT = 21;
   const EXPECTED_UNIQUE_IMAGE_COUNT = 41;
   const EXPECTED_CANONICAL_OUTPUT_COUNT = 123;
@@ -76,6 +85,7 @@
     datasetError: document.querySelector("#datasetError"),
     datasetErrorText: document.querySelector("#datasetErrorText"),
     caseViewport: document.querySelector("#caseViewport"),
+    videoCountSummary: document.querySelector("#videoCountSummary"),
   };
 
   const missingElement = Object.values(elements).some((element) => !element);
@@ -84,6 +94,9 @@
   const numberFormatter = new Intl.NumberFormat("ru-RU", {
     maximumFractionDigits: 1,
   });
+  const prefersReducedMotion =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const escapeHtml = (value = "") =>
     String(value).replace(/[&<>"']/g, (character) => {
@@ -489,6 +502,161 @@
     return normalizedArticles;
   };
 
+  const validateLoopExperiment = (loopExperiment, usedVideoPaths) => {
+    assert(
+      loopExperiment && typeof loopExperiment === "object",
+      "Loop-эксперимент кейса 21 имеет неверный формат.",
+    );
+    assert(
+      typeof loopExperiment.experiment_id === "string" &&
+        loopExperiment.experiment_id.trim(),
+      "У loop-эксперимента нет experiment_id.",
+    );
+    assert(
+      loopExperiment.model_id === LOOP_MODEL_ID,
+      "Loop-эксперимент разрешён только для alibaba/wan-2.7.",
+    );
+
+    const requestContract = loopExperiment.request_contract;
+    assert(
+      requestContract &&
+        requestContract.classification === LOOP_REQUEST_CLASSIFICATION &&
+        requestContract.verified_lite_planning === true &&
+        requestContract.canonical_lite_runtime === false &&
+        requestContract.request_mechanism === LOOP_REQUEST_MECHANISM &&
+        requestContract.last_frame_is_source === true &&
+        requestContract.same_source_for_endpoints === true &&
+        requestContract.provider_native_loop_parameter === false &&
+        requestContract.browser_playback_loop === true &&
+        JSON.stringify(requestContract.frame_types) === JSON.stringify(LOOP_FRAME_TYPES),
+      "Loop-эксперимент должен честно описывать API conditioning одинаковым first/last source.",
+    );
+
+    const cost = loopExperiment.cost;
+    assert(
+      cost &&
+        cost.currency === "USD" &&
+        Number(cost.operator_budget_cap_usd) > 0 &&
+        Number(cost.operator_budget_cap_usd) <= 5 &&
+        Number(cost.reserved_usd) >= 0 &&
+        Number(cost.reserved_usd) <= Number(cost.operator_budget_cap_usd) &&
+        cost.automatic_paid_retries === false &&
+        cost.actual_billing_available === false,
+      "Бюджет loop-эксперимента должен оставаться внутри отдельного лимита $5.",
+    );
+    assert(
+      Array.isArray(loopExperiment.outputs) &&
+        Array.isArray(loopExperiment.attempt_history),
+      "У loop-эксперимента нет outputs или attempt_history.",
+    );
+
+    const attempts = loopExperiment.attempt_history;
+    const availableAttempts = attempts.filter((attempt) => attempt.available_video === true);
+    const failedAttempts = attempts.filter((attempt) => attempt.available_video !== true);
+    assert(
+      loopExperiment.attempt_count === attempts.length &&
+        loopExperiment.attempts_without_video_count === failedAttempts.length &&
+        loopExperiment.available_output_count === loopExperiment.outputs.length &&
+        availableAttempts.length === loopExperiment.outputs.length,
+      "Счётчики loop-эксперимента не совпадают с полной историей запусков.",
+    );
+
+    const attemptByRunId = new Map();
+    attempts.forEach((attempt, attemptIndex) => {
+      assert(
+        attempt &&
+          attempt.activity === "loop-closure-experiment" &&
+          attempt.experiment_id === loopExperiment.experiment_id &&
+          attempt.model_id === LOOP_MODEL_ID &&
+          typeof attempt.provider_run_id === "string" &&
+          attempt.provider_run_id.trim() &&
+          !attemptByRunId.has(attempt.provider_run_id),
+        `Неверная identity loop-попытки ${attemptIndex + 1}.`,
+      );
+      assert(
+        attempt.selected_for_display === attempt.available_video,
+        `Loop-попытка ${attemptIndex + 1} неверно помечена для показа.`,
+      );
+      const attemptNumber =
+        attempt.experiment_attempt_number ?? attempt.model_attempt_number ?? attemptIndex + 1;
+      assert(
+        Number.isInteger(attemptNumber) && attemptNumber > 0,
+        `У loop-попытки ${attemptIndex + 1} нет номера.`,
+      );
+      attemptByRunId.set(attempt.provider_run_id, {
+        ...attempt,
+        experimentAttemptNumber: attemptNumber,
+      });
+    });
+
+    const outputs = loopExperiment.outputs
+      .map((output, outputIndex) => {
+        const attempt = attemptByRunId.get(output?.provider_run_id);
+        assert(
+          output &&
+            output.model_id === LOOP_MODEL_ID &&
+            output.delivery === "repository-raw" &&
+            output.available === true &&
+            attempt?.available_video === true,
+          `Loop-output ${outputIndex + 1} не связан с доступной Wan 2.7 попыткой.`,
+        );
+        const selection = output.selection;
+        assert(
+          selection &&
+            selection.activity === "loop-closure-experiment" &&
+            selection.experiment_id === loopExperiment.experiment_id &&
+            typeof selection.variant_id === "string" &&
+            selection.variant_id.trim(),
+          `У loop-output ${outputIndex + 1} нет точной experiment selection.`,
+        );
+        const closure = output.loop_closure;
+        const seamReview = closure?.seam_review;
+        assert(
+          closure &&
+            typeof closure.request_sha256 === "string" &&
+            closure.request_sha256.length === 64 &&
+            JSON.stringify(closure.frame_types) === JSON.stringify(LOOP_FRAME_TYPES) &&
+            closure.same_source_for_endpoints === true &&
+            closure.browser_playback_loop === true &&
+            seamReview &&
+            hasOwn(LOOP_SEAM_PRESENTATION, seamReview.status) &&
+            typeof seamReview.summary === "string" &&
+            seamReview.summary.trim(),
+          `Loop-output ${outputIndex + 1} не содержит честного seam review.`,
+        );
+        validateOutput("21", output, usedVideoPaths, `loop ${outputIndex + 1}`);
+        const label = selection.variant_label || selection.variant_id;
+        return {
+          ...output,
+          experimentAttemptNumber: attempt.experimentAttemptNumber,
+          showcaseLabel: `${label} · API first/last · попытка ${attempt.experimentAttemptNumber}`,
+          showcaseVariant: "loop",
+        };
+      })
+      .sort(
+        (left, right) =>
+          left.experimentAttemptNumber - right.experimentAttemptNumber,
+      );
+
+    const outputRunIds = new Set(outputs.map((output) => output.provider_run_id));
+    const availableRunIds = new Set(
+      availableAttempts.map((attempt) => attempt.provider_run_id),
+    );
+    assert(
+      outputRunIds.size === outputs.length &&
+        outputRunIds.size === availableRunIds.size &&
+        [...outputRunIds].every((runId) => availableRunIds.has(runId)),
+      "Не все доступные loop-результаты включены в демо.",
+    );
+
+    return {
+      ...loopExperiment,
+      outputs,
+      failedAttempts: failedAttempts.map((attempt) => attemptByRunId.get(attempt.provider_run_id)),
+      requestContract,
+    };
+  };
+
   const validateCase21Manifest = (manifest, baseArticles, additionalArticles) => {
     assert(manifest && typeof manifest === "object", "Манифест кейса 21 имеет неверный формат.");
     assert(
@@ -689,6 +857,9 @@
           EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT,
       "Полный case 21 должен показывать семь уникальных MP4.",
     );
+    const loopExperiment = hasOwn(manifest, "loop_experiment")
+      ? validateLoopExperiment(manifest.loop_experiment, usedVideoPaths)
+      : null;
 
     return [
       {
@@ -700,6 +871,7 @@
             outputs,
             research_outputs: researchOutputs,
             displayOutputs,
+            loopExperiment,
             attemptSummary: {
               total: manifest.attempt_count,
               available: manifest.available_output_count,
@@ -830,10 +1002,16 @@
     `;
   };
 
-  const renderModel = (article, imageRecord, output, modelIndex) => {
+  const renderModel = (
+    article,
+    imageRecord,
+    output,
+    modelIndex,
+    { idPrefix = "model", loopPlayback = false, headingLevel = 3 } = {},
+  ) => {
     const presentation = MODEL_PRESENTATION[output.model_id];
     assert(presentation, `Нет presentation для ${output.model_id}.`);
-    const titleId = `model-${article.article_number}-${imageRecord.image.image_id}-${modelIndex + 1}`;
+    const titleId = `${idPrefix}-${article.article_number}-${imageRecord.image.image_id}-${modelIndex + 1}`;
     const videoUrl = asAssetUrl(output.video_path, output.delivery);
     const promptLabel = output.showcaseLabel
       ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
@@ -848,7 +1026,28 @@
       output.visual_review?.status === "fidelity-failed"
         ? `<p class="contractWarning fidelityWarning"><strong>Visual review · fidelity failed.</strong> ${escapeHtml(output.visual_review.summary)}</p>`
         : "";
-    const panelKind = output.showcaseLabel ? "Вариант" : "Модель";
+    const seamReview = output.loop_closure?.seam_review;
+    const seamLabel = seamReview ? LOOP_SEAM_PRESENTATION[seamReview.status] : null;
+    const loopStatus = loopPlayback
+      ? `
+        <p class="loopMechanism">
+          <strong>API loop-closure.</strong> Один исходник передан как first и last frame;
+          native loop-параметр не использовался.
+        </p>
+        <p class="loopSeamStatus" data-seam-status="${escapeHtml(seamReview.status)}">
+          <strong>${escapeHtml(seamLabel)}.</strong> ${escapeHtml(seamReview.summary)}
+        </p>
+      `
+      : "";
+    const panelKind = loopPlayback
+      ? "Loop-вариант"
+      : output.showcaseLabel
+        ? "Вариант"
+        : "Модель";
+    const headingTag = headingLevel === 4 ? "h4" : "h3";
+    const loopAttributes = loopPlayback
+      ? `${prefersReducedMotion ? "" : " loop"} muted data-loop-output`
+      : "";
 
     return `
       <article
@@ -869,6 +1068,7 @@
             controls
             playsinline
             preload="metadata"
+            ${loopAttributes}
             aria-label="${escapeHtml(presentation.name + accessibleVariant)}: результат для статьи «${escapeHtml(article.title)}»"
           >
             Ваш браузер не поддерживает MP4-видео.
@@ -883,8 +1083,9 @@
             ${promptLabel}
             ${contractWarning}
             ${fidelityWarning}
+            ${loopStatus}
             <p class="panelKicker">${panelKind} ${String(modelIndex + 1).padStart(2, "0")}</p>
-            <h3 id="${titleId}">${escapeHtml(presentation.name)}</h3>
+            <${headingTag} id="${titleId}">${escapeHtml(presentation.name)}</${headingTag}>
             <code class="modelId">${escapeHtml(output.model_id)}</code>
           </div>
           <strong class="modelCost">
@@ -900,6 +1101,12 @@
           ...(output.route_label
             ? [["Маршрут", output.route_label]]
             : []),
+          ...(loopPlayback
+            ? [
+                ["API-замыкание", "same-source first + last"],
+                ["Шов", seamLabel],
+              ]
+            : []),
         ])}
 
         <details class="promptDetails">
@@ -907,6 +1114,96 @@
           <p class="promptText" lang="en">${escapeHtml(output.positive_prompt)}</p>
         </details>
       </article>
+    `;
+  };
+
+  const renderLoopAttemptHistory = (loopExperiment) => {
+    const failures = loopExperiment.failedAttempts;
+    const summary = failures.length
+      ? `История неудач · ${failures.length} без MP4 из ${loopExperiment.attempt_count}`
+      : `История неудач · все ${loopExperiment.attempt_count} запусков вернули MP4`;
+    const content = failures.length
+      ? `<ol class="loopAttemptList">
+          ${failures
+            .map((attempt) => {
+              const variant = attempt.variant_id || attempt.sample_id || "без variant_id";
+              const error = attempt.error || "Провайдер не вернул доступный MP4.";
+              return `<li>
+                <p>
+                  <strong>Попытка ${attempt.experimentAttemptNumber}</strong>
+                  <span>${escapeHtml(variant)} · ${escapeHtml(attempt.status || "unknown")}</span>
+                </p>
+                <p>${escapeHtml(error)}</p>
+              </li>`;
+            })
+            .join("")}
+        </ol>`
+      : '<p class="loopAttemptEmpty">Неудачных запусков в этой серии нет.</p>';
+
+    return `
+      <details class="loopAttemptHistory">
+        <summary>${escapeHtml(summary)}</summary>
+        ${content}
+      </details>
+    `;
+  };
+
+  const renderLoopSection = (article, imageRecord) => {
+    const loopExperiment = imageRecord.loopExperiment;
+    if (!loopExperiment) return "";
+    const outputCount = loopExperiment.outputs.length;
+    const cap = numberFormatter.format(loopExperiment.cost.operator_budget_cap_usd);
+    const outputSummary = outputCount
+      ? `Получено ${outputCount} MP4 из ${loopExperiment.attempt_count} запусков.`
+      : `Ни один из ${loopExperiment.attempt_count} запусков не вернул MP4.`;
+    const playbackNote = prefersReducedMotion
+      ? "Автоповтор отключён системной настройкой reduced motion."
+      : "Браузер повторяет MP4 для проверки шва.";
+
+    return `
+      <section class="loopExperimentSection" aria-labelledby="loopExperimentTitle">
+        <header class="loopExperimentHeader">
+          <p class="loopExperimentKicker">Wan 2.7 · отдельная исследовательская серия</p>
+          <h3 id="loopExperimentTitle">API loop-closure: одинаковый first и last frame</h3>
+          <p>
+            Это endpoint-conditioning, а не native loop-параметр и не canonical Lite runtime.
+            ${escapeHtml(playbackNote)} Бесшовность подтверждает только статус seam review
+            на каждой карточке. ${escapeHtml(outputSummary)} Лимит серии — $${escapeHtml(cap)}.
+          </p>
+        </header>
+        <div class="loopExperimentActions">
+          <button
+            class="controlButton strong"
+            type="button"
+            data-play-loop
+            data-video-group-control="loop"
+            data-play-label="Воспроизвести ${outputCount} loop-видео"
+            data-pause-label="Пауза loop-видео"
+            aria-pressed="false"
+            aria-describedby="navigatorStatus"
+            disabled
+            ${outputCount ? "" : 'aria-disabled="true"'}
+          >
+            ${outputCount ? `Воспроизвести ${outputCount} loop-видео` : "Loop-видео недоступны"}
+          </button>
+        </div>
+        ${
+          outputCount
+            ? `<div class="modelGrid loopGrid" data-video-group="loop">
+                ${loopExperiment.outputs
+                  .map((output, outputIndex) =>
+                    renderModel(article, imageRecord, output, outputIndex, {
+                      idPrefix: "loopModel",
+                      loopPlayback: true,
+                      headingLevel: 4,
+                    }),
+                  )
+                  .join("")}
+              </div>`
+            : '<p class="loopEmptyState">Видео нет; причины сохранены в истории запусков.</p>'
+        }
+        ${renderLoopAttemptHistory(loopExperiment)}
+      </section>
     `;
   };
 
@@ -936,9 +1233,25 @@
   };
 
   const monitorSelectedVideos = (article, imageRecord, sequence) => {
-    const videos = [...elements.caseViewport.querySelectorAll("video")];
-    const videoCount = videos.length;
-    const playAllButton = elements.caseViewport.querySelector("[data-play-all]");
+    const allVideos = [...elements.caseViewport.querySelectorAll("video")];
+    const playbackGroups = [
+      {
+        name: "основная серия",
+        videos: [
+          ...elements.caseViewport.querySelectorAll(
+            '[data-video-group="primary"] video',
+          ),
+        ],
+        button: elements.caseViewport.querySelector("[data-play-all]"),
+      },
+      {
+        name: "loop-серия",
+        videos: [
+          ...elements.caseViewport.querySelectorAll('[data-video-group="loop"] video'),
+        ],
+        button: elements.caseViewport.querySelector("[data-play-loop]"),
+      },
+    ].filter((group) => group.button && group.videos.length > 0);
     const sourceToggle = elements.caseViewport.querySelector("[data-source-toggle]");
     const sourcePanel = elements.caseViewport.querySelector("[data-source-panel]");
     const ready = new Set();
@@ -948,7 +1261,7 @@
 
     const restoreCoordinatedMuteState = () => {
       if (!coordinatedPlaybackActive) return;
-      videos.forEach((video) => {
+      allVideos.forEach((video) => {
         if (mutedBeforeCoordinatedPlayback.has(video)) {
           video.muted = mutedBeforeCoordinatedPlayback.get(video);
         }
@@ -957,7 +1270,7 @@
       coordinatedPlaybackActive = false;
     };
 
-    const muteCoordinatedPlayback = () => {
+    const muteCoordinatedPlayback = (videos) => {
       restoreCoordinatedMuteState();
       videos.forEach((video) => {
         mutedBeforeCoordinatedPlayback.set(video, video.muted);
@@ -967,76 +1280,89 @@
     };
 
     const setPlaybackState = () => {
-      if (!playAllButton || sequence !== renderSequence) return;
-      const anyPlaying = videos.some((video) => !video.paused && !video.ended);
+      if (sequence !== renderSequence) return;
+      const anyPlaying = allVideos.some((video) => !video.paused && !video.ended);
       if (!anyPlaying) restoreCoordinatedMuteState();
-      playAllButton.setAttribute("aria-pressed", String(anyPlaying));
-      playAllButton.textContent = anyPlaying ? "Пауза всех" : "Воспроизвести все";
+      playbackGroups.forEach((group) => {
+        const groupPlaying = group.videos.some(
+          (video) => !video.paused && !video.ended,
+        );
+        group.button.setAttribute("aria-pressed", String(groupPlaying));
+        group.button.textContent = groupPlaying
+          ? group.button.dataset.pauseLabel
+          : group.button.dataset.playLabel;
+      });
     };
 
     const pauseAll = () => {
-      videos.forEach((video) => video.pause());
+      allVideos.forEach((video) => video.pause());
       restoreCoordinatedMuteState();
       setPlaybackState();
     };
 
-    const playAll = async () => {
-      if (!playAllButton || playAllButton.disabled) return;
+    const playGroup = async (group) => {
+      const { button, videos } = group;
+      const videoCount = videos.length;
+      if (button.disabled) return;
 
       if (videos.some((video) => !video.paused && !video.ended)) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео на паузе.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${group.name} на паузе.`;
         return;
       }
 
-      playAllButton.disabled = true;
+      pauseAll();
+      button.disabled = true;
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: запускаем ${videoCount} видео…`;
+        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: запускаем ${videoCount} видео — ${group.name}…`;
       videos.forEach((video) => {
-        video.pause();
         video.currentTime = 0;
       });
       // A coordinated comparison is visual: prevent provider audio tracks from overlapping.
-      muteCoordinatedPlayback();
+      muteCoordinatedPlayback(videos);
       // Keep all play() calls in the original click gesture for consistent browser behavior.
       const results = await Promise.allSettled(videos.map((video) => video.play()));
       if (sequence !== renderSequence) return;
 
-      playAllButton.disabled = false;
+      button.disabled = false;
       if (results.some((result) => result.status === "rejected")) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: браузер не разрешил общее воспроизведение.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: браузер не разрешил воспроизвести группу «${group.name}».`;
         return;
       }
 
       setPlaybackState();
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео запущены одновременно без звука.`;
+        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео группы «${group.name}» запущены одновременно без звука.`;
     };
 
     const announce = () => {
       if (sequence !== renderSequence) return;
 
-      const complete = ready.size + failed.size === videos.length;
+      const complete = ready.size + failed.size === allVideos.length;
       elements.caseViewport.setAttribute("aria-busy", String(!complete));
-      if (playAllButton) {
-        playAllButton.disabled = !complete || failed.size > 0;
-      }
+      playbackGroups.forEach((group) => {
+        const groupComplete = group.videos.every(
+          (video) => ready.has(video) || failed.has(video),
+        );
+        const groupFailed = group.videos.some((video) => failed.has(video));
+        group.button.disabled = !groupComplete || groupFailed;
+      });
 
       if (failed.size > 0) {
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружено ${ready.size} из ${videoCount}, ошибок — ${failed.size}.`;
-      } else if (ready.size === videos.length) {
+        elements.navigatorStatus.textContent = `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружено ${ready.size} из ${allVideos.length}, ошибок — ${failed.size}.`;
+      } else if (ready.size === allVideos.length) {
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео подключены. Другие изображения не загружаются.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${allVideos.length} видео подключены. Серии запускаются отдельно.`;
       } else {
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружаем метаданные · ${ready.size} из ${videoCount}.`;
+          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружаем метаданные · ${ready.size} из ${allVideos.length}.`;
       }
     };
 
-    videos.forEach((video) => {
+    allVideos.forEach((video) => {
       const markReady = () => {
         if (sequence !== renderSequence || failed.has(video)) return;
         ready.add(video);
@@ -1068,7 +1394,9 @@
       });
     });
 
-    playAllButton?.addEventListener("click", playAll);
+    playbackGroups.forEach((group) => {
+      group.button.addEventListener("click", () => playGroup(group));
+    });
     sourceToggle?.addEventListener("click", () => {
       if (!sourcePanel) return;
       const shouldShow = sourcePanel.hidden;
@@ -1097,6 +1425,7 @@
     const researchSummary = imageRecord.attemptSummary
       ? `<p class="researchSummary"><strong>Полный журнал кейса 21.</strong> Получено ${imageRecord.attemptSummary.available} MP4 из ${imageRecord.attemptSummary.total} запусков; ${imageRecord.attemptSummary.unavailable} запуска завершились без видео. Все семь результатов имеют статус fidelity failed.</p>`
       : "";
+    const loopSection = renderLoopSection(article, imageRecord);
 
     detachCurrentVideos();
     elements.currentNumber.textContent = article.article_number;
@@ -1118,11 +1447,14 @@
             class="controlButton strong"
             type="button"
             data-play-all
+            data-video-group-control="primary"
+            data-play-label="Воспроизвести ${displayOutputs.length} основных"
+            data-pause-label="Пауза основных"
             aria-pressed="false"
             aria-describedby="navigatorStatus"
             disabled
           >
-            Воспроизвести все
+            Воспроизвести ${displayOutputs.length} основных
           </button>
           <button
             class="controlButton"
@@ -1136,11 +1468,15 @@
         </div>
         ${renderSource(article, imageRecord)}
         ${researchSummary}
-        <div class="modelGrid${modelCountClass}${gridClass}${multiRowClass}">
+        <div
+          class="modelGrid${modelCountClass}${gridClass}${multiRowClass}"
+          data-video-group="primary"
+        >
           ${displayOutputs
             .map((output, modelIndex) => renderModel(article, imageRecord, output, modelIndex))
             .join("")}
         </div>
+        ${loopSection}
       </div>
     `;
 
@@ -1221,6 +1557,10 @@
         baseArticles,
         additionalArticles,
       );
+      const loopOutputCount =
+        case21Articles[0]?.images[0]?.loopExperiment?.outputs.length || 0;
+      elements.videoCountSummary.textContent =
+        `123 + ${EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT + loopOutputCount}`;
       articles = mergeArticleImages(baseArticles, additionalArticles, case21Articles);
       elements.caseSelect.replaceChildren(
         ...articles.map(

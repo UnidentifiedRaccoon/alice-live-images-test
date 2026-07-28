@@ -6,7 +6,7 @@
   "batch_id": "promopages-9930-case21-failure-aware-20260727-v1",
   "agent_id": "clipmaker-lite",
   "delivery": "repository-raw",
-  "updated_at": "2026-07-28T09:12:05Z",
+  "updated_at": "2026-07-28T12:33:22Z",
   "models": [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -2380,5 +2380,1204 @@
       "error": "Media contract verification failed: audio, resolution",
       "model_attempt_number": 5
     }
-  ]
+  ],
+  "loop_experiment": {
+    "schema_version": 1,
+    "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+    "model_id": "alibaba/wan-2.7",
+    "agent_id": "clipmaker-lite",
+    "updated_at": "2026-07-28T12:27:30Z",
+    "request_contract": {
+      "classification": "api-loop-closure-experiment",
+      "verified_lite_planning": true,
+      "canonical_lite_runtime": false,
+      "mechanism": "same-source-first-and-last-frame",
+      "request_mechanism": "same-source-first-and-last-frame",
+      "last_frame_is_source": true,
+      "same_source_for_endpoints": true,
+      "provider_native_loop_parameter": false,
+      "browser_playback_loop": true,
+      "frame_types": [
+        "first_frame",
+        "last_frame"
+      ],
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "provider_api_base_url": "https://api.eliza.yandex.net/openrouter/v1",
+      "provider_submit_url": "https://api.eliza.yandex.net/openrouter/v1/videos",
+      "provider_status_url_template": "https://api.eliza.yandex.net/openrouter/v1/videos/{job_id}",
+      "provider_content_url_template": "https://api.eliza.yandex.net/openrouter/v1/videos/{job_id}/content?index=0"
+    },
+    "cost": {
+      "currency": "USD",
+      "operator_budget_cap_usd": 5.0,
+      "reserved_usd": 4.0,
+      "reservation_per_output_usd": 0.5,
+      "automatic_paid_retries": false,
+      "actual_billing_available": false,
+      "reservation_kind": "conservative-operator-envelope",
+      "note": "Eight immutable entries reserve $4.00. Two $0.50 contingency slots remain unmaterialized and require a new explicit namespace."
+    },
+    "attempt_count": 8,
+    "attempts_without_video_count": 0,
+    "available_output_count": 8,
+    "accepted_output_count": 0,
+    "source": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+    },
+    "source_manifests": {
+      "inventory": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/inventory.json",
+      "generation": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/generation-manifest.json",
+      "experiment": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/experiment-manifest.json",
+      "review": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json"
+    },
+    "receipt_sha256": {
+      "experiment_manifest": "8d0bddc0fe740ff8958663e3d7d0b0702023c30cbc8e79c12fc57de3162400ed",
+      "inventory": "f7256d44998c7a102ff52074a166ffda3bbbd789ef429107cbdefc869ea24d87",
+      "generation": "85e7fb5d413cc5ad1a7a54cc796486eeb13a5274247de970ff9d6d1164a43f20",
+      "review": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a"
+    },
+    "attempt_history": [
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "sync-cycle",
+        "stage": "canary",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-sync-cycle-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-sync-cycle-20260728-v1",
+        "sample_id": "21-maier-04-loop-sync-cycle",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "56c8894c4ad3b3543a8e3004e793329b76b13c8293908641f3aa78ca0cd8e1a8",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "shhqgWto80WcY1T1wKQi",
+        "submitted_at": "2026-07-28T12:23:06Z",
+        "completed_at": "2026-07-28T12:24:22Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.mp4",
+        "prompt_sha256": "20541baa3f49ff83218a0e5a1b7492bc5bb5ab9bd10901dda9886577c9b00a09",
+        "run_sha256": "e21784acceae4dcbdc81ae819899a15e64edf70dee54b28ae3bdfdbae2f292a5",
+        "video_sha256": "592c9308538350c575485f52f50aa80b65a6e40a2fe4b24f9742ef745692dc3e",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 1,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "mirror-midpoint",
+        "stage": "main",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-mirror-midpoint-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-mirror-midpoint-20260728-v1",
+        "sample_id": "21-maier-04-loop-mirror-midpoint",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "79236e97c7908277a591f7ed4f0234169d68ca727b7cd84de28016b3c2d25f61",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "uJjr0qd4b5xyMGctOsSk",
+        "submitted_at": "2026-07-28T12:24:51Z",
+        "completed_at": "2026-07-28T12:26:10Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.mp4",
+        "prompt_sha256": "d9a04015ac6110235d24861e28ba99f343accac5450591cb99d3950789518872",
+        "run_sha256": "d9db3d0559a0aaec50dbbd47c44aa22729bc6954fe3e9f01160075f220ee12d9",
+        "video_sha256": "e02ed005f6985f33977512c30fd4edb76e15085bcf1971d5cc6d3073c18cef9a",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 2,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "local-icons",
+        "stage": "canary",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-local-icons-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-local-icons-20260728-v1",
+        "sample_id": "21-maier-04-loop-local-icons",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "610d16ca3bf39825b766ea05922c93e22e211aaa4ac2c7cf800f10b29f63922c",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "NRmvtfS351JZjVCmjrOC",
+        "submitted_at": "2026-07-28T12:23:05Z",
+        "completed_at": "2026-07-28T12:24:22Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.mp4",
+        "prompt_sha256": "21d2e9505f89b00e89b93494b41438a81a522077a75cff5b76cc65d47fd4f148",
+        "run_sha256": "05f7be5ec7d88d211acce22f44e317c1ab1f05ff0220da5b10d22db68b95c9cd",
+        "video_sha256": "f9b29e19b78289e56b82d25947cc1e3a3633bea75cbb48893e7947e21f07683c",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 3,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "kinetic-compact",
+        "stage": "main",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-kinetic-compact-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-kinetic-compact-20260728-v1",
+        "sample_id": "21-maier-04-loop-kinetic-compact",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "309fed6197a8838fca7b971d6a3621b3a69f8725fe7ea55d929c58a8bf77f13b",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "RQ5E0lFe1SUaRbtJoOO8",
+        "submitted_at": "2026-07-28T12:24:52Z",
+        "completed_at": "2026-07-28T12:26:12Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.mp4",
+        "prompt_sha256": "ff8f81ac6f393e23e0b5c5fe60685ec21a593e430d79c7fcdfb550f969672ab8",
+        "run_sha256": "b1e94e262f63dfadd19924570a3884bf7bd804dab16b0df8231c63c0c78122ef",
+        "video_sha256": "546d3e195b35f16acc60e20c86d6dec01a103468fd6c8581c64c840af58d98a4",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 4,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "staggered-wave",
+        "stage": "main",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-staggered-wave-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-staggered-wave-20260728-v1",
+        "sample_id": "21-maier-04-loop-staggered-wave",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "c7c5e4d04284693e853d4ac9707cf668822bd25551189c7317864066fbec11fc",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "tMyZKpQ6NxAleoElt9cb",
+        "submitted_at": "2026-07-28T12:24:51Z",
+        "completed_at": "2026-07-28T12:26:12Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.mp4",
+        "prompt_sha256": "92cceb46905c845d4c7589bd65433691f572f4ef14e0f05ebc9abd0399a43d26",
+        "run_sha256": "c84267ab82bf45a780ac41e035295496976717d31fca46e78ad0ac31e6045174",
+        "video_sha256": "a4e68dc69abf502bd796c02b9aeabdd78c56e49c0596cc56769d63e78be42f7d",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 5,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "simultaneous-microloops",
+        "stage": "main",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-simultaneous-microloops-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-simultaneous-microloops-20260728-v1",
+        "sample_id": "21-maier-04-loop-simultaneous-microloops",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "83c93d75c0c6b9bdd2360800e3f4bbdad58ace455f8576222b51b735405ef8c4",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "bopKanaJSdIgdHLFYRwP",
+        "submitted_at": "2026-07-28T12:26:12Z",
+        "completed_at": "2026-07-28T12:27:27Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.mp4",
+        "prompt_sha256": "e8c59748ac4537b0b595e738ad4ad156dc2d4bf0fdc191aa00b91837ffbe6113",
+        "run_sha256": "bfd0ab0bc63bbb8824312270d0e57461e3d387f73be5cb5ce02cea21003cdd40",
+        "video_sha256": "ae97a6773d3e425eadbe18731e5793f87b258d935b79434e9e96b86097bbc67f",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 6,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "endpoint-first",
+        "stage": "canary",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-endpoint-first-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-endpoint-first-20260728-v1",
+        "sample_id": "21-maier-04-loop-endpoint-first",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "46f0f2ca8bd9a65b57407f3efda28ae7e3b2d42be8c1a4e734c9a2acb86df9c0",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "4HrUAV7xoHjgeeSPTEOh",
+        "submitted_at": "2026-07-28T12:23:07Z",
+        "completed_at": "2026-07-28T12:24:16Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.mp4",
+        "prompt_sha256": "367ea8f00d5d48a1c4dd565092465ac9af77013b147a98e697646c6b6943a11d",
+        "run_sha256": "f639be2b953b0bd396027493229fa7c752283e60c42630a2a207eea3318966d1",
+        "video_sha256": "9334edf4388a28a74d6aaa36277ee5f1b1c6c88a0b74692137bbf47a41919497",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 7,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "loop-closure-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+        "variant_id": "preservation-repair",
+        "stage": "main",
+        "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-preservation-repair-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-preservation-repair-20260728-v1",
+        "sample_id": "21-maier-04-loop-preservation-repair",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "1e02fe9eb7d80d466c55d55bf5679dbd2c1589f2e798f416a1a9227a7c608b91",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "7pfdhJsJAWaC99FJTkEB",
+        "submitted_at": "2026-07-28T12:26:14Z",
+        "completed_at": "2026-07-28T12:27:30Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.mp4",
+        "prompt_sha256": "19b1ba2aebb6aacf50a7b40fb5813d78ff1db92eb669c466c44b6f0aa654881a",
+        "run_sha256": "714a656a2a5fcd3bbbbaae649e7861c90e42c212c726c89c30e26e186afcf2c4",
+        "video_sha256": "42e6707b06bce6abfbd3365e36a81291cd884174bfc9ee6eb35594799a172b27",
+        "available_video": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "experiment_attempt_number": 8,
+        "error": "Media contract verification failed: audio, resolution"
+      }
+    ],
+    "outputs": [
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-sync-cycle",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-sync-cycle-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-sync-cycle-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Animate one synchronized five-second cycle: ovaries pulse subtly; the progesterone molecule and purple aura gently pulse and turn; balance scales rock; the bathroom-scale needle makes one smooth revolution; drops fall like rain; irritation lines jitter; the battery fills red through yellow to green, then every element smoothly returns to its exact starting pose and red charge for a seamless loop. Keep all text, arrows, icons, chemistry and layout unchanged.",
+        "negative_prompt": "No text or glyph changes, misspellings, icon morphing, layout drift, altered arrows or chemistry, extra objects, cuts, camera motion, or mismatched first and last frames.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 2938328,
+          "sha256": "592c9308538350c575485f52f50aa80b65a6e40a2fe4b24f9742ef745692dc3e"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 4 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "sync-cycle",
+          "variant_label": "synchronized full infographic cycle",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "56c8894c4ad3b3543a8e3004e793329b76b13c8293908641f3aa78ca0cd8e1a8",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "20541baa3f49ff83218a0e5a1b7492bc5bb5ab9bd10901dda9886577c9b00a09",
+          "run_sha256": "e21784acceae4dcbdc81ae819899a15e64edf70dee54b28ae3bdfdbae2f292a5",
+          "video_sha256": "592c9308538350c575485f52f50aa80b65a6e40a2fe4b24f9742ef745692dc3e",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 4,
+            "missing_motion_regions": [
+              "bathroom_scale",
+              "water_drops",
+              "irritability_lines"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-mirror-midpoint",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-mirror-midpoint-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-mirror-midpoint-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Animate one synchronized palindrome cycle: ovaries and the progesterone formula softly pulse as the purple aura turns; balance pans rock, the scale needle swings, droplets rain, irritation lines jitter, and the battery shifts red-yellow-green-red. Build smoothly to maximum activity at 2.5 seconds, then reverse every motion precisely, ending on the exact source frame. Keep all text and diagram geometry unchanged.",
+        "negative_prompt": null,
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 2728895,
+          "sha256": "e02ed005f6985f33977512c30fd4edb76e15085bcf1971d5cc6d3073c18cef9a"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 4 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "mirror-midpoint",
+          "variant_label": "time-symmetric motion around the midpoint",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "79236e97c7908277a591f7ed4f0234169d68ca727b7cd84de28016b3c2d25f61",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "d9a04015ac6110235d24861e28ba99f343accac5450591cb99d3950789518872",
+          "run_sha256": "d9db3d0559a0aaec50dbbd47c44aa22729bc6954fe3e9f01160075f220ee12d9",
+          "video_sha256": "e02ed005f6985f33977512c30fd4edb76e15085bcf1971d5cc6d3073c18cef9a",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position, boundary-motion-continuity",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position",
+              "boundary-motion-continuity"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 4,
+            "missing_motion_regions": [
+              "progesterone_formula",
+              "bathroom_scale",
+              "water_drops"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-local-icons",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-local-icons-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-local-icons-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Create a seamless local-icon loop: ovaries softly pulse; the progesterone molecule and aura gently pulse and turn; balance pans sway; scale needle circles; water drops repeatedly fall; irritation lines writhe; battery cycles red-yellow-green-red. Keep every motion inside its original icon bounds. All regions return exactly to the initial frame. Preserve all labels, arrows, formula, icons and layout unchanged.",
+        "negative_prompt": null,
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 2901974,
+          "sha256": "f9b29e19b78289e56b82d25947cc1e3a3633bea75cbb48893e7947e21f07683c"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 5 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "local-icons",
+          "variant_label": "strict local icon masks and fixed layout",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "610d16ca3bf39825b766ea05922c93e22e211aaa4ac2c7cf800f10b29f63922c",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "21d2e9505f89b00e89b93494b41438a81a522077a75cff5b76cc65d47fd4f148",
+          "run_sha256": "05f7be5ec7d88d211acce22f44e317c1ab1f05ff0220da5b10d22db68b95c9cd",
+          "video_sha256": "f9b29e19b78289e56b82d25947cc1e3a3633bea75cbb48893e7947e21f07683c",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position, boundary-motion-continuity",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position",
+              "boundary-motion-continuity"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 5,
+            "missing_motion_regions": [
+              "bathroom_scale",
+              "water_drops"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-kinetic-compact",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-kinetic-compact-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-kinetic-compact-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Animate one synchronized seamless cycle: the gold balance swings twice, the scale needle turns once, drops rain, irritation lines jitter, the battery flows red-yellow-green-red, and the ovaries pulse twice. The progesterone molecule gently turns while its purple aura pulses. Keep all text, arrows, icon geometry and layout unchanged; every element returns exactly to the source pose at the seam.",
+        "negative_prompt": "No text or arrow deformation, no icon warping, no layout drift, no extra objects, no camera motion, no unmatched loop seam, and no changed molecule geometry or battery shape.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 2562683,
+          "sha256": "546d3e195b35f16acc60e20c86d6dec01a103468fd6c8581c64c840af58d98a4"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 4 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "kinetic-compact",
+          "variant_label": "compact kinetic choreography",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "309fed6197a8838fca7b971d6a3621b3a69f8725fe7ea55d929c58a8bf77f13b",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "ff8f81ac6f393e23e0b5c5fe60685ec21a593e430d79c7fcdfb550f969672ab8",
+          "run_sha256": "b1e94e262f63dfadd19924570a3884bf7bd804dab16b0df8231c63c0c78122ef",
+          "video_sha256": "546d3e195b35f16acc60e20c86d6dec01a103468fd6c8581c64c840af58d98a4",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 4,
+            "missing_motion_regions": [
+              "antique_balance",
+              "bathroom_scale",
+              "water_drops"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-staggered-wave",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-staggered-wave-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-staggered-wave-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. A gentle staggered wave crosses the diagram: ovaries pulse, the progesterone formula and aura softly turn and pulse, then the balance rocks; below, the scale needle rotates, drops fall, irritation lines jitter, and the battery cycles red-yellow-green-red. Each motion eases back in sequence, ending on the exact source frame. Keep all text, arrows, chemistry, silhouettes, and layout unchanged.",
+        "negative_prompt": null,
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 2709894,
+          "sha256": "a4e68dc69abf502bd796c02b9aeabdd78c56e49c0596cc56769d63e78be42f7d"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 4 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "staggered-wave",
+          "variant_label": "staggered wave across existing elements",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "c7c5e4d04284693e853d4ac9707cf668822bd25551189c7317864066fbec11fc",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "92cceb46905c845d4c7589bd65433691f572f4ef14e0f05ebc9abd0399a43d26",
+          "run_sha256": "c84267ab82bf45a780ac41e035295496976717d31fca46e78ad0ac31e6045174",
+          "video_sha256": "a4e68dc69abf502bd796c02b9aeabdd78c56e49c0596cc56769d63e78be42f7d",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 4,
+            "missing_motion_regions": [
+              "antique_balance",
+              "bathroom_scale",
+              "water_drops"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-simultaneous-microloops",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-simultaneous-microloops-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-simultaneous-microloops-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Over five seconds, run synchronized seamless local loops: ovaries and the progesterone molecule with purple aura gently pulse, the molecule subtly turns, the balance rocks, scale needle rotates and returns, drops fall cyclically, irritability lines jitter, and the battery cycles red-yellow-green-red. End pixel-aligned with the first frame. Preserve every Russian label, arrow, formula bond, icon shape, and layout exactly.",
+        "negative_prompt": null,
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 2722754,
+          "sha256": "ae97a6773d3e425eadbe18731e5793f87b258d935b79434e9e96b86097bbc67f"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 4 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "simultaneous-microloops",
+          "variant_label": "simultaneous local microloops",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "83c93d75c0c6b9bdd2360800e3f4bbdad58ace455f8576222b51b735405ef8c4",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "e8c59748ac4537b0b595e738ad4ad156dc2d4bf0fdc191aa00b91837ffbe6113",
+          "run_sha256": "bfd0ab0bc63bbb8824312270d0e57461e3d387f73be5cb5ce02cea21003cdd40",
+          "video_sha256": "ae97a6773d3e425eadbe18731e5793f87b258d935b79434e9e96b86097bbc67f",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 4,
+            "missing_motion_regions": [
+              "ovaries",
+              "bathroom_scale",
+              "water_drops"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-endpoint-first",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-endpoint-first-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-endpoint-first-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Create one smooth reversible infographic loop: ovaries pulse; the progesterone molecule and aura gently pulse and turn; the balance sways; the scale needle rotates; drops fall like rain; irritation lines jitter; the battery cycles red-yellow-green-red. Use sinusoidal motion and return every element exactly to the source composition in the final frame, fully still and seamless with the first frame.",
+        "negative_prompt": "No changed or garbled text, added objects, layout drift, warped anatomy or icons, altered arrows, camera motion, cuts, residual motion, or mismatched first and last frames. Do not end on yellow or green battery.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 3303061,
+          "sha256": "9334edf4388a28a74d6aaa36277ee5f1b1c6c88a0b74692137bbf47a41919497"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 5 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "endpoint-first",
+          "variant_label": "explicit source-matching endpoint",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "46f0f2ca8bd9a65b57407f3efda28ae7e3b2d42be8c1a4e734c9a2acb86df9c0",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "367ea8f00d5d48a1c4dd565092465ac9af77013b147a98e697646c6b6943a11d",
+          "run_sha256": "f639be2b953b0bd396027493229fa7c752283e60c42630a2a207eea3318966d1",
+          "video_sha256": "9334edf4388a28a74d6aaa36277ee5f1b1c6c88a0b74692137bbf47a41919497",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 5,
+            "missing_motion_regions": [
+              "bathroom_scale",
+              "water_drops"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-loop-preservation-repair",
+        "lite_run_id": "promopages-9930-case21-wan27-loop-preservation-repair-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-preservation-repair-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera, seamless 5-second loop with exact source first and last frame. Ovaries pulse in place; progesterone molecule and aura gently pulse and turn; gold balance rocks locally; scale needle rotates only inside its dial; droplets fall and reappear only inside their region; irritation scribbles jitter locally; battery interior cycles red-yellow-green-red while its casing stays fixed. Lock all masks, geometry, text, arrows and layout.",
+        "negative_prompt": "No bloom, glow spread, drifting, morphing, warped masks, altered geometry, extra icons, text or layout changes, moving arrows, changing battery casing, motion outside each region, or loop-seam mismatch.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-loop-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · API first/last conditioning",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 3335396,
+          "sha256": "42e6707b06bce6abfbd3365e36a81291cd884174bfc9ee6eb35594799a172b27"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "fidelity-failed",
+          "summary": "Deterministic ROI review detected motion in 6 of 7 requested regions; semantic direction and battery color order still require human review.",
+          "human_semantic_review_complete": false
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/loop-review.json",
+        "selection": {
+          "activity": "loop-closure-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-loop-20260728-v1",
+          "variant_id": "preservation-repair",
+          "variant_label": "observed-fidelity preservation repair",
+          "purpose": "point-animation-and-loop-closure-research"
+        },
+        "loop_closure": {
+          "request_sha256": "1e02fe9eb7d80d466c55d55bf5679dbd2c1589f2e798f416a1a9227a7c608b91",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame",
+            "last_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "same_source_for_endpoints": true,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": true,
+          "prompt_sha256": "19b1ba2aebb6aacf50a7b40fb5813d78ff1db92eb669c466c44b6f0aa654881a",
+          "run_sha256": "714a656a2a5fcd3bbbbaae649e7861c90e42c212c726c89c30e26e186afcf2c4",
+          "video_sha256": "42e6707b06bce6abfbd3365e36a81291cd884174bfc9ee6eb35594799a172b27",
+          "review_sha256": "7cd8fc1bcd5e0a425b4b27d40108e6037f72b94ed68577c047db00cf3d14d95a",
+          "seam_review": {
+            "status": "seam-failed",
+            "summary": "Deterministic seam review failed: first-last-position",
+            "analysis_status": "fail",
+            "failed_checks": [
+              "first-last-position"
+            ]
+          },
+          "motion_review": {
+            "status": "fail",
+            "requested_region_count": 7,
+            "regions_with_detected_motion": 6,
+            "missing_motion_regions": [
+              "progesterone_formula"
+            ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      }
+    ]
+  }
 }

@@ -2,9 +2,10 @@
 """Finalize the case-21 research sidecar without hiding fidelity failures.
 
 This is a read-only verifier plus one local JSON write.  It does not call a
-provider, discover a route, retry an entry, or fetch a URL.  Three generated
-MP4s are intentionally exposed for visual comparison, but all three remain
-unaccepted because their exact visual-review receipts say ``fidelity-failed``.
+provider, discover a route, retry an entry, or fetch a URL.  The original seven
+research MP4s remain unchanged and unaccepted.  When the separately budgeted
+Wan 2.7 loop experiment is complete, its available MP4s and full attempt
+history are exposed in a distinct top-level section with exact receipt binding.
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ import hashlib
 import json
 import sys
 from dataclasses import dataclass
+from fractions import Fraction
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import quote
@@ -24,6 +26,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
+from scripts import clipmaker_lite_case21_loop_experiment as loop_experiment  # noqa: E402
 from scripts import clipmaker_lite_case21_pipeline as case21  # noqa: E402
 from scripts import clipmaker_lite_runner as runner  # noqa: E402
 from scripts import video_generation_pipeline as transport  # noqa: E402
@@ -41,6 +44,33 @@ STAGE1_GENERATION_PATH = STAGE1_ROOT / "generation-manifest.json"
 STAGE2_GENERATION_PATH = STAGE2_ROOT / "generation-manifest.json"
 STAGE1_INVENTORY_PATH = STAGE1_ROOT / "inventory.json"
 STAGE2_INVENTORY_PATH = STAGE2_ROOT / "inventory.json"
+LOOP_REVIEW_PATH = loop_experiment.EXPERIMENT_ROOT / "loop-review.json"
+
+LOOP_INCOMPLETE_STATUSES = frozenset(
+    {
+        "missing",
+        "pending",
+        "dry-run",
+        "preparing",
+        "submitting",
+        "submitted",
+        "running",
+        "submit-unknown",
+        "stale",
+    }
+)
+LOOP_AVAILABLE_STATUSES = frozenset({"succeeded", "verification-failed"})
+LOOP_FRAME_TYPES = ("first_frame", "last_frame")
+LOOP_REVIEW_SCHEMA_VERSION = "clipmaker-lite.case21-loop-review.v1"
+LOOP_REGION_IDS = (
+    "ovaries",
+    "progesterone_formula",
+    "antique_balance",
+    "bathroom_scale",
+    "water_drops",
+    "irritability_lines",
+    "battery",
+)
 
 PUBLIC_RAW_BASE = (
     "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
@@ -1219,6 +1249,579 @@ def build_attempt_history(root: Path = ROOT) -> list[dict[str, Any]]:
     return history
 
 
+def _sha256_text(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _validated_loop_source(
+    root: Path,
+) -> tuple[dict[str, Any], dict[str, Any]] | None:
+    """Return the exact experiment/inventory pair, or ``None`` when absent.
+
+    A materialized experiment manifest is written before paid generation starts,
+    so existence alone does not make it publishable.  We still reconstruct an
+    existing document before checking completion; a malformed partial receipt is
+    never silently treated as a trustworthy experiment.
+    """
+
+    manifest_path = root / loop_experiment.EXPERIMENT_MANIFEST_PATH
+    if not manifest_path.exists():
+        return None
+    if not manifest_path.is_file() or manifest_path.is_symlink():
+        raise FinalizeError(f"Loop experiment manifest is unsafe: {manifest_path}")
+    experiment = read_json(manifest_path)
+    if not isinstance(experiment, dict):
+        raise FinalizeError("Loop experiment manifest is not an object")
+    updated_at = experiment.get("updated_at")
+    cost = experiment.get("cost")
+    budget = cost.get("operator_budget_cap_usd") if isinstance(cost, dict) else None
+    if (
+        experiment.get("manifest_role")
+        != "case-21-wan27-loop-experiment"
+        or experiment.get("ticket") != TICKET
+        or experiment.get("experiment_id") != loop_experiment.EXPERIMENT_ID
+        or experiment.get("provider_batch_id")
+        != loop_experiment.PROVIDER_BATCH_ID
+        or experiment.get("agent_id") != AGENT_ID
+        or not isinstance(updated_at, str)
+        or not updated_at.strip()
+        or not isinstance(budget, (int, float))
+        or isinstance(budget, bool)
+        or float(budget) > float(loop_experiment.HARD_BUDGET_CAP_USD)
+    ):
+        raise FinalizeError("Loop experiment identity or budget changed")
+    expected = loop_experiment._experiment_document(  # noqa: SLF001
+        str(budget),
+        root,
+        updated_at=updated_at,
+    )
+    if experiment != expected:
+        raise FinalizeError(
+            "Loop experiment manifest differs from exact inventory and run receipts"
+        )
+    inventory = read_json(root / loop_experiment.INVENTORY_PATH)
+    expected_inventory = loop_experiment.inventory_document(str(budget), root)
+    if inventory != expected_inventory:
+        raise FinalizeError("Loop inventory differs from exact Lite plans and requests")
+    return experiment, inventory
+
+
+def _loop_is_complete(experiment: dict[str, Any]) -> bool:
+    outputs = experiment.get("outputs")
+    if (
+        not isinstance(outputs, list)
+        or len(outputs) != loop_experiment.INITIAL_ENTRY_COUNT
+    ):
+        raise FinalizeError("Loop experiment output matrix changed")
+    statuses = [str(output.get("status", "missing")) for output in outputs]
+    return not any(status in LOOP_INCOMPLETE_STATUSES for status in statuses)
+
+
+def _validated_loop_review(
+    root: Path,
+    available: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], str]:
+    review_path = root / LOOP_REVIEW_PATH
+    if not available:
+        if review_path.exists() and (
+            not review_path.is_file() or review_path.is_symlink()
+        ):
+            raise FinalizeError(f"Loop review path is unsafe: {review_path}")
+        return {}, sha256_file(review_path) if review_path.is_file() else ""
+    if not review_path.is_file() or review_path.is_symlink():
+        raise FinalizeError(f"Completed loop MP4s require {LOOP_REVIEW_PATH}")
+    review_sha256 = sha256_file(review_path)
+    report = read_json(review_path)
+    if not isinstance(report, dict):
+        raise FinalizeError("Loop review report is not an object")
+    case = report.get("case")
+    method = report.get("method")
+    requested_regions = (
+        method.get("requested_regions") if isinstance(method, dict) else None
+    )
+    videos = report.get("videos")
+    if (
+        report.get("schema_version") != LOOP_REVIEW_SCHEMA_VERSION
+        or case
+        != {
+            "article_number": "21",
+            "article_slug": case21.ARTICLE_SLUG,
+            "image_id": case21.IMAGE_ID,
+            "model_id": loop_experiment.MODEL_ID,
+        }
+        or not isinstance(requested_regions, list)
+        or tuple(
+            item.get("region_id") for item in requested_regions if isinstance(item, dict)
+        )
+        != LOOP_REGION_IDS
+        or report.get("video_count") != len(available)
+        or not isinstance(videos, list)
+        or len(videos) != len(available)
+    ):
+        raise FinalizeError("Loop review report identity or requested ROI set changed")
+
+    available_by_variant = {item["variant_id"]: item for item in available}
+    if len(available_by_variant) != len(available):
+        raise FinalizeError("Available loop variants are duplicated")
+    reviewed: dict[str, dict[str, Any]] = {}
+    for video in videos:
+        if not isinstance(video, dict):
+            raise FinalizeError("Loop review video entry is not an object")
+        variant_id = video.get("video_id")
+        expected = available_by_variant.get(str(variant_id))
+        media = video.get("media")
+        seam = video.get("seam")
+        regions = video.get("regions")
+        if (
+            expected is None
+            or variant_id in reviewed
+            or video.get("path") != expected["video_path"]
+            or video.get("sha256") != expected["video_sha256"]
+            or video.get("seam_status") not in {"pass", "fail"}
+            or video.get("fidelity_status") not in {"pass", "fail"}
+            or not isinstance(media, dict)
+            or not isinstance(seam, dict)
+            or seam.get("seam_status") != video.get("seam_status")
+            or not isinstance(seam.get("failed_checks"), list)
+            or not isinstance(regions, list)
+            or tuple(
+                item.get("region_id") for item in regions if isinstance(item, dict)
+            )
+            != LOOP_REGION_IDS
+            or any(
+                not isinstance(item.get("detected_motion"), bool)
+                for item in regions
+                if isinstance(item, dict)
+            )
+        ):
+            raise FinalizeError(f"Loop review binding changed for {variant_id!r}")
+        run_media = expected["media"]
+        try:
+            frame_rate = float(Fraction(str(media.get("frame_rate"))))
+        except (ValueError, ZeroDivisionError) as exc:
+            raise FinalizeError(
+                f"Loop review frame rate is invalid for {variant_id}"
+            ) from exc
+        media_matches = (
+            media.get("width") == run_media.get("width")
+            and media.get("height") == run_media.get("height")
+            and media.get("codec") == run_media.get("codec")
+            and media.get("container") == run_media.get("container")
+            and media.get("has_audio") == run_media.get("has_audio")
+            and media.get("bytes") == run_media.get("bytes")
+            and abs(
+                float(media.get("duration_seconds") or 0)
+                - float(run_media.get("duration_seconds") or 0)
+            )
+            <= 0.1
+            and (
+                run_media.get("fps") is None
+                or abs(frame_rate - float(run_media["fps"])) <= 0.001
+            )
+            and (
+                run_media.get("frames") is None
+                or media.get("frame_count") == run_media.get("frames")
+            )
+        )
+        if not media_matches:
+            raise FinalizeError(f"Loop review media changed for {variant_id}")
+        reviewed[str(variant_id)] = video
+    if set(reviewed) != set(available_by_variant):
+        raise FinalizeError("Loop review does not cover every available MP4 exactly once")
+    if (
+        report.get("seam_pass_count")
+        != sum(item.get("seam_status") == "pass" for item in videos)
+        or report.get("fidelity_pass_count")
+        != sum(item.get("fidelity_status") == "pass" for item in videos)
+    ):
+        raise FinalizeError("Loop review aggregate counters changed")
+    return reviewed, review_sha256
+
+
+def _loop_seam_summary(review: dict[str, Any]) -> tuple[str, str]:
+    seam_status = review["seam_status"]
+    if seam_status == "pass":
+        return (
+            "seam-passed",
+            "First/last position and boundary-motion proxy passed deterministic review.",
+        )
+    failed = review["seam"].get("failed_checks") or ["unspecified seam check"]
+    return (
+        "seam-failed",
+        "Deterministic seam review failed: " + ", ".join(str(item) for item in failed),
+    )
+
+
+def build_loop_experiment(root: Path = ROOT) -> dict[str, Any] | None:
+    validated = _validated_loop_source(root)
+    if validated is None:
+        return None
+    experiment, inventory = validated
+    if not _loop_is_complete(experiment):
+        return None
+
+    route = loop_experiment.validate_route()
+    entries_by_variant = {
+        item["variant_id"]: item for item in inventory.get("entries", [])
+    }
+    planning_by_variant = {
+        item["variant_id"]: item
+        for item in experiment.get("planning_variants", [])
+        if isinstance(item, dict) and isinstance(item.get("variant_id"), str)
+    }
+    if (
+        set(entries_by_variant) != set(loop_experiment.VARIANT_BY_ID)
+        or set(planning_by_variant) != set(loop_experiment.VARIANT_BY_ID)
+    ):
+        raise FinalizeError("Loop inventory or planning variant matrix changed")
+
+    attempts: list[dict[str, Any]] = []
+    available: list[dict[str, Any]] = []
+    with loop_experiment.configured_native(root):
+        for attempt_number, raw_output in enumerate(experiment["outputs"], start=1):
+            if not isinstance(raw_output, dict):
+                raise FinalizeError("Loop generation output is not an object")
+            variant_id = raw_output.get("variant_id")
+            entry = loop_experiment.ENTRY_BY_VARIANT.get(str(variant_id))
+            inventory_entry = entries_by_variant.get(str(variant_id))
+            planning_variant = planning_by_variant.get(str(variant_id))
+            if (
+                entry is None
+                or not isinstance(inventory_entry, dict)
+                or not isinstance(planning_variant, dict)
+            ):
+                raise FinalizeError(f"Unknown loop variant: {variant_id!r}")
+            job = loop_experiment.load_experiment_job(entry, root)
+            paths = loop_experiment.artifact_paths(entry, root)
+            expected_paths = {
+                "prompt_path": _relative(paths["prompt"], root),
+                "run_path": _relative(paths["run"], root),
+                "video_path": _relative(paths["video"], root),
+            }
+            expected_identity = {
+                "lite_run_id": entry.planning_run_id,
+                "provider_run_id": loop_experiment._provider_run_id(entry),  # noqa: SLF001
+                "sample_id": entry.sample.sample_id,
+                "article_slug": case21.ARTICLE_SLUG,
+                "source_path": case21.SOURCE_PATH.as_posix(),
+                "model_id": loop_experiment.MODEL_ID,
+                "variant_id": variant_id,
+                "stage": inventory_entry.get("stage"),
+                **expected_paths,
+            }
+            if any(raw_output.get(key) != value for key, value in expected_identity.items()):
+                raise FinalizeError(f"Loop aggregate identity changed for {variant_id}")
+
+            prompt = read_json(paths["prompt"])
+            expected_prompt = loop_experiment.loop_prompt_artifact(job)
+            if prompt != expected_prompt:
+                raise FinalizeError(f"Loop prompt differs from verified Lite plan: {variant_id}")
+            positive = job.positive_prompt
+            negative = job.negative_prompt
+            if (
+                inventory_entry.get("planning_result_sha256") != job.result_sha256
+                or planning_variant.get("result_sha256") != job.result_sha256
+                or inventory_entry.get("positive_prompt_sha256")
+                != _sha256_text(positive)
+                or inventory_entry.get("negative_prompt_sha256")
+                != (_sha256_text(negative) if negative else None)
+            ):
+                raise FinalizeError(f"Loop planning or prompt SHA changed for {variant_id}")
+
+            run = read_json(paths["run"])
+            initial = loop_experiment.loop_initial_run(job, paths, root)
+            immutable_run_keys = (
+                "schema_version",
+                "ticket",
+                "sample_id",
+                "image_id",
+                "model_id",
+                "adapter",
+                "prompt_path",
+                "output_path",
+                "batch_id",
+                "agent_id",
+                "lite_run_id",
+                "provider_run_id",
+                "lite_result_sha256",
+                "provider_transport_experiment",
+            )
+            if (
+                not isinstance(run, dict)
+                or any(run.get(key) != initial.get(key) for key in immutable_run_keys)
+                or any(run.get(key) for key in ("retry_of", "retry_count", "attempts"))
+            ):
+                raise FinalizeError(f"Loop run identity changed for {variant_id}")
+            expected_request = loop_experiment.native.provider_request_preview(
+                loop_experiment.provider_sample(entry),
+                loop_experiment.loop_provider_prompt(job),
+            )
+            loop_experiment.assert_loop_request(entry, expected_request, job)
+            request_sha256 = transport.request_fingerprint(
+                expected_request,
+                loop_experiment.provider_sample(entry),
+            )
+            frames = expected_request.get("frame_images")
+            frame_types = tuple(
+                item.get("frame_type") for item in frames if isinstance(item, dict)
+            ) if isinstance(frames, list) else ()
+            frame_urls = tuple(
+                (item.get("image_url") or {}).get("url")
+                for item in frames
+                if isinstance(item, dict)
+            ) if isinstance(frames, list) else ()
+            if (
+                run.get("request") != expected_request
+                or run.get("request_fingerprint_version")
+                != loop_experiment.REQUEST_FINGERPRINT_VERSION
+                or run.get("request_sha256") != request_sha256
+                or inventory_entry.get("request_sha256") != request_sha256
+                or frame_types != LOOP_FRAME_TYPES
+                or frame_urls != (loop_experiment.SOURCE_URL, loop_experiment.SOURCE_URL)
+                or inventory_entry.get("first_frame_url") != loop_experiment.SOURCE_URL
+                or inventory_entry.get("last_frame_url") != loop_experiment.SOURCE_URL
+            ):
+                raise FinalizeError(f"Loop request or endpoint URL changed for {variant_id}")
+
+            recorded_status = run.get("status")
+            status = native.effective_run_status(run)
+            if status in LOOP_INCOMPLETE_STATUSES or run.get("provider_may_be_active") is True:
+                raise FinalizeError(f"Loop attempt is not terminal: {variant_id} ({status})")
+            mirrored = {
+                "recorded_status": recorded_status,
+                "status": status,
+                "provider_may_be_active": run.get("provider_may_be_active"),
+                "media": run.get("media"),
+                "contract_check": run.get("contract_check"),
+                "error": run.get("error"),
+                "provider_transport_experiment": loop_experiment.TRANSPORT_EXPERIMENT,
+            }
+            if any(raw_output.get(key) != value for key, value in mirrored.items()):
+                raise FinalizeError(f"Loop aggregate differs from run receipt: {variant_id}")
+
+            video_path = paths["video"]
+            has_available_status = status in LOOP_AVAILABLE_STATUSES
+            video_is_safe = video_path.is_file() and not video_path.is_symlink()
+            media = run.get("media")
+            if has_available_status != (video_is_safe and isinstance(media, dict)):
+                raise FinalizeError(f"Loop MP4 availability changed for {variant_id}")
+            video_sha256: str | None = None
+            if has_available_status:
+                video_sha256 = sha256_file(video_path)
+                if (
+                    media.get("sha256") != video_sha256
+                    or media.get("bytes") != video_path.stat().st_size
+                ):
+                    raise FinalizeError(f"Loop MP4 SHA or byte count changed for {variant_id}")
+
+            attempt = {
+                "activity": "loop-closure-experiment",
+                "experiment_id": loop_experiment.EXPERIMENT_ID,
+                "variant_id": variant_id,
+                "stage": raw_output.get("stage"),
+                "batch_id": loop_experiment.PROVIDER_BATCH_ID,
+                "provider_run_id": run.get("provider_run_id"),
+                "lite_run_id": run.get("lite_run_id"),
+                "sample_id": run.get("sample_id"),
+                "model_id": run.get("model_id"),
+                "status": status,
+                "recorded_status": recorded_status,
+                "provider_may_be_active": run.get("provider_may_be_active"),
+                "request_sha256": request_sha256,
+                "request_fingerprint_version": loop_experiment.REQUEST_FINGERPRINT_VERSION,
+                "provider_job_id": run.get("provider_job_id"),
+                "submitted_at": run.get("submitted_at"),
+                "completed_at": run.get("completed_at"),
+                **expected_paths,
+                "prompt_sha256": sha256_file(paths["prompt"]),
+                "run_sha256": sha256_file(paths["run"]),
+                "video_sha256": video_sha256,
+                "available_video": has_available_status,
+                "selected_for_display": has_available_status,
+                "selected_for_acceptance": False,
+                "experiment_attempt_number": attempt_number,
+                "error": run.get("error"),
+            }
+            attempts.append(attempt)
+            if has_available_status:
+                available.append(
+                    {
+                        "variant_id": variant_id,
+                        "entry": entry,
+                        "job": job,
+                        "raw_output": raw_output,
+                        "run": run,
+                        "media": media,
+                        "video_path": expected_paths["video_path"],
+                        "video_sha256": video_sha256,
+                        "prompt_path": expected_paths["prompt_path"],
+                        "run_path": expected_paths["run_path"],
+                        "prompt_sha256": attempt["prompt_sha256"],
+                        "run_sha256": attempt["run_sha256"],
+                        "request_sha256": request_sha256,
+                        "attempt_number": attempt_number,
+                        "planning_variant": planning_variant,
+                    }
+                )
+
+    reviewed, review_sha256 = _validated_loop_review(root, available)
+    outputs: list[dict[str, Any]] = []
+    for item in available:
+        variant_id = item["variant_id"]
+        review = reviewed[variant_id]
+        seam_status, seam_summary = _loop_seam_summary(review)
+        motion_failed = review.get("fidelity_status") != "pass"
+        motion_summary = (
+            f"Deterministic ROI review detected motion in "
+            f"{review.get('regions_with_detected_motion', 0)} of "
+            f"{review.get('requested_region_count', len(LOOP_REGION_IDS))} requested regions; "
+            "semantic direction and battery color order still require human review."
+        )
+        run = item["run"]
+        outputs.append(
+            {
+                "article_slug": case21.ARTICLE_SLUG,
+                "image_id": case21.IMAGE_ID,
+                "source_path": case21.SOURCE_PATH.as_posix(),
+                "sample_id": item["entry"].sample.sample_id,
+                "lite_run_id": item["entry"].planning_run_id,
+                "provider_run_id": run.get("provider_run_id"),
+                "model_id": loop_experiment.MODEL_ID,
+                "positive_prompt": item["job"].positive_prompt,
+                "negative_prompt": item["job"].negative_prompt,
+                "status": native.effective_run_status(run),
+                "recorded_status": run.get("status"),
+                "available": True,
+                "accepted": False,
+                "availability_status": "available-for-loop-research-display",
+                "acceptance_status": "research-only-human-review-required",
+                "prompt_path": item["prompt_path"],
+                "run_path": item["run_path"],
+                "video_path": item["video_path"],
+                "delivery": "repository-raw",
+                "repository_raw_url": PUBLIC_RAW_BASE
+                + quote(item["video_path"], safe="/"),
+                "route": {
+                    "adapter": route["adapter"],
+                    "transport": route["transport"],
+                    "provider": route["provider_key"],
+                    "capacity": route["capacity"],
+                    "route_substitution": False,
+                },
+                "route_label": "Atlas Cloud · API first/last conditioning",
+                "media": item["media"],
+                "contract_check": run.get("contract_check"),
+                "visual_review": {
+                    "status": "fidelity-failed" if motion_failed else "fidelity-passed",
+                    "summary": motion_summary,
+                    "human_semantic_review_complete": False,
+                },
+                "review_path": LOOP_REVIEW_PATH.as_posix(),
+                "selection": {
+                    "activity": "loop-closure-experiment",
+                    "experiment_id": loop_experiment.EXPERIMENT_ID,
+                    "variant_id": variant_id,
+                    "variant_label": item["planning_variant"].get("strategy"),
+                    "purpose": "point-animation-and-loop-closure-research",
+                },
+                "loop_closure": {
+                    "request_sha256": item["request_sha256"],
+                    "request_fingerprint_version": loop_experiment.REQUEST_FINGERPRINT_VERSION,
+                    "frame_types": list(LOOP_FRAME_TYPES),
+                    "first_frame_url": loop_experiment.SOURCE_URL,
+                    "last_frame_url": loop_experiment.SOURCE_URL,
+                    "same_source_for_endpoints": True,
+                    "provider_native_loop_parameter": False,
+                    "browser_playback_loop": True,
+                    "prompt_sha256": item["prompt_sha256"],
+                    "run_sha256": item["run_sha256"],
+                    "video_sha256": item["video_sha256"],
+                    "review_sha256": review_sha256,
+                    "seam_review": {
+                        "status": seam_status,
+                        "summary": seam_summary,
+                        "analysis_status": review.get("seam_status"),
+                        "failed_checks": review["seam"].get("failed_checks"),
+                    },
+                    "motion_review": {
+                        "status": review.get("fidelity_status"),
+                        "requested_region_count": review.get("requested_region_count"),
+                        "regions_with_detected_motion": review.get(
+                            "regions_with_detected_motion"
+                        ),
+                        "missing_motion_regions": review.get("missing_motion_regions"),
+                    },
+                },
+                "error": run.get("error"),
+            }
+        )
+
+    cost = experiment["cost"]
+    endpoint_base = route["default_base_url"].rstrip("/")
+    return {
+        "schema_version": 1,
+        "experiment_id": loop_experiment.EXPERIMENT_ID,
+        "model_id": loop_experiment.MODEL_ID,
+        "agent_id": AGENT_ID,
+        "updated_at": experiment["updated_at"],
+        "request_contract": {
+            "classification": "api-loop-closure-experiment",
+            "verified_lite_planning": True,
+            "canonical_lite_runtime": False,
+            "mechanism": "same-source-first-and-last-frame",
+            "request_mechanism": "same-source-first-and-last-frame",
+            "last_frame_is_source": True,
+            "same_source_for_endpoints": True,
+            "provider_native_loop_parameter": False,
+            "browser_playback_loop": True,
+            "frame_types": list(LOOP_FRAME_TYPES),
+            "first_frame_url": loop_experiment.SOURCE_URL,
+            "last_frame_url": loop_experiment.SOURCE_URL,
+            "provider_api_base_url": route["default_base_url"],
+            "provider_submit_url": endpoint_base + route["paths"]["submit"],
+            "provider_status_url_template": endpoint_base
+            + route["paths"]["status_template"],
+            "provider_content_url_template": endpoint_base
+            + route["paths"]["content_template"],
+        },
+        "cost": {
+            "currency": "USD",
+            "operator_budget_cap_usd": cost["operator_budget_cap_usd"],
+            "reserved_usd": cost["initial_reserved_usd"],
+            "reservation_per_output_usd": cost[
+                "reservation_per_wan27_entry_usd"
+            ],
+            "automatic_paid_retries": False,
+            "actual_billing_available": False,
+            "reservation_kind": "conservative-operator-envelope",
+            "note": cost["note"],
+        },
+        "attempt_count": len(attempts),
+        "attempts_without_video_count": len(attempts) - len(outputs),
+        "available_output_count": len(outputs),
+        "accepted_output_count": 0,
+        "source": experiment["source"],
+        "source_manifests": {
+            "inventory": loop_experiment.INVENTORY_PATH.as_posix(),
+            "generation": loop_experiment.GENERATION_MANIFEST_PATH.as_posix(),
+            "experiment": loop_experiment.EXPERIMENT_MANIFEST_PATH.as_posix(),
+            "review": LOOP_REVIEW_PATH.as_posix() if review_sha256 else None,
+        },
+        "receipt_sha256": {
+            "experiment_manifest": sha256_file(
+                root / loop_experiment.EXPERIMENT_MANIFEST_PATH
+            ),
+            "inventory": sha256_file(root / loop_experiment.INVENTORY_PATH),
+            "generation": sha256_file(
+                root / loop_experiment.GENERATION_MANIFEST_PATH
+            ),
+            "review": review_sha256 or None,
+        },
+        "attempt_history": attempts,
+        "outputs": outputs,
+    }
+
+
 def build_manifest(
     *,
     root: Path = ROOT,
@@ -1293,7 +1896,7 @@ def build_manifest(
         "outputs": outputs,
         "research_outputs": research_outputs,
     }
-    return {
+    document = {
         "schema_version": 1,
         "manifest_role": "case-21-extension",
         "ticket": TICKET,
@@ -1364,6 +1967,10 @@ def build_manifest(
         "outputs": outputs,
         "research_outputs": research_outputs,
     }
+    loop_document = build_loop_experiment(root)
+    if loop_document is not None:
+        document["loop_experiment"] = loop_document
+    return document
 
 
 def finalize(root: Path = ROOT) -> dict[str, Any]:

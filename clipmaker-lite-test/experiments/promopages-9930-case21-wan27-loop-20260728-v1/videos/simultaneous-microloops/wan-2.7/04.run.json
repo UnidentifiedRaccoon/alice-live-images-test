@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-loop-simultaneous-microloops",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. Over five seconds, run synchronized seamless local loops: ovaries and the progesterone molecule with purple aura gently pulse, the molecule subtly turns, the balance rocks, scale needle rotates and returns, drops fall cyclically, irritability lines jitter, and the battery cycles red-yellow-green-red. End pixel-aligned with the first frame. Preserve every Russian label, arrow, formula bond, icon shape, and layout exactly.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "last_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "83c93d75c0c6b9bdd2360800e3f4bbdad58ace455f8576222b51b735405ef8c4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bopKanaJSdIgdHLFYRwP",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-28T12:26:12Z",
+  "completed_at": "2026-07-28T12:27:27Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2722754,
+    "sha256": "ae97a6773d3e425eadbe18731e5793f87b258d935b79434e9e96b86097bbc67f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-loop-simultaneous-microloops-20260728-v1",
+  "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-simultaneous-microloops-wan-2-7",
+  "lite_result_sha256": "54e3e0c60ce5a3b3cf2c043b185b7c55e514170d4004f1ae87c3a4e956f28596",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "provider_transport_experiment": {
+    "profile": "non-canonical-loop-closure",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": false,
+    "reason": "The locked Lite v1 runtime contains only first_frame; this research transport repeats the exact source URL as last_frame to test loop closure.",
+    "last_frame_is_source": true,
+    "first_and_last_frame_urls_must_match": true
+  }
+}

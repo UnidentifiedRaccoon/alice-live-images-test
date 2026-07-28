@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-loop-sync-cycle-20260728-v1",
+  "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-sync-cycle-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "Снижение прогестерона и связанное с ним гормональное доминирование проявляются сразу несколькими взаимосвязанными симптомами.",
+    "primary_action": "Все видимые физиологические и симптоматические индикаторы проходят один синхронизированный замкнутый цикл.",
+    "terminal_state": "Все индикаторы возвращаются к исходным положениям и фазам, включая первоначальный красный уровень батареи.",
+    "semantic_invariant": "Причинная связь от яичников через снижение прогестерона и гормональный дисбаланс к четырём симптомам остаётся неизменной."
+  },
+  "prompt": {
+    "positive": "Fixed camera. Animate one synchronized five-second cycle: ovaries pulse subtly; the progesterone molecule and purple aura gently pulse and turn; balance scales rock; the bathroom-scale needle makes one smooth revolution; drops fall like rain; irritation lines jitter; the battery fills red through yellow to green, then every element smoothly returns to its exact starting pose and red charge for a seamless loop. Keep all text, arrows, icons, chemistry and layout unchanged.",
+    "negative": "No text or glyph changes, misspellings, icon morphing, layout drift, altered arrows or chemistry, extra objects, cuts, camera motion, or mismatched first and last frames."
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-wan27-loop-sync-cycle-20260728-v1/result.json",
+    "sha256": "0e46fd047b53ff0d94d128f8ea4a504a625fef2cdae768ee3c7027763e7337e9",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+      "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+      "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "models": [
+        "alibaba/wan-2.7"
+      ]
+    }
+  },
+  "provider_transport_experiment": {
+    "profile": "non-canonical-loop-closure",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": false,
+    "reason": "The locked Lite v1 runtime contains only first_frame; this research transport repeats the exact source URL as last_frame to test loop closure.",
+    "last_frame_is_source": true,
+    "first_and_last_frame_urls_must_match": true
+  }
+}

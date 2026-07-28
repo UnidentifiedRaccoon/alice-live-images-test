@@ -1,0 +1,124 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-wan27-loop-preservation-repair-20260728-v1",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+    "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      }
+    ],
+    "inputs_sha256": "sha256:ac586da8ce2d7bc6192c970def6aa4c6824dc2a980458a422fa99b76d6faa99a",
+    "execution_fingerprint": "sha256:008833e31b71cbcac39e5fd5ba61f20e1e34cd1570064ece2f02ae3f1dee9541",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa89d-6d63-7c01-b568-5c417abf18c8"
+    },
+    "authored_payload_sha256": "cabc12c859fa55ae22eb705246f9ab51556649b98e5a732450f1ddb3f124ddf2",
+    "draft_file_sha256": "b9680afe2c0a21c567392fe0f7863894157c5cfd774331c2826c9ac2bdb127a5"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Observed-failure repair for a looped Wan 2.7 infographic. Animate every requested region, but lock masks and geometry: old balance rocks in place; bathroom-scale needle rotates inside its dial; existing droplets fall and reappear only within their region; irritation scribble lines jitter locally; battery interior cycles red-yellow-green-red without changing casing; ovaries pulse in place; progesterone molecule/aura keeps a gentle pulse/turn. Exact first/last source frame, fixed camera. Forbid bloom, drifting, morphing, extra icons, text/layout changes and seam mismatch. Prompt under 500 characters."
+  },
+  "analysis": {
+    "image_reading": [
+      "A fixed Russian-language medical infographic links ovaries to decreased progesterone, estrogen dominance, and four symptom icons.",
+      "Movable regions are the ovaries, progesterone molecule and aura, gold balance, scale dial needle, droplets, irritation scribbles, and battery fill; labels, arrows, casing, and layout must remain fixed."
+    ],
+    "article_context": "The body infographic follows the explanation that reduced ovarian activity lowers hormone production and produces linked symptoms. Its editorial role is to connect declining progesterone and estrogen dominance with weight changes, edema, irritability, and fatigue.",
+    "structured_intent": {
+      "editorial_meaning": "Reduced ovarian hormone activity is presented as a connected cause of several physical and emotional symptoms.",
+      "primary_action": "The existing ovarian, hormonal, balance, and symptom indicators undergo one synchronized cyclical activation within their own regions.",
+      "terminal_state": "All animated indicators return exactly to their original source-image positions, shapes, and colors.",
+      "semantic_invariant": "The infographic continues to show decreased progesterone leading to estrogen dominance and the same four associated symptoms."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Over the full five seconds, all requested regions animate concurrently in restrained local loops: ovaries pulse; the progesterone structure and aura softly pulse and turn; the gold balance rocks in place; the bathroom-scale needle rotates within its dial; droplets descend and reappear only inside their mask; irritation scribbles jitter locally; and the battery interior cycles red-yellow-green-red. The camera, masks, text, arrows, icon outlines, casing, and layout remain fixed. Every motion returns precisely to the source pose and color at the final frame for a seamless loop.",
+      "positive_prompt": "Fixed camera, seamless 5-second loop with exact source first and last frame. Ovaries pulse in place; progesterone molecule and aura gently pulse and turn; gold balance rocks locally; scale needle rotates only inside its dial; droplets fall and reappear only inside their region; irritation scribbles jitter locally; battery interior cycles red-yellow-green-red while its casing stays fixed. Lock all masks, geometry, text, arrows and layout.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": "No bloom, glow spread, drifting, morphing, warped masks, altered geometry, extra icons, text or layout changes, moving arrows, changing battery casing, motion outside each region, or loop-seam mismatch."
+    }
+  ]
+}

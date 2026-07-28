@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-loop-preservation-repair-20260728-v1",
+  "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-preservation-repair-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "Reduced ovarian hormone activity is presented as a connected cause of several physical and emotional symptoms.",
+    "primary_action": "The existing ovarian, hormonal, balance, and symptom indicators undergo one synchronized cyclical activation within their own regions.",
+    "terminal_state": "All animated indicators return exactly to their original source-image positions, shapes, and colors.",
+    "semantic_invariant": "The infographic continues to show decreased progesterone leading to estrogen dominance and the same four associated symptoms."
+  },
+  "prompt": {
+    "positive": "Fixed camera, seamless 5-second loop with exact source first and last frame. Ovaries pulse in place; progesterone molecule and aura gently pulse and turn; gold balance rocks locally; scale needle rotates only inside its dial; droplets fall and reappear only inside their region; irritation scribbles jitter locally; battery interior cycles red-yellow-green-red while its casing stays fixed. Lock all masks, geometry, text, arrows and layout.",
+    "negative": "No bloom, glow spread, drifting, morphing, warped masks, altered geometry, extra icons, text or layout changes, moving arrows, changing battery casing, motion outside each region, or loop-seam mismatch."
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-wan27-loop-preservation-repair-20260728-v1/result.json",
+    "sha256": "3c5f975909f00b1332ecd7c8de5b7d2efe8912baa30f44d6c67a4fb9770b0398",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+      "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+      "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "models": [
+        "alibaba/wan-2.7"
+      ]
+    }
+  },
+  "provider_transport_experiment": {
+    "profile": "non-canonical-loop-closure",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": false,
+    "reason": "The locked Lite v1 runtime contains only first_frame; this research transport repeats the exact source URL as last_frame to test loop closure.",
+    "last_frame_is_source": true,
+    "first_and_last_frame_urls_must_match": true
+  }
+}
