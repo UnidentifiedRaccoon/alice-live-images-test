@@ -6,7 +6,7 @@
   "batch_id": "promopages-9930-case21-failure-aware-20260727-v1",
   "agent_id": "clipmaker-lite",
   "delivery": "repository-raw",
-  "updated_at": "2026-07-28T12:33:22Z",
+  "updated_at": "2026-07-28T14:46:36Z",
   "models": [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -3574,6 +3574,1039 @@
             "missing_motion_regions": [
               "progesterone_formula"
             ]
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      }
+    ]
+  },
+  "smooth_experiment": {
+    "schema_version": 1,
+    "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+    "model_id": "alibaba/wan-2.7",
+    "agent_id": "clipmaker-lite",
+    "updated_at": "2026-07-28T13:49:45Z",
+    "request_contract": {
+      "classification": "non-loop-smooth-motion-experiment",
+      "verified_lite_planning": true,
+      "canonical_lite_runtime": true,
+      "mechanism": "single-source-first-frame",
+      "request_mechanism": "single-source-first-frame",
+      "last_frame_is_source": false,
+      "same_source_for_endpoints": false,
+      "provider_native_loop_parameter": false,
+      "browser_playback_loop": false,
+      "frame_types": [
+        "first_frame"
+      ],
+      "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "last_frame_url": null,
+      "provider_api_base_url": "https://api.eliza.yandex.net/openrouter/v1",
+      "provider_submit_url": "https://api.eliza.yandex.net/openrouter/v1/videos",
+      "provider_status_url_template": "https://api.eliza.yandex.net/openrouter/v1/videos/{job_id}",
+      "provider_content_url_template": "https://api.eliza.yandex.net/openrouter/v1/videos/{job_id}/content?index=0"
+    },
+    "cost": {
+      "currency": "USD",
+      "operator_budget_cap_usd": 3.0,
+      "reserved_usd": 2.5,
+      "reservation_per_output_usd": 0.5,
+      "remaining_contingency_attempt_count": 1,
+      "remaining_contingency_reserved_usd": 0.5,
+      "automatic_paid_retries": false,
+      "actual_billing_available": false,
+      "reservation_kind": "conservative-operator-envelope",
+      "note": "The immutable four-entry series reserved $2.00. This new explicit identity reserves $0.50, bringing the aggregate to $2.50 under the $3.00 cap; one unmaterialized $0.50 contingency attempt remains."
+    },
+    "attempt_count": 5,
+    "attempts_without_video_count": 0,
+    "available_attempt_count": 5,
+    "available_output_count": 4,
+    "display_output_count": 4,
+    "excluded_from_demo_count": 1,
+    "accepted_output_count": 0,
+    "featured_review": {
+      "schema_version": "clipmaker-lite.case21-smooth-featured-review.v1",
+      "status": "visual-winner",
+      "label": "Визуальный победитель",
+      "reviewer": "operator-visual-selection",
+      "selection_basis": "operator-visual-review-not-proxy-rank",
+      "variant_id": "staggered-ease-retry1",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1-21-maier-04-smooth-staggered-ease-retry1-wan-2-7",
+      "summary": "Визуально самый цельный результат серии: движения остаются плавными и локальными, а старинные двухчашечные весы, формула, подписи и компоновка сохраняются. Это визуальный выбор, а не первое место proxy-рейтинга.",
+      "prompt_distinction": "По сравнению с исходным staggered-ease, retry разделяет два похожих объекта и фиксирует их части: exact two-pan balance с locked central stand, где двигаются только pans; отдельно — needle within its dial у современных весов. Targeted negative адресно запрещает дефект первой попытки — clock/dial substitution старинных весов.",
+      "evidence": {
+        "analysis_status": "measured",
+        "regions_with_detected_motion": 7,
+        "requested_region_count": 7,
+        "abrupt_transition_count": 0,
+        "motion_energy_spike_count": 0,
+        "proxy_rank": 2,
+        "proxy_rank_scale": 5
+      },
+      "practices": [
+        {
+          "id": "long-overlapping-eases",
+          "title": "Длинные перекрывающиеся переходы",
+          "description": "Все действия распределены на пять секунд и мягко перекрываются, поэтому сцена воспринимается как единая хореография."
+        },
+        {
+          "id": "bounded-one-shot-motion",
+          "title": "Ограниченная амплитуда",
+          "description": "Для объектов заданы один пульс, одно неглубокое покачивание и непрерывные траектории вместо повторяющихся резких жестов."
+        },
+        {
+          "id": "structural-locks",
+          "title": "Part-level invariants",
+          "description": "Exact two-pan balance разбит на locked central stand и подвижные pans; стрелка современных весов отдельно движется within its dial."
+        },
+        {
+          "id": "failure-specific-negative",
+          "title": "Запрет конкретного дефекта",
+          "description": "Negative prompt прямо запрещает превращать старинные весы в часы или циферблат, а также исключает morphing, рывки и layout drift."
+        },
+        {
+          "id": "held-end-states",
+          "title": "Удержание финальных состояний",
+          "description": "Батарея последовательно доходит до зелёного и остаётся зелёной, а аура сжимается и тускнеет без обратного движения и loop."
+        }
+      ]
+    },
+    "source": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+      "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+    },
+    "source_manifests": {
+      "base_inventory": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/inventory.json",
+      "base_generation": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/generation-manifest.json",
+      "base_experiment": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/experiment-manifest.json",
+      "retry_inventory": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/inventory.json",
+      "retry_generation": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/generation-manifest.json",
+      "retry_experiment": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/experiment-manifest.json",
+      "review": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/smooth-review.json"
+    },
+    "receipt_sha256": {
+      "base_experiment_manifest": "a838c480da5792b072db3fc107ef991fc14fe6c9185d97d7f884a84a44e98dc6",
+      "base_inventory": "bd44775f0ef841171f485b5624d3336f9df17de8230366115ec55f16ff951157",
+      "base_generation": "407c67ed2002afb5df5d2c066f578150a364163dd8e954213fb78c900d68a691",
+      "retry_experiment_manifest": "ed5557a9f0ca6947f095fe37de1d95d4554c05be2d4034be95c3dfe47ba1a687",
+      "retry_inventory": "ac15051722a871db922c13af31c53b6946ffbc6ece37cc22b3216b99a6bbfb4b",
+      "retry_generation": "f364ec38cc40c351e230e573af246fdee8175933c4558c7ebb7edc7ca5d35f00",
+      "review": "09c9b5c21e200f0edfb8774bc7893ce07bc4bdc93ae6f79936a10df30fe40212"
+    },
+    "attempt_history": [
+      {
+        "activity": "smooth-motion-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+        "variant_id": "low-amplitude-continuous",
+        "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-low-amplitude-continuous-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-low-amplitude-continuous-20260728-v3",
+        "sample_id": "21-maier-04-smooth-low-amplitude-continuous",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "bd5c60a0e79420a141e5679edf054f63ded24f7771e8d2767b266bde5c08fd95",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "YfhHYRmYIMtUHBIsoAWy",
+        "submitted_at": "2026-07-28T13:27:36Z",
+        "completed_at": "2026-07-28T13:28:53Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.mp4",
+        "prompt_sha256": "93c36050b93b93aee53d69530cc45105a74ef5e8e89545ef76c8d342fc3d0a9d",
+        "run_sha256": "497fa23afba68b96e879410ac66cfa34bcaa10c0b032742e69a6272898697ae0",
+        "video_sha256": "416279e81eddc4c291c697487203bc61929ff6c1c983dfa071955d52ed7db774",
+        "available_video": true,
+        "selected_for_demo": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Accepted for the four-video smooth demo set after contact-sheet review."
+        },
+        "retry_of": null,
+        "supersedes_for_demo": null,
+        "experiment_attempt_number": 1,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "smooth-motion-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+        "variant_id": "staggered-ease",
+        "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-20260728-v4",
+        "sample_id": "21-maier-04-smooth-staggered-ease",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "944ab89281bd23f840cde17fe869dd63d510d335a064ee21ccd62c5b02459f8f",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "CYLlxEDmlPgqeoAHHCBg",
+        "submitted_at": "2026-07-28T13:27:37Z",
+        "completed_at": "2026-07-28T13:28:53Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.mp4",
+        "prompt_sha256": "2e19665863a0250acc1a7e9a3076fcae7896d7e65997a8485d720353b6ba4ef9",
+        "run_sha256": "e3e98183f6cb2b3deb52c83af02863a43f6311f0494263208f5c9b4108380c86",
+        "video_sha256": "cde9e047a24fc74bd50f12b76e8576cae4ddf45328d0b352a3789a4e4b8fdf71",
+        "available_video": true,
+        "selected_for_demo": false,
+        "selected_for_display": false,
+        "selected_for_acceptance": false,
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "excluded",
+          "reason_code": "object-substitution",
+          "note": "Antique two-pan balance morphs into a round clock/dial in later frames."
+        },
+        "retry_of": null,
+        "supersedes_for_demo": null,
+        "experiment_attempt_number": 2,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "smooth-motion-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+        "variant_id": "left-to-right-flow",
+        "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-left-to-right-flow-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+        "sample_id": "21-maier-04-smooth-left-to-right-flow",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "01d73a4cb24d3915e44e8ec80027e731ad95c8bffd32d24711ece2548ee1eab6",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "PDmXTuAP3MhZDpFDpRxF",
+        "submitted_at": "2026-07-28T13:27:36Z",
+        "completed_at": "2026-07-28T13:28:52Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.mp4",
+        "prompt_sha256": "ea00b2e89e097ddad11595fe0703746e3289c884e2ac03fd8de42cf30aa383b7",
+        "run_sha256": "135b83e378c8ddeacbc52a360de8c44b20b9c65e4c5dac0c2a5760e1c85f36b2",
+        "video_sha256": "22fd794ce1bbdcf1b87ce7622f4a607b68203d0e7b09aee27fc0a266473c060a",
+        "available_video": true,
+        "selected_for_demo": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Accepted for the four-video smooth demo set after contact-sheet review."
+        },
+        "retry_of": null,
+        "supersedes_for_demo": null,
+        "experiment_attempt_number": 3,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "smooth-motion-experiment",
+        "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+        "variant_id": "preservation-smooth-repair",
+        "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-preservation-smooth-repair-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-preservation-smooth-repair-20260728-v3",
+        "sample_id": "21-maier-04-smooth-preservation-smooth-repair",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "747067d334d1e61b8931db80fd7bf3ffc826a09a7208798656aa92f48e5929d5",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "B1LcyBVFZAOD0pX4pQci",
+        "submitted_at": "2026-07-28T13:29:02Z",
+        "completed_at": "2026-07-28T13:30:17Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.mp4",
+        "prompt_sha256": "cba7705a1110f668843f12c864e7fb9a45681fa82f77a05db0972a809313e95b",
+        "run_sha256": "4112ba65b5b0f19bc6b34732e8dd0e7eb57b34c39cf124dc869e28294f932bcf",
+        "video_sha256": "16cca5d55e0f06e994feba5389791cc64cb0024d786c5b9c9c90fe0bc74e0fd3",
+        "available_video": true,
+        "selected_for_demo": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Accepted for the four-video smooth demo set after contact-sheet review."
+        },
+        "retry_of": null,
+        "supersedes_for_demo": null,
+        "experiment_attempt_number": 4,
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "activity": "smooth-motion-explicit-retry",
+        "experiment_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1",
+        "series_experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+        "variant_id": "staggered-ease-retry1",
+        "batch_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1-21-maier-04-smooth-staggered-ease-retry1-wan-2-7",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1",
+        "sample_id": "21-maier-04-smooth-staggered-ease-retry1",
+        "model_id": "alibaba/wan-2.7",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "provider_may_be_active": false,
+        "request_sha256": "1eb5112b5712fe353d2542e5cf65aecf399b8e434514ec661bf4fbff37728917",
+        "request_fingerprint_version": 2,
+        "provider_job_id": "jLAH761oBRKzHKpoflwD",
+        "submitted_at": "2026-07-28T13:48:35Z",
+        "completed_at": "2026-07-28T13:49:45Z",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.mp4",
+        "prompt_sha256": "b7e9d7c0d2586f355f828dc407f3078c05f165aeee496e0601bae4c86b1e7cf1",
+        "run_sha256": "dee73bf1577ba511497114fe354bd3e74a95bb5b84cb9a1a2d90d5ab6e854b17",
+        "video_sha256": "a5a8bcf4f1ea388ef7a8117d98509662c5ed2c251fc97e7ff7e6365a88360572",
+        "available_video": true,
+        "selected_for_demo": true,
+        "selected_for_display": true,
+        "selected_for_acceptance": false,
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Antique two-pan balance remains recognizable; motion is accepted for the four-video smooth demo set."
+        },
+        "retry_of": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+        "supersedes_for_demo": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+        "experiment_attempt_number": 5,
+        "error": "Media contract verification failed: audio, resolution"
+      }
+    ],
+    "outputs": [
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-smooth-low-amplitude-continuous",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-low-amplitude-continuous-20260728-v3",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-low-amplitude-continuous-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Over five seconds, smoothly animate the infographic with broad easing and no return: scales make one shallow sway; the scale needle sweeps steadily clockwise; drops descend evenly; irritation lines wander chaotically along continuous curves; ovaries pulse once softly; only the purple aura contracts and dims around the fixed molecule. The battery fills red through yellow to full green, ending full green and staying there. Preserve all text, arrows and layout.",
+        "negative_prompt": "No jerks, snapping, looping, reverse motion, morphing, warped anatomy or symbols, text changes, layout drift, camera drift, or molecule and bond movement.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-smooth-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · canonical Lite first-frame",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 3019689,
+          "sha256": "416279e81eddc4c291c697487203bc61929ff6c1c983dfa071955d52ed7db774"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "accepted-for-demo",
+          "summary": "Deterministic proxy review measured motion in 6 of 7 requested regions; proxy rank 5 of 5. Semantic direction, battery color order, preservation and visual quality still require human review.",
+          "human_fidelity_review_complete": true,
+          "human_semantic_review_complete": false
+        },
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Accepted for the four-video smooth demo set after contact-sheet review."
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/smooth-review.json",
+        "selection": {
+          "activity": "smooth-motion-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+          "variant_id": "low-amplitude-continuous",
+          "variant_label": "continuous low-amplitude motion",
+          "purpose": "non-loop-point-animation-research",
+          "retry_of": null,
+          "supersedes_for_demo": null
+        },
+        "smooth_motion": {
+          "request_sha256": "bd5c60a0e79420a141e5679edf054f63ded24f7771e8d2767b266bde5c08fd95",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": null,
+          "last_frame_is_source": false,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": false,
+          "prompt_sha256": "93c36050b93b93aee53d69530cc45105a74ef5e8e89545ef76c8d342fc3d0a9d",
+          "run_sha256": "497fa23afba68b96e879410ac66cfa34bcaa10c0b032742e69a6272898697ae0",
+          "video_sha256": "416279e81eddc4c291c697487203bc61929ff6c1c983dfa071955d52ed7db774",
+          "review_sha256": "09c9b5c21e200f0edfb8774bc7893ce07bc4bdc93ae6f79936a10df30fe40212",
+          "proxy_review": {
+            "analysis_status": "measured",
+            "proxy_rank": 5,
+            "motion_coverage": {
+              "coverage_ratio": 0.85714286,
+              "missing_motion_regions": [
+                "bathroom_scale"
+              ],
+              "regions_with_detected_motion": 6,
+              "requested_region_count": 7
+            },
+            "requested_union_smoothness": {
+              "acceleration_proxy_mae_rgb": {
+                "abrupt_frame_indices": [
+                  52,
+                  53
+                ],
+                "abrupt_threshold": 2.370743,
+                "abrupt_transition_count": 2,
+                "abrupt_transition_ratio": 0.01351351,
+                "mad": 0.225628,
+                "max": 3.307671,
+                "mean": 1.050113,
+                "median": 0.948297,
+                "normalized_p95_by_motion_p95": 1.094652,
+                "p90": 1.68386,
+                "p95": 1.873086,
+                "sample_count": 148
+              },
+              "motion_energy_mae_rgb": {
+                "mad": 0.264121,
+                "max": 3.398624,
+                "mean": 0.811872,
+                "median": 0.718679,
+                "p90": 1.436505,
+                "p95": 1.711125,
+                "spike_count": 2,
+                "spike_frame_indices": [
+                  52,
+                  59
+                ],
+                "spike_ratio": 0.01342282,
+                "spike_threshold": 2.303405
+              },
+              "transition_count": 149
+            },
+            "collateral_activity": {
+              "max_changed_pixel_ratio_from_first": 0.01784489,
+              "max_mae_rgb_from_first": 2.728132,
+              "outside_requested_region_pixel_count": 4371,
+              "temporal_smoothness": {
+                "acceleration_proxy_mae_rgb": {
+                  "abrupt_frame_indices": [
+                    3,
+                    4
+                  ],
+                  "abrupt_threshold": 1.043335,
+                  "abrupt_transition_count": 2,
+                  "abrupt_transition_ratio": 0.01351351,
+                  "mad": 0.084573,
+                  "max": 1.144742,
+                  "mean": 0.429269,
+                  "median": 0.417334,
+                  "normalized_p95_by_motion_p95": 1.777161,
+                  "p90": 0.622703,
+                  "p95": 0.683299,
+                  "sample_count": 148
+                },
+                "motion_energy_mae_rgb": {
+                  "mad": 0.054602,
+                  "max": 0.925036,
+                  "mean": 0.223926,
+                  "median": 0.20209,
+                  "p90": 0.330725,
+                  "p95": 0.384489,
+                  "spike_count": 0,
+                  "spike_frame_indices": [],
+                  "spike_ratio": 0.0,
+                  "spike_threshold": 1.0
+                },
+                "transition_count": 149
+              }
+            }
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-smooth-left-to-right-flow",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-left-to-right-flow-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. A single smooth left-to-right flow begins with one gentle ovarian pulse, passes into the purple aura contracting and dimming around the completely fixed progesterone molecule, then gives the balance one sway. Below, the gauge needle sweeps, drops fall, and irritation lines trace continuous irregular paths as the battery fills red through yellow to full green and holds. No reversals or snap-backs; preserve all Russian text, arrows, bonds, geometry and layout.",
+        "negative_prompt": null,
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-smooth-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · canonical Lite first-frame",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 3100164,
+          "sha256": "22fd794ce1bbdcf1b87ce7622f4a607b68203d0e7b09aee27fc0a266473c060a"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "accepted-for-demo",
+          "summary": "Deterministic proxy review measured motion in 7 of 7 requested regions; proxy rank 1 of 5. Semantic direction, battery color order, preservation and visual quality still require human review.",
+          "human_fidelity_review_complete": true,
+          "human_semantic_review_complete": false
+        },
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Accepted for the four-video smooth demo set after contact-sheet review."
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/smooth-review.json",
+        "selection": {
+          "activity": "smooth-motion-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+          "variant_id": "left-to-right-flow",
+          "variant_label": "left-to-right visual flow",
+          "purpose": "non-loop-point-animation-research",
+          "retry_of": null,
+          "supersedes_for_demo": null
+        },
+        "smooth_motion": {
+          "request_sha256": "01d73a4cb24d3915e44e8ec80027e731ad95c8bffd32d24711ece2548ee1eab6",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": null,
+          "last_frame_is_source": false,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": false,
+          "prompt_sha256": "ea00b2e89e097ddad11595fe0703746e3289c884e2ac03fd8de42cf30aa383b7",
+          "run_sha256": "135b83e378c8ddeacbc52a360de8c44b20b9c65e4c5dac0c2a5760e1c85f36b2",
+          "video_sha256": "22fd794ce1bbdcf1b87ce7622f4a607b68203d0e7b09aee27fc0a266473c060a",
+          "review_sha256": "09c9b5c21e200f0edfb8774bc7893ce07bc4bdc93ae6f79936a10df30fe40212",
+          "proxy_review": {
+            "analysis_status": "measured",
+            "proxy_rank": 1,
+            "motion_coverage": {
+              "coverage_ratio": 1.0,
+              "missing_motion_regions": [],
+              "regions_with_detected_motion": 7,
+              "requested_region_count": 7
+            },
+            "requested_union_smoothness": {
+              "acceleration_proxy_mae_rgb": {
+                "abrupt_frame_indices": [],
+                "abrupt_threshold": 3.819539,
+                "abrupt_transition_count": 0,
+                "abrupt_transition_ratio": 0.0,
+                "mad": 0.414517,
+                "max": 3.056209,
+                "mean": 1.376004,
+                "median": 1.332439,
+                "normalized_p95_by_motion_p95": 0.940214,
+                "p90": 2.193842,
+                "p95": 2.368655,
+                "sample_count": 148
+              },
+              "motion_energy_mae_rgb": {
+                "mad": 0.467354,
+                "max": 3.540007,
+                "mean": 1.27871,
+                "median": 1.099553,
+                "p90": 2.388689,
+                "p95": 2.519271,
+                "spike_count": 0,
+                "spike_frame_indices": [],
+                "spike_ratio": 0.0,
+                "spike_threshold": 3.903677
+              },
+              "transition_count": 149
+            },
+            "collateral_activity": {
+              "max_changed_pixel_ratio_from_first": 0.22328987,
+              "max_mae_rgb_from_first": 10.123847,
+              "outside_requested_region_pixel_count": 4371,
+              "temporal_smoothness": {
+                "acceleration_proxy_mae_rgb": {
+                  "abrupt_frame_indices": [],
+                  "abrupt_threshold": 1.752955,
+                  "abrupt_transition_count": 0,
+                  "abrupt_transition_ratio": 0.0,
+                  "mad": 0.181652,
+                  "max": 1.284451,
+                  "mean": 0.690887,
+                  "median": 0.663044,
+                  "normalized_p95_by_motion_p95": 1.194585,
+                  "p90": 1.070243,
+                  "p95": 1.135316,
+                  "sample_count": 148
+                },
+                "motion_energy_mae_rgb": {
+                  "mad": 0.160527,
+                  "max": 1.091588,
+                  "mean": 0.461867,
+                  "median": 0.422482,
+                  "p90": 0.848517,
+                  "p95": 0.950385,
+                  "spike_count": 0,
+                  "spike_frame_indices": [],
+                  "spike_ratio": 0.0,
+                  "spike_threshold": 1.385644
+                },
+                "transition_count": 149
+              }
+            }
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-smooth-preservation-smooth-repair",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-preservation-smooth-repair-20260728-v3",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-preservation-smooth-repair-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera. Over five seconds, animate only tiny smooth motions inside each icon region: one ovarian pulse; the purple aura contracts and dims around the fixed molecule and bonds; scales make one shallow sway; the dial needle turns slightly; drops fall locally; irritation lines meander smoothly. The battery interior steadily fills red through yellow to full green, ending and staying fully green. Preserve all text, arrows, masks, and layout.",
+        "negative_prompt": "No jerking, flicker, morphing, warped icons or text, mask leakage, region spill, broken bonds, altered arrows, or layout drift.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-smooth-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · canonical Lite first-frame",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 3177217,
+          "sha256": "16cca5d55e0f06e994feba5389791cc64cb0024d786c5b9c9c90fe0bc74e0fd3"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "accepted-for-demo",
+          "summary": "Deterministic proxy review measured motion in 7 of 7 requested regions; proxy rank 4 of 5. Semantic direction, battery color order, preservation and visual quality still require human review.",
+          "human_fidelity_review_complete": true,
+          "human_semantic_review_complete": false
+        },
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Accepted for the four-video smooth demo set after contact-sheet review."
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/smooth-review.json",
+        "selection": {
+          "activity": "smooth-motion-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+          "variant_id": "preservation-smooth-repair",
+          "variant_label": "smooth motion with observed-fidelity preservation repair",
+          "purpose": "non-loop-point-animation-research",
+          "retry_of": null,
+          "supersedes_for_demo": null
+        },
+        "smooth_motion": {
+          "request_sha256": "747067d334d1e61b8931db80fd7bf3ffc826a09a7208798656aa92f48e5929d5",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": null,
+          "last_frame_is_source": false,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": false,
+          "prompt_sha256": "cba7705a1110f668843f12c864e7fb9a45681fa82f77a05db0972a809313e95b",
+          "run_sha256": "4112ba65b5b0f19bc6b34732e8dd0e7eb57b34c39cf124dc869e28294f932bcf",
+          "video_sha256": "16cca5d55e0f06e994feba5389791cc64cb0024d786c5b9c9c90fe0bc74e0fd3",
+          "review_sha256": "09c9b5c21e200f0edfb8774bc7893ce07bc4bdc93ae6f79936a10df30fe40212",
+          "proxy_review": {
+            "analysis_status": "measured",
+            "proxy_rank": 4,
+            "motion_coverage": {
+              "coverage_ratio": 1.0,
+              "missing_motion_regions": [],
+              "regions_with_detected_motion": 7,
+              "requested_region_count": 7
+            },
+            "requested_union_smoothness": {
+              "acceleration_proxy_mae_rgb": {
+                "abrupt_frame_indices": [
+                  101,
+                  102
+                ],
+                "abrupt_threshold": 2.683781,
+                "abrupt_transition_count": 2,
+                "abrupt_transition_ratio": 0.01351351,
+                "mad": 0.247196,
+                "max": 2.94957,
+                "mean": 1.18624,
+                "median": 1.073512,
+                "normalized_p95_by_motion_p95": 1.134771,
+                "p90": 1.849233,
+                "p95": 2.165628,
+                "sample_count": 148
+              },
+              "motion_energy_mae_rgb": {
+                "mad": 0.212728,
+                "max": 3.439422,
+                "mean": 0.960559,
+                "median": 0.827038,
+                "p90": 1.56022,
+                "p95": 1.908428,
+                "spike_count": 5,
+                "spike_frame_indices": [
+                  76,
+                  81,
+                  86,
+                  101,
+                  106
+                ],
+                "spike_ratio": 0.03355705,
+                "spike_threshold": 2.103406
+              },
+              "transition_count": 149
+            },
+            "collateral_activity": {
+              "max_changed_pixel_ratio_from_first": 0.02791123,
+              "max_mae_rgb_from_first": 2.997331,
+              "outside_requested_region_pixel_count": 4371,
+              "temporal_smoothness": {
+                "acceleration_proxy_mae_rgb": {
+                  "abrupt_frame_indices": [],
+                  "abrupt_threshold": 1.163635,
+                  "abrupt_transition_count": 0,
+                  "abrupt_transition_ratio": 0.0,
+                  "mad": 0.078548,
+                  "max": 0.939983,
+                  "mean": 0.475822,
+                  "median": 0.465454,
+                  "normalized_p95_by_motion_p95": 1.695169,
+                  "p90": 0.613803,
+                  "p95": 0.645905,
+                  "sample_count": 148
+                },
+                "motion_energy_mae_rgb": {
+                  "mad": 0.052467,
+                  "max": 0.827194,
+                  "mean": 0.250457,
+                  "median": 0.238084,
+                  "p90": 0.351758,
+                  "p95": 0.381027,
+                  "spike_count": 0,
+                  "spike_frame_indices": [],
+                  "spike_ratio": 0.0,
+                  "spike_threshold": 1.0
+                },
+                "transition_count": 149
+              }
+            }
+          }
+        },
+        "error": "Media contract verification failed: audio, resolution"
+      },
+      {
+        "article_slug": "21-maier-doctor-zolotoe-vremia",
+        "image_id": "04",
+        "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "sample_id": "21-maier-04-smooth-staggered-ease-retry1",
+        "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1",
+        "provider_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1-21-maier-04-smooth-staggered-ease-retry1-wan-2-7",
+        "model_id": "alibaba/wan-2.7",
+        "positive_prompt": "Fixed camera, canonical first-frame-only non-loop motion. Over five seconds, use long overlapping eases: ovaries pulse once; the molecule stays fixed as its purple aura contracts and dims; the exact two-pan balance keeps its central stand locked while the pans make one shallow sway. The scale needle sweeps within its dial, drops fall, irritation lines trace continuous irregular curves, and the battery fills red through yellow to full green, holding green at the end.",
+        "negative_prompt": "No clock or dial substitution for the antique two-pan balance; no object replacement, jerks, morphing, or layout drift. Do not alter text, arrows, chemical bonds, icons, or the locked central stand.",
+        "status": "verification-failed",
+        "recorded_status": "verification-failed",
+        "available": true,
+        "accepted": false,
+        "availability_status": "available-for-smooth-research-display",
+        "acceptance_status": "research-only-human-review-required",
+        "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.prompt.json",
+        "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.run.json",
+        "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.mp4",
+        "delivery": "repository-raw",
+        "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.mp4",
+        "route": {
+          "adapter": "eliza-openrouter",
+          "transport": "eliza-video-jobs",
+          "provider": "atlas-cloud",
+          "capacity": 3,
+          "route_substitution": false
+        },
+        "route_label": "Atlas Cloud · canonical Lite first-frame",
+        "media": {
+          "container": "mov,mp4,m4a,3gp,3g2,mj2",
+          "codec": "h264",
+          "duration_seconds": 5.0,
+          "width": 1440,
+          "height": 1440,
+          "fps": 30.0,
+          "frames": 150,
+          "has_audio": true,
+          "bytes": 4188537,
+          "sha256": "a5a8bcf4f1ea388ef7a8117d98509662c5ed2c251fc97e7ff7e6365a88360572"
+        },
+        "contract_check": {
+          "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "1:1",
+            "generate_audio": false,
+            "frames": null,
+            "fps": null
+          },
+          "checks": {
+            "duration": true,
+            "audio": false,
+            "resolution": false,
+            "aspect_ratio": true
+          },
+          "conforms": false,
+          "warnings": [
+            "audio",
+            "resolution"
+          ]
+        },
+        "visual_review": {
+          "status": "accepted-for-demo",
+          "summary": "Deterministic proxy review measured motion in 7 of 7 requested regions; proxy rank 2 of 5. Semantic direction, battery color order, preservation and visual quality still require human review.",
+          "human_fidelity_review_complete": true,
+          "human_semantic_review_complete": false
+        },
+        "human_review": {
+          "reviewer": "codex-visual-inspection",
+          "status": "accepted",
+          "reason_code": "smooth-enough-and-fidelity-preserved",
+          "note": "Antique two-pan balance remains recognizable; motion is accepted for the four-video smooth demo set."
+        },
+        "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/smooth-review.json",
+        "selection": {
+          "activity": "smooth-motion-experiment",
+          "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+          "variant_id": "staggered-ease-retry1",
+          "variant_label": "staggered eased motion · explicit retry",
+          "purpose": "non-loop-point-animation-research",
+          "retry_of": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+          "supersedes_for_demo": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7"
+        },
+        "smooth_motion": {
+          "request_sha256": "1eb5112b5712fe353d2542e5cf65aecf399b8e434514ec661bf4fbff37728917",
+          "request_fingerprint_version": 2,
+          "frame_types": [
+            "first_frame"
+          ],
+          "first_frame_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+          "last_frame_url": null,
+          "last_frame_is_source": false,
+          "provider_native_loop_parameter": false,
+          "browser_playback_loop": false,
+          "prompt_sha256": "b7e9d7c0d2586f355f828dc407f3078c05f165aeee496e0601bae4c86b1e7cf1",
+          "run_sha256": "dee73bf1577ba511497114fe354bd3e74a95bb5b84cb9a1a2d90d5ab6e854b17",
+          "video_sha256": "a5a8bcf4f1ea388ef7a8117d98509662c5ed2c251fc97e7ff7e6365a88360572",
+          "review_sha256": "09c9b5c21e200f0edfb8774bc7893ce07bc4bdc93ae6f79936a10df30fe40212",
+          "proxy_review": {
+            "analysis_status": "measured",
+            "proxy_rank": 2,
+            "motion_coverage": {
+              "coverage_ratio": 1.0,
+              "missing_motion_regions": [],
+              "regions_with_detected_motion": 7,
+              "requested_region_count": 7
+            },
+            "requested_union_smoothness": {
+              "acceleration_proxy_mae_rgb": {
+                "abrupt_frame_indices": [],
+                "abrupt_threshold": 6.795356,
+                "abrupt_transition_count": 0,
+                "abrupt_transition_ratio": 0.0,
+                "mad": 0.722325,
+                "max": 4.276367,
+                "mean": 2.337418,
+                "median": 2.461404,
+                "normalized_p95_by_motion_p95": 1.1028,
+                "p90": 3.447513,
+                "p95": 3.852401,
+                "sample_count": 148
+              },
+              "motion_energy_mae_rgb": {
+                "mad": 0.696112,
+                "max": 4.405642,
+                "mean": 1.963904,
+                "median": 1.912693,
+                "p90": 3.134214,
+                "p95": 3.493292,
+                "spike_count": 0,
+                "spike_frame_indices": [],
+                "spike_ratio": 0.0,
+                "spike_threshold": 6.089365
+              },
+              "transition_count": 149
+            },
+            "collateral_activity": {
+              "max_changed_pixel_ratio_from_first": 0.05856783,
+              "max_mae_rgb_from_first": 5.714024,
+              "outside_requested_region_pixel_count": 4371,
+              "temporal_smoothness": {
+                "acceleration_proxy_mae_rgb": {
+                  "abrupt_frame_indices": [],
+                  "abrupt_threshold": 1.390223,
+                  "abrupt_transition_count": 0,
+                  "abrupt_transition_ratio": 0.0,
+                  "mad": 0.107565,
+                  "max": 1.210402,
+                  "mean": 0.564232,
+                  "median": 0.556089,
+                  "normalized_p95_by_motion_p95": 1.744783,
+                  "p90": 0.743903,
+                  "p95": 0.911977,
+                  "sample_count": 148
+                },
+                "motion_energy_mae_rgb": {
+                  "mad": 0.06505,
+                  "max": 0.928773,
+                  "mean": 0.30718,
+                  "median": 0.274537,
+                  "p90": 0.439549,
+                  "p95": 0.522688,
+                  "spike_count": 0,
+                  "spike_frame_indices": [],
+                  "spike_ratio": 0.0,
+                  "spike_threshold": 1.0
+                },
+                "transition_count": 149
+              }
+            }
           }
         },
         "error": "Media contract verification failed: audio, resolution"
