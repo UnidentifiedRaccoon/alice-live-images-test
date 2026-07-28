@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-smooth-staggered-ease-retry1",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/videos/staggered-ease-retry1/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera, canonical first-frame-only non-loop motion. Over five seconds, use long overlapping eases: ovaries pulse once; the molecule stays fixed as its purple aura contracts and dims; the exact two-pan balance keeps its central stand locked while the pans make one shallow sway. The scale needle sweeps within its dial, drops fall, irritation lines trace continuous irregular curves, and the battery fills red through yellow to full green, holding green at the end.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true,
+            "negative_prompt": "No clock or dial substitution for the antique two-pan balance; no object replacement, jerks, morphing, or layout drift. Do not alter text, arrows, chemical bonds, icons, or the locked central stand."
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "1eb5112b5712fe353d2542e5cf65aecf399b8e434514ec661bf4fbff37728917",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "jLAH761oBRKzHKpoflwD",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-28T13:48:35Z",
+  "completed_at": "2026-07-28T13:49:45Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4188537,
+    "sha256": "a5a8bcf4f1ea388ef7a8117d98509662c5ed2c251fc97e7ff7e6365a88360572"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1",
+  "provider_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1-21-maier-04-smooth-staggered-ease-retry1-wan-2-7",
+  "lite_result_sha256": "a5c5da332d3bd46634928b517083fb0bf35fe8b4261ef388b5ca267d501a0ef6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion-explicit-retry",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false,
+    "explicit_retry": true,
+    "retry_of": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+    "supersedes_for_demo": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7"
+  },
+  "explicit_retry": {
+    "retry_of": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+    "supersedes_for_demo": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7"
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-wan27-smooth-experiment",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+  "provider_batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-07-28T13:30:17Z",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "controls": {
+    "primary": {
+      "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1",
+      "sha256": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8"
+    },
+    "retry": {
+      "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1",
+      "sha256": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b"
+    },
+    "prompt_research": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1",
+      "sha256": "ead5a3a4a1137985b6b0abe4da86fb6a209231c1653f3d06de2dbcf76d219286"
+    },
+    "opacity_stage2": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1",
+      "sha256": "750294ab4ad2a6d72ced0afbab207c42c4c8b86edaa5085ac72e0a88b1356a5e"
+    },
+    "loop_experiment": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1",
+      "sha256": "c40fcc922643ee53c2cb59dc77dd98419b4d8d27cd9d0aa2bd3997d679f3d938"
+    }
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 3.0,
+    "hard_budget_cap_usd": 3.0,
+    "reservation_per_wan27_entry_usd": 0.5,
+    "initial_entry_count": 4,
+    "initial_reserved_usd": 2.0,
+    "contingency_attempt_count": 2,
+    "contingency_reserved_usd": 1.0,
+    "maximum_provider_entries": 6,
+    "admitted_provider_entries": 4,
+    "contingency_entries_materialized": 0,
+    "maximum_submissions_per_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "Four immutable initial jobs reserve $2.00. Up to two explicit $0.50 contingency attempts require new provider identities and are not materialized or submitted by this coordinator."
+  },
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false
+  },
+  "generation_policy": {
+    "exact_model_id": "alibaba/wan-2.7",
+    "exact_route_only": true,
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "force_allowed": false,
+    "automatic_paid_retries": false,
+    "wan27_capacity": 3,
+    "first_frame_only": true,
+    "last_frame_allowed": false,
+    "loop_allowed": false,
+    "contingency_requires_new_explicit_provider_identity": true
+  },
+  "expected_outputs": 4,
+  "summary": {
+    "verification-failed": 4
+  },
+  "planning_variants": [
+    {
+      "variant_id": "low-amplitude-continuous",
+      "strategy": "continuous low-amplitude motion",
+      "negative_policy": "required-observed-repair",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-low-amplitude-continuous-20260728-v3",
+      "result_sha256": "441894fee34c64eee91529f3f98039adf180f257092cc2207a69f7180440157e"
+    },
+    {
+      "variant_id": "staggered-ease",
+      "strategy": "staggered eased motion",
+      "negative_policy": "must-be-null",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-20260728-v4",
+      "result_sha256": "ac773559abba5386897ef830fbbf1ec186d3c58e3149d2b4f605c026bca7a5aa"
+    },
+    {
+      "variant_id": "left-to-right-flow",
+      "strategy": "left-to-right visual flow",
+      "negative_policy": "must-be-null",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+      "result_sha256": "6ee108f3cfbeda317ecc861288ce5a6148049f87e2eb4807cf4b6ca995682f8b"
+    },
+    {
+      "variant_id": "preservation-smooth-repair",
+      "strategy": "smooth motion with observed-fidelity preservation repair",
+      "negative_policy": "required-observed-repair",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-preservation-smooth-repair-20260728-v3",
+      "result_sha256": "e5a115bb7aeaaee815f5656adde2144a6b0453e72e09128b91deadbfc3a71d3b"
+    }
+  ],
+  "inventory_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/inventory.json",
+  "generation_manifest_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/generation-manifest.json",
+  "outputs": [
+    {
+      "lite_run_id": "promopages-9930-case21-wan27-smooth-low-amplitude-continuous-20260728-v3",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-low-amplitude-continuous-wan-2-7",
+      "sample_id": "21-maier-04-smooth-low-amplitude-continuous",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3019689,
+        "sha256": "416279e81eddc4c291c697487203bc61929ff6c1c983dfa071955d52ed7db774"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "variant_id": "low-amplitude-continuous",
+      "provider_transport_experiment": {
+        "profile": "non-loop-smooth-motion",
+        "canonical_lite_planning": true,
+        "canonical_lite_provider_runtime": true,
+        "first_frame_only": true,
+        "last_frame_is_source": false,
+        "loop": false
+      }
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-20260728-v4",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+      "sample_id": "21-maier-04-smooth-staggered-ease",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3264959,
+        "sha256": "cde9e047a24fc74bd50f12b76e8576cae4ddf45328d0b352a3789a4e4b8fdf71"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "variant_id": "staggered-ease",
+      "provider_transport_experiment": {
+        "profile": "non-loop-smooth-motion",
+        "canonical_lite_planning": true,
+        "canonical_lite_provider_runtime": true,
+        "first_frame_only": true,
+        "last_frame_is_source": false,
+        "loop": false
+      }
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-left-to-right-flow-wan-2-7",
+      "sample_id": "21-maier-04-smooth-left-to-right-flow",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3100164,
+        "sha256": "22fd794ce1bbdcf1b87ce7622f4a607b68203d0e7b09aee27fc0a266473c060a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "variant_id": "left-to-right-flow",
+      "provider_transport_experiment": {
+        "profile": "non-loop-smooth-motion",
+        "canonical_lite_planning": true,
+        "canonical_lite_provider_runtime": true,
+        "first_frame_only": true,
+        "last_frame_is_source": false,
+        "loop": false
+      }
+    },
+    {
+      "lite_run_id": "promopages-9930-case21-wan27-smooth-preservation-smooth-repair-20260728-v3",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-preservation-smooth-repair-wan-2-7",
+      "sample_id": "21-maier-04-smooth-preservation-smooth-repair",
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/preservation-smooth-repair/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3177217,
+        "sha256": "16cca5d55e0f06e994feba5389791cc64cb0024d786c5b9c9c90fe0bc74e0fd3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "variant_id": "preservation-smooth-repair",
+      "provider_transport_experiment": {
+        "profile": "non-loop-smooth-motion",
+        "canonical_lite_planning": true,
+        "canonical_lite_provider_runtime": true,
+        "first_frame_only": true,
+        "last_frame_is_source": false,
+        "loop": false
+      }
+    }
+  ]
+}

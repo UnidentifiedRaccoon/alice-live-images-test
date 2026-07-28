@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-smooth-low-amplitude-continuous",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/low-amplitude-continuous/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. Over five seconds, smoothly animate the infographic with broad easing and no return: scales make one shallow sway; the scale needle sweeps steadily clockwise; drops descend evenly; irritation lines wander chaotically along continuous curves; ovaries pulse once softly; only the purple aura contracts and dims around the fixed molecule. The battery fills red through yellow to full green, ending full green and staying there. Preserve all text, arrows and layout.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true,
+            "negative_prompt": "No jerks, snapping, looping, reverse motion, morphing, warped anatomy or symbols, text changes, layout drift, camera drift, or molecule and bond movement."
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "bd5c60a0e79420a141e5679edf054f63ded24f7771e8d2767b266bde5c08fd95",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "YfhHYRmYIMtUHBIsoAWy",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-28T13:27:36Z",
+  "completed_at": "2026-07-28T13:28:53Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3019689,
+    "sha256": "416279e81eddc4c291c697487203bc61929ff6c1c983dfa071955d52ed7db774"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-smooth-low-amplitude-continuous-20260728-v3",
+  "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-low-amplitude-continuous-wan-2-7",
+  "lite_result_sha256": "441894fee34c64eee91529f3f98039adf180f257092cc2207a69f7180440157e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false
+  }
+}

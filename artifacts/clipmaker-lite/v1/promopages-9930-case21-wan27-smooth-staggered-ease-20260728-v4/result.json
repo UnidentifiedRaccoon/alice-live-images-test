@@ -1,0 +1,124 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-wan27-smooth-staggered-ease-20260728-v4",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+    "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      }
+    ],
+    "inputs_sha256": "sha256:82247726c4d1d0da034663333934b301b81feb025eb2f09479d2b7d190cb4296",
+    "execution_fingerprint": "sha256:2305927c0e3995e9e75de07193f4a2bea4e8f8b3e7e749ea77524c96bc35e5d2",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa8e3-f1ff-7350-ad4f-218c040faf2e"
+    },
+    "authored_payload_sha256": "58c38c1b826fc02915ae04ab2426235128303c006ad4d3adeb2dcd94c9a17101",
+    "draft_file_sha256": "c5a984cbb1e2bbfc163a2391daf3b3b16495a37db544918e25bce9ecb8cf48c5"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Plan a canonical first-frame-only, non-loop five-second causal relay with long overlapping ease-in and ease-out. Stage one has two separate motions: ovaries make one soft pulse; independently, the purple aura centered on the progesterone formula slowly contracts and dims while the molecule and every bond remain fixed. Stage two: antique balance makes one shallow sway and bathroom-scale needle makes one steady sweep. Stage three: water drops fall downward, irritation lines move chaotically along continuous curves, battery fills red through yellow to full green and holds green. Never attach the purple aura to ovaries; never swell the drops. Preserve text, arrows, icons and layout. positive_prompt at most 480 characters; negative_prompt must be null."
+  },
+  "analysis": {
+    "image_reading": [
+      "Статичная медицинская инфографика: яичники ведут стрелкой к формуле прогестерона в отдельной фиолетовой ауре, затем к весам и четырём симптомам ниже.",
+      "Подвижные визуальные элементы — яичники, фиолетовая аура, чаши весов, стрелка напольных весов, капли воды, линии над головой и заряд батареи; молекула, подписи, соединительные стрелки, иконки и компоновка должны оставаться неизменными."
+    ],
+    "article_context": "Это body-иллюстрация после объяснения, что при недостаточном питании яичники «засыпают», гормоны перестают вырабатываться и появляются изменения самочувствия; изображение наглядно связывает снижение прогестерона и эстрогенное доминирование с весом, отёками, раздражительностью и усталостью.",
+    "structured_intent": {
+      "editorial_meaning": "Оживление подчёркивает причинную связь между снижением прогестерона, эстрогенным доминированием и комплексом заметных изменений самочувствия.",
+      "primary_action": "По схеме проходит единый причинный импульс от ослабления гормонального сигнала к последовательной активации показателей симптомов.",
+      "terminal_state": "Фиолетовая аура уменьшена и потускнела, весы завершили качание, стрелка шкалы смещена, капли находятся ниже, линии раздражения перестроены, а батарея полностью заполнена зелёным.",
+      "semantic_invariant": "Смысловая связь снижения прогестерона с эстрогенным доминированием и перечисленными последствиями сохраняется до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Непрерывный пятисекундный кадр с неподвижной камерой и мягко перекрывающимися фазами. Сначала яичники делают один слабый пульс, независимо от них фиолетовая аура строго вокруг неподвижной формулы медленно сжимается и тускнеет. На длинном выходе первой фазы старинные весы один раз неглубоко качаются, а стрелка напольных весов выполняет один ровный проход. Затем капли опускаются без изменения размера, линии раздражения хаотично скользят по непрерывным кривым, батарея плавно заполняется красным, жёлтым и зелёным. К финалу аура мала и тускла, капли ниже, линии смещены, батарея полностью зелёная и удерживает это состояние; весь текст, стрелки, молекула с каждой связью, иконки и компоновка неподвижны.",
+      "positive_prompt": "Fixed camera. A smooth causal relay with long overlapping eases: ovaries pulse once while the separate purple aura around the fixed progesterone molecule slowly contracts and dims. Then the balance sways shallowly once as the scale needle sweeps steadily. Water drops fall without swelling, irritation lines drift chaotically on continuous curves, and the battery fills red through yellow to full green, holding green. Keep all text, arrows, bonds, icons and layout fixed.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    }
+  ]
+}
