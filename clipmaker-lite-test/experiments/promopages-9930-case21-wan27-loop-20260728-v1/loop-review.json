@@ -1,0 +1,2698 @@
+{
+  "analyzer": {
+    "analysis_version": 1,
+    "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "python": "3.14.6",
+    "script": "scripts/analyze_clipmaker_lite_case21_loop.py",
+    "third_party_python_dependencies": []
+  },
+  "case": {
+    "article_number": "21",
+    "article_slug": "21-maier-doctor-zolotoe-vremia",
+    "image_id": "04",
+    "model_id": "alibaba/wan-2.7"
+  },
+  "fidelity_pass_count": 0,
+  "limitations": [
+    "ROI activity detects pixel motion, not the semantic direction, rotation count, battery color order, or visual appeal.",
+    "The signed boundary-velocity comparison is a discontinuity proxy; compression noise and motion blur can affect it.",
+    "A matching first and last frame can still look non-looping when an object pauses unnaturally near the seam.",
+    "Full visual review remains required before any result is accepted."
+  ],
+  "method": {
+    "changed_pixel_threshold_rgb": 12,
+    "collateral_thresholds": {
+      "max_changed_pixel_ratio_from_first": 0.05,
+      "max_mae_rgb_from_first": 4.0
+    },
+    "exact_seam_neighbor_frames": [
+      "first",
+      "second",
+      "penultimate",
+      "last"
+    ],
+    "normalized_size": 256,
+    "requested_regions": [
+      {
+        "expected_motion": "soft local pulse",
+        "label": "Ovaries",
+        "normalized_roi": {
+          "x0": 0.025,
+          "x1": 0.325,
+          "y0": 0.255,
+          "y1": 0.515
+        },
+        "region_id": "ovaries"
+      },
+      {
+        "expected_motion": "existing purple-aura swell and recede pulse",
+        "label": "Progesterone formula and aura",
+        "normalized_roi": {
+          "x0": 0.335,
+          "x1": 0.655,
+          "y0": 0.235,
+          "y1": 0.555
+        },
+        "region_id": "progesterone_formula"
+      },
+      {
+        "expected_motion": "small rocking motion",
+        "label": "Antique balance",
+        "normalized_roi": {
+          "x0": 0.66,
+          "x1": 0.945,
+          "y0": 0.245,
+          "y1": 0.555
+        },
+        "region_id": "antique_balance"
+      },
+      {
+        "expected_motion": "dial needle rotation",
+        "label": "Bathroom scale",
+        "normalized_roi": {
+          "x0": 0.035,
+          "x1": 0.305,
+          "y0": 0.605,
+          "y1": 0.895
+        },
+        "region_id": "bathroom_scale"
+      },
+      {
+        "expected_motion": "repeating downward rain motion",
+        "label": "Water drops",
+        "normalized_roi": {
+          "x0": 0.315,
+          "x1": 0.515,
+          "y0": 0.61,
+          "y1": 0.9
+        },
+        "region_id": "water_drops"
+      },
+      {
+        "expected_motion": "irregular local jitter above the head",
+        "label": "Irritability lines",
+        "normalized_roi": {
+          "x0": 0.505,
+          "x1": 0.725,
+          "y0": 0.595,
+          "y1": 0.905
+        },
+        "region_id": "irritability_lines"
+      },
+      {
+        "expected_motion": "fill through yellow and green, then return to source state",
+        "label": "Battery",
+        "normalized_roi": {
+          "x0": 0.715,
+          "x1": 0.95,
+          "y0": 0.62,
+          "y1": 0.875
+        },
+        "region_id": "battery"
+      }
+    ],
+    "roi_motion_thresholds": {
+      "active_pair_min_changed_ratio": 0.01,
+      "active_pair_min_mae_rgb": 1.0,
+      "min_active_transitions": 2
+    },
+    "sample_count_requested": 17,
+    "seam_thresholds": {
+      "max_direction_conflict_ratio": 0.35,
+      "max_edge_motion_magnitude_delta_rgb": 4.0,
+      "max_first_last_changed_ratio": 0.03,
+      "max_first_last_mae_rgb": 4.0,
+      "max_signed_velocity_gap_mae_rgb": 8.0
+    }
+  },
+  "schema_version": "clipmaker-lite.case21-loop-review.v1",
+  "seam_pass_count": 0,
+  "video_count": 8,
+  "videos": [
+    {
+      "collateral_activity": {
+        "fidelity_status": "pass",
+        "max_changed_pixel_ratio_from_first": 0.01107774,
+        "max_mae_rgb_from_first": 2.30994,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops",
+        "missing-motion:irritability_lines"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 2938328,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "bathroom_scale",
+        "water_drops",
+        "irritability_lines"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/sync-cycle/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 14,
+          "activity": {
+            "max_changed_pixel_ratio": 0.22911417,
+            "max_pair_mae_rgb": 8.085094,
+            "mean_changed_pixel_ratio": 0.14131722,
+            "mean_pair_mae_rgb": 4.976176
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 11,
+          "activity": {
+            "max_changed_pixel_ratio": 0.34681737,
+            "max_pair_mae_rgb": 19.026472,
+            "mean_changed_pixel_ratio": 0.17676317,
+            "mean_pair_mae_rgb": 5.696223
+          },
+          "detected_motion": true,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "pass",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 9,
+          "activity": {
+            "max_changed_pixel_ratio": 0.32391191,
+            "max_pair_mae_rgb": 22.494249,
+            "mean_changed_pixel_ratio": 0.11016704,
+            "mean_pair_mae_rgb": 6.697326
+          },
+          "detected_motion": true,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "pass",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00567959,
+            "max_pair_mae_rgb": 1.192453,
+            "mean_changed_pixel_ratio": 0.00270923,
+            "mean_pair_mae_rgb": 0.696457
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00026497,
+            "max_pair_mae_rgb": 1.155273,
+            "mean_changed_pixel_ratio": 1.472e-05,
+            "mean_pair_mae_rgb": 0.513739
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 1,
+          "activity": {
+            "max_changed_pixel_ratio": 0.03508772,
+            "max_pair_mae_rgb": 2.180336,
+            "mean_changed_pixel_ratio": 0.00521442,
+            "mean_pair_mae_rgb": 0.925284
+          },
+          "detected_motion": false,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "fail",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 11,
+          "activity": {
+            "max_changed_pixel_ratio": 0.20358974,
+            "max_pair_mae_rgb": 12.753846,
+            "mean_changed_pixel_ratio": 0.09652422,
+            "mean_pair_mae_rgb": 3.537531
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 4,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.03320312,
+          "mean_absolute_rgb_difference": 2.655411,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 473,
+          "active_direction_channel_ratio": 0.0024058,
+          "after_seam_mean_absolute_rgb_motion": 1.258993,
+          "before_seam_mean_absolute_rgb_motion": 0.330165,
+          "direction_conflict_material": false,
+          "direction_conflict_ratio": 0.76321353,
+          "edge_motion_magnitude_delta_rgb": 0.928828,
+          "motion_continuous": true,
+          "signed_velocity_gap_mae_rgb": 1.519079
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "592c9308538350c575485f52f50aa80b65a6e40a2fe4b24f9742ef745692dc3e",
+      "square_output": true,
+      "video_id": "sync-cycle"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "pass",
+        "max_changed_pixel_ratio_from_first": 0.02454543,
+        "max_mae_rgb_from_first": 2.726211,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 2901974,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "bathroom_scale",
+        "water_drops"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/local-icons/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 13,
+          "activity": {
+            "max_changed_pixel_ratio": 0.20197713,
+            "max_pair_mae_rgb": 7.705563,
+            "mean_changed_pixel_ratio": 0.11287717,
+            "mean_pair_mae_rgb": 4.692637
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 12,
+          "activity": {
+            "max_changed_pixel_ratio": 0.15199286,
+            "max_pair_mae_rgb": 10.864119,
+            "mean_changed_pixel_ratio": 0.07288155,
+            "mean_pair_mae_rgb": 5.738146
+          },
+          "detected_motion": true,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "pass",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 10,
+          "activity": {
+            "max_changed_pixel_ratio": 0.13993411,
+            "max_pair_mae_rgb": 6.51708,
+            "mean_changed_pixel_ratio": 0.05095081,
+            "mean_pair_mae_rgb": 2.671483
+          },
+          "detected_motion": true,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "pass",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00802977,
+            "max_pair_mae_rgb": 1.168952,
+            "mean_changed_pixel_ratio": 0.00382992,
+            "mean_pair_mae_rgb": 0.777713
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00609433,
+            "max_pair_mae_rgb": 1.222752,
+            "mean_changed_pixel_ratio": 0.00173703,
+            "mean_pair_mae_rgb": 0.606567
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 12,
+          "activity": {
+            "max_changed_pixel_ratio": 0.25833333,
+            "max_pair_mae_rgb": 15.83136,
+            "mean_changed_pixel_ratio": 0.1061769,
+            "mean_pair_mae_rgb": 5.658817
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 11,
+          "activity": {
+            "max_changed_pixel_ratio": 0.05538462,
+            "max_pair_mae_rgb": 5.408889,
+            "mean_changed_pixel_ratio": 0.03216524,
+            "mean_pair_mae_rgb": 2.790802
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 5,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position",
+          "boundary-motion-continuity"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.05308533,
+          "mean_absolute_rgb_difference": 2.744914,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 2993,
+          "active_direction_channel_ratio": 0.01522319,
+          "after_seam_mean_absolute_rgb_motion": 1.386515,
+          "before_seam_mean_absolute_rgb_motion": 1.016841,
+          "direction_conflict_material": true,
+          "direction_conflict_ratio": 0.87103241,
+          "edge_motion_magnitude_delta_rgb": 0.369675,
+          "motion_continuous": false,
+          "signed_velocity_gap_mae_rgb": 2.292384
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "f9b29e19b78289e56b82d25947cc1e3a3633bea75cbb48893e7947e21f07683c",
+      "square_output": true,
+      "video_id": "local-icons"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "fail",
+        "max_changed_pixel_ratio_from_first": 0.05932888,
+        "max_mae_rgb_from_first": 6.927925,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops",
+        "collateral-motion"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 3303061,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "bathroom_scale",
+        "water_drops"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 10,
+          "activity": {
+            "max_changed_pixel_ratio": 0.07113782,
+            "max_pair_mae_rgb": 3.630161,
+            "mean_changed_pixel_ratio": 0.0182852,
+            "mean_pair_mae_rgb": 1.334942
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 14,
+          "activity": {
+            "max_changed_pixel_ratio": 0.29729328,
+            "max_pair_mae_rgb": 10.393664,
+            "mean_changed_pixel_ratio": 0.14064049,
+            "mean_pair_mae_rgb": 7.004007
+          },
+          "detected_motion": true,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "pass",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 9,
+          "activity": {
+            "max_changed_pixel_ratio": 0.37627883,
+            "max_pair_mae_rgb": 28.440495,
+            "mean_changed_pixel_ratio": 0.137651,
+            "mean_pair_mae_rgb": 9.853535
+          },
+          "detected_motion": true,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "pass",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00235018,
+            "max_pair_mae_rgb": 1.213474,
+            "mean_changed_pixel_ratio": 0.00013057,
+            "mean_pair_mae_rgb": 0.584614
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00503445,
+            "max_pair_mae_rgb": 1.129747,
+            "mean_changed_pixel_ratio": 0.00170759,
+            "mean_pair_mae_rgb": 0.589693
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 10,
+          "activity": {
+            "max_changed_pixel_ratio": 0.23421053,
+            "max_pair_mae_rgb": 11.646053,
+            "mean_changed_pixel_ratio": 0.08961988,
+            "mean_pair_mae_rgb": 4.26862
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 9,
+          "activity": {
+            "max_changed_pixel_ratio": 0.16641026,
+            "max_pair_mae_rgb": 10.067094,
+            "mean_changed_pixel_ratio": 0.04396011,
+            "mean_pair_mae_rgb": 3.432911
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 5,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.03364563,
+          "mean_absolute_rgb_difference": 2.55864,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 1148,
+          "active_direction_channel_ratio": 0.00583903,
+          "after_seam_mean_absolute_rgb_motion": 1.24559,
+          "before_seam_mean_absolute_rgb_motion": 0.890752,
+          "direction_conflict_material": false,
+          "direction_conflict_ratio": 0.69512195,
+          "edge_motion_magnitude_delta_rgb": 0.354838,
+          "motion_continuous": true,
+          "signed_velocity_gap_mae_rgb": 1.979604
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "9334edf4388a28a74d6aaa36277ee5f1b1c6c88a0b74692137bbf47a41919497",
+      "square_output": true,
+      "video_id": "endpoint-first"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "pass",
+        "max_changed_pixel_ratio_from_first": 0.02144495,
+        "max_mae_rgb_from_first": 2.597939,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:progesterone_formula",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 2728895,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "progesterone_formula",
+        "bathroom_scale",
+        "water_drops"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/mirror-midpoint/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 7,
+          "activity": {
+            "max_changed_pixel_ratio": 0.18995929,
+            "max_pair_mae_rgb": 3.538218,
+            "mean_changed_pixel_ratio": 0.02642631,
+            "mean_pair_mae_rgb": 1.780675
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00371802,
+            "max_pair_mae_rgb": 1.560579,
+            "mean_changed_pixel_ratio": 0.00028092,
+            "mean_pair_mae_rgb": 0.642585
+          },
+          "detected_motion": false,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "fail",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 8,
+          "activity": {
+            "max_changed_pixel_ratio": 0.21952488,
+            "max_pair_mae_rgb": 14.910468,
+            "mean_changed_pixel_ratio": 0.06626785,
+            "mean_pair_mae_rgb": 3.8956
+          },
+          "detected_motion": true,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "pass",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00235018,
+            "max_pair_mae_rgb": 1.205379,
+            "mean_changed_pixel_ratio": 0.00017409,
+            "mean_pair_mae_rgb": 0.611252
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00556439,
+            "max_pair_mae_rgb": 1.204822,
+            "mean_changed_pixel_ratio": 0.00125125,
+            "mean_pair_mae_rgb": 0.588093
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 14,
+          "activity": {
+            "max_changed_pixel_ratio": 0.2497807,
+            "max_pair_mae_rgb": 14.484649,
+            "mean_changed_pixel_ratio": 0.09746589,
+            "mean_pair_mae_rgb": 4.566025
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 9,
+          "activity": {
+            "max_changed_pixel_ratio": 0.22461538,
+            "max_pair_mae_rgb": 11.538034,
+            "mean_changed_pixel_ratio": 0.0665812,
+            "mean_pair_mae_rgb": 2.922911
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 4,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position",
+          "boundary-motion-continuity"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.04685974,
+          "mean_absolute_rgb_difference": 2.637599,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 2195,
+          "active_direction_channel_ratio": 0.01116435,
+          "after_seam_mean_absolute_rgb_motion": 1.405416,
+          "before_seam_mean_absolute_rgb_motion": 0.965256,
+          "direction_conflict_material": true,
+          "direction_conflict_ratio": 0.8642369,
+          "edge_motion_magnitude_delta_rgb": 0.44016,
+          "motion_continuous": false,
+          "signed_velocity_gap_mae_rgb": 2.261113
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "e02ed005f6985f33977512c30fd4edb76e15085bcf1971d5cc6d3073c18cef9a",
+      "square_output": true,
+      "video_id": "mirror-midpoint"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "fail",
+        "max_changed_pixel_ratio_from_first": 0.13680845,
+        "max_mae_rgb_from_first": 7.786961,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:antique_balance",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops",
+        "collateral-motion"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 2562683,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "antique_balance",
+        "bathroom_scale",
+        "water_drops"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/kinetic-compact/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 6,
+          "activity": {
+            "max_changed_pixel_ratio": 0.0533049,
+            "max_pair_mae_rgb": 1.894812,
+            "mean_changed_pixel_ratio": 0.01394543,
+            "mean_pair_mae_rgb": 1.144282
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 11,
+          "activity": {
+            "max_changed_pixel_ratio": 0.18292683,
+            "max_pair_mae_rgb": 11.436595,
+            "mean_changed_pixel_ratio": 0.07735971,
+            "mean_pair_mae_rgb": 4.96339
+          },
+          "detected_motion": true,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "pass",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00468181,
+            "max_pair_mae_rgb": 1.592105,
+            "mean_changed_pixel_ratio": 0.0003179,
+            "mean_pair_mae_rgb": 0.711815
+          },
+          "detected_motion": false,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "fail",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.0045045,
+            "max_pair_mae_rgb": 1.22862,
+            "mean_changed_pixel_ratio": 0.00028289,
+            "mean_pair_mae_rgb": 0.617462
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00105988,
+            "max_pair_mae_rgb": 1.293676,
+            "mean_changed_pixel_ratio": 7.36e-05,
+            "mean_pair_mae_rgb": 0.563387
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 2,
+          "activity": {
+            "max_changed_pixel_ratio": 0.02039474,
+            "max_pair_mae_rgb": 2.004532,
+            "mean_changed_pixel_ratio": 0.00328947,
+            "mean_pair_mae_rgb": 0.920976
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 5,
+          "activity": {
+            "max_changed_pixel_ratio": 0.15974359,
+            "max_pair_mae_rgb": 10.120085,
+            "mean_changed_pixel_ratio": 0.02893162,
+            "mean_pair_mae_rgb": 1.888495
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 4,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.05561829,
+          "mean_absolute_rgb_difference": 2.874049,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 1066,
+          "active_direction_channel_ratio": 0.00542196,
+          "after_seam_mean_absolute_rgb_motion": 1.427928,
+          "before_seam_mean_absolute_rgb_motion": 0.967951,
+          "direction_conflict_material": false,
+          "direction_conflict_ratio": 0.93058161,
+          "edge_motion_magnitude_delta_rgb": 0.459976,
+          "motion_continuous": true,
+          "signed_velocity_gap_mae_rgb": 2.307531
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "546d3e195b35f16acc60e20c86d6dec01a103468fd6c8581c64c840af58d98a4",
+      "square_output": true,
+      "video_id": "kinetic-compact"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "pass",
+        "max_changed_pixel_ratio_from_first": 0.02448083,
+        "max_mae_rgb_from_first": 2.834824,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:antique_balance",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 2709894,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "antique_balance",
+        "bathroom_scale",
+        "water_drops"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/staggered-wave/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 15,
+          "activity": {
+            "max_changed_pixel_ratio": 0.34347742,
+            "max_pair_mae_rgb": 13.909802,
+            "mean_changed_pixel_ratio": 0.22448364,
+            "mean_pair_mae_rgb": 7.141859
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 7,
+          "activity": {
+            "max_changed_pixel_ratio": 0.17474717,
+            "max_pair_mae_rgb": 4.6802,
+            "mean_changed_pixel_ratio": 0.04258378,
+            "mean_pair_mae_rgb": 1.555503
+          },
+          "detected_motion": true,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "pass",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00468181,
+            "max_pair_mae_rgb": 1.529507,
+            "mean_changed_pixel_ratio": 0.00032753,
+            "mean_pair_mae_rgb": 0.695037
+          },
+          "detected_motion": false,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "fail",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00763807,
+            "max_pair_mae_rgb": 1.208252,
+            "mean_changed_pixel_ratio": 0.0038408,
+            "mean_pair_mae_rgb": 0.812178
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00503445,
+            "max_pair_mae_rgb": 1.231496,
+            "mean_changed_pixel_ratio": 0.00135429,
+            "mean_pair_mae_rgb": 0.608761
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 13,
+          "activity": {
+            "max_changed_pixel_ratio": 0.24429825,
+            "max_pair_mae_rgb": 14.723538,
+            "mean_changed_pixel_ratio": 0.10891813,
+            "mean_pair_mae_rgb": 5.249968
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 11,
+          "activity": {
+            "max_changed_pixel_ratio": 0.05846154,
+            "max_pair_mae_rgb": 5.393504,
+            "mean_changed_pixel_ratio": 0.03138177,
+            "mean_pair_mae_rgb": 2.856448
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 4,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.04821777,
+          "mean_absolute_rgb_difference": 2.77978,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 1260,
+          "active_direction_channel_ratio": 0.00640869,
+          "after_seam_mean_absolute_rgb_motion": 1.431015,
+          "before_seam_mean_absolute_rgb_motion": 0.967946,
+          "direction_conflict_material": false,
+          "direction_conflict_ratio": 0.93095238,
+          "edge_motion_magnitude_delta_rgb": 0.463069,
+          "motion_continuous": true,
+          "signed_velocity_gap_mae_rgb": 2.298528
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "a4e68dc69abf502bd796c02b9aeabdd78c56e49c0596cc56769d63e78be42f7d",
+      "square_output": true,
+      "video_id": "staggered-wave"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "pass",
+        "max_changed_pixel_ratio_from_first": 0.02493298,
+        "max_mae_rgb_from_first": 2.815662,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:ovaries",
+        "missing-motion:bathroom_scale",
+        "missing-motion:water_drops"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 2722754,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "ovaries",
+        "bathroom_scale",
+        "water_drops"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/simultaneous-microloops/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 1,
+          "activity": {
+            "max_changed_pixel_ratio": 0.01027331,
+            "max_pair_mae_rgb": 2.137882,
+            "mean_changed_pixel_ratio": 0.00066766,
+            "mean_pair_mae_rgb": 0.76861
+          },
+          "detected_motion": false,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "fail",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 13,
+          "activity": {
+            "max_changed_pixel_ratio": 0.17549078,
+            "max_pair_mae_rgb": 11.667509,
+            "mean_changed_pixel_ratio": 0.07934265,
+            "mean_pair_mae_rgb": 5.225709
+          },
+          "detected_motion": true,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "pass",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 5,
+          "activity": {
+            "max_changed_pixel_ratio": 0.21033466,
+            "max_pair_mae_rgb": 9.906479,
+            "mean_changed_pixel_ratio": 0.03668381,
+            "mean_pair_mae_rgb": 2.13172
+          },
+          "detected_motion": true,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "pass",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.0045045,
+            "max_pair_mae_rgb": 1.295926,
+            "mean_changed_pixel_ratio": 0.00029377,
+            "mean_pair_mae_rgb": 0.636582
+          },
+          "detected_motion": false,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "fail",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00264971,
+            "max_pair_mae_rgb": 1.260201,
+            "mean_changed_pixel_ratio": 0.00108933,
+            "mean_pair_mae_rgb": 0.599021
+          },
+          "detected_motion": false,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "fail",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 15,
+          "activity": {
+            "max_changed_pixel_ratio": 0.15701754,
+            "max_pair_mae_rgb": 7.179532,
+            "mean_changed_pixel_ratio": 0.06920078,
+            "mean_pair_mae_rgb": 3.191638
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 11,
+          "activity": {
+            "max_changed_pixel_ratio": 0.05589744,
+            "max_pair_mae_rgb": 5.620769,
+            "mean_changed_pixel_ratio": 0.03108262,
+            "mean_pair_mae_rgb": 2.863077
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 4,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.05151367,
+          "mean_absolute_rgb_difference": 2.751236,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 1347,
+          "active_direction_channel_ratio": 0.0068512,
+          "after_seam_mean_absolute_rgb_motion": 1.467728,
+          "before_seam_mean_absolute_rgb_motion": 1.024633,
+          "direction_conflict_material": false,
+          "direction_conflict_ratio": 0.91165553,
+          "edge_motion_magnitude_delta_rgb": 0.443095,
+          "motion_continuous": true,
+          "signed_velocity_gap_mae_rgb": 2.404368
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "ae97a6773d3e425eadbe18731e5793f87b258d935b79434e9e96b86097bbc67f",
+      "square_output": true,
+      "video_id": "simultaneous-microloops"
+    },
+    {
+      "collateral_activity": {
+        "fidelity_status": "pass",
+        "max_changed_pixel_ratio_from_first": 0.01201434,
+        "max_mae_rgb_from_first": 2.330803,
+        "outside_requested_region_pixel_count": 30963
+      },
+      "failed_checks": [
+        "loop-seam",
+        "missing-motion:progesterone_formula"
+      ],
+      "fidelity_status": "fail",
+      "media": {
+        "bytes": 3335396,
+        "codec": "h264",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "duration_seconds": 5.061995,
+        "frame_count": 150,
+        "frame_rate": "30",
+        "has_audio": true,
+        "height": 1440,
+        "pixel_format": "yuv420p",
+        "width": 1440
+      },
+      "missing_motion_regions": [
+        "progesterone_formula"
+      ],
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/preservation-repair/wan-2.7/04.mp4",
+      "regions": [
+        {
+          "active_transition_count": 15,
+          "activity": {
+            "max_changed_pixel_ratio": 0.30916844,
+            "max_pair_mae_rgb": 14.169413,
+            "mean_changed_pixel_ratio": 0.17403244,
+            "mean_pair_mae_rgb": 7.067415
+          },
+          "detected_motion": true,
+          "expected_motion": "soft local pulse",
+          "fidelity_status": "pass",
+          "label": "Ovaries",
+          "normalized_roi": {
+            "x0": 0.025,
+            "x1": 0.325,
+            "y0": 0.255,
+            "y1": 0.515
+          },
+          "pixel_roi": {
+            "x0": 6,
+            "x1": 83,
+            "y0": 65,
+            "y1": 132
+          },
+          "region_id": "ovaries",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 0,
+          "activity": {
+            "max_changed_pixel_ratio": 0.00505651,
+            "max_pair_mae_rgb": 1.603212,
+            "mean_changed_pixel_ratio": 0.00032223,
+            "mean_pair_mae_rgb": 0.517739
+          },
+          "detected_motion": false,
+          "expected_motion": "existing purple-aura swell and recede pulse",
+          "fidelity_status": "fail",
+          "label": "Progesterone formula and aura",
+          "normalized_roi": {
+            "x0": 0.335,
+            "x1": 0.655,
+            "y0": 0.235,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 86,
+            "x1": 168,
+            "y0": 60,
+            "y1": 142
+          },
+          "region_id": "progesterone_formula",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 15,
+          "activity": {
+            "max_changed_pixel_ratio": 0.23651812,
+            "max_pair_mae_rgb": 11.47373,
+            "mean_changed_pixel_ratio": 0.11584109,
+            "mean_pair_mae_rgb": 4.814404
+          },
+          "detected_motion": true,
+          "expected_motion": "small rocking motion",
+          "fidelity_status": "pass",
+          "label": "Antique balance",
+          "normalized_roi": {
+            "x0": 0.66,
+            "x1": 0.945,
+            "y0": 0.245,
+            "y1": 0.555
+          },
+          "pixel_roi": {
+            "x0": 169,
+            "x1": 242,
+            "y0": 63,
+            "y1": 142
+          },
+          "region_id": "antique_balance",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 3,
+          "activity": {
+            "max_changed_pixel_ratio": 0.02252252,
+            "max_pair_mae_rgb": 1.402794,
+            "mean_changed_pixel_ratio": 0.00562519,
+            "mean_pair_mae_rgb": 0.790214
+          },
+          "detected_motion": true,
+          "expected_motion": "dial needle rotation",
+          "fidelity_status": "pass",
+          "label": "Bathroom scale",
+          "normalized_roi": {
+            "x0": 0.035,
+            "x1": 0.305,
+            "y0": 0.605,
+            "y1": 0.895
+          },
+          "pixel_roi": {
+            "x0": 9,
+            "x1": 78,
+            "y0": 155,
+            "y1": 229
+          },
+          "region_id": "bathroom_scale",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 9,
+          "activity": {
+            "max_changed_pixel_ratio": 0.24297827,
+            "max_pair_mae_rgb": 11.18495,
+            "mean_changed_pixel_ratio": 0.08820585,
+            "mean_pair_mae_rgb": 4.166554
+          },
+          "detected_motion": true,
+          "expected_motion": "repeating downward rain motion",
+          "fidelity_status": "pass",
+          "label": "Water drops",
+          "normalized_roi": {
+            "x0": 0.315,
+            "x1": 0.515,
+            "y0": 0.61,
+            "y1": 0.9
+          },
+          "pixel_roi": {
+            "x0": 81,
+            "x1": 132,
+            "y0": 156,
+            "y1": 230
+          },
+          "region_id": "water_drops",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 13,
+          "activity": {
+            "max_changed_pixel_ratio": 0.31842105,
+            "max_pair_mae_rgb": 22.74269,
+            "mean_changed_pixel_ratio": 0.16436404,
+            "mean_pair_mae_rgb": 8.931437
+          },
+          "detected_motion": true,
+          "expected_motion": "irregular local jitter above the head",
+          "fidelity_status": "pass",
+          "label": "Irritability lines",
+          "normalized_roi": {
+            "x0": 0.505,
+            "x1": 0.725,
+            "y0": 0.595,
+            "y1": 0.905
+          },
+          "pixel_roi": {
+            "x0": 129,
+            "x1": 186,
+            "y0": 152,
+            "y1": 232
+          },
+          "region_id": "irritability_lines",
+          "transition_count": 18
+        },
+        {
+          "active_transition_count": 6,
+          "activity": {
+            "max_changed_pixel_ratio": 0.04948718,
+            "max_pair_mae_rgb": 3.76547,
+            "mean_changed_pixel_ratio": 0.01804843,
+            "mean_pair_mae_rgb": 1.370266
+          },
+          "detected_motion": true,
+          "expected_motion": "fill through yellow and green, then return to source state",
+          "fidelity_status": "pass",
+          "label": "Battery",
+          "normalized_roi": {
+            "x0": 0.715,
+            "x1": 0.95,
+            "y0": 0.62,
+            "y1": 0.875
+          },
+          "pixel_roi": {
+            "x0": 183,
+            "x1": 243,
+            "y0": 159,
+            "y1": 224
+          },
+          "region_id": "battery",
+          "transition_count": 18
+        }
+      ],
+      "regions_with_detected_motion": 6,
+      "requested_region_count": 7,
+      "sampled_frame_indices": [
+        0,
+        1,
+        9,
+        19,
+        28,
+        37,
+        47,
+        56,
+        65,
+        74,
+        84,
+        93,
+        102,
+        112,
+        121,
+        130,
+        140,
+        148,
+        149
+      ],
+      "sampling": {
+        "frame_indices": [
+          0,
+          1,
+          9,
+          19,
+          28,
+          37,
+          47,
+          56,
+          65,
+          74,
+          84,
+          93,
+          102,
+          112,
+          121,
+          130,
+          140,
+          148,
+          149
+        ],
+        "normalization": "full-frame Lanczos scale to square RGB24",
+        "normalized_height": 256,
+        "normalized_width": 256,
+        "timestamps_seconds": [
+          0.0,
+          0.033333,
+          0.3,
+          0.633333,
+          0.933333,
+          1.233333,
+          1.566667,
+          1.866667,
+          2.166667,
+          2.466667,
+          2.8,
+          3.1,
+          3.4,
+          3.733333,
+          4.033333,
+          4.333333,
+          4.666667,
+          4.933333,
+          4.966667
+        ]
+      },
+      "seam": {
+        "failed_checks": [
+          "first-last-position"
+        ],
+        "first_vs_last": {
+          "changed_pixel_ratio": 0.03076172,
+          "mean_absolute_rgb_difference": 2.622411,
+          "pixel_count": 65536
+        },
+        "motion_discontinuity_proxy": {
+          "active_direction_channel_count": 265,
+          "active_direction_channel_ratio": 0.00134786,
+          "after_seam_mean_absolute_rgb_motion": 1.221186,
+          "before_seam_mean_absolute_rgb_motion": 0.301254,
+          "direction_conflict_material": false,
+          "direction_conflict_ratio": 0.67924528,
+          "edge_motion_magnitude_delta_rgb": 0.919932,
+          "motion_continuous": true,
+          "signed_velocity_gap_mae_rgb": 1.459259
+        },
+        "position_closed": false,
+        "seam_status": "fail"
+      },
+      "seam_status": "fail",
+      "sha256": "42e6707b06bce6abfbd3365e36a81291cd884174bfc9ee6eb35594799a172b27",
+      "square_output": true,
+      "video_id": "preservation-repair"
+    }
+  ]
+}

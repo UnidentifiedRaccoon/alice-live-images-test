@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-loop-endpoint-first",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1/videos/endpoint-first/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. Create one smooth reversible infographic loop: ovaries pulse; the progesterone molecule and aura gently pulse and turn; the balance sways; the scale needle rotates; drops fall like rain; irritation lines jitter; the battery cycles red-yellow-green-red. Use sinusoidal motion and return every element exactly to the source composition in the final frame, fully still and seamless with the first frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "last_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true,
+            "negative_prompt": "No changed or garbled text, added objects, layout drift, warped anatomy or icons, altered arrows, camera motion, cuts, residual motion, or mismatched first and last frames. Do not end on yellow or green battery."
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "46f0f2ca8bd9a65b57407f3efda28ae7e3b2d42be8c1a4e734c9a2acb86df9c0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "4HrUAV7xoHjgeeSPTEOh",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-28T12:23:07Z",
+  "completed_at": "2026-07-28T12:24:16Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3303061,
+    "sha256": "9334edf4388a28a74d6aaa36277ee5f1b1c6c88a0b74692137bbf47a41919497"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-loop-endpoint-first-20260728-v1",
+  "provider_run_id": "promopages-9930-case21-wan27-loop-provider-20260728-v1-21-maier-04-loop-endpoint-first-wan-2-7",
+  "lite_result_sha256": "f4e4081fc3b1a6878cacced576c170e9e01c15c8b2f8b869db3c8984732d60ae",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "provider_transport_experiment": {
+    "profile": "non-canonical-loop-closure",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": false,
+    "reason": "The locked Lite v1 runtime contains only first_frame; this research transport repeats the exact source URL as last_frame to test loop closure.",
+    "last_frame_is_source": true,
+    "first_and_last_frame_urls_must_match": true
+  }
+}

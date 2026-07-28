@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-wan27-loop-local-icons-20260728-v1",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+    "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      }
+    ],
+    "inputs_sha256": "sha256:70b07dbfa98fb9f851f5c735089c247b371841c03cbc87b0ed302c377ab35ad9",
+    "execution_fingerprint": "sha256:5d3673b5e31bc4938a68371c2955ef1243c3f6807c50f25dfc5339647969ed51",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa89b-efff-7042-80e9-db4e03131e60"
+    },
+    "authored_payload_sha256": "d388e38dff8704c0e451b8e84e45c5b2ee6e8fe4b895ff7099bf86bb1daea416",
+    "draft_file_sha256": "599531b7c9f791a22de0d1f9d99730a0b5f5d0df8c80ce215a110a08ef09ee57"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Animate only inside the seven existing icon regions as a seamless Wan 2.7 loop. Each region performs a small independent local cycle without moving its bounding box: old balance sway, bathroom-scale needle spin, repeating falling water drops, chaotic irritation-line motion, battery red-yellow-green-red fill cycle, ovary pulse, progesterone molecule/aura gentle established pulse/turn. All cycles return to the exact initial frame. Fixed camera, preserved labels, arrows, formula, icons and layout. Downstream same-source first/last conditioning. Prompt under 500 characters; targeted negative repair."
+  },
+  "analysis": {
+    "image_reading": [
+      "Схема связывает яичники со снижением прогестерона, нарушением гормонального равновесия и четырьмя симптомами.",
+      "Видимы семь локальных областей для движения: яичники, молекула с фиолетовой аурой, старинные весы, напольные весы, капли воды, линии раздражения вокруг головы и батарея.",
+      "Русские подписи, стрелки, химическая формула, иконки и их фиксированное расположение являются смысловой частью инфографики."
+    ],
+    "article_context": "Это body-инфографика после объяснения, что снижение активности яичников уменьшает выработку гормонов и проявляется набором веса, отёками, раздражительностью и усталостью. Оживление должно подчеркнуть причинную связь, не меняя медицинскую схему.",
+    "structured_intent": {
+      "editorial_meaning": "Снижение прогестерона при ослаблении работы яичников нарушает гормональное равновесие и связано с комплексом заметных симптомов.",
+      "primary_action": "Семь существующих элементов инфографики проходят согласованный цикл локальной активности.",
+      "terminal_state": "Все семь элементов возвращены точно к исходному виду и положению, а схема совпадает с первым кадром.",
+      "semantic_invariant": "Причинная схема «яичники — снижение прогестерона — гормональный дисбаланс — вес, отёки, раздражительность и усталость» остаётся неизменной."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Неподвижный пятисекундный кадр. Сразу запускаются малые независимые циклы только внутри семи существующих областей: мягкий пульс яичников; спокойный пульс и небольшой поворот молекулы с аурой; покачивание чаш весов; оборот стрелки напольных весов; последовательное падение капель; хаотичное шевеление линий раздражения; переход заполнения батареи красный–жёлтый–зелёный–красный. Амплитуда умеренная, границы иконок неподвижны. К концу все циклы синхронно возвращаются в исходное состояние для бесшовной петли; текст, стрелки, формула и компоновка остаются неизменными.",
+      "positive_prompt": "Fixed camera. Create a seamless local-icon loop: ovaries softly pulse; the progesterone molecule and aura gently pulse and turn; balance pans sway; scale needle circles; water drops repeatedly fall; irritation lines writhe; battery cycles red-yellow-green-red. Keep every motion inside its original icon bounds. All regions return exactly to the initial frame. Preserve all labels, arrows, formula, icons and layout unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    }
+  ]
+}

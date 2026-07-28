@@ -1,0 +1,124 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-wan27-loop-endpoint-first-20260728-v1",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+    "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      }
+    ],
+    "inputs_sha256": "sha256:b111f90c9726b5ced755fb10cd2b23eb756e7ead2855edbae562212b39246d95",
+    "execution_fingerprint": "sha256:92dc2987e03aeefe0da2aea284ab6b5394153f7b72477f22d3e2188dabafc38b",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa89c-c80e-7a22-b16a-88d224e8673b"
+    },
+    "authored_payload_sha256": "840ab32085bc05ceb9869539f1b48443680e1c794e748ff11efb691b38982f96",
+    "draft_file_sha256": "33644ba9533ea5c182ee4470772455668365c6e4f36335974dde7c257fc37b73"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Prioritize loop closure over every other goal. The exact source composition is both start and end. Between those endpoints animate all requested existing elements clearly: sway the old balance; rotate the bathroom-scale needle; make drops fall like rain; jitter irritation lines; cycle battery red-yellow-green-red; pulse ovaries; keep the progesterone molecule/aura in its current gentle animated pulse/turn. Use smooth sinusoidal or reversible motion, fixed camera, and no new objects, text edits or deformation. Wan 2.7 prompt under 500 characters with post-failure negative repair."
+  },
+  "analysis": {
+    "image_reading": [
+      "A static Russian-language medical infographic links ovaries to decreased progesterone, then estrogen dominance, with arrows branching to weight, edema, irritability, and fatigue icons.",
+      "Movable existing elements include the ovaries, progesterone molecule and aura, balance, bathroom-scale needle, water drops, irritation lines, and battery indicator; the diagram layout and labels must remain unchanged."
+    ],
+    "article_context": "Body infographic supporting the section explaining that declining ovarian activity and progesterone are associated with estrogen dominance and a connected cluster of symptoms: weight changes, edema, irritability, and fatigue.",
+    "structured_intent": {
+      "editorial_meaning": "Reduced ovarian progesterone is presented as a systemic imbalance connected to several recognizable symptoms rather than an isolated organ change.",
+      "primary_action": "The existing infographic elements perform one coordinated reversible cycle that visualizes the linked hormonal process and symptoms.",
+      "terminal_state": "Every animated element has returned exactly to its source position, orientation, color, and appearance, reproducing the original composition in the last frame.",
+      "semantic_invariant": "The causal diagram, Russian labels, arrows, anatomy, molecule, symptom meanings, and estrogen-dominance message remain unchanged."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Over five seconds, animate every specified existing element as one coordinated reversible loop with a fixed camera. Moderate sinusoidal motions develop together: ovarian pulse, gentle molecular/aura pulse-turn, balance sway, scale-needle rotation, falling drops, irritation-line jitter, and a red-to-yellow-to-green-to-red battery cycle. All motions reverse or close cleanly near the end; the final frame is fully still and pixel-compositionally aligned with the source.",
+      "positive_prompt": "Fixed camera. Create one smooth reversible infographic loop: ovaries pulse; the progesterone molecule and aura gently pulse and turn; the balance sways; the scale needle rotates; drops fall like rain; irritation lines jitter; the battery cycles red-yellow-green-red. Use sinusoidal motion and return every element exactly to the source composition in the final frame, fully still and seamless with the first frame.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": "No changed or garbled text, added objects, layout drift, warped anatomy or icons, altered arrows, camera motion, cuts, residual motion, or mismatched first and last frames. Do not end on yellow or green battery."
+    }
+  ]
+}
