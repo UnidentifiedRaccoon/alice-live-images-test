@@ -127,12 +127,31 @@ PRIMARY_WAN22_BASE = (
     / case21.ARTICLE_SLUG
     / native.MODEL_DIRECTORIES[native.WAN_MODEL_ID]
 )
+RETRY_WAN27_BASE = (
+    case21.RETRY_BATCH_ROOT
+    / "videos"
+    / case21.ARTICLE_SLUG
+    / native.MODEL_DIRECTORIES[native.WAN_27_MODEL_ID]
+)
+STAGE1_MONOTONIC_WAN27_BASE = (
+    STAGE1_ROOT
+    / "videos"
+    / "monotonic-positive"
+    / native.MODEL_DIRECTORIES[native.WAN_27_MODEL_ID]
+)
+STAGE1_EROSION_WAN22_BASE = (
+    STAGE1_ROOT
+    / "videos"
+    / "erosion-negative"
+    / native.MODEL_DIRECTORIES[native.WAN_MODEL_ID]
+)
 STAGE1_WAN27_BASE = (
     STAGE1_ROOT / "videos" / "erosion-negative" / native.MODEL_DIRECTORIES[native.WAN_27_MODEL_ID]
 )
 STAGE1_VEO_BASE = (
     STAGE1_ROOT / "videos" / "veo-motion-only" / native.MODEL_DIRECTORIES[native.VEO_31_MODEL_ID]
 )
+STAGE2_WAN27_BASE = STAGE2_ROOT / "videos" / native.MODEL_DIRECTORIES[native.WAN_27_MODEL_ID]
 
 DISPLAY_SELECTIONS = (
     DisplaySelection(
@@ -290,6 +309,221 @@ DISPLAY_SELECTIONS = (
         activity="prompt-experiment",
         experiment_id=STAGE1_EXPERIMENT_ID,
         variant_id="veo-motion-only",
+    ),
+)
+
+RESEARCH_SELECTIONS = (
+    DisplaySelection(
+        model_id=native.WAN_27_MODEL_ID,
+        planning_run_id=case21.PLANNING_RUN_ID,
+        planning_result_sha256=(
+            "c1a4453979a13ea9291efde8c2ef0491a9e4a08327d615ba4dc6699ce7bf1a39"
+        ),
+        planning_model_ids=case21.MODEL_IDS,
+        batch_id=case21.RETRY_PROVIDER_BATCH_ID,
+        generation_path=case21.RETRY_GENERATION_MANIFEST_PATH,
+        sample_id=case21.SAMPLE_ID,
+        provider_run_id=(
+            "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1-"
+            "21-maier-doctor-zolotoe-vremia-04-wan-2-7"
+        ),
+        prompt_path=RETRY_WAN27_BASE / "04.prompt.json",
+        run_path=RETRY_WAN27_BASE / "04.run.json",
+        video_path=RETRY_WAN27_BASE / "04.mp4",
+        review_path=RETRY_WAN27_BASE / "04.review.json",
+        review_sha256=(
+            "c9f1bde94baa12b261a48dd848abe36c87a99dfc26fca94cbae7a7790f90b503"
+        ),
+        review_evidence_path=(
+            STAGE1_ROOT / "review/contact-sheets/baseline-wan27.png"
+        ),
+        review_evidence_sha256=(
+            "0e0f0969a86b3fe13adcd7a01332185e6e2d44c9eb1a5808f788a03baf199d81"
+        ),
+        video_sha256=(
+            "5d7dd8073d77173da5da061e393c5b768533a152ec12a9d6214044a650fdef2a"
+        ),
+        request_sha256=(
+            "d382ee035d4825f6033975681eb126315820965a1e56ca428ce7c40c2ef7d198"
+        ),
+        expected_status="verification-failed",
+        expected_media={
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1440,
+            "height": 1440,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": True,
+            "bytes": 2253774,
+            "sha256": (
+                "5d7dd8073d77173da5da061e393c5b768533a152ec12a9d6214044a650fdef2a"
+            ),
+        },
+        expected_contract_conforms=False,
+        expected_contract_warnings=("audio", "resolution"),
+        activity="explicit-retry",
+    ),
+    DisplaySelection(
+        model_id=native.WAN_27_MODEL_ID,
+        planning_run_id="promopages-9930-case21-monotonic-positive-20260727-v1",
+        planning_result_sha256=(
+            "addacbc3ef88d516b1a9d4ae564713ed71be5a16cb41623bc8256ec68d9c062a"
+        ),
+        planning_model_ids=(native.WAN_MODEL_ID, native.WAN_27_MODEL_ID),
+        batch_id="promopages-9930-case21-prompt-research-stage1-20260727-v1",
+        generation_path=STAGE1_GENERATION_PATH,
+        sample_id="21-maier-04-monotonic-positive",
+        provider_run_id=(
+            "promopages-9930-case21-prompt-research-stage1-20260727-v1-"
+            "21-maier-04-monotonic-positive-wan-2-7"
+        ),
+        prompt_path=STAGE1_MONOTONIC_WAN27_BASE / "04.prompt.json",
+        run_path=STAGE1_MONOTONIC_WAN27_BASE / "04.run.json",
+        video_path=STAGE1_MONOTONIC_WAN27_BASE / "04.mp4",
+        review_path=STAGE1_MONOTONIC_WAN27_BASE / "04.review.json",
+        review_sha256=(
+            "86563f88b9c942c7f7a684914017b3dbd813d3e227d9af00b09cbbc490dd9768"
+        ),
+        review_evidence_path=(
+            STAGE1_ROOT / "review/contact-sheets/monotonic-positive-wan27.png"
+        ),
+        review_evidence_sha256=(
+            "9e854691dc797c43fd719a6c0059cf5e58b594de20f6d2aeac00c234f4124f0d"
+        ),
+        video_sha256=(
+            "ffadc7aad0077c344ca16e251ec12b41b2222b71061f876dfd701202fbe15277"
+        ),
+        request_sha256=(
+            "f16bcfc1f5e06d7b10b1e336a492c954fcea84a512fd8fc993be4286eefac970"
+        ),
+        expected_status="verification-failed",
+        expected_media={
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1440,
+            "height": 1440,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": True,
+            "bytes": 2569300,
+            "sha256": (
+                "ffadc7aad0077c344ca16e251ec12b41b2222b71061f876dfd701202fbe15277"
+            ),
+        },
+        expected_contract_conforms=False,
+        expected_contract_warnings=("audio", "resolution"),
+        activity="prompt-experiment",
+        experiment_id=STAGE1_EXPERIMENT_ID,
+        variant_id="monotonic-positive",
+    ),
+    DisplaySelection(
+        model_id=native.WAN_MODEL_ID,
+        planning_run_id="promopages-9930-case21-erosion-negative-20260727-v1",
+        planning_result_sha256=(
+            "a2934ffa723151b82b869d835934407dbbcea7ac384a270412e3adbe3fc71664"
+        ),
+        planning_model_ids=(native.WAN_MODEL_ID, native.WAN_27_MODEL_ID),
+        batch_id="promopages-9930-case21-prompt-research-stage1-20260727-v1",
+        generation_path=STAGE1_GENERATION_PATH,
+        sample_id="21-maier-04-erosion-negative",
+        provider_run_id=(
+            "promopages-9930-case21-prompt-research-stage1-20260727-v1-"
+            "21-maier-04-erosion-negative-wan-2-2"
+        ),
+        prompt_path=STAGE1_EROSION_WAN22_BASE / "04.prompt.json",
+        run_path=STAGE1_EROSION_WAN22_BASE / "04.run.json",
+        video_path=STAGE1_EROSION_WAN22_BASE / "04.mp4",
+        review_path=STAGE1_EROSION_WAN22_BASE / "04.review.json",
+        review_sha256=(
+            "41e9ae80d9292b2a2fb1b832653344375126e22763ecb567212f5eb4db803b45"
+        ),
+        review_evidence_path=(
+            STAGE1_ROOT / "review/contact-sheets/erosion-negative-wan22.png"
+        ),
+        review_evidence_sha256=(
+            "84e046f4565908cc864533b5eae6d580e845fd3c57e4f607a94e0f0aa446a67e"
+        ),
+        video_sha256=(
+            "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+        ),
+        request_sha256=(
+            "367df96911f1ae3c473f07b50a837e680a51a14303e5f5f200b69bf06ed144e6"
+        ),
+        expected_status="succeeded",
+        expected_media={
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 3.233,
+            "width": 944,
+            "height": 944,
+            "fps": 30.0,
+            "frames": 97,
+            "has_audio": False,
+            "bytes": 241667,
+            "sha256": (
+                "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+            ),
+        },
+        expected_contract_conforms=True,
+        expected_contract_warnings=(),
+        activity="prompt-experiment",
+        experiment_id=STAGE1_EXPERIMENT_ID,
+        variant_id="erosion-negative",
+    ),
+    DisplaySelection(
+        model_id=native.WAN_27_MODEL_ID,
+        planning_run_id="promopages-9930-case21-opacity-only-20260727-v1",
+        planning_result_sha256=(
+            "57caec79fa7390a07101fbe314dc66b11f448291e271adc5eca8d447332187db"
+        ),
+        planning_model_ids=(native.WAN_27_MODEL_ID,),
+        batch_id="promopages-9930-case21-opacity-only-stage2-20260727-v1",
+        generation_path=STAGE2_GENERATION_PATH,
+        sample_id="21-maier-04-opacity-only",
+        provider_run_id=(
+            "promopages-9930-case21-opacity-only-stage2-20260727-v1-"
+            "21-maier-04-opacity-only-wan-2-7"
+        ),
+        prompt_path=STAGE2_WAN27_BASE / "04.prompt.json",
+        run_path=STAGE2_WAN27_BASE / "04.run.json",
+        video_path=STAGE2_WAN27_BASE / "04.mp4",
+        review_path=STAGE2_WAN27_BASE / "04.review.json",
+        review_sha256=(
+            "8e6e252813ccd77ea46af4b36efdb6a668fb362aea7ab3f09f780d2070c7d325"
+        ),
+        review_evidence_path=STAGE2_ROOT / "review/contact-sheet.png",
+        review_evidence_sha256=(
+            "4fb1f05890337d3706e9acdb2a6e18752fe0b408b44913055f7a255b60780a64"
+        ),
+        video_sha256=(
+            "abcaaccf20ee93871db5201c5ab7759285f7dd78b84dd9d2c29999bc7c4f0dd7"
+        ),
+        request_sha256=(
+            "5d3c1ce44ec71281015aa2a6b1911780f7f1e287073c370c9f6f98129bb86929"
+        ),
+        expected_status="verification-failed",
+        expected_media={
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1440,
+            "height": 1440,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": True,
+            "bytes": 2614579,
+            "sha256": (
+                "abcaaccf20ee93871db5201c5ab7759285f7dd78b84dd9d2c29999bc7c4f0dd7"
+            ),
+        },
+        expected_contract_conforms=False,
+        expected_contract_warnings=("audio", "resolution"),
+        activity="prompt-experiment",
+        experiment_id=STAGE2_EXPERIMENT_ID,
+        variant_id="opacity-only",
     ),
 )
 
@@ -515,13 +749,16 @@ def _generation_output(
 ) -> dict[str, Any]:
     manifest = read_json(root / selection.generation_path)
     outputs = manifest.get("outputs") if isinstance(manifest, dict) else None
-    expected_count = (
-        len(case21.MODEL_IDS)
-        if selection.generation_path == case21.GENERATION_MANIFEST_PATH
-        else 5
-    )
+    expected_counts = {
+        case21.GENERATION_MANIFEST_PATH: len(case21.MODEL_IDS),
+        case21.RETRY_GENERATION_MANIFEST_PATH: len(case21.RETRY_MODEL_IDS),
+        STAGE1_GENERATION_PATH: 5,
+        STAGE2_GENERATION_PATH: 1,
+    }
+    expected_count = expected_counts.get(selection.generation_path)
     if (
-        manifest.get("batch_id") != selection.batch_id
+        expected_count is None
+        or manifest.get("batch_id") != selection.batch_id
         or manifest.get("agent_id") != AGENT_ID
         or manifest.get("expected_outputs") != expected_count
         or not isinstance(outputs, list)
@@ -861,7 +1098,10 @@ def _manifest_attempts(
     outputs = manifest.get("outputs") if isinstance(manifest, dict) else None
     if not isinstance(outputs, list):
         raise FinalizeError(f"Attempt manifest has no outputs: {manifest_path}")
-    selected_ids = {selection.provider_run_id for selection in DISPLAY_SELECTIONS}
+    primary_ids = {selection.provider_run_id for selection in DISPLAY_SELECTIONS}
+    selected_ids = primary_ids | {
+        selection.provider_run_id for selection in RESEARCH_SELECTIONS
+    }
     for output in outputs:
         if not isinstance(output, dict):
             raise FinalizeError(f"Attempt output is not an object: {manifest_path}")
@@ -918,6 +1158,7 @@ def _manifest_attempts(
             "video_path": video_value,
             "available_video": available_video,
             "selected_for_display": provider_run_id in selected_ids,
+            "selected_for_primary_display": provider_run_id in primary_ids,
             "selected_for_acceptance": False,
             "error": output.get("error"),
         }
@@ -969,7 +1210,9 @@ def build_attempt_history(root: Path = ROOT) -> list[dict[str, Any]]:
     if (
         len(history) != 11
         or sum(item["activity"] == "prompt-experiment" for item in history) != 6
-        or sum(item["selected_for_display"] for item in history) != 3
+        or sum(item["available_video"] for item in history) != 7
+        or sum(item["selected_for_display"] for item in history) != 7
+        or sum(item["selected_for_primary_display"] for item in history) != 3
         or any(item["selected_for_acceptance"] for item in history)
     ):
         raise FinalizeError("Case-21 research attempt history changed")
@@ -987,10 +1230,19 @@ def build_manifest(
     validate_budget_receipts(root)
     case21.validate_routes()
     attempts = build_attempt_history(root)
+    attempts_by_provider_run_id = {
+        attempt["provider_run_id"]: attempt for attempt in attempts
+    }
     outputs: list[dict[str, Any]] = []
     planning: list[dict[str, Any]] = []
     for selection in DISPLAY_SELECTIONS:
         output, selected_planning = validate_display_selection(selection, source, root)
+        attempt = attempts_by_provider_run_id.get(selection.provider_run_id)
+        if not attempt:
+            raise FinalizeError(
+                f"Selected attempt is missing: {selection.provider_run_id}"
+            )
+        output["model_attempt_number"] = attempt["model_attempt_number"]
         output["attempt_history"] = [
             item for item in attempts if item["model_id"] == selection.model_id
         ]
@@ -1004,6 +1256,32 @@ def build_manifest(
     ):
         raise FinalizeError("Failure-aware output selection changed")
 
+    research_outputs: list[dict[str, Any]] = []
+    research_planning: list[dict[str, Any]] = []
+    for selection in RESEARCH_SELECTIONS:
+        output, selected_planning = validate_display_selection(selection, source, root)
+        attempt = attempts_by_provider_run_id.get(selection.provider_run_id)
+        if not attempt:
+            raise FinalizeError(
+                f"Research attempt is missing: {selection.provider_run_id}"
+            )
+        output["model_attempt_number"] = attempt["model_attempt_number"]
+        research_outputs.append(output)
+        research_planning.append(selected_planning)
+    all_display_outputs = outputs + research_outputs
+    if (
+        len(research_outputs) != 4
+        or len(all_display_outputs) != 7
+        or len({output["video_path"] for output in all_display_outputs}) != 7
+        or any(
+            output["visual_review"]["status"] != "fidelity-failed"
+            for output in all_display_outputs
+        )
+        or any(output["accepted"] for output in all_display_outputs)
+        or any(not output["available"] for output in all_display_outputs)
+    ):
+        raise FinalizeError("Full case-21 research display selection changed")
+
     image_record = {
         "image": {
             **source.image,
@@ -1013,6 +1291,7 @@ def build_manifest(
         "repository_raw_url": PUBLIC_RAW_BASE
         + quote(source.image["source_path"], safe="/"),
         "outputs": outputs,
+        "research_outputs": research_outputs,
     }
     return {
         "schema_version": 1,
@@ -1027,13 +1306,18 @@ def build_manifest(
         "article_count": 1,
         "image_count": 1,
         "expected_outputs": 3,
-        "available_output_count": 3,
+        "canonical_output_count": 3,
+        "research_output_count": 4,
+        "display_output_count": 7,
+        "attempt_count": 11,
+        "attempts_without_video_count": 4,
+        "available_output_count": 7,
         "accepted_output_count": 0,
-        "rejected_output_count": 3,
-        "conforming_output_count": 2,
-        "contract_warning_output_count": 1,
+        "rejected_output_count": 7,
+        "conforming_output_count": 3,
+        "contract_warning_output_count": 4,
         "visual_fidelity_passed_count": 0,
-        "visual_fidelity_failed_count": 3,
+        "visual_fidelity_failed_count": 7,
         "cost": _expected_cost(),
         "generation_policy": {
             "route_resolution": "exact-model-id",
@@ -1061,8 +1345,9 @@ def build_manifest(
         },
         "attempt_history": attempts,
         "planning": {
-            "selection_mode": "per-model-research-display",
+            "selection_mode": "full-research-display",
             "selected_runs": planning,
+            "research_runs": research_planning,
         },
         "articles": [
             {
@@ -1077,6 +1362,7 @@ def build_manifest(
             }
         ],
         "outputs": outputs,
+        "research_outputs": research_outputs,
     }
 
 

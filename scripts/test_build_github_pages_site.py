@@ -93,6 +93,19 @@ class GitHubPagesSiteTest(unittest.TestCase):
                       }, {
                         "video_path": "raw/case-21-veo31.mp4",
                         "delivery": "repository-raw"
+                      }],
+                      "research_outputs": [{
+                        "video_path": "raw/case-21-wan27-retry.mp4",
+                        "delivery": "repository-raw"
+                      }, {
+                        "video_path": "raw/case-21-wan27-monotonic.mp4",
+                        "delivery": "repository-raw"
+                      }, {
+                        "video_path": "raw/case-21-wan22-erosion.mp4",
+                        "delivery": "repository-raw"
+                      }, {
+                        "video_path": "raw/case-21-wan27-opacity.mp4",
+                        "delivery": "repository-raw"
                       }]
                     }]
                   }]
@@ -107,6 +120,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 root / "raw/case-21-wan22.mp4",
                 root / "raw/case-21-wan27.mp4",
                 root / "raw/case-21-veo31.mp4",
+                root / "raw/case-21-wan27-retry.mp4",
+                root / "raw/case-21-wan27-monotonic.mp4",
+                root / "raw/case-21-wan22-erosion.mp4",
+                root / "raw/case-21-wan27-opacity.mp4",
             ]
             source_path.parent.mkdir(parents=True, exist_ok=True)
             source_path.write_bytes(b"source")

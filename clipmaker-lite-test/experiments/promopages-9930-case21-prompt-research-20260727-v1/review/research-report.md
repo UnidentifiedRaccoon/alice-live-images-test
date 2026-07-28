@@ -171,8 +171,10 @@ model-scoped сессию на каждую модель и связывать r
 
 ## Решение по case 21
 
-В демке можно показать по одному доступному ролику каждой модели с явным
-`Visual review · fidelity failed`, чтобы результат исследования не потерялся.
-При этом `available_output_count` должен быть 3, а `accepted_output_count` — 0.
-Для production-публикации этой анимации рекомендуется deterministic masked
+После проверки демо принято решение показывать все семь доступных MP4, а не
+только по одному представителю каждой модели. Четыре запуска без видео остаются
+в `attempt_history` и отражаются в сводке без пустых видеокарточек. Все семь
+результатов имеют явный `Visual review · fidelity failed`, поэтому
+`available_output_count` равен 7, а `accepted_output_count` остаётся 0. Для
+production-публикации этой анимации рекомендуется deterministic masked
 compositor либо новый model route, прошедший автоматический temporal/ROI gate.

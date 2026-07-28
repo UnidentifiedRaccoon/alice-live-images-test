@@ -233,6 +233,20 @@
   margin-bottom: var(--space-2xl);
 }
 
+.researchSummary {
+  max-width: 58rem;
+  margin: calc(var(--space-xl) * -1) 0 var(--space-2xl);
+  border-top: 0.0625rem solid var(--line-strong);
+  padding-top: var(--space-md);
+  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.researchSummary strong {
+  color: var(--ink);
+}
+
 .modelGrid {
   display: grid;
   gap: var(--space-2xl) var(--space-lg);
@@ -400,12 +414,21 @@
   border-top-color: var(--accent-dark);
 }
 
+.modelPanel[data-output-kind="research"] {
+  border-top-color: var(--accent);
+}
+
 .modelPanel[data-output-kind="comparison"] .promptLabel {
   color: var(--accent-dark);
   background: var(--accent-soft);
 }
 
 .modelPanel[data-output-kind="external"] .promptLabel {
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+}
+
+.modelPanel[data-output-kind="research"] .promptLabel {
   color: var(--accent-dark);
   background: var(--accent-soft);
 }
@@ -547,7 +570,7 @@
     gap: var(--space-2xl) var(--space-md);
   }
 
-  .modelGrid.hasExperiment.sixModels {
+  .modelGrid.hasExperiment.multiRow {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

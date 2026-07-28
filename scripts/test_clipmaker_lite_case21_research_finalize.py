@@ -40,6 +40,14 @@ def make_fixture() -> tempfile.TemporaryDirectory[str]:
             "artifacts/clipmaker-lite/v1/"
             "promopages-9930-case21-veo-motion-only-20260727-v1"
         ),
+        Path(
+            "artifacts/clipmaker-lite/v1/"
+            "promopages-9930-case21-monotonic-positive-20260727-v1"
+        ),
+        Path(
+            "artifacts/clipmaker-lite/v1/"
+            "promopages-9930-case21-opacity-only-20260727-v1"
+        ),
         finalizer.CONTROLS["primary"].path,
         finalizer.CONTROLS["retry"].path,
         finalizer.CONTROLS["stage1_generation_core"].path,
@@ -63,11 +71,16 @@ class Case21ResearchFinalizeTest(unittest.TestCase):
         self.assertEqual(document["article_count"], 1)
         self.assertEqual(document["image_count"], 1)
         self.assertEqual(document["expected_outputs"], 3)
-        self.assertEqual(document["available_output_count"], 3)
+        self.assertEqual(document["canonical_output_count"], 3)
+        self.assertEqual(document["research_output_count"], 4)
+        self.assertEqual(document["display_output_count"], 7)
+        self.assertEqual(document["attempt_count"], 11)
+        self.assertEqual(document["attempts_without_video_count"], 4)
+        self.assertEqual(document["available_output_count"], 7)
         self.assertEqual(document["accepted_output_count"], 0)
-        self.assertEqual(document["rejected_output_count"], 3)
+        self.assertEqual(document["rejected_output_count"], 7)
         self.assertEqual(document["visual_fidelity_passed_count"], 0)
-        self.assertEqual(document["visual_fidelity_failed_count"], 3)
+        self.assertEqual(document["visual_fidelity_failed_count"], 7)
         self.assertEqual(document["cost"]["reserved_aggregate_usd"], 2.7)
         self.assertEqual(document["cost"]["operator_budget_cap_usd"], 3.0)
         self.assertFalse(document["cost"]["actual_billing_available"])
@@ -78,6 +91,9 @@ class Case21ResearchFinalizeTest(unittest.TestCase):
         image_record = article["images"][0]
         self.assertEqual(image_record["image"]["delivery"], "repository-raw")
         self.assertEqual(image_record["outputs"], document["outputs"])
+        self.assertEqual(
+            image_record["research_outputs"], document["research_outputs"]
+        )
         self.assertTrue(ROOT.joinpath(image_record["image"]["source_path"]).is_file())
 
         self.assertEqual(
@@ -85,7 +101,10 @@ class Case21ResearchFinalizeTest(unittest.TestCase):
             list(finalizer.case21.MODEL_IDS),
         )
         self.assertEqual(len({output["video_path"] for output in document["outputs"]}), 3)
-        for output in document["outputs"]:
+        self.assertEqual(len(document["research_outputs"]), 4)
+        display_outputs = document["outputs"] + document["research_outputs"]
+        self.assertEqual(len({output["video_path"] for output in display_outputs}), 7)
+        for output in display_outputs:
             video = ROOT / output["video_path"]
             self.assertTrue(video.is_file())
             self.assertEqual(video.stat().st_size, output["media"]["bytes"])
@@ -118,7 +137,11 @@ class Case21ResearchFinalizeTest(unittest.TestCase):
             {attempt["experiment_id"] for attempt in experiments},
             {finalizer.STAGE1_EXPERIMENT_ID, finalizer.STAGE2_EXPERIMENT_ID},
         )
-        self.assertEqual(sum(item["selected_for_display"] for item in history), 3)
+        self.assertEqual(sum(item["available_video"] for item in history), 7)
+        self.assertEqual(sum(item["selected_for_display"] for item in history), 7)
+        self.assertEqual(
+            sum(item["selected_for_primary_display"] for item in history), 3
+        )
         self.assertFalse(any(item["selected_for_acceptance"] for item in history))
         self.assertTrue(
             all("fallback" not in key for attempt in history for key in attempt)
@@ -150,7 +173,7 @@ class Case21ResearchFinalizeTest(unittest.TestCase):
                 root=root,
                 updated_at="2026-07-27T18:00:00Z",
             )
-        self.assertEqual(document["available_output_count"], 3)
+        self.assertEqual(document["available_output_count"], 7)
         self.assertFalse(destination.exists())
 
     def test_finalize_writes_one_sidecar_and_verify_reconstructs_it(self) -> None:
@@ -198,6 +221,14 @@ class Case21ResearchFinalizeTest(unittest.TestCase):
             ),
             "review": (
                 finalizer.DISPLAY_SELECTIONS[1].review_path,
+                lambda path: _tamper_review(path),
+            ),
+            "research-video": (
+                finalizer.RESEARCH_SELECTIONS[2].video_path,
+                lambda path: path.write_bytes(path.read_bytes() + b"tamper"),
+            ),
+            "research-review": (
+                finalizer.RESEARCH_SELECTIONS[3].review_path,
                 lambda path: _tamper_review(path),
             ),
         }
