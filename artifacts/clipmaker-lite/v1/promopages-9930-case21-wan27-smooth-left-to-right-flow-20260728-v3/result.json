@@ -1,0 +1,124 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.2",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 4,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ec39d26c305c42a8d007a3cebcfd2a2ad05cbdb1197c7647fa3f68c6953fd1fd",
+    "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+    "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      }
+    ],
+    "inputs_sha256": "sha256:88fd2749a7fcdf9c7b4b20223ab0a93bbca46f461e557b68b62297c15d342032",
+    "execution_fingerprint": "sha256:005b17d85dce116e388f37cf74cfb6f0ac29c6af78a1a2e12fc951de715a29b9",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+      "version": "codex-cli 0.146.0-alpha.3.1",
+      "requested_model": null,
+      "thread_id": "019fa8e2-6bb6-7230-884e-24c5bb252308"
+    },
+    "authored_payload_sha256": "3546180d964df12498e6193b38dc36af920d52cef729687268bdfbdc79dd0d6c",
+    "draft_file_sha256": "fa86f1e253b6b72abba6ec87ed8fdf65d38609ce18cc19ff501860d008807f3e"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "bytes": 642980
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+      "sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "bytes": 40209,
+      "locator": {
+        "article_id": "21-maier-doctor-zolotoe-vremia",
+        "title": "35+: ваше золотое время, чтобы сохранить молодость",
+        "lead": "Что происходит с яичниками после 35 и как продлить их (и свою) молодость",
+        "image_id": "04",
+        "block_index": 34,
+        "role": "article_image",
+        "caption": "",
+        "file": "04.png",
+        "manifest_file_path": "articles/21-maier-doctor-zolotoe-vremia/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 3,
+          "text": "Что происходит?"
+        },
+        "nearest_text_before": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Он не умирает. Он просто «засыпает». Фолликулы есть, но они не растут. Гормоны не вырабатываются. И вы начинаете чувствовать все эти изменения."
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Как проверить, что происходит с яичниками?"
+        }
+      }
+    },
+    "user_direction": "Plan a canonical first-frame-only, non-loop five-second left-to-right flow. Motion passes smoothly from one ovarian pulse to the contracting/dimming purple aura around a completely fixed progesterone molecule, then one balance sway, then lower icons: needle sweeps, drops fall, irritation lines follow continuous irregular paths. Mandatory battery motion: fill red through yellow to full green and hold green. No region reverses or snaps back. Preserve all Russian text, arrows, bonds, icon geometry and layout. positive_prompt at most 480 characters; negative_prompt must be null."
+  },
+  "analysis": {
+    "image_reading": [
+      "A fixed medical infographic presents a left-to-right causal chain: ovaries and uterus, a progesterone molecule with a purple aura, then balance scales, branching to four symptom icons.",
+      "Visible movable accents are an ovarian pulse, the purple aura, the scale beam and pans, the weight-gauge needle, water drops, irritation scribbles, and the battery fill; Russian labels, arrows, molecular bonds, and icon geometry carry the diagram’s meaning."
+    ],
+    "article_context": "The body illustration explains the article’s causal claim that declining ovarian activity and progesterone can disrupt hormonal balance and manifest as weight changes, swelling, irritability, and fatigue.",
+    "structured_intent": {
+      "editorial_meaning": "The animation reinforces the article’s explanation that reduced ovarian progesterone affects hormonal balance and is associated with several noticeable symptoms.",
+      "primary_action": "A single causal impulse progresses from the ovaries through the hormone-and-balance chain into the four symptom indicators.",
+      "terminal_state": "The causal progression has reached all four lower indicators, their movements have settled, and the battery is fully green.",
+      "semantic_invariant": "The infographic remains a recognizable causal diagram linking ovaries, reduced progesterone, hormonal imbalance, and the labeled symptom categories."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Over five seconds, keep the camera and infographic layout fixed while one continuous visual impulse travels left to right. Begin immediately with one restrained ovarian pulse; carry it into a gradual contraction and dimming of the purple aura without moving or deforming the progesterone molecule. Continue into one moderate sway of the balance, then distribute the same forward progression across the lower row: the scale needle sweeps, droplets descend, and irritation lines travel along uninterrupted irregular paths. The battery steadily fills red, then yellow, reaches full green near the end, and holds green. Every region moves only forward and settles without reversal or snapping.",
+      "positive_prompt": "Fixed camera. A single smooth left-to-right flow begins with one gentle ovarian pulse, passes into the purple aura contracting and dimming around the completely fixed progesterone molecule, then gives the balance one sway. Below, the gauge needle sweeps, drops fall, and irritation lines trace continuous irregular paths as the battery fills red through yellow to full green and holds. No reversals or snap-backs; preserve all Russian text, arrows, bonds, geometry and layout.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c213729718cede0bc7c91622dec980bc0e2c556f9f9964a567aad1c8357805b5",
+      "negative_prompt": null
+    }
+  ]
+}

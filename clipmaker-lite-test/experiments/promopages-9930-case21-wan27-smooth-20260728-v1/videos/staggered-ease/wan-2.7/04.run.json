@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-smooth-staggered-ease",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/staggered-ease/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. A smooth causal relay with long overlapping eases: ovaries pulse once while the separate purple aura around the fixed progesterone molecule slowly contracts and dims. Then the balance sways shallowly once as the scale needle sweeps steadily. Water drops fall without swelling, irritation lines drift chaotically on continuous curves, and the battery fills red through yellow to full green, holding green. Keep all text, arrows, bonds, icons and layout fixed.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "944ab89281bd23f840cde17fe869dd63d510d335a064ee21ccd62c5b02459f8f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CYLlxEDmlPgqeoAHHCBg",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-28T13:27:37Z",
+  "completed_at": "2026-07-28T13:28:53Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3264959,
+    "sha256": "cde9e047a24fc74bd50f12b76e8576cae4ddf45328d0b352a3789a4e4b8fdf71"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-20260728-v4",
+  "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+  "lite_result_sha256": "ac773559abba5386897ef830fbbf1ec186d3c58e3149d2b4f605c026bca7a5aa",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false
+  }
+}

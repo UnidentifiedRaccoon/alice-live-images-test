@@ -398,6 +398,88 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                     1,
                 )
 
+    def test_case_21_smooth_retry_shape_is_explicit_and_keeps_four_demo_outputs(self):
+        if self.case_21_manifest is None or "smooth_experiment" not in self.case_21_manifest:
+            self.skipTest("Final smooth experiment has not been published yet")
+
+        smooth = self.case_21_manifest["smooth_experiment"]
+        attempts = smooth["attempt_history"]
+        outputs = smooth["outputs"]
+        self.assertEqual(smooth["attempt_count"], 5)
+        self.assertEqual(smooth["available_attempt_count"], 5)
+        self.assertEqual(smooth["available_output_count"], 4)
+        self.assertEqual(smooth["display_output_count"], 4)
+        self.assertEqual(smooth["excluded_from_demo_count"], 1)
+        self.assertEqual(len(attempts), 5)
+        self.assertEqual(len(outputs), 4)
+
+        base_attempts = [
+            attempt
+            for attempt in attempts
+            if attempt["activity"] == "smooth-motion-experiment"
+        ]
+        retry_attempts = [
+            attempt
+            for attempt in attempts
+            if attempt["activity"] == "smooth-motion-explicit-retry"
+        ]
+        self.assertEqual(len(base_attempts), 4)
+        self.assertEqual(len(retry_attempts), 1)
+        self.assertTrue(
+            all(
+                attempt["experiment_id"] == smooth["experiment_id"]
+                for attempt in base_attempts
+            )
+        )
+        retry_attempt = retry_attempts[0]
+        self.assertNotEqual(retry_attempt["experiment_id"], smooth["experiment_id"])
+        self.assertEqual(
+            retry_attempt["series_experiment_id"], smooth["experiment_id"]
+        )
+        self.assertEqual(
+            retry_attempt["retry_of"], retry_attempt["supersedes_for_demo"]
+        )
+        replaced = next(
+            attempt
+            for attempt in base_attempts
+            if attempt["provider_run_id"] == retry_attempt["retry_of"]
+        )
+        self.assertEqual(replaced["variant_id"], "staggered-ease")
+        self.assertFalse(replaced["selected_for_display"])
+        self.assertTrue(retry_attempt["selected_for_display"])
+
+        selected_run_ids = {
+            attempt["provider_run_id"]
+            for attempt in attempts
+            if attempt["selected_for_display"]
+        }
+        self.assertEqual(
+            {output["provider_run_id"] for output in outputs}, selected_run_ids
+        )
+        self.assertEqual(
+            {output["selection"]["activity"] for output in outputs},
+            {"smooth-motion-experiment"},
+        )
+        featured = smooth["featured_review"]
+        self.assertEqual(featured["status"], "visual-winner")
+        self.assertEqual(featured["label"], "Визуальный победитель")
+        self.assertEqual(featured["variant_id"], "staggered-ease-retry1")
+        self.assertEqual(
+            featured["provider_run_id"], retry_attempt["provider_run_id"]
+        )
+        self.assertEqual(featured["evidence"]["regions_with_detected_motion"], 7)
+        self.assertEqual(featured["evidence"]["requested_region_count"], 7)
+        self.assertEqual(featured["evidence"]["abrupt_transition_count"], 0)
+        self.assertEqual(featured["evidence"]["motion_energy_spike_count"], 0)
+        self.assertEqual(featured["evidence"]["proxy_rank"], 2)
+        self.assertEqual(featured["evidence"]["proxy_rank_scale"], 5)
+        proxy_ranks = {
+            output["smooth_motion"]["proxy_review"]["proxy_rank"]
+            for output in outputs
+        }
+        self.assertIn(5, proxy_ranks)
+        self.assertTrue(all(1 <= rank <= len(attempts) for rank in proxy_ranks))
+
     def test_showcase_uses_manifest_and_only_renders_active_videos(self):
         app = (ROOT / "clipmaker-lite" / "app.js").read_text(encoding="utf-8")
         html = (ROOT / "clipmaker-lite" / "index.html").read_text(encoding="utf-8")
@@ -419,9 +501,11 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT = 4", app)
         self.assertIn("EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT = 7", app)
         self.assertIn("EXPECTED_CASE_21_ATTEMPT_COUNT = 11", app)
+        self.assertIn("EXPECTED_CASE_21_SMOOTH_OUTPUT_COUNT = 4", app)
         self.assertIn("EXPECTED_TOTAL_ARTICLE_COUNT = 21", app)
         self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 41", app)
         self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 123", app)
+        self.assertIn("EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH = 139", app)
         self.assertIn("EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2", app)
         self.assertIn("EXPECTED_EXTERNAL_OUTPUT_COUNT = 1", app)
         self.assertIn('const EXTERNAL_MODEL_ID = "segmind/wan-2.2-i2v-flash";', app)
@@ -438,8 +522,24 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("same-source-first-and-last-frame", app)
         self.assertIn("provider_native_loop_parameter", app)
         self.assertIn("API loop-closure", app)
+        self.assertIn("контрольная исследовательская серия", app)
         self.assertIn("seam review", app)
         self.assertIn("attempt_history", app)
+        self.assertIn("validateSmoothExperiment", app)
+        self.assertIn("smooth_experiment", app)
+        self.assertIn("single-source-first-frame", app)
+        self.assertIn("non-loop-smooth-motion-experiment", app)
+        self.assertIn("proxy_review", app)
+        self.assertIn("motion_coverage", app)
+        self.assertIn("selectedAttempts", app)
+        self.assertIn("SMOOTH_RETRY_ACTIVITY", app)
+        self.assertIn("attempt.series_experiment_id === smoothExperiment.experiment_id", app)
+        self.assertIn("retryAttempts.length === 1", app)
+        self.assertIn("proxyReview.proxy_rank <= attempts.length", app)
+        self.assertIn("Motion proxy", app)
+        self.assertIn("data-play-smooth", app)
+        self.assertIn('data-video-group="smooth"', app)
+        self.assertIn("останавливается в финальном кадре", app)
         self.assertIn("Показать оригинал", app)
         self.assertIn("data-original-src", app)
         self.assertNotIn('poster="', app)
@@ -463,15 +563,15 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn("123 + 7", html)
+        self.assertIn('id="videoCountSummary">139', html)
         self.assertIn("все семь полученных MP4 из одиннадцати", html)
         self.assertIn("Историческая выборка из 20 статей и 40 изображений сохранена", html)
         self.assertRegex(
             html,
             r"Wan 2\.2 Flash\s+через Eliza → Segmind за \$0\.18",
         )
-        self.assertIn('src="app.js?v=10"', html)
-        self.assertIn('href="styles.css?v=7"', html)
+        self.assertIn('src="app.js?v=12"', html)
+        self.assertIn('href="styles.css?v=9"', html)
         self.assertIn('id="videoCountSummary"', html)
         self.assertIn("endpoint-conditioning, а не native", html)
         self.assertIn('id="imageSelect"', html)
@@ -489,10 +589,55 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn(".loopExperimentSection", styles)
         self.assertIn(".loopAttemptHistory", styles)
         self.assertIn(".loopGrid", styles)
+        self.assertIn(".smoothExperimentSection", styles)
+        self.assertIn(".smoothGrid", styles)
+        self.assertIn(".smoothProxyStatus", styles)
+        self.assertIn(".smoothWinnerCallout", styles)
+        self.assertIn(".smoothWinnerPractices", styles)
+        self.assertIn(".winnerBadge", styles)
+        self.assertIn('[data-featured-winner="true"]', styles)
+        self.assertIn('.modelPanel[data-output-kind="smooth"]', styles)
         self.assertIn("@media (prefers-reduced-motion: reduce)", styles)
         self.assertIn('.modelPanel[data-output-kind="external"]', styles)
         self.assertIn(".modelGrid.twoModels", styles)
         self.assertIn(".sourcePanel[hidden]", styles)
+
+    def test_smooth_section_follows_loop_and_has_no_loop_playback_contract(self):
+        app = (ROOT / "clipmaker-lite" / "app.js").read_text(encoding="utf-8")
+        render_template = app[
+            app.index("const renderSelection") : app.index("const renderImage")
+        ]
+        self.assertLess(
+            render_template.index("${loopSection}"),
+            render_template.index("${smoothSection}"),
+        )
+
+        smooth_renderer = app[
+            app.index("const renderSmoothSection") : app.index("let articles = []")
+        ]
+        self.assertIn('data-video-group-control="smooth"', smooth_renderer)
+        self.assertIn('data-video-group="smooth"', smooth_renderer)
+        self.assertIn("loopPlayback: false", smooth_renderer)
+        self.assertIn("smoothExperiment: true", smooth_renderer)
+        self.assertNotIn("loopPlayback: true", smooth_renderer)
+        self.assertNotIn("data-loop-output", smooth_renderer)
+
+        model_renderer = app[
+            app.index("const renderModel") : app.index("const renderLoopAttemptHistory")
+        ]
+        self.assertIn('smoothExperiment\n        ? "muted"', model_renderer)
+        self.assertIn('data-loop-output`\n      : smoothExperiment', model_renderer)
+
+        count_formula = app[
+            app.index("const uniqueVideoCount") : app.index(
+                "elements.videoCountSummary.textContent"
+            )
+        ]
+        self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT", count_formula)
+        self.assertIn("EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT", count_formula)
+        self.assertIn("loopOutputCount", count_formula)
+        self.assertIn("smoothOutputCount", count_formula)
+        self.assertNotIn("EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT", count_formula)
 
 
 if __name__ == "__main__":

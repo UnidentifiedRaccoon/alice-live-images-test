@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-9930",
+  "batch_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1",
+  "provider_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-retry1-provider-20260728-v1-21-maier-04-smooth-staggered-ease-retry1-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation reinforces the article’s explanation that ovarian and progesterone changes are connected to a cluster of noticeable bodily symptoms.",
+    "primary_action": "The linked hormonal and symptom indicators progress through one coordinated causal response.",
+    "terminal_state": "The ovarian pulse has completed, the progesterone aura is smaller and dimmer, the balance is settled, symptom motions have completed, and the battery is fully green.",
+    "semantic_invariant": "The image remains a readable causal medical infographic connecting ovaries and reduced progesterone with weight, swelling, irritability, and fatigue."
+  },
+  "prompt": {
+    "positive": "Fixed camera, canonical first-frame-only non-loop motion. Over five seconds, use long overlapping eases: ovaries pulse once; the molecule stays fixed as its purple aura contracts and dims; the exact two-pan balance keeps its central stand locked while the pans make one shallow sway. The scale needle sweeps within its dial, drops fall, irritation lines trace continuous irregular curves, and the battery fills red through yellow to full green, holding green at the end.",
+    "negative": "No clock or dial substitution for the antique two-pan balance; no object replacement, jerks, morphing, or layout drift. Do not alter text, arrows, chemical bonds, icons, or the locked central stand."
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-wan27-smooth-staggered-ease-retry1-20260728-v1/result.json",
+    "sha256": "a5c5da332d3bd46634928b517083fb0bf35fe8b4261ef388b5ca267d501a0ef6",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.2",
+      "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+      "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+      "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+      "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce",
+      "models": [
+        "alibaba/wan-2.7"
+      ]
+    }
+  },
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion-explicit-retry",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false,
+    "explicit_retry": true,
+    "retry_of": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+    "supersedes_for_demo": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7"
+  },
+  "explicit_retry": {
+    "retry_of": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+    "supersedes_for_demo": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7"
+  }
+}

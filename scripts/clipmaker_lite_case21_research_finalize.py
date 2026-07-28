@@ -6,6 +6,9 @@ provider, discover a route, retry an entry, or fetch a URL.  The original seven
 research MP4s remain unchanged and unaccepted.  When the separately budgeted
 Wan 2.7 loop experiment is complete, its available MP4s and full attempt
 history are exposed in a distinct top-level section with exact receipt binding.
+The separately budgeted canonical first-frame smooth series is exposed as an
+optional sibling only after all five attempts have exact review receipts; four
+human-selected MP4s are published while the excluded attempt stays in history.
 """
 
 from __future__ import annotations
@@ -28,6 +31,8 @@ if str(ROOT) not in sys.path:
 from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
 from scripts import clipmaker_lite_case21_loop_experiment as loop_experiment  # noqa: E402
 from scripts import clipmaker_lite_case21_pipeline as case21  # noqa: E402
+from scripts import clipmaker_lite_case21_smooth_experiment as smooth_experiment  # noqa: E402
+from scripts import clipmaker_lite_case21_smooth_retry as smooth_retry  # noqa: E402
 from scripts import clipmaker_lite_runner as runner  # noqa: E402
 from scripts import video_generation_pipeline as transport  # noqa: E402
 
@@ -45,6 +50,7 @@ STAGE2_GENERATION_PATH = STAGE2_ROOT / "generation-manifest.json"
 STAGE1_INVENTORY_PATH = STAGE1_ROOT / "inventory.json"
 STAGE2_INVENTORY_PATH = STAGE2_ROOT / "inventory.json"
 LOOP_REVIEW_PATH = loop_experiment.EXPERIMENT_ROOT / "loop-review.json"
+SMOOTH_REVIEW_PATH = smooth_experiment.EXPERIMENT_ROOT / "smooth-review.json"
 
 LOOP_INCOMPLETE_STATUSES = frozenset(
     {
@@ -70,6 +76,87 @@ LOOP_REGION_IDS = (
     "water_drops",
     "irritability_lines",
     "battery",
+)
+SMOOTH_FRAME_TYPES = ("first_frame",)
+SMOOTH_REVIEW_SCHEMA_VERSION = "clipmaker-lite.case21-smooth-review.v1"
+SMOOTH_REGION_IDS = LOOP_REGION_IDS
+SMOOTH_DISPLAY_OUTPUT_COUNT = 4
+SMOOTH_ATTEMPT_COUNT = 5
+SMOOTH_RESERVED_USD = 2.5
+SMOOTH_REPLACED_VARIANT_ID = "staggered-ease"
+SMOOTH_RETRY_VARIANT_ID = "staggered-ease-retry1"
+SMOOTH_ACCEPTED_REASON = "smooth-enough-and-fidelity-preserved"
+SMOOTH_EXCLUDED_REASON = "object-substitution"
+SMOOTH_REVIEWER = "codex-visual-inspection"
+SMOOTH_INITIAL_EXCLUSION_NOTE = (
+    "Antique two-pan balance morphs into a round clock/dial in later frames."
+)
+SMOOTH_RETRY_ACCEPTANCE_NOTE = (
+    "Antique two-pan balance remains recognizable; motion is accepted for the "
+    "four-video smooth demo set."
+)
+SMOOTH_DEFAULT_ACCEPTANCE_NOTE = (
+    "Accepted for the four-video smooth demo set after contact-sheet review."
+)
+SMOOTH_FEATURED_REVIEW_SCHEMA_VERSION = (
+    "clipmaker-lite.case21-smooth-featured-review.v1"
+)
+SMOOTH_FEATURED_STATUS = "visual-winner"
+SMOOTH_FEATURED_LABEL = "Визуальный победитель"
+SMOOTH_FEATURED_REVIEWER = "operator-visual-selection"
+SMOOTH_FEATURED_SUMMARY = (
+    "Визуально самый цельный результат серии: движения остаются плавными и "
+    "локальными, а старинные двухчашечные весы, формула, подписи и компоновка "
+    "сохраняются. Это визуальный выбор, а не первое место proxy-рейтинга."
+)
+SMOOTH_FEATURED_PROMPT_DISTINCTION = (
+    "По сравнению с исходным staggered-ease, retry разделяет два похожих объекта "
+    "и фиксирует их части: exact two-pan balance с locked central stand, где "
+    "двигаются только pans; отдельно — needle within its dial у современных "
+    "весов. Targeted negative адресно запрещает дефект первой попытки — clock/dial "
+    "substitution старинных весов."
+)
+SMOOTH_FEATURED_PRACTICES = (
+    {
+        "id": "long-overlapping-eases",
+        "title": "Длинные перекрывающиеся переходы",
+        "description": (
+            "Все действия распределены на пять секунд и мягко перекрываются, "
+            "поэтому сцена воспринимается как единая хореография."
+        ),
+    },
+    {
+        "id": "bounded-one-shot-motion",
+        "title": "Ограниченная амплитуда",
+        "description": (
+            "Для объектов заданы один пульс, одно неглубокое покачивание и "
+            "непрерывные траектории вместо повторяющихся резких жестов."
+        ),
+    },
+    {
+        "id": "structural-locks",
+        "title": "Part-level invariants",
+        "description": (
+            "Exact two-pan balance разбит на locked central stand и подвижные "
+            "pans; стрелка современных весов отдельно движется within its dial."
+        ),
+    },
+    {
+        "id": "failure-specific-negative",
+        "title": "Запрет конкретного дефекта",
+        "description": (
+            "Negative prompt прямо запрещает превращать старинные весы в часы "
+            "или циферблат, а также исключает morphing, рывки и layout drift."
+        ),
+    },
+    {
+        "id": "held-end-states",
+        "title": "Удержание финальных состояний",
+        "description": (
+            "Батарея последовательно доходит до зелёного и остаётся зелёной, "
+            "а аура сжимается и тускнеет без обратного движения и loop."
+        ),
+    },
 )
 
 PUBLIC_RAW_BASE = (
@@ -1822,6 +1909,1292 @@ def build_loop_experiment(root: Path = ROOT) -> dict[str, Any] | None:
     }
 
 
+def _validated_smooth_source(
+    root: Path,
+) -> tuple[
+    dict[str, Any],
+    dict[str, Any],
+    dict[str, Any],
+    dict[str, Any],
+] | None:
+    """Return exact smooth receipts, or ``None`` when the series is absent."""
+
+    manifest_path = root / smooth_experiment.EXPERIMENT_MANIFEST_PATH
+    if not manifest_path.exists():
+        return None
+    if not manifest_path.is_file() or manifest_path.is_symlink():
+        raise FinalizeError(f"Smooth experiment manifest is unsafe: {manifest_path}")
+    experiment = read_json(manifest_path)
+    if not isinstance(experiment, dict):
+        raise FinalizeError("Smooth experiment manifest is not an object")
+    updated_at = experiment.get("updated_at")
+    cost = experiment.get("cost")
+    budget = cost.get("operator_budget_cap_usd") if isinstance(cost, dict) else None
+    if (
+        experiment.get("manifest_role")
+        != "case-21-wan27-smooth-experiment"
+        or experiment.get("ticket") != TICKET
+        or experiment.get("experiment_id") != smooth_experiment.EXPERIMENT_ID
+        or experiment.get("provider_batch_id")
+        != smooth_experiment.PROVIDER_BATCH_ID
+        or experiment.get("agent_id") != AGENT_ID
+        or not isinstance(updated_at, str)
+        or not updated_at.strip()
+        or not isinstance(budget, (int, float))
+        or isinstance(budget, bool)
+        or float(budget) != float(smooth_experiment.HARD_BUDGET_CAP_USD)
+        or not isinstance(cost, dict)
+        or cost.get("initial_reserved_usd") != float(smooth_retry.BASE_RESERVED_USD)
+        or cost.get("reservation_per_wan27_entry_usd")
+        != float(smooth_experiment.RESERVATION_PER_ENTRY_USD)
+        or cost.get("admitted_provider_entries")
+        != smooth_experiment.INITIAL_ENTRY_COUNT
+        or cost.get("contingency_entries_materialized") != 0
+        or cost.get("automatic_paid_retries") is not False
+        or cost.get("actual_billing_available") is not False
+    ):
+        raise FinalizeError("Smooth experiment identity or separate budget changed")
+    expected = smooth_experiment._experiment_document(  # noqa: SLF001
+        str(budget),
+        root,
+        updated_at=updated_at,
+    )
+    if experiment != expected:
+        raise FinalizeError(
+            "Smooth experiment manifest differs from exact inventory and run receipts"
+        )
+    inventory_path = root / smooth_experiment.INVENTORY_PATH
+    if not inventory_path.is_file() or inventory_path.is_symlink():
+        raise FinalizeError(f"Smooth inventory path is unsafe: {inventory_path}")
+    inventory = read_json(inventory_path)
+    expected_inventory = smooth_experiment.inventory_document(str(budget), root)
+    if inventory != expected_inventory:
+        raise FinalizeError(
+            "Smooth inventory differs from exact Lite plans and first-frame requests"
+        )
+    retry_manifest_path = root / smooth_retry.EXPERIMENT_MANIFEST_PATH
+    if not retry_manifest_path.is_file() or retry_manifest_path.is_symlink():
+        raise FinalizeError(
+            f"Completed smooth base series requires explicit retry receipt "
+            f"{smooth_retry.EXPERIMENT_MANIFEST_PATH}"
+        )
+    retry = read_json(retry_manifest_path)
+    if not isinstance(retry, dict):
+        raise FinalizeError("Smooth explicit retry manifest is not an object")
+    retry_updated_at = retry.get("updated_at")
+    retry_cost = retry.get("cost")
+    retry_budget = (
+        retry_cost.get("operator_budget_cap_usd")
+        if isinstance(retry_cost, dict)
+        else None
+    )
+    if (
+        retry.get("manifest_role")
+        != "case-21-wan27-smooth-explicit-retry"
+        or retry.get("ticket") != TICKET
+        or retry.get("retry_id") != smooth_retry.RETRY_ID
+        or retry.get("provider_batch_id") != smooth_retry.PROVIDER_BATCH_ID
+        or retry.get("agent_id") != AGENT_ID
+        or retry.get("retry_of") != smooth_retry.RETRY_OF_PROVIDER_RUN_ID
+        or retry.get("supersedes_for_demo")
+        != smooth_retry.SUPERSEDES_FOR_DEMO_PROVIDER_RUN_ID
+        or retry.get("initial_four_receipts_immutable") is not True
+        or not isinstance(retry_updated_at, str)
+        or not retry_updated_at.strip()
+        or not isinstance(retry_budget, (int, float))
+        or isinstance(retry_budget, bool)
+        or float(retry_budget) != float(smooth_retry.HARD_BUDGET_CAP_USD)
+        or not isinstance(retry_cost, dict)
+        or retry_cost.get("base_reserved_usd")
+        != float(smooth_retry.BASE_RESERVED_USD)
+        or retry_cost.get("explicit_retry_reserved_usd")
+        != float(smooth_retry.RETRY_RESERVED_USD)
+        or retry_cost.get("aggregate_reserved_usd") != SMOOTH_RESERVED_USD
+        or retry_cost.get("aggregate_paid_entry_count") != SMOOTH_ATTEMPT_COUNT
+        or retry_cost.get("automatic_paid_retries") is not False
+        or retry_cost.get("actual_billing_available") is not False
+    ):
+        raise FinalizeError("Smooth explicit retry identity or aggregate budget changed")
+    expected_retry = smooth_retry._experiment_document(  # noqa: SLF001
+        str(retry_budget),
+        root,
+        updated_at=retry_updated_at,
+    )
+    if retry != expected_retry:
+        raise FinalizeError(
+            "Smooth explicit retry differs from exact base and retry receipts"
+        )
+    retry_inventory_path = root / smooth_retry.INVENTORY_PATH
+    if not retry_inventory_path.is_file() or retry_inventory_path.is_symlink():
+        raise FinalizeError(f"Smooth retry inventory is unsafe: {retry_inventory_path}")
+    retry_inventory = read_json(retry_inventory_path)
+    expected_retry_inventory = smooth_retry.inventory_document(
+        str(retry_budget), root
+    )
+    if retry_inventory != expected_retry_inventory:
+        raise FinalizeError(
+            "Smooth retry inventory differs from exact Lite plan and first-frame request"
+        )
+    return experiment, inventory, retry, retry_inventory
+
+
+def _smooth_is_complete(
+    experiment: dict[str, Any],
+    retry: dict[str, Any],
+) -> bool:
+    outputs = experiment.get("outputs")
+    retry_outputs = retry.get("outputs")
+    if (
+        not isinstance(outputs, list)
+        or len(outputs) != smooth_experiment.INITIAL_ENTRY_COUNT
+        or not isinstance(retry_outputs, list)
+        or len(retry_outputs) != 1
+    ):
+        raise FinalizeError("Smooth experiment output matrix changed")
+    statuses = [
+        str(output.get("status", "missing"))
+        for output in [*outputs, *retry_outputs]
+    ]
+    return not any(status in LOOP_INCOMPLETE_STATUSES for status in statuses)
+
+
+def _is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def _validate_temporal_smoothness(value: Any, label: str) -> None:
+    if not isinstance(value, dict):
+        raise FinalizeError(f"Smooth review temporal block is missing for {label}")
+    energy = value.get("motion_energy_mae_rgb")
+    acceleration = value.get("acceleration_proxy_mae_rgb")
+    if (
+        not isinstance(value.get("transition_count"), int)
+        or value["transition_count"] < 1
+        or not isinstance(energy, dict)
+        or not isinstance(acceleration, dict)
+    ):
+        raise FinalizeError(f"Smooth review temporal identity changed for {label}")
+    energy_numbers = (
+        "mean",
+        "median",
+        "p90",
+        "p95",
+        "max",
+        "mad",
+        "spike_threshold",
+        "spike_ratio",
+    )
+    acceleration_numbers = (
+        "mean",
+        "median",
+        "p90",
+        "p95",
+        "max",
+        "mad",
+        "abrupt_threshold",
+        "abrupt_transition_ratio",
+        "normalized_p95_by_motion_p95",
+    )
+    if (
+        any(not _is_number(energy.get(key)) for key in energy_numbers)
+        or not isinstance(energy.get("spike_count"), int)
+        or not isinstance(energy.get("spike_frame_indices"), list)
+        or any(not isinstance(item, int) for item in energy["spike_frame_indices"])
+        or any(not _is_number(acceleration.get(key)) for key in acceleration_numbers)
+        or not isinstance(acceleration.get("sample_count"), int)
+        or not isinstance(acceleration.get("abrupt_transition_count"), int)
+        or not isinstance(acceleration.get("abrupt_frame_indices"), list)
+        or any(
+            not isinstance(item, int)
+            for item in acceleration["abrupt_frame_indices"]
+        )
+        or not 0 <= float(energy["spike_ratio"]) <= 1
+        or not 0 <= float(acceleration["abrupt_transition_ratio"]) <= 1
+    ):
+        raise FinalizeError(f"Smooth review temporal metrics changed for {label}")
+
+
+def _validated_smooth_review(
+    root: Path,
+    available: list[dict[str, Any]],
+) -> tuple[dict[str, dict[str, Any]], str]:
+    review_path = root / SMOOTH_REVIEW_PATH
+    if len(available) != SMOOTH_ATTEMPT_COUNT:
+        raise FinalizeError("Smooth publication requires exactly five available MP4s")
+    if not review_path.is_file() or review_path.is_symlink():
+        raise FinalizeError(f"Completed smooth MP4s require {SMOOTH_REVIEW_PATH}")
+    review_sha256 = sha256_file(review_path)
+    report = read_json(review_path)
+    if not isinstance(report, dict):
+        raise FinalizeError("Smooth review report is not an object")
+    case = report.get("case")
+    analyzer = report.get("analyzer")
+    method = report.get("method")
+    requested_regions = (
+        method.get("requested_regions") if isinstance(method, dict) else None
+    )
+    videos = report.get("videos")
+    ranking = report.get("ranking")
+    ranking_entries = (
+        ranking.get("entries") if isinstance(ranking, dict) else None
+    )
+    if (
+        report.get("schema_version") != SMOOTH_REVIEW_SCHEMA_VERSION
+        or case
+        != {
+            "article_number": "21",
+            "article_slug": case21.ARTICLE_SLUG,
+            "image_id": case21.IMAGE_ID,
+            "model_id": smooth_experiment.MODEL_ID,
+            "experiment_id": smooth_experiment.EXPERIMENT_ID,
+        }
+        or not isinstance(analyzer, dict)
+        or analyzer.get("script")
+        != "scripts/analyze_clipmaker_lite_case21_smooth.py"
+        or analyzer.get("analysis_version") != 1
+        or not isinstance(method, dict)
+        or any(
+            key not in method
+            for key in (
+                "temporal_sampling",
+                "coverage_sampling",
+                "jerkiness_proxies",
+                "collateral_thresholds",
+            )
+        )
+        or not isinstance(requested_regions, list)
+        or tuple(
+            item.get("region_id")
+            for item in requested_regions
+            if isinstance(item, dict)
+        )
+        != SMOOTH_REGION_IDS
+        or report.get("video_count") != SMOOTH_ATTEMPT_COUNT
+        or not isinstance(videos, list)
+        or len(videos) != SMOOTH_ATTEMPT_COUNT
+        or not isinstance(ranking, dict)
+        or ranking.get("method")
+        != "coverage-desc-then-abrupt-acceleration-spikes-collateral-asc"
+        or not isinstance(ranking_entries, list)
+        or len(ranking_entries) != SMOOTH_ATTEMPT_COUNT
+        or not isinstance(report.get("limitations"), list)
+        or not report["limitations"]
+        or "seam_pass_count" in report
+        or "fidelity_pass_count" in report
+    ):
+        raise FinalizeError("Smooth review report identity or proxy contract changed")
+
+    available_by_variant = {item["variant_id"]: item for item in available}
+    if len(available_by_variant) != len(available):
+        raise FinalizeError("Available smooth variants are duplicated")
+    reviewed: dict[str, dict[str, Any]] = {}
+    for video in videos:
+        if not isinstance(video, dict):
+            raise FinalizeError("Smooth review video entry is not an object")
+        variant_id = video.get("video_id")
+        expected = available_by_variant.get(str(variant_id))
+        media = video.get("media")
+        frame_analysis = video.get("frame_analysis")
+        motion_coverage = video.get("motion_coverage")
+        regions = video.get("regions")
+        collateral = video.get("collateral_activity")
+        proxy_rank = video.get("proxy_rank")
+        if (
+            expected is None
+            or variant_id in reviewed
+            or video.get("path") != expected["video_path"]
+            or video.get("sha256") != expected["video_sha256"]
+            or video.get("analysis_status") != "measured"
+            or not isinstance(media, dict)
+            or not isinstance(frame_analysis, dict)
+            or not isinstance(motion_coverage, dict)
+            or not isinstance(regions, list)
+            or tuple(
+                item.get("region_id") for item in regions if isinstance(item, dict)
+            )
+            != SMOOTH_REGION_IDS
+            or any(
+                not isinstance(item.get("detected_motion"), bool)
+                or "temporal_smoothness" not in item
+                for item in regions
+                if isinstance(item, dict)
+            )
+            or not isinstance(collateral, dict)
+            or not isinstance(proxy_rank, int)
+            or isinstance(proxy_rank, bool)
+            or not 1 <= proxy_rank <= SMOOTH_ATTEMPT_COUNT
+            or "seam" in video
+            or "seam_status" in video
+            or "fidelity_status" in video
+        ):
+            raise FinalizeError(f"Smooth review binding changed for {variant_id!r}")
+        detected_regions = [
+            item["region_id"] for item in regions if item["detected_motion"]
+        ]
+        missing_regions = [
+            item["region_id"] for item in regions if not item["detected_motion"]
+        ]
+        if (
+            motion_coverage.get("requested_region_count") != len(SMOOTH_REGION_IDS)
+            or motion_coverage.get("regions_with_detected_motion")
+            != len(detected_regions)
+            or motion_coverage.get("missing_motion_regions") != missing_regions
+            or not _is_number(motion_coverage.get("coverage_ratio"))
+            or abs(
+                float(motion_coverage["coverage_ratio"])
+                - len(detected_regions) / len(SMOOTH_REGION_IDS)
+            )
+            > 1e-6
+            or not isinstance(frame_analysis.get("decoded_frame_count"), int)
+            or not _is_number(frame_analysis.get("normalized_width"))
+            or not _is_number(frame_analysis.get("normalized_height"))
+            or not isinstance(frame_analysis.get("coverage_frame_indices"), list)
+            or not isinstance(frame_analysis.get("coverage_timestamps_seconds"), list)
+            or len(frame_analysis["coverage_frame_indices"])
+            != len(frame_analysis["coverage_timestamps_seconds"])
+        ):
+            raise FinalizeError(
+                f"Smooth review coverage counters changed for {variant_id}"
+            )
+        for region in regions:
+            _validate_temporal_smoothness(
+                region["temporal_smoothness"],
+                f"{variant_id}/{region['region_id']}",
+            )
+        _validate_temporal_smoothness(
+            video.get("requested_union_smoothness"),
+            f"{variant_id}/requested-union",
+        )
+        _validate_temporal_smoothness(
+            collateral.get("temporal_smoothness"),
+            f"{variant_id}/collateral",
+        )
+        if (
+            not isinstance(collateral.get("outside_requested_region_pixel_count"), int)
+            or not _is_number(collateral.get("max_mae_rgb_from_first"))
+            or not _is_number(collateral.get("max_changed_pixel_ratio_from_first"))
+            or not isinstance(video.get("square_output"), bool)
+        ):
+            raise FinalizeError(
+                f"Smooth review collateral metrics changed for {variant_id}"
+            )
+        run_media = expected["media"]
+        try:
+            frame_rate = float(Fraction(str(media.get("frame_rate"))))
+        except (ValueError, ZeroDivisionError) as exc:
+            raise FinalizeError(
+                f"Smooth review frame rate is invalid for {variant_id}"
+            ) from exc
+        media_matches = (
+            media.get("width") == run_media.get("width")
+            and media.get("height") == run_media.get("height")
+            and media.get("codec") == run_media.get("codec")
+            and media.get("container") == run_media.get("container")
+            and media.get("has_audio") == run_media.get("has_audio")
+            and media.get("bytes") == run_media.get("bytes")
+            and abs(
+                float(media.get("duration_seconds") or 0)
+                - float(run_media.get("duration_seconds") or 0)
+            )
+            <= 0.1
+            and (
+                run_media.get("fps") is None
+                or abs(frame_rate - float(run_media["fps"])) <= 0.001
+            )
+            and (
+                run_media.get("frames") is None
+                or media.get("frame_count") == run_media.get("frames")
+            )
+            and frame_analysis.get("decoded_frame_count") == media.get("frame_count")
+        )
+        if not media_matches:
+            raise FinalizeError(f"Smooth review media changed for {variant_id}")
+        reviewed[str(variant_id)] = video
+    if set(reviewed) != set(available_by_variant):
+        raise FinalizeError(
+            "Smooth review does not cover every available MP4 exactly once"
+        )
+
+    ranking_by_variant: dict[str, dict[str, Any]] = {}
+    ranking_keys = {
+        "rank",
+        "video_id",
+        "regions_with_detected_motion",
+        "coverage_ratio",
+        "abrupt_transition_count",
+        "abrupt_transition_ratio",
+        "motion_energy_spike_count",
+        "motion_energy_spike_ratio",
+        "normalized_acceleration_p95",
+        "collateral_max_changed_pixel_ratio_from_first",
+    }
+    for entry in ranking_entries:
+        if not isinstance(entry, dict):
+            raise FinalizeError("Smooth ranking entry is not an object")
+        variant_id = entry.get("video_id")
+        reviewed_video = reviewed.get(str(variant_id))
+        coverage = (
+            reviewed_video.get("motion_coverage")
+            if isinstance(reviewed_video, dict)
+            else None
+        )
+        union = (
+            reviewed_video.get("requested_union_smoothness")
+            if isinstance(reviewed_video, dict)
+            else None
+        )
+        energy = union.get("motion_energy_mae_rgb") if isinstance(union, dict) else None
+        acceleration = (
+            union.get("acceleration_proxy_mae_rgb")
+            if isinstance(union, dict)
+            else None
+        )
+        collateral = (
+            reviewed_video.get("collateral_activity")
+            if isinstance(reviewed_video, dict)
+            else None
+        )
+        if (
+            set(entry) != ranking_keys
+            or reviewed_video is None
+            or variant_id in ranking_by_variant
+            or entry.get("rank") != reviewed_video["proxy_rank"]
+            or not isinstance(coverage, dict)
+            or not isinstance(energy, dict)
+            or not isinstance(acceleration, dict)
+            or not isinstance(collateral, dict)
+            or entry.get("regions_with_detected_motion")
+            != coverage.get("regions_with_detected_motion")
+            or entry.get("coverage_ratio") != coverage.get("coverage_ratio")
+            or entry.get("abrupt_transition_count")
+            != acceleration.get("abrupt_transition_count")
+            or entry.get("abrupt_transition_ratio")
+            != acceleration.get("abrupt_transition_ratio")
+            or entry.get("motion_energy_spike_count")
+            != energy.get("spike_count")
+            or entry.get("motion_energy_spike_ratio")
+            != energy.get("spike_ratio")
+            or entry.get("normalized_acceleration_p95")
+            != acceleration.get("normalized_p95_by_motion_p95")
+            or entry.get("collateral_max_changed_pixel_ratio_from_first")
+            != collateral.get("max_changed_pixel_ratio_from_first")
+        ):
+            raise FinalizeError(f"Smooth ranking binding changed for {variant_id!r}")
+        ranking_by_variant[str(variant_id)] = entry
+    if (
+        set(ranking_by_variant) != set(reviewed)
+        or {video["proxy_rank"] for video in reviewed.values()}
+        != set(range(1, SMOOTH_ATTEMPT_COUNT + 1))
+    ):
+        raise FinalizeError("Smooth proxy ranking is incomplete or duplicated")
+    return reviewed, review_sha256
+
+
+def build_smooth_experiment(root: Path = ROOT) -> dict[str, Any] | None:
+    validated = _validated_smooth_source(root)
+    if validated is None:
+        return None
+    experiment, inventory, retry_experiment, retry_inventory = validated
+    if not _smooth_is_complete(experiment, retry_experiment):
+        return None
+
+    route = smooth_experiment.validate_route()
+    entries_by_variant = {
+        item["variant_id"]: item for item in inventory.get("entries", [])
+    }
+    planning_by_variant = {
+        item["variant_id"]: item
+        for item in experiment.get("planning_variants", [])
+        if isinstance(item, dict) and isinstance(item.get("variant_id"), str)
+    }
+    expected_variants = tuple(
+        variant.variant_id for variant in smooth_experiment.VARIANTS
+    )
+    if (
+        tuple(entries_by_variant) != expected_variants
+        or tuple(planning_by_variant) != expected_variants
+        or tuple(
+            item.get("variant_id")
+            for item in experiment["outputs"]
+            if isinstance(item, dict)
+        )
+        != expected_variants
+    ):
+        raise FinalizeError("Smooth inventory, planning, or output matrix changed")
+    if (
+        SMOOTH_REPLACED_VARIANT_ID not in entries_by_variant
+        or len(expected_variants) != smooth_experiment.INITIAL_ENTRY_COUNT
+    ):
+        raise FinalizeError("Smooth explicit-retry matrix is incomplete")
+    replaced_entry = smooth_experiment.ENTRY_BY_VARIANT[
+        SMOOTH_REPLACED_VARIANT_ID
+    ]
+    replaced_provider_run_id = smooth_experiment._provider_run_id(  # noqa: SLF001
+        replaced_entry
+    )
+
+    attempts: list[dict[str, Any]] = []
+    available: list[dict[str, Any]] = []
+    with smooth_experiment.configured_native(root):
+        for attempt_number, raw_output in enumerate(experiment["outputs"], start=1):
+            if not isinstance(raw_output, dict):
+                raise FinalizeError("Smooth generation output is not an object")
+            variant_id = raw_output.get("variant_id")
+            entry = smooth_experiment.ENTRY_BY_VARIANT.get(str(variant_id))
+            inventory_entry = entries_by_variant.get(str(variant_id))
+            planning_variant = planning_by_variant.get(str(variant_id))
+            if (
+                entry is None
+                or not isinstance(inventory_entry, dict)
+                or not isinstance(planning_variant, dict)
+            ):
+                raise FinalizeError(f"Unknown smooth variant: {variant_id!r}")
+            job = smooth_experiment.load_experiment_job(entry, root)
+            paths = smooth_experiment.artifact_paths(entry, root)
+            expected_paths = {
+                "prompt_path": _relative(paths["prompt"], root),
+                "run_path": _relative(paths["run"], root),
+                "video_path": _relative(paths["video"], root),
+            }
+            expected_identity = {
+                "lite_run_id": entry.planning_run_id,
+                "provider_run_id": smooth_experiment._provider_run_id(entry),  # noqa: SLF001
+                "sample_id": entry.sample.sample_id,
+                "article_slug": case21.ARTICLE_SLUG,
+                "source_path": case21.SOURCE_PATH.as_posix(),
+                "model_id": smooth_experiment.MODEL_ID,
+                "variant_id": variant_id,
+                **expected_paths,
+            }
+            if any(
+                raw_output.get(key) != value
+                for key, value in expected_identity.items()
+            ):
+                raise FinalizeError(f"Smooth aggregate identity changed for {variant_id}")
+            selected_for_demo = variant_id != SMOOTH_REPLACED_VARIANT_ID
+            if variant_id == SMOOTH_REPLACED_VARIANT_ID:
+                expected_human_review = {
+                    "reviewer": SMOOTH_REVIEWER,
+                    "status": "excluded",
+                    "reason_code": SMOOTH_EXCLUDED_REASON,
+                    "note": SMOOTH_INITIAL_EXCLUSION_NOTE,
+                }
+            else:
+                expected_human_review = {
+                    "reviewer": SMOOTH_REVIEWER,
+                    "status": "accepted",
+                    "reason_code": SMOOTH_ACCEPTED_REASON,
+                    "note": SMOOTH_DEFAULT_ACCEPTANCE_NOTE,
+                }
+            expected_retry_of = None
+            if any(
+                raw_output.get(key) is not None
+                for key in (
+                    "selected_for_demo",
+                    "human_review",
+                    "retry_of",
+                    "supersedes_for_demo",
+                )
+            ):
+                raise FinalizeError(
+                    f"Smooth base receipt unexpectedly contains selection data: {variant_id}"
+                )
+
+            prompt = read_json(paths["prompt"])
+            expected_prompt = smooth_experiment.smooth_prompt_artifact(job)
+            if prompt != expected_prompt:
+                raise FinalizeError(
+                    f"Smooth prompt differs from verified Lite plan: {variant_id}"
+                )
+            positive = job.positive_prompt
+            negative = job.negative_prompt
+            if (
+                inventory_entry.get("planning_result_sha256") != job.result_sha256
+                or planning_variant.get("result_sha256") != job.result_sha256
+                or inventory_entry.get("positive_prompt_sha256")
+                != _sha256_text(positive)
+                or inventory_entry.get("negative_prompt_sha256")
+                != (_sha256_text(negative) if negative else None)
+            ):
+                raise FinalizeError(
+                    f"Smooth planning or prompt SHA changed for {variant_id}"
+                )
+
+            run = read_json(paths["run"])
+            initial = smooth_experiment.smooth_initial_run(job, paths, root)
+            immutable_run_keys = (
+                "schema_version",
+                "ticket",
+                "sample_id",
+                "image_id",
+                "model_id",
+                "adapter",
+                "prompt_path",
+                "output_path",
+                "batch_id",
+                "agent_id",
+                "lite_run_id",
+                "provider_run_id",
+                "lite_result_sha256",
+                "provider_transport_experiment",
+            )
+            if (
+                not isinstance(run, dict)
+                or any(run.get(key) != initial.get(key) for key in immutable_run_keys)
+                or any(run.get(key) for key in ("retry_of", "retry_count", "attempts"))
+            ):
+                raise FinalizeError(f"Smooth run identity changed for {variant_id}")
+            expected_request = smooth_experiment.native.provider_request_preview(
+                smooth_experiment.provider_sample(entry),
+                smooth_experiment.smooth_provider_prompt(job),
+            )
+            smooth_experiment.assert_smooth_request(entry, expected_request, job)
+            request_sha256 = transport.request_fingerprint(
+                expected_request,
+                smooth_experiment.provider_sample(entry),
+            )
+            frames = expected_request.get("frame_images")
+            frame_types = tuple(
+                item.get("frame_type")
+                for item in frames
+                if isinstance(item, dict)
+            ) if isinstance(frames, list) else ()
+            frame_urls = tuple(
+                (item.get("image_url") or {}).get("url")
+                for item in frames
+                if isinstance(item, dict)
+            ) if isinstance(frames, list) else ()
+            if (
+                run.get("request") != expected_request
+                or run.get("request_fingerprint_version")
+                != smooth_experiment.REQUEST_FINGERPRINT_VERSION
+                or run.get("request_sha256") != request_sha256
+                or inventory_entry.get("request_sha256") != request_sha256
+                or inventory_entry.get("request_fingerprint_version")
+                != smooth_experiment.REQUEST_FINGERPRINT_VERSION
+                or inventory_entry.get("frame_inputs") != ["first_frame"]
+                or inventory_entry.get("source_url") != smooth_experiment.SOURCE_URL
+                or frame_types != SMOOTH_FRAME_TYPES
+                or frame_urls != (smooth_experiment.SOURCE_URL,)
+                or "loop" in expected_request
+                or any(frame_type == "last_frame" for frame_type in frame_types)
+            ):
+                raise FinalizeError(
+                    f"Smooth request is not exact first-frame-only: {variant_id}"
+                )
+
+            recorded_status = run.get("status")
+            status = native.effective_run_status(run)
+            if status in LOOP_INCOMPLETE_STATUSES or run.get("provider_may_be_active") is True:
+                raise FinalizeError(
+                    f"Smooth attempt is not terminal: {variant_id} ({status})"
+                )
+            mirrored = {
+                "recorded_status": recorded_status,
+                "status": status,
+                "provider_may_be_active": run.get("provider_may_be_active"),
+                "media": run.get("media"),
+                "contract_check": run.get("contract_check"),
+                "error": run.get("error"),
+                "provider_transport_experiment": dict(
+                    smooth_experiment.TRANSPORT_PROFILE
+                ),
+            }
+            if any(raw_output.get(key) != value for key, value in mirrored.items()):
+                raise FinalizeError(
+                    f"Smooth aggregate differs from run receipt: {variant_id}"
+                )
+
+            video_path = paths["video"]
+            has_available_status = status in LOOP_AVAILABLE_STATUSES
+            video_is_safe = video_path.is_file() and not video_path.is_symlink()
+            media = run.get("media")
+            if has_available_status != (video_is_safe and isinstance(media, dict)):
+                raise FinalizeError(f"Smooth MP4 availability changed for {variant_id}")
+            video_sha256: str | None = None
+            if has_available_status:
+                video_sha256 = sha256_file(video_path)
+                if (
+                    media.get("sha256") != video_sha256
+                    or media.get("bytes") != video_path.stat().st_size
+                ):
+                    raise FinalizeError(
+                        f"Smooth MP4 SHA or byte count changed for {variant_id}"
+                    )
+
+            attempt = {
+                "activity": "smooth-motion-experiment",
+                "experiment_id": smooth_experiment.EXPERIMENT_ID,
+                "variant_id": variant_id,
+                "batch_id": smooth_experiment.PROVIDER_BATCH_ID,
+                "provider_run_id": run.get("provider_run_id"),
+                "lite_run_id": run.get("lite_run_id"),
+                "sample_id": run.get("sample_id"),
+                "model_id": run.get("model_id"),
+                "status": status,
+                "recorded_status": recorded_status,
+                "provider_may_be_active": run.get("provider_may_be_active"),
+                "request_sha256": request_sha256,
+                "request_fingerprint_version": smooth_experiment.REQUEST_FINGERPRINT_VERSION,
+                "provider_job_id": run.get("provider_job_id"),
+                "submitted_at": run.get("submitted_at"),
+                "completed_at": run.get("completed_at"),
+                **expected_paths,
+                "prompt_sha256": sha256_file(paths["prompt"]),
+                "run_sha256": sha256_file(paths["run"]),
+                "video_sha256": video_sha256,
+                "available_video": has_available_status,
+                "selected_for_demo": has_available_status and selected_for_demo,
+                "selected_for_display": has_available_status and selected_for_demo,
+                "selected_for_acceptance": False,
+                "human_review": expected_human_review,
+                "retry_of": expected_retry_of,
+                "supersedes_for_demo": expected_retry_of,
+                "experiment_attempt_number": attempt_number,
+                "error": run.get("error"),
+            }
+            attempts.append(attempt)
+            if has_available_status:
+                available.append(
+                    {
+                        "variant_id": variant_id,
+                        "entry": entry,
+                        "job": job,
+                        "run": run,
+                        "media": media,
+                        "video_path": expected_paths["video_path"],
+                        "video_sha256": video_sha256,
+                        "prompt_path": expected_paths["prompt_path"],
+                        "run_path": expected_paths["run_path"],
+                        "prompt_sha256": attempt["prompt_sha256"],
+                        "run_sha256": attempt["run_sha256"],
+                        "request_sha256": request_sha256,
+                        "attempt_number": attempt_number,
+                        "planning_variant": planning_variant,
+                        "selected_for_demo": selected_for_demo,
+                        "human_review": expected_human_review,
+                        "retry_of": expected_retry_of,
+                        "supersedes_for_demo": expected_retry_of,
+                    }
+                )
+
+    retry_raw_output = retry_experiment["outputs"][0]
+    retry_inventory_entry = retry_inventory["entries"][0]
+    retry_planning = retry_experiment.get("planning")
+    retry_entry = smooth_retry.ENTRY
+    retry_variant_id = smooth_retry.SAMPLE.variant_id
+    if (
+        retry_variant_id != SMOOTH_RETRY_VARIANT_ID
+        or not isinstance(retry_raw_output, dict)
+        or not isinstance(retry_inventory_entry, dict)
+        or not isinstance(retry_planning, dict)
+    ):
+        raise FinalizeError("Smooth explicit retry matrix changed")
+    with smooth_retry.configured_native(root):
+        retry_job = smooth_retry.load_retry_job(retry_entry, root)
+        retry_paths = smooth_retry.artifact_paths(retry_entry, root)
+        retry_expected_paths = {
+            "prompt_path": _relative(retry_paths["prompt"], root),
+            "run_path": _relative(retry_paths["run"], root),
+            "video_path": _relative(retry_paths["video"], root),
+        }
+        retry_identity = {
+            "lite_run_id": smooth_retry.PLANNING_RUN_ID,
+            "provider_run_id": smooth_retry._provider_run_id(),  # noqa: SLF001
+            "sample_id": smooth_retry.SAMPLE.sample_id,
+            "article_slug": case21.ARTICLE_SLUG,
+            "source_path": case21.SOURCE_PATH.as_posix(),
+            "model_id": smooth_retry.MODEL_ID,
+            "variant_id": SMOOTH_RETRY_VARIANT_ID,
+            "retry_of": replaced_provider_run_id,
+            "supersedes_for_demo": replaced_provider_run_id,
+            **retry_expected_paths,
+        }
+        if any(
+            retry_raw_output.get(key) != value
+            for key, value in retry_identity.items()
+        ):
+            raise FinalizeError("Smooth explicit retry aggregate identity changed")
+        if (
+            retry_experiment.get("retry_of") != replaced_provider_run_id
+            or retry_experiment.get("supersedes_for_demo")
+            != replaced_provider_run_id
+            or retry_inventory_entry.get("retry_of") != replaced_provider_run_id
+            or retry_inventory_entry.get("supersedes_for_demo")
+            != replaced_provider_run_id
+            or retry_planning.get("planning_run_id")
+            != smooth_retry.PLANNING_RUN_ID
+            or retry_planning.get("result_sha256")
+            != smooth_retry.PLANNING_RESULT_SHA256
+        ):
+            raise FinalizeError("Smooth explicit retry linkage changed")
+
+        retry_prompt = read_json(retry_paths["prompt"])
+        expected_retry_prompt = smooth_retry.retry_prompt_artifact(retry_job)
+        if retry_prompt != expected_retry_prompt:
+            raise FinalizeError(
+                "Smooth retry prompt differs from verified Lite repair plan"
+            )
+        if (
+            retry_inventory_entry.get("planning_result_sha256")
+            != retry_job.result_sha256
+            or retry_inventory_entry.get("positive_prompt_sha256")
+            != _sha256_text(retry_job.positive_prompt)
+            or retry_inventory_entry.get("negative_prompt_sha256")
+            != _sha256_text(retry_job.negative_prompt or "")
+        ):
+            raise FinalizeError("Smooth retry planning or prompt SHA changed")
+
+        retry_run = read_json(retry_paths["run"])
+        retry_initial = smooth_retry.retry_initial_run(
+            retry_job, retry_paths, root
+        )
+        retry_immutable_run_keys = (
+            "schema_version",
+            "ticket",
+            "sample_id",
+            "image_id",
+            "model_id",
+            "adapter",
+            "prompt_path",
+            "output_path",
+            "batch_id",
+            "agent_id",
+            "lite_run_id",
+            "provider_run_id",
+            "lite_result_sha256",
+            "provider_transport_experiment",
+            "explicit_retry",
+        )
+        if (
+            not isinstance(retry_run, dict)
+            or any(
+                retry_run.get(key) != retry_initial.get(key)
+                for key in retry_immutable_run_keys
+            )
+            or retry_run.get("explicit_retry")
+            != {
+                "retry_of": replaced_provider_run_id,
+                "supersedes_for_demo": replaced_provider_run_id,
+            }
+            or any(
+                retry_run.get(key) for key in ("retry_count", "attempts")
+            )
+        ):
+            raise FinalizeError("Smooth explicit retry run identity changed")
+        retry_expected_request = smooth_retry.native.provider_request_preview(
+            smooth_retry.provider_sample(retry_entry),
+            smooth_retry.retry_provider_prompt(retry_job),
+        )
+        smooth_retry.assert_retry_request(
+            retry_entry, retry_expected_request, retry_job
+        )
+        retry_request_sha256 = transport.request_fingerprint(
+            retry_expected_request,
+            smooth_retry.provider_sample(retry_entry),
+        )
+        retry_frames = retry_expected_request.get("frame_images")
+        retry_frame_types = tuple(
+            item.get("frame_type")
+            for item in retry_frames
+            if isinstance(item, dict)
+        ) if isinstance(retry_frames, list) else ()
+        retry_frame_urls = tuple(
+            (item.get("image_url") or {}).get("url")
+            for item in retry_frames
+            if isinstance(item, dict)
+        ) if isinstance(retry_frames, list) else ()
+        if (
+            retry_run.get("request") != retry_expected_request
+            or retry_run.get("request_fingerprint_version")
+            != smooth_retry.REQUEST_FINGERPRINT_VERSION
+            or retry_run.get("request_sha256") != retry_request_sha256
+            or retry_inventory_entry.get("request_sha256")
+            != retry_request_sha256
+            or retry_inventory_entry.get("request_fingerprint_version")
+            != smooth_retry.REQUEST_FINGERPRINT_VERSION
+            or retry_inventory_entry.get("frame_inputs") != ["first_frame"]
+            or retry_inventory_entry.get("source_url") != smooth_retry.SOURCE_URL
+            or retry_frame_types != SMOOTH_FRAME_TYPES
+            or retry_frame_urls != (smooth_retry.SOURCE_URL,)
+            or "loop" in retry_expected_request
+            or any(
+                frame_type == "last_frame" for frame_type in retry_frame_types
+            )
+        ):
+            raise FinalizeError(
+                "Smooth explicit retry request is not exact first-frame-only"
+            )
+
+        retry_recorded_status = retry_run.get("status")
+        retry_status = native.effective_run_status(retry_run)
+        if (
+            retry_status in LOOP_INCOMPLETE_STATUSES
+            or retry_run.get("provider_may_be_active") is True
+        ):
+            raise FinalizeError(
+                f"Smooth explicit retry is not terminal ({retry_status})"
+            )
+        retry_mirrored = {
+            "recorded_status": retry_recorded_status,
+            "status": retry_status,
+            "provider_may_be_active": retry_run.get("provider_may_be_active"),
+            "media": retry_run.get("media"),
+            "contract_check": retry_run.get("contract_check"),
+            "error": retry_run.get("error"),
+            "provider_transport_experiment": dict(smooth_retry.TRANSPORT_PROFILE),
+            "retry_of": replaced_provider_run_id,
+            "supersedes_for_demo": replaced_provider_run_id,
+        }
+        if any(
+            retry_raw_output.get(key) != value
+            for key, value in retry_mirrored.items()
+        ):
+            raise FinalizeError("Smooth explicit retry differs from run receipt")
+        retry_video_path = retry_paths["video"]
+        retry_has_video = retry_status in LOOP_AVAILABLE_STATUSES
+        retry_media = retry_run.get("media")
+        if retry_has_video != (
+            retry_video_path.is_file()
+            and not retry_video_path.is_symlink()
+            and isinstance(retry_media, dict)
+        ):
+            raise FinalizeError("Smooth explicit retry MP4 availability changed")
+        retry_video_sha256: str | None = None
+        if retry_has_video:
+            retry_video_sha256 = sha256_file(retry_video_path)
+            if (
+                retry_media.get("sha256") != retry_video_sha256
+                or retry_media.get("bytes") != retry_video_path.stat().st_size
+            ):
+                raise FinalizeError(
+                    "Smooth explicit retry MP4 SHA or byte count changed"
+                )
+        retry_human_review = {
+            "reviewer": SMOOTH_REVIEWER,
+            "status": "accepted",
+            "reason_code": SMOOTH_ACCEPTED_REASON,
+            "note": SMOOTH_RETRY_ACCEPTANCE_NOTE,
+        }
+        retry_attempt = {
+            "activity": "smooth-motion-explicit-retry",
+            "experiment_id": smooth_retry.RETRY_ID,
+            "series_experiment_id": smooth_experiment.EXPERIMENT_ID,
+            "variant_id": SMOOTH_RETRY_VARIANT_ID,
+            "batch_id": smooth_retry.PROVIDER_BATCH_ID,
+            "provider_run_id": retry_run.get("provider_run_id"),
+            "lite_run_id": retry_run.get("lite_run_id"),
+            "sample_id": retry_run.get("sample_id"),
+            "model_id": retry_run.get("model_id"),
+            "status": retry_status,
+            "recorded_status": retry_recorded_status,
+            "provider_may_be_active": retry_run.get("provider_may_be_active"),
+            "request_sha256": retry_request_sha256,
+            "request_fingerprint_version": smooth_retry.REQUEST_FINGERPRINT_VERSION,
+            "provider_job_id": retry_run.get("provider_job_id"),
+            "submitted_at": retry_run.get("submitted_at"),
+            "completed_at": retry_run.get("completed_at"),
+            **retry_expected_paths,
+            "prompt_sha256": sha256_file(retry_paths["prompt"]),
+            "run_sha256": sha256_file(retry_paths["run"]),
+            "video_sha256": retry_video_sha256,
+            "available_video": retry_has_video,
+            "selected_for_demo": retry_has_video,
+            "selected_for_display": retry_has_video,
+            "selected_for_acceptance": False,
+            "human_review": retry_human_review,
+            "retry_of": replaced_provider_run_id,
+            "supersedes_for_demo": replaced_provider_run_id,
+            "experiment_attempt_number": SMOOTH_ATTEMPT_COUNT,
+            "error": retry_run.get("error"),
+        }
+        attempts.append(retry_attempt)
+        if retry_has_video:
+            available.append(
+                {
+                    "variant_id": SMOOTH_RETRY_VARIANT_ID,
+                    "entry": retry_entry,
+                    "job": retry_job,
+                    "run": retry_run,
+                    "media": retry_media,
+                    "video_path": retry_expected_paths["video_path"],
+                    "video_sha256": retry_video_sha256,
+                    "prompt_path": retry_expected_paths["prompt_path"],
+                    "run_path": retry_expected_paths["run_path"],
+                    "prompt_sha256": retry_attempt["prompt_sha256"],
+                    "run_sha256": retry_attempt["run_sha256"],
+                    "request_sha256": retry_request_sha256,
+                    "attempt_number": SMOOTH_ATTEMPT_COUNT,
+                    "planning_variant": {
+                        "strategy": "staggered eased motion · explicit retry",
+                        "result_sha256": smooth_retry.PLANNING_RESULT_SHA256,
+                    },
+                    "selected_for_demo": True,
+                    "human_review": retry_human_review,
+                    "retry_of": replaced_provider_run_id,
+                    "supersedes_for_demo": replaced_provider_run_id,
+                }
+            )
+    if (
+        len(attempts) != SMOOTH_ATTEMPT_COUNT
+        or len(available) != SMOOTH_ATTEMPT_COUNT
+        or sum(attempt["selected_for_display"] for attempt in attempts)
+        != SMOOTH_DISPLAY_OUTPUT_COUNT
+        or next(
+            attempt
+            for attempt in attempts
+            if attempt["variant_id"] == SMOOTH_REPLACED_VARIANT_ID
+        )["selected_for_display"]
+        or not next(
+            attempt
+            for attempt in attempts
+            if attempt["variant_id"] == SMOOTH_RETRY_VARIANT_ID
+        )["selected_for_display"]
+    ):
+        raise FinalizeError(
+            "Smooth publication requires five available attempts and four demo selections"
+        )
+
+    reviewed, review_sha256 = _validated_smooth_review(root, available)
+    outputs: list[dict[str, Any]] = []
+    for item in available:
+        if not item["selected_for_demo"]:
+            continue
+        variant_id = item["variant_id"]
+        review = reviewed[variant_id]
+        coverage = review["motion_coverage"]
+        motion_summary = (
+            "Deterministic proxy review measured motion in "
+            f"{coverage['regions_with_detected_motion']} of "
+            f"{coverage['requested_region_count']} requested regions; "
+            f"proxy rank {review['proxy_rank']} of "
+            f"{SMOOTH_ATTEMPT_COUNT}. Semantic direction, battery "
+            "color order, preservation and visual quality still require human review."
+        )
+        run = item["run"]
+        outputs.append(
+            {
+                "article_slug": case21.ARTICLE_SLUG,
+                "image_id": case21.IMAGE_ID,
+                "source_path": case21.SOURCE_PATH.as_posix(),
+                "sample_id": item["entry"].sample.sample_id,
+                "lite_run_id": item["entry"].planning_run_id,
+                "provider_run_id": run.get("provider_run_id"),
+                "model_id": smooth_experiment.MODEL_ID,
+                "positive_prompt": item["job"].positive_prompt,
+                "negative_prompt": item["job"].negative_prompt,
+                "status": native.effective_run_status(run),
+                "recorded_status": run.get("status"),
+                "available": True,
+                "accepted": False,
+                "availability_status": "available-for-smooth-research-display",
+                "acceptance_status": "research-only-human-review-required",
+                "prompt_path": item["prompt_path"],
+                "run_path": item["run_path"],
+                "video_path": item["video_path"],
+                "delivery": "repository-raw",
+                "repository_raw_url": PUBLIC_RAW_BASE
+                + quote(item["video_path"], safe="/"),
+                "route": {
+                    "adapter": route["adapter"],
+                    "transport": route["transport"],
+                    "provider": route["provider_key"],
+                    "capacity": route["capacity"],
+                    "route_substitution": False,
+                },
+                "route_label": "Atlas Cloud · canonical Lite first-frame",
+                "media": item["media"],
+                "contract_check": run.get("contract_check"),
+                "visual_review": {
+                    "status": "accepted-for-demo",
+                    "summary": motion_summary,
+                    "human_fidelity_review_complete": True,
+                    "human_semantic_review_complete": False,
+                },
+                "human_review": item["human_review"],
+                "review_path": SMOOTH_REVIEW_PATH.as_posix(),
+                "selection": {
+                    "activity": "smooth-motion-experiment",
+                    "experiment_id": smooth_experiment.EXPERIMENT_ID,
+                    "variant_id": variant_id,
+                    "variant_label": item["planning_variant"].get("strategy"),
+                    "purpose": "non-loop-point-animation-research",
+                    "retry_of": item["retry_of"],
+                    "supersedes_for_demo": item["supersedes_for_demo"],
+                },
+                "smooth_motion": {
+                    "request_sha256": item["request_sha256"],
+                    "request_fingerprint_version": smooth_experiment.REQUEST_FINGERPRINT_VERSION,
+                    "frame_types": list(SMOOTH_FRAME_TYPES),
+                    "first_frame_url": smooth_experiment.SOURCE_URL,
+                    "last_frame_url": None,
+                    "last_frame_is_source": False,
+                    "provider_native_loop_parameter": False,
+                    "browser_playback_loop": False,
+                    "prompt_sha256": item["prompt_sha256"],
+                    "run_sha256": item["run_sha256"],
+                    "video_sha256": item["video_sha256"],
+                    "review_sha256": review_sha256,
+                    "proxy_review": {
+                        "analysis_status": review["analysis_status"],
+                        "proxy_rank": review["proxy_rank"],
+                        "motion_coverage": review["motion_coverage"],
+                        "requested_union_smoothness": review[
+                            "requested_union_smoothness"
+                        ],
+                        "collateral_activity": review["collateral_activity"],
+                    },
+                },
+                "error": run.get("error"),
+            }
+        )
+
+    featured_output = next(
+        (
+            output
+            for output in outputs
+            if output["selection"]["variant_id"] == SMOOTH_RETRY_VARIANT_ID
+        ),
+        None,
+    )
+    expected_featured_provider_run_id = smooth_retry._provider_run_id()  # noqa: SLF001
+    if (
+        not isinstance(featured_output, dict)
+        or featured_output.get("provider_run_id")
+        != expected_featured_provider_run_id
+    ):
+        raise FinalizeError(
+            "Smooth featured review must bind to the selected explicit retry"
+        )
+    featured_proxy = reviewed[SMOOTH_RETRY_VARIANT_ID]
+    featured_coverage = featured_proxy["motion_coverage"]
+    featured_smoothness = featured_proxy["requested_union_smoothness"]
+    featured_acceleration = featured_smoothness["acceleration_proxy_mae_rgb"]
+    featured_motion_energy = featured_smoothness["motion_energy_mae_rgb"]
+    if (
+        featured_coverage["regions_with_detected_motion"] != 7
+        or featured_coverage["requested_region_count"] != 7
+        or featured_acceleration["abrupt_transition_count"] != 0
+        or featured_motion_energy["spike_count"] != 0
+        or featured_proxy["proxy_rank"] != 2
+    ):
+        raise FinalizeError(
+            "Smooth featured review evidence changed; refresh the human selection"
+        )
+    featured_review = {
+        "schema_version": SMOOTH_FEATURED_REVIEW_SCHEMA_VERSION,
+        "status": SMOOTH_FEATURED_STATUS,
+        "label": SMOOTH_FEATURED_LABEL,
+        "reviewer": SMOOTH_FEATURED_REVIEWER,
+        "selection_basis": "operator-visual-review-not-proxy-rank",
+        "variant_id": SMOOTH_RETRY_VARIANT_ID,
+        "provider_run_id": expected_featured_provider_run_id,
+        "summary": SMOOTH_FEATURED_SUMMARY,
+        "prompt_distinction": SMOOTH_FEATURED_PROMPT_DISTINCTION,
+        "evidence": {
+            "analysis_status": featured_proxy["analysis_status"],
+            "regions_with_detected_motion": featured_coverage[
+                "regions_with_detected_motion"
+            ],
+            "requested_region_count": featured_coverage[
+                "requested_region_count"
+            ],
+            "abrupt_transition_count": featured_acceleration[
+                "abrupt_transition_count"
+            ],
+            "motion_energy_spike_count": featured_motion_energy["spike_count"],
+            "proxy_rank": featured_proxy["proxy_rank"],
+            "proxy_rank_scale": SMOOTH_ATTEMPT_COUNT,
+        },
+        "practices": [dict(practice) for practice in SMOOTH_FEATURED_PRACTICES],
+    }
+
+    cost = retry_experiment["cost"]
+    endpoint_base = route["default_base_url"].rstrip("/")
+    return {
+        "schema_version": 1,
+        "experiment_id": smooth_experiment.EXPERIMENT_ID,
+        "model_id": smooth_experiment.MODEL_ID,
+        "agent_id": AGENT_ID,
+        "updated_at": retry_experiment["updated_at"],
+        "request_contract": {
+            "classification": "non-loop-smooth-motion-experiment",
+            "verified_lite_planning": True,
+            "canonical_lite_runtime": True,
+            "mechanism": "single-source-first-frame",
+            "request_mechanism": "single-source-first-frame",
+            "last_frame_is_source": False,
+            "same_source_for_endpoints": False,
+            "provider_native_loop_parameter": False,
+            "browser_playback_loop": False,
+            "frame_types": list(SMOOTH_FRAME_TYPES),
+            "first_frame_url": smooth_experiment.SOURCE_URL,
+            "last_frame_url": None,
+            "provider_api_base_url": route["default_base_url"],
+            "provider_submit_url": endpoint_base + route["paths"]["submit"],
+            "provider_status_url_template": endpoint_base
+            + route["paths"]["status_template"],
+            "provider_content_url_template": endpoint_base
+            + route["paths"]["content_template"],
+        },
+        "cost": {
+            "currency": "USD",
+            "operator_budget_cap_usd": cost["operator_budget_cap_usd"],
+            "reserved_usd": cost["aggregate_reserved_usd"],
+            "reservation_per_output_usd": float(
+                smooth_experiment.RESERVATION_PER_ENTRY_USD
+            ),
+            "remaining_contingency_attempt_count": cost[
+                "remaining_contingency_attempt_count"
+            ],
+            "remaining_contingency_reserved_usd": cost[
+                "remaining_contingency_reserved_usd"
+            ],
+            "automatic_paid_retries": False,
+            "actual_billing_available": False,
+            "reservation_kind": "conservative-operator-envelope",
+            "note": cost["note"],
+        },
+        "attempt_count": len(attempts),
+        "attempts_without_video_count": 0,
+        "available_attempt_count": len(available),
+        "available_output_count": len(outputs),
+        "display_output_count": len(outputs),
+        "excluded_from_demo_count": len(available) - len(outputs),
+        "accepted_output_count": 0,
+        "featured_review": featured_review,
+        "source": experiment["source"],
+        "source_manifests": {
+            "base_inventory": smooth_experiment.INVENTORY_PATH.as_posix(),
+            "base_generation": smooth_experiment.GENERATION_MANIFEST_PATH.as_posix(),
+            "base_experiment": smooth_experiment.EXPERIMENT_MANIFEST_PATH.as_posix(),
+            "retry_inventory": smooth_retry.INVENTORY_PATH.as_posix(),
+            "retry_generation": smooth_retry.GENERATION_MANIFEST_PATH.as_posix(),
+            "retry_experiment": smooth_retry.EXPERIMENT_MANIFEST_PATH.as_posix(),
+            "review": SMOOTH_REVIEW_PATH.as_posix(),
+        },
+        "receipt_sha256": {
+            "base_experiment_manifest": sha256_file(
+                root / smooth_experiment.EXPERIMENT_MANIFEST_PATH
+            ),
+            "base_inventory": sha256_file(root / smooth_experiment.INVENTORY_PATH),
+            "base_generation": sha256_file(
+                root / smooth_experiment.GENERATION_MANIFEST_PATH
+            ),
+            "retry_experiment_manifest": sha256_file(
+                root / smooth_retry.EXPERIMENT_MANIFEST_PATH
+            ),
+            "retry_inventory": sha256_file(root / smooth_retry.INVENTORY_PATH),
+            "retry_generation": sha256_file(
+                root / smooth_retry.GENERATION_MANIFEST_PATH
+            ),
+            "review": review_sha256,
+        },
+        "attempt_history": attempts,
+        "outputs": outputs,
+    }
+
+
 def build_manifest(
     *,
     root: Path = ROOT,
@@ -1970,6 +3343,9 @@ def build_manifest(
     loop_document = build_loop_experiment(root)
     if loop_document is not None:
         document["loop_experiment"] = loop_document
+    smooth_document = build_smooth_experiment(root)
+    if smooth_document is not None:
+        document["smooth_experiment"] = smooth_document
     return document
 
 

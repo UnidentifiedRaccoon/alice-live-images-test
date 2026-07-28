@@ -117,6 +117,15 @@ class GitHubPagesSiteTest(unittest.TestCase):
                       "video_path": "raw/case-21-loop-staggered.mp4",
                       "delivery": "repository-raw"
                     }]
+                  },
+                  "smooth_experiment": {
+                    "outputs": [{
+                      "video_path": "raw/case-21-smooth-continuous.mp4",
+                      "delivery": "repository-raw"
+                    }, {
+                      "video_path": "raw/case-21-smooth-staggered.mp4",
+                      "delivery": "repository-raw"
+                    }]
                   }
                 }\n""",
             )
@@ -135,6 +144,8 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 root / "raw/case-21-wan27-opacity.mp4",
                 root / "raw/case-21-loop-sync.mp4",
                 root / "raw/case-21-loop-staggered.mp4",
+                root / "raw/case-21-smooth-continuous.mp4",
+                root / "raw/case-21-smooth-staggered.mp4",
             ]
             source_path.parent.mkdir(parents=True, exist_ok=True)
             source_path.write_bytes(b"source")
@@ -268,6 +279,58 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
                 self.assertRaisesRegex(ValueError, "loop outputs.*repository-raw"),
+            ):
+                pages.collect_site_paths(root)
+
+    def test_case_21_smooth_outputs_must_use_repository_raw_delivery(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+
+            def write_text(relative_path, content):
+                path = root / relative_path
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8")
+
+            write_text("generated-gallery-data.js", "window.generatedGalleryData = [];\n")
+            write_text(
+                "manual-review/review-data.js",
+                'window.qualityReviewDataset = {"items": []};\n',
+            )
+            write_text("clipmaker-lite-test/manifest.json", '{"articles": []}\n')
+            write_text(
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                '{"articles": []}\n',
+            )
+            write_text(
+                "clipmaker-lite-test/case-21-manifest.json",
+                """{
+                  "articles": [{
+                    "images": [{
+                      "image": {
+                        "source_path": "raw/source.png",
+                        "delivery": "repository-raw"
+                      },
+                      "outputs": []
+                    }]
+                  }],
+                  "smooth_experiment": {
+                    "outputs": [{
+                      "video_path": "raw/smooth.mp4",
+                      "delivery": "site"
+                    }]
+                  }
+                }\n""",
+            )
+
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+                self.assertRaisesRegex(ValueError, "smooth outputs.*repository-raw"),
             ):
                 pages.collect_site_paths(root)
 

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-9930",
+  "sample_id": "21-maier-04-smooth-left-to-right-flow",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-smooth-20260728-v1/videos/left-to-right-flow/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. A single smooth left-to-right flow begins with one gentle ovarian pulse, passes into the purple aura contracting and dimming around the completely fixed progesterone molecule, then gives the balance one sway. Below, the gauge needle sweeps, drops fall, and irritation lines trace continuous irregular paths as the battery fills red through yellow to full green and holds. No reversals or snap-backs; preserve all Russian text, arrows, bonds, geometry and layout.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "01d73a4cb24d3915e44e8ec80027e731ad95c8bffd32d24711ece2548ee1eab6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "PDmXTuAP3MhZDpFDpRxF",
+  "provider_session_hash": null,
+  "submitted_at": "2026-07-28T13:27:36Z",
+  "completed_at": "2026-07-28T13:28:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3100164,
+    "sha256": "22fd794ce1bbdcf1b87ce7622f4a607b68203d0e7b09aee27fc0a266473c060a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+  "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-left-to-right-flow-wan-2-7",
+  "lite_result_sha256": "6ee108f3cfbeda317ecc861288ce5a6148049f87e2eb4807cf4b6ca995682f8b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false
+  }
+}

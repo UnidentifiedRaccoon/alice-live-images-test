@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "manifest_role": "case-21-wan27-smooth-inventory",
+  "ticket": "PROMOPAGES-9930",
+  "experiment_id": "promopages-9930-case21-wan27-smooth-20260728-v1",
+  "provider_batch_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1",
+  "agent_id": "clipmaker-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+    "sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+    "provider_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig",
+    "context_path": "PROMOPAGES-9884/articles/21-maier-doctor-zolotoe-vremia/content.json",
+    "context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+  },
+  "controls": {
+    "primary": {
+      "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1",
+      "sha256": "0e7dc0d0fe9461a6c91d91df56aec4a1e49562929c756dc7913fab21e7cfe7a8"
+    },
+    "retry": {
+      "path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1",
+      "sha256": "54967ca5b10ef079a21deca6ab0de9835a0b0105da032d57e9364718c914e53b"
+    },
+    "prompt_research": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1",
+      "sha256": "ead5a3a4a1137985b6b0abe4da86fb6a209231c1653f3d06de2dbcf76d219286"
+    },
+    "opacity_stage2": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1",
+      "sha256": "750294ab4ad2a6d72ced0afbab207c42c4c8b86edaa5085ac72e0a88b1356a5e"
+    },
+    "loop_experiment": {
+      "path": "clipmaker-lite-test/experiments/promopages-9930-case21-wan27-loop-20260728-v1",
+      "sha256": "c40fcc922643ee53c2cb59dc77dd98419b4d8d27cd9d0aa2bd3997d679f3d938"
+    }
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 3.0,
+    "hard_budget_cap_usd": 3.0,
+    "reservation_per_wan27_entry_usd": 0.5,
+    "initial_entry_count": 4,
+    "initial_reserved_usd": 2.0,
+    "contingency_attempt_count": 2,
+    "contingency_reserved_usd": 1.0,
+    "maximum_provider_entries": 6,
+    "admitted_provider_entries": 4,
+    "contingency_entries_materialized": 0,
+    "maximum_submissions_per_entry": 1,
+    "automatic_paid_retries": false,
+    "provider_unit_costs_asserted": false,
+    "actual_billing_available": false,
+    "note": "Four immutable initial jobs reserve $2.00. Up to two explicit $0.50 contingency attempts require new provider identities and are not materialized or submitted by this coordinator."
+  },
+  "provider_transport_experiment": {
+    "profile": "non-loop-smooth-motion",
+    "canonical_lite_planning": true,
+    "canonical_lite_provider_runtime": true,
+    "first_frame_only": true,
+    "last_frame_is_source": false,
+    "loop": false
+  },
+  "generation_policy": {
+    "exact_model_id": "alibaba/wan-2.7",
+    "exact_route_only": true,
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "force_allowed": false,
+    "automatic_paid_retries": false,
+    "wan27_capacity": 3,
+    "first_frame_only": true,
+    "last_frame_allowed": false,
+    "loop_allowed": false,
+    "contingency_requires_new_explicit_provider_identity": true
+  },
+  "expected_outputs": 4,
+  "entries": [
+    {
+      "variant_id": "low-amplitude-continuous",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-low-amplitude-continuous-20260728-v3",
+      "planning_result_sha256": "441894fee34c64eee91529f3f98039adf180f257092cc2207a69f7180440157e",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-low-amplitude-continuous-wan-2-7",
+      "sample_id": "21-maier-04-smooth-low-amplitude-continuous",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "d49ea89c7cdcc5aef9393d069b0756cd863198daa5ed64d8de73d40eec776933",
+      "negative_prompt_sha256": "bd4a479bbaf6d5d304ed9d2847eeeacdb17bcdf89c9b4a0db238f65c2abefca4",
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "bd5c60a0e79420a141e5679edf054f63ded24f7771e8d2767b266bde5c08fd95",
+      "frame_inputs": [
+        "first_frame"
+      ],
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "staggered-ease",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-staggered-ease-20260728-v4",
+      "planning_result_sha256": "ac773559abba5386897ef830fbbf1ec186d3c58e3149d2b4f605c026bca7a5aa",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7",
+      "sample_id": "21-maier-04-smooth-staggered-ease",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "3bc1306afa7ebb96290336b834147f97deb53e722469233f15f39911a08a50b1",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "944ab89281bd23f840cde17fe869dd63d510d335a064ee21ccd62c5b02459f8f",
+      "frame_inputs": [
+        "first_frame"
+      ],
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "left-to-right-flow",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-left-to-right-flow-20260728-v3",
+      "planning_result_sha256": "6ee108f3cfbeda317ecc861288ce5a6148049f87e2eb4807cf4b6ca995682f8b",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-left-to-right-flow-wan-2-7",
+      "sample_id": "21-maier-04-smooth-left-to-right-flow",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "4c414b611cd32e71ac9bfb7268dd7f7fad74d6929d185e9df4672e4b37ebaa38",
+      "negative_prompt_sha256": null,
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "01d73a4cb24d3915e44e8ec80027e731ad95c8bffd32d24711ece2548ee1eab6",
+      "frame_inputs": [
+        "first_frame"
+      ],
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    },
+    {
+      "variant_id": "preservation-smooth-repair",
+      "planning_run_id": "promopages-9930-case21-wan27-smooth-preservation-smooth-repair-20260728-v3",
+      "planning_result_sha256": "e5a115bb7aeaaee815f5656adde2144a6b0453e72e09128b91deadbfc3a71d3b",
+      "provider_run_id": "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-preservation-smooth-repair-wan-2-7",
+      "sample_id": "21-maier-04-smooth-preservation-smooth-repair",
+      "model_id": "alibaba/wan-2.7",
+      "positive_prompt_sha256": "2bf03965f5097374cdd7e0d0dd8983fbb2dafca75e1348cbb4adf0bf9ce986c5",
+      "negative_prompt_sha256": "d9d6c226098a59d4215585d4538cb5ffdbf05577081934c3b55725c7ef27e4f5",
+      "reservation_usd": 0.5,
+      "request_fingerprint_version": 2,
+      "request_sha256": "747067d334d1e61b8931db80fd7bf3ffc826a09a7208798656aa92f48e5929d5",
+      "frame_inputs": [
+        "first_frame"
+      ],
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6328e396062011505ab621_6a6328f345a595396555e61a/orig"
+    }
+  ]
+}
