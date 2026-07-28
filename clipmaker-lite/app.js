@@ -25,9 +25,28 @@
     "seam-failed": "Шов · не прошёл проверку",
     "seam-not-reviewed": "Шов · не проверен",
   };
+  const EXPECTED_CASE_21_SMOOTH_OUTPUT_COUNT = 4;
+  const SMOOTH_REQUEST_CLASSIFICATION = "non-loop-smooth-motion-experiment";
+  const SMOOTH_REQUEST_MECHANISM = "single-source-first-frame";
+  const SMOOTH_FRAME_TYPES = ["first_frame"];
+  const SMOOTH_RETRY_ACTIVITY = "smooth-motion-explicit-retry";
+  const SMOOTH_RETRY_VARIANT_ID = "staggered-ease-retry1";
+  const SMOOTH_REPLACED_VARIANT_ID = "staggered-ease";
+  const SMOOTH_RETRY_OF_PROVIDER_RUN_ID =
+    "promopages-9930-case21-wan27-smooth-provider-20260728-v1-21-maier-04-smooth-staggered-ease-wan-2-7";
+  const SMOOTH_FEATURED_REVIEW_SCHEMA =
+    "clipmaker-lite.case21-smooth-featured-review.v1";
+  const SMOOTH_FEATURED_PRACTICE_IDS = [
+    "long-overlapping-eases",
+    "bounded-one-shot-motion",
+    "structural-locks",
+    "failure-specific-negative",
+    "held-end-states",
+  ];
   const EXPECTED_TOTAL_ARTICLE_COUNT = 21;
   const EXPECTED_UNIQUE_IMAGE_COUNT = 41;
   const EXPECTED_CANONICAL_OUTPUT_COUNT = 123;
+  const EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH = 139;
   const EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2;
   const EXPECTED_EXTERNAL_OUTPUT_COUNT = 1;
   const MODEL_ORDER = [
@@ -657,6 +676,322 @@
     };
   };
 
+  const validateSmoothExperiment = (smoothExperiment, usedVideoPaths) => {
+    assert(
+      smoothExperiment && typeof smoothExperiment === "object",
+      "Smooth-эксперимент кейса 21 имеет неверный формат.",
+    );
+    assert(
+      typeof smoothExperiment.experiment_id === "string" &&
+        smoothExperiment.experiment_id.trim(),
+      "У smooth-эксперимента нет experiment_id.",
+    );
+    assert(
+      smoothExperiment.model_id === LOOP_MODEL_ID,
+      "Smooth-эксперимент разрешён только для alibaba/wan-2.7.",
+    );
+
+    const requestContract = smoothExperiment.request_contract;
+    assert(
+      requestContract &&
+        requestContract.classification === SMOOTH_REQUEST_CLASSIFICATION &&
+        requestContract.verified_lite_planning === true &&
+        requestContract.canonical_lite_runtime === true &&
+        requestContract.request_mechanism === SMOOTH_REQUEST_MECHANISM &&
+        requestContract.last_frame_is_source === false &&
+        requestContract.same_source_for_endpoints === false &&
+        requestContract.provider_native_loop_parameter === false &&
+        requestContract.browser_playback_loop === false &&
+        JSON.stringify(requestContract.frame_types) ===
+          JSON.stringify(SMOOTH_FRAME_TYPES) &&
+        typeof requestContract.first_frame_url === "string" &&
+        requestContract.first_frame_url.trim() &&
+        requestContract.last_frame_url === null,
+      "Smooth-эксперимент должен честно описывать canonical first-frame-only запрос без loop.",
+    );
+
+    const cost = smoothExperiment.cost;
+    const reservedUsd = Number(cost?.reserved_usd ?? cost?.initial_reserved_usd);
+    assert(
+      cost &&
+        cost.currency === "USD" &&
+        Number(cost.operator_budget_cap_usd) > 0 &&
+        Number(cost.operator_budget_cap_usd) <= 3 &&
+        reservedUsd >= 0 &&
+        reservedUsd <= Number(cost.operator_budget_cap_usd) &&
+        cost.automatic_paid_retries === false &&
+        cost.actual_billing_available === false,
+      "Бюджет smooth-эксперимента должен оставаться внутри отдельного лимита $3.",
+    );
+    assert(
+      Array.isArray(smoothExperiment.outputs) &&
+        Array.isArray(smoothExperiment.attempt_history),
+      "У smooth-эксперимента нет outputs или attempt_history.",
+    );
+
+    const attempts = smoothExperiment.attempt_history;
+    const availableAttempts = attempts.filter((attempt) => attempt.available_video === true);
+    const failedAttempts = attempts.filter((attempt) => attempt.available_video !== true);
+    const selectedAttempts = attempts.filter(
+      (attempt) => attempt.selected_for_display === true,
+    );
+    const availableAttemptCount =
+      smoothExperiment.available_attempt_count ?? smoothExperiment.available_output_count;
+    const displayOutputCount =
+      smoothExperiment.display_output_count ?? smoothExperiment.available_output_count;
+    const excludedFromDemoCount =
+      smoothExperiment.excluded_from_demo_count ??
+      availableAttempts.length - selectedAttempts.length;
+    assert(
+      smoothExperiment.attempt_count === attempts.length &&
+        smoothExperiment.attempts_without_video_count === failedAttempts.length &&
+        availableAttemptCount === availableAttempts.length &&
+        smoothExperiment.available_output_count === smoothExperiment.outputs.length &&
+        displayOutputCount === smoothExperiment.outputs.length &&
+        excludedFromDemoCount === availableAttempts.length - selectedAttempts.length &&
+        selectedAttempts.length === smoothExperiment.outputs.length &&
+        smoothExperiment.outputs.length === EXPECTED_CASE_21_SMOOTH_OUTPUT_COUNT,
+      "Smooth-эксперимент должен содержать четыре выбранных результата и полную историю запусков.",
+    );
+
+    const attemptByRunId = new Map();
+    const baseAttempts = [];
+    const retryAttempts = [];
+    attempts.forEach((attempt, attemptIndex) => {
+      const isBaseAttempt =
+        attempt?.activity === "smooth-motion-experiment" &&
+        attempt.experiment_id === smoothExperiment.experiment_id;
+      const isRetryAttempt =
+        attempt?.activity === SMOOTH_RETRY_ACTIVITY &&
+        typeof attempt.experiment_id === "string" &&
+        attempt.experiment_id.trim() &&
+        attempt.experiment_id !== smoothExperiment.experiment_id &&
+        attempt.series_experiment_id === smoothExperiment.experiment_id &&
+        attempt.variant_id === SMOOTH_RETRY_VARIANT_ID &&
+        attempt.retry_of === SMOOTH_RETRY_OF_PROVIDER_RUN_ID &&
+        attempt.supersedes_for_demo === SMOOTH_RETRY_OF_PROVIDER_RUN_ID;
+      assert(
+        attempt &&
+          (isBaseAttempt || isRetryAttempt) &&
+          attempt.model_id === LOOP_MODEL_ID &&
+          typeof attempt.provider_run_id === "string" &&
+          attempt.provider_run_id.trim() &&
+          attempt.provider_may_be_active === false &&
+          !attemptByRunId.has(attempt.provider_run_id),
+        `Неверная identity smooth-попытки ${attemptIndex + 1}.`,
+      );
+      if (isRetryAttempt) retryAttempts.push(attempt);
+      else baseAttempts.push(attempt);
+      assert(
+        typeof attempt.selected_for_display === "boolean" &&
+          (!attempt.selected_for_display || attempt.available_video === true),
+        `Недоступная smooth-попытка ${attemptIndex + 1} не может быть выбрана для показа.`,
+      );
+      const attemptNumber =
+        attempt.experiment_attempt_number ?? attempt.model_attempt_number ?? attemptIndex + 1;
+      assert(
+        Number.isInteger(attemptNumber) && attemptNumber > 0,
+        `У smooth-попытки ${attemptIndex + 1} нет номера.`,
+      );
+      attemptByRunId.set(attempt.provider_run_id, {
+        ...attempt,
+        isExplicitRetry: isRetryAttempt,
+        experimentAttemptNumber: attemptNumber,
+      });
+    });
+    assert(
+      baseAttempts.length === EXPECTED_CASE_21_SMOOTH_OUTPUT_COUNT &&
+        retryAttempts.length === 1,
+      "Smooth-история должна содержать четыре main-попытки и один explicit retry.",
+    );
+    const retryAttempt = retryAttempts[0];
+    const replacedAttempt = attemptByRunId.get(retryAttempt.retry_of);
+    assert(
+      replacedAttempt &&
+        replacedAttempt.variant_id === SMOOTH_REPLACED_VARIANT_ID &&
+        replacedAttempt.isExplicitRetry === false &&
+        replacedAttempt.available_video === true &&
+        replacedAttempt.selected_for_display === false &&
+        retryAttempt.available_video === true &&
+        retryAttempt.selected_for_display === true,
+      "Explicit retry должен заменить исходный staggered-ease только в demo selection.",
+    );
+
+    const featuredReview = smoothExperiment.featured_review;
+    const featuredPractices = featuredReview?.practices;
+    const featuredPracticeIds = Array.isArray(featuredPractices)
+      ? featuredPractices.map((practice) => practice?.id)
+      : [];
+    assert(
+      featuredReview &&
+        featuredReview.schema_version === SMOOTH_FEATURED_REVIEW_SCHEMA &&
+        featuredReview.status === "visual-winner" &&
+        featuredReview.label === "Визуальный победитель" &&
+        featuredReview.reviewer === "operator-visual-selection" &&
+        featuredReview.selection_basis ===
+          "operator-visual-review-not-proxy-rank" &&
+        featuredReview.variant_id === SMOOTH_RETRY_VARIANT_ID &&
+        featuredReview.provider_run_id === retryAttempt.provider_run_id &&
+        typeof featuredReview.summary === "string" &&
+        featuredReview.summary.trim() &&
+        typeof featuredReview.prompt_distinction === "string" &&
+        featuredReview.prompt_distinction.trim() &&
+        JSON.stringify(featuredPracticeIds) ===
+          JSON.stringify(SMOOTH_FEATURED_PRACTICE_IDS) &&
+        featuredPractices.every(
+          (practice) =>
+            practice &&
+            typeof practice.title === "string" &&
+            practice.title.trim() &&
+            typeof practice.description === "string" &&
+            practice.description.trim(),
+        ),
+      "Smooth featured review должен точно описывать выбранный staggered retry.",
+    );
+    const featuredRawOutput = smoothExperiment.outputs.find(
+      (output) => output?.provider_run_id === featuredReview.provider_run_id,
+    );
+    const featuredOutputProxy = featuredRawOutput?.smooth_motion?.proxy_review;
+    const featuredEvidence = featuredReview.evidence;
+    assert(
+      featuredRawOutput?.selection?.variant_id === featuredReview.variant_id &&
+        featuredEvidence &&
+        featuredEvidence.analysis_status === "measured" &&
+        featuredEvidence.regions_with_detected_motion === 7 &&
+        featuredEvidence.requested_region_count === 7 &&
+        featuredEvidence.abrupt_transition_count === 0 &&
+        featuredEvidence.motion_energy_spike_count === 0 &&
+        featuredEvidence.proxy_rank === 2 &&
+        featuredEvidence.proxy_rank_scale === attempts.length &&
+        featuredOutputProxy?.analysis_status === featuredEvidence.analysis_status &&
+        featuredOutputProxy.proxy_rank === featuredEvidence.proxy_rank &&
+        featuredOutputProxy.motion_coverage?.regions_with_detected_motion ===
+          featuredEvidence.regions_with_detected_motion &&
+        featuredOutputProxy.motion_coverage?.requested_region_count ===
+          featuredEvidence.requested_region_count &&
+        featuredOutputProxy.requested_union_smoothness?.acceleration_proxy_mae_rgb
+          ?.abrupt_transition_count === featuredEvidence.abrupt_transition_count &&
+        featuredOutputProxy.requested_union_smoothness?.motion_energy_mae_rgb
+          ?.spike_count === featuredEvidence.motion_energy_spike_count,
+      "Smooth featured review не связан с выбранным output.",
+    );
+
+    const outputs = smoothExperiment.outputs
+      .map((output, outputIndex) => {
+        const attempt = attemptByRunId.get(output?.provider_run_id);
+        assert(
+          output &&
+            output.model_id === LOOP_MODEL_ID &&
+            output.delivery === "repository-raw" &&
+            output.available === true &&
+            attempt?.available_video === true &&
+            attempt.selected_for_display === true,
+          `Smooth-output ${outputIndex + 1} не связан с выбранной Wan 2.7 попыткой.`,
+        );
+        assert(
+          !hasOwn(output, "loop_closure"),
+          `Smooth-output ${outputIndex + 1} не должен содержать loop_closure.`,
+        );
+        const selection = output.selection;
+        assert(
+          selection &&
+            selection.activity === "smooth-motion-experiment" &&
+            selection.experiment_id === smoothExperiment.experiment_id &&
+            typeof selection.variant_id === "string" &&
+            selection.variant_id.trim(),
+          `У smooth-output ${outputIndex + 1} нет точной experiment selection.`,
+        );
+        assert(
+          attempt.isExplicitRetry
+            ? selection.retry_of === attempt.retry_of &&
+                selection.supersedes_for_demo === attempt.supersedes_for_demo
+            : selection.retry_of == null && selection.supersedes_for_demo == null,
+          `Smooth-output ${outputIndex + 1} неверно описывает retry selection.`,
+        );
+        const smoothMotion = output.smooth_motion;
+        const proxyReview = smoothMotion?.proxy_review;
+        const motionCoverage = proxyReview?.motion_coverage;
+        assert(
+          smoothMotion &&
+            typeof smoothMotion.request_sha256 === "string" &&
+            smoothMotion.request_sha256.length === 64 &&
+            JSON.stringify(smoothMotion.frame_types) ===
+              JSON.stringify(SMOOTH_FRAME_TYPES) &&
+            smoothMotion.browser_playback_loop === false &&
+            proxyReview &&
+            proxyReview.analysis_status === "measured" &&
+            Number.isInteger(proxyReview.proxy_rank) &&
+            proxyReview.proxy_rank >= 1 &&
+            proxyReview.proxy_rank <= attempts.length &&
+            motionCoverage &&
+            motionCoverage.requested_region_count === 7 &&
+            Number.isInteger(motionCoverage.regions_with_detected_motion) &&
+            motionCoverage.regions_with_detected_motion >= 0 &&
+            motionCoverage.regions_with_detected_motion <= 7 &&
+            Array.isArray(motionCoverage.missing_motion_regions),
+          `Smooth-output ${outputIndex + 1} не содержит честного motion proxy review.`,
+        );
+        const visualReview = output.visual_review;
+        assert(
+          visualReview &&
+            typeof visualReview.status === "string" &&
+            visualReview.status.trim() &&
+            typeof visualReview.summary === "string" &&
+            visualReview.summary.trim() &&
+            typeof visualReview.human_semantic_review_complete === "boolean",
+          `Smooth-output ${outputIndex + 1} не содержит честного visual review.`,
+        );
+        validateOutput("21", output, usedVideoPaths, `smooth ${outputIndex + 1}`);
+        const label = selection.variant_label || selection.variant_id;
+        return {
+          ...output,
+          isFeaturedWinner:
+            output.provider_run_id === featuredReview.provider_run_id,
+          experimentAttemptNumber: attempt.experimentAttemptNumber,
+          motionProxy: {
+            status: proxyReview.analysis_status,
+            rank: proxyReview.proxy_rank,
+            rankScale: attempts.length,
+            ...motionCoverage,
+          },
+          showcaseLabel: `${label} · first-frame only · попытка ${attempt.experimentAttemptNumber}`,
+          showcaseVariant: "smooth",
+        };
+      })
+      .sort(
+        (left, right) =>
+          left.experimentAttemptNumber - right.experimentAttemptNumber,
+      );
+
+    const outputRunIds = new Set(outputs.map((output) => output.provider_run_id));
+    const selectedRunIds = new Set(
+      selectedAttempts.map((attempt) => attempt.provider_run_id),
+    );
+    assert(
+      outputRunIds.size === outputs.length &&
+        outputRunIds.size === selectedRunIds.size &&
+        [...outputRunIds].every((runId) => selectedRunIds.has(runId)),
+      "Не все выбранные smooth-результаты включены в демо.",
+    );
+    assert(
+      outputs.filter((output) => output.isFeaturedWinner).length === 1,
+      "Smooth featured review должен выделять ровно один output.",
+    );
+    assert(
+      smoothExperiment.accepted_output_count ===
+        outputs.filter((output) => output.accepted === true).length,
+      "Счётчик принятых smooth-результатов не совпадает с outputs.",
+    );
+
+    return {
+      ...smoothExperiment,
+      outputs,
+      featuredReview,
+      failedAttempts: failedAttempts.map((attempt) => attemptByRunId.get(attempt.provider_run_id)),
+      requestContract,
+    };
+  };
+
   const validateCase21Manifest = (manifest, baseArticles, additionalArticles) => {
     assert(manifest && typeof manifest === "object", "Манифест кейса 21 имеет неверный формат.");
     assert(
@@ -860,6 +1195,9 @@
     const loopExperiment = hasOwn(manifest, "loop_experiment")
       ? validateLoopExperiment(manifest.loop_experiment, usedVideoPaths)
       : null;
+    const smoothExperiment = hasOwn(manifest, "smooth_experiment")
+      ? validateSmoothExperiment(manifest.smooth_experiment, usedVideoPaths)
+      : null;
 
     return [
       {
@@ -872,6 +1210,7 @@
             research_outputs: researchOutputs,
             displayOutputs,
             loopExperiment,
+            smoothExperiment,
             attemptSummary: {
               total: manifest.attempt_count,
               available: manifest.available_output_count,
@@ -1007,7 +1346,12 @@
     imageRecord,
     output,
     modelIndex,
-    { idPrefix = "model", loopPlayback = false, headingLevel = 3 } = {},
+    {
+      idPrefix = "model",
+      loopPlayback = false,
+      smoothExperiment = false,
+      headingLevel = 3,
+    } = {},
   ) => {
     const presentation = MODEL_PRESENTATION[output.model_id];
     assert(presentation, `Нет presentation для ${output.model_id}.`);
@@ -1016,14 +1360,26 @@
     const promptLabel = output.showcaseLabel
       ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
       : "";
+    const isFeaturedWinner = smoothExperiment && output.isFeaturedWinner === true;
+    const winnerBadge = isFeaturedWinner
+      ? '<p class="winnerBadge">Визуальный победитель</p>'
+      : "";
+    const negativePromptDetails =
+      typeof output.negative_prompt === "string" && output.negative_prompt.trim()
+        ? `<details class="promptDetails negativePromptDetails">
+            <summary>Дословный negative prompt</summary>
+            <p class="promptText" lang="en">${escapeHtml(output.negative_prompt)}</p>
+          </details>`
+        : "";
     const variant = output.showcaseVariant || "canonical";
     const accessibleVariant = output.showcaseLabel ? ` · ${output.showcaseLabel}` : "";
+    const accessibleWinner = isFeaturedWinner ? " · визуальный победитель" : "";
     const contractWarning =
       output.status === "verification-failed"
         ? '<p class="contractWarning">Raw output · media contract warning</p>'
         : "";
     const fidelityWarning =
-      output.visual_review?.status === "fidelity-failed"
+      !smoothExperiment && output.visual_review?.status === "fidelity-failed"
         ? `<p class="contractWarning fidelityWarning"><strong>Visual review · fidelity failed.</strong> ${escapeHtml(output.visual_review.summary)}</p>`
         : "";
     const seamReview = output.loop_closure?.seam_review;
@@ -1039,20 +1395,46 @@
         </p>
       `
       : "";
+    const motionProxy = output.motionProxy;
+    const smoothStatus = smoothExperiment
+      ? `
+        <p
+          class="smoothProxyStatus"
+          data-motion-proxy-status="${escapeHtml(motionProxy.status)}"
+        >
+          <strong>Motion proxy · ${escapeHtml(motionProxy.status)}.</strong>
+          Движение найдено в ${motionProxy.regions_with_detected_motion} из
+          ${motionProxy.requested_region_count} заданных зон; proxy rank
+          ${motionProxy.rank} из ${motionProxy.rankScale}.
+        </p>
+        <p
+          class="smoothVisualStatus"
+          data-visual-review-status="${escapeHtml(output.visual_review.status)}"
+        >
+          <strong>Visual review · ${escapeHtml(output.visual_review.status)}.</strong>
+          ${escapeHtml(output.visual_review.summary)}
+        </p>
+      `
+      : "";
     const panelKind = loopPlayback
       ? "Loop-вариант"
+      : smoothExperiment
+        ? "Smooth-вариант"
       : output.showcaseLabel
         ? "Вариант"
         : "Модель";
     const headingTag = headingLevel === 4 ? "h4" : "h3";
-    const loopAttributes = loopPlayback
+    const playbackAttributes = loopPlayback
       ? `${prefersReducedMotion ? "" : " loop"} muted data-loop-output`
-      : "";
+      : smoothExperiment
+        ? "muted"
+        : "";
 
     return `
       <article
         class="mediaPanel modelPanel"
         data-output-kind="${escapeHtml(variant)}"
+        data-featured-winner="${isFeaturedWinner ? "true" : "false"}"
         aria-labelledby="${titleId}"
       >
         <div
@@ -1068,8 +1450,8 @@
             controls
             playsinline
             preload="metadata"
-            ${loopAttributes}
-            aria-label="${escapeHtml(presentation.name + accessibleVariant)}: результат для статьи «${escapeHtml(article.title)}»"
+            ${playbackAttributes}
+            aria-label="${escapeHtml(presentation.name + accessibleVariant + accessibleWinner)}: результат для статьи «${escapeHtml(article.title)}»"
           >
             Ваш браузер не поддерживает MP4-видео.
           </video>
@@ -1080,9 +1462,11 @@
 
         <div class="panelIdentity">
           <div>
+            ${winnerBadge}
             ${promptLabel}
             ${contractWarning}
             ${fidelityWarning}
+            ${smoothStatus}
             ${loopStatus}
             <p class="panelKicker">${panelKind} ${String(modelIndex + 1).padStart(2, "0")}</p>
             <${headingTag} id="${titleId}">${escapeHtml(presentation.name)}</${headingTag}>
@@ -1107,12 +1491,24 @@
                 ["Шов", seamLabel],
               ]
             : []),
+          ...(smoothExperiment
+            ? [
+                ["Conditioning", "first frame only"],
+                ["Повтор", "нет · остановка в конце"],
+                [
+                  "Motion proxy",
+                  `${motionProxy.regions_with_detected_motion}/${motionProxy.requested_region_count}`,
+                ],
+                ["Visual review", output.visual_review.status],
+              ]
+            : []),
         ])}
 
         <details class="promptDetails">
           <summary>Дословный positive prompt</summary>
           <p class="promptText" lang="en">${escapeHtml(output.positive_prompt)}</p>
         </details>
+        ${negativePromptDetails}
       </article>
     `;
   };
@@ -1163,10 +1559,11 @@
     return `
       <section class="loopExperimentSection" aria-labelledby="loopExperimentTitle">
         <header class="loopExperimentHeader">
-          <p class="loopExperimentKicker">Wan 2.7 · отдельная исследовательская серия</p>
+          <p class="loopExperimentKicker">Wan 2.7 · контрольная исследовательская серия</p>
           <h3 id="loopExperimentTitle">API loop-closure: одинаковый first и last frame</h3>
           <p>
-            Это endpoint-conditioning, а не native loop-параметр и не canonical Lite runtime.
+            Это контроль для сравнения с non-loop вариантами: endpoint-conditioning,
+            а не native loop-параметр и не canonical Lite runtime.
             ${escapeHtml(playbackNote)} Бесшовность подтверждает только статус seam review
             на каждой карточке. ${escapeHtml(outputSummary)} Лимит серии — $${escapeHtml(cap)}.
           </p>
@@ -1203,6 +1600,114 @@
             : '<p class="loopEmptyState">Видео нет; причины сохранены в истории запусков.</p>'
         }
         ${renderLoopAttemptHistory(loopExperiment)}
+      </section>
+    `;
+  };
+
+  const renderSmoothFeaturedReview = (featuredReview) => {
+    const evidence = featuredReview.evidence;
+    return `
+      <aside class="smoothWinnerCallout" aria-labelledby="smoothWinnerTitle">
+        <div class="smoothWinnerLead">
+          <p class="smoothWinnerKicker">${escapeHtml(featuredReview.label)} · Staggered retry</p>
+          <h4 id="smoothWinnerTitle">Почему этот вариант выглядит сильнее</h4>
+          <p>${escapeHtml(featuredReview.summary)}</p>
+          <dl class="smoothWinnerEvidence" aria-label="Данные motion proxy для победителя">
+            <div>
+              <dt>Motion coverage</dt>
+              <dd>${evidence.regions_with_detected_motion}/${evidence.requested_region_count}</dd>
+            </div>
+            <div>
+              <dt>Abrupt transitions</dt>
+              <dd>${evidence.abrupt_transition_count}</dd>
+            </div>
+            <div>
+              <dt>Motion spikes</dt>
+              <dd>${evidence.motion_energy_spike_count}</dd>
+            </div>
+            <div>
+              <dt>Proxy rank</dt>
+              <dd>${evidence.proxy_rank}/${evidence.proxy_rank_scale}</dd>
+            </div>
+          </dl>
+          <p class="smoothWinnerEvidenceNote">
+            Победитель выбран визуально; proxy rank приведён как диагностика, а не
+            как основание выбора.
+          </p>
+        </div>
+        <div class="smoothWinnerMethod">
+          <p class="smoothWinnerMethodTitle">Практики постановки движения</p>
+          <ol class="smoothWinnerPractices">
+            ${featuredReview.practices
+              .map(
+                (practice) => `<li>
+                  <strong>${escapeHtml(practice.title)}</strong>
+                  <span>${escapeHtml(practice.description)}</span>
+                </li>`,
+              )
+              .join("")}
+          </ol>
+          <p class="smoothWinnerDistinction">
+            <strong>Ключевое отличие prompt.</strong>
+            ${escapeHtml(featuredReview.prompt_distinction)}
+          </p>
+        </div>
+      </aside>
+    `;
+  };
+
+  const renderSmoothSection = (article, imageRecord) => {
+    const smoothExperiment = imageRecord.smoothExperiment;
+    if (!smoothExperiment) return "";
+    const outputCount = smoothExperiment.outputs.length;
+    const cap = numberFormatter.format(smoothExperiment.cost.operator_budget_cap_usd);
+    const availableAttemptCount =
+      smoothExperiment.available_attempt_count ?? outputCount;
+    const outputSummary =
+      `Получено ${availableAttemptCount} MP4 из ${smoothExperiment.attempt_count} запусков; ` +
+      `для демо выбрано ${outputCount}.`;
+
+    return `
+      <section class="smoothExperimentSection" aria-labelledby="smoothExperimentTitle">
+        <header class="smoothExperimentHeader">
+          <p class="smoothExperimentKicker">Wan 2.7 · smooth motion · first-frame only</p>
+          <h3 id="smoothExperimentTitle">Точечная анимация без зацикливания</h3>
+          <p>
+            Это canonical Lite runtime с одним first frame: last frame и loop-параметр
+            не передавались. Каждый ролик останавливается в финальном кадре. Motion proxy
+            и visual review на карточках дословно взяты из манифеста и сами по себе не
+            означают human acceptance. ${escapeHtml(outputSummary)} Лимит серии —
+            $${escapeHtml(cap)}.
+          </p>
+        </header>
+        ${renderSmoothFeaturedReview(smoothExperiment.featuredReview)}
+        <div class="smoothExperimentActions">
+          <button
+            class="controlButton strong"
+            type="button"
+            data-play-smooth
+            data-video-group-control="smooth"
+            data-play-label="Воспроизвести ${outputCount} smooth-видео"
+            data-pause-label="Пауза smooth-видео"
+            aria-pressed="false"
+            aria-describedby="navigatorStatus"
+            disabled
+          >
+            Воспроизвести ${outputCount} smooth-видео
+          </button>
+        </div>
+        <div class="modelGrid smoothGrid" data-video-group="smooth">
+          ${smoothExperiment.outputs
+            .map((output, outputIndex) =>
+              renderModel(article, imageRecord, output, outputIndex, {
+                idPrefix: "smoothModel",
+                loopPlayback: false,
+                smoothExperiment: true,
+                headingLevel: 4,
+              }),
+            )
+            .join("")}
+        </div>
       </section>
     `;
   };
@@ -1250,6 +1755,13 @@
           ...elements.caseViewport.querySelectorAll('[data-video-group="loop"] video'),
         ],
         button: elements.caseViewport.querySelector("[data-play-loop]"),
+      },
+      {
+        name: "smooth-серия",
+        videos: [
+          ...elements.caseViewport.querySelectorAll('[data-video-group="smooth"] video'),
+        ],
+        button: elements.caseViewport.querySelector("[data-play-smooth]"),
       },
     ].filter((group) => group.button && group.videos.length > 0);
     const sourceToggle = elements.caseViewport.querySelector("[data-source-toggle]");
@@ -1426,6 +1938,7 @@
       ? `<p class="researchSummary"><strong>Полный журнал кейса 21.</strong> Получено ${imageRecord.attemptSummary.available} MP4 из ${imageRecord.attemptSummary.total} запусков; ${imageRecord.attemptSummary.unavailable} запуска завершились без видео. Все семь результатов имеют статус fidelity failed.</p>`
       : "";
     const loopSection = renderLoopSection(article, imageRecord);
+    const smoothSection = renderSmoothSection(article, imageRecord);
 
     detachCurrentVideos();
     elements.currentNumber.textContent = article.article_number;
@@ -1477,6 +1990,7 @@
             .join("")}
         </div>
         ${loopSection}
+        ${smoothSection}
       </div>
     `;
 
@@ -1559,8 +2073,20 @@
       );
       const loopOutputCount =
         case21Articles[0]?.images[0]?.loopExperiment?.outputs.length || 0;
-      elements.videoCountSummary.textContent =
-        `123 + ${EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT + loopOutputCount}`;
+      const smoothOutputCount =
+        case21Articles[0]?.images[0]?.smoothExperiment?.outputs.length || 0;
+      const uniqueVideoCount =
+        EXPECTED_CANONICAL_OUTPUT_COUNT +
+        EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT +
+        loopOutputCount +
+        smoothOutputCount;
+      if (smoothOutputCount) {
+        assert(
+          uniqueVideoCount === EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH,
+          `После smooth-интеграции найдено уникальных MP4: ${uniqueVideoCount}, ожидалось 139.`,
+        );
+      }
+      elements.videoCountSummary.textContent = String(uniqueVideoCount);
       articles = mergeArticleImages(baseArticles, additionalArticles, case21Articles);
       elements.caseSelect.replaceChildren(
         ...articles.map(
