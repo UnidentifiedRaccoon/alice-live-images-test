@@ -13,6 +13,9 @@
   const EXPECTED_CASE_21_ARTICLE_COUNT = 1;
   const EXPECTED_CASE_21_IMAGE_COUNT = 1;
   const EXPECTED_CASE_21_OUTPUT_COUNT = 3;
+  const EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT = 4;
+  const EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT = 7;
+  const EXPECTED_CASE_21_ATTEMPT_COUNT = 11;
   const EXPECTED_TOTAL_ARTICLE_COUNT = 21;
   const EXPECTED_UNIQUE_IMAGE_COUNT = 41;
   const EXPECTED_CANONICAL_OUTPUT_COUNT = 123;
@@ -47,6 +50,14 @@
       name: "Wan 2.2 Flash",
       cost: "$0.18",
     },
+  };
+  const CASE_21_VARIANT_LABELS = {
+    "baseline-generation:": "Baseline",
+    "explicit-retry:": "Baseline retry",
+    "prompt-experiment:monotonic-positive": "Monotonic positive",
+    "prompt-experiment:erosion-negative": "Erosion + negative repair",
+    "prompt-experiment:veo-motion-only": "Motion-only",
+    "prompt-experiment:opacity-only": "Opacity-only + negative repair",
   };
 
   const elements = {
@@ -498,6 +509,18 @@
       "В sidecar должно быть заявлено три ролика.",
     );
     assert(
+      manifest.canonical_output_count === EXPECTED_CASE_21_OUTPUT_COUNT &&
+        manifest.research_output_count === EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT &&
+        manifest.display_output_count === EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT,
+      "Sidecar должен разделять три canonical и четыре research-ролика.",
+    );
+    assert(
+      manifest.attempt_count === EXPECTED_CASE_21_ATTEMPT_COUNT &&
+        manifest.attempts_without_video_count === 4 &&
+        manifest.available_output_count === EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT,
+      "История кейса 21 должна содержать 11 запусков и семь MP4.",
+    );
+    assert(
       JSON.stringify(manifest.models) === JSON.stringify(MODEL_ORDER),
       "Sidecar должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
     );
@@ -510,6 +533,20 @@
       Array.isArray(manifest.outputs) &&
         manifest.outputs.length === EXPECTED_CASE_21_OUTPUT_COUNT,
       "В sidecar должен быть плоский список из трёх роликов.",
+    );
+    assert(
+      Array.isArray(manifest.research_outputs) &&
+        manifest.research_outputs.length === EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT,
+      "В sidecar должен быть плоский список из четырёх research-роликов.",
+    );
+    assert(
+      Array.isArray(manifest.attempt_history) &&
+        manifest.attempt_history.length === EXPECTED_CASE_21_ATTEMPT_COUNT &&
+        manifest.attempt_history.filter((attempt) => attempt.available_video).length ===
+          EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT &&
+        manifest.attempt_history.filter((attempt) => attempt.selected_for_display).length ===
+          EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT,
+      "История попыток кейса 21 не совпадает с полным набором MP4.",
     );
 
     const article = manifest.articles[0];
@@ -579,6 +616,33 @@
       validateOutput("21", output, usedVideoPaths, modelId);
       return output;
     });
+    assert(
+      Array.isArray(record.research_outputs) &&
+        record.research_outputs.length === EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT,
+      "У изображения кейса 21 должно быть четыре дополнительных research-ролика.",
+    );
+    const researchOutputs = record.research_outputs.map((output, outputIndex) => {
+      assert(
+        MODEL_ORDER.includes(output.model_id),
+        `У research-ролика ${outputIndex + 1} неизвестная модель ${output.model_id}.`,
+      );
+      assert(
+        output.delivery === "repository-raw",
+        `Research-ролик ${output.model_id} должен доставляться из main.`,
+      );
+      assert(
+        output.available === true &&
+          output.accepted === false &&
+          output.visual_review?.status === "fidelity-failed",
+        `Research-ролик ${output.model_id} должен оставаться доступным, но отклонённым по fidelity.`,
+      );
+      assert(
+        Number.isInteger(output.model_attempt_number) && output.model_attempt_number > 0,
+        `У research-ролика ${output.model_id} нет номера попытки.`,
+      );
+      validateOutput("21", output, usedVideoPaths, `research ${outputIndex + 1}`);
+      return output;
+    });
 
     const flatOutputsByModel = new Map(
       manifest.outputs.map((output) => [output.model_id, output]),
@@ -594,6 +658,37 @@
         `Плоский output ${modelId} не совпадает с записью статьи.`,
       );
     });
+    assert(
+      JSON.stringify(manifest.research_outputs) === JSON.stringify(researchOutputs),
+      "Плоский список research_outputs не совпадает с записью статьи.",
+    );
+
+    const displayOutputs = [...outputs, ...researchOutputs]
+      .map((output) => {
+        const selection = output.selection || {};
+        const variantKey = `${selection.activity || ""}:${selection.variant_id || ""}`;
+        const variantLabel = CASE_21_VARIANT_LABELS[variantKey];
+        assert(variantLabel, `У case 21 нет подписи варианта ${variantKey}.`);
+        assert(
+          Number.isInteger(output.model_attempt_number) && output.model_attempt_number > 0,
+          `У case 21 / ${output.model_id} нет номера попытки.`,
+        );
+        return {
+          ...output,
+          showcaseLabel: `${variantLabel} · попытка ${output.model_attempt_number}`,
+          showcaseVariant: "research",
+        };
+      })
+      .sort((left, right) => {
+        const modelDelta = MODEL_ORDER.indexOf(left.model_id) - MODEL_ORDER.indexOf(right.model_id);
+        return modelDelta || left.model_attempt_number - right.model_attempt_number;
+      });
+    assert(
+      displayOutputs.length === EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT &&
+        new Set(displayOutputs.map((output) => output.video_path)).size ===
+          EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT,
+      "Полный case 21 должен показывать семь уникальных MP4.",
+    );
 
     return [
       {
@@ -603,7 +698,13 @@
             ...record,
             image,
             outputs,
-            displayOutputs: outputs,
+            research_outputs: researchOutputs,
+            displayOutputs,
+            attemptSummary: {
+              total: manifest.attempt_count,
+              available: manifest.available_output_count,
+              unavailable: manifest.attempts_without_video_count,
+            },
           },
         ],
       },
@@ -747,6 +848,7 @@
       output.visual_review?.status === "fidelity-failed"
         ? `<p class="contractWarning fidelityWarning"><strong>Visual review · fidelity failed.</strong> ${escapeHtml(output.visual_review.summary)}</p>`
         : "";
+    const panelKind = output.showcaseLabel ? "Вариант" : "Модель";
 
     return `
       <article
@@ -781,7 +883,7 @@
             ${promptLabel}
             ${contractWarning}
             ${fidelityWarning}
-            <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
+            <p class="panelKicker">${panelKind} ${String(modelIndex + 1).padStart(2, "0")}</p>
             <h3 id="${titleId}">${escapeHtml(presentation.name)}</h3>
             <code class="modelId">${escapeHtml(output.model_id)}</code>
           </div>
@@ -990,8 +1092,11 @@
     const sequence = ++renderSequence;
     const displayOutputs = imageRecord.displayOutputs || imageRecord.outputs;
     const gridClass = displayOutputs.length > MODEL_ORDER.length ? " hasExperiment" : "";
-    const sixModelsClass = displayOutputs.length === 6 ? " sixModels" : "";
+    const multiRowClass = displayOutputs.length >= 6 ? " multiRow" : "";
     const modelCountClass = displayOutputs.length === 2 ? " twoModels" : "";
+    const researchSummary = imageRecord.attemptSummary
+      ? `<p class="researchSummary"><strong>Полный журнал кейса 21.</strong> Получено ${imageRecord.attemptSummary.available} MP4 из ${imageRecord.attemptSummary.total} запусков; ${imageRecord.attemptSummary.unavailable} запуска завершились без видео. Все семь результатов имеют статус fidelity failed.</p>`
+      : "";
 
     detachCurrentVideos();
     elements.currentNumber.textContent = article.article_number;
@@ -1030,7 +1135,8 @@
           </button>
         </div>
         ${renderSource(article, imageRecord)}
-        <div class="modelGrid${modelCountClass}${gridClass}${sixModelsClass}">
+        ${researchSummary}
+        <div class="modelGrid${modelCountClass}${gridClass}${multiRowClass}">
           ${displayOutputs
             .map((output, modelIndex) => renderModel(article, imageRecord, output, modelIndex))
             .join("")}

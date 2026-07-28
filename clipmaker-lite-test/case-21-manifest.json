@@ -6,7 +6,7 @@
   "batch_id": "promopages-9930-case21-failure-aware-20260727-v1",
   "agent_id": "clipmaker-lite",
   "delivery": "repository-raw",
-  "updated_at": "2026-07-27T17:12:37Z",
+  "updated_at": "2026-07-28T09:12:05Z",
   "models": [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -15,13 +15,18 @@
   "article_count": 1,
   "image_count": 1,
   "expected_outputs": 3,
-  "available_output_count": 3,
+  "canonical_output_count": 3,
+  "research_output_count": 4,
+  "display_output_count": 7,
+  "attempt_count": 11,
+  "attempts_without_video_count": 4,
+  "available_output_count": 7,
   "accepted_output_count": 0,
-  "rejected_output_count": 3,
-  "conforming_output_count": 2,
-  "contract_warning_output_count": 1,
+  "rejected_output_count": 7,
+  "conforming_output_count": 3,
+  "contract_warning_output_count": 4,
   "visual_fidelity_passed_count": 0,
-  "visual_fidelity_failed_count": 3,
+  "visual_fidelity_failed_count": 7,
   "cost": {
     "currency": "USD",
     "operator_budget_cap_usd": 3.0,
@@ -89,6 +94,7 @@
       "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
       "available_video": true,
       "selected_for_display": true,
+      "selected_for_primary_display": true,
       "selected_for_acceptance": false,
       "error": null,
       "model_attempt_number": 1
@@ -114,6 +120,7 @@
       "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
       "available_video": false,
       "selected_for_display": false,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "Eliza/OpenRouter job dapgT81alYO8sgkyVisw failed with status failed: Failed to download ***",
       "model_attempt_number": 1
@@ -139,6 +146,7 @@
       "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
       "available_video": false,
       "selected_for_display": false,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 400: {\"key\":\"OPENROUTER_FOX_KEY_1\",\"response\":{\"error\":{\"message\":\"Received 404 status code when fetching image from URL: https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png\",\"code\":400}},\"attempt_count\":1,\"elapsed_time_ms\":1349,\"last_request_duration_ms\":1349,\"request_id\":\"1785161879930977-8456110058332309828-gze6iy57wssor74m-BAL\"}",
       "model_attempt_number": 1
@@ -163,7 +171,8 @@
       "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
       "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
       "available_video": true,
-      "selected_for_display": false,
+      "selected_for_display": true,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "Media contract verification failed: audio, resolution",
       "model_attempt_number": 2
@@ -189,6 +198,7 @@
       "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
       "available_video": false,
       "selected_for_display": false,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 403: {\"key\":\"OPENROUTER_FOX_KEY_2\",\"response\":{\"error\":{\"message\":\"The request is prohibited due to a violation of provider Terms Of Service.\",\"code\":403},\"user_id\":\"user_3Dz7IzLHuYAjrbJhvJLcN5L19mn\"},\"attempt_count\":1,\"elapsed_time_ms\":166,\"last_request_duration_ms\":166,\"request_id\":\"1785167688486377-17734509723684157683-fgj3gwlvspupq2he-BAL\"}",
       "model_attempt_number": 2
@@ -214,6 +224,7 @@
       "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.mp4",
       "available_video": false,
       "selected_for_display": false,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
       "model_attempt_number": 2
@@ -238,7 +249,8 @@
       "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.run.json",
       "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
       "available_video": true,
-      "selected_for_display": false,
+      "selected_for_display": true,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "Media contract verification failed: audio, resolution",
       "model_attempt_number": 3
@@ -263,7 +275,8 @@
       "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.run.json",
       "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
       "available_video": true,
-      "selected_for_display": false,
+      "selected_for_display": true,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": null,
       "model_attempt_number": 3
@@ -289,6 +302,7 @@
       "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.mp4",
       "available_video": true,
       "selected_for_display": true,
+      "selected_for_primary_display": true,
       "selected_for_acceptance": false,
       "error": "Media contract verification failed: audio, resolution",
       "model_attempt_number": 4
@@ -314,6 +328,7 @@
       "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.mp4",
       "available_video": true,
       "selected_for_display": true,
+      "selected_for_primary_display": true,
       "selected_for_acceptance": false,
       "error": null,
       "model_attempt_number": 3
@@ -338,14 +353,15 @@
       "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.run.json",
       "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
       "available_video": true,
-      "selected_for_display": false,
+      "selected_for_display": true,
+      "selected_for_primary_display": false,
       "selected_for_acceptance": false,
       "error": "Media contract verification failed: audio, resolution",
       "model_attempt_number": 5
     }
   ],
   "planning": {
-    "selection_mode": "per-model-research-display",
+    "selection_mode": "full-research-display",
     "selected_runs": [
       {
         "model_id": "alibaba/wan-2.2",
@@ -467,6 +483,168 @@
           "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
         }
       }
+    ],
+    "research_runs": [
+      {
+        "model_id": "alibaba/wan-2.7",
+        "run_id": "promopages-9930-case21-maier-20260727-v4",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-maier-20260727-v4/result.json",
+        "result_sha256": "c1a4453979a13ea9291efde8c2ef0491a9e4a08327d615ba4dc6699ce7bf1a39",
+        "structured_intent": {
+          "editorial_meaning": "Falling progesterone is presented as the link between reduced ovarian function, estrogen dominance, and a cluster of noticeable symptoms.",
+          "primary_action": "The purple hormone aura around the progesterone molecule continuously contracts and loses intensity.",
+          "terminal_state": "The progesterone molecule remains fully visible inside a small, faint purple halo.",
+          "semantic_invariant": "The infographic continues to communicate declining progesterone and its causal connection to the four symptoms, with all medical labels and relationships intact."
+        },
+        "provenance": {
+          "verified": true,
+          "verification_scope": "trusted-workspace-route",
+          "cryptographically_signed": false,
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-maier-20260727-v4/result.json",
+          "agent_id": "clipmaker-lite",
+          "contract_version": "2.0.2",
+          "contract_fingerprint": "sha256:2f5170c29b75c85bf4a0f75d22a1548577b7ec87082ff42d159542d6098bdf09",
+          "instruction_bundle_sha256": "a95bd38b381ef6bd4975155077542919a617933738135f9c390dc12ed6503b90",
+          "runner": {
+            "path": "scripts/clipmaker_lite_runner.py",
+            "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+          },
+          "execution": {
+            "executor_id": "codex-exec",
+            "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+            "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+            "version": "codex-cli 0.146.0-alpha.3.1",
+            "requested_model": null,
+            "thread_id": "019fa3ca-9952-7f32-9328-3d109b793a0c"
+          },
+          "models": [
+            "alibaba/wan-2.2",
+            "alibaba/wan-2.7",
+            "google/veo-3.1-lite"
+          ],
+          "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+          "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+        }
+      },
+      {
+        "model_id": "alibaba/wan-2.7",
+        "run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-monotonic-positive-20260727-v1/result.json",
+        "result_sha256": "addacbc3ef88d516b1a9d4ae564713ed71be5a16cb41623bc8256ec68d9c062a",
+        "structured_intent": {
+          "editorial_meaning": "Gradual hormonal depletion connects declining ovarian activity with the illustrated physical and emotional symptoms.",
+          "primary_action": "The purple aura around the progesterone molecule continuously contracts and fades.",
+          "terminal_state": "Only a thin, faint purple halo remains around the molecule.",
+          "semantic_invariant": "The infographic continues to communicate declining progesterone and its associated symptoms, while every non-aura element preserves its original state."
+        },
+        "provenance": {
+          "verified": true,
+          "verification_scope": "trusted-workspace-route",
+          "cryptographically_signed": false,
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-monotonic-positive-20260727-v1/result.json",
+          "agent_id": "clipmaker-lite",
+          "contract_version": "2.0.2",
+          "contract_fingerprint": "sha256:ef1b079f11829fb331216781a2593e0134e408e0d55fcd491b3a81020f6fea85",
+          "instruction_bundle_sha256": "36a7eca81f1fbce6ff4d180eb71082d74336cfe78bc2fe3ba16ca9e0a9e816ae",
+          "runner": {
+            "path": "scripts/clipmaker_lite_runner.py",
+            "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+          },
+          "execution": {
+            "executor_id": "codex-exec",
+            "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+            "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+            "version": "codex-cli 0.146.0-alpha.3.1",
+            "requested_model": null,
+            "thread_id": "019fa45c-81f1-7440-970d-50af7564dd7b"
+          },
+          "models": [
+            "alibaba/wan-2.2",
+            "alibaba/wan-2.7"
+          ],
+          "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+          "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+        }
+      },
+      {
+        "model_id": "alibaba/wan-2.2",
+        "run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-erosion-negative-20260727-v1/result.json",
+        "result_sha256": "a2934ffa723151b82b869d835934407dbbcea7ac384a270412e3adbe3fc71664",
+        "structured_intent": {
+          "editorial_meaning": "Visually reinforce the infographic’s explanation that declining progesterone is the central hormonal change associated with the listed symptoms.",
+          "primary_action": "The translucent purple overlay is continuously erased from its outer boundary inward as its opacity decreases.",
+          "terminal_state": "Only a small faint purple halo remains around the central progesterone molecule.",
+          "semantic_invariant": "The infographic’s causal relationships, wording, values, symbols, and symptom states remain unchanged through the last frame."
+        },
+        "provenance": {
+          "verified": true,
+          "verification_scope": "trusted-workspace-route",
+          "cryptographically_signed": false,
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-erosion-negative-20260727-v1/result.json",
+          "agent_id": "clipmaker-lite",
+          "contract_version": "2.0.2",
+          "contract_fingerprint": "sha256:ef1b079f11829fb331216781a2593e0134e408e0d55fcd491b3a81020f6fea85",
+          "instruction_bundle_sha256": "36a7eca81f1fbce6ff4d180eb71082d74336cfe78bc2fe3ba16ca9e0a9e816ae",
+          "runner": {
+            "path": "scripts/clipmaker_lite_runner.py",
+            "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+          },
+          "execution": {
+            "executor_id": "codex-exec",
+            "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+            "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+            "version": "codex-cli 0.146.0-alpha.3.1",
+            "requested_model": null,
+            "thread_id": "019fa45c-87f4-77b1-aecb-1b31f6920b95"
+          },
+          "models": [
+            "alibaba/wan-2.2",
+            "alibaba/wan-2.7"
+          ],
+          "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+          "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+        }
+      },
+      {
+        "model_id": "alibaba/wan-2.7",
+        "run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-opacity-only-20260727-v1/result.json",
+        "result_sha256": "57caec79fa7390a07101fbe314dc66b11f448291e271adc5eca8d447332187db",
+        "structured_intent": {
+          "editorial_meaning": "Ослабление гормональной активности яичников связано с комплексом заметных изменений — весом, отёками, раздражительностью и усталостью.",
+          "primary_action": "Фиолетовая акварельная подложка вокруг молекулы равномерно теряет непрозрачность, не меняя своих границ.",
+          "terminal_state": "В последнем кадре фиолетовая подложка едва видна, но сохраняет точные исходные форму и площадь.",
+          "semantic_invariant": "Причинная схема снижения прогестерона и связанных с ним симптомов остаётся неизменной и однозначно читаемой."
+        },
+        "provenance": {
+          "verified": true,
+          "verification_scope": "trusted-workspace-route",
+          "cryptographically_signed": false,
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-9930-case21-opacity-only-20260727-v1/result.json",
+          "agent_id": "clipmaker-lite",
+          "contract_version": "2.0.2",
+          "contract_fingerprint": "sha256:542bed594404e184949ca8ea971b543bdc3a4160c83022f3794644f595d75d95",
+          "instruction_bundle_sha256": "9f3827e83361ce37c972a9880ce0630d9b999beaafbc594adf3c4b6fab7a9ce7",
+          "runner": {
+            "path": "scripts/clipmaker_lite_runner.py",
+            "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+          },
+          "execution": {
+            "executor_id": "codex-exec",
+            "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+            "binary_sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
+            "version": "codex-cli 0.146.0-alpha.3.1",
+            "requested_model": null,
+            "thread_id": "019fa479-3f53-7c22-989a-3e7c217ced0e"
+          },
+          "models": [
+            "alibaba/wan-2.7"
+          ],
+          "source_image_sha256": "c42c39e7fd2243c37abe014acc8d901ea5e8751dedd82273cf409cc4b2591b6b",
+          "article_context_sha256": "a95143fb2ab46087a51ac734465618a34eaab5abb022c3f753caefdefa7c44ce"
+        }
+      }
     ]
   },
   "articles": [
@@ -575,6 +753,7 @@
                 "purpose": "failure-analysis-display"
               },
               "error": null,
+              "model_attempt_number": 1,
               "attempt_history": [
                 {
                   "activity": "baseline-generation",
@@ -597,6 +776,7 @@
                   "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
                   "available_video": true,
                   "selected_for_display": true,
+                  "selected_for_primary_display": true,
                   "selected_for_acceptance": false,
                   "error": null,
                   "model_attempt_number": 1
@@ -622,6 +802,7 @@
                   "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.mp4",
                   "available_video": false,
                   "selected_for_display": false,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
                   "model_attempt_number": 2
@@ -646,7 +827,8 @@
                   "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.run.json",
                   "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
                   "available_video": true,
-                  "selected_for_display": false,
+                  "selected_for_display": true,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": null,
                   "model_attempt_number": 3
@@ -731,6 +913,7 @@
                 "purpose": "failure-analysis-display"
               },
               "error": "Media contract verification failed: audio, resolution",
+              "model_attempt_number": 4,
               "attempt_history": [
                 {
                   "activity": "baseline-generation",
@@ -753,6 +936,7 @@
                   "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
                   "available_video": false,
                   "selected_for_display": false,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "Eliza/OpenRouter job dapgT81alYO8sgkyVisw failed with status failed: Failed to download ***",
                   "model_attempt_number": 1
@@ -777,7 +961,8 @@
                   "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
                   "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
                   "available_video": true,
-                  "selected_for_display": false,
+                  "selected_for_display": true,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "Media contract verification failed: audio, resolution",
                   "model_attempt_number": 2
@@ -802,7 +987,8 @@
                   "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.run.json",
                   "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
                   "available_video": true,
-                  "selected_for_display": false,
+                  "selected_for_display": true,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "Media contract verification failed: audio, resolution",
                   "model_attempt_number": 3
@@ -828,6 +1014,7 @@
                   "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.mp4",
                   "available_video": true,
                   "selected_for_display": true,
+                  "selected_for_primary_display": true,
                   "selected_for_acceptance": false,
                   "error": "Media contract verification failed: audio, resolution",
                   "model_attempt_number": 4
@@ -852,7 +1039,8 @@
                   "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.run.json",
                   "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
                   "available_video": true,
-                  "selected_for_display": false,
+                  "selected_for_display": true,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "Media contract verification failed: audio, resolution",
                   "model_attempt_number": 5
@@ -934,6 +1122,7 @@
                 "purpose": "failure-analysis-display"
               },
               "error": null,
+              "model_attempt_number": 3,
               "attempt_history": [
                 {
                   "activity": "baseline-generation",
@@ -956,6 +1145,7 @@
                   "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
                   "available_video": false,
                   "selected_for_display": false,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 400: {\"key\":\"OPENROUTER_FOX_KEY_1\",\"response\":{\"error\":{\"message\":\"Received 404 status code when fetching image from URL: https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png\",\"code\":400}},\"attempt_count\":1,\"elapsed_time_ms\":1349,\"last_request_duration_ms\":1349,\"request_id\":\"1785161879930977-8456110058332309828-gze6iy57wssor74m-BAL\"}",
                   "model_attempt_number": 1
@@ -981,6 +1171,7 @@
                   "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
                   "available_video": false,
                   "selected_for_display": false,
+                  "selected_for_primary_display": false,
                   "selected_for_acceptance": false,
                   "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 403: {\"key\":\"OPENROUTER_FOX_KEY_2\",\"response\":{\"error\":{\"message\":\"The request is prohibited due to a violation of provider Terms Of Service.\",\"code\":403},\"user_id\":\"user_3Dz7IzLHuYAjrbJhvJLcN5L19mn\"},\"attempt_count\":1,\"elapsed_time_ms\":166,\"last_request_duration_ms\":166,\"request_id\":\"1785167688486377-17734509723684157683-fgj3gwlvspupq2he-BAL\"}",
                   "model_attempt_number": 2
@@ -1006,11 +1197,333 @@
                   "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.mp4",
                   "available_video": true,
                   "selected_for_display": true,
+                  "selected_for_primary_display": true,
                   "selected_for_acceptance": false,
                   "error": null,
                   "model_attempt_number": 3
                 }
               ]
+            }
+          ],
+          "research_outputs": [
+            {
+              "article_slug": "21-maier-doctor-zolotoe-vremia",
+              "image_id": "04",
+              "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+              "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+              "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+              "provider_run_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-7",
+              "model_id": "alibaba/wan-2.7",
+              "scene_plan": "Across five seconds, use the existing watercolor-like aura as a continuous visual metaphor for falling progesterone. Let it recede slowly from its diffuse outer edges toward the molecule while its saturation and opacity gently diminish, arriving near the end at a small faint halo. Preserve every label, arrow, icon, and structural relationship without movement.",
+              "positive_prompt": "With a fixed camera, the purple aura surrounding the progesterone molecule gradually recedes and loses intensity in one continuous motion, settling as a small faint halo by the end while the molecule and entire infographic remain unchanged and readable.",
+              "negative_prompt": null,
+              "status": "verification-failed",
+              "recorded_status": "verification-failed",
+              "available": true,
+              "accepted": false,
+              "availability_status": "available-for-research-display",
+              "acceptance_status": "rejected-visual-fidelity",
+              "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.prompt.json",
+              "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
+              "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+              "delivery": "repository-raw",
+              "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+              "route": {
+                "adapter": "eliza-openrouter",
+                "transport": "eliza-video-jobs",
+                "provider": "atlas-cloud",
+                "capacity": 3,
+                "route_substitution": false
+              },
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 5.0,
+                "width": 1440,
+                "height": 1440,
+                "fps": 30.0,
+                "frames": 150,
+                "has_audio": true,
+                "bytes": 2253774,
+                "sha256": "5d7dd8073d77173da5da061e393c5b768533a152ec12a9d6214044a650fdef2a"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 5,
+                  "resolution": "1080p",
+                  "aspect_ratio": "1:1",
+                  "generate_audio": false,
+                  "frames": null,
+                  "fps": null
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": false,
+                  "resolution": false,
+                  "aspect_ratio": true
+                },
+                "conforms": false,
+                "warnings": [
+                  "audio",
+                  "resolution"
+                ]
+              },
+              "visual_review": {
+                "status": "fidelity-failed",
+                "summary": "The output preserves readable labels and overall layout, but the aura first grows dramatically and unrelated infographic states also animate; it therefore fails the requested isolated continuous contraction."
+              },
+              "review_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.review.json",
+              "review_evidence": {
+                "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/review/contact-sheets/baseline-wan27.png",
+                "sha256": "0e0f0969a86b3fe13adcd7a01332185e6e2d44c9eb1a5808f788a03baf199d81"
+              },
+              "selection": {
+                "activity": "explicit-retry",
+                "experiment_id": null,
+                "variant_id": null,
+                "purpose": "failure-analysis-display"
+              },
+              "error": "Media contract verification failed: audio, resolution",
+              "model_attempt_number": 2
+            },
+            {
+              "article_slug": "21-maier-doctor-zolotoe-vremia",
+              "image_id": "04",
+              "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+              "sample_id": "21-maier-04-monotonic-positive",
+              "lite_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+              "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-7",
+              "model_id": "alibaba/wan-2.7",
+              "scene_plan": "Over 5 seconds, the central purple aura undergoes one slow continuous depletion: its radius and opacity begin decreasing immediately and proceed together at an even monotonic rate for nearly the full shot. It resolves near the end as a thin faint halo. The fixed camera and all non-aura infographic content remain completely unchanged.",
+              "positive_prompt": "Fixed camera. Only the central purple aura steadily contracts and fades from its first-frame maximum, with radius and opacity decreasing monotonically and evenly throughout, ending as a thin faint halo. All other elements stay perfectly static and unchanged.",
+              "negative_prompt": null,
+              "status": "verification-failed",
+              "recorded_status": "verification-failed",
+              "available": true,
+              "accepted": false,
+              "availability_status": "available-for-research-display",
+              "acceptance_status": "rejected-visual-fidelity",
+              "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.prompt.json",
+              "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.run.json",
+              "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
+              "delivery": "repository-raw",
+              "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
+              "route": {
+                "adapter": "eliza-openrouter",
+                "transport": "eliza-video-jobs",
+                "provider": "atlas-cloud",
+                "capacity": 3,
+                "route_substitution": false
+              },
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 5.0,
+                "width": 1440,
+                "height": 1440,
+                "fps": 30.0,
+                "frames": 150,
+                "has_audio": true,
+                "bytes": 2569300,
+                "sha256": "ffadc7aad0077c344ca16e251ec12b41b2222b71061f876dfd701202fbe15277"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 5,
+                  "resolution": "1080p",
+                  "aspect_ratio": "1:1",
+                  "generate_audio": false,
+                  "frames": null,
+                  "fps": null
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": false,
+                  "resolution": false,
+                  "aspect_ratio": true
+                },
+                "conforms": false,
+                "warnings": [
+                  "audio",
+                  "resolution"
+                ]
+              },
+              "visual_review": {
+                "status": "fidelity-failed",
+                "summary": "Explicit monotonic wording did not constrain the trajectory: the aura expands into a large dark ring before fading."
+              },
+              "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.review.json",
+              "review_evidence": {
+                "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/review/contact-sheets/monotonic-positive-wan27.png",
+                "sha256": "9e854691dc797c43fd719a6c0059cf5e58b594de20f6d2aeac00c234f4124f0d"
+              },
+              "selection": {
+                "activity": "prompt-experiment",
+                "experiment_id": "promopages-9930-case21-prompt-research-20260727-v1",
+                "variant_id": "monotonic-positive",
+                "purpose": "failure-analysis-display"
+              },
+              "error": "Media contract verification failed: audio, resolution",
+              "model_attempt_number": 3
+            },
+            {
+              "article_slug": "21-maier-doctor-zolotoe-vremia",
+              "image_id": "04",
+              "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+              "sample_id": "21-maier-04-erosion-negative",
+              "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+              "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-2",
+              "model_id": "alibaba/wan-2.2",
+              "scene_plan": "Over 3.2 seconds, the maximum-size purple overlay begins receding immediately and erodes evenly outside-in at a steady compact pace while becoming more transparent. The camera remains fixed. By the final frames only a small faint halo remains around the molecule; the rest of the infographic stays pixel-locked throughout.",
+              "positive_prompt": "Fixed camera. Continuously erase the central purple aura from its outer boundary inward while steadily lowering its opacity, ending as a small faint halo around the molecule. Keep every other pixel locked.",
+              "negative_prompt": "Avoid aura growth, bloom, pulsing, or rebound; battery fill change; scale needle motion; arrow recoloring; text or layout deformation.",
+              "status": "succeeded",
+              "recorded_status": "succeeded",
+              "available": true,
+              "accepted": false,
+              "availability_status": "available-for-research-display",
+              "acceptance_status": "rejected-visual-fidelity",
+              "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.prompt.json",
+              "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.run.json",
+              "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+              "delivery": "repository-raw",
+              "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+              "route": {
+                "adapter": "wan-demo",
+                "transport": "gradio-legacy-queue",
+                "provider": "wan-streamlit",
+                "capacity": 1,
+                "route_substitution": false
+              },
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 3.233,
+                "width": 944,
+                "height": 944,
+                "fps": 30.0,
+                "frames": 97,
+                "has_audio": false,
+                "bytes": 241667,
+                "sha256": "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 3.2,
+                  "resolution": "720p",
+                  "aspect_ratio": "source",
+                  "generate_audio": false,
+                  "frames": 97,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true,
+                  "resolution": true,
+                  "aspect_ratio": true
+                },
+                "conforms": true,
+                "warnings": []
+              },
+              "visual_review": {
+                "status": "fidelity-failed",
+                "summary": "The negative repair did not preserve the infographic: the molecule and state indicators animate, and the aura does not follow the requested fade."
+              },
+              "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.review.json",
+              "review_evidence": {
+                "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/review/contact-sheets/erosion-negative-wan22.png",
+                "sha256": "84e046f4565908cc864533b5eae6d580e845fd3c57e4f607a94e0f0aa446a67e"
+              },
+              "selection": {
+                "activity": "prompt-experiment",
+                "experiment_id": "promopages-9930-case21-prompt-research-20260727-v1",
+                "variant_id": "erosion-negative",
+                "purpose": "failure-analysis-display"
+              },
+              "error": null,
+              "model_attempt_number": 3
+            },
+            {
+              "article_slug": "21-maier-doctor-zolotoe-vremia",
+              "image_id": "04",
+              "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+              "sample_id": "21-maier-04-opacity-only",
+              "lite_run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+              "provider_run_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1-21-maier-04-opacity-only-wan-2-7",
+              "model_id": "alibaba/wan-2.7",
+              "scene_plan": "Неподвижная камера и единый пятсекундный план. С первого кадра равномерно уменьшается только непрозрачность существующей фиолетовой акварельной подложки вокруг молекулы. Затухание идёт плавно почти всю сцену без пульсации и без изменения границ; к финалу подложка едва видна, сохраняя исходные форму и площадь. Молекула, текст, стрелки, весы, шкала, батарея, пиктограммы и компоновка остаются полностью неподвижными и неизменными.",
+              "positive_prompt": "Fixed camera. Over five seconds, only the existing purple watercolor wash fades evenly within its exact first-frame footprint until barely visible. Its footprint and shape remain identical; every other element stays completely unchanged in the final frame.",
+              "negative_prompt": "No size change, expansion, contraction, bloom, pulse, rebound, dark rings, molecule rotation or deformation. No change to the battery, scale needle, arrows, text, icons, or layout.",
+              "status": "verification-failed",
+              "recorded_status": "verification-failed",
+              "available": true,
+              "accepted": false,
+              "availability_status": "available-for-research-display",
+              "acceptance_status": "rejected-visual-fidelity",
+              "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.prompt.json",
+              "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.run.json",
+              "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
+              "delivery": "repository-raw",
+              "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
+              "route": {
+                "adapter": "eliza-openrouter",
+                "transport": "eliza-video-jobs",
+                "provider": "atlas-cloud",
+                "capacity": 3,
+                "route_substitution": false
+              },
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 5.0,
+                "width": 1440,
+                "height": 1440,
+                "fps": 30.0,
+                "frames": 150,
+                "has_audio": true,
+                "bytes": 2614579,
+                "sha256": "abcaaccf20ee93871db5201c5ab7759285f7dd78b84dd9d2c29999bc7c4f0dd7"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 5,
+                  "resolution": "1080p",
+                  "aspect_ratio": "1:1",
+                  "generate_audio": false,
+                  "frames": null,
+                  "fps": null
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": false,
+                  "resolution": false,
+                  "aspect_ratio": true
+                },
+                "conforms": false,
+                "warnings": [
+                  "audio",
+                  "resolution"
+                ]
+              },
+              "visual_review": {
+                "status": "fidelity-failed",
+                "summary": "Opacity-only wording did not preserve the footprint; it produced the largest spatial bloom in the experiment before fading."
+              },
+              "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.review.json",
+              "review_evidence": {
+                "path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/review/contact-sheet.png",
+                "sha256": "4fb1f05890337d3706e9acdb2a6e18752fe0b408b44913055f7a255b60780a64"
+              },
+              "selection": {
+                "activity": "prompt-experiment",
+                "experiment_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+                "variant_id": "opacity-only",
+                "purpose": "failure-analysis-display"
+              },
+              "error": "Media contract verification failed: audio, resolution",
+              "model_attempt_number": 5
             }
           ]
         }
@@ -1095,6 +1608,7 @@
         "purpose": "failure-analysis-display"
       },
       "error": null,
+      "model_attempt_number": 1,
       "attempt_history": [
         {
           "activity": "baseline-generation",
@@ -1117,6 +1631,7 @@
           "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.2/04.mp4",
           "available_video": true,
           "selected_for_display": true,
+          "selected_for_primary_display": true,
           "selected_for_acceptance": false,
           "error": null,
           "model_attempt_number": 1
@@ -1142,6 +1657,7 @@
           "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.2/04.mp4",
           "available_video": false,
           "selected_for_display": false,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "Wan stream ended before completion: {'msg': 'unexpected_error', 'event_id': None, 'message': '404: Not Found', 'session_not_found': True, 'success': False}",
           "model_attempt_number": 2
@@ -1166,7 +1682,8 @@
           "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.run.json",
           "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
           "available_video": true,
-          "selected_for_display": false,
+          "selected_for_display": true,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": null,
           "model_attempt_number": 3
@@ -1251,6 +1768,7 @@
         "purpose": "failure-analysis-display"
       },
       "error": "Media contract verification failed: audio, resolution",
+      "model_attempt_number": 4,
       "attempt_history": [
         {
           "activity": "baseline-generation",
@@ -1273,6 +1791,7 @@
           "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
           "available_video": false,
           "selected_for_display": false,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "Eliza/OpenRouter job dapgT81alYO8sgkyVisw failed with status failed: Failed to download ***",
           "model_attempt_number": 1
@@ -1297,7 +1816,8 @@
           "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
           "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
           "available_video": true,
-          "selected_for_display": false,
+          "selected_for_display": true,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "Media contract verification failed: audio, resolution",
           "model_attempt_number": 2
@@ -1322,7 +1842,8 @@
           "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.run.json",
           "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
           "available_video": true,
-          "selected_for_display": false,
+          "selected_for_display": true,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "Media contract verification failed: audio, resolution",
           "model_attempt_number": 3
@@ -1348,6 +1869,7 @@
           "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.7/04.mp4",
           "available_video": true,
           "selected_for_display": true,
+          "selected_for_primary_display": true,
           "selected_for_acceptance": false,
           "error": "Media contract verification failed: audio, resolution",
           "model_attempt_number": 4
@@ -1372,7 +1894,8 @@
           "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.run.json",
           "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
           "available_video": true,
-          "selected_for_display": false,
+          "selected_for_display": true,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "Media contract verification failed: audio, resolution",
           "model_attempt_number": 5
@@ -1454,6 +1977,7 @@
         "purpose": "failure-analysis-display"
       },
       "error": null,
+      "model_attempt_number": 3,
       "attempt_history": [
         {
           "activity": "baseline-generation",
@@ -1476,6 +2000,7 @@
           "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-runs-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
           "available_video": false,
           "selected_for_display": false,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 400: {\"key\":\"OPENROUTER_FOX_KEY_1\",\"response\":{\"error\":{\"message\":\"Received 404 status code when fetching image from URL: https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png\",\"code\":400}},\"attempt_count\":1,\"elapsed_time_ms\":1349,\"last_request_duration_ms\":1349,\"request_id\":\"1785161879930977-8456110058332309828-gze6iy57wssor74m-BAL\"}",
           "model_attempt_number": 1
@@ -1501,6 +2026,7 @@
           "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/veo-3.1-lite/04.mp4",
           "available_video": false,
           "selected_for_display": false,
+          "selected_for_primary_display": false,
           "selected_for_acceptance": false,
           "error": "POST https://api.eliza.yandex.net/openrouter/v1/videos failed with HTTP 403: {\"key\":\"OPENROUTER_FOX_KEY_2\",\"response\":{\"error\":{\"message\":\"The request is prohibited due to a violation of provider Terms Of Service.\",\"code\":403},\"user_id\":\"user_3Dz7IzLHuYAjrbJhvJLcN5L19mn\"},\"attempt_count\":1,\"elapsed_time_ms\":166,\"last_request_duration_ms\":166,\"request_id\":\"1785167688486377-17734509723684157683-fgj3gwlvspupq2he-BAL\"}",
           "model_attempt_number": 2
@@ -1526,11 +2052,333 @@
           "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/veo-motion-only/veo-3.1-lite/04.mp4",
           "available_video": true,
           "selected_for_display": true,
+          "selected_for_primary_display": true,
           "selected_for_acceptance": false,
           "error": null,
           "model_attempt_number": 3
         }
       ]
+    }
+  ],
+  "research_outputs": [
+    {
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "image_id": "04",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sample_id": "21-maier-doctor-zolotoe-vremia-04",
+      "lite_run_id": "promopages-9930-case21-maier-20260727-v4",
+      "provider_run_id": "promopages-9930-case21-maier-retry-wan27-veo-20260727-v1-21-maier-doctor-zolotoe-vremia-04-wan-2-7",
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Across five seconds, use the existing watercolor-like aura as a continuous visual metaphor for falling progesterone. Let it recede slowly from its diffuse outer edges toward the molecule while its saturation and opacity gently diminish, arriving near the end at a small faint halo. Preserve every label, arrow, icon, and structural relationship without movement.",
+      "positive_prompt": "With a fixed camera, the purple aura surrounding the progesterone molecule gradually recedes and loses intensity in one continuous motion, settling as a small faint halo by the end while the molecule and entire infographic remain unchanged and readable.",
+      "negative_prompt": null,
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "available": true,
+      "accepted": false,
+      "availability_status": "available-for-research-display",
+      "acceptance_status": "rejected-visual-fidelity",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+      "delivery": "repository-raw",
+      "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.mp4",
+      "route": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "provider": "atlas-cloud",
+        "capacity": 3,
+        "route_substitution": false
+      },
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2253774,
+        "sha256": "5d7dd8073d77173da5da061e393c5b768533a152ec12a9d6214044a650fdef2a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "visual_review": {
+        "status": "fidelity-failed",
+        "summary": "The output preserves readable labels and overall layout, but the aura first grows dramatically and unrelated infographic states also animate; it therefore fails the requested isolated continuous contraction."
+      },
+      "review_path": "clipmaker-lite-test/runs/promopages-9930-case21-maier-retry-wan27-veo-20260727-v1/videos/21-maier-doctor-zolotoe-vremia/wan-2.7/04.review.json",
+      "review_evidence": {
+        "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/review/contact-sheets/baseline-wan27.png",
+        "sha256": "0e0f0969a86b3fe13adcd7a01332185e6e2d44c9eb1a5808f788a03baf199d81"
+      },
+      "selection": {
+        "activity": "explicit-retry",
+        "experiment_id": null,
+        "variant_id": null,
+        "purpose": "failure-analysis-display"
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "model_attempt_number": 2
+    },
+    {
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "image_id": "04",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sample_id": "21-maier-04-monotonic-positive",
+      "lite_run_id": "promopages-9930-case21-monotonic-positive-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-monotonic-positive-wan-2-7",
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Over 5 seconds, the central purple aura undergoes one slow continuous depletion: its radius and opacity begin decreasing immediately and proceed together at an even monotonic rate for nearly the full shot. It resolves near the end as a thin faint halo. The fixed camera and all non-aura infographic content remain completely unchanged.",
+      "positive_prompt": "Fixed camera. Only the central purple aura steadily contracts and fades from its first-frame maximum, with radius and opacity decreasing monotonically and evenly throughout, ending as a thin faint halo. All other elements stay perfectly static and unchanged.",
+      "negative_prompt": null,
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "available": true,
+      "accepted": false,
+      "availability_status": "available-for-research-display",
+      "acceptance_status": "rejected-visual-fidelity",
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
+      "delivery": "repository-raw",
+      "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.mp4",
+      "route": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "provider": "atlas-cloud",
+        "capacity": 3,
+        "route_substitution": false
+      },
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2569300,
+        "sha256": "ffadc7aad0077c344ca16e251ec12b41b2222b71061f876dfd701202fbe15277"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "visual_review": {
+        "status": "fidelity-failed",
+        "summary": "Explicit monotonic wording did not constrain the trajectory: the aura expands into a large dark ring before fading."
+      },
+      "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/monotonic-positive/wan-2.7/04.review.json",
+      "review_evidence": {
+        "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/review/contact-sheets/monotonic-positive-wan27.png",
+        "sha256": "9e854691dc797c43fd719a6c0059cf5e58b594de20f6d2aeac00c234f4124f0d"
+      },
+      "selection": {
+        "activity": "prompt-experiment",
+        "experiment_id": "promopages-9930-case21-prompt-research-20260727-v1",
+        "variant_id": "monotonic-positive",
+        "purpose": "failure-analysis-display"
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "model_attempt_number": 3
+    },
+    {
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "image_id": "04",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sample_id": "21-maier-04-erosion-negative",
+      "lite_run_id": "promopages-9930-case21-erosion-negative-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-prompt-research-stage1-20260727-v1-21-maier-04-erosion-negative-wan-2-2",
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over 3.2 seconds, the maximum-size purple overlay begins receding immediately and erodes evenly outside-in at a steady compact pace while becoming more transparent. The camera remains fixed. By the final frames only a small faint halo remains around the molecule; the rest of the infographic stays pixel-locked throughout.",
+      "positive_prompt": "Fixed camera. Continuously erase the central purple aura from its outer boundary inward while steadily lowering its opacity, ending as a small faint halo around the molecule. Keep every other pixel locked.",
+      "negative_prompt": "Avoid aura growth, bloom, pulsing, or rebound; battery fill change; scale needle motion; arrow recoloring; text or layout deformation.",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "available": true,
+      "accepted": false,
+      "availability_status": "available-for-research-display",
+      "acceptance_status": "rejected-visual-fidelity",
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+      "delivery": "repository-raw",
+      "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.mp4",
+      "route": {
+        "adapter": "wan-demo",
+        "transport": "gradio-legacy-queue",
+        "provider": "wan-streamlit",
+        "capacity": 1,
+        "route_substitution": false
+      },
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 3.233,
+        "width": 944,
+        "height": 944,
+        "fps": 30.0,
+        "frames": 97,
+        "has_audio": false,
+        "bytes": 241667,
+        "sha256": "8224f815fba75fcc1911496f9442842f68175cbbc6edabfb35d479a27aa0524d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 3.2,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 97,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "visual_review": {
+        "status": "fidelity-failed",
+        "summary": "The negative repair did not preserve the infographic: the molecule and state indicators animate, and the aura does not follow the requested fade."
+      },
+      "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/videos/erosion-negative/wan-2.2/04.review.json",
+      "review_evidence": {
+        "path": "clipmaker-lite-test/experiments/promopages-9930-case21-prompt-research-20260727-v1/review/contact-sheets/erosion-negative-wan22.png",
+        "sha256": "84e046f4565908cc864533b5eae6d580e845fd3c57e4f607a94e0f0aa446a67e"
+      },
+      "selection": {
+        "activity": "prompt-experiment",
+        "experiment_id": "promopages-9930-case21-prompt-research-20260727-v1",
+        "variant_id": "erosion-negative",
+        "purpose": "failure-analysis-display"
+      },
+      "error": null,
+      "model_attempt_number": 3
+    },
+    {
+      "article_slug": "21-maier-doctor-zolotoe-vremia",
+      "image_id": "04",
+      "source_path": "PROMOPAGES-9857/articles/21-maier-doctor-zolotoe-vremia/04.png",
+      "sample_id": "21-maier-04-opacity-only",
+      "lite_run_id": "promopages-9930-case21-opacity-only-20260727-v1",
+      "provider_run_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1-21-maier-04-opacity-only-wan-2-7",
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Неподвижная камера и единый пятсекундный план. С первого кадра равномерно уменьшается только непрозрачность существующей фиолетовой акварельной подложки вокруг молекулы. Затухание идёт плавно почти всю сцену без пульсации и без изменения границ; к финалу подложка едва видна, сохраняя исходные форму и площадь. Молекула, текст, стрелки, весы, шкала, батарея, пиктограммы и компоновка остаются полностью неподвижными и неизменными.",
+      "positive_prompt": "Fixed camera. Over five seconds, only the existing purple watercolor wash fades evenly within its exact first-frame footprint until barely visible. Its footprint and shape remain identical; every other element stays completely unchanged in the final frame.",
+      "negative_prompt": "No size change, expansion, contraction, bloom, pulse, rebound, dark rings, molecule rotation or deformation. No change to the battery, scale needle, arrows, text, icons, or layout.",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "available": true,
+      "accepted": false,
+      "availability_status": "available-for-research-display",
+      "acceptance_status": "rejected-visual-fidelity",
+      "prompt_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
+      "delivery": "repository-raw",
+      "repository_raw_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.mp4",
+      "route": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "provider": "atlas-cloud",
+        "capacity": 3,
+        "route_substitution": false
+      },
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2614579,
+        "sha256": "abcaaccf20ee93871db5201c5ab7759285f7dd78b84dd9d2c29999bc7c4f0dd7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "visual_review": {
+        "status": "fidelity-failed",
+        "summary": "Opacity-only wording did not preserve the footprint; it produced the largest spatial bloom in the experiment before fading."
+      },
+      "review_path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/videos/wan-2.7/04.review.json",
+      "review_evidence": {
+        "path": "clipmaker-lite-test/experiments/promopages-9930-case21-opacity-only-stage2-20260727-v1/review/contact-sheet.png",
+        "sha256": "4fb1f05890337d3706e9acdb2a6e18752fe0b408b44913055f7a255b60780a64"
+      },
+      "selection": {
+        "activity": "prompt-experiment",
+        "experiment_id": "promopages-9930-case21-opacity-only-stage2-20260727-v1",
+        "variant_id": "opacity-only",
+        "purpose": "failure-analysis-display"
+      },
+      "error": "Media contract verification failed: audio, resolution",
+      "model_attempt_number": 5
     }
   ]
 }
