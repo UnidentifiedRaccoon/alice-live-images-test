@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+    "width": 1068,
+    "height": 699
+  },
+  "structured_intent": {
+    "editorial_meaning": "Interrupted or excessively slow pouring can cause uneven hardening, cracking, and costly removal of the failed floor.",
+    "primary_action": "The existing fracture propagates through the loose central floor slab as its weakened edge crumbles and settles.",
+    "terminal_state": "The central crack is visibly longer and more open, with the adjacent slab edge slightly displaced and fresh grit in the gap.",
+    "semantic_invariant": "The floor remains visibly failed and under demolition, reinforcing the consequence of an improper interrupted pour."
+  },
+  "prompt": {
+    "positive": "The central floor crack spreads a short distance as the loose edge sinks slightly and sheds fine dust into the gap. Fixed camera; finish on the widened fracture and settled slab edge.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08/result.json",
+    "sha256": "cc0dc7efa0963e82dabb775d2d81d9e16fa69032ba77c8c5f789ca947574f5e4",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
