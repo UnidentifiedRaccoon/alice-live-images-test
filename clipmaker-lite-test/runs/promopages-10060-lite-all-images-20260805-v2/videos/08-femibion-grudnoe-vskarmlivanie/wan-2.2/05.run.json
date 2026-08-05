@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "08-femibion-grudnoe-vskarmlivanie-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4ff6646ea17f6e82547e/orig",
+      "prompt": "The woman calmly completes a single open-palm refusal gesture toward the offered pizza, then keeps her attention on the healthy food. Fixed camera. By the final frame, the pizza remains declined at the edge of the frame and her hand is held in a clear stop position.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "11ec12317cf8ae002c6a6e519dc00eee67afd53806e081ba016383e8d49b2015",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "f9975d360ea77c6f949b512579610228",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:17:53Z",
+  "completed_at": "2026-08-05T00:17:53Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4897142,
+    "sha256": "fbd00be89501f55960a378b538d1b0d0dd75e13a500e451bf6527fdbe51c81e9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05-wan-2-2",
+  "lite_result_sha256": "5de787bee115dfd4b51d37c2c0c0226b3d3d88ecb5db1c7d47f62abf4aa34464",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 248159,
+    "sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "f9975d360ea77c6f949b512579610228",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

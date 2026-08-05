@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+    "sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+    "width": 1920,
+    "height": 1280
+  },
+  "structured_intent": {
+    "editorial_meaning": "Mindful, varied nourishment is a better everyday support than relying on fast food, while avoiding an absolutist view of food.",
+    "primary_action": "The woman calmly declines the offered slice of pizza with one open-palm gesture.",
+    "terminal_state": "The pizza is still held back at the right edge while her raised palm visibly signals refusal.",
+    "semantic_invariant": "Her composed, discerning preference for balanced nourishment remains clear throughout."
+  },
+  "prompt": {
+    "positive": "The woman calmly completes a single open-palm refusal gesture toward the offered pizza, then keeps her attention on the healthy food. Fixed camera. By the final frame, the pizza remains declined at the edge of the frame and her hand is held in a clear stop position.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05/result.json",
+    "sha256": "5de787bee115dfd4b51d37c2c0c0226b3d3d88ecb5db1c7d47f62abf4aa34464",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+      "article_context_sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

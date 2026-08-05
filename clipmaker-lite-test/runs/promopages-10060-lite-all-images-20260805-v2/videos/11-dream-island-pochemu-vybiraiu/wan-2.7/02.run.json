@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "11-dream-island-pochemu-vybiraiu-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A measured forward glide through the central alley toward the clock-tower arch; the existing decorative lights softly shimmer. Finish with the illuminated arch closer and centered, framed by the visible themed facades.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_687a5391bcfe3d7b9a29bcb7_687a5404bcfe3d7b9a29c6ee/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "818251c6cdb9300ef5bc7f81081e8473660d1ccbcd299e3995ad223ba3889a2f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ReaVcJVEMDfTEPzRWKZT",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T07:50:22Z",
+  "completed_at": "2026-08-05T08:02:22Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1862,
+    "height": 1114,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 20769626,
+    "sha256": "dccf7c38242205dde8e7bef2205b8965c357ffd85cb83a6c3bab2df8f201cb57"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-02-wan-2-7",
+  "lite_result_sha256": "fbe10ff3f413e83a827cce05d8f440c68a2d10f21d887b993bd26e9382827208",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

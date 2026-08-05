@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "07-femibion-gotovites-k-beremennosti-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman steadily completes a controlled sit-up as her partner stays close with calm encouragement. Fixed camera; end with her upright and balanced, both still focused on gentle exercise.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4740453107264122b27b/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b92c683df487447459b14432b0fa6effcf731623331ce4b14060d74aa57392e3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "sWjYqKzcV5yqCLvBsjo1",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:40:23Z",
+  "completed_at": "2026-08-04T23:42:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4101297,
+    "sha256": "ce8638d4b7d189dbdace2993b73ae46e2ecd546d5d663d82896e9ead209a8df2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-03-wan-2-7",
+  "lite_result_sha256": "581b1dc0f3b97dbaa7eee84a55621fed88e3208a5728deb7abb5c29518702a22",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

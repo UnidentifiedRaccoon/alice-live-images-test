@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The balloon makes a smooth, unhurried ascent over the resort slope while remaining fully in view; a slight natural sway accompanies the lift. Hold the camera on the balloon. In the final moment it is calmly settled at a visibly higher altitude.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb113c3f4407664ee50/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b7bed8422421e5aac8689d464ae421a4383a7244ab78516a54f9d3f9c9a81789",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "hP71vXwug5BxgDQBcXlL",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:27:46Z",
+  "completed_at": "2026-08-05T00:29:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 19149491,
+    "sha256": "33c0a24fba903410bc2b02f69a74fa65c4ee828bd8c038ccf56b60dc2e763410"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-02-wan-2-7",
+  "lite_result_sha256": "f588c2b17114491ad147d61229eee191e35aab949d266f166507ee521be90fe7",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

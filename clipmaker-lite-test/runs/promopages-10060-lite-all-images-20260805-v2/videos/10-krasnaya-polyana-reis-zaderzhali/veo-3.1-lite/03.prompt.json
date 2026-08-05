@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-03-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/03.jpeg",
+    "sha256": "59268f3ea9e8c4d65be1006cac21ec7b999fdd012f8e1effe61121dfff980490",
+    "width": 2048,
+    "height": 1365
+  },
+  "structured_intent": {
+    "editorial_meaning": "Even when travel plans are disrupted, guests can still reach the resort and move into a reassuring holiday experience.",
+    "primary_action": "The couple continues walking together along the resort street.",
+    "terminal_state": "The couple is visibly closer in the foreground, still walking arm in arm.",
+    "semantic_invariant": "Their calm, confident sense of arriving for a mountain holiday remains unchanged."
+  },
+  "prompt": {
+    "positive": "Fixed camera: the couple walks arm in arm toward the foreground with two or three smooth, relaxed steps; a gentle breeze moves their hair and clothing. End with them noticeably closer to camera, still walking together calmly against the mountain view.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-03/result.json",
+    "sha256": "852b4328cb90f6b5d82941b257d8cda5a564b0782f2e65ef92bba6c7299a2913",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "59268f3ea9e8c4d65be1006cac21ec7b999fdd012f8e1effe61121dfff980490",
+      "article_context_sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

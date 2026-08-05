@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "08-femibion-grudnoe-vskarmlivanie-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed close view of the meal as the woman neatly cuts the salad and lifts a forkful above the bowl in one calm motion. The final frame holds the forkful visibly above the salad.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4fa183113703283dd8f2/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "62049d9909e0866d4ca176cea2baceec7624df6addbdc84fcfa22236a3ea3896",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "fycVjMDnI4klM5BFT4CS",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:01:07Z",
+  "completed_at": "2026-08-05T00:02:56Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4528211,
+    "sha256": "da76fa0ac44fdf7d14e6b5c7fd681f3690750041949b7f7fbc3a594b579cdd92"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-02-veo-3-1-lite",
+  "lite_result_sha256": "841d7da2f55d3301396bbabf05c33f91597a83d566c1c411defc4030e925d2b6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

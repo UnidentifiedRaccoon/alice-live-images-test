@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:eb692a5a6ea6d5620d0b005840ae62029b2dd1b6ab71dd6aa579643691c900ec",
+    "execution_fingerprint": "sha256:cbf65f42da5f7183607aef293ed9970fc220e72d4b4571d6a32e9f7ff9695010",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef8-1e54-7203-b382-461828c84ea0"
+    },
+    "authored_payload_sha256": "2728ac7296405709c91047fed601a07eae32e80e395d3f89a682223c1ee6bad6",
+    "draft_file_sha256": "f5c20f3e91474cb70e86f8121c5af215f3fa870dd3cdf11712144151c934edd1"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+      "sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d",
+      "bytes": 1272221
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+      "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "bytes": 20404,
+      "locator": {
+        "article_id": "10-krasnaya-polyana-reis-zaderzhali",
+        "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+        "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Рейс задержали или отменили? Знаем, как это может смешать все планы на отпуск. Поэтому на Курорте действует набор гарантий, благодаря которым номер, средства и хорошее начало отдыха останутся при вас — что бы ни происходило с расписанием самолётов."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A large red Krasnaya Polyana Resort hot-air balloon floats above a green mountain slope, with a small basket below.",
+      "The balloon is the dominant foreground subject; cable-car infrastructure and rugged mountains remain visible behind it.",
+      "The balloon’s branding is clearly readable and should remain continuously visible."
+    ],
+    "article_context": "Cover image for an article about protecting a mountain holiday from flight disruptions; it establishes Krasnaya Polyana as a calm, welcoming destination where the trip can still continue.",
+    "structured_intent": {
+      "editorial_meaning": "A delayed journey does not take away the prospect of a calm, welcoming mountain holiday.",
+      "primary_action": "The hot-air balloon makes one continuous gentle ascent.",
+      "terminal_state": "The balloon is visibly higher above the slope, fully in view and calmly floating.",
+      "semantic_invariant": "The destination remains calm, safe, and inviting despite travel disruption."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Across five seconds, the balloon begins an immediate, smooth upward ascent of moderate distance while remaining prominent in the frame. The camera stays fixed so the resort balloon and mountain setting remain stable; subtle rope movement supports the lift. Near the end, the balloon settles into a clearly higher, calm floating position without leaving view.",
+      "positive_prompt": "The hot-air balloon rises gently and steadily above the slope, with a faint breeze moving the basket ropes. Keep a fixed wide view centered on the balloon; by the final moments it is visibly higher, calmly floating with its branding still clear.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second version, make the balloon’s ascent gradual and unbroken, occupying most of the shot rather than completing early. Hold the wide camera position to protect the visible logo and surrounding destination landscape. The rising motion eases naturally into a higher hover at the endpoint.",
+      "positive_prompt": "Fixed wide view of the resort balloon as it makes a calm, continuous ascent over the mountain slope; slight natural movement in the basket and ropes. End with the balloon floating noticeably higher, fully visible and steady.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over four seconds, focus on one compact, even upward lift by the balloon. Keep the camera fixed on the balloon as the focal subject, with only subtle physically linked rope movement. The ascent reaches a readable higher hovering position close to the end, retaining the tranquil resort-arrival feeling.",
+      "positive_prompt": "The hot-air balloon steadily lifts upward through the still mountain air, with subtle basket-rope motion. Use a fixed wide camera on the balloon. In the final frame, it is clearly higher above the slope and calmly hovering in full view.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

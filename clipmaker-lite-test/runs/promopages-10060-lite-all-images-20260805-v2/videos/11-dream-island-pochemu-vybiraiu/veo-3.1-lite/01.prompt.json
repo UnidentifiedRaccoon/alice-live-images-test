@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-01-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/01.jpeg",
+    "sha256": "d01d807c228871fe9bf5747e1d997b0c41bc8a82284c6b5a84be31e539d23a71",
+    "width": 1600,
+    "height": 1066
+  },
+  "structured_intent": {
+    "editorial_meaning": "The park welcomes visitors with a playful, memorable atmosphere and photo-worthy entrance.",
+    "primary_action": "The three mascot characters perform one collective friendly greeting wave toward the viewer.",
+    "terminal_state": "All three mascots are visibly holding an open, friendly greeting pose toward the viewer.",
+    "semantic_invariant": "The entrance remains a joyful, welcoming invitation to visit Dream Island."
+  },
+  "prompt": {
+    "positive": "A gentle camera push toward the mascot trio as they complete one cheerful welcome wave to the viewer. The fountain sprays steadily and the flags flutter softly. In the final frame, the group holds a bright open greeting pose.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-01/result.json",
+    "sha256": "f2459b9d1291fa4434ff9b836ee03d2e795a3986b136ac164f9572cb857050ef",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "d01d807c228871fe9bf5747e1d997b0c41bc8a82284c6b5a84be31e539d23a71",
+      "article_context_sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "07-femibion-gotovites-k-beremennosti-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_685a45c483113703283d5b0e_685a47ee646ea17f6e81e8c2/orig",
+      "prompt": "Fixed camera. A soft narrow reflection slowly glides down the printed source list and settles beside the final Femibion 1 reference, while every word and link remains unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "810cc1d88a45ccc8a9418be7f47e03f6aad03d08872d76c65c5dc46c8f72272a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7142124c1e1c8841195d31cc94d049b5",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:48:02Z",
+  "completed_at": "2026-08-04T23:48:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 15192765,
+    "sha256": "fddb9f7cff1cdc9bc106c7a49a4e2932513d6f8fff5e5397a25c8966c56c47e5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-09",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-09-wan-2-2",
+  "lite_result_sha256": "4b489916ad13aa5caef45383c30659376864ff1fc8100383d45fddd873f2510e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 340466,
+    "sha256": "fd453f74d688ca3f3db90199f03ed4c4cd679aa9bfea14a3fde359a3a520add2"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "7142124c1e1c8841195d31cc94d049b5",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

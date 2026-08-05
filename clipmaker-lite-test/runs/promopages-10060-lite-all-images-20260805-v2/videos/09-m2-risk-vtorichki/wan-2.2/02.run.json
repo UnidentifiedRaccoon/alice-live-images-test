@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "09-m2-risk-vtorichki-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67ca/orig",
+      "prompt": "The wall clock hands advance steadily as the clipped paperwork remains stacked and clearly visible; by the final frame the hands have visibly moved forward, sustaining the sense of a running deadline.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "27e9fb79d7e8cc5899341a22602c8947c2344499cb2e56395ecaab0fca620d56",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "11cfae42a8b186fea0147bd80a57f623",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:25:05Z",
+  "completed_at": "2026-08-05T00:25:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 3144973,
+    "sha256": "b95ce8b9c07277ac93f5f7b389c5885ce7b2a9202a0a1a9b27a5889242c1a956"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02-wan-2-2",
+  "lite_result_sha256": "4e52f9b2be8b483086ae00bc7c0e4337220ffbe77999128b7dd9fe59dfe91d88",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 199430,
+    "sha256": "378d0e7e3dd19759b36561f31d00c1a5b9a7ea0ec148b425137cc286631937c1"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "11cfae42a8b186fea0147bd80a57f623",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

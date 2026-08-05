@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "11-dream-island-pochemu-vybiraiu-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a54047382f340da734e3e/orig",
+      "prompt": "The ornate elevated ride vehicle glides steadily along the curved track toward the golden castle while the swing ride gently turns overhead. Fixed wide view; in the final frame the vehicle is clearly farther around the curve, with the fantasy park still lively.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "00d0d748c8342080e2f902ce761d10aadb89477d07ed7468c1ecf9f89591d9d9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3c5de1e2b581cf3e13407840b839e885",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T07:54:29Z",
+  "completed_at": "2026-08-05T07:54:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 17858043,
+    "sha256": "b9f9fdf3f09963007d1f065d075b25b415dd190e3bec2362d761dba49b9fbddd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-04-wan-2-2",
+  "lite_result_sha256": "507f6e2ac9a51ca0e51de27f7537aabc231f1753da8ef52e0554d0c717e0fc1c",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 571121,
+    "sha256": "9d793a294bb1ce53d0c7627084e512c33df03ceb387547f470b5c5bf5a7138d4"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "3c5de1e2b581cf3e13407840b839e885",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

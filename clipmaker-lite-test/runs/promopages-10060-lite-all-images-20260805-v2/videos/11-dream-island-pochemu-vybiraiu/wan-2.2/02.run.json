@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "11-dream-island-pochemu-vybiraiu-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_687a5391bcfe3d7b9a29bcb7_687a5404bcfe3d7b9a29c6ee/orig",
+      "prompt": "Slowly glide forward down the central alley toward the clock-tower arch, with the facade lights giving a subtle steady shimmer. End on a closer centered view of the glowing arch while the whole themed street remains visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "dbfbbd47ea98caa411bd7b19064e038fad864717f71aff198c8333f0a23d0367",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "aa48e404fc9c30b80a2e9cc67655287d",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T07:52:29Z",
+  "completed_at": "2026-08-05T07:52:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1232,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 25342103,
+    "sha256": "a30d2cab60652245cd54b766b21b7509f83a17593363597244e16de2d330aa7d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-02-wan-2-2",
+  "lite_result_sha256": "fbe10ff3f413e83a827cce05d8f440c68a2d10f21d887b993bd26e9382827208",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 556856,
+    "sha256": "73e770c24e96a5da91a5cf3f5c4c32cbb795823f476733a990b229369b348690"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "aa48e404fc9c30b80a2e9cc67655287d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

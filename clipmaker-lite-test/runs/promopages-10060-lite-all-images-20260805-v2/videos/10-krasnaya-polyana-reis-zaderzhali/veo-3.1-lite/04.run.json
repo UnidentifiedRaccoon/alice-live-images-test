@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-04",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the women. They smoothly raise their drinks toward each other with easy smiles while a light breeze moves their hair. In the final frame the glasses are close together at chest height and both women remain relaxed.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb1f3f63851d4217de9/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "d0ab38449bc33be3b1fc4b1b26bec06e50e2ca635fac96f1b88d73e41599be74",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Lw62hNzfgX9oiteYjTMb",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:29:52Z",
+  "completed_at": "2026-08-05T07:35:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 7663046,
+    "sha256": "1eab05abbf52c9afcecf5ade7ab8a4bd0a09c56592b5710aaefa206e9ef04aea"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-04-veo-3-1-lite",
+  "lite_result_sha256": "158f16fcad2d226c4a905a8267c21d3512e5082a0bbfdc6b9d9fd7b1a4dc8fc9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

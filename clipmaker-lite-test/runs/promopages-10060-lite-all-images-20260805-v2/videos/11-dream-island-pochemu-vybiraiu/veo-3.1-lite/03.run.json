@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "11-dream-island-pochemu-vybiraiu-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed riders’ viewpoint: the pterosaur glides from right toward the left over the jungle, with one slow wingbeat and drifting valley mist. End with the pterosaur clearly suspended above the left-side canopy.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a5404ca2ddc03fc550956/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9aa3c8d2f9825ca0784cfe7353e4ac99d5f97382162ae0dea24465d5704cc3ad",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "i1qO7UjOB9s5O9kUZhtI",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T07:50:22Z",
+  "completed_at": "2026-08-05T07:52:24Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 8904432,
+    "sha256": "bd6901bf0bce1190882700dbe896f0fb1ee3e55563bf1a2e089b7aec9d23948e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-03-veo-3-1-lite",
+  "lite_result_sha256": "c922ef9dc7db858b9c9a2f95fa3a6ff32326bda2f104a3d409078039dfd779fd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

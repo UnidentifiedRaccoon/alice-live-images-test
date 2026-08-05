@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "08-femibion-grudnoe-vskarmlivanie-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed product shot. A gentle warm highlight glides across the orange lower panel and settles at its right edge; the carton remains intact and fully readable in the last frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a5028a717f87730dd3d4f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "247c225984cc40bcaed7209f671a9ebb5db73373b482f21063b92e155ccebfbf",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "FPW0k4AWzWFJVMmTJlyf",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:04:21Z",
+  "completed_at": "2026-08-05T00:05:36Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3259192,
+    "sha256": "eda7d3e9bde6dbca3d8559be5bc202e6a394fd58815b3f367fec050e58b51a2c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-06-wan-2-7",
+  "lite_result_sha256": "ab535b2087631486bdebd79a46f0752c9408d7b4e9fce010775e26ea855573d9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

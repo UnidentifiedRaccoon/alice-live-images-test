@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "08-femibion-grudnoe-vskarmlivanie-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.7/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.7/08.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed view of the source list. A subtle sheen moves downward across the existing blue hyperlinks and fades at the final references, with all text and layout unchanged and readable at the end.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a5028a717f87730dd3d4e/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c5af0da2b05836d5341ebfd22645efe31430db976edde92c6ca04791b35c77b7",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bAvkBxZndHuXBxHtEwfY",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:05:38Z",
+  "completed_at": "2026-08-05T00:07:44Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1746,
+    "height": 1188,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5704273,
+    "sha256": "2109431792a757060fea946e955817b763ef63fc72d734682b4fda32a94baa92"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-08-wan-2-7",
+  "lite_result_sha256": "a5b03b333999ed6cb37bf87f21713b6c8a3442e27a7b6cb230d638ea21730cb5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

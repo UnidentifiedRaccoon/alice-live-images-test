@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "09-m2-risk-vtorichki-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67cc/orig",
+      "prompt": "Fixed UI view. A soft violet sheen travels once from left to right across the existing order-service button at a steady pace, then fades; the final frame shows the unchanged button and all text clearly visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "d7203d0350fd55826fe66ce74f81b6c6984d43ff1c5ba6f4fb594675ec3436ce",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bb942e5311ef642fc67c790ff50e40e6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:27:29Z",
+  "completed_at": "2026-08-05T00:27:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1296,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 3585331,
+    "sha256": "6acc69cf2596ff62b74415b7e29f23c9fa0f7ee841aabb3a7516374af5eecfe3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-05-wan-2-2",
+  "lite_result_sha256": "5433ec6a12bbbf72bfe8f7644b63f0473300e974add5c2087c4f50d896dd0983",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 93685,
+    "sha256": "88c09b3c980d186bcd690712120cc152eab5167a0ca25ae1f69f1ccb68e1fd39"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "bb942e5311ef642fc67c790ff50e40e6",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

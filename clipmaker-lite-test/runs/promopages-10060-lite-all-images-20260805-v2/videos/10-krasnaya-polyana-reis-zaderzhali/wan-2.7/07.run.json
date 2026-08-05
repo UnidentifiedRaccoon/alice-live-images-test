@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.7/07.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman gently lifts her cup into a relaxed chest-height hold, her warm expression unchanged; the family remains quietly together over breakfast. Fixed camera, ending with the cup held steady.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "44fb13c641a7c1d451de1915ff4f4fbc681b465fa13f5c43703425a8aa8ee3d4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "yGlxbl9l9THysNatsgdF",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:30:22Z",
+  "completed_at": "2026-08-05T07:35:01Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3942973,
+    "sha256": "bf0d3a1dd03a85669829fc22255ce232c81aa9f79c0ba378d48d6d7b9bb3bf97"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-07-wan-2-7",
+  "lite_result_sha256": "470ac8da25934d160caf694893d9816382e86c21742c448c5cba32028ad4239f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

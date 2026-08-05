@@ -1,0 +1,194 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:256c2559ff48214f2387abcab560f37584d88565fbf10d1bf612545b1708b9a3",
+    "execution_fingerprint": "sha256:ea71a1e28d20d1589299a8c3b4fc2f96d5b63b6abecaef3630e4f9e0d9d4baef",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef8-f259-7901-bdc2-66ebb32a198e"
+    },
+    "authored_payload_sha256": "2726c7371538007ca247ddfa189057f91af1faac8a212d47ae14799d957a3a22",
+    "draft_file_sha256": "4dd893ee7fe88306a35d1002a52727f3d3e2d2bca84fc7e3a40741e7c991e125"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/02.jpeg",
+      "sha256": "73e770c24e96a5da91a5cf3f5c4c32cbb795823f476733a990b229369b348690",
+      "bytes": 556856
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/content.json",
+      "sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "bytes": 15975,
+      "locator": {
+        "article_id": "11-dream-island-pochemu-vybiraiu",
+        "title": "Почему я выбираю парк развлечений «Остров Мечты»?",
+        "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+        "image_id": "02",
+        "block_index": 9,
+        "role": "article_image",
+        "caption": "Вид на центральную аллею: масштабы парка впечатляют.",
+        "file": "02.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 8,
+          "type": "list_item",
+          "text": "Посидите на лавочке и просто… насладитесь моментом"
+        },
+        "nearest_text_after": {
+          "block_index": 10,
+          "type": "heading",
+          "text": "1 входной билет на все развлечения"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A wide elevated view looks down a brightly lit indoor themed street toward a central clock-tower arch.",
+      "Colorful facade lights, the central alley, decorative trees, and the glass-domed hall provide visible depth and a clear forward focal line.",
+      "The scene is empty of close people; the architectural scale and illuminated decorations are the editorial focus."
+    ],
+    "article_context": "Body image 02 follows an invitation to stroll through the themed zones and is captioned as a view of the central alley whose scale impresses; it should convey the park’s immersive architecture and spaciousness before the ticket-benefit section.",
+    "structured_intent": {
+      "editorial_meaning": "The animation invites the reader to take in the grand, immersive architecture and atmosphere of the park while walking through it.",
+      "primary_action": "Move forward along the central alley toward the clock-tower arch.",
+      "terminal_state": "The central clock-tower arch is visibly closer and centered at the end, with the themed street still recognizable around it.",
+      "semantic_invariant": "The park remains a bright, welcoming, expansive themed indoor destination throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, make one smooth, gentle forward camera glide along the empty central alley, motivated by the invitation to explore the park’s scale. Keep the clock-tower arch centered as the focal target; existing facade lights may softly shimmer as secondary ambient motion. Arrive near the end at a clearly closer, centered view of the brightly lit arch, with both rows of themed buildings still recognizable.",
+      "positive_prompt": "Slowly glide forward down the central alley toward the clock-tower arch, with the facade lights giving a subtle steady shimmer. End on a closer centered view of the glowing arch while the whole themed street remains visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, use a single unhurried push forward that lets the alley’s converging facades reveal the indoor park’s breadth. The camera tracks only toward the central clock-tower arch, while the existing strings of lights have restrained ambient shimmer. The approach resolves close to the end with the arch larger, centered, and still surrounded by the colorful street.",
+      "positive_prompt": "A measured forward glide through the central alley toward the clock-tower arch; the existing decorative lights softly shimmer. Finish with the illuminated arch closer and centered, framed by the visible themed facades.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Within four seconds, create one compact, smooth forward push aimed at the clock-tower arch to emphasize the impressive central alley. Maintain the wide architectural read throughout; only the already visible decorative lights add a faint ambient shimmer. The endpoint is a closer centered arch in the final moments, with the surrounding themed facades remaining in frame.",
+      "positive_prompt": "Gently push forward along the central alley toward the clock-tower arch, with a faint shimmer across the existing decorative lights. End with the glowing arch larger and centered, the colorful street still clearly visible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

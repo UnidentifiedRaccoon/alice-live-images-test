@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The hot-air balloon steadily lifts upward through the still mountain air, with subtle basket-rope motion. Use a fixed wide camera on the balloon. In the final frame, it is clearly higher above the slope and calmly hovering in full view.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb113c3f4407664ee50/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "ec42ac6b89e998b932674dc19e8fe61f498ea585447f76e290e35d70ce2a3d84",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "BcIqIxMnolMafNW6xDNC",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:27:49Z",
+  "completed_at": "2026-08-05T00:29:51Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 13330361,
+    "sha256": "d9ca792e60e25cc665b0795d027f69e69677534d88a9d3a349d06f1c101414bd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01-veo-3-1-lite",
+  "lite_result_sha256": "a2a4084a07baa570293d32cbeb73a17f1b8120485d1ba77c97e61a420eb89f0d",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

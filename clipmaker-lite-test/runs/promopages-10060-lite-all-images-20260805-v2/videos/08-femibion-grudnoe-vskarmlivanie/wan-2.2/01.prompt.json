@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-01-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/01.jpeg",
+    "sha256": "e458129e4952a0695d20feaf86a386fce718ceafd87553b2448d8f4f1232696a",
+    "width": 1920,
+    "height": 1285
+  },
+  "structured_intent": {
+    "editorial_meaning": "Calm, attentive preparation supports a mother navigating breastfeeding information without stress.",
+    "primary_action": "A soft reflection travels across the front baby bottle and settles.",
+    "terminal_state": "The front bottle's transparent nipple holds a gentle settled highlight in the last frame.",
+    "semantic_invariant": "The bottles remain a quiet, reassuring symbol of practical infant-feeding care throughout."
+  },
+  "prompt": {
+    "positive": "A soft reflection slowly glides across the front bottle's clear nipple and collar, with a faint matching shimmer on the bottle behind. Fixed close-up camera. By the final frame, the front nipple holds a calm, settled highlight.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-01/result.json",
+    "sha256": "a8869e3671ca229c42a00e6c8e65643e97f5e89d5bc819479317dcf63071b671",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "e458129e4952a0695d20feaf86a386fce718ceafd87553b2448d8f4f1232696a",
+      "article_context_sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

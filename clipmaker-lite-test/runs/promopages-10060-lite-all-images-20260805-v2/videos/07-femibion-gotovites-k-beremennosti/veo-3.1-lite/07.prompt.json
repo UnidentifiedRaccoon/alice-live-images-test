@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-07-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/07.jpeg",
+    "sha256": "ad2c9d5e6530ab377dd82c7ac9319b99e76b1c86550d207c9eb30f739eb8a5b7",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "A calm, reassuring presentation of Femibion 1 as a vitamin-and-folate complex for pregnancy planning and early pregnancy.",
+    "primary_action": "A soft warm sheen travels across the carton’s existing golden lower panel.",
+    "terminal_state": "The golden lower panel ends with a subtle settled warm highlight near its lower-right edge.",
+    "semantic_invariant": "The product package remains recognizably unchanged and conveys steady, supportive care throughout."
+  },
+  "prompt": {
+    "positive": "Fixed camera on the product carton. A restrained warm glint glides across the golden lower panel from left to right and finishes as a soft settled highlight on the lower-right, leaving all package printing unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-07/result.json",
+    "sha256": "63aabfd6772ec4eafd41a56e854aa9ab5cdb208ed1fc677208f85f6fd1e011e3",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "ad2c9d5e6530ab377dd82c7ac9319b99e76b1c86550d207c9eb30f739eb8a5b7",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

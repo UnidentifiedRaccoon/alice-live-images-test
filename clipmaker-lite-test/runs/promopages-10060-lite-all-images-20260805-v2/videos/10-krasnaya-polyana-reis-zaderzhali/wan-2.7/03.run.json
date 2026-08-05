@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A relaxed couple continues walking arm in arm toward the foreground, taking several even steps as a light breeze stirs their clothes. Fixed camera on the pair; in the final frame they are closer and still calmly proceeding together beneath the mountains.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb1d6edb03d5192c15a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "004079d7541d2348074d52f5ec055c277c58a5efe599d7c7720e293d8c3298d8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cLm2xvJlPxxH9SgOisTe",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:27:47Z",
+  "completed_at": "2026-08-05T00:28:56Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4791476,
+    "sha256": "798c365efaeb1aff26dd91c3ebd534dcce817a33456ea231abc21cc8be988668"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-03-wan-2-7",
+  "lite_result_sha256": "852b4328cb90f6b5d82941b257d8cda5a564b0782f2e65ef92bba6c7299a2913",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

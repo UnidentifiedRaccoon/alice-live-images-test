@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "07-femibion-gotovites-k-beremennosti-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7191255/pub_685a45c483113703283d5b0e_685a477b646ea17f6e81e434/orig",
+      "prompt": "Fixed camera. The sleeping couple breathes slowly and calmly as the white duvet rises and falls softly, then settles into a still, restful final frame with both remaining peacefully asleep.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "a86062309aec6a87765cfd341aba377d529c9ef94a9ca5c10b2964e6032041f3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "745e91e7f5a084e8735ff286badbd712",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:43:47Z",
+  "completed_at": "2026-08-04T23:43:47Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5641708,
+    "sha256": "84b04120d47827ed1550e674a3b17dfde5db04547e1326491fba11b668c645f2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-04-wan-2-2",
+  "lite_result_sha256": "22d5e19924bf033c2297e9a96c95ccf237f7b16ea15f5f3c1798912b03f710e8",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 125079,
+    "sha256": "a04ab57b7bb51c47139d4a2f7408adc91f3c7cf093e3abed7b1255795345973d"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "745e91e7f5a084e8735ff286badbd712",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

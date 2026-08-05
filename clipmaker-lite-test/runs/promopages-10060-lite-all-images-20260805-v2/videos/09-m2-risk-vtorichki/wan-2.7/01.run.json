@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "09-m2-risk-vtorichki-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A deliberate key handover: the key ring descends smoothly into the waiting palm, swaying lightly before settling there in the final moment. Fixed close framing on the keys.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a10486863f26c39b45d9352/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "767b3b70858a1d29afcae7eb90dddb41bd465d5c5206eb0efac2939fe0afaeea",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "lUlt8dhrUTSvWahqXoJY",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:23:34Z",
+  "completed_at": "2026-08-05T00:25:21Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2752690,
+    "sha256": "1deb9ee627d88520b04ce284c2cd17333c7ff9a6718c18712747191129450a16"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-01-wan-2-7",
+  "lite_result_sha256": "3d0888441ee1ae53a8b5fde3d2a577fbb29fef4ed4c783548ffd5f9985ff471b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

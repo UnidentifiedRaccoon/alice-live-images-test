@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-04-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/04.jpeg",
+    "sha256": "9d793a294bb1ce53d0c7627084e512c33df03ceb387547f470b5c5bf5a7138d4",
+    "width": 1600,
+    "height": 1066
+  },
+  "structured_intent": {
+    "editorial_meaning": "A visit to the park is an immersive journey through striking themed scenery and memorable attractions.",
+    "primary_action": "The elevated ride vehicle travels continuously along its curved track toward the castle.",
+    "terminal_state": "The ride vehicle is visibly farther around the curved track, still approaching the castle.",
+    "semantic_invariant": "The location remains a bright, welcoming fantasy park whose décor invites visitors to look around and take photos."
+  },
+  "prompt": {
+    "positive": "The ornate elevated ride vehicle glides steadily along the curved track toward the golden castle while the swing ride gently turns overhead. Fixed wide view; in the final frame the vehicle is clearly farther around the curve, with the fantasy park still lively.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-04/result.json",
+    "sha256": "507f6e2ac9a51ca0e51de27f7537aabc231f1753da8ef52e0554d0c717e0fc1c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "9d793a294bb1ce53d0c7627084e512c33df03ceb387547f470b5c5bf5a7138d4",
+      "article_context_sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb113c3f4407664ee50/orig",
+      "prompt": "The hot-air balloon rises gently and steadily above the slope, with a faint breeze moving the basket ropes. Keep a fixed wide view centered on the balloon; by the final moments it is visibly higher, calmly floating with its branding still clear.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "102eae4bce7174372bd50f384afa60198ad81293d63908e9127276c54d64c9f4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3485699366419ee7e3138af5a6b632f5",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:28:52Z",
+  "completed_at": "2026-08-05T00:28:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 15432918,
+    "sha256": "f70c2642f6d480b7184d46025f7658434080acafec00c8d97cafa646743f83ef"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01-wan-2-2",
+  "lite_result_sha256": "a2a4084a07baa570293d32cbeb73a17f1b8120485d1ba77c97e61a420eb89f0d",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1272221,
+    "sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "3485699366419ee7e3138af5a6b632f5",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

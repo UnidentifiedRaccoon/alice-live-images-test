@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "09-m2-risk-vtorichki-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A steady close observation of the clock as its hands move forward over the stack of transaction papers, ending with the hands clearly farther ahead while the documents remain in place.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67ca/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "859250857e91b7f3206253234aab55d3c5dcf88ab04df553467376d19b60e055",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "UmJMYNZfX9XJg3AEQuuM",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:23:34Z",
+  "completed_at": "2026-08-05T00:25:09Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3983586,
+    "sha256": "d705bca8d94d0a53c7152d7db13c632ba499f86be62cdacd3ceb85b6e2838302"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02-wan-2-7",
+  "lite_result_sha256": "4e52f9b2be8b483086ae00bc7c0e4337220ffbe77999128b7dd9fe59dfe91d88",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
