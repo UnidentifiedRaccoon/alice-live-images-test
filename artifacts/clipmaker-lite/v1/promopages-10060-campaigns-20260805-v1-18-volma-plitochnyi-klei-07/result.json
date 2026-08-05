@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:dc121b3a30d92265df4d29c3648dd02e4d0a00d38f08b1780628225c22e26823",
+    "execution_fingerprint": "sha256:86ae91a3f845a1fd4e725d048f607a9b92f86759b825b55424fd069357e26cb8",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": null,
+      "thread_id": "019fd287-5fe2-7971-aeb2-157ce13124e6"
+    },
+    "authored_payload_sha256": "5f810073c4847103d3806ad86f10cd9bb6ab4216fa0e364f53d7b106a70fbe87",
+    "draft_file_sha256": "3285009ba01f10cd85408cb7ded28d7d15e014f33951e7b875872f838b92cda9"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      "bytes": 27754
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/content.json",
+      "sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "bytes": 19996,
+      "locator": {
+        "article_id": "18-volma-plitochnyi-klei",
+        "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+        "lead": "В статье — ответы экспертов на главные вопросы по плитке во время ремонта",
+        "image_id": "07",
+        "block_index": 36,
+        "role": "article_image",
+        "caption": "",
+        "file": "07.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+        "current_heading": {
+          "block_index": 34,
+          "level": 2,
+          "text": "Вопрос 5. На какой клей укладывать керамогранит?"
+        },
+        "nearest_text_before": {
+          "block_index": 35,
+          "type": "paragraph",
+          "text": "Проблема: керамогранит — тяжелый материал, требует особого подхода. Выбор клея зависит от формата плитки."
+        },
+        "nearest_text_after": {
+          "block_index": 37,
+          "type": "heading",
+          "text": "Чек-лист перед укладкой плитки"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Статичная двухколоночная таблица сопоставляет малый и средний формат керамогранита с клеями «ВОЛМА-Керамик» и «Керамик Плюс», а крупный формат — с «ВОЛМА-Мультиклей» и «ВОЛМА-Экстраклей».",
+      "Под таблицей жирным выделено предупреждение о необходимости очень прочного основания; текст, линии и компоновка интерфейсного изображения должны оставаться неизменными."
+    ],
+    "article_context": "Изображение — справочная таблица внутри ответа на вопрос о выборе клея для керамогранита. Она связывает формат плитки с конкретными продуктами ВОЛМА и отдельно подчеркивает требование к прочности основания; анимация должна облегчить чтение этой рекомендации, не меняя данные.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть, что подходящий плиточный клей выбирают по формату керамогранита, а надежность также зависит от прочности основания.",
+      "primary_action": "Мягкий оптический акцент последовательно проходит по двум существующим строкам рекомендаций.",
+      "terminal_state": "Оптический акцент исчез, а исходная таблица и предупреждение остаются полностью неизменными и читаемыми.",
+      "semantic_invariant": "Все названия продуктов, соответствия форматов, предупреждение и компоновка таблицы сохраняются без изменений."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Пятисекундный непрерывный кадр с неподвижной камерой. Мягкий узкий блик сразу начинает проход по верхней строке, плавно переходит к нижней и к концу затухает. В последнем кадре исходная таблица полностью читаема и не отличается по тексту, линиям и расположению элементов.",
+      "positive_prompt": "Fixed camera. A soft narrow highlight glides steadily across the two recommendation rows from top to bottom, then fades near the final second, leaving the entire table and warning text unchanged and clearly readable in the last frame.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "На протяжении пяти секунд камера зафиксирована, а единый мягкий оптический акцент равномерно спускается от рекомендации для малого и среднего формата к рекомендации для крупного. Его интенсивность естественно ослабевает ближе к финалу; последний кадр показывает неизменную, четко читаемую таблицу и предупреждение.",
+      "positive_prompt": "Fixed camera as one gentle optical highlight travels down the recommendation table, briefly emphasizing each existing row in sequence. It softly dissipates near the end, with all text, lines, and the warning remaining exactly unchanged and readable.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырехсекундный сфокусированный момент с неподвижной камерой: сдержанный мягкий блик одним проходом движется сверху вниз по двум строкам рекомендаций. К концу он растворяется без паузы и второго действия; финал сохраняет исходные тексты, разделители и предупреждение полностью неизменными.",
+      "positive_prompt": "Fixed camera. A restrained soft sheen moves once from the upper recommendation row to the lower row over four seconds, then fades, ending on the original unchanged table with every word, divider, and warning clearly readable.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

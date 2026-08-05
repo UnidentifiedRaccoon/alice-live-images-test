@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/03.jpeg",
+    "sha256": "e1953d89b9aca64214e9ede065ab4d6695a618b6e229ab3f64bc9ef2f775f347",
+    "width": 752,
+    "height": 459
+  },
+  "structured_intent": {
+    "editorial_meaning": "Correct, controlled substrate preparation and adhesive application create the reliable, even base needed for tile installation.",
+    "primary_action": "The hand draws the notched trowel through fresh adhesive to form uniform parallel ridges.",
+    "terminal_state": "A newly combed section of adhesive has even, continuous ridges, with the trowel still visible at the wall.",
+    "semantic_invariant": "The scene remains a precise, professional wall-preparation process for dependable tile adhesion."
+  },
+  "prompt": {
+    "positive": "Fixed close-up as the hand makes one concise upward trowel pass, combing the fresh adhesive into straight, even ridges. Finish with the new ridged section uniform and the trowel still visible against the wall.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03/result.json",
+    "sha256": "1fa0c6167889fbb59a367f82d1699c0a5654760eae61d1952623377d3c1c4fc9",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "e1953d89b9aca64214e9ede065ab4d6695a618b6e229ab3f64bc9ef2f775f347",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

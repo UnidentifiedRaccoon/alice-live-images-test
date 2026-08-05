@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-ca17bb9673fad6ff3d56",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-05T18:36:52Z",
+  "expected_outputs": 1,
+  "summary": {
+    "succeeded": 1
+  },
+  "conforming_outputs": 1,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-ca17bb9673fad6ff3d56-18-volma-plitochnyi-klei-05-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-05",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1776,
+        "height": 512,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 1015510,
+        "sha256": "f5dd85065a61721913d12e82dc78927f7fc4fc7af16830b1a10157fb5403578f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

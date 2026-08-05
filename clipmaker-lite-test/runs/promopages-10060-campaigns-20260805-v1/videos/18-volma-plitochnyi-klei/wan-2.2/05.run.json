@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "submit-unknown",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+      "prompt": "Fixed camera. A soft optical highlight slowly passes once across the existing green recommendation icon and settles as a gentle glow around it by the final frame. Keep every table element unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "94ff3292dac454dd11af7b44b3428110926de1dac54ce29fa976a8212158cec9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": null,
+  "provider_session_hash": null,
+  "submitted_at": null,
+  "completed_at": null,
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"9d2d4347-7fbd-473c-adf2-cc2b7f5199c2\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-06 00:57:29.008\\\", \\\"scheduled_time\\\": \\\"2026-08-06 00:57:29.030\\\", \\\"end_time\\\": \\\"2026-08-06 00:57:30.228\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05-wan-2-2",
+  "lite_result_sha256": "a6216b5caf28e9d183a503336d1f971e928c4e893fcd974cc4eca67a22c25d2f",
+  "provider_may_be_active": true,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 17569,
+    "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543"
+  }
+}

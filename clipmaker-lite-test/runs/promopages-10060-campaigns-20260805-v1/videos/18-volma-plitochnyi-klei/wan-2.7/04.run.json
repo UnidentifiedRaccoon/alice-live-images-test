@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The installer gently seats the tile into the adhesive with steady pressure, gradually aligning the horizontal and vertical joints. Keep the camera fixed; end with the tile flush, level, and securely held against the wall.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf27231/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dd1e03a6be02e28ff5558e17a5352b69c3af3fbe3d26b018bcb35df97f2715d6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "t2t7o6rUNNpX9tUvvE29",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:55:34Z",
+  "completed_at": "2026-08-05T16:56:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1766,
+    "height": 1174,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 9251866,
+    "sha256": "e5eb941e9cb85544e0327f708b8022daced658c1db1475a2ec8edf718991bdc8"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04-wan-2-7",
+  "lite_result_sha256": "da9fa77fc384009f3740d5762e9c0f83a71b491ec982559eece09f0d2aca555b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

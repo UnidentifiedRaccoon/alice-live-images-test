@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf2723e/orig",
+      "prompt": "With one steady forward stroke, the worker draws the notched trowel across the exposed floor, spreading a thin adhesive layer into straight parallel ridges. Fixed overhead camera; by the final frame, the newly combed section is even and aligned with the tile edge.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "db599c420372930aa83eeecf5de7721bc5df8b17927877df3022f761e919fd04",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5fd491170517f397d0aefcb79f43f58f",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T18:40:02Z",
+  "completed_at": "2026-08-05T18:40:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5522960,
+    "sha256": "3f407986d3542ebaa52a8df3285d9f75fbd2fff5480c182ce999678059bd7189"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06-wan-2-2",
+  "lite_result_sha256": "8d52478580a20d8554c9a91e03eafb4d4cc0982d886ed2a8c0562212a512fc64",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 56115,
+    "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "5fd491170517f397d0aefcb79f43f58f",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

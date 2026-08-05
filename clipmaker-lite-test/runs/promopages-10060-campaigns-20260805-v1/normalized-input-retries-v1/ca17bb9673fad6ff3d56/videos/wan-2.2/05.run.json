@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+      "prompt": "Fixed camera. A soft optical highlight slowly passes once across the existing green recommendation icon and settles as a gentle glow around it by the final frame. Keep every table element unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "b51c632a70166187f1d35f5ce8d473daf763c245132c2a3a41c815320bd4f45d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6e610b7de65fb35c229e5860495ae115",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T18:36:52Z",
+  "completed_at": "2026-08-05T18:36:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1776,
+    "height": 512,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 1015510,
+    "sha256": "f5dd85065a61721913d12e82dc78927f7fc4fc7af16830b1a10157fb5403578f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-ca17bb9673fad6ff3d56",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-ca17bb9673fad6ff3d56-18-volma-plitochnyi-klei-05-wan-2-2",
+  "lite_result_sha256": "a6216b5caf28e9d183a503336d1f971e928c4e893fcd974cc4eca67a22c25d2f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 46883,
+    "sha256": "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "6e610b7de65fb35c229e5860495ae115",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

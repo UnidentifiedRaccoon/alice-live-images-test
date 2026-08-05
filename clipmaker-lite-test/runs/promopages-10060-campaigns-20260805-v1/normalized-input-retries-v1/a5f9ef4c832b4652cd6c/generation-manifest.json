@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-a5f9ef4c832b4652cd6c",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-05T22:59:26Z",
+  "expected_outputs": 1,
+  "summary": {
+    "verification-failed": 1
+  },
+  "conforming_outputs": 0,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-a5f9ef4c832b4652cd6c-18-volma-plitochnyi-klei-08-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-08",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/a5f9ef4c832b4652cd6c/videos/wan-2.7/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/a5f9ef4c832b4652cd6c/videos/wan-2.7/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/a5f9ef4c832b4652cd6c/videos/wan-2.7/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2842,
+        "height": 728,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2777218,
+        "sha256": "6c39917c8182af95f3aff3c2c45f02c2d05edc1be9e6476a708165812d8d99c0"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    }
+  ]
+}

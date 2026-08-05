@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With a slow coordinated push on the lifting frame, the installers seat the large slab against the combed adhesive. The slab settles evenly and ends aligned, stable, and flush with the wall. Fixed camera.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf27224/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2b70de10f118ffa2c2fbbdf2446aec5a959f30618b44e2bedbd3d453cc5094f9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "vGA00nhwzerqMm8pe0J5",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:54:13Z",
+  "completed_at": "2026-08-05T16:56:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2034,
+    "height": 1020,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3735227,
+    "sha256": "20808e1eeb5aed289e98b445a099d828eb96643a3fdc308f6c84e26f73a986aa"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02-wan-2-7",
+  "lite_result_sha256": "322a042a08bb17b0994f741daaa220ac17f5396b9372a5724d3d9d4f3c3a4394",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

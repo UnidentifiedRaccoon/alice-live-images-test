@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With a smooth controlled upward pass, the hand combs the fresh adhesive into evenly spaced parallel ridges. Keep the camera fixed; end with a uniform ridged strip and the trowel still touching the wall.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a267e54c6621a31e5630a18_6a267e6f81cbac61b6b6a8cf/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "95a92e9ebf6c2e22631824c43b638a98b8d8f691ecd012b263a8e6357c5fdd20",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "FqnBzKGP057sEQ3FBRha",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:54:13Z",
+  "completed_at": "2026-08-05T16:56:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1842,
+    "height": 1124,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5975838,
+    "sha256": "4c700b345f3c17540444fe317b7be56af0078be64b7299b07c7b156852c85d61"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03-wan-2-7",
+  "lite_result_sha256": "1fa0c6167889fbb59a367f82d1699c0a5654760eae61d1952623377d3c1c4fc9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

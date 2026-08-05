@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-campaign-extension-normalized-input-retry",
+  "ticket": "PROMOPAGES-10060",
+  "primary_batch_id": "promopages-10060-campaigns-20260805-v1",
+  "retry_number": 1,
+  "agent_id": "clipmaker-lite",
+  "logical_output_key": {
+    "article_slug": "18-volma-plitochnyi-klei",
+    "image_id": "07",
+    "model_id": "alibaba/wan-2.7"
+  },
+  "primary_attempt": {
+    "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07-wan-2-7",
+    "provider_job_id": "6C4hzugE4O5couny93cp",
+    "provider_task_id": null,
+    "status": "provider-failed",
+    "recorded_status": "provider-failed",
+    "provider_may_be_active": false,
+    "recorded_provider_may_be_active": false,
+    "recorded_provider_job_id": "6C4hzugE4O5couny93cp",
+    "submitted_at": "2026-08-05T16:56:48Z",
+    "completed_at": "2026-08-05T16:57:39Z",
+    "error": "Eliza/OpenRouter job 6C4hzugE4O5couny93cp failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 773x239\", \"internal_name\": \"InvalidParameter\"}",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/07.run.json",
+    "run_sha256": "a5f80875cd2b90e2c806d0ca7eb84040851417b8dfa3f9c0e90eae232d41b35a",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/07.prompt.json",
+    "prompt_sha256": "f808037a19c317cd1784f7910da280a2b94adedb0935eb7bca966a7483c4d5f3",
+    "request": {
+      "model": "alibaba/wan-2.7",
+      "prompt": "Fixed camera as one gentle optical highlight travels down the recommendation table, briefly emphasizing each existing row in sequence. It softly dissipates near the end, with all text, lines, and the warning remaining exactly unchanged and readable.",
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "seed": 9681,
+      "generate_audio": false,
+      "frame_images": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig"
+          },
+          "frame_type": "first_frame"
+        }
+      ],
+      "provider": {
+        "options": {
+          "atlas-cloud": {
+            "parameters": {
+              "prompt_extend": true
+            }
+          }
+        }
+      }
+    },
+    "request_sha256": "c829cb8b6ed8af6f19804bcce29d5968d3de671b7c8c955a21027f49ad78a92b",
+    "request_fingerprint_version": 2,
+    "lite_result_path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07/result.json",
+    "lite_result_sha256": "cf6d2fc646b5e7f8360f3bb3d0f5da4947c75508596afd0ed9635fb28d54bc1f",
+    "source": {
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      "bytes": 27754,
+      "width": 773,
+      "height": 239
+    },
+    "model_id": "alibaba/wan-2.7",
+    "adapter": "eliza-openrouter",
+    "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07"
+  },
+  "retry_attempt": {
+    "retry_key": "c45a8447813d1b4e4df0",
+    "batch_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c45a8447813d1b4e4df0",
+    "provider_run_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7",
+    "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07",
+    "model_id": "alibaba/wan-2.7",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+    "source_sha256": "7f71227971a99ca0f204eccadb89a706128eabfb6022657bf8718e952fca70e4",
+    "source_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/0535f187b92384618210/normalized.png",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/c45a8447813d1b4e4df0/videos/wan-2.7/07.prompt.json",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/c45a8447813d1b4e4df0/videos/wan-2.7/07.run.json",
+    "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/c45a8447813d1b4e4df0/videos/wan-2.7/07.mp4",
+    "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/c45a8447813d1b4e4df0/generation-manifest.json",
+    "request": {
+      "model": "alibaba/wan-2.7",
+      "prompt": "Fixed camera as one gentle optical highlight travels down the recommendation table, briefly emphasizing each existing row in sequence. It softly dissipates near the end, with all text, lines, and the warning remaining exactly unchanged and readable.",
+      "duration": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "seed": 9681,
+      "generate_audio": false,
+      "frame_images": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/0535f187b92384618210/normalized.png"
+          },
+          "frame_type": "first_frame"
+        }
+      ],
+      "provider": {
+        "options": {
+          "atlas-cloud": {
+            "parameters": {
+              "prompt_extend": true
+            }
+          }
+        }
+      }
+    },
+    "request_sha256": "856d0b61fe665e11e93a294a16cf7bfa6deaac302c68df951c7096b4b2736ce8",
+    "request_fingerprint_version": 2
+  },
+  "source_transform": {
+    "strategy": "deterministic-uniform-upscale",
+    "original": {
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      "bytes": 27754,
+      "width": 773,
+      "height": 239
+    },
+    "normalized": {
+      "http_status": 200,
+      "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/0535f187b92384618210/normalized.png",
+      "sha256": "7f71227971a99ca0f204eccadb89a706128eabfb6022657bf8718e952fca70e4",
+      "bytes": 57771,
+      "width": 828,
+      "height": 256,
+      "format": "PNG",
+      "delivery": "repository-raw",
+      "repository_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/0535f187b92384618210/normalized.png",
+      "source_commit_sha": "25995ee6ea168d2ae7025e5a416bc008ae17a908",
+      "metadata_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/0535f187b92384618210/asset.json",
+      "metadata_sha256": "f748a9609ab2610bfacce0c521d8542fca195a143f9ae9cea462025d105dc080"
+    },
+    "request_delta": {
+      "json_pointer": "/frame_images/0/image_url/url",
+      "from": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+      "to": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/0535f187b92384618210/normalized.png",
+      "changed_leaf_count": 1
+    },
+    "preparation": {
+      "operation": "uniform-scale",
+      "target_height": 256,
+      "resampler": "lanczos",
+      "crop": false,
+      "local_reencode": true
+    },
+    "minimum_provider_input_dimension": 240
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 1000.0,
+    "hard_budget_cap_usd": 1000.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 38.15,
+    "estimated_headroom_usd": 961.85,
+    "planned_paid_submissions": 102,
+    "maximum_paid_submissions": 109,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job; provider-confirmed terminal failures may receive at most one separately namespaced, explicit retry-v1 submit; a quarantined exact-route provider submit with unknown outcome may receive at most one separately namespaced, explicit ambiguous-submit retry-v1; each exact oversize Wan primary may receive one separately namespaced normalized-input retry-v1 whose only request change is the frozen image URL; every immutable reservation is included in the aggregate accounting maximum",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery",
+    "terminal_retry_version": 1,
+    "terminal_retry_accounting_cost_usd": 0.35,
+    "terminal_retry_reservations": 2,
+    "ambiguous_submit_retry_version": 1,
+    "ambiguous_submit_retry_accounting_cost_usd": 0.35,
+    "ambiguous_submit_retry_reservations": 1,
+    "normalized_input_retry_version": 1,
+    "normalized_input_retry_accounting_cost_usd": 0.35,
+    "normalized_input_retry_reservations": 4,
+    "total_retry_reservations": 7,
+    "maximum_new_paid_submissions_per_failed_output": 1,
+    "maximum_new_paid_submissions_per_ambiguous_output": 1,
+    "maximum_new_paid_submissions_per_normalized_input_output": 1
+  },
+  "policy": {
+    "explicit_operator_command_required": true,
+    "automatic_retry": false,
+    "maximum_new_paid_submissions": 1,
+    "retry2_forbidden": true,
+    "same_verified_lite_result": true,
+    "same_prompt": true,
+    "same_model": true,
+    "request_delta_only_image_pointer": true,
+    "shared_frozen_scale_1200_asset": false,
+    "local_reencode": true,
+    "fallback": false,
+    "primary_receipt_immutable": true,
+    "commit_pinned_repository_asset": true,
+    "normalization_strategy": "deterministic-uniform-upscale"
+  }
+}

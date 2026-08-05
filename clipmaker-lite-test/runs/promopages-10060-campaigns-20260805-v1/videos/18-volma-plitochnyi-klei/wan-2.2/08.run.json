@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "submit-unknown",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fc6621a31e5630ed8/orig",
+      "prompt": "Fixed camera. A restrained blue sheen moves once from left to right across both VOLMA bags at an even pace, then settles as a soft balanced accent on both product labels in the final frame. Keep every word, number, logo, package shape, portrait, and layout unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "8d8e22325f02352264aa493b2c196dbdbcbad4d2ef53017facb77f95d9dd9c88",
+  "request_fingerprint_version": 2,
+  "provider_job_id": null,
+  "provider_session_hash": null,
+  "submitted_at": null,
+  "completed_at": null,
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"5d654252-e2c1-4a80-822f-c9777a6e7ae0\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-06 06:51:49.753\\\", \\\"scheduled_time\\\": \\\"2026-08-06 06:51:49.774\\\", \\\"end_time\\\": \\\"2026-08-06 06:51:50.928\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08-wan-2-2",
+  "lite_result_sha256": "3589258d95bbd8a95c8af335ac19518fe463f51275d9874a1b21cade50f0817e",
+  "provider_may_be_active": true,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 30852,
+    "sha256": "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03"
+  }
+}

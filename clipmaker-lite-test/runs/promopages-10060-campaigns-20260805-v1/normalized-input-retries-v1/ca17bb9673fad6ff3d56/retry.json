@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-campaign-extension-normalized-input-retry",
+  "ticket": "PROMOPAGES-10060",
+  "primary_batch_id": "promopages-10060-campaigns-20260805-v1",
+  "retry_number": 1,
+  "agent_id": "clipmaker-lite",
+  "logical_output_key": {
+    "article_slug": "18-volma-plitochnyi-klei",
+    "image_id": "05",
+    "model_id": "alibaba/wan-2.2"
+  },
+  "primary_attempt": {
+    "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05-wan-2-2",
+    "provider_job_id": "9d2d4347-7fbd-473c-adf2-cc2b7f5199c2",
+    "provider_task_id": "9d2d4347-7fbd-473c-adf2-cc2b7f5199c2",
+    "status": "provider-failed",
+    "recorded_status": "submit-unknown",
+    "provider_may_be_active": false,
+    "recorded_provider_may_be_active": true,
+    "recorded_provider_job_id": null,
+    "submitted_at": null,
+    "completed_at": null,
+    "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"9d2d4347-7fbd-473c-adf2-cc2b7f5199c2\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-06 00:57:29.008\\\", \\\"scheduled_time\\\": \\\"2026-08-06 00:57:29.030\\\", \\\"end_time\\\": \\\"2026-08-06 00:57:30.228\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.run.json",
+    "run_sha256": "ff4f246b8dfa6c221e326cd15018fd4d4f681f6eb657ffaa0c7185fcc2e24eb6",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.prompt.json",
+    "prompt_sha256": "aa87872a91a57f0ff7c90cbb7a1dc4f2c56d0dffddada97453c2959bf99f5a13",
+    "request": {
+      "endpoint": "/wan-2.2-i2v-flash",
+      "model": "alibaba/wan-2.2",
+      "provider": "segmind",
+      "provider_model_id": "segmind/wan-2.2-i2v-flash",
+      "input": {
+        "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+        "prompt": "Fixed camera. A soft optical highlight slowly passes once across the existing green recommendation icon and settles as a gentle glow around it by the final frame. Keep every table element unchanged.",
+        "negative_prompt": "",
+        "resolution": "720p",
+        "prompt_extend": false,
+        "watermark": false,
+        "seed": 220214
+      }
+    },
+    "request_sha256": "94ff3292dac454dd11af7b44b3428110926de1dac54ce29fa976a8212158cec9",
+    "request_fingerprint_version": 2,
+    "lite_result_path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05/result.json",
+    "lite_result_sha256": "a6216b5caf28e9d183a503336d1f971e928c4e893fcd974cc4eca67a22c25d2f",
+    "source": {
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+      "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+      "bytes": 17569,
+      "width": 758,
+      "height": 220
+    },
+    "model_id": "alibaba/wan-2.2",
+    "adapter": "eliza-segmind",
+    "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+    "provider_failure": {
+      "http_status": 400,
+      "provider_task_id": "9d2d4347-7fbd-473c-adf2-cc2b7f5199c2",
+      "provider_task_status": "FAILED",
+      "provider_error_code": "InvalidParameter",
+      "provider_error_message": "Image height or width is too small than 240",
+      "submit_time": "2026-08-06 00:57:29.008",
+      "scheduled_time": "2026-08-06 00:57:29.030",
+      "end_time": "2026-08-06 00:57:30.228"
+    },
+    "provider_submit_time": "2026-08-06 00:57:29.008",
+    "provider_scheduled_time": "2026-08-06 00:57:29.030",
+    "provider_end_time": "2026-08-06 00:57:30.228"
+  },
+  "retry_attempt": {
+    "retry_key": "ca17bb9673fad6ff3d56",
+    "batch_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-ca17bb9673fad6ff3d56",
+    "provider_run_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-ca17bb9673fad6ff3d56-18-volma-plitochnyi-klei-05-wan-2-2",
+    "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+    "model_id": "alibaba/wan-2.2",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+    "source_sha256": "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23",
+    "source_url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.prompt.json",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.run.json",
+    "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/videos/wan-2.2/05.mp4",
+    "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/ca17bb9673fad6ff3d56/generation-manifest.json",
+    "request": {
+      "endpoint": "/wan-2.2-i2v-flash",
+      "model": "alibaba/wan-2.2",
+      "provider": "segmind",
+      "provider_model_id": "segmind/wan-2.2-i2v-flash",
+      "input": {
+        "image": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+        "prompt": "Fixed camera. A soft optical highlight slowly passes once across the existing green recommendation icon and settles as a gentle glow around it by the final frame. Keep every table element unchanged.",
+        "negative_prompt": "",
+        "resolution": "720p",
+        "prompt_extend": false,
+        "watermark": false,
+        "seed": 220214
+      }
+    },
+    "request_sha256": "b51c632a70166187f1d35f5ce8d473daf763c245132c2a3a41c815320bd4f45d",
+    "request_fingerprint_version": 2
+  },
+  "source_transform": {
+    "strategy": "deterministic-uniform-upscale",
+    "original": {
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+      "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+      "bytes": 17569,
+      "width": 758,
+      "height": 220
+    },
+    "normalized": {
+      "http_status": 200,
+      "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+      "sha256": "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23",
+      "bytes": 46883,
+      "width": 882,
+      "height": 256,
+      "format": "PNG",
+      "delivery": "repository-raw",
+      "repository_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+      "source_commit_sha": "25995ee6ea168d2ae7025e5a416bc008ae17a908",
+      "metadata_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/asset.json",
+      "metadata_sha256": "9c15789fad15c0418ec4eef4d223e66177621d7f274b3b4122066440c1cbcedc"
+    },
+    "request_delta": {
+      "json_pointer": "/input/image",
+      "from": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+      "to": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+      "changed_leaf_count": 1
+    },
+    "preparation": {
+      "operation": "uniform-scale",
+      "target_height": 256,
+      "resampler": "lanczos",
+      "crop": false,
+      "local_reencode": true
+    },
+    "minimum_provider_input_dimension": 240
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 1000.0,
+    "hard_budget_cap_usd": 1000.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 37.1,
+    "estimated_headroom_usd": 962.9,
+    "planned_paid_submissions": 102,
+    "maximum_paid_submissions": 106,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job; provider-confirmed terminal failures may receive at most one separately namespaced, explicit retry-v1 submit; a quarantined exact-route provider submit with unknown outcome may receive at most one separately namespaced, explicit ambiguous-submit retry-v1; each exact oversize Wan primary may receive one separately namespaced normalized-input retry-v1 whose only request change is the frozen image URL; every immutable reservation is included in the aggregate accounting maximum",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery",
+    "terminal_retry_version": 1,
+    "terminal_retry_accounting_cost_usd": 0.35,
+    "terminal_retry_reservations": 2,
+    "ambiguous_submit_retry_version": 1,
+    "ambiguous_submit_retry_accounting_cost_usd": 0.35,
+    "ambiguous_submit_retry_reservations": 1,
+    "normalized_input_retry_version": 1,
+    "normalized_input_retry_accounting_cost_usd": 0.35,
+    "normalized_input_retry_reservations": 1,
+    "total_retry_reservations": 4,
+    "maximum_new_paid_submissions_per_failed_output": 1,
+    "maximum_new_paid_submissions_per_ambiguous_output": 1,
+    "maximum_new_paid_submissions_per_normalized_input_output": 1
+  },
+  "policy": {
+    "explicit_operator_command_required": true,
+    "automatic_retry": false,
+    "maximum_new_paid_submissions": 1,
+    "retry2_forbidden": true,
+    "same_verified_lite_result": true,
+    "same_prompt": true,
+    "same_model": true,
+    "request_delta_only_image_pointer": true,
+    "shared_frozen_scale_1200_asset": false,
+    "local_reencode": true,
+    "fallback": false,
+    "primary_receipt_immutable": true,
+    "commit_pinned_repository_asset": true,
+    "normalization_strategy": "deterministic-uniform-upscale"
+  }
+}

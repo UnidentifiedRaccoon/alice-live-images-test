@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. A broad, subtle reflection glides continuously from the marble wall across to the dark floor tiles, gently bringing out the surface textures. It reaches the far-right tile area near the end and softens there, with the installation remaining perfectly unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a30e9cc66e1c52e2cb60ab1/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "70335a3995386c8613c0293e70a00ba73a35ff494c784eb412db17eb59f2cbad",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "XvdPTOAym1aUTSIQZYja",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:54:13Z",
+  "completed_at": "2026-08-05T16:55:33Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2036,
+    "height": 1018,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5314950,
+    "sha256": "60766dc2ad6c51c19c3e7fd4568f0d8c7fa37c40845e823968bd8c6b6e6e7674"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01-wan-2-7",
+  "lite_result_sha256": "f7603db39b30b011611556b8b1fa68369a949c8773dd4bea1416455b0a7e4616",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
