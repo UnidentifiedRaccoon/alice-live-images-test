@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3b55c4222ecf5576e/orig",
+      "prompt": "The spiked roller travels steadily across the wet floor from left toward center, releasing small air bubbles as shallow ripples spread and settle behind it. Fixed camera; by the final frames, the treated strip is visibly smooth and even while the headline and product bag remain stationary and readable.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "272efd2c348367c8de816474688b02c5bd549d4759d16274e21e37d360145e2a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ed71df755e8253bb253cfce80cde94dc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:39:54Z",
+  "completed_at": "2026-08-05T16:39:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 10344075,
+    "sha256": "795b454a951031e2855d930413381fde651dc010cff90548bc5af947c930bdf4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03-wan-2-2",
+  "lite_result_sha256": "f7bcc51845cebdf44202e7a18667a6f8f15a057bf1a0e679bdb5f2f48b805e22",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1053398,
+    "sha256": "e101c745034dfa157c843b823bf3e1d1c99aa06f757822a9d4c735d4bbcc53d9"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "ed71df755e8253bb253cfce80cde94dc",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

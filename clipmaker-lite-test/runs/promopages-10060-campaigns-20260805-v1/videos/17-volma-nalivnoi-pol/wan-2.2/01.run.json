@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268ef3bf5214766a59098a/orig",
+      "prompt": "A thin veil of loose construction dust lifts from the floor near the brick wall, drifts slowly to the right, then settles back across the rough surface by the final frames. Fixed camera; the wall, bucket, tools, and debris remain clearly visible and unmoved.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "991f4931b77ce4ebe8873e72330ae8226ce89e622c7a011d23322696345c3cea",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9481470c7f6aa346ff7f1bece675dbbc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:38:04Z",
+  "completed_at": "2026-08-05T16:38:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6981879,
+    "sha256": "37e2d12f86f309f305ec3e21fc6ddf14389fcbc6975eb66d1245f8acff4f05e1"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01-wan-2-2",
+  "lite_result_sha256": "b744bf1777949aeae24ff837e860747798714b198576ae580f786caeeae9bea2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 758704,
+    "sha256": "c0bbdf8d577aeb4e5c4e2c725b75d0e25e3abb27f268775b757841ffee3da9b6"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "9481470c7f6aa346ff7f1bece675dbbc",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

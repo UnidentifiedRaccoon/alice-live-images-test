@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/03.png",
+    "sha256": "e101c745034dfa157c843b823bf3e1d1c99aa06f757822a9d4c735d4bbcc53d9",
+    "width": 1080,
+    "height": 722
+  },
+  "structured_intent": {
+    "editorial_meaning": "Правильная обработка свежей смеси помогает получить ровный наливной пол и избежать дефектов.",
+    "primary_action": "Игольчатый валик одним непрерывным проходом деаэрирует и выравнивает свежую смесь.",
+    "terminal_state": "За валиком остаётся визуально спокойная, равномерно гладкая полоса пола без заметных пузырьков.",
+    "semantic_invariant": "Кадр сохраняет смысл аккуратной профессиональной работы с наливным полом и неизменный рекламный акцент на продукте ВОЛМА."
+  },
+  "prompt": {
+    "positive": "The spiked roller travels steadily across the wet floor from left toward center, releasing small air bubbles as shallow ripples spread and settle behind it. Fixed camera; by the final frames, the treated strip is visibly smooth and even while the headline and product bag remain stationary and readable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03/result.json",
+    "sha256": "f7bcc51845cebdf44202e7a18667a6f8f15a057bf1a0e679bdb5f2f48b805e22",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "e101c745034dfa157c843b823bf3e1d1c99aa06f757822a9d4c735d4bbcc53d9",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+    "width": 1068,
+    "height": 699
+  },
+  "structured_intent": {
+    "editorial_meaning": "Interrupted or excessively slow pouring can cause uneven hardening, cracking, and costly removal of the failed floor.",
+    "primary_action": "The existing fracture propagates through the loose central floor slab as its weakened edge crumbles and settles.",
+    "terminal_state": "The central crack is visibly longer and more open, with the adjacent slab edge slightly displaced and fresh grit in the gap.",
+    "semantic_invariant": "The floor remains visibly failed and under demolition, reinforcing the consequence of an improper interrupted pour."
+  },
+  "prompt": {
+    "positive": "A crack slowly extends across the central loose floor slab as its edge crumbles and settles slightly, releasing a small trickle of dust and grit. Fixed camera; by the final frame the longer open crack and displaced edge are clearly visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08/result.json",
+    "sha256": "cc0dc7efa0963e82dabb775d2d81d9e16fa69032ba77c8c5f789ca947574f5e4",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
