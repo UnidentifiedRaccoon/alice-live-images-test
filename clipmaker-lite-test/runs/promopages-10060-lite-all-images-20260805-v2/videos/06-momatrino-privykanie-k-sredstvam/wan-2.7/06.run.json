@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. A gentle light sheen glides down the existing bibliography page, emphasizing its supporting-source role, then fades; the final frame shows the complete source list unchanged and clearly readable.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_693bc9e8d469ca47a341cedd_694a69110124957a763dd8e1/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "1cca8849b98c70561efad4328032644f4d760c8893c2726928ab84dd5e7cd322",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "jRQUWohr4sEVpl73mMtU",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:36:44Z",
+  "completed_at": "2026-08-04T23:38:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1474,
+    "height": 1406,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 12027483,
+    "sha256": "d95ac630620f3745a93b488c44d281b0ea16ea2d72011c398260afa120302ced"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-06-wan-2-7",
+  "lite_result_sha256": "589a0390320cb5b4e1408edf2e6f88fe956bf230dd790165be1be0e4a305a144",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

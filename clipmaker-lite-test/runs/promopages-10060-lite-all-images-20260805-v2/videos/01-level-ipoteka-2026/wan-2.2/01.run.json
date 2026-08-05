@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "01-level-ipoteka-2026-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a048df5952e1f1e50d6b5d0/orig",
+      "prompt": "The woman walks steadily away from the entrance along the sunlit path as leaves and grasses stir lightly; a slow forward camera drift keeps the entrance and her in view, ending with her clearly farther along the walkway in the welcoming residential courtyard.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "f63b72c7c7165bc7b39bc6506945891f048779c825de9e5f48a96cb87c76ff76",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "915cadb8e6cb5d0200cfaa191317ae83",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T22:58:01Z",
+  "completed_at": "2026-08-04T22:58:01Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 18566745,
+    "sha256": "24a1d82c512d99ab506f9da7f1c09dab8a435b3e0107f0fe87d569d3fe600507"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01-wan-2-2",
+  "lite_result_sha256": "f5c914d73341d0aa9c80a6a295988cd54837ee06e3927ccb79b402614d89b684",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 2394900,
+    "sha256": "e718914a24cd86ae85b722b646353501f41e1b140e82b60bd17b8e5be27617f1"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "915cadb8e6cb5d0200cfaa191317ae83",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

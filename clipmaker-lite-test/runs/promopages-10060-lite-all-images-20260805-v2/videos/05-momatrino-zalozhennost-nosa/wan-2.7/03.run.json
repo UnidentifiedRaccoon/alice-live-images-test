@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed shot of the humidifier as its mist rises in a smooth, continuous stream and gradually fans into a soft cloud above it, ending with the plume visibly suspended in the air.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c1d6745fd1ab1192bad/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8fd95452ba72dc9189516fecbc45f4ce4a7638fe10b59978e400b9cc9adbddff",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "oxJ3XYm0SQHJzqmSbIPt",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:28:34Z",
+  "completed_at": "2026-08-04T23:30:23Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4154478,
+    "sha256": "43e86764626734a0dd395135ba9671b8630f7c7a7fc31e23f8f54a343574a1b9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03-wan-2-7",
+  "lite_result_sha256": "24d376bc5bc9ba5009e19feab415dd4763be29697f332bc5220b534d384442bb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

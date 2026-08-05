@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69d4aaf3b4df0f51975be64b_69d4ab1bb4df0f51975bea82/orig",
+      "prompt": "The existing black arrow glides gently downward along its current diagonal and settles with its tip precisely on the 3.9 closet room; a restrained soft glow briefly concentrates there, ending with the arrow clearly pointing to the room. Fixed camera.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "181e8d280f530d029e93cf9761b0fddce87addf62ac643235f8b7f4eb58aaf40",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "55fdf4ef78b8950166a4ca569bfb688d",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:16:44Z",
+  "completed_at": "2026-08-04T23:16:44Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 2350346,
+    "sha256": "0090c4bc46b32d86a2e5c7a24ef3795ed8ab35cd6b477cc06da09a648029fa9f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09-wan-2-2",
+  "lite_result_sha256": "b117858d05337b21c8902f64ede51063cfd9113380d80b5df4b4358a2cd09984",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 143585,
+    "sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "55fdf4ef78b8950166a4ca569bfb688d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

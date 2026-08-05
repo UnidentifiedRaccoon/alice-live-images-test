@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the man's back as the warm shower runs steadily over his shoulders; he gently lowers his head and settles into a relaxed posture, ending under the continuous stream.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_693bc9e8d469ca47a341cedd_694a68de6745fd1ab118ccad/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "22537de22a732208b2686eecc722e2f5c6418498021b86e1b73cfadc065ad228",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8MFwCiOdpiIDCt2QkhNc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:35:05Z",
+  "completed_at": "2026-08-04T23:36:59Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3997466,
+    "sha256": "7a3820d842da4ce9fbb9e6ba1a64826f463f843d0c8349460966e6f7490317c1"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-03-veo-3-1-lite",
+  "lite_result_sha256": "bc2e48aba56adc1b96c6223ba68db373d176fe19d273603ffea151e5adff45f2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

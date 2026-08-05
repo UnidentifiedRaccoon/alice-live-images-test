@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "01-level-ipoteka-2026-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. A gentle blue glint sweeps across the February 2026 Moscow bar and fades at the right endpoint by the final frame, while every chart value and element stays unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a048ddca495b52c9d873940_6a049120952e1f1e50d73cc7/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "ee752a331539b78a373ac8847a446a6eaa00ea17bc432e85c755caeadbde37f0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "0noEXcSRKcI1485DUFZP",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T22:54:56Z",
+  "completed_at": "2026-08-04T22:56:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 560625,
+    "sha256": "d9e9391c588db965640646fbda3f3a0c8d8b3aa3cc335cded3c712421da8fd03"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-03-veo-3-1-lite",
+  "lite_result_sha256": "df38ed6d9d135744fbc52a7d8b26e34dd6044482074cd229072eb9d3f44c73e6",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

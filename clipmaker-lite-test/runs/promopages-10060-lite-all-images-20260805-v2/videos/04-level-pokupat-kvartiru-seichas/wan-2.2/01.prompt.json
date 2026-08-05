@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-01-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/01.jpeg",
+    "sha256": "9ddb81151d62d69f921a1383c100cfd45a843e6ff2f839a029246cf8db4f47ae",
+    "width": 1080,
+    "height": 1080
+  },
+  "structured_intent": {
+    "editorial_meaning": "A purchased apartment is presented as an immediately comfortable, personal place to live.",
+    "primary_action": "A faint indoor draft gently stirs the loose throw on the sofa until it settles.",
+    "terminal_state": "The throw rests naturally in a relaxed drape on the sofa.",
+    "semantic_invariant": "The apartment remains a calm, welcoming and completed home throughout."
+  },
+  "prompt": {
+    "positive": "A faint indoor draft gently lifts the loose edge and fringe of the throw on the sofa, then lets it settle naturally into a relaxed drape by the final moment. Slow, subtle push-in toward the sofa.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-01/result.json",
+    "sha256": "34820197eaaa085e8cefcec34a8f11c0028c8b7ca13bf1165c9e83a7499da0b3",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "9ddb81151d62d69f921a1383c100cfd45a843e6ff2f839a029246cf8db4f47ae",
+      "article_context_sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

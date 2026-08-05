@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_694a6039f141406a65b10339_694a6c05f141406a65b26991/orig",
+      "prompt": "The cat takes a slow, deliberate step past the closed book, its tail making one gentle sway. Fixed camera on the cat and bookcase. By the final frame, the cat has settled its front paw beyond the book and remains calmly alert.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "5437f41a7df1007991dfbbce5d144bf6bb614d200d5c2872efc48a95258bcabc",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "d6abae70cc3ee43194965e84403fc24d",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:29:19Z",
+  "completed_at": "2026-08-04T23:29:19Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 960,
+    "height": 960,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6878677,
+    "sha256": "8e809d849253d6c22007794bd2d8123e2ceabe52caab2fd36f95bc999c05a5e5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-01-wan-2-2",
+  "lite_result_sha256": "a3190613bf24e2bafc159ff1f3cf0b898b8f2e4a50ff97ac382128cf9c2a245f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 235695,
+    "sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "d6abae70cc3ee43194965e84403fc24d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

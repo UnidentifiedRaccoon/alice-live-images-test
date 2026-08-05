@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the cat as it completes one gentle forward step beside the book, ending calmly with its paw planted and its gaze held to the left.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_694a6039f141406a65b10339_694a6c05f141406a65b26991/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "264b62ff735732bc2aa70ceeacae61f6e001287aadb452b78ef0167a4c3817ff",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "wLKP1OT8DUDboP8rBeeu",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:28:36Z",
+  "completed_at": "2026-08-04T23:30:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3631301,
+    "sha256": "457f539968bbcf3154c766f68d25a37b4a1a5d56d81abc793cccee8fa7490fdd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02-veo-3-1-lite",
+  "lite_result_sha256": "099e0d160706ffc32ba04963de6a2d34942321e60937a497adf7fdb9747f9fcb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

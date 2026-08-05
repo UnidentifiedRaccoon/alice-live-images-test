@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With a fixed camera, the cat slowly completes a single step past the loose book and settles with both front paws grounded, still facing left.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_694a6039f141406a65b10339_694a6c05f141406a65b26991/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "65819c33813e72df21f0f9fd8a21a5851153937b34cb4839a837ca6d4d73cc66",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "u3SwUFXqkdsuI6CCsOzl",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:28:34Z",
+  "completed_at": "2026-08-04T23:29:18Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2898471,
+    "sha256": "c0765e8c86bba74afc0ca02260e66529598168a014d1d5dad85470dd7b2019fc"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02-wan-2-7",
+  "lite_result_sha256": "099e0d160706ffc32ba04963de6a2d34942321e60937a497adf7fdb9747f9fcb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

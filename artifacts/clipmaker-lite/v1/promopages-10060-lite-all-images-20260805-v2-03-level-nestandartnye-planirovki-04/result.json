@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-04",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:7ef31b3cafdfc63f2cbe1f62795c81240cf18788b900e0def239580bf8fa8900",
+    "execution_fingerprint": "sha256:2c933413ebcf96e87dbf1b03d11c0935314acac6bf56e3fd9fe7bc9d80a29d85",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef3-808e-7ff2-a858-0c52b115aae5"
+    },
+    "authored_payload_sha256": "0c7f80a52975c0746900a5eb23be97931d3cc245a7eb4334884f71f599f25a70",
+    "draft_file_sha256": "81c4d01cceca28c35b8c726a1055d19a522ea0e8d3150d9e3c260be13484f3fd"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/04.jpeg",
+      "sha256": "079794b4e3751b503fdff70550d0aab3f08ea7c321ca46587365021c3bbf60e8",
+      "bytes": 291916
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/content.json",
+      "sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "bytes": 23384,
+      "locator": {
+        "article_id": "03-level-nestandartnye-planirovki",
+        "title": "Топ-6 нестандартных планировок квартир от Level Group",
+        "lead": "Покажем несколько вариантов в разных районах Москвы",
+        "image_id": "04",
+        "block_index": 19,
+        "role": "article_image",
+        "caption": "В двухуровневой квартире места хватит всем — можно с комфортом собираться друзьями или всей семьёй на праздники",
+        "file": "04.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/04.jpeg",
+        "current_heading": {
+          "block_index": 14,
+          "level": 2,
+          "text": "Двухуровневая квартира со вторым светом"
+        },
+        "nearest_text_before": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "👉 Посмотреть планировку"
+        },
+        "nearest_text_after": {
+          "block_index": 20,
+          "type": "heading",
+          "text": "Пентхаусы"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A double-height living and dining room with a staircase, floor-to-ceiling windows, a dining table, and a sculptural hanging chandelier.",
+      "The visible chandelier lights and sheer curtains offer subtle, plausible motion while the snowy city view and spacious interior remain the focal setting."
+    ],
+    "article_context": "Body image for the section about a two-level apartment with a second light; it emphasizes the generous shared living-and-dining space where family and friends can gather comfortably.",
+    "structured_intent": {
+      "editorial_meaning": "The animation conveys a spacious two-level home designed as a warm shared place for gathering.",
+      "primary_action": "A gentle indoor draft moves the sheer curtains and carries the hanging chandelier through one subtle sway.",
+      "terminal_state": "The chandelier is almost still and warmly lit above the prepared dining table, with the curtains softly settled beside the windows.",
+      "semantic_invariant": "The room remains a calm, welcoming shared living space throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, the hanging glass chandelier begins a restrained, natural sway as a faint current moves the sheer curtains beside the tall windows. A single very slow push-in keeps the dining table and chandelier as the focal target. The motion eases by the final moments, with the chandelier nearly still and clearly centered above the inviting table.",
+      "positive_prompt": "The chandelier’s warm glass lights slowly sway in a small arc while the sheer curtains gently drift inward; use a very slow push-in toward the dining table, ending with the chandelier settled above the welcoming table.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, a light indoor draft gives the tall curtains a gradual, continuous drift while the chandelier responds with a soft, small pendulum motion. The camera makes one slow forward move toward the shared dining area, reinforcing the scale of the double-height room. Near the end, both motions settle naturally and the illuminated chandelier remains poised over the table.",
+      "positive_prompt": "A gentle breeze moves the tall sheer curtains as the sculptural chandelier makes a subtle warm sway above the dining table. Slow push-in toward the shared dining area; end with the lights calm and glowing over the table.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "In four seconds, use one measured push-in toward the dining table. The curtains softly billow along the windows and the chandelier traces a minimal, continuous sway, both beginning immediately and easing together near the end. The final frame holds the bright chandelier nearly motionless above the table, keeping the room welcoming and spacious.",
+      "positive_prompt": "Slowly push toward the dining table as the sheer curtains softly billow and the hanging glass chandelier sways gently. End with the chandelier almost still, warmly lit above the ready table.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

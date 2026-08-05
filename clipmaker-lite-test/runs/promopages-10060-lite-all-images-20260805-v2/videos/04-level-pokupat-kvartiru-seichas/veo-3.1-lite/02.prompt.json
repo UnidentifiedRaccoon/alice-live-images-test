@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/02.png",
+    "sha256": "03b2463b4e06e1bb7ea5a5c0b5b4ccb127907c79070c293fba2fa65aef3c41cf",
+    "width": 1600,
+    "height": 900
+  },
+  "structured_intent": {
+    "editorial_meaning": "A desirable Moscow home is presented as a direct connection to the opportunities and advantages of the capital.",
+    "primary_action": "The view opens from the residential tower toward the Moscow skyline.",
+    "terminal_state": "The final frame clearly shows the residential tower and the Moscow city panorama together.",
+    "semantic_invariant": "The residence remains a credible, comfortable urban home connected to Moscow throughout."
+  },
+  "prompt": {
+    "positive": "The camera gently pans right from the curved balconies toward the Moscow skyline as soft reflections shift on the glass. End with the tower and city panorama clearly visible in one stable composition.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02/result.json",
+    "sha256": "234c06f16e923589c298d8230dec6dd3f32fbea86c360941d7aecf1e6867365a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "03b2463b4e06e1bb7ea5a5c0b5b4ccb127907c79070c293fba2fa65aef3c41cf",
+      "article_context_sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

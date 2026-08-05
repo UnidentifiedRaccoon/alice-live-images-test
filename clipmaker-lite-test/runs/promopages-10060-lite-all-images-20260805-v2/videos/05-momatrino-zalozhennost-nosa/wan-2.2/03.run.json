@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c1d6745fd1ab1192bad/orig",
+      "prompt": "The humidifier releases a steady, softly billowing plume of mist that rises and gently disperses upward; fixed camera on the humidifier. By the final frame, a continuous light mist cloud is visibly suspended above it.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "5b45318756dc013a051da1da0563de86fd2204b4313f298b740886977c4a159b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ed4ff69671c9e4b1602cb1b272e2cea4",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:31:16Z",
+  "completed_at": "2026-08-04T23:31:16Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7333069,
+    "sha256": "773deed25b2042d69258d673c332fa0529d1a651bce1a8a8fc83022bc45115d8"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03-wan-2-2",
+  "lite_result_sha256": "24d376bc5bc9ba5009e19feab415dd4763be29697f332bc5220b534d384442bb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 2461196,
+    "sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "ed4ff69671c9e4b1602cb1b272e2cea4",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

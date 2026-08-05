@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_694a6039f141406a65b10339_694a6c78845ed16240d564fd/orig",
+      "prompt": "Fixed product shot. A soft controlled highlight travels smoothly up the yellow-green curved ribbon on the carton and continues toward the spray bottle, ending as a gentle glow on the bottle label while both packages remain still and fully visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "6b4dc9d0a48327ce08bf505b593143c11641d26f848d09207a47ee19c0d3caef",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "84eeb51c23b2d1ae0a13e363cf07acde",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:33:05Z",
+  "completed_at": "2026-08-04T23:33:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 880,
+    "height": 1040,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5870943,
+    "sha256": "9af216a1044d70a6c13926c9d5eb0d9754a80fb586162fe8e0e2be86746cb121"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-05-wan-2-2",
+  "lite_result_sha256": "70a21dbc4be88a6cd464b6f1d7c78a7475d26ddcde7dac38f4642c0152ae59bb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 213890,
+    "sha256": "39cb8399f80a54de49037e4a4276bb55d4a0a53fcb0d786236a22f9894edf0c1"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "84eeb51c23b2d1ae0a13e363cf07acde",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

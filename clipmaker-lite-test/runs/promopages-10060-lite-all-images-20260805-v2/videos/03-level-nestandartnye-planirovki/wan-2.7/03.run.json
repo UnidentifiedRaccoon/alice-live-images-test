@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A fixed view of the dining space: sheer curtains drift gently toward the room as warm daylight slowly expands over the round table and floor, ending with the table clearly bathed in soft light.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cad/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "171e92417fd92c020473919ec78192418109405f35aa767c849fa040b5554617",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CpAT6i2Bl1TqNVeZ3eHT",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:07:46Z",
+  "completed_at": "2026-08-04T23:09:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4987661,
+    "sha256": "bc75aa85d6856e6d93872650eb7493a37960e0d72bb43785c84a2cc5caee078b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-03-wan-2-7",
+  "lite_result_sha256": "c3cbdfe9c173459539229fbce0b30b2e02fd411ba98d1e4c131bf64cecd7b736",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

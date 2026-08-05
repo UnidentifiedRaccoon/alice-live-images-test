@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A warm golden glint smoothly follows the existing yellow ribbon motif upward across the Momat Rino packs. Fixed camera; the product lineup stays still. The glint comes to rest by the front-pack emblem in the final frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a6911845ed16240d4fe62/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b97ebf23cb5dfc03537b90deb071b505f9ff0ff5e0631c030d182fa40476aa74",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CFBi91OQer8M0HQBVTLK",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:36:14Z",
+  "completed_at": "2026-08-04T23:37:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2513353,
+    "sha256": "aaa1c0c5dd4ca504447762fa51f28fb2092e2fd01a653e1f1a7e73c5ad42fda4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-04-wan-2-7",
+  "lite_result_sha256": "6532f29d4d871988dd6e5057b573de23907b50290bb9025a1882861dacb9cb8f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

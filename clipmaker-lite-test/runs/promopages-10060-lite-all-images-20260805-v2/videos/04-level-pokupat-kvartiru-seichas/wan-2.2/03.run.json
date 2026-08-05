@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "04-level-pokupat-kvartiru-seichas-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c483d3dfea25cc0cb364/orig",
+      "prompt": "The family walks slowly forward along the path, the stroller rolling smoothly beside the small child; flowers and tree leaves sway lightly. Fixed camera on the family. In the final frame they are visibly closer in the foreground, continuing their calm walk through the courtyard.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "8cc09902c25018f3a21f08fda4f2d66be56df17c90821cfa9ed275296d99bba7",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "55c35be2807b90e50d714ca07fee5918",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:22:18Z",
+  "completed_at": "2026-08-04T23:22:19Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 24650781,
+    "sha256": "ce48e80fb3abec1ad94ef59c50f9cd437f95532fdfade5d662e1675e378d130a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-03-wan-2-2",
+  "lite_result_sha256": "9d2ae909806348a1da507b909c1ce2fd083fab9b8efd98508d16f8195cfca912",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 3381891,
+    "sha256": "7f493165ff21fa083eace3b481b449aed09418bfcc10d8c5144663065e44eabc"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "55c35be2807b90e50d714ca07fee5918",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

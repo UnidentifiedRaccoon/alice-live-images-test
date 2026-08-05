@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed frame; a gentle optical sheen moves gradually down the existing disclaimer text and settles away, ending with the complete warning clearly readable and unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_693bc9e8d469ca47a341cedd_694a6911f141406a65b20ecd/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "23a5d5f8bca7d6b905d22b4b57b7a6d1af1603259e8e838773b4e6c3e23c4c81",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "U3osyVNNRteS91pjn71K",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:36:36Z",
+  "completed_at": "2026-08-04T23:37:48Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1798,
+    "height": 1152,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1811765,
+    "sha256": "4b4f52744474c0c36e3131a5e712baef031400b8dbb0866e3d3a905442f47866"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-05-wan-2-7",
+  "lite_result_sha256": "b7f536a7bd41731dcaca938448768bfca9d7f046cec03d326351de60d11c333f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

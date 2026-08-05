@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman slowly gathers the tissue in her hand once, maintaining her weary downcast expression; end with the lightly crumpled tissue held motionless in her hand. Fixed camera.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a68baf141406a65b2044b/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "cb0b9c3ac26ff000850381c1d8de4ac73d01ad33d14f15db012e9e6e4714c95b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "orxiihcc9xf2Y74DxbQd",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:35:03Z",
+  "completed_at": "2026-08-04T23:36:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1904,
+    "height": 1088,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2461613,
+    "sha256": "b5ad10adccf79c47c181c0819c8367603b8360d8a0a95dc42ac7b2dd42043d04"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-02-wan-2-7",
+  "lite_result_sha256": "c08ee2eb39ca82c7f2ae5ccf270972763fce65d6086c5b5aeebf819594360166",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

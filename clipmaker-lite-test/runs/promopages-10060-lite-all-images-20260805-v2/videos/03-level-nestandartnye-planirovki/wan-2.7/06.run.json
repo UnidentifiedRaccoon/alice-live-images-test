@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A sculptural pendant chandelier gently sways above the dining island, with a light stir in the sheer curtains. The camera makes a slow push-in toward the island and chandelier. End with the chandelier nearly still at center, preserving the tranquil shared living space.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69d4aaf3b4df0f51975be64b_69d4ab1a0b31d967ee8d8ba2/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "67c8cd10003c91fd2c09ccdd1f8ad4ef16361f2e1024945ab2d2d938af5a9fda",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cT8a2C2nraSeXp9f151u",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:09:05Z",
+  "completed_at": "2026-08-04T23:10:22Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 7561041,
+    "sha256": "765b73814a5f910183caa533c9f64197dfa14e6d22a3335a96c482e9dc31efb5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-06-wan-2-7",
+  "lite_result_sha256": "e7db8a8285553956a0dfd7444fccbf3ac4c55e29abacf38d41580daa58bc3961",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

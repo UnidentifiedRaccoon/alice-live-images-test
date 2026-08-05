@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "01-level-ipoteka-2026-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the chart. A subtle light glint moves steadily across the existing blue bars and arrives at the lower February 2026 bar on the far right. All text, numbers, labels, layout, and data remain unchanged; the final frame holds a soft glint on the February bar.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a0490f4a495b52c9d87bcd3/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8a9120fab5623f4784250d80338fbe9000f355e629a97f9e7784a68038323585",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "fxAJ6WvRIVc5ZN1k53UA",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T22:54:58Z",
+  "completed_at": "2026-08-04T22:56:23Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 712775,
+    "sha256": "2f9b4b6964e6e20cc82d3a3e991717916e815e4e485a0aea9578c31f8d8c8933"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-02-veo-3-1-lite",
+  "lite_result_sha256": "43250be911a2fca08ef78c8dd6613f3be0c2f7cfca3774dd9c3f221a5eacc913",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

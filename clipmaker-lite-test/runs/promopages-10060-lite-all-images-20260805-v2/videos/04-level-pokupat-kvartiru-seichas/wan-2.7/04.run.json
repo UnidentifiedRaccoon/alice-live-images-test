@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "04-level-pokupat-kvartiru-seichas-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed UI view; a gentle sheen moves across the existing apartment cards from left to right and finishes as a soft glint on the final card, with every displayed value, text, plan, and control unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c48362490f252844dcfd/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9a736c99baa175f65ebef279fabf3989cb2af8b1c10ffe75ff2263987b1331a4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bSaY9im18FBltA5RoF87",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:20:45Z",
+  "completed_at": "2026-08-04T23:22:32Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2160,
+    "height": 960,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3315555,
+    "sha256": "86d51ae2e60a4064ba5d4053553c960b97d7b07194fbc0565c263bd0ad0380ab"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-04-wan-2-7",
+  "lite_result_sha256": "1e898ab25c545f844ea7e9b0c4ef8472ff66362f86316c1637dcfaf8b80b101e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

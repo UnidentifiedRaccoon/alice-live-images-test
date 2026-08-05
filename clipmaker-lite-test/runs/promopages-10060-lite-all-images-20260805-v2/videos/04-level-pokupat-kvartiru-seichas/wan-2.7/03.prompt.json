@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-03-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/03.png",
+    "sha256": "7f493165ff21fa083eace3b481b449aed09418bfcc10d8c5144663065e44eabc",
+    "width": 1600,
+    "height": 900
+  },
+  "structured_intent": {
+    "editorial_meaning": "A comfortable, family-oriented home environment is something people can choose and enjoy now rather than postpone.",
+    "primary_action": "The foreground family walks together along the courtyard path with the stroller.",
+    "terminal_state": "The family is visibly closer in the foreground, still progressing together on the path.",
+    "semantic_invariant": "The courtyard remains a calm, welcoming place for everyday family life."
+  },
+  "prompt": {
+    "positive": "The family makes a calm, continuous walk toward the foreground, with the stroller rolling alongside the child; nearby flowers and leaves stir gently. Fixed camera. End with the family noticeably closer on the path, still moving together.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-03/result.json",
+    "sha256": "9d2ae909806348a1da507b909c1ce2fd083fab9b8efd98508d16f8195cfca912",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "7f493165ff21fa083eace3b481b449aed09418bfcc10d8c5144663065e44eabc",
+      "article_context_sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

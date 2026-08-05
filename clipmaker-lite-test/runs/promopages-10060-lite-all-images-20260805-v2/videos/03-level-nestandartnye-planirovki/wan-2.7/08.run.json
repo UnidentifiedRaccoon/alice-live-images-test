@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/08.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A soft warm glow gradually strengthens from the existing pendant lamps and settles evenly over the bed, ending with the bedroom quietly illuminated for rest. Fixed camera.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab1b0b31d967ee8d8bf6/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "4ebec5175477c5b124ab884bc1b9302b3d7365a3c40a79c8e41cc351a230e52f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Iu7dETYH6Jm6KAwjI4Sm",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:10:22Z",
+  "completed_at": "2026-08-04T23:11:37Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4315568,
+    "sha256": "47c34610ae944e8239cc8e1120474f8c8ce135aff04ec3fec067c63d87197802"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-08-wan-2-7",
+  "lite_result_sha256": "a9e1c14895d3ec1daab3b93918aae81c8a6077f9071a5e424dcaed610fdcdf65",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "04-level-pokupat-kvartiru-seichas-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_68e3beeb4b9a6709c589f56b_68e3c8f78525275a1e3fe738/orig",
+      "prompt": "A faint indoor draft gently lifts the loose edge and fringe of the throw on the sofa, then lets it settle naturally into a relaxed drape by the final moment. Slow, subtle push-in toward the sofa.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "2034df99612093585a1bfb99a58f492fb9455c7fd7031b8d0b18652cbe6b4df5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "a1d45bdcb093f14e7b1874a4cba7c2e7",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:20:14Z",
+  "completed_at": "2026-08-04T23:20:14Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 960,
+    "height": 960,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 8440661,
+    "sha256": "f0ba0ed42102893f91a2b686d6d4dbe97a4e163a0d541939c9babd5b55304a35"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-01-wan-2-2",
+  "lite_result_sha256": "34820197eaaa085e8cefcec34a8f11c0028c8b7ca13bf1165c9e83a7499da0b3",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 182720,
+    "sha256": "9ddb81151d62d69f921a1383c100cfd45a843e6ff2f839a029246cf8db4f47ae"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "a1d45bdcb093f14e7b1874a4cba7c2e7",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

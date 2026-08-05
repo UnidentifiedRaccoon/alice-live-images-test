@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A soft breeze gradually billows the sheer curtains inward and moves warm window light across the dining table. Fixed view of the table and staircase; at the end, the curtains hold a gentle curve and the dining area is warmly lit.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cad/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dc33ac85300ce14455d8fa364ab1e0cc71541d45d72433f4a231f052a09fe4a4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ArYEuDzoiWhSg6cEWkTH",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:07:46Z",
+  "completed_at": "2026-08-04T23:09:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5233439,
+    "sha256": "ebdad68a792b7ab8119199b0f670ba9802abe2fac5073cd16fdb58888ae15c2c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-01-wan-2-7",
+  "lite_result_sha256": "18e63a7a87a82570a94041ad4582727897c13d2c37541be9e8f24d7ae254b427",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

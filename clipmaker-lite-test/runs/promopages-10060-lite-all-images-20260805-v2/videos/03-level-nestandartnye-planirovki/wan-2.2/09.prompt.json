@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+    "sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f",
+    "width": 1192,
+    "height": 798
+  },
+  "structured_intent": {
+    "editorial_meaning": "The plan shows that a dedicated closet is a practical, integrated part of a spacious apartment layout.",
+    "primary_action": "The existing directional arrow moves smoothly to emphasize the central closet room.",
+    "terminal_state": "The black arrow is visibly settled with its tip pointing at the room labelled 3.9, with a subtle emphasis inside it.",
+    "semantic_invariant": "The apartment plan remains an accurate, unchanged architectural layout centered on organized storage."
+  },
+  "prompt": {
+    "positive": "The existing black arrow glides gently downward along its current diagonal and settles with its tip precisely on the 3.9 closet room; a restrained soft glow briefly concentrates there, ending with the arrow clearly pointing to the room. Fixed camera.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09/result.json",
+    "sha256": "b117858d05337b21c8902f64ede51063cfd9113380d80b5df4b4358a2cd09984",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f",
+      "article_context_sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

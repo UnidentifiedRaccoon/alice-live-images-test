@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "01-level-ipoteka-2026-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a0490f4a495b52c9d87bcd3/orig",
+      "prompt": "Fixed camera. A soft light sheen travels once across the existing blue mortgage-volume bars from left to right, slowing near the lower February 2026 bar; all chart values, labels, layout, and bar heights remain unchanged, ending with a faint settled highlight on the February 2026 bar.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "50bdb50df2a8aea51d253d907f2d8fe7a0226bb66b29e98db46f06a93321aeb5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "669732a03db2f43f047bc6b5cda8a1b6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T22:59:09Z",
+  "completed_at": "2026-08-04T22:59:09Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1248,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4315989,
+    "sha256": "b653a21b987f221b6adb8854b7a26a445d506e291cf4f1687154efa2cb2a6742"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-02-wan-2-2",
+  "lite_result_sha256": "43250be911a2fca08ef78c8dd6613f3be0c2f7cfca3774dd9c3f221a5eacc913",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 103223,
+    "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "669732a03db2f43f047bc6b5cda8a1b6",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

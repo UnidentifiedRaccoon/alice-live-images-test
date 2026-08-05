@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:9d076aca4afa298d92f51b7fe19367748c020bae54bc44c4415cf2311336b3cd",
+    "execution_fingerprint": "sha256:8f5f0709077895b801f62069bd4f9c982505fb4bc7571a9cecfe3f047730f572",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef2-34d3-7f01-b8e6-f204f6a9aa45"
+    },
+    "authored_payload_sha256": "c66fdead3b57ee46b604eee2f6953904fa98c4dd17e317be8dabae0a734f3f24",
+    "draft_file_sha256": "d531a564403d4931b0722af6754f44ef8c43187608e1bcae26e32b401b1c9fd4"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+      "sha256": "e718914a24cd86ae85b722b646353501f41e1b140e82b60bd17b8e5be27617f1",
+      "bytes": 2394900
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/01-level-ipoteka-2026/content.json",
+      "sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "bytes": 17879,
+      "locator": {
+        "article_id": "01-level-ipoteka-2026",
+        "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+        "lead": "Кому лучше купить недвижимость сейчас, а кому есть смысл подождать",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "🔑 Кому лучше купить недвижимость сейчас, а кому есть смысл подождать"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A sunlit landscaped courtyard frames the entrance of a tall brick residential building.",
+      "A woman is already walking out from the central entrance along the paved path; trees and ornamental grasses can move subtly in a light breeze.",
+      "The composition keeps the building facade and welcoming pedestrian courtyard clearly visible."
+    ],
+    "article_context": "Cover image for an expert guide on whether to take a mortgage in late 2026; it presents a modern, comfortable new-build residence as a tangible near-term home-buying opportunity.",
+    "structured_intent": {
+      "editorial_meaning": "A comfortable contemporary residential complex is presented as a real, welcoming home-buying opportunity for readers considering a mortgage.",
+      "primary_action": "The woman walks away from the building entrance along the courtyard path.",
+      "terminal_state": "The woman is visibly farther along the sunlit paved walkway while the entrance and residential courtyard remain clearly recognizable.",
+      "semantic_invariant": "The residential setting remains calm, welcoming, and recognizably aspirational as a place to live."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, the woman continues her natural forward walk from the entrance toward the open paved courtyard. A restrained forward camera drift follows her as the focal target while keeping the facade and doorway readable. Leaves and planting respond with a mild breeze throughout. By the final frames she is visibly farther from the doorway on the path, with the calm, inviting residential setting unchanged.",
+      "positive_prompt": "The woman walks steadily away from the entrance along the sunlit path as leaves and grasses stir lightly; a slow forward camera drift keeps the entrance and her in view, ending with her clearly farther along the walkway in the welcoming residential courtyard.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For the five-second shot, let the exiting woman carry one continuous walking action from the doorway toward the courtyard. Use a small, smooth forward move motivated by following her progress, without shifting attention away from the residential facade. Gentle wind moves the visible greenery. Her position advances steadily until she reaches a clearly more open section of the walkway near the end, preserving the scene's composed, welcoming feel.",
+      "positive_prompt": "The woman continues walking from the entrance into the courtyard at an even pace. A subtle forward camera move follows her; nearby leaves and flowering grasses sway gently. End with her farther along the paved path, the modern home entrance still clearly visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Within four seconds, focus on the woman’s existing walk as she moves away from the entrance at a moderate, unhurried pace. A single gentle forward drift tracks her progression and retains the entrance as contextual proof of the new-build home. Environmental motion stays limited to a light breeze in the visible foliage. In the last moment, she is unmistakably farther down the path, with the courtyard still calm and inviting.",
+      "positive_prompt": "The woman walks smoothly away from the building entrance along the paved courtyard path while tree leaves and grasses move in a light breeze. Use a gentle forward camera drift focused on her, ending with her distinctly farther down the sunlit walkway and the entrance still in frame.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

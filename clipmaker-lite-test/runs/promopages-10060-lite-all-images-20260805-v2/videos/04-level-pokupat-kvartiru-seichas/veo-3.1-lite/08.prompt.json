@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-08-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/08.png",
+    "sha256": "0b3394990523d0ea84aae7d019c37db9ebf8762b91d9c648df04f1a83530656b",
+    "width": 1600,
+    "height": 1067
+  },
+  "structured_intent": {
+    "editorial_meaning": "A home under construction is a tangible future purchase that gives the buyer time to prepare for the move and renovation.",
+    "primary_action": "The tower crane steadily pivots above the unfinished residential buildings.",
+    "terminal_state": "The crane boom is visibly settled above the right-hand tower in the final frame.",
+    "semantic_invariant": "The buildings remain visibly unfinished yet actively progressing toward future homes."
+  },
+  "prompt": {
+    "positive": "Fixed low-angle view: the tower crane pivots steadily over the unfinished residential towers as clouds move lightly, ending with the boom aligned above the right tower.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-08/result.json",
+    "sha256": "4d746583f94531140e696e0962487698974331151e409438a7cee153b683bb7e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "0b3394990523d0ea84aae7d019c37db9ebf8762b91d9c648df04f1a83530656b",
+      "article_context_sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A restrained highlight glides along the carton’s curved yellow-green ribbon, then settles as a soft optical accent on the spray bottle label. Fixed camera; the final frame holds both product packages clearly visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "3:4",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_694a6039f141406a65b10339_694a6c78845ed16240d564fd/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5671223d5963a93f01c9624313cc672adb127e50282003845d29002fae24e13d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "oHEjXWqlkVpGQdRhvy5X",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:29:50Z",
+  "completed_at": "2026-08-04T23:31:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1320,
+    "height": 1568,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3117244,
+    "sha256": "f7c5917d469a790777d93dc52f334932418c8256ca20be888117f5e69dc2eca9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "3:4",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-05-wan-2-7",
+  "lite_result_sha256": "70a21dbc4be88a6cd464b6f1d7c78a7475d26ddcde7dac38f4642c0152ae59bb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

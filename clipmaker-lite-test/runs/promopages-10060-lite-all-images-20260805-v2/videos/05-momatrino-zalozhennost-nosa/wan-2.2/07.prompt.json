@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-07-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/07.jpeg",
+    "sha256": "527c28a3905925e37cf4b42fa22cea899be2c6a9180320f1c36dfba7f0d53484",
+    "width": 863,
+    "height": 680
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation supports the article’s evidence-based, medically informed guidance.",
+    "primary_action": "A soft reflected highlight travels down the existing reference list.",
+    "terminal_state": "The highlight has faded, leaving the original reference page fully visible and unchanged.",
+    "semantic_invariant": "The page remains an unchanged, readable list of cited sources throughout."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A soft, narrow light sheen slowly travels down the printed source list and fades by the final frames, leaving the same fully readable reference page unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-07/result.json",
+    "sha256": "728720d1d3d6a79e248a31c8d64bd51cc05cc7a50b0ae8c80d31909abf976dee",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "527c28a3905925e37cf4b42fa22cea899be2c6a9180320f1c36dfba7f0d53484",
+      "article_context_sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

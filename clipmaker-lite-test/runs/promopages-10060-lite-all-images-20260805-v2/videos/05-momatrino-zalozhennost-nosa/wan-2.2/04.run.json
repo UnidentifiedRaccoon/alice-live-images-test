@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c416745fd1ab1193003/orig",
+      "prompt": "The upper-right trigger spray bottle slowly depresses and releases a fine, narrow mist to the right; the mist drifts briefly and dissipates while the neatly arranged cleaning supplies remain in place. Fixed camera. End with the spray stopped and the cabinet orderly.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "710a5246b3a646d151c9ae3aa3cbf6a860ddfa0e40ac162c4ef2e29bb8833fa3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "b4dca4cf85112f9055dd9d28a5d3d843",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:32:13Z",
+  "completed_at": "2026-08-04T23:32:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 960,
+    "height": 960,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4022321,
+    "sha256": "8fbf637f355291d6ef47b87af04529ee5b6492833a10253c2e8af286ea068754"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-04-wan-2-2",
+  "lite_result_sha256": "ed986e294576a8cdd0c4a402ea523e15c67354fd4fab53fdfbf534420f4ba87f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1371930,
+    "sha256": "9fb38f97af30b51107d6fbdf842148f07fc7021ea6500d7234acc22b59157d65"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "b4dca4cf85112f9055dd9d28a5d3d843",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

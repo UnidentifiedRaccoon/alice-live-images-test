@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:14b53350faa8458111c28dff3a8eb41da2e0f55fe12273159d2ebc871b2bd2b5",
+    "execution_fingerprint": "sha256:c1bac2f7e7f1fd3a9d0cb0dbe8c82511f4f49914035a3f702ca6d1d1d697e232",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef4-d303-7722-8c84-528af0ad6189"
+    },
+    "authored_payload_sha256": "602c710ce21eb0b7f91c12502bb65b9b94cc7327f5374b7feb5b691eb0b30514",
+    "draft_file_sha256": "c37b9b89fb37a33f8e9041a7e12203adadee26169c42f233d8c25282db9ddd33"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/01.jpeg",
+      "sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013",
+      "bytes": 235695
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/content.json",
+      "sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "bytes": 19193,
+      "locator": {
+        "article_id": "05-momatrino-zalozhennost-nosa",
+        "title": "4 возможных причины длительной заложенности носа",
+        "lead": "Как бытовые факторы влияют на течение ринита и чем может помочь Момат Рино",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "⬇️ Как бытовые факторы влияют на течение ринита и чем может помочь Момат Рино"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "An orange-and-white cat walks slowly leftward in front of a dark wooden glass-front bookcase.",
+      "A closed book lies on the floor by the cat’s front paw; the warm, dim interior is still and orderly.",
+      "The cat, bookcase, and shelves of old books remain clearly visible throughout the composition."
+    ],
+    "article_context": "Cover image for an article about everyday factors that can prolong nasal congestion. The cat beside a bookcase visually supports the opening theme of household allergens and dust that remain in the home.",
+    "structured_intent": {
+      "editorial_meaning": "Everyday home surroundings can quietly preserve exposure to pet-related allergens and dust.",
+      "primary_action": "The cat takes one slow step past the book.",
+      "terminal_state": "The cat’s front paw is planted beyond the closed book as it stands poised and alert.",
+      "semantic_invariant": "The cat remains calmly alert within the home library setting, preserving the sense of an ongoing household allergen source."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, the cat continues its measured walk with a small transfer of weight onto the forward paw; its tail follows with a restrained natural sway. Keep the camera fixed so the cat, book, and library stay readable. The movement resolves near the end with the front paw placed past the book and the cat calmly poised.",
+      "positive_prompt": "The cat takes a slow, deliberate step past the closed book, its tail making one gentle sway. Fixed camera on the cat and bookcase. By the final frame, the cat has settled its front paw beyond the book and remains calmly alert.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, let the cat make one continuous, unhurried advance past the book. A subtle tail movement accompanies the transfer of weight while the library remains stable in frame. The action develops steadily and ends close to the final frames with the cat balanced in its new position, still alert.",
+      "positive_prompt": "The cat walks one unhurried step past the book, with a soft tail sway, then finishes standing alert with its front paw beyond the book. Fixed camera focused on the cat against the bookcase.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Across four seconds, the cat immediately completes a single controlled step forward, passing the book without obscuring it. Use only a faint tail sway as secondary visible motion. Maintain a fixed framing on the cat and bookcase; near the end, the cat’s paw is planted beyond the book and it remains attentively calm.",
+      "positive_prompt": "Fixed camera on the cat by the bookcase. The cat makes one calm forward step past the book and gives a slight tail sway, ending with its front paw set beyond the book and its attentive expression unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

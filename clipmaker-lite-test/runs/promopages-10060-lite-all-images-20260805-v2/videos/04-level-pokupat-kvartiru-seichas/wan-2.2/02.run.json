@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "04-level-pokupat-kvartiru-seichas-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c483d3dfea25cc0cb363/orig",
+      "prompt": "Slowly pan right from the residential tower's curved glass balconies toward the Moscow skyline, with subtle window reflections shifting in the sunlight. End on a stable wide view where the tower and the city beyond remain clearly visible together.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "83114a037200fce0edb2cbc7c0ea326979cc86d44b77a0cd1aa52aaf482e9938",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "df01f463e9be8044468306c2028ca434",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:21:06Z",
+  "completed_at": "2026-08-04T23:21:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 11920568,
+    "sha256": "901cb0b87a6eac70820d72799cc7e407c5e7b421485006a4c8d111a34cdbded3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02-wan-2-2",
+  "lite_result_sha256": "234c06f16e923589c298d8230dec6dd3f32fbea86c360941d7aecf1e6867365a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 2279049,
+    "sha256": "03b2463b4e06e1bb7ea5a5c0b5b4ccb127907c79070c293fba2fa65aef3c41cf"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "df01f463e9be8044468306c2028ca434",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

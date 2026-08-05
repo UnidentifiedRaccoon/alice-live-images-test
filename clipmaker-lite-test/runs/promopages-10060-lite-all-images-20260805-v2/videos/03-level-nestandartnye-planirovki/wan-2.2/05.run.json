@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_69d4aaf3b4df0f51975be64b_69d4ab1a0b31d967ee8d8b98/orig",
+      "prompt": "A light breeze slowly carries the sheer curtains inward and along the panoramic windows while the camera makes a minimal rightward slide toward the city view. By the final moment, the curtains settle in a soft open curve, leaving the Moscow panorama clearly visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "e47385c2f72c5c12e5afc400cda44e9ce4e76c69e74d4ffeb66e644adcaa5d89",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "31949502730e64f2e7dbc43daa0409a6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:13:26Z",
+  "completed_at": "2026-08-04T23:13:26Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7580541,
+    "sha256": "8e293a180411d1c830b791467d869601b72e558602517599e6ede48095d3d8b5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-05-wan-2-2",
+  "lite_result_sha256": "f9b3374c78376003817eb3fcda46073eb086c9464b55ee643a5fe77af56b5c03",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 254481,
+    "sha256": "3619a5ad35176e4e8226b404834debce7f237f56e47936d49c721be6a54d4f9f"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "31949502730e64f2e7dbc43daa0409a6",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

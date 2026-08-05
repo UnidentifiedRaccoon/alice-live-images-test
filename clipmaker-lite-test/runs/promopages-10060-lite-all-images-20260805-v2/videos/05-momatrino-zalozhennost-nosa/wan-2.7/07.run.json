@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "05-momatrino-zalozhennost-nosa-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/05-momatrino-zalozhennost-nosa/wan-2.7/07.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed view of the source page. A subtle reflected highlight glides gradually from the heading through the existing references, then fades, ending on the unchanged readable document.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c787caeb9040413cb22/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "74a7819fa9be3bd07ba1845f90c553d96e69e7ed55dad37c555336fcef92a815",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Y1iyj4BYBRtBaITqCOQ7",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:30:29Z",
+  "completed_at": "2026-08-04T23:32:08Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1622,
+    "height": 1278,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 7148604,
+    "sha256": "906bed58258d395072a3f8860d831d07ffbf1c55de2733ea71fce4b2c1c06dd5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-07-wan-2-7",
+  "lite_result_sha256": "728720d1d3d6a79e248a31c8d64bd51cc05cc7a50b0ae8c80d31909abf976dee",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

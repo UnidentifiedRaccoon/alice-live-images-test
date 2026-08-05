@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-07-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/07.jpeg",
+    "sha256": "01daf0c406d0223f69d644c604207a98ced8562853a891ef69f6d17960d795d1",
+    "width": 1600,
+    "height": 1205
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть, что просторная квартира может быть уютным личным пространством и местом, где близкие собираются у огня.",
+    "primary_action": "Пламя в камине непрерывно мягко колышется над дровами.",
+    "terminal_state": "В последнем кадре в камине отчётливо горит ровное спокойное пламя.",
+    "semantic_invariant": "Гостиная остаётся спокойным, тёплым и гостеприимным пространством для уединения или семейной встречи."
+  },
+  "prompt": {
+    "positive": "Fixed view of the fireplace: the flame rises and gently flickers across the logs, its warm glow subtly pulsing in the hearth. Finish with a steady, peaceful fire clearly alight.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-07/result.json",
+    "sha256": "4907426a2f5a1599130863e8a1748546eb2ff2ddd1fda0341c2ae4e3b0d43b4b",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "01daf0c406d0223f69d644c604207a98ced8562853a891ef69f6d17960d795d1",
+      "article_context_sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

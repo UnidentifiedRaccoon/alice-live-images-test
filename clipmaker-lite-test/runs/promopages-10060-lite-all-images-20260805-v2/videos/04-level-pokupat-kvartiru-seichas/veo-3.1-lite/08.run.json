@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "04-level-pokupat-kvartiru-seichas-08",
+  "image_id": "08",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/08.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed low-angle view: the tower crane pivots steadily over the unfinished residential towers as clouds move lightly, ending with the boom aligned above the right tower.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_68e3beeb4b9a6709c589f56b_68e3c488a27d223d149413a3/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "91f41d0c3558277e0b725a8fb063d00d2cac8a35941b1d0f0224180c82e7cc2d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "lT5AMGYu5sGF5hPKWeDl",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:24:26Z",
+  "completed_at": "2026-08-04T23:26:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3881913,
+    "sha256": "6a27d75d35ec6fd6637b7aa977170a665a4b40f51a7da707b9f2f96b5ea2f838"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-08-veo-3-1-lite",
+  "lite_result_sha256": "4d746583f94531140e696e0962487698974331151e409438a7cee153b683bb7e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

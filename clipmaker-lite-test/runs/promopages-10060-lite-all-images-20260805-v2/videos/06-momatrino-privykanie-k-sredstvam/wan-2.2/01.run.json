@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a69776745fd1ab118de79/orig",
+      "prompt": "Fixed camera. The man takes one slow, strained breath; his shoulders rise slightly and gradually settle. In the final moments his shoulders are still, his eyes remain closed, and his discomfort is unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "905a571aa648dc05994a4608818aa2b702a1ce177c31b1b21b00bad4bbd79d6b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9e5043ad5d330162c67687be0fcf1545",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:35:47Z",
+  "completed_at": "2026-08-04T23:35:47Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4766778,
+    "sha256": "e949a770bb09a1ca39b70530b8d3d80619983cbd3564b06f926a4a09861b237d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-01-wan-2-2",
+  "lite_result_sha256": "e522af2e44bd790ee6eecaaf36e5bfd14ece1c251da13c9884c276afe5c76704",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 135666,
+    "sha256": "d9bdfbff3fada4c018ca05c901db98fb7817f1119092642339317910a5660e15"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "9e5043ad5d330162c67687be0fcf1545",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}
