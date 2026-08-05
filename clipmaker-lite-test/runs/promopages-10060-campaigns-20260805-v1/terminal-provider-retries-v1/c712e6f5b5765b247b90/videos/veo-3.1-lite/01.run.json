@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/terminal-provider-retries-v1/c712e6f5b5765b247b90/videos/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/terminal-provider-retries-v1/c712e6f5b5765b247b90/videos/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera as the woman makes a small, smooth head turn toward the viewer, keeps her hands still, blinks naturally, and settles into steady eye contact with the same calm, confident smile in the final frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103e5a8cab7b46b62589/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "05933ee261f359a3f451f53ff599d9ef850a68071eee841072eda3f8dcf1de7e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "wBT4icCBFT6mYyz6ASn2",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:43:05Z",
+  "completed_at": "2026-08-05T15:44:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3523874,
+    "sha256": "741100ba3bdec7e283d805c6f3802de16d35ee0ca40222a2f1dec12b06f25b7a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1-terminal-retry-v1-c712e6f5b5765b247b90",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-terminal-retry-v1-c712e6f5b5765b247b90-15-marykay-sredstva-01-veo-3-1-lite",
+  "lite_result_sha256": "51db3ca460f6f0851603385b16d79e800946baa6d11739fec13eefcfc93d0f69",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

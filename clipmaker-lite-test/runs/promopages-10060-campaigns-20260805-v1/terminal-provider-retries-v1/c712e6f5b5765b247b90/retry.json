@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-campaign-extension-terminal-provider-retry",
+  "ticket": "PROMOPAGES-10060",
+  "primary_batch_id": "promopages-10060-campaigns-20260805-v1",
+  "retry_number": 1,
+  "agent_id": "clipmaker-lite",
+  "logical_output_key": {
+    "article_slug": "15-marykay-sredstva",
+    "image_id": "01",
+    "model_id": "google/veo-3.1-lite"
+  },
+  "primary_attempt": {
+    "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01-veo-3-1-lite",
+    "provider_job_id": "9ruKxqd4zpNsFtOqY95W",
+    "status": "provider-failed",
+    "provider_may_be_active": false,
+    "submitted_at": "2026-08-05T15:27:03Z",
+    "completed_at": "2026-08-05T15:38:12Z",
+    "error": "Eliza/OpenRouter job 9ruKxqd4zpNsFtOqY95W failed with status failed: The service is currently experiencing high load and cannot process your request. Please try again later. Operation ID: 0bd8b20a-1972-4fa3-99bc-f1e96c63ee89.",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/01.run.json",
+    "run_sha256": "00a4dd2c7bd3511505ac93cda0769be1a7643074b651b8ff3908d52060dc85c2",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/01.prompt.json",
+    "prompt_sha256": "db64bcd5533a4f2a1f1311dcac924e1620241de258d3530d5890c8597389151f",
+    "request": {
+      "model": "google/veo-3.1-lite",
+      "prompt": "Fixed camera as the woman makes a small, smooth head turn toward the viewer, keeps her hands still, blinks naturally, and settles into steady eye contact with the same calm, confident smile in the final frame.",
+      "duration": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "seed": 9681,
+      "generate_audio": false,
+      "frame_images": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103e5a8cab7b46b62589/orig"
+          },
+          "frame_type": "first_frame"
+        }
+      ],
+      "provider": {
+        "options": {
+          "google-vertex": {
+            "parameters": {
+              "enhancePrompt": true
+            }
+          }
+        }
+      }
+    },
+    "request_sha256": "05933ee261f359a3f451f53ff599d9ef850a68071eee841072eda3f8dcf1de7e",
+    "lite_result_path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01/result.json",
+    "lite_result_sha256": "51db3ca460f6f0851603385b16d79e800946baa6d11739fec13eefcfc93d0f69",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+    "source_sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+    "model_id": "google/veo-3.1-lite",
+    "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01"
+  },
+  "retry_attempt": {
+    "retry_key": "c712e6f5b5765b247b90",
+    "batch_id": "promopages-10060-campaigns-20260805-v1-terminal-retry-v1-c712e6f5b5765b247b90",
+    "provider_run_id": "promopages-10060-campaigns-20260805-v1-terminal-retry-v1-c712e6f5b5765b247b90-15-marykay-sredstva-01-veo-3-1-lite",
+    "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+    "model_id": "google/veo-3.1-lite",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+    "source_sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/terminal-provider-retries-v1/c712e6f5b5765b247b90/videos/veo-3.1-lite/01.prompt.json",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/terminal-provider-retries-v1/c712e6f5b5765b247b90/videos/veo-3.1-lite/01.run.json",
+    "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/terminal-provider-retries-v1/c712e6f5b5765b247b90/videos/veo-3.1-lite/01.mp4",
+    "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/terminal-provider-retries-v1/c712e6f5b5765b247b90/generation-manifest.json"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 1000.0,
+    "hard_budget_cap_usd": 1000.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 36.05,
+    "estimated_headroom_usd": 963.95,
+    "planned_paid_submissions": 102,
+    "maximum_paid_submissions": 103,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job; provider-confirmed terminal failures may receive at most one separately namespaced, explicit retry-v1 submit; a quarantined synchronous Segmind submit with unknown outcome may receive at most one separately namespaced, explicit ambiguous-submit retry-v1; each exact oversize Wan primary may receive one separately namespaced normalized-input retry-v1 whose only request change is the frozen image URL; every immutable reservation is included in the aggregate accounting maximum",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery",
+    "terminal_retry_version": 1,
+    "terminal_retry_accounting_cost_usd": 0.35,
+    "terminal_retry_reservations": 1,
+    "ambiguous_submit_retry_version": 1,
+    "ambiguous_submit_retry_accounting_cost_usd": 0.35,
+    "ambiguous_submit_retry_reservations": 0,
+    "normalized_input_retry_version": 1,
+    "normalized_input_retry_accounting_cost_usd": 0.35,
+    "normalized_input_retry_reservations": 0,
+    "total_retry_reservations": 1,
+    "maximum_new_paid_submissions_per_failed_output": 1,
+    "maximum_new_paid_submissions_per_ambiguous_output": 1,
+    "maximum_new_paid_submissions_per_normalized_input_output": 1
+  },
+  "policy": {
+    "explicit_operator_command_required": true,
+    "automatic_retry": false,
+    "maximum_new_paid_submissions": 1,
+    "same_verified_lite_result": true,
+    "same_source": true,
+    "same_prompt": true,
+    "same_model": true,
+    "fallback": false,
+    "primary_receipt_immutable": true
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+    "sha256": "893dcbadf34d476231cc91eb6d66305eb2f4afd264bb61da6e62ba73d52206ca",
+    "width": 1500,
+    "height": 1000
+  },
+  "structured_intent": {
+    "editorial_meaning": "Careful self-observation supports the article's shift from uncertain skincare experimentation toward calm trust in a dependable routine.",
+    "primary_action": "The woman slowly examines her reflection with her gaze.",
+    "terminal_state": "Her gaze rests steadily on her reflection with quiet assurance.",
+    "semantic_invariant": "She remains calm, thoughtful, and self-possessed throughout."
+  },
+  "prompt": {
+    "positive": "Her thoughtful gaze gradually moves across her reflection and comes to rest with calm assurance near the end; fixed camera.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03/result.json",
+    "sha256": "d0375332456eedd1493080303e6b281074bbf2a6197ea411b5a7bc017d9fa6c5",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "893dcbadf34d476231cc91eb6d66305eb2f4afd264bb61da6e62ba73d52206ca",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

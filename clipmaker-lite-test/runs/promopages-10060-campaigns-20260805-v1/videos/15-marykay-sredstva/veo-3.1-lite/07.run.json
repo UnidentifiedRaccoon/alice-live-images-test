@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-07",
+  "image_id": "07",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/07.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera stays fixed as two clear drops fall from the tilted dispenser onto the cotton pad at an even pace. The moisture softly spreads through the fibers, and by the final frame the second drop is fully absorbed into a clearly damp center while the product remains visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa05f6eb774ed004b2a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "fb63a113374a94d67c7aa815bd91aa862bb7b8a12bff7b9cb585c1608fcd107c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3FI4ao1x6dC0XwCBo1Ou",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:33:15Z",
+  "completed_at": "2026-08-05T15:35:07Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1561155,
+    "sha256": "661c791bb55a7dbb7785509949b28537dce809f74c4c0d394024f9dc48c69a33"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07-veo-3-1-lite",
+  "lite_result_sha256": "f01a50162b6ec70b47bd419eebe58bae5c34d799e9aa37e8015746f1423acf32",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

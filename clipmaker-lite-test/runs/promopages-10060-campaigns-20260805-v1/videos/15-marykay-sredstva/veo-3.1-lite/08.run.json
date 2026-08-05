@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-08",
+  "image_id": "08",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/08.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, the hand gently raises and slightly rotates the spatula, making the thick cream softly settle into a neat rounded dollop. End with the spatula steady above the open jar and the dollop intact and clearly visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa0a447d75722940ef2/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8a5cfd8da1f481dfa3ab6ee858607fd7ae2845a98823a26f30ff6eb137898415",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "GYZaav0ek3NLt6WFqQhV",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:35:12Z",
+  "completed_at": "2026-08-05T15:38:15Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2046460,
+    "sha256": "0c84cdd0f6b0318f339f6f4932e95480487eb6b6c354a53133306933044a2f8e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08-veo-3-1-lite",
+  "lite_result_sha256": "811bd5e453f0f9d49c472fd9431200c840be392629382f32626503a1e98a94dd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

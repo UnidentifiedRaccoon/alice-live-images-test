@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/07.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa05f6eb774ed004b2a/orig",
+      "prompt": "With the camera fixed, clear toner forms at the open dispenser and falls in a slow, controlled sequence onto the cotton pad. Each drop absorbs into a gradually widening damp spot; by the final frame the last drop has disappeared into the visibly moistened pad while both bottles remain fully visible and steady.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "464685cf6f738b8afa73a20b412599ac267fd01ec4d801e97cfc1341cb208c3a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "f9f1fb29c32f5e9afc1cf65fa9fd29f4",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:32:44Z",
+  "completed_at": "2026-08-05T15:32:44Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 3867395,
+    "sha256": "ed7db83830c7abff9370330fc9ebd8e12222788952d0bc5ec739a98ab1a8b1d6"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07-wan-2-2",
+  "lite_result_sha256": "f01a50162b6ec70b47bd419eebe58bae5c34d799e9aa37e8015746f1423acf32",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 2586498,
+    "sha256": "87a52d11b4ba40bf9bb2fd71e7949227206d7d43b88cf3ddc98f0d6117c8f4e2"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "f9f1fb29c32f5e9afc1cf65fa9fd29f4",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

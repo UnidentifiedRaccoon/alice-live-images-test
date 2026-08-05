@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+    "sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+    "width": 1500,
+    "height": 917
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойная уверенность героини выражает доверие к выбранному уходу и удовлетворение простой, надёжной бьюти-рутиной.",
+    "primary_action": "Героиня мягко выпрямляется и поворачивает лицо к зрителю, сохраняя руки неподвижными.",
+    "terminal_state": "Героиня смотрит прямо на зрителя с расслабленной позой и спокойной уверенной улыбкой.",
+    "semantic_invariant": "Доброжелательное спокойствие и уверенность в выбранном уходе сохраняются до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Fixed camera as the woman makes a small, smooth head turn toward the viewer, keeps her hands still, blinks naturally, and settles into steady eye contact with the same calm, confident smile in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01/result.json",
+    "sha256": "51db3ca460f6f0851603385b16d79e800946baa6d11739fec13eefcfc93d0f69",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

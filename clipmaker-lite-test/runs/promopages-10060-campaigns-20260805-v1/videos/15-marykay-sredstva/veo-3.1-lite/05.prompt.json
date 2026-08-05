@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/05.jpeg",
+    "sha256": "b96b5000ea29daa38e94537b578b9d1b3903a0453bf052272c4683c19feaa443",
+    "width": 1152,
+    "height": 896
+  },
+  "structured_intent": {
+    "editorial_meaning": "Современная лабораторная разработка и контролируемые исследования служат надежной основой качества косметики Mary Kay®.",
+    "primary_action": "Жидкости в окружающей лабораторной посуде мягко циркулируют и постепенно успокаиваются.",
+    "terminal_state": "К последнему кадру поверхности жидкостей почти ровные и спокойные, а центральная баночка остается четко видимой и неизменной.",
+    "semantic_invariant": "Центральная баночка остается неизменным, узнаваемым и надежным фокусом научно выверенной композиции до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Subtle currents form smooth ripples across the liquids in the surrounding laboratory glassware as the camera gently pushes toward the central cream jar. The motion settles by the final frame, leaving nearly level liquid surfaces and the jar centered, sharp, and unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05/result.json",
+    "sha256": "9305ec34e849704f3d28fdb717b2dfd28eaa3f9fde577aceba91b339cca7d0fd",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "b96b5000ea29daa38e94537b578b9d1b3903a0453bf052272c4683c19feaa443",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

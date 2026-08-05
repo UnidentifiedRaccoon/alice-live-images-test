@@ -1,0 +1,194 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:3b49cdfbd1c3c192fa64b4df192400ea765bd17d2d77e59db0a5279cfcca0699",
+    "execution_fingerprint": "sha256:b810ff57b6108a3abd150f29efd34549a34cc52835c80ea37e11a837144b7e85",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": null,
+      "thread_id": "019fd282-d1fd-7e90-a993-82958dd125ab"
+    },
+    "authored_payload_sha256": "69451acafd8dccf1473a0bc750d9d2604937796be71c936b13a7ee799dbb22a0",
+    "draft_file_sha256": "13b80134510e889b3e5a155d9bae6de564ea41adf27965820cbbf6c53fa7ac34"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+      "sha256": "893dcbadf34d476231cc91eb6d66305eb2f4afd264bb61da6e62ba73d52206ca",
+      "bytes": 198315
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/content.json",
+      "sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "bytes": 17558,
+      "locator": {
+        "article_id": "15-marykay-sredstva",
+        "title": "Средства Mary Kay®, которые заменили мне десятки других",
+        "lead": "Делюсь, почему выбрала бренд с историей, который при этом идет в ногу со временем",
+        "image_id": "03",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "Меня зовут Кристина. Мне 35 лет, и только недавно я нашла косметический бренд, которому можно доверять",
+        "file": "03.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "И только с косметикой я почему-то годами поступала ровно наоборот. Расскажу, как пришла к уходу за кожей, которым довольна на все 100%."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "Как я устала гоняться за новинками"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A woman studies her face closely in a bathroom mirror with a calm, serious expression.",
+      "Her reflection is the clear focal point; both hands are already resting beside her cheeks, so motion should avoid animating further hand-to-face interaction.",
+      "The mirror composition supports a restrained change in gaze while the camera remains fixed."
+    ],
+    "article_context": "Body image introducing Kristina at the transition from dissatisfaction with novelty-chasing to finding a skincare brand she can trust; the animation should emphasize calm, attentive self-assessment rather than product use or a dramatic transformation.",
+    "structured_intent": {
+      "editorial_meaning": "Careful self-observation supports the article's shift from uncertain skincare experimentation toward calm trust in a dependable routine.",
+      "primary_action": "The woman slowly examines her reflection with her gaze.",
+      "terminal_state": "Her gaze rests steadily on her reflection with quiet assurance.",
+      "semantic_invariant": "She remains calm, thoughtful, and self-possessed throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, keep the mirror framing fixed while her gaze moves slowly and continuously across her reflection. The motion is restrained and even, ending near the close with her eyes settled and attentive; her calm, reflective expression remains unchanged.",
+      "positive_prompt": "Fixed camera. Her eyes slowly examine her reflection with a calm, thoughtful gaze, then settle into steady, quiet assurance by the final frames.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Use the full five-second shot for one gradual visual appraisal: her eyes travel subtly across the mirrored face at an even pace and settle near the end. Keep the camera fixed and preserve the composed, introspective mood through the last frame.",
+      "positive_prompt": "Her thoughtful gaze gradually moves across her reflection and comes to rest with calm assurance near the end; fixed camera.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "For four seconds, concentrate on a smaller, slightly quicker gaze shift across the reflection. The camera stays fixed, and the continuous eye movement resolves close to the end in a steady, focused look without changing her calm emotional state.",
+      "positive_prompt": "Fixed camera as the woman slowly studies her reflection; her gaze settles into calm, focused assurance in the final frame.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

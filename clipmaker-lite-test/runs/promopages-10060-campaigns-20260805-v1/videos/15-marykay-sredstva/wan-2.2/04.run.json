@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig",
+      "prompt": "The large white pump bottle slowly settles deeper into the crowded cosmetic bag, gently nudging the dark dispenser and clear bottle as they rock and come to rest. Fixed camera; by the final frame every item is still visible and tightly wedged in the overflowing bag.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "61e3b9e5b09e1c55cfb1310e5cb0f3a1f1b7164cf354c46b56c1eb19b1f6fd42",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "d7ba9b79be31710a61f1b71201e498ca",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:30:12Z",
+  "completed_at": "2026-08-05T15:30:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7106644,
+    "sha256": "ffef68c9754931e3b3e8bfd511032d078330b6b86181c16fddc402095eb18afb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04-wan-2-2",
+  "lite_result_sha256": "469c03b99d6e3a987297f86e6275e715102de770d60007435b3dc978780e104f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 290238,
+    "sha256": "0da169fe5bf12eb74627485d969ea6f8bff626ebe9aa5a0fb5d9c33cc9a047ae"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "d7ba9b79be31710a61f1b71201e498ca",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}
