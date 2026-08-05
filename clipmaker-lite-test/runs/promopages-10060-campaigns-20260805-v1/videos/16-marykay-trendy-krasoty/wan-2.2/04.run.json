@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "16-marykay-trendy-krasoty-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d1368a447d7572294ade2/orig",
+      "prompt": "She slowly turns her head a little toward the handheld mirror and shifts her eyes to inspect her moisturized cheek, keeping her hand still. Fixed camera. By the final frame, her gaze rests calmly on her reflection with the same relaxed, attentive expression.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "5c8cf5f454b8f174411603370b0e80a974441b912476a7ba63f07d96e2a6840d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "dcf6d1e45739d3f0c3111209aacc615c",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:10:15Z",
+  "completed_at": "2026-08-05T16:10:15Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1072,
+    "height": 848,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 9795533,
+    "sha256": "36ef30ab7effeb2973ef0a82fdb04fdcfe3846deaff1f3fddd4e71529b17573a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04-wan-2-2",
+  "lite_result_sha256": "4b08f184172b61a2370dca1704fe508c3ec3a3b49ae74167e202112f35a68e0a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 139697,
+    "sha256": "49e688993933ee097b64357682f536f158ae5391e3c1000f54ef8cad0ba4bc9e"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "dcf6d1e45739d3f0c3111209aacc615c",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

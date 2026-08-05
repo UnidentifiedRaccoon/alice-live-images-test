@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "16-marykay-trendy-krasoty-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d13685a8cab7b46b6a8f0/orig",
+      "prompt": "Fixed camera. A soft narrow highlight glides steadily across the five serum bottles from left to right, continues onto the box, and gently fades over its central emblem near the end. All products remain fully visible and still, with the final frame showing an even polished sheen across the complete set.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "907ab1ddfd78a462c87fcf02a8785f1e122b6b99426baf91acf9b849bc7a8fb2",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6056c2955f7804c068df270812dc280c",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:11:47Z",
+  "completed_at": "2026-08-05T16:11:47Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 960,
+    "height": 960,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 3553067,
+    "sha256": "3fc71f8c2fd8aecea7dd92780ef6b4f47673f7d50d88d99c5f15f39cfb3ec028"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06-wan-2-2",
+  "lite_result_sha256": "fec01fc7f1dc2d5100cafe7f5531d926fe0515e3d2fbfe923f3ffcca06e245f4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 177327,
+    "sha256": "036300677b23cb195036f3b5c72aa14549de5d1cc4ad9fe257385c5e35b0d40b"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "6056c2955f7804c068df270812dc280c",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

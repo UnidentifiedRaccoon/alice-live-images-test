@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/05.png",
+    "sha256": "55940a7f8872ac1cbf754b1cbe72c6c73389cf27c7b34f13febc1946029d6b3b",
+    "width": 768,
+    "height": 768
+  },
+  "structured_intent": {
+    "editorial_meaning": "Помада воплощает тренд на выразительный оттенок с мягким сиянием и ощущением увлажненной, ухаживающей текстуры.",
+    "primary_action": "Мягкий световой блик непрерывно проходит по футляру и коралловому стику к его скошенному кончику.",
+    "terminal_state": "В последнем кадре на скошенном кончике помады остается деликатный влажный отблеск.",
+    "semantic_invariant": "Помада остается узнаваемым продуктом Mary Kay одного кораллового оттенка, а акцент на ухоженном сиянии сохраняется до конца."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A soft highlight sweeps upward across the lipstick and finishes on the beveled coral tip, which carries a subtle moist gleam in the last frame; the product, cap, and Mary Kay lettering stay still and clearly visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05/result.json",
+    "sha256": "489051299a075584db97cba0baee002cbcaef67b711b4fc7354ff4ee91e464aa",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "55940a7f8872ac1cbf754b1cbe72c6c73389cf27c7b34f13febc1946029d6b3b",
+      "article_context_sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
