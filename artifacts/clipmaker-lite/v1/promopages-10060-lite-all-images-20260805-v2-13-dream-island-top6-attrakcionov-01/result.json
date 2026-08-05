@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:e300e4f7c91230ce79d99099363c9e4a3a2502b7ad513e1c4eb778576e30a562",
+    "execution_fingerprint": "sha256:8f5cdd79f5bac831c53b725e46d3e62349d772d4af88c9663f500f2e4240f9c6",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcefa-590f-7e12-9bcf-c1a8c74633f4"
+    },
+    "authored_payload_sha256": "e650801e41b0e3209e5bcda002b3a5038a04c4e0bfced51749fe741c8ff1197d",
+    "draft_file_sha256": "9191daa1e4c57552d1c2401a1e9efa38e5078cc6fad89584d75821a41700eaa3"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+      "sha256": "01e5a2ad2302b945921a8cf8b7805e182533e89f1be081c03701e8b509d7998a",
+      "bytes": 7526106
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/content.json",
+      "sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee",
+      "bytes": 19526,
+      "locator": {
+        "article_id": "13-dream-island-top6-attrakcionov",
+        "title": "Топ-6 аттракционов в «Острове Мечты» для фаната экстрима",
+        "lead": "6 экстремальных аттракционов «Острова Мечты» — ловите адреналин!",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "🎢 После этих аттракционов вы точно скажете, что парки развлечений — не только для детей"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A large indoor winged ride carries several seated visitors around a circular mechanism, with one pair visibly inverted high on the right.",
+      "The riders’ raised legs, taut restraints, and broad mechanical arcs make upward rotation and changing orientation the natural motion.",
+      "The wide frame retains the ride structure and themed indoor park as the visual anchor."
+    ],
+    "article_context": "Cover image for an article about six extreme attractions at Dream Island; it introduces the adrenaline and weightless thrill of high-swinging rides.",
+    "structured_intent": {
+      "editorial_meaning": "A vivid invitation to experience the article’s promised extreme-ride adrenaline and sensation of weightlessness.",
+      "primary_action": "The ride continuously rotates upward through its large mechanical arc, lifting the seated visitors.",
+      "terminal_state": "The riders on the right are visibly high overhead in a near-inverted position as the ride continues its rotation.",
+      "semantic_invariant": "The riders remain securely strapped in and visibly exhilarated by the extreme attraction."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Across five seconds, the ride immediately continues a smooth, moderate clockwise-style sweep through its visible mechanical arc. The right-side seats rise and tip toward their already elevated, near-inverted orientation while the lower seats follow naturally; riders keep their excited, braced expressions. Keep the wide camera fixed so the full wheel-like structure proves the motion. Near the end, the elevated riders are clearly high overhead with legs raised as the rotation eases into the endpoint.",
+      "positive_prompt": "The winged ride rotates steadily upward through its arc, carrying the seated visitors into a brief near-inverted sweep; by the final frame the right-side riders are held high overhead, legs raised, while the ride continues its thrilling rotation. Fixed wide camera.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this independent five-second execution, begin with the existing ride already in motion and let its large arms travel in one sustained, even sweep. Use the upper-right riders as the focal proof of height and weightlessness, raising them through the arc while the remaining seats follow the shared mechanism. Maintain a fixed wide view, with no cuts. The movement develops across most of the duration and finishes with the upper-right seats clearly elevated and nearly inverted, preserving the ongoing thrill.",
+      "positive_prompt": "The ride sweeps through a powerful continuous rotation, lifting the seats and their excited riders toward the overhead arc. Hold the wide view on the mechanism; in the final moment, the right-side riders remain visibly high and nearly upside down as the rotation carries on.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over four seconds, make the visible ride execute a compact but continuous upward sweep rather than a full new cycle. Its seats travel together along the large arc, emphasizing the elevated right-side riders and their airborne legs. Keep the camera fixed and the whole mechanism readable. Arrive near the end at a clear high, near-inverted position on the right, with the riders still exhilarated and secured in their seats.",
+      "positive_prompt": "Fixed wide shot: the winged ride makes one smooth, forceful upward sweep, lifting the riders through the arc. By the final frame, the riders on the right are high overhead and nearly inverted, still visibly thrilled.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

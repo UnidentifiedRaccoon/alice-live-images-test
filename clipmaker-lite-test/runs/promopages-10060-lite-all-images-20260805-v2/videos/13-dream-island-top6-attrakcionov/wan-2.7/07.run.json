@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.7/07.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The roller-coaster train drives through the steep curve in a sustained rush, riders leaning into the turn. Fixed view; by the last frame the train has climbed into the upper right-hand curve and continues forward at speed.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1a232bd5c226f523d860/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "86af3c87aff35b26f9dfb0eef0ce890b28aa297da02518919f50ae3c6b452790",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "gTBOcJ2QZzFbdjB50r20",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:15:35Z",
+  "completed_at": "2026-08-05T09:18:27Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 9597040,
+    "sha256": "bdda92a6dd01e6dd9b5db437129b4817a14d17b754d66bf1c7dce92e2136bb72"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-07-wan-2-7",
+  "lite_result_sha256": "1a532e42b043f4243b25e8fe79151ad0c9dd8621b20735770189bd335974ded4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

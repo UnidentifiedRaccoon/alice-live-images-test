@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the red coaster car as it sweeps forward through the elevated curve; the riders lean slightly with the turn and the crystal lights shimmer. In the final frame, the car is visibly farther along the near bend, still in motion.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a59e32a3a302a69aec403c2_6a59ff39b1afef7284d5cedd/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "46056311caa087252b2658a5a05747f443fc6a69f2129f5eed486c9537f5b801",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "HjiTLiN2q9daSpV7npge",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:06:57Z",
+  "completed_at": "2026-08-05T08:08:56Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 13532330,
+    "sha256": "8246929630b1efb3cbefca2d0e7d0eee91efe76f30d58162a29d09c5492c8d29"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-03-veo-3-1-lite",
+  "lite_result_sha256": "6c929b71f95bb5aa34df9121b32d87b44f5b5ab3f09d3089e2aa5de2e8985700",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

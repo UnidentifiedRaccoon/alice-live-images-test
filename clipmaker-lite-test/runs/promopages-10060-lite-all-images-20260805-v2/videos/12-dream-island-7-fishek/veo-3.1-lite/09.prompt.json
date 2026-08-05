@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-09",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-09-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/09.jpeg",
+    "sha256": "d5e335a62e06415a63fd1ada8c74379c7f06edb256427f10711cb606a48c7569",
+    "width": 3619,
+    "height": 2413
+  },
+  "structured_intent": {
+    "editorial_meaning": "Reveal the Snow Queen observation deck as a spectacular hidden vantage point filled with sparkling park lights.",
+    "primary_action": "The hanging crystal decorations send a continuous gentle shimmer across the plaza.",
+    "terminal_state": "The visible hanging crystals are evenly illuminated above the active plaza.",
+    "semantic_invariant": "The space remains a lively, enchanting indoor park vista viewed from above."
+  },
+  "prompt": {
+    "positive": "Fixed wide view: the suspended crystal lights ripple with a gentle blue-white shimmer while visitors below continue walking. By the final frame, all crystals are evenly luminous above the bustling plaza.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-09/result.json",
+    "sha256": "139ac52104bb885919a76c2a1d88c57bce0ef4d21b9f922d4343288b76ab5ddd",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "d5e335a62e06415a63fd1ada8c74379c7f06edb256427f10711cb606a48c7569",
+      "article_context_sha256": "f873287c9c994b4dedf6faf6eb5199362f1ea79f4a8e96f63537658e248e3ecf",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

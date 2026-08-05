@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/06.jpeg",
+    "sha256": "0fd06599e7ff3c2d9254eeecdf28edd4055d1b0f0a7a72c876f81cd62e1c4435",
+    "width": 2752,
+    "height": 1536
+  },
+  "structured_intent": {
+    "editorial_meaning": "A useful advertising article earns attention through a calm, relevant conversation with a genuinely interested person.",
+    "primary_action": "The woman shifts her attention from offscreen to her laptop.",
+    "terminal_state": "The woman’s gaze is settled on the laptop screen while her gentle smile remains.",
+    "semantic_invariant": "Her composed, approachable engagement remains unchanged through the final frame."
+  },
+  "prompt": {
+    "positive": "Fixed camera on the woman and laptop. She smoothly turns her eyes and head toward the laptop, ending calmly focused on the screen while maintaining her gentle smile.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-06/result.json",
+    "sha256": "2346197eb6c1d9dd2304a90a92d436066879c563120d291f7a8d557531a18930",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "0fd06599e7ff3c2d9254eeecdf28edd4055d1b0f0a7a72c876f81cd62e1c4435",
+      "article_context_sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

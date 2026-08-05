@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.7/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.7/08.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A slow wave of marquee lights travels across the circus facade, gradually bathing the clown entrance in a warm eerie glow. Fixed frontal camera; the final frame holds the fully lit, threatening entrance.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1c83fccb527e723636c0/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c20ead13138e0736de8fc82a9d8f2fb152c56f3f737eba595f3671e3647844a3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "pwrw5YqTj9f3JEpByBBJ",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:17:10Z",
+  "completed_at": "2026-08-05T09:20:22Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1504,
+    "height": 1378,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5163659,
+    "sha256": "7132b9c51f3a705959b0738b8c3a71c51696b4c721976415751a9a11dced78ba"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08-wan-2-7",
+  "lite_result_sha256": "2a5fbd9ea5adab1005c58f9a368609fe2e6b96f0dbac0cfad8cd032d73b67dc5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

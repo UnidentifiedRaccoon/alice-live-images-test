@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a1825bf47d01035dda06e/orig",
+      "prompt": "The red coaster car accelerates smoothly along the elevated curve toward the right, the riders braced in their seats while the crystal lights streak subtly past. Fixed camera. In the final moment, the car is clearly rounding the rightward bend with every rider still visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "ed166fb9a5e2ca653554a59cf8b291bb91034813656eab5da90d57d72435847b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6db863bb63547d728cb9a17109310592",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:13:32Z",
+  "completed_at": "2026-08-05T09:13:33Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1152,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 19937436,
+    "sha256": "c544bac00e2ef284e96f61b6606f5ddcde998935088c478bba7d77a01013af19"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-02-wan-2-2",
+  "lite_result_sha256": "7863e1d803b7927e87cf1a38a4d96c1a04ad3eecbacc809f8097597ba25291d0",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 6372049,
+    "sha256": "0e2da2da0cc176bdcf7efb4183112cedd527e3af440d7a35077b89a5b78877b2"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "6db863bb63547d728cb9a17109310592",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

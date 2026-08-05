@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-04",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:b7d9538e79bbfced0dfa87250d8ba826b9b632abfa89e0def8c06c31c11c3c87",
+    "execution_fingerprint": "sha256:1988f34ee3c63ccc26e6192e4ab7fbfdb25e367e7e29b1851bccdb0911df2fc9",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcefb-6c2c-72a3-a068-38f1ce19f3cc"
+    },
+    "authored_payload_sha256": "cdc43f2a9d06d237f46b85a53bcb01fdc35bed9e79134a25c2e2a305ebe5e93a",
+    "draft_file_sha256": "0a5d652dd1112416be97ba82bfd79089f1e1a8dd59c6800d232930b262bf93a3"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+      "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632",
+      "bytes": 126619
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/content.json",
+      "sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "bytes": 21581,
+      "locator": {
+        "article_id": "14-promopages-govorit-s-auditoriei",
+        "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+        "lead": "Разбираем, как удержать внимание, вызвать доверие и подвести человека к покупке",
+        "image_id": "04",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "А в финале остается собрать основные выводы и подсказать дальнейшее действие: посмотреть модель, рассчитать стоимость, сравнить тарифы или оставить заявку. Так путь к покупке продолжается логично, без резкого перехода от рекомендаций к рекламе",
+        "file": "04.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Делитесь пользой, прежде чем продавать"
+        },
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "Ваше предложение становится частью такого разбора. Человек уже знает, на какие параметры смотреть, и может понять, подходит ли ему этот вариант."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "heading",
+          "text": "Говорите с конкретным человеком, а не всей ЦА"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A white article page with several Russian paragraphs; two key statements are bold, including the final call to continue scrolling and order Klima Home 12.",
+      "The frame is entirely text-based UI with black typography and generous white space; no people or physical objects are visible."
+    ],
+    "article_context": "Body UI image closing the section on giving value before selling: it illustrates a calm, logical next step from helpful advice to viewing a model, calculating cost, comparing options, or ordering with installation.",
+    "structured_intent": {
+      "editorial_meaning": "Helpful content leads naturally to a clear next action without an abrupt sales push.",
+      "primary_action": "A soft optical sheen moves once across the existing final call-to-action.",
+      "terminal_state": "The final bold call-to-action is left with a subtle, settled visual emphasis.",
+      "semantic_invariant": "The article remains calm, informative, and trustworthy; its text and interface state do not change."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Across five seconds, keep the article page completely still while one restrained optical sheen begins at the left edge of the final bold call-to-action and moves evenly to the right. It decelerates into a faint, stable emphasis over the same line near the end; no UI content changes.",
+      "positive_prompt": "Fixed camera. A soft light sheen slowly travels across the existing final bold call-to-action line, then settles as a subtle even emphasis on that line in the last frame; all text and layout remain unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, use one gradual optical accent on the lower bold CTA. The highlight progresses smoothly across the line for most of the duration and naturally fades into a quiet, readable emphasis in the final frame; the page itself remains static.",
+      "positive_prompt": "Fixed view: a gentle highlight glides once along the existing final bold call-to-action and resolves into a soft settled emphasis on it at the end, with every word, value, and layout unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Within four seconds, animate only a single soft sheen over the final bold instruction. It travels at a steady pace across the CTA and reaches a subtle stationary emphasis close to the end, preserving the unaltered article UI throughout.",
+      "positive_prompt": "Fixed camera. A restrained soft sheen passes once across the existing final bold CTA, ending with a subtle settled highlight on the line; text and interface stay exactly unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

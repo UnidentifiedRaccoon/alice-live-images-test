@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "14-promopages-govorit-s-auditoriei-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed UI. A gentle light glint moves across the existing problem-focused headline and fades, ending with the unchanged headline clearly readable under a subtle sheen.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe91b0caf85757b96ab3/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "7ee9da33ccb6a7628a6a3394a1bb7cbe7a7250b9d8a5c4860a0f7bb2d9beb39f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "iO3BNVn0S4hEmKZnjfkw",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:22:17Z",
+  "completed_at": "2026-08-05T09:25:18Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1876,
+    "height": 1106,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2731797,
+    "sha256": "586b1bf5f076ff4a4d15c5c82a97c6317d4bed8c0bf44cb19f95593ccd56ecab"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03-wan-2-7",
+  "lite_result_sha256": "b22d9301b6c0c6abb533bbbb7202fd74afa66569e9de2be4f097b87ab06b6f6c",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

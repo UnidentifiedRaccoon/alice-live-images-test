@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.7/07.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The boy slowly turns toward the mirror corridor as the woman remains close beside him; the repeated reflections slide through the maze and settle with both visible in the mirrors.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a59e32a3a302a69aec403c2_6a5a02c53a302a69aeca3208/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "431bb537ed273ef5c64d347e7814139d32608a38a65ff35841a2f4eb900e52a3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8hHZ5n2zz5fSqBjmQXQ2",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:21:52Z",
+  "completed_at": "2026-08-05T08:58:47Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 10039639,
+    "sha256": "8fca71ac060b67ab527a293c00145135f154f34563c13ecbf591392f2ff3a2ee"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-07-wan-2-7",
+  "lite_result_sha256": "4fc8bae8fc6663985ac77255a88c0478a8aa5955b6cdf81588dad242266de6c7",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

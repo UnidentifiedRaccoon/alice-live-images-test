@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1c83fccb527e723636c0/orig",
+      "prompt": "The marquee bulbs around the circus entrance ignite in a slow uneven sequence, spreading a warm, ominous glow across the clown face and striped tents. Fixed camera. By the final frame the whole entrance is steadily illuminated while the clown remains menacing.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "465281f7e9dc71626ebe135c79be9dcbda13224edb3d4342aee649db17ff8182",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "08e88d0d0020e6b35697f5f65cc3f961",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:21:58Z",
+  "completed_at": "2026-08-05T09:21:58Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 992,
+    "height": 912,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6174101,
+    "sha256": "10330203ff7884e81a4372cbec08f8009c5d7053dddc02530c0fe5802b1c33cf"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08-wan-2-2",
+  "lite_result_sha256": "2a5fbd9ea5adab1005c58f9a368609fe2e6b96f0dbac0cfad8cd032d73b67dc5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 324929,
+    "sha256": "594b825d5a38c98a476ef86a6dd038f75956a577382d62aade1d80c0858e78b0"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "08e88d0d0020e6b35697f5f65cc3f961",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-normalized-input-retry",
+  "ticket": "PROMOPAGES-10060",
+  "primary_batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "retry_number": 1,
+  "agent_id": "clipmaker-lite",
+  "logical_output_key": {
+    "article_slug": "12-dream-island-7-fishek",
+    "image_id": "08",
+    "model_id": "alibaba/wan-2.2"
+  },
+  "primary_attempt": {
+    "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-08-wan-2-2",
+    "provider_job_id": "3cc24b8d-51c7-43be-a504-6d550dd9c368",
+    "provider_task_id": "3cc24b8d-51c7-43be-a504-6d550dd9c368",
+    "status": "provider-failed",
+    "recorded_status": "submit-unknown",
+    "provider_may_be_active": false,
+    "recorded_provider_may_be_active": true,
+    "recorded_provider_job_id": null,
+    "submitted_at": null,
+    "completed_at": null,
+    "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"3cc24b8d-51c7-43be-a504-6d550dd9c368\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-05 16:16:38.596\\\", \\\"scheduled_time\\\": \\\"2026-08-05 16:16:38.614\\\", \\\"end_time\\\": \\\"2026-08-05 16:16:42.626\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image size is too large than 20.0 mb\\\"}\"}",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/08.run.json",
+    "run_sha256": "f35df2934fa92539feb239346d0bcd8e18ddde4d707d6d2661986dcb0a557c64",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/08.prompt.json",
+    "prompt_sha256": "9a49b10632fe8cee2d0a5ab14bf14ba269d155e29ae2d12dadaede4a2630f0d1",
+    "request": {
+      "endpoint": "/wan-2.2-i2v-flash",
+      "model": "alibaba/wan-2.2",
+      "provider": "segmind",
+      "provider_model_id": "segmind/wan-2.2-i2v-flash",
+      "input": {
+        "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+        "prompt": "Fixed wide shot. The loaded ride swings upward in a steady powerful arc, lifting the seat row and riders higher through the temple set; by the final frames it reaches a clearly elevated position while still climbing slightly.",
+        "negative_prompt": "",
+        "resolution": "720p",
+        "prompt_extend": false,
+        "watermark": false,
+        "seed": 220214
+      }
+    },
+    "request_sha256": "f14c0ef34c9059fedcf973ccac93c68ae75944cb3cc0a8d87fc6b50f476f25f1",
+    "request_fingerprint_version": 2,
+    "lite_result_path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-08/result.json",
+    "lite_result_sha256": "2b89bbc96c6ccab5ed1028ceb4b755b91b6573ad6b60765c5e3ef4bf00ff21df",
+    "source": {
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/08.jpeg",
+      "sha256": "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d",
+      "bytes": 23472383,
+      "width": 5445,
+      "height": 3635
+    },
+    "model_id": "alibaba/wan-2.2",
+    "adapter": "eliza-segmind",
+    "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-08",
+    "provider_failure": {
+      "http_status": 400,
+      "provider_task_id": "3cc24b8d-51c7-43be-a504-6d550dd9c368",
+      "provider_task_status": "FAILED",
+      "provider_error_code": "InvalidParameter",
+      "provider_error_message": "Image size is too large than 20.0 mb",
+      "submit_time": "2026-08-05 16:16:38.596",
+      "scheduled_time": "2026-08-05 16:16:38.614",
+      "end_time": "2026-08-05 16:16:42.626"
+    },
+    "provider_submit_time": "2026-08-05 16:16:38.596",
+    "provider_scheduled_time": "2026-08-05 16:16:38.614",
+    "provider_end_time": "2026-08-05 16:16:42.626"
+  },
+  "retry_attempt": {
+    "retry_key": "a2b2eedbdccfd28c58a2",
+    "batch_id": "promopages-10060-lite-all-images-20260805-v2-normalized-input-retry-v1-a2b2eedbdccfd28c58a2",
+    "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-normalized-input-retry-v1-a2b2eedbdccfd28c58a2-12-dream-island-7-fishek-08-wan-2-2",
+    "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-08",
+    "model_id": "alibaba/wan-2.2",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/08.jpeg",
+    "source_sha256": "66bfa65fd8c8c81d5d2e83be831f946ab1572082ecebf9d468a027d9b2bac691",
+    "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/scale_1200",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-retries-v1/a2b2eedbdccfd28c58a2/videos/wan-2.2/08.prompt.json",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-retries-v1/a2b2eedbdccfd28c58a2/videos/wan-2.2/08.run.json",
+    "video_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-retries-v1/a2b2eedbdccfd28c58a2/videos/wan-2.2/08.mp4",
+    "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-retries-v1/a2b2eedbdccfd28c58a2/generation-manifest.json",
+    "request": {
+      "endpoint": "/wan-2.2-i2v-flash",
+      "model": "alibaba/wan-2.2",
+      "provider": "segmind",
+      "provider_model_id": "segmind/wan-2.2-i2v-flash",
+      "input": {
+        "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/scale_1200",
+        "prompt": "Fixed wide shot. The loaded ride swings upward in a steady powerful arc, lifting the seat row and riders higher through the temple set; by the final frames it reaches a clearly elevated position while still climbing slightly.",
+        "negative_prompt": "",
+        "resolution": "720p",
+        "prompt_extend": false,
+        "watermark": false,
+        "seed": 220214
+      }
+    },
+    "request_sha256": "8078d477451f8b2eac4de8db19015bca4210a8c695dd39967e1c57757721b7ca",
+    "request_fingerprint_version": 2
+  },
+  "source_transform": {
+    "strategy": "frozen-page-variant",
+    "original": {
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/08.jpeg",
+      "sha256": "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d",
+      "bytes": 23472383,
+      "width": 5445,
+      "height": 3635
+    },
+    "normalized": {
+      "http_status": 200,
+      "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/scale_1200",
+      "sha256": "66bfa65fd8c8c81d5d2e83be831f946ab1572082ecebf9d468a027d9b2bac691",
+      "bytes": 386709,
+      "width": 1200,
+      "height": 801,
+      "format": "JPEG",
+      "metadata_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-assets-v1/2bdd38fc20a3d0edc595/asset.json",
+      "metadata_sha256": "b0f523dd03aa95681a44ab04d1830cec5efc43b21a714bbdb82df3bb5f21810b"
+    },
+    "request_delta": {
+      "json_pointer": "/input/image",
+      "from": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+      "to": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/scale_1200",
+      "changed_leaf_count": 1
+    }
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 100.0,
+    "hard_budget_cap_usd": 100.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 98.0,
+    "estimated_headroom_usd": 2.0,
+    "planned_paid_submissions": 276,
+    "maximum_paid_submissions": 280,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job; provider-confirmed terminal failures may receive at most one separately namespaced, explicit retry-v1 submit; a quarantined synchronous Segmind submit with unknown outcome may receive at most one separately namespaced, explicit ambiguous-submit retry-v1; each exact oversize Wan primary may receive one separately namespaced normalized-input retry-v1 whose only request change is the frozen image URL; every immutable reservation is included in the aggregate accounting maximum",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery",
+    "terminal_retry_version": 1,
+    "terminal_retry_accounting_cost_usd": 0.35,
+    "terminal_retry_reservations": 2,
+    "ambiguous_submit_retry_version": 1,
+    "ambiguous_submit_retry_accounting_cost_usd": 0.35,
+    "ambiguous_submit_retry_reservations": 1,
+    "normalized_input_retry_version": 1,
+    "normalized_input_retry_accounting_cost_usd": 0.35,
+    "normalized_input_retry_reservations": 1,
+    "total_retry_reservations": 4,
+    "maximum_new_paid_submissions_per_failed_output": 1,
+    "maximum_new_paid_submissions_per_ambiguous_output": 1,
+    "maximum_new_paid_submissions_per_normalized_input_output": 1
+  },
+  "policy": {
+    "explicit_operator_command_required": true,
+    "automatic_retry": false,
+    "maximum_new_paid_submissions": 1,
+    "retry2_forbidden": true,
+    "same_verified_lite_result": true,
+    "same_prompt": true,
+    "same_model": true,
+    "request_delta_only_image_pointer": true,
+    "shared_frozen_scale_1200_asset": true,
+    "local_reencode": false,
+    "fallback": false,
+    "primary_receipt_immutable": true
+  }
+}

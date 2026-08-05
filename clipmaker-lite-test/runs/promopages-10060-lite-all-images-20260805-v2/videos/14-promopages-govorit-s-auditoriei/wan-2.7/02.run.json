@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "14-promopages-govorit-s-auditoriei-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With a fixed camera, the woman gradually turns her gaze to the laptop and starts typing at an even pace. End with her calmly engaged with the screen, still composed and attentive.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b088aa78cb9159a3ee57b/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "cb1534458c5212a0139102584c4dcadb3318153e23f4fb9384aab51679c20ed9",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Mk9mPEJ4mKFIZqFEMv8I",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:22:16Z",
+  "completed_at": "2026-08-05T09:23:33Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1926,
+    "height": 1076,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6896631,
+    "sha256": "54fb1e76464cf8269dc6a55e6591a300d64544c371e95ad5217c48fcadb099ec"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-02-wan-2-7",
+  "lite_result_sha256": "41ebed5065f993713f1afa8ed223cacfd6102aca10184c1fe1fa1185d58b1104",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

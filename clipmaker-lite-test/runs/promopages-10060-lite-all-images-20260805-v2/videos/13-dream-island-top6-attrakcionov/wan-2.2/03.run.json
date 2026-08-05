@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a18252bd5c226f5237586/orig",
+      "prompt": "The rotating ride carries the central red cabin smoothly along its circular arc as the riders lean with the turn, holding their excited smiles; fixed camera, with the cabin still clearly visible and settling into the next turn in the final frame.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "2f10c309fea0ffa5b367654f2bd794ed03472294471c03b3d7146621f5208b7e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "84ee8a995e0e2fbd12b7031347b1ef37",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:15:30Z",
+  "completed_at": "2026-08-05T09:15:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 11166803,
+    "sha256": "40fd1cca1d372169ce484b0edd00fba9bdd42972d59dd14cae0711aa95f1f3e8"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-03-wan-2-2",
+  "lite_result_sha256": "db3308fa99579e0354f132856a4122b30027032d4ccf1feb2d6c0520787ff47d",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 9821816,
+    "sha256": "f1bb24adc36d53f546ea51ef407b349227e893757f80279bd9da151e41ebfba9"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "84ee8a995e0e2fbd12b7031347b1ef37",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

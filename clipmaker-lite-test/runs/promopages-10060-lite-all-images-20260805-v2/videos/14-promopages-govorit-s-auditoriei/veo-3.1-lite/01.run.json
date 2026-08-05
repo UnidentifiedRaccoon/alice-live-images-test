@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "14-promopages-govorit-s-auditoriei-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the woman and tablet. She gently brings one finger toward an existing product tile, ending in a steady hover that conveys a considered choice; the tablet display remains unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b04b987675c24ffb6bd71/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "4e23a7c69af71716c567c89d4fe9341d1670420e24fc067a530f17a6087d034a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "AizZ2xMszSsXdFhzEPt6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:22:18Z",
+  "completed_at": "2026-08-05T09:24:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1887589,
+    "sha256": "832f9ca1277adf1b4bfabb08141e38da93099409a348fdf0d041dd9bfaab13e3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01-veo-3-1-lite",
+  "lite_result_sha256": "90084bbbfa90ea6c225e6bfd564b3acba9f7b4e4e24a5bcc5c46f23bc70c608a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

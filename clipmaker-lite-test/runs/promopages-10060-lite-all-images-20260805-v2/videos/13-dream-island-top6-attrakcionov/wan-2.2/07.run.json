@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/07.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1a232bd5c226f523d860/orig",
+      "prompt": "Fixed camera on the roller-coaster train as it surges along the steep curved track, riders leaning with the turn; it reaches the higher right-hand curve by the final frame, still racing through the dark indoor city.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "c41e9fac2b53e0446a942e9f11b788632fbc008de1c5ff3bc672bf067533e180",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "e26516c13361f1adb416ceaec424b402",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:21:01Z",
+  "completed_at": "2026-08-05T09:21:01Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 12714001,
+    "sha256": "f358cfbfbe47ac010c37c1bdd7cdddb37f5d1ca253413746081e3cd6d28f4a9c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-07-wan-2-2",
+  "lite_result_sha256": "1a532e42b043f4243b25e8fe79151ad0c9dd8621b20735770189bd335974ded4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 5889225,
+    "sha256": "7b83948381c8644ae5dd171ccf2de1f957eb878fa25243d349e56c44dd39a5d6"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "e26516c13361f1adb416ceaec424b402",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

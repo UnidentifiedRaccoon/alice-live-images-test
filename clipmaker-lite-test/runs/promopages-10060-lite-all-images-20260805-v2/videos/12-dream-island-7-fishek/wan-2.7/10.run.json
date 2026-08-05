@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-10",
+  "image_id": "10",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.7/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.7/10.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Visitors drift along the park paths as the decorative lights twinkle; make a gentle forward push toward the central mushroom house, ending on a clear glowing overview of the surrounding themed zones.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a59e32a3a302a69aec403c2_6a5a082d3a302a69aecb23dc/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "6a1b7c4d9bb300b89d0f091d859871b17a2054ed2a7676677516ffd0ab471a34",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "wfs94Lv9C6Jt2g4WYrka",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:58:49Z",
+  "completed_at": "2026-08-05T09:01:16Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 24263332,
+    "sha256": "7d0791ae977772fb7397713e8c4e934c71d0065391d80f4a6122ef6258b9ff4d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-10",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-10-wan-2-7",
+  "lite_result_sha256": "3f7369eee6f7c1b505dfe86164ad7a361691deeaf3256309f09d8e74ab4409a8",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

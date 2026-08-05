@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-07",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-07-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/07.jpeg",
+    "sha256": "6d1ad711cc0c9ca917c30a5806824d53efb1e5f040701a9b5b6eab5b3d3ebd39",
+    "width": 6016,
+    "height": 4016
+  },
+  "structured_intent": {
+    "editorial_meaning": "Семейная прогулка по зеркальному лабиринту превращается в необычную фотолокацию с множеством собственных отражений.",
+    "primary_action": "Мальчик делает один спокойный любопытный поворот к зеркальному коридору.",
+    "terminal_state": "Мальчик и женщина отчётливо видны среди повторяющихся отражений в зеркалах.",
+    "semantic_invariant": "Сохраняется ощущение безопасного совместного исследования зеркального лабиринта и эффект множества отражений."
+  },
+  "prompt": {
+    "positive": "The boy slowly turns toward the mirror corridor as the woman remains close beside him; the repeated reflections slide through the maze and settle with both visible in the mirrors.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-07/result.json",
+    "sha256": "4fc8bae8fc6663985ac77255a88c0478a8aa5955b6cdf81588dad242266de6c7",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "6d1ad711cc0c9ca917c30a5806824d53efb1e5f040701a9b5b6eab5b3d3ebd39",
+      "article_context_sha256": "f873287c9c994b4dedf6faf6eb5199362f1ea79f4a8e96f63537658e248e3ecf",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

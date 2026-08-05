@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-01-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+    "sha256": "01e5a2ad2302b945921a8cf8b7805e182533e89f1be081c03701e8b509d7998a",
+    "width": 2632,
+    "height": 1974
+  },
+  "structured_intent": {
+    "editorial_meaning": "A vivid invitation to experience the article’s promised extreme-ride adrenaline and sensation of weightlessness.",
+    "primary_action": "The ride continuously rotates upward through its large mechanical arc, lifting the seated visitors.",
+    "terminal_state": "The riders on the right are visibly high overhead in a near-inverted position as the ride continues its rotation.",
+    "semantic_invariant": "The riders remain securely strapped in and visibly exhilarated by the extreme attraction."
+  },
+  "prompt": {
+    "positive": "The winged ride rotates steadily upward through its arc, carrying the seated visitors into a brief near-inverted sweep; by the final frame the right-side riders are held high overhead, legs raised, while the ride continues its thrilling rotation. Fixed wide camera.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-01/result.json",
+    "sha256": "58402ef04b98dc69d36284e622b7cf512e5c32ef3a9d295295158499ee66fb3b",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "01e5a2ad2302b945921a8cf8b7805e182533e89f1be081c03701e8b509d7998a",
+      "article_context_sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

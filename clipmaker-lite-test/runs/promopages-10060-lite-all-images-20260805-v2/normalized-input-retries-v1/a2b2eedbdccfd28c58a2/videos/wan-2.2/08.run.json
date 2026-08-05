@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-retries-v1/a2b2eedbdccfd28c58a2/videos/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/normalized-input-retries-v1/a2b2eedbdccfd28c58a2/videos/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/scale_1200",
+      "prompt": "Fixed wide shot. The loaded ride swings upward in a steady powerful arc, lifting the seat row and riders higher through the temple set; by the final frames it reaches a clearly elevated position while still climbing slightly.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "8078d477451f8b2eac4de8db19015bca4210a8c695dd39967e1c57757721b7ca",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "2fd50baa52450e9a9f9c2775b3bc543a",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:58:24Z",
+  "completed_at": "2026-08-05T08:58:24Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 14103448,
+    "sha256": "2c81b3c6635d28e5c2d1b1b0429b3c1777de92c6cb0be218e38512932228893f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2-normalized-input-retry-v1-a2b2eedbdccfd28c58a2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-normalized-input-retry-v1-a2b2eedbdccfd28c58a2-12-dream-island-7-fishek-08-wan-2-2",
+  "lite_result_sha256": "2b89bbc96c6ccab5ed1028ceb4b755b91b6573ad6b60765c5e3ef4bf00ff21df",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 386709,
+    "sha256": "66bfa65fd8c8c81d5d2e83be831f946ab1572082ecebf9d468a027d9b2bac691"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "2fd50baa52450e9a9f9c2775b3bc543a",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

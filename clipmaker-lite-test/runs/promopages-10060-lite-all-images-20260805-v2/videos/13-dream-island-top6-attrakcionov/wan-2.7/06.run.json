@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The ride carriage continues its powerful downward swing, carrying the excited riders lower through the frame. The wide camera stays fixed on the carriage and arm; the last frame shows the carriage lower in the arc, still moving downward.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a1825bf47d01035dda05f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "fff025b3e35684c16250b37568694d4ad50d1ad084804b984615063f8d901b29",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "E9HScXregL36EI8Fsk7H",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:14:41Z",
+  "completed_at": "2026-08-05T09:17:07Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1248,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 10539425,
+    "sha256": "fab6bf196efd831fc45ba7a123f648ebd3c74bb72b41d5630f3cff7b21172b98"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-06-wan-2-7",
+  "lite_result_sha256": "88df4d2391e555c4516a717b5cd5b4617f29012078dd0650e262f25c50eda642",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/08.jpeg",
+    "sha256": "594b825d5a38c98a476ef86a6dd038f75956a577382d62aade1d80c0858e78b0",
+    "width": 1280,
+    "height": 1174
+  },
+  "structured_intent": {
+    "editorial_meaning": "The entrance hints at the separately ticketed horror-circus experience and its playful but sinister promise.",
+    "primary_action": "The existing marquee lights progressively illuminate the circus entrance.",
+    "terminal_state": "The visible marquee lighting across the circus facade is fully glowing while the central doorway remains dark.",
+    "semantic_invariant": "The clown entrance remains an ominous, recognizable threshold into a sinister circus throughout."
+  },
+  "prompt": {
+    "positive": "A slow wave of marquee lights travels across the circus facade, gradually bathing the clown entrance in a warm eerie glow. Fixed frontal camera; the final frame holds the fully lit, threatening entrance.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08/result.json",
+    "sha256": "2a5fbd9ea5adab1005c58f9a368609fe2e6b96f0dbac0cfad8cd032d73b67dc5",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "594b825d5a38c98a476ef86a6dd038f75956a577382d62aade1d80c0858e78b0",
+      "article_context_sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
