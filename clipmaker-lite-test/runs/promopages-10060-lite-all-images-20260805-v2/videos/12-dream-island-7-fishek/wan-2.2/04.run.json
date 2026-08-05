@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a59e32a3a302a69aec403c2_6a5a02343a302a69aeca1771/orig",
+      "prompt": "The two Smurf mascots make one gentle synchronized side-to-side celebratory sway with raised arms, then settle side by side facing the viewer with both arms held high. Fixed camera.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "bc6e353c6f46f0dbf1821fa9688b5b389553110fce95b9a8f72c6f0d79a96444",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "81b81402e1d7381e8dcab822bc0db74e",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:12:49Z",
+  "completed_at": "2026-08-05T08:12:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 8813674,
+    "sha256": "3dbc747198840b5d9421963092d5bc1f14e619b44e1df1281178637c8f011c41"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-04-wan-2-2",
+  "lite_result_sha256": "244becd540af01727f5a28d0d6c760d3aae75319a8856738e1ccad5fc63627ef",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 11589923,
+    "sha256": "e18bbc181b374f5773120a92e23af198184f0f6f7c83c7b61f9285a29ee7993d"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "81b81402e1d7381e8dcab822bc0db74e",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

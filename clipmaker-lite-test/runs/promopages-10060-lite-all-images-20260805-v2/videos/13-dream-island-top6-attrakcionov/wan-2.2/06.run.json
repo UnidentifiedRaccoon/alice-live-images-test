@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "13-dream-island-top6-attrakcionov-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/13-dream-island-top6-attrakcionov/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a1825bf47d01035dda05f/orig",
+      "prompt": "The pendulum ride sweeps smoothly downward through its arc, the riders leaning with the motion and holding their excited expressions. Fixed wide camera. In the final frames, the carriage is visibly lower and still descending with controlled momentum.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "1bf2d8c17e046e775d2656dd23646c05ed2fb25c3680ed03340e3d6a940ca379",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "808cfc8254ab12958546d4b30887dec9",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:19:45Z",
+  "completed_at": "2026-08-05T09:19:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 832,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 16459876,
+    "sha256": "35dd16a22c8f3dbae490b67e494bb24c6a86aaaf3133413a0e3a56e15dd7a8f7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-06-wan-2-2",
+  "lite_result_sha256": "88df4d2391e555c4516a717b5cd5b4617f29012078dd0650e262f25c50eda642",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 963962,
+    "sha256": "cd24fd724020e82111c8608091d3a2068e5ca4adb530231e59f5c096ac845cbd"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "808cfc8254ab12958546d4b30887dec9",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

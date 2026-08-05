@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "08-femibion-grudnoe-vskarmlivanie-05",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera on the woman as she makes one gentle, deliberate stop gesture toward the pizza, keeping a composed, discerning expression. Her gaze settles on the healthy food; in the final frame the pizza is clearly declined at the right edge.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4ff6646ea17f6e82547e/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "30df775a691ff4814b67252784630c3d241cdc22a083b8ac297dd85415d93955",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6QIWOmo7PJgVMK4qECeg",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:02:59Z",
+  "completed_at": "2026-08-05T00:04:43Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/OpenRouter job 6QIWOmo7PJgVMK4qECeg failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+  "lite_result_sha256": "5de787bee115dfd4b51d37c2c0c0226b3d3d88ecb5db1c7d47f62abf4aa34464",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

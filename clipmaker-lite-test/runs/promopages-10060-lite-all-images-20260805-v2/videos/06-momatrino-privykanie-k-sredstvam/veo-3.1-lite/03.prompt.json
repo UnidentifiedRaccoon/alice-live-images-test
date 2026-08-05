@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-03-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/03.png",
+    "sha256": "77429c1c0f1e1280692df2d6d82e02b28c38a731246e19ac1c0c9e2f8b944435",
+    "width": 1344,
+    "height": 768
+  },
+  "structured_intent": {
+    "editorial_meaning": "A warm shower is presented as a simple self-care measure that can bring temporary comfort when nasal congestion feels bothersome.",
+    "primary_action": "Warm shower water flows continuously over the man's shoulders as he settles beneath it.",
+    "terminal_state": "The man is visibly relaxed beneath the still-steady shower stream.",
+    "semantic_invariant": "The scene remains a calm, non-explicit moment of practical self-care and gentle relief."
+  },
+  "prompt": {
+    "positive": "Fixed camera on the man's back as the warm shower runs steadily over his shoulders; he gently lowers his head and settles into a relaxed posture, ending under the continuous stream.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-03/result.json",
+    "sha256": "bc2e48aba56adc1b96c6223ba68db373d176fe19d273603ffea151e5adff45f2",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "77429c1c0f1e1280692df2d6d82e02b28c38a731246e19ac1c0c9e2f8b944435",
+      "article_context_sha256": "2c55f3e8a705dbe8519b15ecf3607ec304c725380ee2647dbe8e0ff9e56c1da2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

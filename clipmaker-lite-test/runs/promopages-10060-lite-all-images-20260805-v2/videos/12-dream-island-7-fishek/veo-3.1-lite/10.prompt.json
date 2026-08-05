@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-10",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-10-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/10.jpeg",
+    "sha256": "bcf9184d8be12094371665493bc1adaf6414aa0f5bbe87d5e1b3a73408947b78",
+    "width": 3276,
+    "height": 2184
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation conveys the rewarding, expansive view of Dream Island available from its lesser-known photo spots.",
+    "primary_action": "Visitors continuously stroll through the themed park pathways.",
+    "terminal_state": "The final frame still clearly shows the central mushroom house within the broad glowing park panorama.",
+    "semantic_invariant": "The park remains a welcoming, magical panorama to be explored and photographed."
+  },
+  "prompt": {
+    "positive": "A gentle forward move toward the central mushroom house as visitors walk through the paths and park lights softly twinkle, ending with the glowing themed park still visible as a wide panorama.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-10/result.json",
+    "sha256": "3f7369eee6f7c1b505dfe86164ad7a361691deeaf3256309f09d8e74ab4409a8",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "bcf9184d8be12094371665493bc1adaf6414aa0f5bbe87d5e1b3a73408947b78",
+      "article_context_sha256": "f873287c9c994b4dedf6faf6eb5199362f1ea79f4a8e96f63537658e248e3ecf",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

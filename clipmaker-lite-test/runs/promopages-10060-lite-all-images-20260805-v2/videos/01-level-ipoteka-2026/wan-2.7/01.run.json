@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "01-level-ipoteka-2026-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/01-level-ipoteka-2026/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman continues walking from the entrance into the courtyard at an even pace. A subtle forward camera move follows her; nearby leaves and flowering grasses sway gently. End with her farther along the paved path, the modern home entrance still clearly visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a048df5952e1f1e50d6b5d0/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "313b8046232886ba528c987bbd31dc18651ff71a18ad6aac165e6bfff54d5103",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "jSclG1CXAOfOHTzykPgC",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T22:54:55Z",
+  "completed_at": "2026-08-04T22:56:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1928,
+    "height": 1074,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 23435338,
+    "sha256": "fb2ad4fda954c3ddd96b2086aef74ff93dbf776b2a6955fd162511a27f367544"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01-wan-2-7",
+  "lite_result_sha256": "f5c914d73341d0aa9c80a6a295988cd54837ee06e3927ccb79b402614d89b684",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

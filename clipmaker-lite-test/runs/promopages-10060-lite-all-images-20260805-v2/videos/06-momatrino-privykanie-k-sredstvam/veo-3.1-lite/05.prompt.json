@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-05-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/05.png",
+    "sha256": "5a97bd7a93946cb30ab1cd934fb274d1f8a0c9e0977da62d9daf6ee7aef76451",
+    "width": 747,
+    "height": 479
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize that treatment has contraindications and requires consultation with a specialist.",
+    "primary_action": "A single soft optical highlight moves across the existing warning text.",
+    "terminal_state": "All existing warning text is fully legible and unchanged after the highlight has faded.",
+    "semantic_invariant": "The cautionary medical message and the need for specialist consultation remain clear throughout."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A restrained soft highlight glides down the existing warning lettering, ending with all text fully legible and unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-05/result.json",
+    "sha256": "b7f536a7bd41731dcaca938448768bfca9d7f046cec03d326351de60d11c333f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "5a97bd7a93946cb30ab1cd934fb274d1f8a0c9e0977da62d9daf6ee7aef76451",
+      "article_context_sha256": "2c55f3e8a705dbe8519b15ecf3607ec304c725380ee2647dbe8e0ff9e56c1da2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

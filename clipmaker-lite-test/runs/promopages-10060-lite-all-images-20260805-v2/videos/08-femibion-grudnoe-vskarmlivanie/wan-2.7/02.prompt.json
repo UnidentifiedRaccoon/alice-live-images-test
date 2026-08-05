@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/02.jpeg",
+    "sha256": "98a2deb359e9e94f25ba9c49af57b95c3f8e3c5e780820eca39147e618f748a4",
+    "width": 1920,
+    "height": 1080
+  },
+  "structured_intent": {
+    "editorial_meaning": "A calm, balanced meal illustrates that breastfeeding nutrition is about varied, adequate food rather than larger portions.",
+    "primary_action": "The woman cuts the salad and lifts one forkful from the bowl.",
+    "terminal_state": "A forkful of salad is visibly held above the bowl.",
+    "semantic_invariant": "The meal remains a calm, nourishing example of balanced everyday eating."
+  },
+  "prompt": {
+    "positive": "A calm, deliberate bite-preparation gesture: she cuts the salad and gradually raises a forkful above the bowl. Fixed close tabletop view. End with the forkful clearly suspended above the salad.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-02/result.json",
+    "sha256": "841d7da2f55d3301396bbabf05c33f91597a83d566c1c411defc4030e925d2b6",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "98a2deb359e9e94f25ba9c49af57b95c3f8e3c5e780820eca39147e618f748a4",
+      "article_context_sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

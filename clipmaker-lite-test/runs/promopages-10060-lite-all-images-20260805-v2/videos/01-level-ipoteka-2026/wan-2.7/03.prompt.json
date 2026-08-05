@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-03-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+    "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+    "width": 1460,
+    "height": 954
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize the leading role of Moscow in February 2026 mortgage issuance while retaining the chart's factual comparison.",
+    "primary_action": "A soft optical highlight travels across the existing February 2026 Moscow bar.",
+    "terminal_state": "The highlight has reached and faded at the right end of the Moscow February 2026 bar, with the chart otherwise unchanged.",
+    "semantic_invariant": "The chart remains an unchanged factual comparison of regional mortgage issuance."
+  },
+  "prompt": {
+    "positive": "Fixed chart with a subtle blue sheen moving across the February 2026 Moscow bar, then settling into a faint highlight at its right end; chart data and layout remain unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-03/result.json",
+    "sha256": "df38ed6d9d135744fbc52a7d8b26e34dd6044482074cd229072eb9d3f44c73e6",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+      "article_context_sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

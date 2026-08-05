@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "09-m2-risk-vtorichki-05",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed UI camera. A restrained violet sheen moves once across the existing order-service button, fading by the final frame; the interface remains unchanged and readable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67cc/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5526630f7e0561f4faaf1bb26601259a971f03d8722267366a7e57aa42e27ccc",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "vmELDhOVW6oGZmW6ewDN",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:25:30Z",
+  "completed_at": "2026-08-05T00:26:48Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 538969,
+    "sha256": "eadb67626b47569ac453f00a6ab66549bd21321cdba033c11ab4c63600a3db68"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-05-veo-3-1-lite",
+  "lite_result_sha256": "5433ec6a12bbbf72bfe8f7644b63f0473300e974add5c2087c4f50d896dd0983",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

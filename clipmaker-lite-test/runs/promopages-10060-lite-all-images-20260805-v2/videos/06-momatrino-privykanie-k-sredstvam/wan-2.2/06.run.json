@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_693bc9e8d469ca47a341cedd_694a69110124957a763dd8e1/orig",
+      "prompt": "A soft vertical sheen slowly travels across the existing references page from top to bottom, subtly drawing attention to the source list while the camera stays fixed. End with the full bibliography evenly lit, static, and fully legible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "90f11cfd8cd6fba7584dc72ff02e5ce483881acec449cc85e5ecdd6143ad3ba8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cfff38671ad7623630f6c80d590c627c",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:40:00Z",
+  "completed_at": "2026-08-04T23:40:00Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 976,
+    "height": 928,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 9701949,
+    "sha256": "05c40eec2c2744f2093d2cbefa0833af087055e103019dc4e708470e5ccef6c9"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-06-wan-2-2",
+  "lite_result_sha256": "589a0390320cb5b4e1408edf2e6f88fe956bf230dd790165be1be0e4a305a144",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 209700,
+    "sha256": "100c76b63d143bedabd0d615b42c034e6d63b47a9af37b345dbf6c462e4cad34"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "cfff38671ad7623630f6c80d590c627c",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

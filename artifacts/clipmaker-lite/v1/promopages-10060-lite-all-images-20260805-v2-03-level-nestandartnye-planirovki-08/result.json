@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-08",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:1037d9fa611933b5e505f8873fc759f08d7ee30b9eb07592cfdf5e7cdf7faed5",
+    "execution_fingerprint": "sha256:19e25561997cde2db9192968517ca15acf925e9b2d64faafb7189e7115d25bdf",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef3-cb91-77f0-aa2b-ec29e305d8a3"
+    },
+    "authored_payload_sha256": "6804687942a4b00cf8f241ce7b86b6f94d8657beca4abc85e4b4525d79ba5aed",
+    "draft_file_sha256": "346712f1cf6d7182cce29cd129659d48fb38078df3c1dd9719d552204286e31d"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/08.jpeg",
+      "sha256": "dae066652e655f7ba57f1c4b32f6cb1fa564198e8eac653648e70b06854cd710",
+      "bytes": 346814
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/content.json",
+      "sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "bytes": 23384,
+      "locator": {
+        "article_id": "03-level-nestandartnye-planirovki",
+        "title": "Топ-6 нестандартных планировок квартир от Level Group",
+        "lead": "Покажем несколько вариантов в разных районах Москвы",
+        "image_id": "08",
+        "block_index": 34,
+        "role": "gallery_image",
+        "caption": "Просторная спальня, чтобы хорошо отдыхать после насыщенного дня",
+        "file": "08.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/08.jpeg",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Квартиры с 5+ комнатами"
+        },
+        "nearest_text_before": {
+          "block_index": 31,
+          "type": "paragraph",
+          "text": "Листайте галерею, чтобы посмотреть разные варианты комнат в премиальной коллекции 👇"
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Квартира с гардеробной"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A spacious modern bedroom is centered symmetrically around a large made bed, with two pendant lamps, framed wall art, dark bedside tables, and a lounge chair.",
+      "The visible warm pendant light and still, uncluttered interior support a quiet, restorative mood."
+    ],
+    "article_context": "Gallery image 08 illustrates the article’s idea of a spacious bedroom as a calm place to recover after a busy day.",
+    "structured_intent": {
+      "editorial_meaning": "A spacious private bedroom can become a quiet, restorative place to rest after a full day.",
+      "primary_action": "The existing bedside pendant lights gradually cast a warmer, fuller glow across the bed.",
+      "terminal_state": "Both pendant lamps leave the bed and bedside area in a stable, softly warmed illumination.",
+      "semantic_invariant": "The bedroom remains a calm, private space for rest throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, the warm illumination from both existing pendant lamps gradually deepens and spreads softly across the bed and nearby tables. Keep the camera fixed so the centered bedroom remains continuously visible; the glow reaches a stable, welcoming level in the last moments.",
+      "positive_prompt": "The two bedside pendant lights slowly bloom warmer and brighter, casting a gentle expanding glow across the bed; by the final moment the bedroom rests in an even, inviting warm light. Fixed camera.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, let the existing bedside pendants gently build their warm pool of light at an even pace, making the bed feel progressively more inviting. Use a fixed camera and let the illumination settle naturally near the end without introducing another event.",
+      "positive_prompt": "A soft warm glow gradually strengthens from the existing pendant lamps and settles evenly over the bed, ending with the bedroom quietly illuminated for rest. Fixed camera.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Across four seconds, the visible pendant lamps softly increase their warm illumination in one continuous progression. The fixed framing holds the centered bed and the light reaches a calm, even final state close to the end.",
+      "positive_prompt": "Fixed camera on the bedroom as the pendant lamps softly brighten, their warm light spreading across the bed and ending in a calm, evenly lit resting space.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

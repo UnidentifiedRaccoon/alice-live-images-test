@@ -47,7 +47,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
         wan = models / "alibaba-wan-2.7.md"
         veo = models / "google-veo-3.1-lite.md"
         readme.write_text("Lite base instruction.\n", encoding="utf-8")
-        wan22.write_text("Wan 2.2 three-second instruction.\n", encoding="utf-8")
+        wan22.write_text("Wan 2.2 five-second Segmind instruction.\n", encoding="utf-8")
         wan.write_text("Wan five-second instruction.\n", encoding="utf-8")
         veo.write_text("Veo four-second instruction.\n", encoding="utf-8")
 
@@ -122,22 +122,29 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                     "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
                     "spec_sha256": runner.sha256_file(wan22),
                     "runtime": {
-                        "duration_seconds": 3.2,
+                        "duration_seconds": 5,
                         "resolution": "720p",
                         "aspect_ratios": ["source"],
                         "generate_audio": False,
                         "frame_inputs": ["first_frame"],
-                        "provider": "wan-streamlit",
-                        "adapter": "wan-demo",
-                        "frames": 97,
+                        "gateway": "eliza",
+                        "provider": "segmind",
+                        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+                        "adapter": "eliza-segmind",
+                        "synchronous": True,
+                        "automatic_retry": False,
+                        "frames": 150,
                         "fps": 30,
-                        "seed": 1,
-                        "loop": False,
-                        "last_frame": None,
-                        "prompt_expansion": {"mode": "not_exposed"},
+                        "seed": 220214,
+                        "watermark": False,
+                        "prompt_expansion": {
+                            "parameter": "prompt_extend",
+                            "value": False,
+                        },
                         "negative_prompt_transport": {
-                            "mode": "combined_prompt",
-                            "separator": "\n\nAvoid: ",
+                            "mode": "separate_field",
+                            "parameter": "negative_prompt",
+                            "null_serialization": "empty_string",
                         },
                     },
                 },
@@ -260,7 +267,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             )
             bundle = (run / "instruction-bundle.md").read_text(encoding="utf-8")
             self.assertIn("Lite base instruction.", bundle)
-            self.assertIn("Wan 2.2 three-second instruction.", bundle)
+            self.assertIn("Wan 2.2 five-second Segmind instruction.", bundle)
             self.assertIn("Wan five-second instruction.", bundle)
             self.assertIn("Veo four-second instruction.", bundle)
             self.assertNotIn("docs/agents/clipmaker/", bundle)
@@ -276,11 +283,11 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             self.assertTrue(result["producer"]["contract_fingerprint"].startswith("sha256:"))
             self.assertEqual(
                 [item["runtime"]["duration_seconds"] for item in result["models"]],
-                [3.2, 5, 4],
+                [5, 5, 4],
             )
             self.assertEqual(
                 result["models"][0]["runtime"]["prompt_expansion"],
-                {"mode": "not_exposed"},
+                {"parameter": "prompt_extend", "value": False},
             )
             self.assertEqual(
                 result["models"][1]["runtime"]["prompt_expansion"],
@@ -365,7 +372,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 model_ids=["alibaba/wan-2.2"],
             )
             bundle = (run / "instruction-bundle.md").read_text(encoding="utf-8")
-            self.assertIn("Wan 2.2 three-second instruction.", bundle)
+            self.assertIn("Wan 2.2 five-second Segmind instruction.", bundle)
             self.assertNotIn("Wan five-second instruction.", bundle)
             self.assertNotIn("Veo four-second instruction.", bundle)
 
@@ -379,7 +386,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 [item["model_id"] for item in result["models"]],
                 ["alibaba/wan-2.2"],
             )
-            self.assertEqual(result["models"][0]["runtime"]["frames"], 97)
+            self.assertEqual(result["models"][0]["runtime"]["frames"], 150)
             self.assertEqual(
                 runner.provenance_summary(root, "wan22-only")["models"],
                 ["alibaba/wan-2.2"],
@@ -651,14 +658,50 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                         external_processing_approved=True,
                     )
 
-    def test_codex_event_parser_detects_tool_use(self) -> None:
+    def test_codex_event_parser_allows_only_exact_mdm_approval_policy_error(
+        self,
+    ) -> None:
+        stdout = (
+            b'{"type":"thread.started","thread_id":"thread-1"}\n'
+            b'{"type":"turn.started"}\n'
+            b'{"type":"item.completed","item":{"id":"item_0","type":"error",'
+            b'"message":"Configured value for `approval_policy` is disallowed by '
+            b'requirements; falling back to required value UnlessTrusted. Details: '
+            b'invalid value for `approval_policy`: `Never` is not in the allowed set '
+            b'[UnlessTrusted, OnRequest] (set by MDM '
+            b'com.openai.codex:requirements_toml_base64)"}}\n'
+            b'{"type":"item.completed","item":{"type":"agent_message"}}\n'
+            b'{"type":"turn.completed"}\n'
+        )
+        thread_id, tool_events = runner._codex_event_metadata(stdout)
+        self.assertEqual(thread_id, "thread-1")
+        self.assertEqual(tool_events, [])
+
+    def test_codex_event_parser_rejects_unknown_error_item(self) -> None:
+        stdout = (
+            b'{"type":"thread.started","thread_id":"thread-1"}\n'
+            b'{"type":"item.completed","item":{"id":"item_0","type":"error",'
+            b'"message":"A different error"}}\n'
+        )
+        with self.assertRaisesRegex(runner.LiteRunnerError, "forbidden item type"):
+            runner._codex_event_metadata(stdout)
+
+    def test_codex_event_parser_rejects_command_execution(self) -> None:
         stdout = (
             b'{"type":"thread.started","thread_id":"thread-1"}\n'
             b'{"type":"item.completed","item":{"type":"command_execution"}}\n'
         )
-        thread_id, tool_events = runner._codex_event_metadata(stdout)
-        self.assertEqual(thread_id, "thread-1")
-        self.assertEqual(tool_events, ["command_execution"])
+        with self.assertRaisesRegex(runner.LiteRunnerError, "forbidden item type"):
+            runner._codex_event_metadata(stdout)
+
+    def test_codex_event_parser_rejects_mdm_error_on_item_started(self) -> None:
+        item = json.dumps(runner.IGNORABLE_MDM_APPROVAL_POLICY_ERROR_ITEM)
+        stdout = (
+            '{"type":"thread.started","thread_id":"thread-1"}\n'
+            f'{{"type":"item.started","item":{item}}}\n'
+        ).encode()
+        with self.assertRaisesRegex(runner.LiteRunnerError, "forbidden item type"):
+            runner._codex_event_metadata(stdout)
 
     def test_codex_event_parser_fails_closed(self) -> None:
         with self.assertRaisesRegex(runner.LiteRunnerError, "Invalid Codex JSONL"):
@@ -726,6 +769,10 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             command = commands[1]
             self.assertEqual(command[0], str(binary))
             self.assertNotIn("--model", command)
+            self.assertEqual(
+                command[command.index("--ask-for-approval") + 1],
+                "untrusted",
+            )
             for flag in (
                 "--ephemeral",
                 "--ignore-user-config",

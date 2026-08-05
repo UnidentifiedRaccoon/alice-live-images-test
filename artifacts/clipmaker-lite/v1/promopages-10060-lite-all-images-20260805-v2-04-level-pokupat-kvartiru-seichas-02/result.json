@@ -1,0 +1,198 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:34900733982bd85a39ae8ff528a05b8c77c47829798fa9804dc229799edfca46",
+    "execution_fingerprint": "sha256:bedf33c0b21f0607846d71e64f4ef1672d6ae58b4dada79b312e8e6df514c94d",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef4-1767-71b0-a86a-c87919dbd63d"
+    },
+    "authored_payload_sha256": "807850448f217404a4d11b0d21c6acd05aa8996db9c6932fe1cc5a46aff24704",
+    "draft_file_sha256": "6e025444630a9ba22dc5d774ce31ad14363124e7260a4055b5b14f6016afc6d7"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/02.png",
+      "sha256": "03b2463b4e06e1bb7ea5a5c0b5b4ccb127907c79070c293fba2fa65aef3c41cf",
+      "bytes": 2279049
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/content.json",
+      "sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "bytes": 29939,
+      "locator": {
+        "article_id": "04-level-pokupat-kvartiru-seichas",
+        "title": "Стоит ли покупать квартиру сейчас: мнение экспертов",
+        "lead": "Почему россияне активно покупают недвижимость в Москве и откуда берут средства",
+        "image_id": "02",
+        "block_index": 7,
+        "role": "article_image",
+        "caption": "Часто квартиры в Москве покупают ради столичной прописки, которая даёт много преимуществ — от упрощённого трудоустройства до повышенных льгот",
+        "file": "02.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/02.png",
+        "current_heading": {
+          "block_index": 3,
+          "level": 2,
+          "text": "Покупка вместо аренды — выгодное решение"
+        },
+        "nearest_text_before": {
+          "block_index": 6,
+          "type": "paragraph",
+          "text": "20% опрошенных готовы продать жильё в регионе ради собственной квартиры в Москве. Почти половина из них переезжают из-за работы, ведь в столице больше возможностей для развития карьеры. Другая мотивация — стремление к лучшему качеству жизни и семейные обстоятельства. Таким образом, если сравнивать аренду и покупку квартиры, второй вариант более выгодный и удобный для россиян."
+        },
+        "nearest_text_after": {
+          "block_index": 8,
+          "type": "heading",
+          "text": "Планы на 2026-й: откладывать, покупать и переезжать"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A close view of a contemporary residential tower with warm copper-toned facade panels and rounded glass balconies occupies the left side of the frame.",
+      "The view opens across a sunlit Moscow cityscape toward distant high-rises; apartment interiors are visible through several windows.",
+      "The clear sky and broad city panorama leave room for a restrained outward-looking camera movement."
+    ],
+    "article_context": "Body image after the section arguing that buying rather than renting is advantageous; its caption frames a Moscow apartment as a route to the benefits of city registration, employment and social advantages.",
+    "structured_intent": {
+      "editorial_meaning": "A desirable Moscow home is presented as a direct connection to the opportunities and advantages of the capital.",
+      "primary_action": "The view opens from the residential tower toward the Moscow skyline.",
+      "terminal_state": "The final frame clearly shows the residential tower and the Moscow city panorama together.",
+      "semantic_invariant": "The residence remains a credible, comfortable urban home connected to Moscow throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Across five seconds, a slow rightward pan begins immediately, using the curved balconies as the focal foreground and gradually revealing more of the city panorama. Sunlight glides faintly across the visible glass; the move settles near the end with both the building and distant Moscow skyline held in a composed, readable view.",
+      "positive_prompt": "Slowly pan right from the residential tower's curved glass balconies toward the Moscow skyline, with subtle window reflections shifting in the sunlight. End on a stable wide view where the tower and the city beyond remain clearly visible together.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, the camera makes one measured rightward pan from the facade's rounded balconies toward the open city view. The continuous movement conveys an apartment connected to the capital, while slight reflection movement provides a natural secondary detail. It eases into a final balanced composition late in the shot without introducing another action.",
+      "positive_prompt": "A gentle rightward camera pan follows the curved balconies outward to Moscow's skyline; faint reflections move across the glass. Finish with the residence and the city panorama clearly framed together.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "In four seconds, make a compact, smooth rightward pan with the rounded balcony edge as the focal anchor. The city opens quickly but evenly behind it, and subtle glass reflections shift as the same physical motion continues. By the final moments, the move resolves into a clear joint view of the residence and Moscow skyline.",
+      "positive_prompt": "The camera gently pans right from the curved balconies toward the Moscow skyline as soft reflections shift on the glass. End with the tower and city panorama clearly visible in one stable composition.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

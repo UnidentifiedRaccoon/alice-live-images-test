@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/01.jpeg",
+    "sha256": "f1ee20efbcf72c61672adc78ea6f2bc53e588cad4374e91254c2bf26d0edae13",
+    "width": 2752,
+    "height": 1536
+  },
+  "structured_intent": {
+    "editorial_meaning": "A potential customer is given space to consider a relevant option, illustrating attention and trust before purchase.",
+    "primary_action": "The woman deliberately moves her fingertip toward one visible product tile and settles into a hover.",
+    "terminal_state": "Her fingertip is steadily poised above the same visible product tile while the tablet interface remains unchanged.",
+    "semantic_invariant": "Her calm, thoughtful consideration of the available options remains unchanged through the final frame."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, the woman makes one unhurried browsing gesture, bringing her fingertip to hover over an existing product option. End with her hand settled above the tile in a thoughtful decision; the screen stays unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01/result.json",
+    "sha256": "90084bbbfa90ea6c225e6bfd564b3acba9f7b4e4e24a5bcc5c46f23bc70c608a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "f1ee20efbcf72c61672adc78ea6f2bc53e588cad4374e91254c2bf26d0edae13",
+      "article_context_sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

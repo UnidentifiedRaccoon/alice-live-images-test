@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "11-dream-island-pochemu-vybiraiu-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/11-dream-island-pochemu-vybiraiu/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_687a5391bcfe3d7b9a29bcb7_687a54048bcac862f013829e/orig",
+      "prompt": "The three mascot characters make one warm, unhurried welcoming wave toward the viewer while the fountain continues to spray and the tower flags flutter lightly. Keep a fixed camera. By the final frame, their raised hands settle in a clear friendly greeting pose.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "d3d472d2d2bf51c466ea239fdb815df72922773a70ee4e6497848f1796634c9a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "38cdaec18710f1a8182e330bd2c9fddf",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T07:51:12Z",
+  "completed_at": "2026-08-05T07:51:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 9352065,
+    "sha256": "c79e53655de02aaecd90d6bfdd8929e02afcf96b3f26955fdeb8722745d70105"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-01-wan-2-2",
+  "lite_result_sha256": "f2459b9d1291fa4434ff9b836ee03d2e795a3986b136ac164f9572cb857050ef",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 347174,
+    "sha256": "d01d807c228871fe9bf5747e1d997b0c41bc8a82284c6b5a84be31e539d23a71"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "38cdaec18710f1a8182e330bd2c9fddf",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

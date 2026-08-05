@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cae/orig",
+      "prompt": "The chandelier’s warm glass lights slowly sway in a small arc while the sheer curtains gently drift inward; use a very slow push-in toward the dining table, ending with the chandelier settled above the welcoming table.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "758416c27c04aa8aa70a9693cd13e204ca5bfebd979d34519abf8e6ce2221c54",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "def6ffca2e16f2574da3c08c7653a4e1",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:12:17Z",
+  "completed_at": "2026-08-04T23:12:17Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6214016,
+    "sha256": "01df5275769364867b6c6d69e26723703d57f849ea9ec6ee00131ea7fd74994a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-04-wan-2-2",
+  "lite_result_sha256": "e6f92f35be96f72490b79367c1b5191c746050cd0f09fd1e4a25adb21b6ae718",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 291916,
+    "sha256": "079794b4e3751b503fdff70550d0aab3f08ea7c321ca46587365021c3bbf60e8"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "def6ffca2e16f2574da3c08c7653a4e1",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

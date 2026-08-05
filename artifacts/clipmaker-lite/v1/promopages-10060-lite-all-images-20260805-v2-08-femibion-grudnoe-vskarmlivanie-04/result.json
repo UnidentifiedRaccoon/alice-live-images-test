@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-04",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:7f5a6c8e5eec35eecbab3b53aa6a55ceb4f4409917a2718e6af520e5fac684a1",
+    "execution_fingerprint": "sha256:1a462af8cf1b0df3f2656627639b68c5dc2f2a726bfee89bd866118bffedefa1",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef7-3851-7d32-b8d8-ed9fca2a6752"
+    },
+    "authored_payload_sha256": "1d5787d560fb686a76f2e9847d9dc2c3fe17a93913f659dfec46a816cc655404",
+    "draft_file_sha256": "99bba968948b310990e71994d85ba5fffd6d40642f2a5eae097174183f303f80"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/04.jpeg",
+      "sha256": "d26960859563b103ddacd984e09ec7140dee85ef02044f0eb17bd41ab6836240",
+      "bytes": 232004
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/content.json",
+      "sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce",
+      "bytes": 21634,
+      "locator": {
+        "article_id": "08-femibion-grudnoe-vskarmlivanie",
+        "title": "Грудное вскармливание без стресса: что нужно знать маме",
+        "lead": "Развеиваем мифы о грудном вскармливании и знакомим с комплексом Фемибион®",
+        "image_id": "04",
+        "block_index": 15,
+        "role": "article_image",
+        "caption": "С некоторыми продуктами кормящим мамам все равно нужно быть осторожнее. Например, не пить больше двух-трех чашек кофе в день. Кофеин в грудном молоке может негативно повлиять на сон малыша, из-за чего он будет чаще просыпаться [3]",
+        "file": "04.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/04.jpeg",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Миф 3. У кормящей мамы должна быть строгая диета, чтобы точно исключить любые аллергены"
+        },
+        "nearest_text_before": {
+          "block_index": 14,
+          "type": "paragraph",
+          "text": "Убирать из рациона продукты стоит только при подтвержденной реакции у ребенка, например, если у него сыпь или колики. В остальных случаях не нужно соблюдать специальную диету во время кормления грудью, питание просто должно быть разнообразным и полноценным [7]."
+        },
+        "nearest_text_after": {
+          "block_index": 16,
+          "type": "heading",
+          "text": "Миф 4. Грудное молоко — идеально, даже если мама питается фастфудом"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Close view of an infant lying in an adult's arms and drinking milk from a bottle held by the adult.",
+      "The baby's open eye, small hands, bottle, and the adult's steady hand are visible; the warm close composition conveys calm, attentive care."
+    ],
+    "article_context": "Body image in the section about dietary restrictions and caffeine: it underscores attentive feeding and a mother's careful choices that support her baby's wellbeing.",
+    "structured_intent": {
+      "editorial_meaning": "Attentive, calm feeding care supports a baby's wellbeing while a mother makes considered choices.",
+      "primary_action": "The caregiver gently adjusts and steadies the bottle while the baby continues drinking.",
+      "terminal_state": "The bottle is held in a stable comfortable position and the baby is still peacefully drinking.",
+      "semantic_invariant": "The infant remains calm, secure, and continuously cared for during feeding."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Across the five-second close shot, the adult makes one slow, small adjustment to keep the bottle comfortably angled while the infant continues a calm, natural feeding motion. Keep the camera fixed on the bottle and baby's face. The motion develops evenly and settles near the end with the bottle held steady and the baby still drinking.",
+      "positive_prompt": "The adult gently adjusts the bottle angle as the baby continues to drink calmly, with a subtle swallow and tiny finger movement. Fixed close camera on the bottle and baby's face; by the final frame the baby is still peacefully drinking from the steadily held bottle.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, let the visible hand gradually refine the bottle's angle as the baby's drinking remains continuous and relaxed. A tiny movement of the infant's fingers can accompany the same feeding process. Use a fixed close camera and end as the adjustment resolves into a stable, comfortable bottle position.",
+      "positive_prompt": "The caregiver slowly steadies and slightly tilts the bottle while the baby drinks peacefully, with a small natural hand movement. Fixed intimate close-up on the feeding; the final frame holds the baby calmly drinking from the secure bottle.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "In the four-second close shot, begin the gentle bottle-angle correction promptly and let it progress as one smooth caregiving action while the infant keeps drinking. Maintain the fixed framing and finish near the end with the bottle stable, the baby visibly calm, and feeding still in progress.",
+      "positive_prompt": "Fixed close camera on the bottle and baby's face. The caregiver makes a gentle, gradual bottle-angle adjustment while the baby continues to drink calmly; end with the bottle steady and the baby peacefully feeding.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

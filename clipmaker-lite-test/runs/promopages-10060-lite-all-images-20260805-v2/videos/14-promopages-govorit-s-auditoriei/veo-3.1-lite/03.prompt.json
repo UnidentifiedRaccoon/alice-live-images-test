@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/03.png",
+    "sha256": "08c3c775f2d2de9eeffc7440e6eeb85dad99414b09dbbd237f4f6f1bfd91398f",
+    "width": 799,
+    "height": 471
+  },
+  "structured_intent": {
+    "editorial_meaning": "A reader-recognizable problem in the headline earns attention and opens the door to useful guidance.",
+    "primary_action": "A soft optical glint passes across the existing headline.",
+    "terminal_state": "The original headline remains fully readable with a subtle settled sheen.",
+    "semantic_invariant": "The UI remains an unchanged, trustworthy example of a problem-first article entry point."
+  },
+  "prompt": {
+    "positive": "Fixed camera on the UI. A soft glint sweeps across the existing headline, fading by the end; the last frame keeps the unchanged headline fully readable with a subtle sheen.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03/result.json",
+    "sha256": "b22d9301b6c0c6abb533bbbb7202fd74afa66569e9de2be4f097b87ab06b6f6c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "08c3c775f2d2de9eeffc7440e6eeb85dad99414b09dbbd237f4f6f1bfd91398f",
+      "article_context_sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

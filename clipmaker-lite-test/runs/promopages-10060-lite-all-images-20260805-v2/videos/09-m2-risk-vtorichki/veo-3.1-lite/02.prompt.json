@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/02.jpeg",
+    "sha256": "378d0e7e3dd19759b36561f31d00c1a5b9a7ea0ec148b425137cc286631937c1",
+    "width": 1500,
+    "height": 1000
+  },
+  "structured_intent": {
+    "editorial_meaning": "A seemingly complete set of sale documents does not stop the hidden bankruptcy risk from unfolding over time.",
+    "primary_action": "The clock hands advance steadily.",
+    "terminal_state": "The clock hands are visibly farther forward while the stack of documents remains in place.",
+    "semantic_invariant": "The paperwork remains an apparently orderly but insufficient record of the transaction risk."
+  },
+  "prompt": {
+    "positive": "Fixed camera: the clock hands advance continuously above the stacked documents, ending in a visibly later position while the papers remain unmoved.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02/result.json",
+    "sha256": "4e52f9b2be8b483086ae00bc7c0e4337220ffbe77999128b7dd9fe59dfe91d88",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "378d0e7e3dd19759b36561f31d00c1a5b9a7ea0ec148b425137cc286631937c1",
+      "article_context_sha256": "d3c0fdd67223e79a3b078b758c7e6d66fbb50ed9c501ebd9d9e300dd2428d2e1",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+      "prompt": "The airplane ride continues a smooth, powerful rotation; the right-side seat sweeps through the arc into a clear full upside-down position while the other seats follow naturally. Fixed camera. End with the inverted riders clearly visible, still in the same exhilarating ride motion.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "61afd73b879bb2dae7e828159b378456fd87d3910a1b28674e65846c366d4164",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "393dc161f0e7e9261c695ecd4985d5ff",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:08:19Z",
+  "completed_at": "2026-08-05T08:08:19Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 960,
+    "height": 960,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 18629938,
+    "sha256": "7a0034624c08f89882f512663f762e736a2a4ce7431eb61c0037d5d21a51c978"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-01-wan-2-2",
+  "lite_result_sha256": "b32af277a39a699e02ffc1cab400c252f3efb20b7126eaefa91408d6e716c1a3",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 8747947,
+    "sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "393dc161f0e7e9261c695ecd4985d5ff",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

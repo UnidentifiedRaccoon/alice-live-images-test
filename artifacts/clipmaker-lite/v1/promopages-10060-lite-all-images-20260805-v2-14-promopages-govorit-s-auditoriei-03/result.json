@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:d988c737edd64b30ad4c045e99d5a1025e1a431c0bd936c0ba437560f21f59ec",
+    "execution_fingerprint": "sha256:6cfd1260ca21c676af6e682036ba35e0d28bdec6ae6cb4922c4694db539df04f",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcefb-504b-7b41-8573-3849fef528e1"
+    },
+    "authored_payload_sha256": "41baf5aacc4e58376e41fc7f2d15b3b3cb45ff58b5c53e3dd806c3f01ad6dc47",
+    "draft_file_sha256": "70bf3a570a5e925d846510c613ffb8a2943001b7ac48789a7f6a729abfe05af3"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/03.png",
+      "sha256": "08c3c775f2d2de9eeffc7440e6eeb85dad99414b09dbbd237f4f6f1bfd91398f",
+      "bytes": 91097
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/content.json",
+      "sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "bytes": 21581,
+      "locator": {
+        "article_id": "14-promopages-govorit-s-auditoriei",
+        "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+        "lead": "Разбираем, как удержать внимание, вызвать доверие и подвести человека к покупке",
+        "image_id": "03",
+        "block_index": 11,
+        "role": "article_image",
+        "caption": "Заголовок дает повод открыть статью, а первые абзацы подтверждают, что читатель найдет в ней ответ на свой вопрос",
+        "file": "03.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/03.png",
+        "current_heading": {
+          "block_index": 5,
+          "level": 2,
+          "text": "Начинайте с боли читателя, а не с продукта"
+        },
+        "nearest_text_before": {
+          "block_index": 10,
+          "type": "quote",
+          "text": "Во вступлении также важно показать, что вы понимаете ситуацию вашей аудитории. Здесь уже можно аккуратно ввести продукт: человек открыл материал ради конкретной задачи, поэтому подходящее решение будет выглядеть естественным продолжением разговора."
+        },
+        "nearest_text_after": {
+          "block_index": 12,
+          "type": "heading",
+          "text": "Делитесь пользой, прежде чем продавать"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A clean static article-preview UI shows the headline about cooling a small apartment in heat, a conditioner-brand byline, and explanatory paragraphs.",
+      "The readable headline is the central editorial element; all text, layout, and controls are part of the fixed UI state."
+    ],
+    "article_context": "Body UI example under the section about starting with the reader’s problem: the visible problem-led headline is the reason to open the article, while the introductory text confirms a useful answer.",
+    "structured_intent": {
+      "editorial_meaning": "A reader-recognizable problem in the headline earns attention and opens the door to useful guidance.",
+      "primary_action": "A soft optical glint passes across the existing headline.",
+      "terminal_state": "The original headline remains fully readable with a subtle settled sheen.",
+      "semantic_invariant": "The UI remains an unchanged, trustworthy example of a problem-first article entry point."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, keep the UI perfectly still while one restrained optical glint enters at the left edge of the headline and progresses evenly across its lines. It fades naturally near the end, leaving the original headline fully legible with a faint residual sheen in the final frames.",
+      "positive_prompt": "Fixed camera. A soft narrow glint slowly travels across the existing headline from left to right, then fades; in the final frame the unchanged headline remains clearly readable with a subtle settled sheen.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For the full five seconds, use the single allowed optical accent: a soft highlight glides steadily over the headline, drawing attention without changing any UI content. Let it dissipate close to the end so the last frame holds the same readable interface and a quiet sheen.",
+      "positive_prompt": "Fixed UI. A gentle light glint moves across the existing problem-focused headline and fades, ending with the unchanged headline clearly readable under a subtle sheen.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "In four seconds, a single delicate glint travels smoothly across the headline at an even pace. The rest of the interface remains immobile. The glint fades near the endpoint, leaving the original text and layout intact and clearly legible.",
+      "positive_prompt": "Fixed camera on the UI. A soft glint sweeps across the existing headline, fading by the end; the last frame keeps the unchanged headline fully readable with a subtle sheen.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

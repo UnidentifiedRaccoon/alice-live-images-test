@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "14-promopages-govorit-s-auditoriei-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/14-promopages-govorit-s-auditoriei/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b04b987675c24ffb6bd71/orig",
+      "prompt": "Fixed camera. The woman slowly moves her fingertip toward one existing product tile and comes to a calm hover above it; the tablet interface remains unchanged, ending with her hand poised in a considered choice.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "a0b5ef0305eed3fe457df131967245829c56e08aebc48157bf84230f03c488df",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "e42c7895269e5326c8c1dafaa25550ab",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:23:07Z",
+  "completed_at": "2026-08-05T09:23:08Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 704,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4175496,
+    "sha256": "ff26ac1264ab0c5d2fdab4cd18abeb6e7822a520e59726c502bc634dac885c65"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01-wan-2-2",
+  "lite_result_sha256": "90084bbbfa90ea6c225e6bfd564b3acba9f7b4e4e24a5bcc5c46f23bc70c608a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 230184,
+    "sha256": "f1ee20efbcf72c61672adc78ea6f2bc53e588cad4374e91254c2bf26d0edae13"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "e42c7895269e5326c8c1dafaa25550ab",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

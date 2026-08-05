@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a59e32a3a302a69aec403c2_6a5a082dfccb527e723244f7/orig",
+      "prompt": "The hanging crystal lights brighten in a gentle cascading shimmer from left to right while visitors move naturally below; fixed wide camera. In the final frames the crystals glow evenly above the lively snowy plaza.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "e98318301ddc098c3d4fffa10907c0baf7b8d86abb3fc4bbdbf7d8c50fe6cc7c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "638be831327012cf8decec8be3ee15ec",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T09:01:01Z",
+  "completed_at": "2026-08-05T09:01:01Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 18712186,
+    "sha256": "9e13033c1af1a776274bffb5ebfd212ea440cca59e1882a226dbe806e6884feb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-09",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-09-wan-2-2",
+  "lite_result_sha256": "139ac52104bb885919a76c2a1d88c57bce0ef4d21b9f922d4343288b76ab5ddd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 11671141,
+    "sha256": "d5e335a62e06415a63fd1ada8c74379c7f06edb256427f10711cb606a48c7569"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "638be831327012cf8decec8be3ee15ec",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

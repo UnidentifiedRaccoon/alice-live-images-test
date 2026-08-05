@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import csv
 import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 from typing import Any
+from unittest import mock
 
 
 MODULE_PATH = Path(__file__).with_name("collect_promo_article_content.py")
@@ -18,6 +21,25 @@ MISSING = object()
 
 
 class CollectPromoArticleContentTest(unittest.TestCase):
+    def test_gallery_caption_supports_structured_text_and_rejects_unmodeled_data(self) -> None:
+        self.assertEqual(
+            collector._gallery_caption(
+                {"text": "Structured caption", "links": []},
+                "caption",
+            ),
+            "Structured caption",
+        )
+        with self.assertRaisesRegex(ValueError, "links are not represented"):
+            collector._gallery_caption(
+                {"text": "Linked caption", "links": [{"url": "https://example.test"}]},
+                "caption",
+            )
+        with self.assertRaisesRegex(ValueError, "unsupported fields"):
+            collector._gallery_caption(
+                {"text": "Caption", "links": [], "style": "bold"},
+                "caption",
+            )
+
     def manifest_row(
         self,
         image_number: str,
@@ -28,7 +50,9 @@ class CollectPromoArticleContentTest(unittest.TestCase):
         gallery_index: str = "",
         extension: str = "jpeg",
         duplicate_of: str = "",
+        dataset_prefix: str = "",
     ) -> dict[str, str]:
+        prefix = f"{dataset_prefix}/" if dataset_prefix else ""
         return {
             "article_number": "01",
             "article_label": "Sample article",
@@ -38,7 +62,10 @@ class CollectPromoArticleContentTest(unittest.TestCase):
             "block_index": block_index,
             "gallery_index": gallery_index,
             "image_id": image_id,
-            "file_path": f"articles/01-sample-article/{image_number}.{extension}",
+            "file_path": (
+                f"{prefix}articles/01-sample-article/"
+                f"{image_number}.{extension}"
+            ),
             "orig_url": f"https://images.example/{image_id}/orig",
             "duplicate_of": duplicate_of,
         }
@@ -571,6 +598,120 @@ class CollectPromoArticleContentTest(unittest.TestCase):
             },
         )
         self.assertEqual([block["type"] for block in content["blocks"]], ["image"])
+
+    def test_namespaced_manifest_uses_configurable_count_and_mirrors_prefix(
+        self,
+    ) -> None:
+        row = self.manifest_row(
+            "01",
+            "cover-source",
+            "cover",
+            dataset_prefix="PROMOPAGES-10060",
+        )
+        page_data = self.page_data([])
+        html = (
+            "<script>w._data = "
+            + json.dumps(page_data, ensure_ascii=False)
+            + ";</script>"
+        ).encode()
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manifest_path = root / "manifest.csv"
+            with manifest_path.open("w", encoding="utf-8", newline="") as output:
+                writer = csv.DictWriter(output, fieldnames=list(row))
+                writer.writeheader()
+                writer.writerow(row)
+
+            with mock.patch.object(
+                collector,
+                "fetch",
+                return_value=(html, "https://final.example/article"),
+            ):
+                summary = collector.collect(
+                    manifest_path,
+                    root / "content",
+                    expected_article_count=1,
+                )
+
+            content_path = (
+                root
+                / "content"
+                / "PROMOPAGES-10060"
+                / "articles"
+                / "01-sample-article"
+                / "content.json"
+            )
+            exceptions_path = (
+                root / "content" / "PROMOPAGES-10060" / "exceptions.json"
+            )
+            self.assertEqual(summary["articles"], 1)
+            self.assertTrue(content_path.is_file())
+            self.assertTrue(exceptions_path.is_file())
+            content = json.loads(content_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                content["blocks"][0]["manifest_file_path"],
+                "PROMOPAGES-10060/articles/01-sample-article/01.jpeg",
+            )
+            self.assertFalse((root / "content" / "articles").exists())
+
+            with self.assertRaises(ValueError):
+                collector.load_manifest(manifest_path, expected_article_count=2)
+
+    def test_manifest_file_path_rejects_traversal_and_malformed_prefixes(self) -> None:
+        malformed_paths = (
+            "../articles/01-sample-article/01.jpeg",
+            "/articles/01-sample-article/01.jpeg",
+            "PROMOPAGES-10060/sub/articles/01-sample-article/01.jpeg",
+            "PROMOPAGES-10060\\articles\\01-sample-article\\01.jpeg",
+            "PROMOPAGES-10060/articles/../01.jpeg",
+            "PROMOPAGES-10060/articles/01-sample-article",
+            "PROMOPAGES-10060/articles/01-sample-article/../01.jpeg",
+        )
+        for file_path in malformed_paths:
+            with self.subTest(file_path=file_path):
+                row = self.manifest_row("01", "cover-source", "cover")
+                row["file_path"] = file_path
+                with self.assertRaises(ValueError):
+                    collector._article_identity([row])
+
+        unprefixed = self.manifest_row("01", "cover-source", "cover")
+        prefixed = self.manifest_row(
+            "02",
+            "mobile-source",
+            "cover_mobile",
+            dataset_prefix="PROMOPAGES-10060",
+        )
+        with self.assertRaisesRegex(ValueError, "dataset prefix"):
+            collector._article_identity([unprefixed, prefixed])
+
+    def test_configurable_count_accepts_sorted_non_contiguous_article_keys(self) -> None:
+        rows = []
+        for article_number in ("03", "01"):
+            row = self.manifest_row("01", "cover-source", "cover")
+            row["article_number"] = article_number
+            row["file_path"] = (
+                "PROMOPAGES-10060/articles/"
+                f"{article_number}-sample-article/01.jpeg"
+            )
+            rows.append(row)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest_path = Path(temporary) / "manifest.csv"
+            with manifest_path.open("w", encoding="utf-8", newline="") as output:
+                writer = csv.DictWriter(output, fieldnames=list(rows[0]))
+                writer.writeheader()
+                writer.writerows(rows)
+
+            grouped = collector.load_manifest(
+                manifest_path,
+                expected_article_count=2,
+            )
+
+        self.assertEqual(
+            [group[0]["article_number"] for group in grouped],
+            ["01", "03"],
+        )
 
 
 if __name__ == "__main__":

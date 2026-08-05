@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/03.png",
+    "sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac",
+    "width": 1536,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "A calm, practical home response to dry indoor air.",
+    "primary_action": "The humidifier continuously releases and disperses a visible plume of mist.",
+    "terminal_state": "A soft, clearly visible mist cloud is suspended above the operating humidifier in the final frame.",
+    "semantic_invariant": "The scene remains a quiet, reassuring depiction of maintaining comfortable indoor air."
+  },
+  "prompt": {
+    "positive": "The humidifier releases a steady, softly billowing plume of mist that rises and gently disperses upward; fixed camera on the humidifier. By the final frame, a continuous light mist cloud is visibly suspended above it.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03/result.json",
+    "sha256": "24d376bc5bc9ba5009e19feab415dd4763be29697f332bc5220b534d384442bb",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac",
+      "article_context_sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

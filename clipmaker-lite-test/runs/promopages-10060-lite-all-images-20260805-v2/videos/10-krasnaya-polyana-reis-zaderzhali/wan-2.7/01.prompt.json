@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+    "sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d",
+    "width": 2048,
+    "height": 1536
+  },
+  "structured_intent": {
+    "editorial_meaning": "A delayed journey does not take away the prospect of a calm, welcoming mountain holiday.",
+    "primary_action": "The hot-air balloon makes one continuous gentle ascent.",
+    "terminal_state": "The balloon is visibly higher above the slope, fully in view and calmly floating.",
+    "semantic_invariant": "The destination remains calm, safe, and inviting despite travel disruption."
+  },
+  "prompt": {
+    "positive": "Fixed wide view of the resort balloon as it makes a calm, continuous ascent over the mountain slope; slight natural movement in the basket and ropes. End with the balloon floating noticeably higher, fully visible and steady.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01/result.json",
+    "sha256": "a2a4084a07baa570293d32cbeb73a17f1b8120485d1ba77c97e61a420eb89f0d",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d",
+      "article_context_sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

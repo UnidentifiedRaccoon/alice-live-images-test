@@ -12,6 +12,9 @@ ADDITIONAL_MANIFEST_PATH = (
     ROOT / "clipmaker-lite-test" / "promopages-9930-manifest.json"
 )
 CASE_21_MANIFEST_PATH = ROOT / "clipmaker-lite-test" / "case-21-manifest.json"
+PROMOPAGES_10060_MANIFEST_PATH = (
+    ROOT / "clipmaker-lite-test" / "promopages-10060-manifest.json"
+)
 MODEL_IDS = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -46,6 +49,11 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         if CASE_21_MANIFEST_PATH.is_file():
             cls.case_21_manifest = json.loads(
                 CASE_21_MANIFEST_PATH.read_text(encoding="utf-8")
+            )
+        cls.promopages_10060_manifest = None
+        if PROMOPAGES_10060_MANIFEST_PATH.is_file():
+            cls.promopages_10060_manifest = json.loads(
+                PROMOPAGES_10060_MANIFEST_PATH.read_text(encoding="utf-8")
             )
 
     def test_manifest_contains_exact_20_by_3_dataset(self):
@@ -241,6 +249,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         source_paths = set()
         video_paths = set()
         output_count = 0
+        filtered_output_count = 0
 
         for article in manifest["articles"]:
             self.assertEqual(len(article["images"]), 1)
@@ -284,6 +293,155 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
             ),
             1,
         )
+
+    def test_promopages_10060_sidecar_is_complete_and_collision_safe(self):
+        if self.promopages_10060_manifest is None:
+            self.skipTest("Final PROMOPAGES-10060 sidecar has not been produced yet")
+
+        manifest = self.promopages_10060_manifest
+        self.assertEqual(manifest["schema_version"], 1)
+        self.assertEqual(
+            manifest["manifest_role"], "promopages-10060-all-images"
+        )
+        self.assertEqual(manifest["ticket"], "PROMOPAGES-10060")
+        self.assertEqual(manifest["agent_id"], "clipmaker-lite")
+        self.assertEqual(manifest["models"], MODEL_IDS)
+        self.assertEqual(manifest["article_count"], 13)
+        self.assertEqual(manifest["image_count"], 92)
+        self.assertEqual(manifest["expected_outputs"], 276)
+        self.assertEqual(manifest["accepted_output_count"], 274)
+        self.assertEqual(manifest["terminal_accounted_output_count"], 276)
+        self.assertEqual(manifest["provider_filtered_output_count"], 2)
+        self.assertEqual(manifest["status_summary"]["provider-filtered"], 2)
+        self.assertEqual(
+            manifest["acceptance_policy"]["terminal_accounted_without_media"],
+            ["provider-filtered", "provider-unavailable"],
+        )
+        self.assertEqual(len(manifest["articles"]), 13)
+        self.assertEqual(
+            [article["article_number"] for article in manifest["articles"]],
+            ["01", *[f"{number:02d}" for number in range(3, 15)]],
+        )
+
+        historical_keys = {
+            f"{self.manifest['ticket']}:{article['article_slug']}"
+            for article in self.manifest["articles"]
+        }
+        review_keys = set()
+        source_paths = set()
+        video_paths = set()
+        output_count = 0
+        image_count = 0
+        filtered_output_count = 0
+        previous_number = 0
+
+        for article in manifest["articles"]:
+            number = int(article["article_number"])
+            self.assertGreater(number, previous_number)
+            previous_number = number
+            self.assertTrue(article["title"].strip())
+            self.assertTrue(article["url"].startswith("https://"))
+            self.assertTrue(article["context_path"])
+            case_key = f"{manifest['ticket']}:{article['article_slug']}"
+            self.assertNotIn(case_key, review_keys)
+            self.assertNotIn(case_key, historical_keys)
+            review_keys.add(case_key)
+            self.assertGreater(len(article["images"]), 0)
+            self.assertEqual(article["image_count"], len(article["images"]))
+            self.assertEqual(
+                [record["image"]["image_id"] for record in article["images"]],
+                [f"{number:02d}" for number in range(1, len(article["images"]) + 1)],
+            )
+
+            for record in article["images"]:
+                image = record["image"]
+                self.assertTrue(image["manifest_file_path"])
+                self.assertRegex(image["sha256"], r"^[a-f0-9]{64}$")
+                self.assertGreater(image["width"], 0)
+                self.assertGreater(image["height"], 0)
+                self.assertNotIn(image["source_path"], source_paths)
+                image_path = ROOT / image["source_path"]
+                self.assertTrue(image_path.is_file())
+                self.assertEqual(
+                    hashlib.sha256(image_path.read_bytes()).hexdigest(),
+                    image["sha256"],
+                )
+                source_paths.add(image["source_path"])
+                image_count += 1
+
+                planning = record["lite_planning"]
+                self.assertTrue(planning["run_id"])
+                self.assertTrue(planning["structured_intent"])
+                self.assertTrue(planning["provenance"]["verified"])
+                self.assertEqual(
+                    planning["provenance"]["agent_id"], "clipmaker-lite"
+                )
+
+                outputs = record["outputs"]
+                self.assertEqual(
+                    [output["model_id"] for output in outputs], MODEL_IDS
+                )
+                for output in outputs:
+                    self.assertEqual(output["article_slug"], article["article_slug"])
+                    self.assertEqual(output["image_id"], image["image_id"])
+                    self.assertTrue(output["positive_prompt"].strip())
+                    if output["status"] == "provider-filtered":
+                        filtered_output_count += 1
+                        self.assertEqual(output["recorded_status"], "provider-failed")
+                        self.assertEqual(
+                            output["selected_attempt"],
+                            "terminal-retry-v1-exhausted",
+                        )
+                        self.assertIsNone(output["video_path"])
+                        self.assertIsNone(output["media"])
+                        self.assertIsNone(output["contract_check"])
+                        self.assertTrue(output["retry"]["exhausted"])
+                        self.assertEqual(output["retry"]["retry_number"], 1)
+                        primary = output["retry"]["primary_attempt"]
+                        retry = output["retry"]["retry_attempt"]
+                        self.assertEqual(primary["status"], "provider-failed")
+                        self.assertEqual(retry["status"], "provider-failed")
+                        self.assertFalse(retry["provider_may_be_active"])
+                        self.assertEqual(
+                            primary["request_sha256"], retry["request_sha256"]
+                        )
+                        self.assertEqual(output["error"], retry["error"])
+                        self.assertIn("filter", output["error"].lower())
+                        output_count += 1
+                        continue
+                    self.assertIn(
+                        output["status"], {"succeeded", "verification-failed"}
+                    )
+                    self.assertNotIn(output["video_path"], video_paths)
+                    video_path = ROOT / output["video_path"]
+                    self.assertTrue(video_path.is_file())
+                    self.assertGreater(output["media"]["bytes"], 0)
+                    self.assertEqual(output["media"]["bytes"], video_path.stat().st_size)
+                    video_paths.add(output["video_path"])
+                    output_count += 1
+
+        self.assertEqual(image_count, manifest["image_count"])
+        self.assertEqual(output_count, manifest["expected_outputs"])
+        self.assertEqual(output_count, image_count * len(MODEL_IDS))
+        self.assertEqual(filtered_output_count, 2)
+        self.assertEqual(len(video_paths), 274)
+        self.assertEqual(len(manifest["outputs"]), 276)
+        self.assertEqual(
+            {
+                output["video_path"]
+                for output in manifest["outputs"]
+                if output["status"] != "provider-filtered"
+            },
+            video_paths,
+        )
+        unavailable = manifest["unavailable_articles"]
+        self.assertEqual(len(unavailable), 1)
+        self.assertEqual(unavailable[0]["article_number"], "02")
+        self.assertEqual(unavailable[0]["status"], "source-unavailable")
+        self.assertTrue(unavailable[0]["error"].strip())
+        self.assertEqual(21 + manifest["article_count"], 34)
+        self.assertEqual(41 + manifest["image_count"], 133)
+        self.assertEqual(139 + manifest["expected_outputs"], 415)
 
     def test_case_21_sidecar_adds_one_raw_image_by_three_models(self):
         if self.additional_manifest is None or self.case_21_manifest is None:
@@ -385,8 +543,8 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                 self.assertEqual(step_pattern.findall(html), ["1", "2", "3", "4", "5"])
                 self.assertIn('<strong class="viewSwitchTitle">Разметка</strong>', html)
                 self.assertIn('<strong class="viewSwitchTitle">Clipmaker Lite</strong>', html)
-                self.assertIn("41 изображение · 3 модели", html)
-                self.assertNotIn("40 изображений · 2–3 модели", html)
+                self.assertIn("Выборка · 3 модели", html)
+                self.assertNotIn("41 изображение · 3 модели", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
                 self.assertEqual(
                     len(
@@ -490,6 +648,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         )
         self.assertIn("promopages-9930-manifest.json", app)
         self.assertIn("case-21-manifest.json", app)
+        self.assertIn("promopages-10060-manifest.json", app)
         self.assertIn("EXPECTED_BASE_ARTICLE_COUNT = 20", app)
         self.assertIn("EXPECTED_BASE_OUTPUT_COUNT = 60", app)
         self.assertIn("EXPECTED_ADDITIONAL_ARTICLE_COUNT = 20", app)
@@ -502,20 +661,41 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT = 7", app)
         self.assertIn("EXPECTED_CASE_21_ATTEMPT_COUNT = 11", app)
         self.assertIn("EXPECTED_CASE_21_SMOOTH_OUTPUT_COUNT = 4", app)
-        self.assertIn("EXPECTED_TOTAL_ARTICLE_COUNT = 21", app)
-        self.assertIn("EXPECTED_UNIQUE_IMAGE_COUNT = 41", app)
-        self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT = 123", app)
-        self.assertIn("EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH = 139", app)
+        self.assertIn("EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT = 13", app)
+        self.assertIn("EXPECTED_PROMOPAGES_10060_IMAGE_COUNT = 92", app)
+        self.assertIn("EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT = 276", app)
+        self.assertIn(
+            "const providerFilteredOutputCount = manifest.provider_filtered_output_count;",
+            app,
+        )
+        self.assertNotIn("EXPECTED_PROMOPAGES_10060_FILTERED_OUTPUT_COUNT", app)
+        self.assertIn('PROVIDER_FILTERED_STATUS = "provider-filtered"', app)
+        self.assertIn('"promopages-10060-all-images"', app)
+        self.assertNotIn("promopages-10060-one-image-per-article", app)
+        self.assertNotIn("EXPECTED_TOTAL_ARTICLE_COUNT", app)
+        self.assertNotIn("EXPECTED_UNIQUE_IMAGE_COUNT", app)
+        self.assertNotIn("EXPECTED_CANONICAL_OUTPUT_COUNT", app)
+        self.assertNotIn("EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH", app)
         self.assertIn("EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2", app)
         self.assertIn("EXPECTED_EXTERNAL_OUTPUT_COUNT = 1", app)
         self.assertIn('const EXTERNAL_MODEL_ID = "segmind/wan-2.2-i2v-flash";', app)
         self.assertIn("const ADDITIONAL_MODEL_ORDER = MODEL_ORDER;", app)
         self.assertIn("repository-raw", app)
         self.assertIn("raw.githubusercontent.com", app)
+        self.assertIn("makeCaseKey", app)
+        self.assertIn("legacy_case_key", app)
+        self.assertIn("resolveRequestedArticleIndex", app)
+        self.assertIn("resolveRequestedImageIndex", app)
+        self.assertIn("article.case_key === elements.caseSelect.value", app)
+        self.assertIn("data-source-ticket", app)
+        self.assertIn("Статус · ${article.sourceStatus}", app)
         self.assertIn('preload="metadata"', app)
         self.assertIn('video.removeAttribute("src")', app)
         self.assertIn('elements.caseViewport.innerHTML = `', app)
-        self.assertIn("Воспроизвести ${displayOutputs.length} основных", app)
+        self.assertIn("Воспроизвести ${availablePrimaryVideoCount} доступных", app)
+        self.assertIn('data-output-kind="provider-filtered"', app)
+        self.assertIn("Основная попытка и retry-v1", app)
+        self.assertIn("immutable request SHA-256 совпадает", app)
         self.assertIn("data-play-loop", app)
         self.assertIn('data-video-group="loop"', app)
         self.assertIn("loop_experiment", app)
@@ -563,17 +743,16 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertNotIn("три видео", app)
         self.assertNotIn("из 3", app)
         self.assertNotIn("Остальные 57", app)
-        self.assertIn('id="videoCountSummary">139', html)
-        self.assertIn("все семь полученных MP4 из одиннадцати", html)
-        self.assertIn("Историческая выборка из 20 статей и 40 изображений сохранена", html)
-        self.assertRegex(
-            html,
-            r"Wan 2\.2 Flash\s+через Eliza → Segmind за \$0\.18",
-        )
-        self.assertIn('src="app.js?v=12"', html)
-        self.assertIn('href="styles.css?v=9"', html)
+        self.assertIn('id="articleCountSummary">—', html)
+        self.assertIn('id="imageCountSummary">—', html)
+        self.assertIn('id="videoCountSummary">—', html)
+        self.assertIn("Историческая выборка сохранена без изменений", html)
+        self.assertIn("PROMOPAGES-10060", html)
+        self.assertIn("со всеми 92 изображениями из 13 доступных статей", html)
+        self.assertIn('src="app.js?v=15"', html)
+        self.assertIn('href="styles.css?v=11"', html)
+        self.assertIn("<dt>Результаты</dt>", html)
         self.assertIn('id="videoCountSummary"', html)
-        self.assertIn("endpoint-conditioning, а не native", html)
         self.assertIn('id="imageSelect"', html)
         self.assertIn('id="previousImage"', html)
         self.assertIn('id="nextImage"', html)
@@ -597,10 +776,15 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn(".winnerBadge", styles)
         self.assertIn('[data-featured-winner="true"]', styles)
         self.assertIn('.modelPanel[data-output-kind="smooth"]', styles)
+        self.assertIn('.modelPanel[data-output-kind="provider-filtered"]', styles)
+        self.assertIn(".providerFilterAudit", styles)
+        self.assertIn(".providerAttemptList", styles)
         self.assertIn("@media (prefers-reduced-motion: reduce)", styles)
         self.assertIn('.modelPanel[data-output-kind="external"]', styles)
         self.assertIn(".modelGrid.twoModels", styles)
         self.assertIn(".sourcePanel[hidden]", styles)
+        self.assertIn(".datasetSourceStatus", styles)
+        self.assertIn(".caseDatasetMeta", styles)
 
     def test_smooth_section_follows_loop_and_has_no_loop_playback_contract(self):
         app = (ROOT / "clipmaker-lite" / "app.js").read_text(encoding="utf-8")
@@ -628,16 +812,15 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn('smoothExperiment\n        ? "muted"', model_renderer)
         self.assertIn('data-loop-output`\n      : smoothExperiment', model_renderer)
 
-        count_formula = app[
-            app.index("const uniqueVideoCount") : app.index(
-                "elements.videoCountSummary.textContent"
-            )
-        ]
-        self.assertIn("EXPECTED_CANONICAL_OUTPUT_COUNT", count_formula)
-        self.assertIn("EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT", count_formula)
-        self.assertIn("loopOutputCount", count_formula)
-        self.assertIn("smoothOutputCount", count_formula)
-        self.assertNotIn("EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT", count_formula)
+        count_formula = app[app.index("const datasetCounts") : app.index("const renderFacts")]
+        self.assertIn("new Set()", count_formula)
+        self.assertIn("record.outputs", count_formula)
+        self.assertIn("record.research_outputs", count_formula)
+        self.assertIn("record.loopExperiment", count_formula)
+        self.assertIn("record.smoothExperiment", count_formula)
+        self.assertIn("elements.articleCountSummary.textContent", app)
+        self.assertIn("elements.imageCountSummary.textContent", app)
+        self.assertIn("elements.videoCountSummary.textContent", app)
 
 
 if __name__ == "__main__":

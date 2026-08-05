@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export ordered PromoPages article content for PROMOPAGES-9884.
+"""Export ordered PromoPages article content.
 
 The public article HTML embeds both publication metadata and the DraftJS editor
 state in ``w._data``.  The editor state is the source of truth for body text and
@@ -8,6 +8,10 @@ the stable two-digit image identifiers and filenames used by this export.
 
 No text, lead, caption, alt text, CTA, or image position is synthesized.  A
 source mismatch fails closed instead of producing a plausible-looking export.
+
+With no command-line overrides the PROMOPAGES-9884 export remains unchanged.
+Namespaced image manifests are mirrored below the same safe dataset prefix in
+the output root.
 """
 
 from __future__ import annotations
@@ -20,7 +24,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import Counter, defaultdict
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 
@@ -71,6 +75,55 @@ IMAGE_DATA_KEYS = PRESENTATION_DATA_KEYS | {
 }
 
 SUPPORTED_INLINE_STYLES = {"BOLD", "ITALIC"}
+
+
+def _safe_path_component(value: str, field: str) -> str:
+    """Return one traversal-safe relative path component."""
+
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{field} must be a non-empty string")
+    if value in {".", ".."} or "/" in value or "\\" in value:
+        raise ValueError(f"{field} must be one relative path component: {value!r}")
+    if value != value.strip() or any(
+        not (character.isalnum() or character in "._-") for character in value
+    ):
+        raise ValueError(f"{field} contains unsafe characters: {value!r}")
+    return value
+
+
+def _manifest_file_location(value: str) -> tuple[str, str, str]:
+    """Parse ``[prefix/]articles/<article>/<file>`` without traversal."""
+
+    if not isinstance(value, str) or not value or "\\" in value:
+        raise ValueError(f"unexpected manifest file_path: {value!r}")
+    path = PurePosixPath(value)
+    if path.is_absolute() or path.as_posix() != value:
+        raise ValueError(f"unexpected manifest file_path: {value!r}")
+    parts = path.parts
+    if len(parts) == 3 and parts[0] == "articles":
+        prefix = ""
+        article_id, filename = parts[1:]
+    elif len(parts) == 4 and parts[1] == "articles":
+        prefix = _safe_path_component(parts[0], "manifest dataset prefix")
+        article_id, filename = parts[2:]
+    else:
+        raise ValueError(f"unexpected manifest file_path: {value!r}")
+    _safe_path_component(article_id, "manifest article folder")
+    _safe_path_component(filename, "manifest image filename")
+    return prefix, article_id, filename
+
+
+def _manifest_dataset_prefix(
+    grouped_rows: list[list[dict[str, str]]],
+) -> str:
+    prefixes = {
+        _manifest_file_location(row["file_path"])[0]
+        for rows in grouped_rows
+        for row in rows
+    }
+    if len(prefixes) != 1:
+        raise ValueError(f"manifest rows disagree on dataset prefix: {sorted(prefixes)}")
+    return next(iter(prefixes))
 
 
 def fetch(url: str, retries: int = 3) -> tuple[bytes, str]:
@@ -127,6 +180,28 @@ def _optional_string(value: Any, field: str) -> str:
     return _required_string(value, field, allow_empty=True)
 
 
+def _gallery_caption(value: Any, field: str) -> str:
+    """Read both legacy string and current structured gallery captions.
+
+    PromoPages may store a gallery caption as ``{"text": ..., "links": []}``.
+    The Lite context consumes the authored text.  Link-bearing or otherwise
+    extended objects remain fail-closed until their semantics are represented
+    in the exported schema.
+    """
+
+    if not isinstance(value, dict):
+        return _optional_string(value, field)
+    unknown = set(value) - {"text", "links"}
+    if unknown:
+        raise ValueError(f"{field} has unsupported fields: {sorted(unknown)}")
+    links = value.get("links", [])
+    if not isinstance(links, list):
+        raise ValueError(f"{field} links must be a list")
+    if links:
+        raise ValueError(f"{field} links are not represented in the export schema")
+    return _optional_string(value.get("text"), f"{field} text")
+
+
 def _optional_int(value: str, field: str) -> int | None:
     if value == "":
         return None
@@ -154,11 +229,16 @@ def _article_identity(rows: list[dict[str, str]]) -> tuple[int, str, str, str]:
         raise ValueError(f"article_number must be zero padded: {article_key!r}")
 
     article_ids: set[str] = set()
+    dataset_prefixes: set[str] = set()
     for row in rows:
-        parts = Path(row["file_path"]).parts
-        if len(parts) != 3 or parts[0] != "articles":
-            raise ValueError(f"unexpected manifest file_path: {row['file_path']!r}")
-        article_ids.add(parts[1])
+        dataset_prefix, article_id, _ = _manifest_file_location(row["file_path"])
+        dataset_prefixes.add(dataset_prefix)
+        article_ids.add(article_id)
+    if len(dataset_prefixes) != 1:
+        raise ValueError(
+            "article rows disagree on dataset prefix: "
+            f"{sorted(dataset_prefixes)}"
+        )
     if len(article_ids) != 1:
         raise ValueError(f"article rows disagree on folder: {sorted(article_ids)}")
 
@@ -519,7 +599,7 @@ def build_article_content(
 
             if is_gallery and gallery_index > 0:
                 raw_caption = contents.get(source_image_id, "")
-                caption = _optional_string(
+                caption = _gallery_caption(
                     raw_caption,
                     f"gallery caption {block_index}/{gallery_index}",
                 )
@@ -590,7 +670,16 @@ def build_article_content(
     return result, unresolved
 
 
-def load_manifest(path: Path) -> list[list[dict[str, str]]]:
+def load_manifest(
+    path: Path,
+    expected_article_count: int = EXPECTED_ARTICLE_COUNT,
+) -> list[list[dict[str, str]]]:
+    if (
+        isinstance(expected_article_count, bool)
+        or not isinstance(expected_article_count, int)
+        or expected_article_count < 1
+    ):
+        raise ValueError("expected article count must be a positive integer")
     with path.open(encoding="utf-8", newline="") as source:
         reader = csv.DictReader(source)
         fieldnames = set(reader.fieldnames or [])
@@ -604,12 +693,28 @@ def load_manifest(path: Path) -> list[list[dict[str, str]]]:
     grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in rows:
         grouped[row["article_number"]].append(row)
-    expected = [
-        f"{number:02d}" for number in range(1, EXPECTED_ARTICLE_COUNT + 1)
-    ]
-    if sorted(grouped) != expected:
+    article_keys: list[str] = []
+    for key in grouped:
+        try:
+            number = int(key)
+        except ValueError as error:
+            raise ValueError(f"invalid manifest article number: {key!r}") from error
+        if number < 1 or key != f"{number:02d}":
+            raise ValueError(f"invalid manifest article number: {key!r}")
+        article_keys.append(key)
+    article_keys.sort(key=int)
+
+    if expected_article_count == EXPECTED_ARTICLE_COUNT:
+        expected = [
+            f"{number:02d}" for number in range(1, EXPECTED_ARTICLE_COUNT + 1)
+        ]
+        if article_keys != expected:
+            raise ValueError(f"manifest article numbers differ: {article_keys}")
+    elif len(article_keys) != expected_article_count:
         raise ValueError(f"manifest article numbers differ: {sorted(grouped)}")
-    return [grouped[key] for key in expected]
+    grouped_rows = [grouped[key] for key in article_keys]
+    _manifest_dataset_prefix(grouped_rows)
+    return grouped_rows
 
 
 def atomic_write_json(path: Path, value: Any) -> None:
@@ -622,8 +727,14 @@ def atomic_write_json(path: Path, value: Any) -> None:
     temporary.replace(path)
 
 
-def collect(manifest_path: Path, output_root: Path) -> dict[str, Any]:
-    grouped_rows = load_manifest(manifest_path)
+def collect(
+    manifest_path: Path,
+    output_root: Path,
+    expected_article_count: int = EXPECTED_ARTICLE_COUNT,
+) -> dict[str, Any]:
+    grouped_rows = load_manifest(manifest_path, expected_article_count)
+    dataset_prefix = _manifest_dataset_prefix(grouped_rows)
+    dataset_root = output_root / dataset_prefix
     unresolved: list[dict[str, Any]] = []
     type_counts: Counter[str] = Counter()
     image_count = 0
@@ -632,7 +743,7 @@ def collect(manifest_path: Path, output_root: Path) -> dict[str, Any]:
     for article_rows in grouped_rows:
         article_number, article_key, article_id, url = _article_identity(article_rows)
         print(
-            f"[{article_key}/{EXPECTED_ARTICLE_COUNT:02d}] {article_id}",
+            f"[{article_key}/{expected_article_count:02d}] {article_id}",
             flush=True,
         )
         html, final_url = fetch(url)
@@ -642,7 +753,10 @@ def collect(manifest_path: Path, output_root: Path) -> dict[str, Any]:
             page_data,
             final_url,
         )
-        atomic_write_json(output_root / "articles" / article_id / "content.json", content)
+        atomic_write_json(
+            dataset_root / "articles" / article_id / "content.json",
+            content,
+        )
         unresolved.extend(article_unresolved)
         for block in content["blocks"]:
             type_counts[block["type"]] += 1
@@ -672,7 +786,7 @@ def collect(manifest_path: Path, output_root: Path) -> dict[str, Any]:
             },
         ],
     }
-    atomic_write_json(output_root / "exceptions.json", exceptions)
+    atomic_write_json(dataset_root / "exceptions.json", exceptions)
     return {
         "articles": len(grouped_rows),
         "blocks": sum(type_counts.values()),
@@ -697,9 +811,22 @@ def main() -> int:
         default=DEFAULT_OUTPUT_ROOT,
         help="directory that will contain the content export",
     )
+    parser.add_argument(
+        "--expected-article-count",
+        type=int,
+        default=EXPECTED_ARTICLE_COUNT,
+        help=(
+            "required article count; the historical default also enforces "
+            f"contiguous keys 01..{EXPECTED_ARTICLE_COUNT}"
+        ),
+    )
     args = parser.parse_args()
 
-    summary = collect(args.manifest, args.output_root)
+    summary = collect(
+        args.manifest,
+        args.output_root,
+        args.expected_article_count,
+    )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
 

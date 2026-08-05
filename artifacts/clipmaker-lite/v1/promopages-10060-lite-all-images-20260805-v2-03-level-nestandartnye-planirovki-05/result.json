@@ -1,0 +1,198 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-05",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:e529a01e00d4ed85f67e7a5fdc24d7bb564259cd4ade98af666e3851d29fdde4",
+    "execution_fingerprint": "sha256:39a52d124a42eb50589b2e75515addaf29f245dbda07780e12696e7fbc2e2296",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef3-81c1-76c0-a207-2d75cc34dd5b"
+    },
+    "authored_payload_sha256": "d92f0b4397342a740b804b8ea8117563f93bc2dd334939a87229c7f2dfe5ac80",
+    "draft_file_sha256": "d9770f26bdbbf12e3a5a131700af3a35525b08e89cbabca08f7cdb5cc10b576b"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/05.jpeg",
+      "sha256": "3619a5ad35176e4e8226b404834debce7f237f56e47936d49c721be6a54d4f9f",
+      "bytes": 254481
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/content.json",
+      "sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "bytes": 23384,
+      "locator": {
+        "article_id": "03-level-nestandartnye-planirovki",
+        "title": "Топ-6 нестандартных планировок квартир от Level Group",
+        "lead": "Покажем несколько вариантов в разных районах Москвы",
+        "image_id": "05",
+        "block_index": 25,
+        "role": "article_image",
+        "caption": "Большие окна похожи на экран кинотеатра — только за ними не кадры фильма, а ваша настоящая жизнь",
+        "file": "05.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/05.jpeg",
+        "current_heading": {
+          "block_index": 20,
+          "level": 2,
+          "text": "Пентхаусы"
+        },
+        "nearest_text_before": {
+          "block_index": 24,
+          "type": "paragraph",
+          "text": "👉 Посмотреть планировку"
+        },
+        "nearest_text_after": {
+          "block_index": 26,
+          "type": "heading",
+          "text": "Квартиры с 5+ комнатами"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A refined open dining and kitchen interior is framed by large curved floor-to-ceiling windows overlooking Moscow.",
+      "Sheer white curtains and darker drapes are visible around the windows; the room remains still and sunlit.",
+      "The city panorama is the visual focal point, with the dining table and stone island anchoring the foreground."
+    ],
+    "article_context": "Body image for the penthouse section: it foregrounds floor-to-ceiling corner windows and the panoramic Moscow view, supporting the idea that the city view becomes part of the interior.",
+    "structured_intent": {
+      "editorial_meaning": "The animation makes the penthouse's expansive windows and Moscow panorama feel like an integral, lived-in part of the interior.",
+      "primary_action": "A gentle breeze continuously moves the sheer curtains inward by the windows.",
+      "terminal_state": "The sheer curtains rest in a softly open curve while the panoramic city view remains clearly visible.",
+      "semantic_invariant": "The space remains serene, luxurious, and open to the city throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, a gentle breeze starts immediately and gradually moves the sheer curtains inward across the window edges. A minimal, steady rightward camera slide is motivated by the panoramic city view and keeps the dining area and windows recognizable. The fabric movement eases naturally near the end; the curtains finish in a softly open, settled curve with the full city panorama still clear.",
+      "positive_prompt": "A light breeze slowly carries the sheer curtains inward and along the panoramic windows while the camera makes a minimal rightward slide toward the city view. By the final moment, the curtains settle in a soft open curve, leaving the Moscow panorama clearly visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second shot, the visible sheer curtains begin a calm, continuous inward drift and develop through most of the duration. The camera makes one slow rightward slide toward the curved windows to emphasize the view as an interior feature. The motion gently subsides close to the end, leaving the curtains open in a quiet curve and the cityscape clearly exposed.",
+      "positive_prompt": "The sheer curtains drift gently inward in a steady breeze as the camera slowly slides right toward the panoramic city windows. End with the curtains softly settled open and the Moscow view unobstructed.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Across four seconds, the sheer curtains move inward with a restrained, continuous breeze. A single slow rightward camera slide directs attention to the broad city panorama without losing the dining interior. The drift eases into a readable end state near the final frames: fabric resting open and the skyline unobstructed.",
+      "positive_prompt": "A soft breeze moves the sheer curtains inward beside the panoramic windows. Slow rightward camera slide toward the city view; end with the curtains gently settled open and the skyline clearly visible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

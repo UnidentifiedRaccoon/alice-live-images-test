@@ -28,7 +28,7 @@ CONTRACT_PATH = Path("docs/agents/clipmaker-lite/contract.json")
 RUNNER_PATH = Path("scripts/clipmaker_lite_runner.py")
 AGENT_ID = "clipmaker-lite"
 RUNNER_ID = "clipmaker-lite-runner"
-RUNNER_VERSION = 4
+RUNNER_VERSION = 7
 DRAFT_SCHEMA_VERSION = 2
 RESULT_SCHEMA_VERSION = 2
 FINGERPRINT_ALGORITHM = "clipmaker-lite-contract-v1"
@@ -57,6 +57,16 @@ SECRET_RE = re.compile(
     r"(?i)(authorization\s*[:=]\s*(?:bearer|oauth)\s+)[^\s,;]+|"
     r"((?:access[_-]?token|api[_-]?key|token)\s*[:=]\s*)[^\s,;]+"
 )
+IGNORABLE_MDM_APPROVAL_POLICY_ERROR_ITEM = {
+    "id": "item_0",
+    "type": "error",
+    "message": (
+        "Configured value for `approval_policy` is disallowed by requirements; "
+        "falling back to required value UnlessTrusted. Details: invalid value for "
+        "`approval_policy`: `Never` is not in the allowed set [UnlessTrusted, "
+        "OnRequest] (set by MDM com.openai.codex:requirements_toml_base64)"
+    ),
+}
 
 
 class LiteRunnerError(RuntimeError):
@@ -308,12 +318,15 @@ def validate_runtime(model_id: str, runtime: Any) -> dict[str, Any]:
         "prompt_expansion",
     }
     wan_22_keys = {
+        "gateway",
+        "provider_model_id",
         "adapter",
+        "synchronous",
+        "automatic_retry",
         "frames",
         "fps",
         "seed",
-        "loop",
-        "last_frame",
+        "watermark",
         "negative_prompt_transport",
     }
     require_exact_keys(
@@ -347,43 +360,84 @@ def validate_runtime(model_id: str, runtime: Any) -> dict[str, Any]:
         f"models.{model_id}.runtime.prompt_expansion",
     )
     if model_id == WAN_22_MODEL_ID:
+        if duration != 5:
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.duration_seconds must be 5"
+            )
+        if runtime["resolution"] != "720p":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.resolution must be 720p"
+            )
+        if runtime["aspect_ratios"] != ["source"]:
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.aspect_ratios must preserve source"
+            )
         require_exact_keys(
             expansion,
-            {"mode"},
+            {"parameter", "value"},
             f"models.{model_id}.runtime.prompt_expansion",
         )
-        if expansion["mode"] != "not_exposed":
+        if expansion != {"parameter": "prompt_extend", "value": False}:
             raise LiteRunnerError(
-                f"models.{model_id}.runtime.prompt_expansion.mode must be not_exposed"
+                f"models.{model_id}.runtime.prompt_expansion must disable prompt_extend"
             )
-        require_nonempty_string(runtime["adapter"], f"models.{model_id}.runtime.adapter")
+        if runtime["provider"] != "segmind":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.provider must be segmind"
+            )
+        if runtime["gateway"] != "eliza":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.gateway must be eliza"
+            )
+        if runtime["provider_model_id"] != "segmind/wan-2.2-i2v-flash":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.provider_model_id is invalid"
+            )
+        if runtime["adapter"] != "eliza-segmind":
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.adapter must be eliza-segmind"
+            )
+        if runtime["synchronous"] is not True:
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.synchronous must be true"
+            )
+        if runtime["automatic_retry"] is not False:
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.automatic_retry must be false"
+            )
         for key in ("frames", "fps"):
             value = runtime[key]
             if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
                 raise LiteRunnerError(f"models.{model_id}.runtime.{key} must be a positive integer")
+        if (runtime["frames"], runtime["fps"]) != (150, 30):
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime must use 150 frames at 30 fps"
+            )
         seed = runtime["seed"]
         if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
             raise LiteRunnerError(f"models.{model_id}.runtime.seed must be a non-negative integer")
-        if runtime["loop"] is not False:
-            raise LiteRunnerError(f"models.{model_id}.runtime.loop must be false")
-        if runtime["last_frame"] is not None:
-            raise LiteRunnerError(f"models.{model_id}.runtime.last_frame must be null")
+        if seed != 220214:
+            raise LiteRunnerError(
+                f"models.{model_id}.runtime.seed must be 220214"
+            )
+        if runtime["watermark"] is not False:
+            raise LiteRunnerError(f"models.{model_id}.runtime.watermark must be false")
         negative_transport = require_mapping(
             runtime["negative_prompt_transport"],
             f"models.{model_id}.runtime.negative_prompt_transport",
         )
         require_exact_keys(
             negative_transport,
-            {"mode", "separator"},
+            {"mode", "parameter", "null_serialization"},
             f"models.{model_id}.runtime.negative_prompt_transport",
         )
-        if negative_transport["mode"] != "combined_prompt":
+        if negative_transport != {
+            "mode": "separate_field",
+            "parameter": "negative_prompt",
+            "null_serialization": "empty_string",
+        }:
             raise LiteRunnerError(
-                f"models.{model_id}.runtime.negative_prompt_transport.mode must be combined_prompt"
-            )
-        if negative_transport["separator"] != "\n\nAvoid: ":
-            raise LiteRunnerError(
-                f"models.{model_id}.runtime.negative_prompt_transport.separator is invalid"
+                f"models.{model_id}.runtime.negative_prompt_transport is invalid"
             )
     else:
         require_exact_keys(
@@ -1103,8 +1157,16 @@ def _codex_event_metadata(stdout: bytes) -> tuple[str, list[str]]:
             item_type = item.get("type")
             if not isinstance(item_type, str) or not item_type:
                 raise LiteRunnerError(f"Codex {event_type} event has no item type")
+            if (
+                event_type == "item.completed"
+                and item == IGNORABLE_MDM_APPROVAL_POLICY_ERROR_ITEM
+            ):
+                continue
             if item_type not in {"agent_message", "reasoning"}:
-                tool_events.append(item_type)
+                raise LiteRunnerError(
+                    "Isolated Clipmaker Lite agent emitted forbidden item type "
+                    f"{item_type!r} at line {line_number}; no result was stamped"
+                )
     if thread_id is None:
         raise LiteRunnerError("Codex JSONL stream has no non-empty thread ID")
     return thread_id, tool_events
@@ -1218,7 +1280,7 @@ def execute_codex_agent(
         command = [
             str(binary),
             "--ask-for-approval",
-            "never",
+            "untrusted",
             "exec",
             "--ephemeral",
             "--skip-git-repo-check",

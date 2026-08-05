@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed wide camera on the ride as its seats continue one smooth rotation; the foreground seat reaches a crisp upside-down position near the end, with the riders still visibly exhilarated.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "9:16",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "75e4e07548d47fbd6a306190ef3faefe709a9743835c67be7fa68629d343cb0f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CqBjtIXnZJpURIbMzCc9",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:06:56Z",
+  "completed_at": "2026-08-05T08:08:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1080,
+    "height": 1920,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 10667668,
+    "sha256": "57d6bcb111af539b87c0aed72acd056e1ebc29e2c22a990cff829a74b2229769"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "9:16",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-01-veo-3-1-lite",
+  "lite_result_sha256": "b32af277a39a699e02ffc1cab400c252f3efb20b7126eaefa91408d6e716c1a3",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

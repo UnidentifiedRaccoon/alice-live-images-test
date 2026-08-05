@@ -1,0 +1,2261 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-frozen-generation-inventory",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "article_config": {
+    "path": "PROMOPAGES-10060/articles.json",
+    "sha256": "0153150f68de387764ac159b356c9535ee9bb591b00bd51a4439aec7a676c964"
+  },
+  "extraction_report": {
+    "path": "PROMOPAGES-10060/extraction-report.json",
+    "sha256": "c704e213b4ef7adce26c3751af6efbc9782b5f789f5f44a69f4908da0cc4376c"
+  },
+  "source_manifest": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/manifest.csv",
+    "sha256": "3cc06f6edc868067515a944687bf3f286717b4d5255e87d69f587a24538aeef2",
+    "row_count": 92
+  },
+  "contract": {
+    "path": "docs/agents/clipmaker-lite/contract.json",
+    "sha256": "1182f8d6dc3d3bdb460979b143458274e94b7a9750f57d1510a32576f7bcad5b",
+    "contract_version": "2.0.6",
+    "runner_version": 7
+  },
+  "generation_routes": {
+    "path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "policy": {
+      "resolution": "exact-model-id",
+      "automatic_fallback": false,
+      "normal_run_discovery": false
+    },
+    "models": {
+      "alibaba/wan-2.2": {
+        "adapter": "eliza-segmind",
+        "transport": "eliza-synchronous-binary",
+        "capacity": 1
+      },
+      "alibaba/wan-2.7": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      },
+      "google/veo-3.1-lite": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      }
+    }
+  },
+  "models": [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 13,
+  "image_count": 92,
+  "expected_outputs": 276,
+  "selection_rule": "in ticket-config order, include every image block from every successfully extracted article, including the cover, in original block order; preserve original article numbers",
+  "generation_policy": {
+    "independent_route_pools": true,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "article_order": "ticket-config-order",
+    "article_barrier": true,
+    "exact_model_routes_only": true,
+    "route_discovery": false,
+    "automatic_fallback": false,
+    "automatic_paid_retries": false,
+    "maximum_paid_submissions_per_job": 1,
+    "aggregate_manifest_writer": "coordinator-only"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 100.0,
+    "hard_budget_cap_usd": 100.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 96.6,
+    "estimated_headroom_usd": 3.4,
+    "planned_paid_submissions": 276,
+    "maximum_paid_submissions": 276,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery"
+  },
+  "unavailable_articles": [
+    {
+      "article_number": "02",
+      "article_slug": "02-level-rabotaiu-v-level",
+      "label": "Level Group — Почему сотрудник купил квартиру у своей компании",
+      "url": "https://level-group.promo.page/media/rabotaiu-v-level-pochemu-kupil-kvartiru-ot-nashei-kompanii-69ef21df12346c2fdfe0008b_0_0",
+      "status": "source-unavailable",
+      "image_count": null,
+      "error": "Public article URL returns HTTP 404; the editor requires authentication in the available browser session."
+    }
+  ],
+  "articles": [
+    {
+      "article_number": "01",
+      "article_slug": "01-level-ipoteka-2026",
+      "label": "Level Group — Брать ипотеку во II половине 2026 года?",
+      "url": "https://level-group.promo.page/media/brat-ipoteku-v-ii-polovine-2026-goda-otvechaiut-eksperty-6a048ddca495b52c9d873940_0_0",
+      "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+      "lead": "Кому лучше купить недвижимость сейчас, а кому есть смысл подождать",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/01-level-ipoteka-2026/content.json",
+        "sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.png",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a048df5952e1f1e50d6b5d0/orig",
+        "sha256": "e718914a24cd86ae85b722b646353501f41e1b140e82b60bd17b8e5be27617f1",
+        "width": 1516,
+        "height": 845,
+        "duplicate_of": null
+      },
+      "image_count": 4,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.png",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a048df5952e1f1e50d6b5d0/orig",
+            "sha256": "e718914a24cd86ae85b722b646353501f41e1b140e82b60bd17b8e5be27617f1",
+            "width": 1516,
+            "height": 845,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "С января 2026 года объём ипотечного жилищного кредитования начал уменьшаться. Источник: Банк России",
+            "source_block_index": 7,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a0490f4a495b52c9d87bcd3/orig",
+            "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a",
+            "width": 1280,
+            "height": 753,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "Чаще всего ипотеку оформляют в Москве и Московской области. В феврале 2026 года спрос на том же уровне, что и в том же месяце прошлого года",
+            "source_block_index": 12,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a048ddca495b52c9d873940_6a049120952e1f1e50d73cc7/orig",
+            "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+            "width": 1460,
+            "height": 954,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Ещё Банк России обсуждает возможность предоставлять льготную ипотеку только по месту регистрации родителей. В таком случае не получится купить квартиру в нужном городе без регистрации",
+            "source_block_index": 27,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a048ddca495b52c9d873940_6a049156a495b52c9d87cb75/orig",
+            "sha256": "e65e115579ed3143be9ee01f93bcb4f3cf68bf48ed58be9834c84babd98fcd49",
+            "width": 1920,
+            "height": 1023,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-04"
+        }
+      ]
+    },
+    {
+      "article_number": "03",
+      "article_slug": "03-level-nestandartnye-planirovki",
+      "label": "Level Group — Топ-6 нестандартных планировок",
+      "url": "https://level-group.promo.page/media/top6-nestandartnyh-planirovok-kvartir-ot-level-group-69ef21df12346c2fdfdffee5_0_0",
+      "title": "Топ-6 нестандартных планировок квартир от Level Group",
+      "lead": "Покажем несколько вариантов в разных районах Москвы",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/content.json",
+        "sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cad/orig",
+        "sha256": "5f8c856a2762b11255a2c2fec5eab572ed9aed64f90474a4a525f8ac76246ec9",
+        "width": 1600,
+        "height": 900,
+        "duplicate_of": null
+      },
+      "image_count": 9,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cad/orig",
+            "sha256": "5f8c856a2762b11255a2c2fec5eab572ed9aed64f90474a4a525f8ac76246ec9",
+            "width": 1600,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Открытое пространство создаёт ощущение роскоши, а виды на Москву можно считать своеобразной деталью интерьера",
+            "source_block_index": 6,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d4aaf3b4df0f51975be64b_69d4ab19e6b97617ed7ba92f/orig",
+            "sha256": "c45fcff678a6b15ba2455951d25ecaa90e976dcf5babb0c167e52d71ea8c50e4",
+            "width": 1600,
+            "height": 902,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "В просторной гостиной или столовой утром будет приятно собираться всей семьёй за завтраком, а вечером — ужинать и делиться новостями за день",
+            "source_block_index": 12,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cad/orig",
+            "sha256": "5f8c856a2762b11255a2c2fec5eab572ed9aed64f90474a4a525f8ac76246ec9",
+            "width": 1600,
+            "height": 900,
+            "duplicate_of": "03/01"
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "В двухуровневой квартире места хватит всем — можно с комфортом собираться друзьями или всей семьёй на праздники",
+            "source_block_index": 18,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab191f3cc12a080b7cae/orig",
+            "sha256": "079794b4e3751b503fdff70550d0aab3f08ea7c321ca46587365021c3bbf60e8",
+            "width": 1600,
+            "height": 893,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "Большие окна похожи на экран кинотеатра — только за ними не кадры фильма, а ваша настоящая жизнь",
+            "source_block_index": 24,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_69d4aaf3b4df0f51975be64b_69d4ab1a0b31d967ee8d8b98/orig",
+            "sha256": "3619a5ad35176e4e8226b404834debce7f237f56e47936d49c721be6a54d4f9f",
+            "width": 1600,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 31,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69d4aaf3b4df0f51975be64b_69d4ab1a0b31d967ee8d8ba2/orig",
+            "sha256": "be8e31d2845f05316eb955857e201c97540cfc1e2a7c4ed0989d57b080ced643",
+            "width": 1600,
+            "height": 1200,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "gallery_image",
+            "caption": "Комната с камином, чтобы бывать наедине с собой или собираться всей семьёй у уютного огня",
+            "source_block_index": 31,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d4aaf3b4df0f51975be64b_69d4ab1ac2758d0c71ab1064/orig",
+            "sha256": "01daf0c406d0223f69d644c604207a98ced8562853a891ef69f6d17960d795d1",
+            "width": 1600,
+            "height": 1205,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "gallery_image",
+            "caption": "Просторная спальня, чтобы хорошо отдыхать после насыщенного дня",
+            "source_block_index": 31,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d4aaf3b4df0f51975be64b_69d4ab1b0b31d967ee8d8bf6/orig",
+            "sha256": "dae066652e655f7ba57f1c4b32f6cb1fa564198e8eac653648e70b06854cd710",
+            "width": 1600,
+            "height": 1200,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.png",
+            "role": "article_image",
+            "caption": "Пример гардеробной на плане квартиры — при желании в ней можно хранить сезонные вещи",
+            "source_block_index": 38,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69d4aaf3b4df0f51975be64b_69d4ab1bb4df0f51975bea82/orig",
+            "sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f",
+            "width": 1192,
+            "height": 798,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09"
+        }
+      ]
+    },
+    {
+      "article_number": "04",
+      "article_slug": "04-level-pokupat-kvartiru-seichas",
+      "label": "Level Group — Стоит ли покупать квартиру сейчас",
+      "url": "https://level-group.promo.page/media/stoit-li-pokupat-kvartiru-seichas-mnenie-ekspertov-69ef21df12346c2fdfdffecf_0_0",
+      "title": "Стоит ли покупать квартиру сейчас: мнение экспертов",
+      "lead": "Почему россияне активно покупают недвижимость в Москве и откуда берут средства",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/content.json",
+        "sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_68e3beeb4b9a6709c589f56b_68e3c8f78525275a1e3fe738/orig",
+        "sha256": "9ddb81151d62d69f921a1383c100cfd45a843e6ff2f839a029246cf8db4f47ae",
+        "width": 1080,
+        "height": 1080,
+        "duplicate_of": null
+      },
+      "image_count": 8,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_68e3beeb4b9a6709c589f56b_68e3c8f78525275a1e3fe738/orig",
+            "sha256": "9ddb81151d62d69f921a1383c100cfd45a843e6ff2f839a029246cf8db4f47ae",
+            "width": 1080,
+            "height": 1080,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.png",
+            "role": "article_image",
+            "caption": "Часто квартиры в Москве покупают ради столичной прописки, которая даёт много преимуществ — от упрощённого трудоустройства до повышенных льгот",
+            "source_block_index": 6,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/02.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/02.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c483d3dfea25cc0cb363/orig",
+            "sha256": "03b2463b4e06e1bb7ea5a5c0b5b4ccb127907c79070c293fba2fa65aef3c41cf",
+            "width": 1600,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "По исследованию Level  видно, что большая часть респондентов не хочет откладывать покупку квартиры на потом, а стремится жить с комфортом прямо сейчас",
+            "source_block_index": 14,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/03.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c483d3dfea25cc0cb364/orig",
+            "sha256": "7f493165ff21fa083eace3b481b449aed09418bfcc10d8c5144663065e44eabc",
+            "width": 1600,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.png",
+            "role": "article_image",
+            "caption": "Небольшая квартира — это ещё и выгодный актив: её можно сдавать и получать пассивный доход, ведь студии и однокомнатные лоты всегда будут востребованы у арендаторов",
+            "source_block_index": 25,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/04.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/04.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c48362490f252844dcfd/orig",
+            "sha256": "dca4ed577e007680bbc8740dea96556b4f3674d88f53621d0ae974160f431ddb",
+            "width": 1385,
+            "height": 615,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "article_image",
+            "caption": "Максимальная высота домов в Левел Лесной — 15 этажей, поэтому здания не будут сильно загораживать вид на зелёные зоны",
+            "source_block_index": 28,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c484a27d223d14941370/orig",
+            "sha256": "7143a61000917545d3363bf593b8233d1920a399614149fae09d22d03de0c1e0",
+            "width": 1600,
+            "height": 1066,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.png",
+            "role": "article_image",
+            "caption": "По данным опроса Level , большинство респондентов из городов-миллионников считают, что для покупки квартиры по программе семейной ипотеки нужно иметь совокупный доход от 150 000 до 300 000 рублей в месяц. В таком случае платёж по ипотеке около 70 000 рублей",
+            "source_block_index": 34,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/06.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/06.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c48462490f252844dd03/orig",
+            "sha256": "780c0ca835b68e1d72fa11d4631f280fcbdb977093433f89c778c9b87c5480f6",
+            "width": 1600,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "gallery_image",
+            "caption": "Если не планируете переезд в ближайшее время, можно купить квартиру в строящемся доме: это выгоднее, чем готовая недвижимость",
+            "source_block_index": 41,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/07.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_68e3beeb4b9a6709c589f56b_68e3c48462490f252844dd04/orig",
+            "sha256": "d0f6a824e0496409e6a082f30dad7c2982bedefd8bc7bca72264610f2130e40a",
+            "width": 1600,
+            "height": 1067,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.png",
+            "role": "gallery_image",
+            "caption": "Пока квартира строится, сможете спокойно разработать дизайн-проект и отложить достаточно средств на ремонт мечты",
+            "source_block_index": 41,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/08.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/08.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_68e3beeb4b9a6709c589f56b_68e3c488a27d223d149413a3/orig",
+            "sha256": "0b3394990523d0ea84aae7d019c37db9ebf8762b91d9c648df04f1a83530656b",
+            "width": 1600,
+            "height": 1067,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-08"
+        }
+      ]
+    },
+    {
+      "article_number": "05",
+      "article_slug": "05-momatrino-zalozhennost-nosa",
+      "label": "Момат Рино — Причины длительной заложенности носа",
+      "url": "https://momatrino.promo.page/promo-page/4-vozmojnyh-prichiny-dlitelnoi-zalojennosti-nosa-6a22ea4881cbac61b68c8b7a_0_0",
+      "title": "4 возможных причины длительной заложенности носа",
+      "lead": "Как бытовые факторы влияют на течение ринита и чем может помочь Момат Рино",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/content.json",
+        "sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_694a6039f141406a65b10339_694a6c05f141406a65b26991/orig",
+        "sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013",
+        "width": 1024,
+        "height": 1024,
+        "duplicate_of": null
+      },
+      "image_count": 7,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_694a6039f141406a65b10339_694a6c05f141406a65b26991/orig",
+            "sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013",
+            "width": 1024,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Книги тоже могут быть источником пыли. Поэтому, если дома большая библиотека, лучше держать ее в закрытом шкафу и протирать полки влажной тряпкой раз в неделю [2]",
+            "source_block_index": 13,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_694a6039f141406a65b10339_694a6c05f141406a65b26991/orig",
+            "sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013",
+            "width": 1024,
+            "height": 1024,
+            "duplicate_of": "05/01"
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "Важно регулярно чистить и менять фильтры в увлажнителе, чтобы в нем не скапливались плесень и бактерии [6]",
+            "source_block_index": 21,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/03.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c1d6745fd1ab1192bad/orig",
+            "sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac",
+            "width": 1536,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.png",
+            "role": "article_image",
+            "caption": "Чтобы понять, как бытовая химия влияет на дискомфорт в носу, можно вести дневник запахов. В нем нужно отмечать, какой аромат или продукт использовался, когда появилась заложенность или другие симптомы [7]",
+            "source_block_index": 29,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/04.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/04.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c416745fd1ab1193003/orig",
+            "sha256": "9fb38f97af30b51107d6fbdf842148f07fc7021ea6500d7234acc22b59157d65",
+            "width": 1024,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "gallery_image",
+            "caption": "Момат Рино выпускается в формате спрея — это удобно и помогает избежать передозировки [9]",
+            "source_block_index": 34,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/05.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_694a6039f141406a65b10339_694a6c78845ed16240d564fd/orig",
+            "sha256": "39cb8399f80a54de49037e4a4276bb55d4a0a53fcb0d786236a22f9894edf0c1",
+            "width": 442,
+            "height": 525,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.png",
+            "role": "gallery_image",
+            "caption": "Момат Рино выпускается в формате спрея — это удобно и помогает избежать передозировки [9]",
+            "source_block_index": 34,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/06.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/06.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_694a6039f141406a65b10339_694a6c77f141406a65b276d9/orig",
+            "sha256": "5a97bd7a93946cb30ab1cd934fb274d1f8a0c9e0977da62d9daf6ee7aef76451",
+            "width": 747,
+            "height": 479,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "gallery_image",
+            "caption": "Момат Рино выпускается в формате спрея — это удобно и помогает избежать передозировки [9]",
+            "source_block_index": 34,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c787caeb9040413cb22/orig",
+            "sha256": "527c28a3905925e37cf4b42fa22cea899be2c6a9180320f1c36dfba7f0d53484",
+            "width": 863,
+            "height": 680,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-07"
+        }
+      ]
+    },
+    {
+      "article_number": "06",
+      "article_slug": "06-momatrino-privykanie-k-sredstvam",
+      "label": "Момат Рино — Привыкание к средствам от насморка",
+      "url": "https://momatrino.promo.page/promo-page/chto-stoit-znat-o-privykanii-k-sredstvam-ot-nasmorka-6a0efe272def417608f1a976_0_0",
+      "title": "Что стоит знать о привыкании к средствам от насморка",
+      "lead": "Откуда берется зависимость от средств для носа и когда может помочь Момат Рино",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/content.json",
+        "sha256": "2c55f3e8a705dbe8519b15ecf3607ec304c725380ee2647dbe8e0ff9e56c1da2"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a69776745fd1ab118de79/orig",
+        "sha256": "d9bdfbff3fada4c018ca05c901db98fb7817f1119092642339317910a5660e15",
+        "width": 1920,
+        "height": 1280,
+        "duplicate_of": null
+      },
+      "image_count": 6,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a69776745fd1ab118de79/orig",
+            "sha256": "d9bdfbff3fada4c018ca05c901db98fb7817f1119092642339317910a5660e15",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.png",
+            "role": "article_image",
+            "caption": "При медикаментозном рините может нарушиться механизм самоочищения носовой полости из-за повреждения реснитчатых клеток слизистой [1, 2]",
+            "source_block_index": 7,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/02.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/02.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a68baf141406a65b2044b/orig",
+            "sha256": "74d0e197501b948d46b8178fe105e3e57edef2683b0c8e5777e560ff721073f9",
+            "width": 1344,
+            "height": 768,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "Можно попробовать ингаляции теплым паром, чтобы облегчить ощущение заложенности при насморке. Либо принять горячую ванну или душ [8, 12]",
+            "source_block_index": 15,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/03.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_693bc9e8d469ca47a341cedd_694a68de6745fd1ab118ccad/orig",
+            "sha256": "77429c1c0f1e1280692df2d6d82e02b28c38a731246e19ac1c0c9e2f8b944435",
+            "width": 1344,
+            "height": 768,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.png",
+            "role": "gallery_image",
+            "caption": "Препарат действует локально и практически не всасывается в системный кровоток. За счет этого Момат Рино подходит для длительного применения по назначению специалиста [15, 16]",
+            "source_block_index": 20,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/04.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/04.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a6911845ed16240d4fe62/orig",
+            "sha256": "d8b816023c652768859bf6b88961a09078d8c819ca5c2dcceed48f6dd66baf13",
+            "width": 1280,
+            "height": 853,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "gallery_image",
+            "caption": "Препарат действует локально и практически не всасывается в системный кровоток. За счет этого Момат Рино подходит для длительного применения по назначению специалиста [15, 16]",
+            "source_block_index": 20,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/05.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_693bc9e8d469ca47a341cedd_694a6911f141406a65b20ecd/orig",
+            "sha256": "5a97bd7a93946cb30ab1cd934fb274d1f8a0c9e0977da62d9daf6ee7aef76451",
+            "width": 747,
+            "height": 479,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.png",
+            "role": "gallery_image",
+            "caption": "Препарат действует локально и практически не всасывается в системный кровоток. За счет этого Момат Рино подходит для длительного применения по назначению специалиста [15, 16]",
+            "source_block_index": 20,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/06.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/06.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_693bc9e8d469ca47a341cedd_694a69110124957a763dd8e1/orig",
+            "sha256": "100c76b63d143bedabd0d615b42c034e6d63b47a9af37b345dbf6c462e4cad34",
+            "width": 928,
+            "height": 886,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-06"
+        }
+      ]
+    },
+    {
+      "article_number": "07",
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "label": "Фемибион — Готовитесь к беременности?",
+      "url": "https://femibion.promo.page/media/gotovites-k-beremennosti-uznaite-chto-nujno-uchest-69ccbb1d79b9a0623bf6adf1_0_0",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+        "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4664453107264122a9a8/orig",
+        "sha256": "2418e372ef5a438094eec8d0a089a344983e9f7e48fe9fe75fa27831dc2e893e",
+        "width": 1920,
+        "height": 1280,
+        "duplicate_of": null
+      },
+      "image_count": 9,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4664453107264122a9a8/orig",
+            "sha256": "2418e372ef5a438094eec8d0a089a344983e9f7e48fe9fe75fa27831dc2e893e",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Если любите кофе, то старайтесь пить не больше одной-двух чашек в день — это около 200 мг кофеина, безопасная доза, по мнению специалистов [6]",
+            "source_block_index": 5,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a45c483113703283d5b0e_685a46fe0cd7b33158b88cbc/orig",
+            "sha256": "206f6c0151c2f1559c72fb5538c6f29c0f9fb82fdf94ae10fffe21deab7c0100",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Если вам тяжело, то начните с малого. Даже 30 минут ходьбы каждый день может быть достаточно [8]",
+            "source_block_index": 10,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4740453107264122b27b/orig",
+            "sha256": "2fb53d52473b30ff4adb33058c89bb0294a33ce32c4892d661d3c3947b3e14b1",
+            "width": 1920,
+            "height": 1080,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Создайте вечерний ритуал, например, за полчаса до сна выключите гаджеты, примите душ и проветрите спальню. Такие привычки помогут улучшить качество сна [11]",
+            "source_block_index": 14,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7191255/pub_685a45c483113703283d5b0e_685a477b646ea17f6e81e434/orig",
+            "sha256": "a04ab57b7bb51c47139d4a2f7408adc91f3c7cf093e3abed7b1255795345973d",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "Не садитесь на жесткие диеты, если на это нет назначений специалистов — ограничения могут вызывать стресс [16, 17]",
+            "source_block_index": 18,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5485055/pub_685a45c483113703283d5b0e_685a47a083113703283d6fa0/orig",
+            "sha256": "63d10731c08815f0b9848fbd7cf20c5c289888c6d6e48fc7d2121f28de73997e",
+            "width": 1920,
+            "height": 1282,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+            "source_block_index": 25,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+            "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+            "width": 2400,
+            "height": 1600,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 29,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7191255/pub_685a45c483113703283d5b0e_685a47e383113703283d728d/orig",
+            "sha256": "ad2c9d5e6530ab377dd82c7ac9319b99e76b1c86550d207c9eb30f739eb8a5b7",
+            "width": 1024,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.png",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 29,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/08.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/08.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5485055/pub_685a45c483113703283d5b0e_685a47ee646ea17f6e81e8c1/orig",
+            "sha256": "faee473502ec6d34a429c5555a752835e8e6ee1d5d9ca3d612ea4f3f152ac0cc",
+            "width": 1400,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.png",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 29,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/09.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/09.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_685a45c483113703283d5b0e_685a47ee646ea17f6e81e8c2/orig",
+            "sha256": "fd453f74d688ca3f3db90199f03ed4c4cd679aa9bfea14a3fde359a3a520add2",
+            "width": 1422,
+            "height": 788,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-09"
+        }
+      ]
+    },
+    {
+      "article_number": "08",
+      "article_slug": "08-femibion-grudnoe-vskarmlivanie",
+      "label": "Фемибион — Грудное вскармливание без стресса",
+      "url": "https://femibion.promo.page/media/grudnoe-vskarmlivanie-bez-stressa-chto-nujno-znat-mame-69cccb918a227d62148118b3_0_0",
+      "title": "Грудное вскармливание без стресса: что нужно знать маме",
+      "lead": "Развеиваем мифы о грудном вскармливании и знакомим с комплексом Фемибион®",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/content.json",
+        "sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7191255/pub_685a4ed183113703283dcca7_685a4ee34531072641231843/orig",
+        "sha256": "e458129e4952a0695d20feaf86a386fce718ceafd87553b2448d8f4f1232696a",
+        "width": 1920,
+        "height": 1285,
+        "duplicate_of": null
+      },
+      "image_count": 8,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7191255/pub_685a4ed183113703283dcca7_685a4ee34531072641231843/orig",
+            "sha256": "e458129e4952a0695d20feaf86a386fce718ceafd87553b2448d8f4f1232696a",
+            "width": 1920,
+            "height": 1285,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Вы можете потреблять то же количество калорий, что и до беременности. Эта стратегия помогает сбросить вес после родов [1]",
+            "source_block_index": 6,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4fa183113703283dd8f2/orig",
+            "sha256": "98a2deb359e9e94f25ba9c49af57b95c3f8e3c5e780820eca39147e618f748a4",
+            "width": 1920,
+            "height": 1080,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Помните, чем чаще вы кормите грудью, тем больше молока вырабатывается. Поэтому кормите малыша по требованию — обычно это 8–12 раз в день. Не нужно придерживаться строгого графика, просто ориентируйтесь на ребенка [5]",
+            "source_block_index": 10,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_685a4ed183113703283dcca7_685a4fbe0cd7b33158b900e2/orig",
+            "sha256": "a43821a33f1c867389568c8149b57409c0dbab3105174894d5a6429b13c2ae86",
+            "width": 2400,
+            "height": 1600,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "С некоторыми продуктами кормящим мамам все равно нужно быть осторожнее. Например, не пить больше двух-трех чашек кофе в день. Кофеин в грудном молоке может негативно повлиять на сон малыша, из-за чего он будет чаще просыпаться [3]",
+            "source_block_index": 14,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4fd9a717f87730dd3825/orig",
+            "sha256": "d26960859563b103ddacd984e09ec7140dee85ef02044f0eb17bd41ab6836240",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "На самом деле «вредной еды» не существует. Есть продукты, в которых много соли, сахара или насыщенных жиров, например в чипсах. Их не обязательно полностью исключать из рациона, просто лучше есть реже и понемногу [9]",
+            "source_block_index": 22,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4ff6646ea17f6e82547e/orig",
+            "sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 26,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a5028a717f87730dd3d4f/orig",
+            "sha256": "6b7c358373312a04583e22e43b30be1f262d5feb34ff3d8cd6e85e1b069f6f4e",
+            "width": 1024,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 26,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/07.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a5019a717f87730dd3c5a/orig",
+            "sha256": "faee473502ec6d34a429c5555a752835e8e6ee1d5d9ca3d612ea4f3f152ac0cc",
+            "width": 1400,
+            "height": 900,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.png",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 26,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/08.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/08.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a5028a717f87730dd3d4e/orig",
+            "sha256": "8ce8c0114c5721814b7bd08aca4170386499cc5be65cfa292d7304b018f5d179",
+            "width": 1470,
+            "height": 1000,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-08"
+        }
+      ]
+    },
+    {
+      "article_number": "09",
+      "article_slug": "09-m2-risk-vtorichki",
+      "label": "М2 — Риск при покупке вторичного жилья",
+      "url": "https://m2.promo.page/amfog/90-pokupatelei-vtorichki-ne-znaiut-ob-etom-riske-6a1046c4295ec11571710766_0_0",
+      "title": "90% покупателей вторички не знают об этом риске",
+      "lead": "Подробно разбираем, как банкротство продавца может лишить вас квартиры",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/content.json",
+        "sha256": "d3c0fdd67223e79a3b078b758c7e6d66fbb50ed9c501ebd9d9e300dd2428d2e1"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/09-m2-risk-vtorichki/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a10486863f26c39b45d9352/orig",
+        "sha256": "7f59a44b9fff862b65c7580564f01db2ce106f92794941c98648ae2d73e36905",
+        "width": 1500,
+        "height": 1000,
+        "duplicate_of": null
+      },
+      "image_count": 5,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/09-m2-risk-vtorichki/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a10486863f26c39b45d9352/orig",
+            "sha256": "7f59a44b9fff862b65c7580564f01db2ce106f92794941c98648ae2d73e36905",
+            "width": 1500,
+            "height": 1000,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "У финансового управляющего есть 3 года, чтобы оспорить сделку банкрота. Часы начинают тикать с момента подачи заявления о банкротстве, а не с момента продажи",
+            "source_block_index": 10,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/09-m2-risk-vtorichki/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67ca/orig",
+            "sha256": "378d0e7e3dd19759b36561f31d00c1a5b9a7ea0ec148b425137cc286631937c1",
+            "width": 1500,
+            "height": 1000,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Проверить продавца на долги можно на сайтах ФССП и ЕФРСБ бесплатно. Но эти базы покажут только уже возбуждённые дела",
+            "source_block_index": 15,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/09-m2-risk-vtorichki/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67cb/orig",
+            "sha256": "93f3715f7525b61e25d5ffc588929d04103652ab6991f07a5b869874338a7071",
+            "width": 1500,
+            "height": 1001,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Если сделку отменят из-за банкротства продавца, деньги не вернут сразу. Покупатель попадает в реестр кредиторов — и ждать возврата можно годами",
+            "source_block_index": 27,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/09-m2-risk-vtorichki/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a1046c4295ec11571710766_6a1046e8984f34350fa2c68d/orig",
+            "sha256": "1213c97f0f5c1ab60f5eed15a1b7575665594b6ce582c397a6e47074c648f87a",
+            "width": 1500,
+            "height": 1001,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "article_image",
+            "caption": "Юристы М2 найдут и учтут все подводные камни перед покупкой квартиры на вторичном рынке",
+            "source_block_index": 31,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/09-m2-risk-vtorichki/05.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/09-m2-risk-vtorichki/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67cc/orig",
+            "sha256": "88c09b3c980d186bcd690712120cc152eab5167a0ca25ae1f69f1ccb68e1fd39",
+            "width": 1288,
+            "height": 692,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-05"
+        }
+      ]
+    },
+    {
+      "article_number": "10",
+      "article_slug": "10-krasnaya-polyana-reis-zaderzhali",
+      "label": "Курорт Красная Поляна — Рейс задержали. Что делать?",
+      "url": "https://krasnayapolyanaresort.promo.page/media/reis-na-kurort-krasnaia-poliana-zaderjali-chto-delat-6a54bb73d6edb03d5192b7e1_0_0",
+      "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+      "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+        "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb113c3f4407664ee50/orig",
+        "sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d",
+        "width": 2048,
+        "height": 1536,
+        "duplicate_of": null
+      },
+      "image_count": 8,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb113c3f4407664ee50/orig",
+            "sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d",
+            "width": 2048,
+            "height": 1536,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 2,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb113c3f4407664ee50/orig",
+            "sha256": "1de63143c78df177e5c34e012dff39208ed5f2ec07e1b3f363496e495e7f755d",
+            "width": 2048,
+            "height": 1536,
+            "duplicate_of": "10/01"
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 6,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb1d6edb03d5192c15a/orig",
+            "sha256": "59268f3ea9e8c4d65be1006cac21ec7b999fdd012f8e1effe61121dfff980490",
+            "width": 2048,
+            "height": 1365,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 11,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb1f3f63851d4217de9/orig",
+            "sha256": "642bc416d362d5fbc1b8c565af01941446029a5bd3c3247e232ff758d4267351",
+            "width": 2048,
+            "height": 1365,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 17,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb142c6081a1fe9b8ba/orig",
+            "sha256": "8cfd539ede6664afa20a20eeba0610b0757c8220abb817594aeec3f45e1d4802",
+            "width": 2048,
+            "height": 1365,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 21,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217deb/orig",
+            "sha256": "1fcf0049652511341a2388ebc52e7e3fe6e87cc0dfa425cc0d483c1ca72dcd64",
+            "width": 2048,
+            "height": 1364,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 28,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig",
+            "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+            "width": 2048,
+            "height": 1365,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 36,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb342c6081a1fe9b90b/orig",
+            "sha256": "044277f8afedad3ddd54157ac359f86184af8830ebd820020351bd11abce6a11",
+            "width": 2048,
+            "height": 1365,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-08"
+        }
+      ]
+    },
+    {
+      "article_number": "11",
+      "article_slug": "11-dream-island-pochemu-vybiraiu",
+      "label": "Остров Мечты — Почему я выбираю парк развлечений",
+      "url": "https://dreamisland.promo.page/media/pochemu-ia-vybiraiu-park-razvlechenii-ostrov-mechty-687a5391bcfe3d7b9a29bcb7_0_0",
+      "title": "Почему я выбираю парк развлечений «Остров Мечты»?",
+      "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/content.json",
+        "sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_687a5391bcfe3d7b9a29bcb7_687a54048bcac862f013829e/orig",
+        "sha256": "d01d807c228871fe9bf5747e1d997b0c41bc8a82284c6b5a84be31e539d23a71",
+        "width": 1600,
+        "height": 1066,
+        "duplicate_of": null
+      },
+      "image_count": 4,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_687a5391bcfe3d7b9a29bcb7_687a54048bcac862f013829e/orig",
+            "sha256": "d01d807c228871fe9bf5747e1d997b0c41bc8a82284c6b5a84be31e539d23a71",
+            "width": 1600,
+            "height": 1066,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Вид на центральную аллею: масштабы парка впечатляют.",
+            "source_block_index": 8,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_687a5391bcfe3d7b9a29bcb7_687a5404bcfe3d7b9a29c6ee/orig",
+            "sha256": "73e770c24e96a5da91a5cf3f5c4c32cbb795823f476733a990b229369b348690",
+            "width": 1600,
+            "height": 957,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Фантастическое путешествие по миру юрского периода «На крыльях ветра»!",
+            "source_block_index": 17,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a5404ca2ddc03fc550956/orig",
+            "sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+            "width": 1600,
+            "height": 1059,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Красивые декорации и зоны для фото на каждом шагу.",
+            "source_block_index": 26,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a54047382f340da734e3e/orig",
+            "sha256": "9d793a294bb1ce53d0c7627084e512c33df03ceb387547f470b5c5bf5a7138d4",
+            "width": 1600,
+            "height": 1066,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-11-dream-island-pochemu-vybiraiu-04"
+        }
+      ]
+    },
+    {
+      "article_number": "12",
+      "article_slug": "12-dream-island-7-fishek",
+      "label": "Остров Мечты — 7 фишек для яркого отдыха",
+      "url": "https://dreamisland.promo.page/media/7-fishek-ostrova-mechty-kotorye-sdelaiut-vash-otdyh-iarche-6a59e32a3a302a69aec403c2_0_0",
+      "title": "7 фишек «Острова Мечты», которые сделают ваш отдых ярче",
+      "lead": "7 секретов «Острова Мечты»: где искать крутые фото и экстремальные развлечения",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/12-dream-island-7-fishek/content.json",
+        "sha256": "f873287c9c994b4dedf6faf6eb5199362f1ea79f4a8e96f63537658e248e3ecf"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+        "sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297",
+        "width": 2560,
+        "height": 2561,
+        "duplicate_of": null
+      },
+      "image_count": 10,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+            "sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297",
+            "width": 2560,
+            "height": 2561,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Правильное место посадки, четкий ритм и ваше упорство — три составляющие успешного переворота",
+            "source_block_index": 8,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+            "sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297",
+            "width": 2560,
+            "height": 2561,
+            "duplicate_of": "12/01"
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Это первая в России катальная гора с VR-технологией, и ощущения здесь действительно непривычные",
+            "source_block_index": 12,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a59e32a3a302a69aec403c2_6a59ff39b1afef7284d5cedd/orig",
+            "sha256": "0e2da2da0cc176bdcf7efb4183112cedd527e3af440d7a35077b89a5b78877b2",
+            "width": 2500,
+            "height": 1691,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 18,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a59e32a3a302a69aec403c2_6a5a02343a302a69aeca1771/orig",
+            "sha256": "e18bbc181b374f5773120a92e23af198184f0f6f7c83c7b61f9285a29ee7993d",
+            "width": 3800,
+            "height": 2533,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "gallery_image",
+            "caption": "Устройте батл с друзьями или семьей и выясните, кто в компании самый меткий. А еще не забудьте запомнить свой счет: сюда стоит вернуться хотя бы для того, чтобы побить собственный рекорд",
+            "source_block_index": 18,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a02343a302a69aeca1772/orig",
+            "sha256": "9ace3a7c53ce5502d8de2ef201600caecbdbaaf23c4369cd79f0b5d6a502c520",
+            "width": 3800,
+            "height": 2533,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "Внутри четыре маршрута общей длиной более 230 метров",
+            "source_block_index": 22,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a59e32a3a302a69aec403c2_6a5a0234b1afef7284d6558a/orig",
+            "sha256": "0f9f67b09cb945ec55eb857b5b0a9fe9fe84fd54b614560fd5b9e471c4162756",
+            "width": 2666,
+            "height": 2526,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "article_image",
+            "caption": "Попробуйте поймать в одно селфи максимум своих отражений — и посчитайте, сколько «вас» поместилось в кадр",
+            "source_block_index": 28,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a59e32a3a302a69aec403c2_6a5a02c53a302a69aeca3208/orig",
+            "sha256": "6d1ad711cc0c9ca917c30a5806824d53efb1e5f040701a9b5b6eab5b3d3ebd39",
+            "width": 6016,
+            "height": 4016,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "article_image",
+            "caption": "Аттракцион стилизован под руины древнего храма — выглядит эпично даже со стороны",
+            "source_block_index": 32,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+            "sha256": "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d",
+            "width": 5445,
+            "height": 3635,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 37,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/09.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/09.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a59e32a3a302a69aec403c2_6a5a082dfccb527e723244f7/orig",
+            "sha256": "d5e335a62e06415a63fd1ada8c74379c7f06edb256427f10711cb606a48c7569",
+            "width": 3619,
+            "height": 2413,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-09"
+        },
+        {
+          "image": {
+            "order": 10,
+            "image_id": "10",
+            "file": "10.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 37,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/10.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/12-dream-island-7-fishek/10.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a59e32a3a302a69aec403c2_6a5a082d3a302a69aecb23dc/orig",
+            "sha256": "bcf9184d8be12094371665493bc1adaf6414aa0f5bbe87d5e1b3a73408947b78",
+            "width": 3276,
+            "height": 2184,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-10"
+        }
+      ]
+    },
+    {
+      "article_number": "13",
+      "article_slug": "13-dream-island-top6-attrakcionov",
+      "label": "Остров Мечты — Топ-6 аттракционов для фаната экстрима",
+      "url": "https://dreamisland.promo.page/media/top6-attrakcionov-v-ostrove-mechty-dlia-fanata-ekstrima-6a5a10c7bf47d01035dc3f22_0_0",
+      "title": "Топ-6 аттракционов в «Острове Мечты» для фаната экстрима",
+      "lead": "6 экстремальных аттракционов «Острова Мечты» — ловите адреналин!",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/content.json",
+        "sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1825fccb527e723564ab/orig",
+        "sha256": "01e5a2ad2302b945921a8cf8b7805e182533e89f1be081c03701e8b509d7998a",
+        "width": 2632,
+        "height": 1974,
+        "duplicate_of": null
+      },
+      "image_count": 8,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1825fccb527e723564ab/orig",
+            "sha256": "01e5a2ad2302b945921a8cf8b7805e182533e89f1be081c03701e8b509d7998a",
+            "width": 2632,
+            "height": 1974,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Это первая в России катальная гора с VR-технологией — попробуйте и без очков, и с ними",
+            "source_block_index": 7,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a1825bf47d01035dda06e/orig",
+            "sha256": "0e2da2da0cc176bdcf7efb4183112cedd527e3af440d7a35077b89a5b78877b2",
+            "width": 2500,
+            "height": 1691,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "После «Бешеного танца» земля еще пару минут кажется ненадежной",
+            "source_block_index": 11,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a18252bd5c226f5237586/orig",
+            "sha256": "f1bb24adc36d53f546ea51ef407b349227e893757f80279bd9da151e41ebfba9",
+            "width": 4608,
+            "height": 3072,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Полный переворот с первого раза получается у единиц, но именно за этим сюда возвращаются снова и снова",
+            "source_block_index": 15,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1825fccb527e723564ab/orig",
+            "sha256": "01e5a2ad2302b945921a8cf8b7805e182533e89f1be081c03701e8b509d7998a",
+            "width": 2632,
+            "height": 1974,
+            "duplicate_of": "13/01"
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 18,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a5a10c7bf47d01035dc3f22_6a5a1a23fccb527e7235c2af/orig",
+            "sha256": "7ec5104f2456949b7fc32e4fb9d8e60a62a088bd0d78cc20ca82694bb3b5eb5c",
+            "width": 5039,
+            "height": 3359,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 23,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a5a10c7bf47d01035dc3f22_6a5a1825bf47d01035dda05f/orig",
+            "sha256": "cd24fd724020e82111c8608091d3a2068e5ca4adb530231e59f5c096ac845cbd",
+            "width": 950,
+            "height": 713,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 27,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1a232bd5c226f523d860/orig",
+            "sha256": "7b83948381c8644ae5dd171ccf2de1f957eb878fa25243d349e56c44dd39a5d6",
+            "width": 3999,
+            "height": 2670,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "article_image",
+            "caption": "Шоу оплачивается отдельно, но поверьте, это того стоит.",
+            "source_block_index": 31,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a5a10c7bf47d01035dc3f22_6a5a1c83fccb527e723636c0/orig",
+            "sha256": "594b825d5a38c98a476ef86a6dd038f75956a577382d62aade1d80c0858e78b0",
+            "width": 1280,
+            "height": 1174,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-13-dream-island-top6-attrakcionov-08"
+        }
+      ]
+    },
+    {
+      "article_number": "14",
+      "article_slug": "14-promopages-govorit-s-auditoriei",
+      "label": "ПромоСтраницы — Как говорить с аудиторией, чтобы покупали",
+      "url": "https://promopages-text.promo.page/media/kak-seichas-govorit-s-auditoriei-chtoby-u-vas-pokupali-6a6afe8c1c0a3777e9c6a1fc_0_0",
+      "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+      "lead": "Разбираем, как удержать внимание, вызвать доверие и подвести человека к покупке",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/content.json",
+        "sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b04b987675c24ffb6bd71/orig",
+        "sha256": "f1ee20efbcf72c61672adc78ea6f2bc53e588cad4374e91254c2bf26d0edae13",
+        "width": 2752,
+        "height": 1536,
+        "duplicate_of": null
+      },
+      "image_count": 6,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b04b987675c24ffb6bd71/orig",
+            "sha256": "f1ee20efbcf72c61672adc78ea6f2bc53e588cad4374e91254c2bf26d0edae13",
+            "width": 2752,
+            "height": 1536,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 6,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b088aa78cb9159a3ee57b/orig",
+            "sha256": "c8a0d61f6b25e3a4259686edda3138892b7e620a2b1de7ee31940d2725d5da3e",
+            "width": 2752,
+            "height": 1536,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "Заголовок дает повод открыть статью, а первые абзацы подтверждают, что читатель найдет в ней ответ на свой вопрос",
+            "source_block_index": 10,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/03.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe91b0caf85757b96ab3/orig",
+            "sha256": "08c3c775f2d2de9eeffc7440e6eeb85dad99414b09dbbd237f4f6f1bfd91398f",
+            "width": 799,
+            "height": 471,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.png",
+            "role": "article_image",
+            "caption": "А в финале остается собрать основные выводы и подсказать дальнейшее действие: посмотреть модель, рассчитать стоимость, сравнить тарифы или оставить заявку. Так путь к покупке продолжается логично, без резкого перехода от рекомендаций к рекламе",
+            "source_block_index": 16,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe910f014557219e1b58/orig",
+            "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632",
+            "width": 867,
+            "height": 554,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 21,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+            "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe911c0a3777e9c6a2de/orig",
+            "sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+            "width": 2048,
+            "height": 895,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "Вы получаете несколько минут на разговор с аудиторией, которой потенциально интересно предложение, и платите за тех, кто дочитал материал или перешел на сайт",
+            "source_block_index": 27,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a6afe8c1c0a3777e9c6a1fc_6a6b0436a78cb9159a3dbecd/orig",
+            "sha256": "0fd06599e7ff3c2d9254eeecdf28edd4055d1b0f0a7a72c876f81cd62e1c4435",
+            "width": 2752,
+            "height": 1536,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-06"
+        }
+      ]
+    }
+  ]
+}

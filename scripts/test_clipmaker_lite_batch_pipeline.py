@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import tempfile
 import threading
 import time
@@ -72,6 +73,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             "timeout": 30,
             "poll_interval": 0.0,
             "allow_external_processing": True,
+            "segmind_base_url": "https://eliza.invalid/segmind/v1",
             "wan_base_url": "https://wan.invalid",
             "wan_stream_base_url": "https://wan-stream.invalid",
             "eliza_base_url": "https://eliza.invalid/v1",
@@ -123,8 +125,8 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             return {
                 "width": 1200,
                 "height": 800,
-                "duration_seconds": 3.2,
-                "frames": 97,
+                "duration_seconds": 5.0,
+                "frames": 150,
                 "fps": 30.0,
                 "has_audio": False,
                 "bytes": 100,
@@ -165,6 +167,9 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             "http_json": lambda *_args, **_kwargs: {"id": "new-provider-job"},
             "eliza_poll": lambda *_args, **_kwargs: {"status": "completed"},
             "http_download": download,
+            "segmind_generate": lambda *_args, **_kwargs: {
+                "request_id": "segmind-request"
+            },
             "wan_generate": lambda *_args, **_kwargs: None,
             "media_probe": lambda _path: self.valid_media(model_id),
         }
@@ -209,6 +214,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             batch.provider_sample(entry), batch.provider_prompt(job)
         )
         self.assertEqual(preview["input"]["prompt"], job.positive_prompt)
+        self.assertEqual(preview["input"]["negative_prompt"], "")
         self.assertNotIn("Avoid:", preview["input"]["prompt"])
         artifact = batch.prompt_artifact(job)
         self.assertEqual(artifact["schema_version"], 2)
@@ -1008,6 +1014,332 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             self.assertEqual(persisted["status"], "submit-unknown")
             self.assertIsNone(persisted["provider_job_id"])
 
+    def test_typed_dns_resolution_failure_is_retryable_pre_submit(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.7")
+            submit = mock.Mock(
+                side_effect=transport.PreSubmitNetworkError(
+                    batch.LEGACY_ELIZA_DNS_PRE_SUBMIT_ERROR
+                )
+            )
+            operations = self.provider_operations(
+                "alibaba/wan-2.7",
+                http_json=submit,
+            )
+
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                first = batch.run_provider_worker(row, self.args(), root, operations)
+                second = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertEqual(first.status, "failed-pre-submit")
+            self.assertEqual(second.status, "failed-pre-submit")
+            self.assertFalse(first.holds_provider_slot)
+            self.assertFalse(second.holds_provider_slot)
+            self.assertEqual(submit.call_count, 2)
+            persisted = transport.read_json(row["paths"]["run"])
+            self.assertEqual(persisted["status"], "failed-pre-submit")
+            self.assertFalse(persisted["provider_may_be_active"])
+            self.assertIsNone(persisted["provider_job_id"])
+            self.assertIsNone(persisted["submitted_at"])
+
+    def test_eliza_post_429_is_retryable_pre_submit(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "google/veo-3.1-lite")
+            submit = mock.Mock(
+                side_effect=transport.PreSubmitRejectedError(
+                    'POST https://eliza.invalid/v1/videos failed with HTTP 429: '
+                    '{"error":"Quota exceeded"}',
+                    429,
+                )
+            )
+            operations = self.provider_operations(
+                "google/veo-3.1-lite",
+                http_json=submit,
+            )
+
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                result = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertEqual(result.status, "failed-pre-submit")
+            self.assertFalse(result.holds_provider_slot)
+            submit.assert_called_once()
+            persisted = transport.read_json(row["paths"]["run"])
+            self.assertFalse(persisted["provider_may_be_active"])
+            self.assertIsNone(persisted["provider_job_id"])
+
+    def test_existing_eliza_job_get_429_remains_submitted_and_resumable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.7")
+            request = transport.build_request_preview(row["sample"], row["prompt"])
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "submitted",
+                    "request": request,
+                    "request_sha256": transport.request_fingerprint(
+                        request, row["sample"]
+                    ),
+                    "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+                    "provider_job_id": "existing-job",
+                    "submitted_at": "2026-08-05T00:00:00Z",
+                    "provider_may_be_active": True,
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            submit = mock.Mock(side_effect=AssertionError("poll must not resubmit"))
+            poll = mock.Mock(
+                side_effect=transport.PipelineError(
+                    "GET https://eliza.invalid/v1/videos/existing-job failed with "
+                    'HTTP 429: {"error":"Quota exceeded"}'
+                )
+            )
+            operations = self.provider_operations(
+                "alibaba/wan-2.7",
+                http_json=submit,
+                eliza_poll=poll,
+            )
+
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                result = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertEqual(result.status, "submitted")
+            self.assertTrue(result.holds_provider_slot)
+            submit.assert_not_called()
+            poll.assert_called_once()
+            persisted = transport.read_json(row["paths"]["run"])
+            self.assertEqual(persisted["status"], "submitted")
+            self.assertEqual(persisted["provider_job_id"], "existing-job")
+            self.assertTrue(persisted["provider_may_be_active"])
+
+    def test_exact_legacy_eliza_dns_receipt_is_recovered_and_submitted_once(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "google/veo-3.1-lite")
+            request = transport.build_request_preview(row["sample"], row["prompt"])
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "submit-unknown",
+                    "request": request,
+                    "request_sha256": transport.request_fingerprint(
+                        request, row["sample"]
+                    ),
+                    "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+                    "provider_job_id": None,
+                    "submitted_at": None,
+                    "completed_at": None,
+                    "provider_may_be_active": True,
+                    "error": batch.LEGACY_ELIZA_DNS_PRE_SUBMIT_ERROR,
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            submit = mock.Mock(return_value={"id": "recovered-job"})
+            operations = self.provider_operations(
+                "google/veo-3.1-lite",
+                http_json=submit,
+            )
+
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                result = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertFalse(result.failed)
+            submit.assert_called_once()
+            final = transport.read_json(row["paths"]["run"])
+            self.assertEqual(final["status"], "succeeded")
+            self.assertEqual(final["provider_job_id"], "recovered-job")
+            self.assertFalse(final["provider_may_be_active"])
+
+    def test_exact_legacy_segmind_quota_receipt_is_recovered_once(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.2")
+            request = transport.build_request_preview(row["sample"], row["prompt"])
+            fingerprint = transport.request_fingerprint(request, row["sample"])
+            exact_error = (
+                "Eliza/Segmind POST failed with HTTP 429: "
+                '{"error":"Quota exceeded","request_id":"gateway-only"}'
+            )
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "submit-unknown",
+                    "request": request,
+                    "request_sha256": fingerprint,
+                    "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+                    "provider_job_id": None,
+                    "submitted_at": None,
+                    "completed_at": None,
+                    "provider_may_be_active": True,
+                    "error": exact_error,
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            generate = mock.Mock(return_value={"request_id": "recovered-request"})
+            operations = self.provider_operations(
+                "alibaba/wan-2.2",
+                segmind_generate=generate,
+            )
+
+            with (
+                mock.patch.object(batch, "materialize_entry", return_value=row),
+                mock.patch.object(
+                    batch,
+                    "LEGACY_SEGMIND_QUOTA_REQUEST_SHA256",
+                    fingerprint,
+                ),
+                mock.patch.object(
+                    batch,
+                    "LEGACY_SEGMIND_QUOTA_ERROR_SHA256",
+                    hashlib.sha256(exact_error.encode("utf-8")).hexdigest(),
+                ),
+            ):
+                result = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertFalse(result.failed)
+            generate.assert_called_once()
+            final = transport.read_json(row["paths"]["run"])
+            self.assertEqual(final["status"], "succeeded")
+            self.assertEqual(final["provider_job_id"], "recovered-request")
+            self.assertFalse(final["provider_may_be_active"])
+
+    def test_near_match_legacy_segmind_quota_receipt_stays_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.2")
+            request = transport.build_request_preview(row["sample"], row["prompt"])
+            fingerprint = transport.request_fingerprint(request, row["sample"])
+            exact_error = (
+                "Eliza/Segmind POST failed with HTTP 429: "
+                '{"error":"Quota exceeded","request_id":"gateway-only"}'
+            )
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "submit-unknown",
+                    "request": request,
+                    "request_sha256": fingerprint,
+                    "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+                    "provider_job_id": None,
+                    "submitted_at": None,
+                    "completed_at": None,
+                    "provider_may_be_active": True,
+                    "error": exact_error + " ",
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            generate = mock.Mock(
+                side_effect=AssertionError("near-match must not submit")
+            )
+            operations = self.provider_operations(
+                "alibaba/wan-2.2",
+                segmind_generate=generate,
+            )
+
+            with (
+                mock.patch.object(batch, "materialize_entry", return_value=row),
+                mock.patch.object(
+                    batch,
+                    "LEGACY_SEGMIND_QUOTA_REQUEST_SHA256",
+                    fingerprint,
+                ),
+                mock.patch.object(
+                    batch,
+                    "LEGACY_SEGMIND_QUOTA_ERROR_SHA256",
+                    hashlib.sha256(exact_error.encode("utf-8")).hexdigest(),
+                ),
+            ):
+                result = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertEqual(result.status, "submit-unknown")
+            self.assertTrue(result.holds_provider_slot)
+            generate.assert_not_called()
+            persisted = transport.read_json(row["paths"]["run"])
+            self.assertEqual(persisted["status"], "submit-unknown")
+
+    def test_segmind_429_after_submit_guard_is_failed_pre_submit(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.2")
+
+            def reject_after_guard(*args: object, **_kwargs: object) -> dict[str, object]:
+                on_submitting = args[5]
+                on_submitting(
+                    {"http_status": 200, "bytes": 123, "sha256": "a" * 64}
+                )
+                raise transport.PreSubmitRejectedError(
+                    "Eliza/Segmind POST failed with HTTP 429: Quota exceeded",
+                    429,
+                )
+
+            operations = self.provider_operations(
+                "alibaba/wan-2.2",
+                segmind_generate=reject_after_guard,
+            )
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                result = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertEqual(result.status, "failed-pre-submit")
+            self.assertFalse(result.holds_provider_slot)
+            final = transport.read_json(row["paths"]["run"])
+            self.assertEqual(final["status"], "failed-pre-submit")
+            self.assertFalse(final["provider_may_be_active"])
+
+    def test_near_match_legacy_dns_receipts_remain_submit_unknown(self) -> None:
+        variants = (
+            {"request_sha256": "0" * 64},
+            {"submitted_at": "2026-08-05T00:00:00Z"},
+            {"provider_job_id": "possibly-active"},
+            {"provider_may_be_active": False},
+            {
+                "error": batch.LEGACY_ELIZA_DNS_PRE_SUBMIT_ERROR
+                + " (temporary)"
+            },
+        )
+        for variant in variants:
+            with self.subTest(variant=variant), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                row = self.temp_row(root, "alibaba/wan-2.7")
+                request = transport.build_request_preview(row["sample"], row["prompt"])
+                run = transport.read_json(row["paths"]["run"])
+                run.update(
+                    {
+                        "status": "submit-unknown",
+                        "request": request,
+                        "request_sha256": transport.request_fingerprint(
+                            request, row["sample"]
+                        ),
+                        "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+                        "provider_job_id": None,
+                        "submitted_at": None,
+                        "completed_at": None,
+                        "provider_may_be_active": True,
+                        "error": batch.LEGACY_ELIZA_DNS_PRE_SUBMIT_ERROR,
+                        **variant,
+                    }
+                )
+                transport.atomic_write_json(row["paths"]["run"], run)
+                submit = mock.Mock(
+                    side_effect=AssertionError("near-match must not submit")
+                )
+                operations = self.provider_operations(
+                    "alibaba/wan-2.7",
+                    http_json=submit,
+                )
+
+                with mock.patch.object(batch, "materialize_entry", return_value=row):
+                    result = batch.run_provider_worker(
+                        row, self.args(), root, operations
+                    )
+
+                self.assertEqual(result.status, "submit-unknown")
+                self.assertTrue(result.holds_provider_slot)
+                submit.assert_not_called()
+                persisted = transport.read_json(row["paths"]["run"])
+                self.assertEqual(persisted["status"], "submit-unknown")
+
     def test_restart_from_submitting_becomes_submit_unknown_without_transport(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -1168,28 +1500,33 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             self.assertEqual(final["status"], "succeeded")
             self.assertEqual(final["provider_job_id"], "provider-job")
 
-    def test_wan_worker_disables_automatic_paid_resubmit(self) -> None:
+    def test_segmind_worker_persists_guard_before_single_paid_post(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             row = self.temp_row(root, "alibaba/wan-2.2")
             observed: dict[str, object] = {}
 
-            def generate(*args: object, **kwargs: object) -> None:
-                observed["allow_resubmit"] = kwargs["allow_resubmit_after_missing_session"]
+            def generate(*args: object, **_kwargs: object) -> dict[str, object]:
                 observed["before_submit"] = transport.read_json(
                     row["paths"]["run"]
                 )["status"]
-                kwargs["on_submitting"]()
-                observed["at_submit"] = transport.read_json(
-                    row["paths"]["run"]
-                )["status"]
-                on_submitted = args[7]
-                on_submitted("wan-job", "wan-session")
+                on_submitting = args[5]
+                on_submitting(
+                    {"http_status": 200, "bytes": 123, "sha256": "a" * 64}
+                )
+                guarded = transport.read_json(row["paths"]["run"])
+                observed["at_submit"] = guarded["status"]
+                observed["preflight"] = guarded["source_preflight"]
                 row["paths"]["video"].write_bytes(b"fake mp4")
+                return {
+                    "request_id": "segmind-request",
+                    "http_status": 200,
+                    "automatic_retry": False,
+                }
 
             operations = self.provider_operations(
                 "alibaba/wan-2.2",
-                wan_generate=generate,
+                segmind_generate=generate,
             )
             with mock.patch.object(
                 batch,
@@ -1200,26 +1537,27 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
 
             self.assertFalse(result.failed)
             self.assertEqual(materialize.call_count, 2)
-            self.assertIs(observed["allow_resubmit"], False)
             self.assertEqual(observed["before_submit"], "preparing")
             self.assertEqual(observed["at_submit"], "submitting")
+            self.assertEqual(observed["preflight"]["bytes"], 123)
             final = transport.read_json(row["paths"]["run"])
-            self.assertEqual(final["provider_job_id"], "wan-job")
+            self.assertEqual(final["provider_job_id"], "segmind-request")
+            self.assertFalse(final["provider_may_be_active"])
             self.assertEqual(final["status"], "succeeded")
 
-    def test_wan_upload_failure_is_known_pre_submit_and_does_not_hold_slot(self) -> None:
+    def test_segmind_preflight_failure_is_known_pre_submit_and_does_not_hold_slot(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             row = self.temp_row(root, "alibaba/wan-2.2")
 
-            def fail_before_submit(*_args: object, **_kwargs: object) -> None:
+            def fail_before_submit(*_args: object, **_kwargs: object) -> dict[str, object]:
                 current = transport.read_json(row["paths"]["run"])
                 self.assertEqual(current["status"], "preparing")
-                raise transport.PipelineError("upload failed before queue/join")
+                raise transport.PipelineError("source digest changed before submit")
 
             operations = self.provider_operations(
                 "alibaba/wan-2.2",
-                wan_generate=fail_before_submit,
+                segmind_generate=fail_before_submit,
             )
             with mock.patch.object(batch, "materialize_entry", return_value=row):
                 result = batch.run_provider_worker(row, self.args(), root, operations)
@@ -1231,33 +1569,127 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             self.assertEqual(final["status"], "failed-pre-submit")
             self.assertFalse(final["provider_may_be_active"])
 
-    def test_wan_revalidates_after_upload_before_marking_submitting(self) -> None:
+    def test_segmind_unknown_submit_is_never_automatically_retried(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             row = self.temp_row(root, "alibaba/wan-2.2")
+            calls = 0
 
-            def after_upload(*_args: object, **kwargs: object) -> None:
-                kwargs["on_submitting"]()
+            def fail_after_guard(*args: object, **_kwargs: object) -> dict[str, object]:
+                nonlocal calls
+                calls += 1
+                on_submitting = args[5]
+                on_submitting(
+                    {"http_status": 200, "bytes": 123, "sha256": "a" * 64}
+                )
+                raise transport.PipelineError("connection closed after POST")
 
             operations = self.provider_operations(
                 "alibaba/wan-2.2",
-                wan_generate=after_upload,
+                segmind_generate=fail_after_guard,
             )
-            with mock.patch.object(
-                batch,
-                "materialize_entry",
-                side_effect=[
-                    row,
-                    batch.BatchPipelineError("Lite result changed during upload"),
-                ],
-            ):
-                result = batch.run_provider_worker(row, self.args(), root, operations)
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                first = batch.run_provider_worker(row, self.args(), root, operations)
+                second = batch.run_provider_worker(row, self.args(), root, operations)
 
-            self.assertTrue(result.failed)
-            self.assertEqual(result.status, "failed-pre-submit")
-            self.assertFalse(result.holds_provider_slot)
+            self.assertTrue(first.failed)
+            self.assertEqual(first.status, "submit-unknown")
+            self.assertTrue(first.holds_provider_slot)
+            self.assertTrue(second.failed)
+            self.assertEqual(second.status, "submit-unknown")
+            self.assertTrue(second.holds_provider_slot)
+            self.assertEqual(calls, 1)
             final = transport.read_json(row["paths"]["run"])
-            self.assertEqual(final["status"], "failed-pre-submit")
+            self.assertEqual(final["status"], "submit-unknown")
+            self.assertTrue(final["provider_may_be_active"])
+
+    def test_segmind_typed_task_failure_persists_terminal_identity(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.2")
+            evidence = {
+                "http_status": 400,
+                "provider_task_id": "segmind-task-400",
+                "provider_task_status": "FAILED",
+                "provider_error_code": "InvalidParameter",
+                "provider_error_message": transport.SEGMIND_OVERSIZE_ERROR_MESSAGE,
+                "submit_time": "2026-08-05 16:16:38.596",
+                "scheduled_time": "2026-08-05 16:16:38.614",
+                "end_time": "2026-08-05 16:16:42.626",
+            }
+            calls = 0
+
+            def fail_terminal(*args: object, **_kwargs: object) -> dict[str, object]:
+                nonlocal calls
+                calls += 1
+                on_submitting = args[5]
+                on_submitting(
+                    {"http_status": 200, "bytes": 21_000_000, "sha256": "a" * 64}
+                )
+                raise transport.SegmindProviderTaskFailedError(
+                    "Eliza/Segmind POST failed with HTTP 400: exact task failure",
+                    evidence,
+                )
+
+            operations = self.provider_operations(
+                "alibaba/wan-2.2",
+                segmind_generate=fail_terminal,
+            )
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                first = batch.run_provider_worker(row, self.args(), root, operations)
+                second = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertTrue(first.failed)
+            self.assertEqual(first.status, "provider-failed")
+            self.assertFalse(first.holds_provider_slot)
+            self.assertEqual(second.status, "provider-failed")
+            self.assertFalse(second.holds_provider_slot)
+            self.assertEqual(calls, 1)
+            final = transport.read_json(row["paths"]["run"])
+            self.assertEqual(final["status"], "provider-failed")
+            self.assertFalse(final["provider_may_be_active"])
+            self.assertEqual(final["provider_job_id"], "segmind-task-400")
+            self.assertEqual(final["provider_task_id"], "segmind-task-400")
+            self.assertEqual(final["provider_failure"], evidence)
+            self.assertIsNotNone(final["completed_at"])
+            self.assertFalse(row["paths"]["video"].exists())
+
+    def test_segmind_generic_http_400_stays_submit_unknown(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.2")
+            calls = 0
+
+            def fail_generic(*args: object, **_kwargs: object) -> dict[str, object]:
+                nonlocal calls
+                calls += 1
+                on_submitting = args[5]
+                on_submitting(
+                    {"http_status": 200, "bytes": 123, "sha256": "a" * 64}
+                )
+                raise transport.PipelineError(
+                    'Eliza/Segmind POST failed with HTTP 400: {"error":"Bad request"}'
+                )
+
+            operations = self.provider_operations(
+                "alibaba/wan-2.2",
+                segmind_generate=fail_generic,
+            )
+            with mock.patch.object(batch, "materialize_entry", return_value=row):
+                first = batch.run_provider_worker(row, self.args(), root, operations)
+                second = batch.run_provider_worker(row, self.args(), root, operations)
+
+            self.assertEqual(first.status, "submit-unknown")
+            self.assertTrue(first.holds_provider_slot)
+            self.assertEqual(second.status, "submit-unknown")
+            self.assertTrue(second.holds_provider_slot)
+            self.assertEqual(calls, 1)
+            final = transport.read_json(row["paths"]["run"])
+            self.assertEqual(final["status"], "submit-unknown")
+            self.assertTrue(final["provider_may_be_active"])
+            self.assertIsNone(final["provider_job_id"])
+            self.assertNotIn("provider_task_id", final)
+            self.assertNotIn("provider_failure", final)
 
     def test_media_contract_mismatch_is_a_failed_verification(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

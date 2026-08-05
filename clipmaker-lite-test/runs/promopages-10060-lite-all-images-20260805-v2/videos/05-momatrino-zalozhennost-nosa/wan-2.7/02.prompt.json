@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/02.jpeg",
+    "sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "A familiar home scene quietly conveys that a beloved pet and a large home library can remain everyday sources of allergen exposure and dust.",
+    "primary_action": "The cat completes one slow forward step beside the bookcase.",
+    "terminal_state": "The cat is standing calmly with its forward paw planted on the floor beside the loose book, still facing left.",
+    "semantic_invariant": "The scene remains a calm domestic environment associated with ongoing household allergen exposure."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, the cat slowly completes a single step past the loose book and settles with both front paws grounded, still facing left.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-02/result.json",
+    "sha256": "099e0d160706ffc32ba04963de6a2d34942321e60937a497adf7fdb9747f9fcb",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "ec1256b2b16251cca2e9a3e951ae20250eb4697f2ef9d8dc6dd1395133be4013",
+      "article_context_sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

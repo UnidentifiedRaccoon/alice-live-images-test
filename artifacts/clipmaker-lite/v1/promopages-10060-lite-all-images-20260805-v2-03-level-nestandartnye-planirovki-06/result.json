@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-06",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:c19105863c19cd4ccb198bc6e100d0ed72868c591df6b765e4db511f0d3ea791",
+    "execution_fingerprint": "sha256:561d2da429193d907d2e87529cfc7fb7a47f43c7d5a5fe38acbf0e3a4fbce0b3",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef3-8abc-70e3-8e96-fd5118b36956"
+    },
+    "authored_payload_sha256": "3a3d8e1512a227a3041be04da49af24d0b88daa6486e45316b4a980bdc6b5b7f",
+    "draft_file_sha256": "00325fd75e8b64e4390d5652a1abcf36d120b623564a1594c4c3b9262118f225"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/06.jpeg",
+      "sha256": "be8e31d2845f05316eb955857e201c97540cfc1e2a7c4ed0989d57b080ced643",
+      "bytes": 337373
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/content.json",
+      "sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "bytes": 23384,
+      "locator": {
+        "article_id": "03-level-nestandartnye-planirovki",
+        "title": "Топ-6 нестандартных планировок квартир от Level Group",
+        "lead": "Покажем несколько вариантов в разных районах Москвы",
+        "image_id": "06",
+        "block_index": 32,
+        "role": "gallery_image",
+        "caption": "",
+        "file": "06.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/06.jpeg",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Квартиры с 5+ комнатами"
+        },
+        "nearest_text_before": {
+          "block_index": 31,
+          "type": "paragraph",
+          "text": "Листайте галерею, чтобы посмотреть разные варианты комнат в премиальной коллекции 👇"
+        },
+        "nearest_text_after": {
+          "block_index": 35,
+          "type": "heading",
+          "text": "Квартира с гардеробной"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A bright open-plan dining and living room with a marble island, tall windows overlooking the city, and a sculptural suspended chandelier.",
+      "The chandelier is the clearest naturally movable focal element; sheer curtains provide subtle secondary motion."
+    ],
+    "article_context": "Gallery image in the section about apartments with 5+ rooms, illustrating a premium shared dining-and-living area that can become the family’s gathering place.",
+    "structured_intent": {
+      "editorial_meaning": "A spacious premium apartment offers a calm, inviting shared setting for family meals and time together.",
+      "primary_action": "The suspended chandelier performs one gentle, gradually settling sway.",
+      "terminal_state": "The chandelier is nearly still and centered above the dining island in the final frame.",
+      "semantic_invariant": "The room remains a serene, welcoming communal space throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Across five seconds, the chandelier begins a restrained pendulum-like sway that develops smoothly above the island; the visible sheer curtains respond with a faint continuous stir. Keep a fixed wide composition so the dining area and city-facing windows remain legible. Let the swing diminish naturally near the end, leaving the chandelier nearly centered in the final frames.",
+      "positive_prompt": "The suspended chandelier makes one slow, gentle sway above the dining island while the sheer curtains barely stir. Fixed camera. By the final frame, the chandelier settles almost centered and the room remains calm and inviting.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Use the five seconds for one unhurried chandelier sway: it starts immediately, reaches a modest lateral arc through the middle, then eases back toward center. A single slow push-in is motivated by the chandelier and dining island as the emblem of a generous common area. Curtains move only subtly; by the end the pendant is almost still and centered.",
+      "positive_prompt": "A sculptural pendant chandelier gently sways above the dining island, with a light stir in the sheer curtains. The camera makes a slow push-in toward the island and chandelier. End with the chandelier nearly still at center, preserving the tranquil shared living space.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "For this focused four-second moment, make a small, smooth forward camera move toward the island and pendant while the chandelier completes one restrained sway. Keep the motion even and use only a faint curtain stir as secondary movement. The sway naturally settles close to center at the endpoint, retaining the calm premium communal-room feeling.",
+      "positive_prompt": "Slow push-in toward the dining island as the suspended chandelier completes a small gentle sway; sheer curtains move faintly. In the last frame, the chandelier is nearly centered and still above the inviting family dining area.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

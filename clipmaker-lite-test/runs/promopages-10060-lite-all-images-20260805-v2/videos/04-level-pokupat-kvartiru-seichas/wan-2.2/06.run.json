@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "04-level-pokupat-kvartiru-seichas-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c48462490f252844dd03/orig",
+      "prompt": "A slow forward camera move toward the residential towers, with light leaf movement and pedestrians continuing naturally across the forecourt. End with the sunlit complex prominently framed and clearly recognizable.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "3e3ce1a726e9523f82bd3f04bf2daeaedbcd5dca26a34e5cdd06bbec821c4c61",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "284d127611e6a7c029b51273c9014453",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:26:12Z",
+  "completed_at": "2026-08-04T23:26:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 12299982,
+    "sha256": "fe932e033aac65a82c6851b8d72e1ebaf21990915c0a3f90d7bcb32ad480d2e3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-04-level-pokupat-kvartiru-seichas-06-wan-2-2",
+  "lite_result_sha256": "97429380186c8a96318774844cddbdb1c5dc1a386e4e2a6b1e37b89d8f3f2f95",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 2494283,
+    "sha256": "780c0ca835b68e1d72fa11d4631f280fcbdb977093433f89c778c9b87c5480f6"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "284d127611e6a7c029b51273c9014453",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

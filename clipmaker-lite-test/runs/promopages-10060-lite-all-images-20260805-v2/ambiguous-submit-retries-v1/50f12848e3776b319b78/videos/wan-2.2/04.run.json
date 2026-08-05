@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "10-krasnaya-polyana-reis-zaderzhali-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/ambiguous-submit-retries-v1/50f12848e3776b319b78/videos/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/ambiguous-submit-retries-v1/50f12848e3776b319b78/videos/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a54bb73d6edb03d5192b7e1_6a54bbb1f3f63851d4217de9/orig",
+      "prompt": "The two women keep their warm smiles as they gently raise their drinks toward each other in one unhurried toast; a light breeze moves loose hair. Fixed camera on them. By the final frame both glasses are held close together at chest height and their relaxed smiles remain.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "d3fec2a43d827db5eb2cdc41d0a3e42e69a63e6d08cd13bf0a3cdda4bcfa5859",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "68371b4133e7678e5c9abdd4f6a7d007",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T07:34:41Z",
+  "completed_at": "2026-08-05T07:34:41Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 12462440,
+    "sha256": "cf983b5e13142f86246a8b2dea4a86437628493cf72b26177cae5e4d10bb5adc"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2-ambiguous-submit-retry-v1-50f12848e3776b319b78",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-10-krasnaya-polyana-reis-zaderzhali-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-ambiguous-submit-retry-v1-50f12848e3776b319b78-10-krasnaya-polyana-reis-zaderzhali-04-wan-2-2",
+  "lite_result_sha256": "158f16fcad2d226c4a905a8267c21d3512e5082a0bbfdc6b9d9fd7b1a4dc8fc9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 697600,
+    "sha256": "642bc416d362d5fbc1b8c565af01941446029a5bd3c3247e232ff758d4267351"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "68371b4133e7678e5c9abdd4f6a7d007",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

@@ -3,11 +3,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import importlib.util
+import io
 import json
+import socket
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler
 
 
@@ -168,6 +171,72 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         self.assertEqual(headers["Authorization"], "OAuth test-token")
         self.assertEqual(headers["X-Retries"], "1")
 
+    def test_http_json_preserves_dns_resolution_as_pre_submit_failure(self) -> None:
+        reason = socket.gaierror(
+            8, "nodename nor servname provided, or not known"
+        )
+        with patch.object(pipeline, "urlopen", side_effect=URLError(reason)):
+            with self.assertRaises(pipeline.PreSubmitNetworkError) as raised:
+                pipeline.http_json(
+                    "POST",
+                    "https://api.eliza.yandex.net/openrouter/v1/videos",
+                    {"model": "test"},
+                )
+
+        self.assertEqual(
+            str(raised.exception),
+            "POST https://api.eliza.yandex.net/openrouter/v1/videos failed: "
+            "[Errno 8] nodename nor servname provided, or not known",
+        )
+
+    def test_http_json_does_not_reclassify_other_url_errors(self) -> None:
+        with patch.object(
+            pipeline,
+            "urlopen",
+            side_effect=URLError(TimeoutError("connection timed out")),
+        ):
+            with self.assertRaises(pipeline.PipelineError) as raised:
+                pipeline.http_json(
+                    "POST",
+                    "https://api.eliza.yandex.net/openrouter/v1/videos",
+                    {"model": "test"},
+                )
+
+        self.assertNotIsInstance(raised.exception, pipeline.PreSubmitNetworkError)
+
+    def test_http_json_post_429_is_a_definitive_pre_submit_rejection(self) -> None:
+        url = "https://api.eliza.yandex.net/openrouter/v1/videos"
+        rejection = HTTPError(
+            url,
+            429,
+            "Too Many Requests",
+            {},
+            io.BytesIO(b'{"error":"Quota exceeded"}'),
+        )
+        with patch.object(pipeline, "urlopen", side_effect=rejection):
+            with self.assertRaises(pipeline.PreSubmitRejectedError) as raised:
+                pipeline.http_json("POST", url, {"model": "test"})
+        rejection.close()
+
+        self.assertEqual(raised.exception.http_status, 429)
+        self.assertIn('HTTP 429: {"error":"Quota exceeded"}', str(raised.exception))
+
+    def test_http_json_get_429_is_not_a_pre_submit_rejection(self) -> None:
+        url = "https://api.eliza.yandex.net/openrouter/v1/videos/existing-job"
+        rejection = HTTPError(
+            url,
+            429,
+            "Too Many Requests",
+            {},
+            io.BytesIO(b'{"error":"Quota exceeded"}'),
+        )
+        with patch.object(pipeline, "urlopen", side_effect=rejection):
+            with self.assertRaises(pipeline.PipelineError) as raised:
+                pipeline.http_json("GET", url)
+        rejection.close()
+
+        self.assertNotIsInstance(raised.exception, pipeline.PreSubmitRejectedError)
+
     def test_generation_route_registry_is_exact_and_discovery_free(self) -> None:
         policy = pipeline.GENERATION_ROUTE_DOCUMENT["policy"]
         self.assertEqual(policy["resolution"], "exact-model-id")
@@ -179,11 +248,27 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         )
         self.assertEqual(set(pipeline.GENERATION_ROUTES), set(pipeline.MODEL_CONFIGS))
         wan = pipeline.route_for_model("alibaba/wan-2.2")
-        self.assertEqual(wan["transport"], "gradio-legacy-queue")
-        self.assertEqual(wan["paths"]["upload"], "/gradio_api/upload")
-        self.assertEqual(wan["paths"]["submit"], "/gradio_api/queue/join")
-        self.assertEqual(wan["paths"]["events"], "/gradio_api/queue/data")
+        self.assertEqual(wan["adapter"], "eliza-segmind")
+        self.assertEqual(wan["transport"], "eliza-synchronous-binary")
+        self.assertEqual(wan["gateway"], "eliza")
+        self.assertEqual(wan["provider_key"], "segmind")
+        self.assertEqual(wan["provider_model_id"], "segmind/wan-2.2-i2v-flash")
+        self.assertEqual(wan["paths"]["submit"], "/wan-2.2-i2v-flash")
         self.assertEqual(wan["capacity"], 1)
+        self.assertTrue(wan["synchronous"])
+        self.assertFalse(wan["automatic_retry"])
+        self.assertEqual(
+            wan["submit_payload"]["fields"],
+            [
+                "image",
+                "prompt",
+                "negative_prompt",
+                "resolution",
+                "prompt_extend",
+                "watermark",
+                "seed",
+            ],
+        )
         self.assertEqual(
             pipeline.route_for_model("alibaba/wan-2.7")["provider_key"],
             "atlas-cloud",
@@ -368,14 +453,484 @@ class VideoGenerationPipelineTest(unittest.TestCase):
             timeout=600,
         )
 
-    def test_wan_demo_preview_preserves_97_frame_contract(self) -> None:
-        sample = {"source_path": "image.jpeg", "width": 1000, "height": 450}
-        prompt = {"model_id": "alibaba/wan-2.2", "positive_prompt": "one step", "negative_prompt": "flicker"}
+    def test_segmind_preview_uses_exact_payload_and_serializes_null_negative(self) -> None:
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": "a" * 64,
+            "width": 1000,
+            "height": 450,
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": None,
+        }
         preview = pipeline.build_request_preview(sample, prompt)
-        self.assertEqual(preview["endpoint"], "/gradio_api/queue/join")
-        self.assertEqual(preview["runtime"]["frames"], 97)
-        self.assertEqual(preview["runtime"]["fps"], 30)
-        self.assertIn("Avoid: flicker", preview["input"]["prompt"])
+        self.assertEqual(preview["endpoint"], "/wan-2.2-i2v-flash")
+        self.assertEqual(preview["model"], "alibaba/wan-2.2")
+        self.assertEqual(preview["provider"], "segmind")
+        self.assertEqual(preview["provider_model_id"], "segmind/wan-2.2-i2v-flash")
+        self.assertEqual(
+            preview["input"],
+            {
+                "image": "https://cdn.invalid/image.jpeg",
+                "prompt": "one step",
+                "negative_prompt": "",
+                "resolution": "720p",
+                "prompt_extend": False,
+                "watermark": False,
+                "seed": 220214,
+            },
+        )
+
+    def test_segmind_generate_preflights_and_posts_once_after_guard(self) -> None:
+        source_bytes = b"frozen source"
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": None,
+        }
+        events: list[str] = []
+
+        class Response(io.BytesIO):
+            def __init__(self, value: bytes, headers: dict[str, str] | None = None):
+                super().__init__(value)
+                self.status = 200
+                self.headers = headers or {}
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                self.close()
+
+        def source_open(request, **_kwargs: object):
+            events.append("preflight")
+            self.assertEqual(request.full_url, sample["source_url"])
+            return Response(source_bytes)
+
+        class PostOpener:
+            calls = 0
+            request = None
+
+            def open(self, request, **_kwargs: object):
+                self.calls += 1
+                self.request = request
+                events.append("post")
+                return Response(
+                    b"binary mp4",
+                    {
+                        "Content-Type": "video/mp4",
+                        "X-Segmind-Request-Id": "request-123",
+                        "X-Response-Cost": "0.18",
+                    },
+                )
+
+        post = PostOpener()
+
+        def guarded(preflight: dict[str, object]) -> None:
+            events.append("guard")
+            self.assertEqual(preflight["sha256"], sample["sha256"])
+
+        with tempfile.TemporaryDirectory() as directory, patch.object(
+            pipeline,
+            "segmind_headers",
+            return_value={
+                "Authorization": "OAuth test",
+                "X-Retries": "1",
+                "X-Include-Cost": "true",
+                "Accept": "video/mp4, application/octet-stream",
+            },
+        ):
+            destination = Path(directory) / "result.mp4"
+            response = pipeline.segmind_generate(
+                sample,
+                prompt,
+                destination,
+                "https://api.eliza.invalid/segmind/v1",
+                30,
+                guarded,
+                source_opener=source_open,
+                post_opener=post,
+            )
+
+            self.assertEqual(destination.read_bytes(), b"binary mp4")
+
+        self.assertEqual(events, ["preflight", "guard", "post"])
+        self.assertEqual(post.calls, 1)
+        self.assertEqual(
+            post.request.full_url,
+            "https://api.eliza.invalid/segmind/v1/wan-2.2-i2v-flash",
+        )
+        self.assertEqual(
+            json.loads(post.request.data.decode("utf-8")),
+            pipeline.segmind_request_payload(sample, prompt),
+        )
+        request_headers = {
+            name.lower(): value for name, value in post.request.header_items()
+        }
+        self.assertEqual(request_headers["authorization"], "OAuth test")
+        self.assertEqual(request_headers["x-retries"], "1")
+        self.assertEqual(request_headers["x-include-cost"], "true")
+        self.assertEqual(request_headers["content-type"], "application/json")
+        self.assertEqual(response["request_id"], "request-123")
+        self.assertFalse(response["automatic_retry"])
+
+    def test_segmind_digest_mismatch_never_reaches_guard_or_post(self) -> None:
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": hashlib.sha256(b"expected").hexdigest(),
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": None,
+        }
+
+        class Response(io.BytesIO):
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                self.close()
+
+        post = unittest.mock.Mock()
+        guard = unittest.mock.Mock()
+        with tempfile.TemporaryDirectory() as directory, patch.object(
+            pipeline, "segmind_headers", return_value={"Authorization": "OAuth test"}
+        ):
+            with self.assertRaisesRegex(pipeline.PipelineError, "digest changed"):
+                pipeline.segmind_generate(
+                    sample,
+                    prompt,
+                    Path(directory) / "result.mp4",
+                    "https://api.eliza.invalid/segmind/v1",
+                    30,
+                    guard,
+                    source_opener=lambda *_args, **_kwargs: Response(b"changed"),
+                    post_opener=post,
+                )
+
+        guard.assert_not_called()
+        post.open.assert_not_called()
+
+    def test_segmind_post_transport_failure_is_not_retried(self) -> None:
+        source_bytes = b"source"
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": "",
+        }
+
+        class Response(io.BytesIO):
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                self.close()
+
+        class FailingPost:
+            calls = 0
+
+            def open(self, *_args: object, **_kwargs: object):
+                self.calls += 1
+                raise URLError("closed")
+
+        post = FailingPost()
+        guard = unittest.mock.Mock()
+        with tempfile.TemporaryDirectory() as directory, patch.object(
+            pipeline, "segmind_headers", return_value={"Authorization": "OAuth test"}
+        ):
+            with self.assertRaisesRegex(pipeline.PipelineError, "POST failed"):
+                pipeline.segmind_generate(
+                    sample,
+                    prompt,
+                    Path(directory) / "result.mp4",
+                    "https://api.eliza.invalid/segmind/v1",
+                    30,
+                    guard,
+                    source_opener=lambda *_args, **_kwargs: Response(source_bytes),
+                    post_opener=post,
+                )
+
+        guard.assert_called_once()
+        self.assertEqual(post.calls, 1)
+
+    def test_segmind_http_429_is_a_definitive_pre_submit_rejection(self) -> None:
+        source_bytes = b"source"
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": "",
+        }
+
+        class Response(io.BytesIO):
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                self.close()
+
+        class RejectingPost:
+            calls = 0
+
+            def open(self, request, **_kwargs: object):
+                self.calls += 1
+                raise HTTPError(
+                    request.full_url,
+                    429,
+                    "Too Many Requests",
+                    {},
+                    io.BytesIO(b'{"error":"Quota exceeded"}'),
+                )
+
+        post = RejectingPost()
+        guard = unittest.mock.Mock()
+        with tempfile.TemporaryDirectory() as directory, patch.object(
+            pipeline, "segmind_headers", return_value={"Authorization": "OAuth test"}
+        ):
+            with self.assertRaises(pipeline.PreSubmitRejectedError) as raised:
+                pipeline.segmind_generate(
+                    sample,
+                    prompt,
+                    Path(directory) / "result.mp4",
+                    "https://api.eliza.invalid/segmind/v1",
+                    30,
+                    guard,
+                    source_opener=lambda *_args, **_kwargs: Response(source_bytes),
+                    post_opener=post,
+                )
+
+        self.assertEqual(raised.exception.http_status, 429)
+        self.assertIn("Quota exceeded", str(raised.exception))
+        guard.assert_called_once()
+        self.assertEqual(post.calls, 1)
+
+    def test_segmind_oversize_task_failure_parser_is_exact_and_structural(self) -> None:
+        provider_failure = {
+            "task_id": "task-123",
+            "task_status": "FAILED",
+            "video_url": "",
+            "submit_time": "2026-08-05 16:16:38.596",
+            "scheduled_time": "2026-08-05 16:16:38.614",
+            "end_time": "2026-08-05 16:16:42.626",
+            "code": "InvalidParameter",
+            "message": pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
+        }
+
+        def body(
+            nested: dict[str, object],
+            **outer_extra: object,
+        ) -> str:
+            return json.dumps(
+                {
+                    "error": pipeline.SEGMIND_PROVIDER_FAILURE_PREFIX
+                    + json.dumps(nested),
+                    **outer_extra,
+                }
+            )
+
+        detail = body(provider_failure)
+        self.assertEqual(
+            pipeline.parse_segmind_oversize_task_failure(400, detail),
+            {
+                "http_status": 400,
+                "provider_task_id": "task-123",
+                "provider_task_status": "FAILED",
+                "provider_error_code": "InvalidParameter",
+                "provider_error_message": pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
+                "submit_time": "2026-08-05 16:16:38.596",
+                "scheduled_time": "2026-08-05 16:16:38.614",
+                "end_time": "2026-08-05 16:16:42.626",
+            },
+        )
+
+        without_times = {
+            key: value
+            for key, value in provider_failure.items()
+            if key not in {"submit_time", "scheduled_time", "end_time"}
+        }
+        minimal = pipeline.parse_segmind_oversize_task_failure(
+            400, body(without_times)
+        )
+        self.assertIsNotNone(minimal)
+        self.assertNotIn("submit_time", minimal)
+
+        variants = (
+            (409, detail),
+            (400, body(provider_failure, request_id="gateway-only")),
+            (400, body({**provider_failure, "task_id": ""})),
+            (400, body({**provider_failure, "task_status": "RUNNING"})),
+            (400, body({**provider_failure, "video_url": "https://cdn.invalid/video.mp4"})),
+            (400, body({**provider_failure, "code": "BadRequest"})),
+            (
+                400,
+                body(
+                    {
+                        **provider_failure,
+                        "message": "Image size is too large than 20 mb",
+                    }
+                ),
+            ),
+            (400, body({**provider_failure, "unexpected": True})),
+            (400, body({**provider_failure, "end_time": None})),
+            (400, '{"error":"the provider task failed: not-json"}'),
+        )
+        for status, near_match in variants:
+            with self.subTest(status=status, detail=near_match):
+                self.assertIsNone(
+                    pipeline.parse_segmind_oversize_task_failure(
+                        status, near_match
+                    )
+                )
+
+    def test_segmind_exact_http_400_task_failure_is_typed_terminal(self) -> None:
+        source_bytes = b"source"
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": "",
+        }
+        provider_failure = {
+            "task_id": "task-400",
+            "task_status": "FAILED",
+            "video_url": "",
+            "submit_time": "2026-08-05 16:16:38.596",
+            "scheduled_time": "2026-08-05 16:16:38.614",
+            "end_time": "2026-08-05 16:16:42.626",
+            "code": "InvalidParameter",
+            "message": pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
+        }
+        detail = json.dumps(
+            {
+                "error": pipeline.SEGMIND_PROVIDER_FAILURE_PREFIX
+                + json.dumps(provider_failure)
+            }
+        ).encode("utf-8")
+
+        class Response(io.BytesIO):
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                self.close()
+
+        class RejectingPost:
+            calls = 0
+
+            def open(self, request, **_kwargs: object):
+                self.calls += 1
+                raise HTTPError(
+                    request.full_url,
+                    400,
+                    "Bad Request",
+                    {},
+                    io.BytesIO(detail),
+                )
+
+        post = RejectingPost()
+        guard = unittest.mock.Mock()
+        with tempfile.TemporaryDirectory() as directory, patch.object(
+            pipeline, "segmind_headers", return_value={"Authorization": "OAuth test"}
+        ):
+            with self.assertRaises(
+                pipeline.SegmindProviderTaskFailedError
+            ) as raised:
+                pipeline.segmind_generate(
+                    sample,
+                    prompt,
+                    Path(directory) / "result.mp4",
+                    "https://api.eliza.invalid/segmind/v1",
+                    30,
+                    guard,
+                    source_opener=lambda *_args, **_kwargs: Response(source_bytes),
+                    post_opener=post,
+                )
+
+        self.assertIsInstance(raised.exception, pipeline.ProviderTerminalError)
+        self.assertEqual(raised.exception.http_status, 400)
+        self.assertEqual(raised.exception.provider_task_id, "task-400")
+        self.assertEqual(
+            raised.exception.evidence["provider_error_message"],
+            pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
+        )
+        guard.assert_called_once()
+        self.assertEqual(post.calls, 1)
+
+    def test_segmind_generic_http_400_remains_untyped(self) -> None:
+        source_bytes = b"source"
+        sample = {
+            "source_url": "https://cdn.invalid/image.jpeg",
+            "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        }
+        prompt = {
+            "model_id": "alibaba/wan-2.2",
+            "positive_prompt": "one step",
+            "negative_prompt": "",
+        }
+
+        class Response(io.BytesIO):
+            status = 200
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                self.close()
+
+        class RejectingPost:
+            def open(self, request, **_kwargs: object):
+                raise HTTPError(
+                    request.full_url,
+                    400,
+                    "Bad Request",
+                    {},
+                    io.BytesIO(b'{"error":"Bad request"}'),
+                )
+
+        with tempfile.TemporaryDirectory() as directory, patch.object(
+            pipeline, "segmind_headers", return_value={"Authorization": "OAuth test"}
+        ):
+            with self.assertRaises(pipeline.PipelineError) as raised:
+                pipeline.segmind_generate(
+                    sample,
+                    prompt,
+                    Path(directory) / "result.mp4",
+                    "https://api.eliza.invalid/segmind/v1",
+                    30,
+                    lambda _preflight: None,
+                    source_opener=lambda *_args, **_kwargs: Response(source_bytes),
+                    post_opener=RejectingPost(),
+                )
+
+        self.assertNotIsInstance(
+            raised.exception, pipeline.SegmindProviderTaskFailedError
+        )
+        self.assertIn("HTTP 400", str(raised.exception))
 
     def test_wan_named_sse_returns_documented_file_url(self) -> None:
         class Response:

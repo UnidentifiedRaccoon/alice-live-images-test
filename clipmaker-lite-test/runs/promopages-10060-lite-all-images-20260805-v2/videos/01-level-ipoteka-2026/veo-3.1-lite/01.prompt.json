@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/01.png",
+    "sha256": "e718914a24cd86ae85b722b646353501f41e1b140e82b60bd17b8e5be27617f1",
+    "width": 1516,
+    "height": 845
+  },
+  "structured_intent": {
+    "editorial_meaning": "A comfortable contemporary residential complex is presented as a real, welcoming home-buying opportunity for readers considering a mortgage.",
+    "primary_action": "The woman walks away from the building entrance along the courtyard path.",
+    "terminal_state": "The woman is visibly farther along the sunlit paved walkway while the entrance and residential courtyard remain clearly recognizable.",
+    "semantic_invariant": "The residential setting remains calm, welcoming, and recognizably aspirational as a place to live."
+  },
+  "prompt": {
+    "positive": "The woman walks smoothly away from the building entrance along the paved courtyard path while tree leaves and grasses move in a light breeze. Use a gentle forward camera drift focused on her, ending with her distinctly farther down the sunlit walkway and the entrance still in frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-01-level-ipoteka-2026-01/result.json",
+    "sha256": "f5c914d73341d0aa9c80a6a295988cd54837ee06e3927ccb79b402614d89b684",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "e718914a24cd86ae85b722b646353501f41e1b140e82b60bd17b8e5be27617f1",
+      "article_context_sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

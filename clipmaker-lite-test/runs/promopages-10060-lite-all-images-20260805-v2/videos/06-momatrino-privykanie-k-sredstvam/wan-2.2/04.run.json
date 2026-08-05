@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "06-momatrino-privykanie-k-sredstvam-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a6911845ed16240d4fe62/orig",
+      "prompt": "A soft golden highlight travels steadily upward along the yellow flowing lines on the Momat Rino packages, drawing the eye through the product lineup. Fixed camera. By the final frame, the highlight settles near the front package emblem while every carton and spray bottle remains clearly visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "a0792d358ce677307bcad35f34c70e5e3dd501fb0d3cdcc59426ff3354225ae8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "dcfc1d9616a246c44329588b25c1ceb4",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:38:10Z",
+  "completed_at": "2026-08-04T23:38:10Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5068492,
+    "sha256": "e9cd2cc88145d1c67bdc1260f95e5a60dd6d35699aa5e49a6a6e2488bed54618"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-04",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-06-momatrino-privykanie-k-sredstvam-04-wan-2-2",
+  "lite_result_sha256": "6532f29d4d871988dd6e5057b573de23907b50290bb9025a1882861dacb9cb8f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 527684,
+    "sha256": "d8b816023c652768859bf6b88961a09078d8c819ca5c2dcceed48f6dd66baf13"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "dcfc1d9616a246c44329588b25c1ceb4",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

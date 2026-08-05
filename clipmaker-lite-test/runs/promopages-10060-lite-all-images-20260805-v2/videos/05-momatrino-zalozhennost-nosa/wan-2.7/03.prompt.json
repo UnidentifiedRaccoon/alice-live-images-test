@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/03.png",
+    "sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac",
+    "width": 1536,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "A calm, practical home response to dry indoor air.",
+    "primary_action": "The humidifier continuously releases and disperses a visible plume of mist.",
+    "terminal_state": "A soft, clearly visible mist cloud is suspended above the operating humidifier in the final frame.",
+    "semantic_invariant": "The scene remains a quiet, reassuring depiction of maintaining comfortable indoor air."
+  },
+  "prompt": {
+    "positive": "Fixed shot of the humidifier as its mist rises in a smooth, continuous stream and gradually fans into a soft cloud above it, ending with the plume visibly suspended in the air.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03/result.json",
+    "sha256": "24d376bc5bc9ba5009e19feab415dd4763be29697f332bc5220b534d384442bb",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac",
+      "article_context_sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

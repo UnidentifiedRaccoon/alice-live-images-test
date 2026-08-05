@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "09-m2-risk-vtorichki-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/09-m2-risk-vtorichki/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a1046c4295ec11571710766_6a1046e84c8868120c0a67cb/orig",
+      "prompt": "Fixed camera. The man gradually lowers his gaze more firmly to the laptop screen, his expression tightening into quiet concentration; by the final frame he is steadily focused on the laptop, thoughtful and concerned.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "bc031cce6241237cd2bf9d8a9e9df1426d3e89735ebdae7d61b6c7020eb9d33b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "253905892ef6dfc8eb710b4638ad3d2d",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T00:25:50Z",
+  "completed_at": "2026-08-05T00:25:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5474581,
+    "sha256": "e827d3be3b1b8d080e8d491f7121d6eb3bc6f94d1b16ee884506e0e65d1a0439"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-03",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-09-m2-risk-vtorichki-03-wan-2-2",
+  "lite_result_sha256": "2e02fbbe22d472503c3626ca667c1f165e5e4792daf78fffb793a9afa5269894",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 272316,
+    "sha256": "93f3715f7525b61e25d5ffc588929d04103652ab6991f07a5b869874338a7071"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "253905892ef6dfc8eb710b4638ad3d2d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

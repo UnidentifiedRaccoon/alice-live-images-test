@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69d4aaf3b4df0f51975be64b_69d4ab1a0b31d967ee8d8ba2/orig",
+      "prompt": "The suspended chandelier makes one slow, gentle sway above the dining island while the sheer curtains barely stir. Fixed camera. By the final frame, the chandelier settles almost centered and the room remains calm and inviting.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "31c4b8d352df6922a2f668911f2790230578a6c747664f1c04f423980eb238d7",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8e82a720fa6804a0613b90c8e12a7f31",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:14:13Z",
+  "completed_at": "2026-08-04T23:14:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6915797,
+    "sha256": "58313f6ce96f0882f30c9a2219081703d0a4b3539e06dfa737abd36d8a0b0031"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-06-wan-2-2",
+  "lite_result_sha256": "e7db8a8285553956a0dfd7444fccbf3ac4c55e29abacf38d41580daa58bc3961",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 337373,
+    "sha256": "be8e31d2845f05316eb955857e201c97540cfc1e2a7c4ed0989d57b080ced643"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "8e82a720fa6804a0613b90c8e12a7f31",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

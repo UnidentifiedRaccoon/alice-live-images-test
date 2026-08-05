@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-05-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+    "sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+    "width": 2048,
+    "height": 895
+  },
+  "structured_intent": {
+    "editorial_meaning": "A small visual emphasis supports the idea of refining content for a specific audience segment with the AI studio.",
+    "primary_action": "A soft optical pulse accentuates the existing upper improvement button.",
+    "terminal_state": "The upper improvement button has returned to its original appearance while the full interface is unchanged.",
+    "semantic_invariant": "The interface remains a stable, unchanged planning view for audience-specific article formats."
+  },
+  "prompt": {
+    "positive": "Fixed UI view. The upper purple “Улучшить” button gets one gentle optical pulse that gradually brightens and settles back to its original appearance in the last frame; the interface remains unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-14-promopages-govorit-s-auditoriei-05/result.json",
+    "sha256": "3ccabc87c41bd72fa1bb7eddccb993bab45942b47cb1a49dcda9704891922d79",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+      "article_context_sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-lite-all-images-20260805-v2-05-momatrino-zalozhennost-nosa-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:8d7660f6b7cf3345eeaf8c5640ba93fd1edca703e5976455fec431c2af8e06a8",
+    "execution_fingerprint": "sha256:c6d15c9f416af67e1bd3639e266650f82e2e3a049d94668b3fb86e56f5ccb71b",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": "gpt-5.6-terra",
+      "thread_id": "019fcef4-f511-7532-b737-f6c3f0dc69d8"
+    },
+    "authored_payload_sha256": "2839b0a795d948d6ec478a6f6cbda32888f9165490e511d11434305cad7a25a0",
+    "draft_file_sha256": "f4e75e01f4014c28bbe2065a6cf53fe87acff83fb4ffbf0aeae2b2132ae63764"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/03.png",
+      "sha256": "8904b9174232a2d629b715ae27a9a3dc75e2248c2a99d68ea2ac0f6b7037e2ac",
+      "bytes": 2461196
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/content.json",
+      "sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "bytes": 19193,
+      "locator": {
+        "article_id": "05-momatrino-zalozhennost-nosa",
+        "title": "4 возможных причины длительной заложенности носа",
+        "lead": "Как бытовые факторы влияют на течение ринита и чем может помочь Момат Рино",
+        "image_id": "03",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "Важно регулярно чистить и менять фильтры в увлажнителе, чтобы в нем не скапливались плесень и бактерии [6]",
+        "file": "03.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/03.png",
+        "current_heading": {
+          "block_index": 15,
+          "level": 2,
+          "text": "В помещении сухой воздух"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "● проветривать помещения [6].[4]"
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "heading",
+          "text": "Бытовые привычки, усиливающие заложенность"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A white humidifier on a bedside table releases a visible vertical plume of mist.",
+      "A woman sits beside it reading; a potted plant and book create a quiet indoor composition.",
+      "The mist is the clearest naturally movable focal element."
+    ],
+    "article_context": "Body image following advice to use humidifiers for dry indoor air; it illustrates calm home care, while the caption emphasizes regularly cleaning and replacing the humidifier filter.",
+    "structured_intent": {
+      "editorial_meaning": "A calm, practical home response to dry indoor air.",
+      "primary_action": "The humidifier continuously releases and disperses a visible plume of mist.",
+      "terminal_state": "A soft, clearly visible mist cloud is suspended above the operating humidifier in the final frame.",
+      "semantic_invariant": "The scene remains a quiet, reassuring depiction of maintaining comfortable indoor air."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Over five seconds, the visible mist starts rising immediately in a calm continuous column, gradually widening and softly diffusing near the top while the humidifier stays the focal point. Keep the camera fixed. In the final moments, the plume remains clearly present as a light dispersed cloud above the device.",
+      "positive_prompt": "The humidifier releases a steady, softly billowing plume of mist that rises and gently disperses upward; fixed camera on the humidifier. By the final frame, a continuous light mist cloud is visibly suspended above it.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "For this five-second version, build one unbroken process: the humidifier’s vapor rises steadily, gains a gentle natural wavering, and expands gradually near its upper edge. A fixed camera preserves the domestic scene and the clearly readable humidifier. The endpoint arrives near the end as an airy cloud held above the active device.",
+      "positive_prompt": "Fixed shot of the humidifier as its mist rises in a smooth, continuous stream and gradually fans into a soft cloud above it, ending with the plume visibly suspended in the air.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Across four seconds, focus tightly on one calm physical action: the vapor lifts from the humidifier without delay, softly curls as it rises, then diffuses into a visible cloud by the last moments. Keep the camera fixed and the humidifier continuously prominent.",
+      "positive_prompt": "Fixed camera on the humidifier. A gentle plume of mist rises continuously, curls slightly, and diffuses upward; in the last frame a soft visible mist cloud lingers above the humidifier.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

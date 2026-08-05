@@ -23,14 +23,16 @@ image-to-video-сцен. Он использует изображение, те�
 
 | Model ID | Длительность Lite |
 | --- | ---: |
-| `alibaba/wan-2.2` | 3.2 секунды |
+| `alibaba/wan-2.2` | 5 секунд |
 | `alibaba/wan-2.7` | 5 секунд |
 | `google/veo-3.1-lite` | 4 секунды |
 
-`alibaba/wan-2.2` — активная самостоятельная Lite-ветка через внутренний
-`wan-streamlit` route. Она получает собственный scene plan и prompt для 3.2
-секунды; prompt другой модели не используется. Этот маршрут не экспонирует
-управляемый prompt expansion, поэтому его prompt должен быть самодостаточным.
+`alibaba/wan-2.2` — активная самостоятельная Lite-ветка через синхронный
+Eliza → Segmind route `segmind/wan-2.2-i2v-flash`. Она получает собственный
+пятисекундный scene plan; prompt другой модели не используется. Provider
+expansion принудительно выключен (`prompt_extend: false`), поэтому prompt должен
+быть самодостаточным. Маршрут выполняет один non-idempotent POST без
+автоматического retry, discovery, DOD, Gradio или fallback.
 
 ## Изолированный запуск
 

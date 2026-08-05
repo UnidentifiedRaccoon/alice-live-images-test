@@ -57,10 +57,12 @@ generation route registry. Do not query model catalogs, `/videos/models`,
 Route discovery is allowed only in an explicitly requested diagnostic run.
 Any instruction to recheck metadata or cost means validating the local route
 registry and operator-provided budget; it never authorizes live model discovery.
-Start the three route pools together: Gradio/Wan 2.2 uses one slot, Eliza/Wan
-2.7 uses three, and Eliza/Veo 3.1 Lite uses three. These are independent limits,
-not one shared Eliza queue; only the coordinator may write the aggregate
-manifest.
+Start the three route pools together: Eliza/Segmind Wan 2.2 uses one slot,
+Eliza/Wan 2.7 uses three, and Eliza/Veo 3.1 Lite uses three. These are
+independent limits, not one shared Eliza queue; only the coordinator may write
+the aggregate manifest. The canonical Wan 2.2 route is the synchronous Segmind
+endpoint recorded in the generation registry; routine Lite runs must not use
+the historical DOD/Gradio transport.
 
 ## Interface design
 

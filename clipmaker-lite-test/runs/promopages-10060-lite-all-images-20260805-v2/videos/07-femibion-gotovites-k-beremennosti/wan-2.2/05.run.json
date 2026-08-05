@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "07-femibion-gotovites-k-beremennosti-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5485055/pub_685a45c483113703283d5b0e_685a47a083113703283d6fa0/orig",
+      "prompt": "The man steadily pours coffee from the moka pot into the pink mug as the woman keeps a warm smile. Fixed camera on the pair and table; the stream slows and stops with the mug visibly filled in the final moment.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "0eadc0f5b2a7fbdb8589ad042037c5fcb10f9045a972243ea6016a87cecc7288",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "003930c6eee18e2c0cc76d66b1d2bd05",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:44:40Z",
+  "completed_at": "2026-08-04T23:44:40Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7668050,
+    "sha256": "056885f451e26caa32b292717f0e63afca34be18f4b288d872b692e52f7f7464"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-05",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-05-wan-2-2",
+  "lite_result_sha256": "a3e6b3543d7c142b4bcea7f9d27550eb2f3f49dc1e26e0d183e02d95b73d1c75",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 193289,
+    "sha256": "63d10731c08815f0b9848fbd7cf20c5c289888c6d6e48fc7d2121f28de73997e"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "003930c6eee18e2c0cc76d66b1d2bd05",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

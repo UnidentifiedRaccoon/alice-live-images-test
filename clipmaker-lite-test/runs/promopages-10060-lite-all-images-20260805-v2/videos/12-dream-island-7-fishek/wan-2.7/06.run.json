@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "12-dream-island-7-fishek-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/12-dream-island-7-fishek/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "She carefully advances upward through the tight cave tunnel, transferring her weight forward beneath the rock ceiling. Keep the camera fixed on the explorer. End with her securely positioned closer to the opening, still smiling with determined curiosity.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a59e32a3a302a69aec403c2_6a5a0234b1afef7284d6558a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c2eacd027f7f18faba9b0140bd4aed6da16f7b8aa316d6c45e2dbb0cfdb64ab6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "vFZBSIKBK8J29dV1UNZ9",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T08:14:10Z",
+  "completed_at": "2026-08-05T08:23:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1478,
+    "height": 1402,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 12707007,
+    "sha256": "25e4062893274f5f75de6d18fed063a7f35522bee81411bb5ebfc1e1c9b25fb2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-06",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-12-dream-island-7-fishek-06-wan-2-7",
+  "lite_result_sha256": "8794eb75ca420fdd973a0e2c83a11da146f5a1c0989881d714e6b236eeb17602",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

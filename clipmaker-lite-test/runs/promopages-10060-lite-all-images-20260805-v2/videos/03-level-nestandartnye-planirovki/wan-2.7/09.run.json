@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "03-level-nestandartnye-planirovki-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/03-level-nestandartnye-planirovki/wan-2.7/09.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed view of the floor plan. The existing black arrow smoothly traces its short downward path toward the 3.9 closet room, ending precisely aimed at it as a subtle soft highlight settles inside the room.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69d4aaf3b4df0f51975be64b_69d4ab1bb4df0f51975bea82/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "57af11743e707b79b8480979603f6969d906b74f043c369fb77f643455e3643d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "qqSB5Ip0ieUWDHjY5Y3J",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-04T23:10:23Z",
+  "completed_at": "2026-08-04T23:11:39Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1760,
+    "height": 1178,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1222339,
+    "sha256": "702e63e85d00a13cf5d12446fb9d879c9f9e498af42da2f8ec39e8a789378a06"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09",
+  "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-03-level-nestandartnye-planirovki-09-wan-2-7",
+  "lite_result_sha256": "b117858d05337b21c8902f64ede51063cfd9113380d80b5df4b4358a2cd09984",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

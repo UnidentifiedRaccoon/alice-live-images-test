@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-terminal-provider-retry",
+  "ticket": "PROMOPAGES-10060",
+  "primary_batch_id": "promopages-10060-lite-all-images-20260805-v2",
+  "retry_number": 1,
+  "agent_id": "clipmaker-lite",
+  "logical_output_key": {
+    "article_slug": "08-femibion-grudnoe-vskarmlivanie",
+    "image_id": "05",
+    "model_id": "google/veo-3.1-lite"
+  },
+  "primary_attempt": {
+    "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+    "provider_job_id": "6QIWOmo7PJgVMK4qECeg",
+    "status": "provider-failed",
+    "provider_may_be_active": false,
+    "submitted_at": "2026-08-05T00:02:59Z",
+    "completed_at": "2026-08-05T00:04:43Z",
+    "error": "Eliza/OpenRouter job 6QIWOmo7PJgVMK4qECeg failed with status failed: Video generation completed with no output (content may have been filtered)",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.run.json",
+    "run_sha256": "c39046d9f6d452c9bd735bcb49ed7c337028eee9f0215bf24f39bcda16aa340d",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.prompt.json",
+    "prompt_sha256": "2bb8bcf4182d1926b4877649d67953573d8bcf0e2cd008b7c83fe447469add92",
+    "request": {
+      "model": "google/veo-3.1-lite",
+      "prompt": "Fixed camera on the woman as she makes one gentle, deliberate stop gesture toward the pizza, keeping a composed, discerning expression. Her gaze settles on the healthy food; in the final frame the pizza is clearly declined at the right edge.",
+      "duration": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "seed": 9681,
+      "generate_audio": false,
+      "frame_images": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_685a4ed183113703283dcca7_685a4ff6646ea17f6e82547e/orig"
+          },
+          "frame_type": "first_frame"
+        }
+      ],
+      "provider": {
+        "options": {
+          "google-vertex": {
+            "parameters": {
+              "enhancePrompt": true
+            }
+          }
+        }
+      }
+    },
+    "request_sha256": "30df775a691ff4814b67252784630c3d241cdc22a083b8ac297dd85415d93955",
+    "lite_result_path": "artifacts/clipmaker-lite/v1/promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05/result.json",
+    "lite_result_sha256": "5de787bee115dfd4b51d37c2c0c0226b3d3d88ecb5db1c7d47f62abf4aa34464",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+    "source_sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+    "model_id": "google/veo-3.1-lite",
+    "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05"
+  },
+  "retry_attempt": {
+    "retry_key": "0cc5261325a58f1785ee",
+    "batch_id": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-0cc5261325a58f1785ee",
+    "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-0cc5261325a58f1785ee-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+    "lite_run_id": "promopages-10060-lite-all-images-20260805-v2-08-femibion-grudnoe-vskarmlivanie-05",
+    "model_id": "google/veo-3.1-lite",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+    "source_sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/0cc5261325a58f1785ee/videos/veo-3.1-lite/05.prompt.json",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/0cc5261325a58f1785ee/videos/veo-3.1-lite/05.run.json",
+    "video_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/0cc5261325a58f1785ee/videos/veo-3.1-lite/05.mp4",
+    "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/0cc5261325a58f1785ee/generation-manifest.json"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 100.0,
+    "hard_budget_cap_usd": 100.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 97.3,
+    "estimated_headroom_usd": 2.7,
+    "planned_paid_submissions": 276,
+    "maximum_paid_submissions": 278,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job; provider-confirmed terminal failures may receive at most one separately namespaced, explicit retry-v1 submit; every immutable retry reservation is included in the aggregate accounting maximum",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery",
+    "terminal_retry_version": 1,
+    "terminal_retry_accounting_cost_usd": 0.35,
+    "terminal_retry_reservations": 2,
+    "maximum_new_paid_submissions_per_failed_output": 1
+  },
+  "policy": {
+    "explicit_operator_command_required": true,
+    "automatic_retry": false,
+    "maximum_new_paid_submissions": 1,
+    "same_verified_lite_result": true,
+    "same_source": true,
+    "same_prompt": true,
+    "same_model": true,
+    "fallback": false,
+    "primary_receipt_immutable": true
+  }
+}
