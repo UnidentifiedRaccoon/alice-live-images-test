@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With a fixed camera, a small cloud of fine dust lifts from the rough floor beside the brick wall, glides gently toward the bucket, and settles before the last frame. The unfinished room, debris, bucket, and tools stay unchanged and visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268ef3bf5214766a59098a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3fb648c30dbe13637f3efe9f2dfdf71fb9d38c7e5ac58d1294ad6db356d18585",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "XigpuCvN59ubbOm76kBu",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:37:12Z",
+  "completed_at": "2026-08-05T16:39:00Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2756284,
+    "sha256": "7683dcd38a05487aa8f1fc5686d46c42497f6b5f2f9e6fb80289e511e26d83e7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01-veo-3-1-lite",
+  "lite_result_sha256": "b744bf1777949aeae24ff837e860747798714b198576ae580f786caeeae9bea2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/c92a7b37f9c54e18f7b8/videos/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-retries-v1/c92a7b37f9c54e18f7b8/videos/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/2d974dbe489b2e6617a3/normalized.png",
+      "prompt": "Fixed camera. A restrained blue sheen moves once from left to right across both VOLMA bags at an even pace, then settles as a soft balanced accent on both product labels in the final frame. Keep every word, number, logo, package shape, portrait, and layout unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "69e3bebe0ba805b82c733dbb0983e31ec060d0acad32ae6da386cf25e0ea981f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5ce237bdd67318db8c966154037de574",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T22:54:11Z",
+  "completed_at": "2026-08-05T22:54:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1888,
+    "height": 480,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4048191,
+    "sha256": "7090c62aa7ab569e9158c4696555d52ec9e495ad80f4fb9e921ea09407c3d445"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c92a7b37f9c54e18f7b8",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c92a7b37f9c54e18f7b8-18-volma-plitochnyi-klei-08-wan-2-2",
+  "lite_result_sha256": "3589258d95bbd8a95c8af335ac19518fe463f51275d9874a1b21cade50f0817e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 246119,
+    "sha256": "1a005159d7efaee55f2124844851b7135f28cccfcad0463ad1ac2f5dec1f589a"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "5ce237bdd67318db8c966154037de574",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

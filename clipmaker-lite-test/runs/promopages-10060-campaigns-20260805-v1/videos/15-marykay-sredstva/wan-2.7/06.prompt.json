@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/06.png",
+    "sha256": "358e447b373d66ca047ec38d96cd46e84380f7b70a23fc22a0459203faba56e6",
+    "width": 1024,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "Очищающая пенка представлена как простой и надежный первый шаг спокойной минималистичной рутины ухода.",
+    "primary_action": "Рука плавно поворачивает тюбик очищающей пенки лицевой стороной к зрителю.",
+    "terminal_state": "Тюбик устойчиво удерживается вертикально, полностью виден, а его лицевая этикетка обращена к зрителю.",
+    "semantic_invariant": "Пенка остается узнаваемым, надежным первым средством бережной рутины и непрерывно находится в руке и в кадре."
+  },
+  "prompt": {
+    "positive": "The hand gently turns the cleanser tube in one smooth, controlled arc and brings it upright toward the viewer. End with the front label squarely facing the fixed camera and the product fully visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06/result.json",
+    "sha256": "0d3df31b6b9f815e01f1b81550d25aa6be45cd11de581acd34875d25321f3f2f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "358e447b373d66ca047ec38d96cd46e84380f7b70a23fc22a0459203faba56e6",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "16-marykay-trendy-krasoty-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With the camera fixed, a broad soft highlight glides slowly upward over the case and coral lipstick, narrowing as it reaches the beveled tip; the final frame holds a fresh, moist gleam on the tip while the product, cap, and logos remain unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d13553046bd041c2e78a2_6a3d1368a447d7572294ade3/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "89e69cd63873e2149321ef19f389c04c09a1c72e3fba8ff432fd67ec0af8f23b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7S0JIXMTvxwR2AYZKIyf",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:51:49Z",
+  "completed_at": "2026-08-05T15:53:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2277175,
+    "sha256": "2e8a068fd41d2c7de0b40d702e33a38b102c6a7aab60dcb50609af83e4771878"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05-wan-2-7",
+  "lite_result_sha256": "489051299a075584db97cba0baee002cbcaef67b711b4fc7354ff4ee91e464aa",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed close-up as the hand makes one concise upward trowel pass, combing the fresh adhesive into straight, even ridges. Finish with the new ridged section uniform and the trowel still visible against the wall.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a267e54c6621a31e5630a18_6a267e6f81cbac61b6b6a8cf/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "db9f114e7501ac290f0e7d94fd6fa3dcc48638b664903c5b9f9c6297cb11af9a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ulF0Kfsw8pbKeSb4RXGw",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:56:06Z",
+  "completed_at": "2026-08-05T16:57:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 5006104,
+    "sha256": "418487e19166ef8ec272f3d674e155fb989fc38c6f61e77688825b9d7413dc20"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03-veo-3-1-lite",
+  "lite_result_sha256": "1fa0c6167889fbb59a367f82d1699c0a5654760eae61d1952623377d3c1c4fc9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

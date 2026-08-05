@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+    "sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+    "width": 1940,
+    "height": 500
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize the ВОЛМА products as professional, predictable materials that help users obtain an even floor with less risk of defects.",
+    "primary_action": "A single soft optical sheen passes across the two visible product bags.",
+    "terminal_state": "The sheen has faded after crossing both bags, leaving the complete product group visibly emphasized and unchanged.",
+    "semantic_invariant": "The products continue to communicate reliability and professional-quality results, while all branding, text, packaging, portrait, and graphic layout retain their original meaning."
+  },
+  "prompt": {
+    "positive": "Fixed camera as one restrained sheen glides steadily across the two product bags from left to right and softly dissipates near the end, leaving both packages emphasized and all text and layout unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11/result.json",
+    "sha256": "801af025cfe9658d720ce2bf64bb125db7797b9b8eddde23a5fd7568652aff94",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman breathes out gently while her shoulders gradually relax, keeping her hands still, her gaze on the camera, and her warm confident smile. Fixed camera; finish with an easy, settled posture and the same serene expression.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103a3046bd041c2df0e1/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "76d36b75a6d9e15d3ae8bc4b83c6e4cb58517a21f7c7653087ab74f803e45299",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "QyJEFGcweTDbL2IP3Xqi",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:27:02Z",
+  "completed_at": "2026-08-05T15:28:19Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1842,
+    "height": 1126,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3760936,
+    "sha256": "ed44e49e958f93b12a954c23090178d8f13406407cffd3b175b305d37ecaba95"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02-wan-2-7",
+  "lite_result_sha256": "a6fa84dfe20941d8dd29512d8f9c4b2b70197bb11a71d31bfef4bdce42ccd313",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

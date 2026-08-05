@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/08.png",
+    "sha256": "df3ac3e632ddf849e347ae149af1f3a4312311566baa47d41315fdafc1eebdfb",
+    "width": 1435,
+    "height": 1096
+  },
+  "structured_intent": {
+    "editorial_meaning": "Показать биоактивный крем как приятный и надежный финальный этап простой вечерней рутины Mary Kay® с акцентом на его насыщенную текстуру.",
+    "primary_action": "Рука плавно приподнимает и слегка поворачивает лопаточку с порцией густого крема над открытой банкой.",
+    "terminal_state": "Лопаточка устойчиво находится над открытой банкой, и на ней отчетливо видна гладкая округлая порция крема.",
+    "semantic_invariant": "Крем остается аккуратной, цельной порцией на лопаточке, а продукт воспринимается как спокойная и надежная часть ухода."
+  },
+  "prompt": {
+    "positive": "The spatula rises in one smooth, gentle arc above the jar while the dense cream slowly rounds and settles on its tip. Fixed camera. Finish with the hand still and the intact dollop clearly displayed over the open jar.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08/result.json",
+    "sha256": "811bd5e453f0f9d49c472fd9431200c840be392629382f32626503a1e98a94dd",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "df3ac3e632ddf849e347ae149af1f3a4312311566baa47d41315fdafc1eebdfb",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

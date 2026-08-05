@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f5c59bd0e6d031e47/orig",
+      "prompt": "The liquids in the surrounding laboratory glassware circulate in slow, gentle currents, creating small controlled ripples that gradually subside. Keep the camera fixed and the central cream jar continuously sharp and motionless; by the final frame, the liquid surfaces are nearly level and calm.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "2cb40f764f904918c1fc7b6dc7a01e26e69ad58af9e954f45b9f401e253fa679",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "d6e7a0fe1a31708f7b50cebd44f36927",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:31:07Z",
+  "completed_at": "2026-08-05T15:31:07Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1088,
+    "height": 832,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7536326,
+    "sha256": "ebd20a47965622e0456b3e5aac104cc927a272c668d96e2dc64f5c6e8ca64a1d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05-wan-2-2",
+  "lite_result_sha256": "9305ec34e849704f3d28fdb717b2dfd28eaa3f9fde577aceba91b339cca7d0fd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 284336,
+    "sha256": "b96b5000ea29daa38e94537b578b9d1b3903a0453bf052272c4683c19feaa443"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "d6e7a0fe1a31708f7b50cebd44f36927",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

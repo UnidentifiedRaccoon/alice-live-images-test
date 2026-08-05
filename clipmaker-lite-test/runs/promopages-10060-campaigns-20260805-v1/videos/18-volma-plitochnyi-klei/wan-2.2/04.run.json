@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf27231/orig",
+      "prompt": "The hands steadily press the tile toward the wall and make one small controlled adjustment until its edges align flush with the neighboring tiles. Fixed camera; the tile remains firmly seated and level in the final frame.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "34e4b10a58b29903d0c093f8547d1abc839bce638623fe5a267be492a48a456b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "4b692be4483395e7fc405a0e7bfdf6b5",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:57:27Z",
+  "completed_at": "2026-08-05T16:57:27Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4753260,
+    "sha256": "fd48317ebe506d89c9ae829d97f3ccc76345b6f2679082af1d66fa89ab546c7c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04-wan-2-2",
+  "lite_result_sha256": "da9fa77fc384009f3740d5762e9c0f83a71b491ec982559eece09f0d2aca555b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 49107,
+    "sha256": "c90e9fa04a55052d06bc20cad6fce60b1a7df420b53510639e9cfa07952c57ab"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "4b692be4483395e7fc405a0e7bfdf6b5",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

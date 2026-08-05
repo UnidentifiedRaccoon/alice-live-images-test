@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/02.jpeg",
+    "sha256": "5bfb98290c6a8f676456d62e92a91482ce9e5a283b46cd92376ddcef0cb08849",
+    "width": 1000,
+    "height": 667
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойный и осознанный домашний бьюти-ритуал поддерживает тему естественности и более простого современного ухода.",
+    "primary_action": "Женщина плавно отводит кисть от щеки и опускает ее, продолжая смотреть в компактное зеркало.",
+    "terminal_state": "Кисть опущена ближе к коленям, а женщина по-прежнему спокойно смотрит на свое отражение в компактном зеркале.",
+    "semantic_invariant": "Ритуал остается спокойным, естественным и сосредоточенным до последнего кадра."
+  },
+  "prompt": {
+    "positive": "The woman smoothly lowers the makeup brush from her cheek toward her lap, keeping her eyes on the compact mirror and her expression calm. Fixed camera. She finishes with the brush lowered and continues quietly checking her reflection.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02/result.json",
+    "sha256": "5c940b2cbf6a9589477e050826bc5dbef10f93c0389944d774590527c0f9c8ce",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "5bfb98290c6a8f676456d62e92a91482ce9e5a283b46cd92376ddcef0cb08849",
+      "article_context_sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

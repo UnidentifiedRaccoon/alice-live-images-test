@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/07.png",
+    "sha256": "87a52d11b4ba40bf9bb2fd71e7949227206d7d43b88cf3ddc98f0d6117c8f4e2",
+    "width": 1536,
+    "height": 1024
+  },
+  "structured_intent": {
+    "editorial_meaning": "Показать увлажняющий тоник как простой и спокойный второй шаг компактной, проверенной рутины ухода.",
+    "primary_action": "Прозрачный тоник контролируемо капает из открытого флакона на ватный диск и впитывается в него.",
+    "terminal_state": "Последняя капля полностью впиталась, и центр ватного диска стал заметно влажным.",
+    "semantic_invariant": "Использование тоника остаётся аккуратным, спокойным и контролируемым, а продукт — узнаваемым до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Fixed camera. Toner drips steadily from the tilted bottle onto the center of the cotton pad, creating a soft damp area that gradually spreads. The final drop is fully absorbed near the end, leaving the pad visibly moistened and the product continuously in view.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07/result.json",
+    "sha256": "f01a50162b6ec70b47bd419eebe58bae5c34d799e9aa37e8015746f1423acf32",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "87a52d11b4ba40bf9bb2fd71e7949227206d7d43b88cf3ddc98f0d6117c8f4e2",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

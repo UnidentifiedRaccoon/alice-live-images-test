@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-03",
+  "image_id": "03",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/03.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera as the woman slowly studies her reflection; her gaze settles into calm, focused assurance in the final frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f5a8cab7b46b60c64/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2ae0d852647b1441843a7c38d3d39799c14d7e2fbbffbc603b7dfd6cf2dd4fb0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ZOUEuX0MjDX7h9ocUk4z",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:27:03Z",
+  "completed_at": "2026-08-05T15:28:50Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/OpenRouter job ZOUEuX0MjDX7h9ocUk4z failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03-veo-3-1-lite",
+  "lite_result_sha256": "d0375332456eedd1493080303e6b281074bbf2a6197ea411b5a7bc017d9fa6c5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

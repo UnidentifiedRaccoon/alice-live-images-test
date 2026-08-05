@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+    "sha256": "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03",
+    "width": 752,
+    "height": 193
+  },
+  "structured_intent": {
+    "editorial_meaning": "The coordinated VOLMA product range supports dependable tile-installation results by offering suitable adhesive solutions for different repair conditions, backed by expert confidence.",
+    "primary_action": "A single soft blue optical highlight passes across the two visible adhesive packages.",
+    "terminal_state": "Both package labels are left with a subtle, balanced blue emphasis while every informational element remains unchanged.",
+    "semantic_invariant": "The image remains a credible, unchanged expert-endorsed VOLMA product advertisement presenting both adhesives as reliable members of the same coordinated range."
+  },
+  "prompt": {
+    "positive": "With the camera fixed, let one soft blue highlight travel steadily across the two adhesive bags from left to right, finishing with both labels subtly and evenly illuminated. Preserve all text, numbers, logos, packaging, portrait, and graphic layout exactly.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08/result.json",
+    "sha256": "3589258d95bbd8a95c8af335ac19518fe463f51275d9874a1b21cade50f0817e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

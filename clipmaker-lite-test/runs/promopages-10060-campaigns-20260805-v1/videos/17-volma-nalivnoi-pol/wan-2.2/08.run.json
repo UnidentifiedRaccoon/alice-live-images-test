@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+      "prompt": "A crack slowly extends across the central loose floor slab as its edge crumbles and settles slightly, releasing a small trickle of dust and grit. Fixed camera; by the final frame the longer open crack and displaced edge are clearly visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "4cdae65330f243654e7b8a2f1d58ee23e9009c5a4a01a12f12fb184b237efa3a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "a40751564861ea2da4a37237f262e2dc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:50:34Z",
+  "completed_at": "2026-08-05T16:50:34Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1184,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7782331,
+    "sha256": "a926639f871ed76ecf5eda3dcf4615d691625688f6f339a7947a2e311a9b1182"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-wan-2-2",
+  "lite_result_sha256": "cc0dc7efa0963e82dabb775d2d81d9e16fa69032ba77c8c5f789ca947574f5e4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1304336,
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "a40751564861ea2da4a37237f262e2dc",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

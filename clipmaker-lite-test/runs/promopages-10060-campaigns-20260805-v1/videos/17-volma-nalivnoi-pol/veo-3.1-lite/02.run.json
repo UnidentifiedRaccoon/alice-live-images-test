@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera as a small veil of loose dust glides across the concrete floor toward the right. The movement gently subsides, ending with the dust settled unevenly beside the stationary bucket.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a268ddbbf5214766a58cd74_6a268eef0531384d521a250e/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "d36d7828f080ac05b013fd57d6dbad8d0e6aed0b313995fa3e9e69f90c5ac9de",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "83SROpLtbjdsi2WEcBoq",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:37:13Z",
+  "completed_at": "2026-08-05T16:39:24Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2797654,
+    "sha256": "37250f51e2e8e3e7eb34bbf3794ed0a3eef4fb6c0a1c23fc14d5b2e88a0e6543"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02-veo-3-1-lite",
+  "lite_result_sha256": "7b4016cde1692f29642a83dd3320269d2e07d9eaf709ad479cfaf09e715b9a59",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

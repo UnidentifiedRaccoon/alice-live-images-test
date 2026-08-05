@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/04.jpeg",
+    "sha256": "49e688993933ee097b64357682f536f158ae5391e3c1000f54ef8cad0ba4bc9e",
+    "width": 1000,
+    "height": 781
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойное внимание к состоянию кожи передает осознанный минималистичный уход, где базовое увлажнение поддерживает естественное здоровье кожи.",
+    "primary_action": "Женщина переводит лицо и взгляд к зеркалу, чтобы внимательнее рассмотреть кожу.",
+    "terminal_state": "Женщина спокойно смотрит на свою щеку в отражении, оценивая увлажненную кожу.",
+    "semantic_invariant": "Домашний уход остается спокойным и осознанным, а выражение женщины — расслабленным и внимательным."
+  },
+  "prompt": {
+    "positive": "With the camera fixed, the woman gently angles her face toward the handheld mirror and shifts her gaze onto her reflection, keeping her hand still. She finishes calmly examining her cheek with the same relaxed, attentive expression.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04/result.json",
+    "sha256": "4b08f184172b61a2370dca1704fe508c3ec3a3b49ae74167e202112f35a68e0a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "49e688993933ee097b64357682f536f158ae5391e3c1000f54ef8cad0ba4bc9e",
+      "article_context_sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

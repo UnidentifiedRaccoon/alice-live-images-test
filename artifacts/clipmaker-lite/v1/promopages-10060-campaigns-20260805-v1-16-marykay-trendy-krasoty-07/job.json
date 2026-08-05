@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:5a9c574e0298f5f685c3cf0eb05d1c3f186567f124c7a669210ac934e9548f0b",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+      "sha256": "30da3d2c26c8011a16865975f96053dfb425e057cf15331f8c610a96288be6b9",
+      "bytes": 2812651
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/content.json",
+      "sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2",
+      "bytes": 21059,
+      "locator": {
+        "article_id": "16-marykay-trendy-krasoty",
+        "title": "Тренды красоты: что нового в косметике и уходе за кожей",
+        "lead": "Бьюти-индустрия последних лет совершает заметный поворот в сторону осознанности. Многоступенчатые рутины с десятком средств уступают место минимализму, а агрессивные процедуры — поддержке естественных процессов кожи.\nMary Kay® предлагает решения, которые соответствуют современным запросам. Разберем четыре актуальных направления и продукты, которые их закрывают.\nЕстественность и здоровье кожи",
+        "image_id": "07",
+        "block_index": 27,
+        "role": "article_image",
+        "caption": "Вечерний уход не менее важен, чем дневной",
+        "file": "07.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+        "current_heading": {
+          "block_index": 24,
+          "level": 2,
+          "text": "Тренд 4. Уход во сне (ночные ритуалы)"
+        },
+        "nearest_text_before": {
+          "block_index": 26,
+          "type": "paragraph",
+          "text": "Mary Kay® предлагает два формата ночного восстановления в линейке TimeWise® 5X. Первый — увлажняющая обновляющая ночная маска. Ее можно нанести на 10 минут для быстрого результата или оставить на всю ночь. Второй вариант — ночной крем. Его формула восстанавливает кожу от повреждений, полученных в течение дня, эффективно сокращает морщины и борется с окислительным стрессом."
+        },
+        "nearest_text_after": {
+          "block_index": 28,
+          "type": "paragraph",
+          "text": "Mary Kay® — компания с более чем полувековой историей, но это не мешает ей идти в ногу со временем. Бренд внимательно следит за трендами и внедряет их, когда они действительно делают жизнь женщин здоровее, красивее и проще. Минимализм, уход за губами как ритуал, научный антивозрастной подход и ночное восстановление — все это уже есть в продуктах Mary Kay®, адаптированных под реальные потребности клиенток."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a"
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07/result.json"
+  }
+}

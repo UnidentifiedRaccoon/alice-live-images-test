@@ -1,0 +1,189 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.6",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c",
+    "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+    "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:9eca52c20a003e467620c234d8ce39cadbbb1e2b42ba223f67b120f1906b63d6",
+    "execution_fingerprint": "sha256:117dd8ba9b1d6f1a4ef7e0f3ed06723673bcc88e449fc884307b181607530184",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2",
+      "requested_model": null,
+      "thread_id": "019fd286-94ce-7cf1-857b-ba66e616abb1"
+    },
+    "authored_payload_sha256": "4a46c899828ef8551d7e796229d4572f06f7be317106ba507c31917a13955501",
+    "draft_file_sha256": "9e7deb5cbb559d86bd0ac6e156cf74bc29c564f7a5a4ae647322141e012ae649"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+      "sha256": "7c3918845b00e5b559513f5ac1187bb895555be6a1e977fcfda9c88332758df6",
+      "bytes": 179833
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/content.json",
+      "sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "bytes": 19996,
+      "locator": {
+        "article_id": "18-volma-plitochnyi-klei",
+        "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+        "lead": "В статье — ответы экспертов на главные вопросы по плитке во время ремонта",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Как правильно подготовить пол для укладывания плитки? Какие особенности у наливного пола? Технические консультанты ВОЛМА получают сотни вопросов о плиточном клее."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Разделенная композиция показывает современную ванную с крупноформатной каменной облицовкой слева и крупный план темно-серой плитки с креслом и подушками справа.",
+      "Плиточные поверхности неподвижны и хорошо читаются; естественным источником движения может быть только мягкое изменение отраженного света, подчеркивающее фактуру без изменения материалов и геометрии."
+    ],
+    "article_context": "Обложка визуально вводит тему статьи: готовая облицовка в интерьере и крупный план плиточной поверхности подчеркивают роль правильной подготовки основания и клеевой системы в аккуратном, надежном результате ремонта.",
+    "structured_intent": {
+      "editorial_meaning": "Качественный результат облицовки зависит от правильно подобранной и согласованной системы основания, подготовки и плиточного клея.",
+      "primary_action": "Мягкое отражение света непрерывно проходит по облицованным поверхностям, проявляя их фактуру.",
+      "terminal_state": "Отражение достигает правой плиточной поверхности и становится мягким, при этом плитка, швы и интерьер остаются без изменений.",
+      "semantic_invariant": "Готовая плиточная облицовка остается ровной, цельной и надежно установленной до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Пятисекундный непрерывный кадр с неподвижной камерой. С первых кадров мягкая полоса отраженного света начинает равномерно проходить слева направо по каменной облицовке ванной, затем продолжает движение по темной плитке правой части изображения. Амплитуда света умеренная, без пересветов и изменения цвета материалов. К концу полоса достигает правой зоны и плавно ослабевает; плитка, швы, мебель и композиция остаются неизменными.",
+      "positive_prompt": "With the camera fixed, a soft reflected light band moves steadily across the stone and tile surfaces from left to right, revealing their texture. By the final frames the highlight reaches the right-side tiles and fades gently, while every surface and seam remains unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:27685d51d1ccd1bbeb1903d9ba64dde7e7fca5a3cdf5244d870731349d160f3a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Самостоятельный пятисекундный план: камера фиксирована, а широкий слабый световой рефлекс плавно перемещается через обе части композиции, начиная на мраморной стене и продолжая путь по темной плитке. Движение развивается почти всю длительность с ровным темпом и подчеркивает фактуру, не создавая нового события. В последних кадрах рефлекс доходит до крайней правой области и смягчается; геометрия облицовки и интерьер сохраняются.",
+      "positive_prompt": "Fixed camera. A broad, subtle reflection glides continuously from the marble wall across to the dark floor tiles, gently bringing out the surface textures. It reaches the far-right tile area near the end and softens there, with the installation remaining perfectly unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:7e254be58ba156760e4305d0a8e09125ebcf03d672e83f589432caece4351b61",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырехсекундный focused moment с неподвижной камерой и меньшей траекторией света. Мягкий блик без задержки проходит от облицованной стены слева к темной плитке справа с ровной умеренной скоростью. К последнему кадру он становится слабым отражением на правой поверхности. Все материалы, швы и предметы остаются непрерывно узнаваемыми и неподвижными.",
+      "positive_prompt": "The camera remains fixed as a restrained soft highlight sweeps smoothly from the stone bathroom wall toward the dark tiles, revealing their texture. By the last frame it settles as a faint reflection on the right-side surface, while all tiles, seams, and furnishings remain unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:60c9af515c61870032fd19cfb5313bb41b3ada2eec23010a2d95e11ce0f2bcbf",
+      "negative_prompt": null
+    }
+  ]
+}

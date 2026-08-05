@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With the camera fixed, the spiked roller moves in one steady pass across the wet floor toward the center. Fine bubbles release and gentle ripples level out behind it, ending with a calm, uniformly smooth treated strip; the headline and product bag stay fixed and readable.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3b55c4222ecf5576e/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "d0bc039773417a4e9e71fc473c105775066c3fdb63436cfae79412081b2a246d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CsksM5qZ6EyCJFWhcugm",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:37:10Z",
+  "completed_at": "2026-08-05T16:38:56Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1760,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4978799,
+    "sha256": "e7d0ceaad1d2e580e883c795353b103e38421d5ab89677557163fb432beb865b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03-wan-2-7",
+  "lite_result_sha256": "f7bcc51845cebdf44202e7a18667a6f8f15a057bf1a0e679bdb5f2f48b805e22",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

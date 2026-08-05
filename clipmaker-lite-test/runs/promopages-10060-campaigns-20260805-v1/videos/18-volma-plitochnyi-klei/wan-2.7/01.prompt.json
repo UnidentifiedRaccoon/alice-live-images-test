@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+    "sha256": "7c3918845b00e5b559513f5ac1187bb895555be6a1e977fcfda9c88332758df6",
+    "width": 1280,
+    "height": 640
+  },
+  "structured_intent": {
+    "editorial_meaning": "Качественный результат облицовки зависит от правильно подобранной и согласованной системы основания, подготовки и плиточного клея.",
+    "primary_action": "Мягкое отражение света непрерывно проходит по облицованным поверхностям, проявляя их фактуру.",
+    "terminal_state": "Отражение достигает правой плиточной поверхности и становится мягким, при этом плитка, швы и интерьер остаются без изменений.",
+    "semantic_invariant": "Готовая плиточная облицовка остается ровной, цельной и надежно установленной до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A broad, subtle reflection glides continuously from the marble wall across to the dark floor tiles, gently bringing out the surface textures. It reaches the far-right tile area near the end and softens there, with the installation remaining perfectly unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01/result.json",
+    "sha256": "f7603db39b30b011611556b8b1fa68369a949c8773dd4bea1416455b0a7e4616",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "7c3918845b00e5b559513f5ac1187bb895555be6a1e977fcfda9c88332758df6",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

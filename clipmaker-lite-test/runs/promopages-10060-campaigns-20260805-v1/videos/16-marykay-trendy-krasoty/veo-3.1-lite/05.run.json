@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "16-marykay-trendy-krasoty-05",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. A soft highlight sweeps upward across the lipstick and finishes on the beveled coral tip, which carries a subtle moist gleam in the last frame; the product, cap, and Mary Kay lettering stay still and clearly visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d13553046bd041c2e78a2_6a3d1368a447d7572294ade3/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f3c38ad9263d6f8b1dbbefc205c72bf08b2bde5951cc1a5937e2fc52d888993a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "49GapbWrMS572Q4FFDr6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:52:19Z",
+  "completed_at": "2026-08-05T15:53:35Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 845764,
+    "sha256": "132776aa6cb7f233aeb5d7464fd6f3010b2f94dd2880aa4a588d674f59f40782"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05-veo-3-1-lite",
+  "lite_result_sha256": "489051299a075584db97cba0baee002cbcaef67b711b4fc7354ff4ee91e464aa",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

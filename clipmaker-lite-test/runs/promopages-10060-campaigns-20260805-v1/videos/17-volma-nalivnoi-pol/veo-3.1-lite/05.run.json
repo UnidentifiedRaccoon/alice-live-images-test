@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-05",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, the worker pushes the vacuum head a short distance forward, pulling the nearby dust and grit underneath it. The hose shifts naturally; finish on a distinct clean strip of concrete behind the fully visible vacuum head.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dc2f03120aa63b99c38e3ee1e8acba746164d10af89124bc647853425f3977a8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "FDgdolwKSaphVyQ2jFz9",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:39:28Z",
+  "completed_at": "2026-08-05T16:41:16Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3132343,
+    "sha256": "afbebdc228b4c0079fbdf2a7dd3a711ac0b166899f7f6091f199eb20177c82fa"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05-veo-3-1-lite",
+  "lite_result_sha256": "022d68692b9eef3c1abb7265cf77af1a00a7ac4f3681f5940baf4749e6d7ccc9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

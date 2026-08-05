@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-06",
+  "image_id": "06",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/06.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, fine dust skims quickly but gently across the foreground floor, curls around the flakes, and settles by the end, leaving the weak cracked surface visibly powdery and exposed.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df30531384d5219f20d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9213ecbbf8953c9165e07486bd28c0de428f0df60cc80bfe40f2e8f0216002d2",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "RCya4UT3t5S2rUNZc6Vd",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:41:20Z",
+  "completed_at": "2026-08-05T16:53:38Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2439221,
+    "sha256": "71e571fcf2f7d5c6cb6a14634b00e38af548c4e3c1307c640ae3d6b1ede5ba92"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06-veo-3-1-lite",
+  "lite_result_sha256": "6da96f01f9897a4b1dedb0ef40db9210ba479a7975593ec188a5725b86752556",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

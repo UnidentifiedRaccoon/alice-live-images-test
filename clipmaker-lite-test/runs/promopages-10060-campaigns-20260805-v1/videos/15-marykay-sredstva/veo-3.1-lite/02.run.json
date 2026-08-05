@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-02",
+  "image_id": "02",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The woman takes a gentle breath and subtly settles her shoulders, keeping her hands still and her warm smile directed at the camera. Fixed camera; end with relaxed shoulders and an unchanged calm, confident expression.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103a3046bd041c2df0e1/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9b3e84ff0ce5967f6c2c2f5d12b99a6782f18a6f539e86d1e65f8ad7d49b79da",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Oq0yJFnJQVaNh4UyYSSc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:27:04Z",
+  "completed_at": "2026-08-05T15:28:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3447521,
+    "sha256": "9b645237d1b5830bc001872905a5857d7f3c4c203b2033cc4d7ade999dc6bf78"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02-veo-3-1-lite",
+  "lite_result_sha256": "a6fa84dfe20941d8dd29512d8f9c4b2b70197bb11a71d31bfef4bdce42ccd313",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "16-marykay-trendy-krasoty-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, the woman gently turns the compact toward the window and follows the mirror with her eyes while keeping the brush poised away from her cheek. She ends holding the brighter angle, still calm and focused.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a3d13553046bd041c2e78a2_6a3d13bfa447d7572294bb95/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a6427fac02c817ff7d964145d47a6cd50062e7ca40a2df66bab568b2446309e3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "BO5SHRuUltq7rCIzAq2N",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:50:25Z",
+  "completed_at": "2026-08-05T15:52:14Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 3499738,
+    "sha256": "482283d70ba16ba8b177b0be6112d1f298444ece1df6f379d0d691008f16b095"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01-veo-3-1-lite",
+  "lite_result_sha256": "101ed247366142096f6144e39f8aa6d86d4e9f447ed59cc8dbdea750e6d535bd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+    "sha256": "a2a7fb67485d3b1ba9c79cb0d379a575883c73a2926909b94cbe7023ce36d0e7",
+    "width": 640,
+    "height": 426
+  },
+  "structured_intent": {
+    "editorial_meaning": "Skipping deaeration allows trapped air to leave pits and craters in a poured floor.",
+    "primary_action": "Trapped air rises through the wet material and opens small pinhole craters at the surface.",
+    "terminal_state": "Several newly formed pinholes remain open and clearly visible on the surface.",
+    "semantic_invariant": "The floor surface remains visibly defective and uneven through the last frame."
+  },
+  "prompt": {
+    "positive": "A few trapped-air pockets rise and gently break through the wet floor as tiny pinhole craters. Fixed macro view; finish with the fresh pits open and clearly visible on the defective surface.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09/result.json",
+    "sha256": "02b0c00021fda7fbcaf794e3652b7c6900436daeed9047d4f2cb3798c35b050e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "a2a7fb67485d3b1ba9c79cb0d379a575883c73a2926909b94cbe7023ce36d0e7",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

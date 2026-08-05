@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "16-marykay-trendy-krasoty-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With the camera fixed, a restrained satin reflection sweeps smoothly from the first bottle across the full row and onto the box, softly emphasizing the central emblem before settling into a uniform refined sheen over the complete set.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "1:1",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d13685a8cab7b46b6a8f0/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "02179fd6aad0834cd1b9855d7dc5918e49d3e4bcadc63636d2e94293ed4f1757",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "xPxWkfbb0RyW5hiBNyZJ",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:52:54Z",
+  "completed_at": "2026-08-05T15:54:10Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1440,
+    "height": 1440,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1946963,
+    "sha256": "faf5f14b2f8084a8ffb269b11f39f9f1c2be0f00e119c7db4c8781df353fb707"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "1:1",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06-wan-2-7",
+  "lite_result_sha256": "fec01fc7f1dc2d5100cafe7f5531d926fe0515e3d2fbfe923f3ffcca06e245f4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

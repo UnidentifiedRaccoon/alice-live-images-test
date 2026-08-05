@@ -802,7 +802,52 @@ class VideoGenerationPipelineTest(unittest.TestCase):
                     )
                 )
 
-    def test_segmind_exact_http_400_task_failure_is_typed_terminal(self) -> None:
+    def test_segmind_undersize_task_failure_parser_is_message_isolated(self) -> None:
+        provider_failure = {
+            "task_id": "task-small",
+            "task_status": "FAILED",
+            "video_url": "",
+            "submit_time": "2026-08-06 00:57:29.008",
+            "scheduled_time": "2026-08-06 00:57:29.030",
+            "end_time": "2026-08-06 00:57:30.228",
+            "code": "InvalidParameter",
+            "message": pipeline.SEGMIND_UNDERSIZE_ERROR_MESSAGE,
+        }
+        detail = json.dumps(
+            {
+                "error": pipeline.SEGMIND_PROVIDER_FAILURE_PREFIX
+                + json.dumps(provider_failure)
+            }
+        )
+        parsed = pipeline.parse_segmind_undersize_task_failure(400, detail)
+        self.assertIsNotNone(parsed)
+        self.assertEqual(
+            parsed["provider_error_message"],
+            pipeline.SEGMIND_UNDERSIZE_ERROR_MESSAGE,
+        )
+        self.assertIsNone(
+            pipeline.parse_segmind_oversize_task_failure(400, detail)
+        )
+        self.assertIsNone(
+            pipeline.parse_segmind_undersize_task_failure(
+                400,
+                json.dumps(
+                    {
+                        "error": pipeline.SEGMIND_PROVIDER_FAILURE_PREFIX
+                        + json.dumps(
+                            {
+                                **provider_failure,
+                                "message": "Image dimension is too small",
+                            }
+                        )
+                    }
+                ),
+            )
+        )
+
+    def test_segmind_exact_http_400_input_task_failures_are_typed_terminal(
+        self,
+    ) -> None:
         source_bytes = b"source"
         sample = {
             "source_url": "https://cdn.invalid/image.jpeg",
@@ -813,22 +858,6 @@ class VideoGenerationPipelineTest(unittest.TestCase):
             "positive_prompt": "one step",
             "negative_prompt": "",
         }
-        provider_failure = {
-            "task_id": "task-400",
-            "task_status": "FAILED",
-            "video_url": "",
-            "submit_time": "2026-08-05 16:16:38.596",
-            "scheduled_time": "2026-08-05 16:16:38.614",
-            "end_time": "2026-08-05 16:16:42.626",
-            "code": "InvalidParameter",
-            "message": pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
-        }
-        detail = json.dumps(
-            {
-                "error": pipeline.SEGMIND_PROVIDER_FAILURE_PREFIX
-                + json.dumps(provider_failure)
-            }
-        ).encode("utf-8")
 
         class Response(io.BytesIO):
             status = 200
@@ -840,7 +869,9 @@ class VideoGenerationPipelineTest(unittest.TestCase):
                 self.close()
 
         class RejectingPost:
-            calls = 0
+            def __init__(self, detail: bytes) -> None:
+                self.calls = 0
+                self.detail = detail
 
             def open(self, request, **_kwargs: object):
                 self.calls += 1
@@ -849,37 +880,68 @@ class VideoGenerationPipelineTest(unittest.TestCase):
                     400,
                     "Bad Request",
                     {},
-                    io.BytesIO(detail),
+                    io.BytesIO(self.detail),
                 )
 
-        post = RejectingPost()
-        guard = unittest.mock.Mock()
-        with tempfile.TemporaryDirectory() as directory, patch.object(
-            pipeline, "segmind_headers", return_value={"Authorization": "OAuth test"}
+        for index, provider_message in enumerate(
+            (
+                pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
+                pipeline.SEGMIND_UNDERSIZE_ERROR_MESSAGE,
+            ),
+            start=1,
         ):
-            with self.assertRaises(
-                pipeline.SegmindProviderTaskFailedError
-            ) as raised:
-                pipeline.segmind_generate(
-                    sample,
-                    prompt,
-                    Path(directory) / "result.mp4",
-                    "https://api.eliza.invalid/segmind/v1",
-                    30,
-                    guard,
-                    source_opener=lambda *_args, **_kwargs: Response(source_bytes),
-                    post_opener=post,
-                )
+            with self.subTest(provider_message=provider_message):
+                task_id = f"task-400-{index}"
+                provider_failure = {
+                    "task_id": task_id,
+                    "task_status": "FAILED",
+                    "video_url": "",
+                    "submit_time": "2026-08-05 16:16:38.596",
+                    "scheduled_time": "2026-08-05 16:16:38.614",
+                    "end_time": "2026-08-05 16:16:42.626",
+                    "code": "InvalidParameter",
+                    "message": provider_message,
+                }
+                detail = json.dumps(
+                    {
+                        "error": pipeline.SEGMIND_PROVIDER_FAILURE_PREFIX
+                        + json.dumps(provider_failure)
+                    }
+                ).encode("utf-8")
+                post = RejectingPost(detail)
+                guard = unittest.mock.Mock()
+                with tempfile.TemporaryDirectory() as directory, patch.object(
+                    pipeline,
+                    "segmind_headers",
+                    return_value={"Authorization": "OAuth test"},
+                ):
+                    with self.assertRaises(
+                        pipeline.SegmindProviderTaskFailedError
+                    ) as raised:
+                        pipeline.segmind_generate(
+                            sample,
+                            prompt,
+                            Path(directory) / "result.mp4",
+                            "https://api.eliza.invalid/segmind/v1",
+                            30,
+                            guard,
+                            source_opener=lambda *_args, **_kwargs: Response(
+                                source_bytes
+                            ),
+                            post_opener=post,
+                        )
 
-        self.assertIsInstance(raised.exception, pipeline.ProviderTerminalError)
-        self.assertEqual(raised.exception.http_status, 400)
-        self.assertEqual(raised.exception.provider_task_id, "task-400")
-        self.assertEqual(
-            raised.exception.evidence["provider_error_message"],
-            pipeline.SEGMIND_OVERSIZE_ERROR_MESSAGE,
-        )
-        guard.assert_called_once()
-        self.assertEqual(post.calls, 1)
+                self.assertIsInstance(
+                    raised.exception, pipeline.ProviderTerminalError
+                )
+                self.assertEqual(raised.exception.http_status, 400)
+                self.assertEqual(raised.exception.provider_task_id, task_id)
+                self.assertEqual(
+                    raised.exception.evidence["provider_error_message"],
+                    provider_message,
+                )
+                guard.assert_called_once()
+                self.assertEqual(post.calls, 1)
 
     def test_segmind_generic_http_400_remains_untyped(self) -> None:
         source_bytes = b"source"

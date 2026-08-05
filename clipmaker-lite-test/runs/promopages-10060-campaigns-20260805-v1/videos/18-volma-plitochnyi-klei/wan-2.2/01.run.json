@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "18-volma-plitochnyi-klei-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a30e9cc66e1c52e2cb60ab1/orig",
+      "prompt": "With the camera fixed, a soft reflected light band moves steadily across the stone and tile surfaces from left to right, revealing their texture. By the final frames the highlight reaches the right-side tiles and fades gently, while every surface and seam remains unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "26ccab5ad9b3bf3c6686d2a1627de237df9b19822a2f2b1021dab95cd2e64c76",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9974197c2dcb43208bd03d8e30c34855",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:55:11Z",
+  "completed_at": "2026-08-05T16:55:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1344,
+    "height": 672,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 12753994,
+    "sha256": "2411cff4e91563fdc492235ca095499fcc8e6e630235d57d6ca7e62da4e7b735"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01-wan-2-2",
+  "lite_result_sha256": "f7603db39b30b011611556b8b1fa68369a949c8773dd4bea1416455b0a7e4616",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 179833,
+    "sha256": "7c3918845b00e5b559513f5ac1187bb895555be6a1e977fcfda9c88332758df6"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "9974197c2dcb43208bd03d8e30c34855",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

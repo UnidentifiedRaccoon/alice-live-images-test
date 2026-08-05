@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/04.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df381cbac61b6b9a322/orig",
+      "prompt": "The existing central crack slowly spreads along the weak seam as the small trapped fragments settle slightly inward. Fixed camera; by the final frame the connected fracture is visibly longer and wider, with the damaged base still intact in view.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "f4a9887f19b43b9eb15c837751077cfcda97160de592abff1a1ca4fe47c03e0a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6c8a701b4ffc190b858f695a354246ae",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:40:52Z",
+  "completed_at": "2026-08-05T16:40:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1216,
+    "height": 752,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 21637540,
+    "sha256": "0a88f94a26307633ddc73fe46af976bf665913b17e96c5f3d1916f2b6cd7a7a5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04-wan-2-2",
+  "lite_result_sha256": "e52698c565e17ae04eb841768eb0dc110e94f248fb04949fbc1333989829d739",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1756207,
+    "sha256": "3321542f6d64427bee141ea96952fc1df48a5ab57939bde5c1e48c0aa72f0ab7"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "6c8a701b4ffc190b858f695a354246ae",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

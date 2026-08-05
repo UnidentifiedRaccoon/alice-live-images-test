@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-11",
+  "image_id": "11",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/11.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera as one restrained sheen glides steadily across the two product bags from left to right and softly dissipates near the end, leaving both packages emphasized and all text and layout unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df8bf5214766a58d277/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "89c8b5a025dc235922b613d90dd6cca66d04d302aaed4b0b5b2d7062f617f078",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "LEo6DYQ4Z98nCSPPC22U",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:42:05Z",
+  "completed_at": "2026-08-05T16:43:22Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2836,
+    "height": 730,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3652110,
+    "sha256": "6f5c7b38d4f8abac074cab3e865020d514c1539d3c4637ae6879c8a56d8484e7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11-wan-2-7",
+  "lite_result_sha256": "801af025cfe9658d720ce2bf64bb125db7797b9b8eddde23a5fd7568652aff94",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

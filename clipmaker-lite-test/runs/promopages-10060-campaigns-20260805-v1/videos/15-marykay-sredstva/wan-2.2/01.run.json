@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/01.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103e5a8cab7b46b62589/orig",
+      "prompt": "With her hands remaining still, the woman slowly straightens and turns her head slightly toward the camera, blinking once as her smile gently brightens. Fixed camera. By the final frame she holds direct eye contact and a calm, confident smile.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "8a674e8f4e017d040487270359fe9e21cf059415b7691bdb8106a22095fbca73",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "0244113ca302354e8df66f3082c87a0a",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:27:46Z",
+  "completed_at": "2026-08-05T15:27:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1216,
+    "height": 736,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5458267,
+    "sha256": "1106b87d0f073ba5642ffffc44deea4bbcaa4db4d5b7a1f33ca0f75dd8eb7c4f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01-wan-2-2",
+  "lite_result_sha256": "51db3ca460f6f0851603385b16d79e800946baa6d11739fec13eefcfc93d0f69",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 780294,
+    "sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "0244113ca302354e8df66f3082c87a0a",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

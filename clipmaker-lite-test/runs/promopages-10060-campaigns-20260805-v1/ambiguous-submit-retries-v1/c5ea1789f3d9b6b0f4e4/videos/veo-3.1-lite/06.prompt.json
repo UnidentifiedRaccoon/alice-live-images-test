@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1-ambiguous-submit-retry-v1-c5ea1789f3d9b6b0f4e4",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-ambiguous-submit-retry-v1-c5ea1789f3d9b6b0f4e4-16-marykay-trendy-krasoty-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+    "sha256": "036300677b23cb195036f3b5c72aa14549de5d1cc4ad9fe257385c5e35b0d40b",
+    "width": 768,
+    "height": 768
+  },
+  "structured_intent": {
+    "editorial_meaning": "Комплекс TimeWise® Plus+ воплощает системный научный подход к поддержке естественного обновления и профилактике возрастных изменений кожи.",
+    "primary_action": "Мягкий световой блик последовательно проходит по всему набору средств.",
+    "terminal_state": "Все пять флаконов и коробка остаются полностью видимыми, объединёнными ровным ухоженным сиянием.",
+    "semantic_invariant": "Набор воспринимается как единая согласованная система научного антивозрастного ухода."
+  },
+  "prompt": {
+    "positive": "Fixed camera. A gentle pearlescent glint travels once across the serum bottles toward the box, briefly illuminating its central emblem, then softens into an even sheen while the entire product set remains clearly visible in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06/result.json",
+    "sha256": "fec01fc7f1dc2d5100cafe7f5531d926fe0515e3d2fbfe923f3ffcca06e245f4",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "036300677b23cb195036f3b5c72aa14549de5d1cc4ad9fe257385c5e35b0d40b",
+      "article_context_sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

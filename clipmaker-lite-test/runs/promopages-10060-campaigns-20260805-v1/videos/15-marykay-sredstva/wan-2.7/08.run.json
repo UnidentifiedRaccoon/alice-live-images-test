@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/08.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The spatula rises in one smooth, gentle arc above the jar while the dense cream slowly rounds and settles on its tip. Fixed camera. Finish with the hand still and the intact dollop clearly displayed over the open jar.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa0a447d75722940ef2/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3db04dcc637c8d5e23797b2f5f035f48ddceb78d42aae5210493b000066d25e5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "vQT2t2OLz3dWSkq3leVP",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:30:51Z",
+  "completed_at": "2026-08-05T15:32:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1648,
+    "height": 1258,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2896829,
+    "sha256": "2511de5a3f2537f93a2fa1a21f6ac85e3b926237fd3843ce044ed6dea087a8f5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08-wan-2-7",
+  "lite_result_sha256": "811bd5e453f0f9d49c472fd9431200c840be392629382f32626503a1e98a94dd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

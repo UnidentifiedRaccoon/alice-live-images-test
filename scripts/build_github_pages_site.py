@@ -42,6 +42,77 @@ PROMOPAGES_10060_ARTICLE_NUMBERS = (
 PROMOPAGES_10060_ARTICLE_COUNT = 13
 PROMOPAGES_10060_IMAGE_COUNT = 92
 PROMOPAGES_10060_OUTPUT_COUNT = 276
+PROMOPAGES_10060_EXTENSION_RELATIVE_PATH = Path(
+    "clipmaker-lite-test/promopages-10060-campaigns-20260805-v1-manifest.json"
+)
+PROMOPAGES_10060_EXTENSION_ROLE = "promopages-10060-campaign-extension"
+PROMOPAGES_10060_EXTENSION_BATCH_ID = "promopages-10060-campaigns-20260805-v1"
+PROMOPAGES_10060_EXTENSION_DATASET_PREFIX = (
+    "PROMOPAGES-10060-campaigns-20260805-v1"
+)
+PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS = ("15", "16", "17", "18")
+PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT = (
+    Path("PROMOPAGES-9884")
+    / PROMOPAGES_10060_EXTENSION_DATASET_PREFIX
+    / "articles"
+)
+PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT = (
+    Path(PROMOPAGES_10060_EXTENSION_DATASET_PREFIX) / "articles"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE = (
+    Path("clipmaker-lite-test/runs")
+    / PROMOPAGES_10060_EXTENSION_BATCH_ID
+    / "normalized-input-retries-v1"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE = (
+    Path("clipmaker-lite-test/runs")
+    / PROMOPAGES_10060_EXTENSION_BATCH_ID
+    / "normalized-input-assets-v1"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT = (
+    "25995ee6ea168d2ae7025e5a416bc008ae17a908"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES = {
+    ("18-volma-plitochnyi-klei", "05"): {
+        "source_sha256": (
+            "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543"
+        ),
+        "asset_key": "660c32c4d1331cb3a82d",
+        "sha256": (
+            "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23"
+        ),
+        "bytes": 46_883,
+        "width": 882,
+        "height": 256,
+        "format": "PNG",
+    },
+    ("18-volma-plitochnyi-klei", "07"): {
+        "source_sha256": (
+            "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8"
+        ),
+        "asset_key": "0535f187b92384618210",
+        "sha256": (
+            "7f71227971a99ca0f204eccadb89a706128eabfb6022657bf8718e952fca70e4"
+        ),
+        "bytes": 57_771,
+        "width": 828,
+        "height": 256,
+        "format": "PNG",
+    },
+    ("18-volma-plitochnyi-klei", "08"): {
+        "source_sha256": (
+            "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03"
+        ),
+        "asset_key": "2d974dbe489b2e6617a3",
+        "sha256": (
+            "1a005159d7efaee55f2124844851b7135f28cccfcad0463ad1ac2f5dec1f589a"
+        ),
+        "bytes": 246_119,
+        "width": 998,
+        "height": 256,
+        "format": "PNG",
+    },
+}
 PROMOPAGES_10060_MEDIA_STATUSES = {"succeeded", "verification-failed"}
 PROMOPAGES_10060_FILTERED_STATUS = "provider-filtered"
 PROMOPAGES_10060_UNAVAILABLE_STATUS = "provider-unavailable"
@@ -52,6 +123,32 @@ PROMOPAGES_10060_AMBIGUOUS_RETRY_EXHAUSTED_SELECTION = (
 PROMOPAGES_10060_NORMALIZED_RETRY_SELECTION = "normalized-input-retry-v1"
 PROMOPAGES_10060_NORMALIZED_RETRY_EXHAUSTED_SELECTION = (
     "normalized-input-retry-v1-exhausted"
+)
+PROMOPAGES_10060_NORMALIZED_SUPERSEDE_SELECTION = (
+    "normalized-input-superseding-attempt-v1"
+)
+PROMOPAGES_10060_NORMALIZED_SUPERSEDE_EXHAUSTED_SELECTION = (
+    "normalized-input-superseding-attempt-v1-exhausted"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_KEY = (
+    "18-volma-plitochnyi-klei",
+    "07",
+    "alibaba/wan-2.7",
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID = (
+    "novcFDcwbuZkgtrmgQIY"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY = (
+    "superseding-attempt-v1"
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_NAMESPACE = (
+    PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE
+    / "c45a8447813d1b4e4df0"
+    / PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY
+)
+PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID = (
+    "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-"
+    "c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7"
 )
 MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024
 
@@ -104,6 +201,17 @@ def _safe_relative_path(value: str) -> Path:
         raise ValueError(f"Non-canonical site path: {value!r}")
 
     return Path(*posix_path.parts)
+
+
+def _safe_extension_audit_path(value: Any, *, label: str) -> Path:
+    """Return one canonical POSIX audit path bound by the extension manifest."""
+
+    if not isinstance(value, str) or "\\" in value:
+        raise ValueError(f"{label} must be a canonical relative POSIX path")
+    try:
+        return _safe_relative_path(value)
+    except ValueError as exc:
+        raise ValueError(f"{label} must be a canonical relative POSIX path") from exc
 
 
 def _is_sha256(value: Any) -> bool:
@@ -526,6 +634,1037 @@ def _tree_files(root: Path, relative_tree: str) -> Iterable[Path]:
     for path in tree.rglob("*"):
         if path.is_file():
             yield path.relative_to(root)
+
+
+def _extension_normalized_supersede_policy() -> dict[str, Any]:
+    return {
+        "version": 1,
+        "namespace": (
+            PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_NAMESPACE.as_posix()
+        ),
+        "explicit_operator_command_required": True,
+        "operator_authorized_active_job": True,
+        "automatic_retry": False,
+        "maximum_new_paid_submissions": 1,
+        "retry2_forbidden": True,
+        "one_off_allowlist": {
+            "article_slug": "18-volma-plitochnyi-klei",
+            "image_id": "07",
+            "model_id": "alibaba/wan-2.7",
+            "normalized_retry_provider_run_id": (
+                PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID
+            ),
+            "active_provider_job_id": (
+                PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID
+            ),
+        },
+        "duplicate_submission_risk_acknowledged": True,
+        "duplicate_billing_risk_acknowledged": True,
+        "same_verified_lite_result": True,
+        "same_normalized_source": True,
+        "same_prompt": True,
+        "same_model": True,
+        "same_route": True,
+        "same_seed": True,
+        "same_request": True,
+        "fallback": False,
+        "route_discovery": False,
+        "primary_receipt_immutable": True,
+        "normalized_retry_envelope_immutable": True,
+        "superseded_receipt_immutable": True,
+    }
+
+
+def _validate_extension_normalized_supersede(
+    output: dict[str, Any],
+    retry: dict[str, Any],
+    *,
+    label: str,
+    exhausted: bool,
+) -> dict[str, Any] | None:
+    """Validate the sole operator-authorized successor to an active retry."""
+
+    supersede = retry.get("supersede")
+    if supersede is None:
+        return None
+    if (
+        (output.get("article_slug"), output.get("image_id"), output.get("model_id"))
+        != PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_KEY
+        or not isinstance(supersede, dict)
+        or supersede.get("version") != 1
+        or supersede.get("exhausted") is not exhausted
+        or not isinstance(supersede.get("namespace"), str)
+        or not isinstance(supersede.get("envelope_path"), str)
+        or not _is_sha256(supersede.get("envelope_sha256"))
+    ):
+        raise ValueError(f"{label} normalized supersede audit is invalid")
+
+    normalized_namespace = _safe_extension_audit_path(
+        retry.get("namespace"), label=f"{label} normalized retry namespace"
+    )
+    supersede_namespace = _safe_extension_audit_path(
+        supersede["namespace"], label=f"{label} supersede namespace"
+    )
+    supersede_envelope = _safe_extension_audit_path(
+        supersede["envelope_path"], label=f"{label} supersede envelope"
+    )
+    if (
+        supersede_namespace
+        != normalized_namespace
+        / PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY
+        or supersede_namespace
+        != PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_NAMESPACE
+        or supersede_envelope != supersede_namespace / "supersede.json"
+    ):
+        raise ValueError(f"{label} normalized supersede escaped its namespace")
+
+    superseded = supersede.get("superseded_attempt")
+    selected = supersede.get("superseding_attempt")
+    if not isinstance(superseded, dict) or not isinstance(selected, dict):
+        raise ValueError(f"{label} normalized supersede attempts are missing")
+    if (
+        superseded.get("provider_job_id")
+        != PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID
+        or superseded.get("provider_run_id")
+        != PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID
+        or superseded.get("status") not in {"submitted", "running"}
+        or superseded.get("provider_may_be_active") is not True
+        or not isinstance(superseded.get("submitted_at"), str)
+        or not superseded["submitted_at"].strip()
+        or superseded.get("completed_at") is not None
+    ):
+        raise ValueError(f"{label} superseded active job evidence is invalid")
+    if (
+        selected.get("status") != output.get("recorded_status")
+        or selected.get("provider_may_be_active") is not False
+        or not isinstance(selected.get("provider_job_id"), str)
+        or not selected["provider_job_id"].strip()
+        or selected.get("provider_job_id") == superseded.get("provider_job_id")
+        or not isinstance(selected.get("submitted_at"), str)
+        or not selected["submitted_at"].strip()
+        or not isinstance(selected.get("completed_at"), str)
+        or not selected["completed_at"].strip()
+        or selected.get("error") != output.get("error")
+    ):
+        raise ValueError(f"{label} superseding attempt is not terminal")
+
+    for attempt_name, attempt in (
+        ("superseded", superseded),
+        ("superseding", selected),
+    ):
+        for field in ("provider_run_id", "run_path", "prompt_path"):
+            if not isinstance(attempt.get(field), str) or not attempt[field].strip():
+                raise ValueError(f"{label} {attempt_name} attempt lacks {field}")
+            if field.endswith("_path"):
+                _safe_extension_audit_path(
+                    attempt[field], label=f"{label} {attempt_name} {field}"
+                )
+        for field in ("run_sha256", "prompt_sha256", "request_sha256"):
+            if not _is_sha256(attempt.get(field)):
+                raise ValueError(f"{label} {attempt_name} attempt has invalid {field}")
+    outer_retry = retry.get("retry_attempt")
+    if (
+        not isinstance(outer_retry, dict)
+        or superseded.get("provider_run_id")
+        != outer_retry.get("provider_run_id")
+        or superseded.get("request_sha256")
+        != outer_retry.get("request_sha256")
+        or selected.get("provider_run_id") == superseded.get("provider_run_id")
+        or selected.get("request_sha256") != superseded.get("request_sha256")
+        or output.get("provider_run_id") != selected.get("provider_run_id")
+        or output.get("selected_attempt")
+        != (
+            PROMOPAGES_10060_NORMALIZED_SUPERSEDE_EXHAUSTED_SELECTION
+            if exhausted
+            else PROMOPAGES_10060_NORMALIZED_SUPERSEDE_SELECTION
+        )
+    ):
+        raise ValueError(f"{label} normalized supersede identity/request differs")
+    return selected
+
+
+def _validate_extension_normalized_input_retry(
+    output: dict[str, Any],
+    image: dict[str, Any],
+    *,
+    label: str,
+    exhausted: bool,
+) -> tuple[tuple[str, str], tuple[Any, ...], set[Path], Path]:
+    """Validate the fixed undersize-input retry contract for the extension."""
+
+    retry = output.get("retry")
+    if (
+        not isinstance(retry, dict)
+        or retry.get("retry_kind") != "normalized-input"
+        or retry.get("retry_number") != 1
+        or retry.get("exhausted") is not exhausted
+        or not isinstance(retry.get("namespace"), str)
+        or not isinstance(retry.get("envelope_path"), str)
+        or not _is_sha256(retry.get("envelope_sha256"))
+    ):
+        raise ValueError(f"{label} extension normalized-input retry audit is invalid")
+    source_key = (output.get("article_slug"), output.get("image_id"))
+    expected_asset = PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES.get(source_key)
+    if (
+        expected_asset is None
+        or output.get("model_id") not in {"alibaba/wan-2.2", "alibaba/wan-2.7"}
+    ):
+        raise ValueError(f"{label} is not an eligible extension normalized input")
+
+    namespace = _safe_extension_audit_path(
+        retry["namespace"], label=f"{label} normalized retry namespace"
+    )
+    envelope_path = _safe_extension_audit_path(
+        retry["envelope_path"], label=f"{label} normalized retry envelope"
+    )
+    if (
+        namespace.parent != PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE
+        or envelope_path != namespace / "retry.json"
+    ):
+        raise ValueError(f"{label} normalized retry is outside its allowed namespace")
+
+    transform = retry.get("source_transform")
+    original = transform.get("original") if isinstance(transform, dict) else None
+    normalized = transform.get("normalized") if isinstance(transform, dict) else None
+    delta = transform.get("request_delta") if isinstance(transform, dict) else None
+    preparation = transform.get("preparation") if isinstance(transform, dict) else None
+    if (
+        not isinstance(transform, dict)
+        or set(transform)
+        != {
+            "strategy",
+            "original",
+            "normalized",
+            "request_delta",
+            "preparation",
+            "minimum_provider_input_dimension",
+        }
+        or transform.get("strategy") != "deterministic-uniform-upscale"
+        or transform.get("minimum_provider_input_dimension") != 240
+        or not isinstance(original, dict)
+        or not isinstance(normalized, dict)
+        or not isinstance(delta, dict)
+        or preparation
+        != {
+            "operation": "uniform-scale",
+            "target_height": expected_asset["height"],
+            "resampler": "lanczos",
+            "crop": False,
+            "local_reencode": True,
+        }
+    ):
+        raise ValueError(f"{label} extension normalized source_transform is invalid")
+
+    original_width = original.get("width")
+    original_height = original.get("height")
+    original_bytes = original.get("bytes")
+    if (
+        set(original) != {"url", "path", "sha256", "bytes", "width", "height"}
+        or not isinstance(original.get("url"), str)
+        or not original["url"].startswith("https://avatars.mds.yandex.net/")
+        or original.get("url") != image.get("orig_url")
+        or original.get("path") != output.get("source_path")
+        or original.get("path") != image.get("source_path")
+        or original.get("sha256") != image.get("sha256")
+        or original.get("sha256") != expected_asset["source_sha256"]
+        or not isinstance(original_bytes, int)
+        or isinstance(original_bytes, bool)
+        or not 0 < original_bytes <= MAX_PROVIDER_SOURCE_BYTES
+        or not isinstance(original_width, int)
+        or isinstance(original_width, bool)
+        or original_width < 1
+        or original_width != image.get("width")
+        or not isinstance(original_height, int)
+        or isinstance(original_height, bool)
+        or original_height < 1
+        or original_height != image.get("height")
+        or min(original_width, original_height) >= 240
+    ):
+        raise ValueError(f"{label} extension original undersize source audit is invalid")
+    _safe_extension_audit_path(
+        original["path"], label=f"{label} original source path"
+    )
+
+    asset_parent = (
+        PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE
+        / expected_asset["asset_key"]
+    )
+    expected_repository_path = asset_parent / "normalized.png"
+    expected_metadata_path = asset_parent / "asset.json"
+    expected_url = (
+        "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
+        "alice-live-images-test/"
+        f"{PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT}/"
+        f"{expected_repository_path.as_posix()}"
+    )
+    repository_path = _safe_extension_audit_path(
+        normalized.get("repository_path"),
+        label=f"{label} normalized repository_path",
+    )
+    metadata_path = _safe_extension_audit_path(
+        normalized.get("metadata_path"),
+        label=f"{label} normalized metadata_path",
+    )
+    if (
+        set(normalized)
+        != {
+            "http_status",
+            "url",
+            "sha256",
+            "bytes",
+            "width",
+            "height",
+            "format",
+            "delivery",
+            "repository_path",
+            "source_commit_sha",
+            "metadata_path",
+            "metadata_sha256",
+        }
+        or normalized.get("http_status") != 200
+        or normalized.get("url") != expected_url
+        or normalized.get("sha256") != expected_asset["sha256"]
+        or normalized.get("bytes") != expected_asset["bytes"]
+        or normalized.get("width") != expected_asset["width"]
+        or normalized.get("height") != expected_asset["height"]
+        or normalized.get("width", 0) < 240
+        or normalized.get("height", 0) < 240
+        or normalized.get("format") != expected_asset["format"]
+        or normalized.get("delivery") != "repository-raw"
+        or repository_path != expected_repository_path
+        or normalized.get("source_commit_sha")
+        != PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT
+        or metadata_path != expected_metadata_path
+        or not _is_sha256(normalized.get("metadata_sha256"))
+    ):
+        raise ValueError(
+            f"{label} extension normalized repository-raw asset audit is invalid"
+        )
+
+    expected_pointer = (
+        "/input/image"
+        if output["model_id"] == "alibaba/wan-2.2"
+        else "/frame_images/0/image_url/url"
+    )
+    if (
+        set(delta) != {"json_pointer", "from", "to", "changed_leaf_count"}
+        or delta.get("json_pointer") != expected_pointer
+        or delta.get("from") != original["url"]
+        or delta.get("to") != normalized["url"]
+        or delta.get("changed_leaf_count") != 1
+    ):
+        raise ValueError(f"{label} normalized request delta is not one image leaf")
+
+    primary = retry.get("primary_attempt")
+    retry_attempt = retry.get("retry_attempt")
+    if (
+        not isinstance(primary, dict)
+        or primary.get("status") != "provider-failed"
+        or primary.get("provider_may_be_active") is not False
+        or not isinstance(primary.get("provider_job_id"), str)
+        or not primary["provider_job_id"].strip()
+        or not isinstance(primary.get("error"), str)
+        or "240" not in primary["error"]
+    ):
+        raise ValueError(f"{label} normalized primary dimension failure is invalid")
+    if output["model_id"] == "alibaba/wan-2.2":
+        if (
+            primary.get("recorded_status") != "submit-unknown"
+            or primary.get("recorded_provider_may_be_active") is not True
+            or primary.get("submitted_at") is not None
+            or primary.get("completed_at") is not None
+            or any(
+                not isinstance(primary.get(field), str) or not primary[field].strip()
+                for field in (
+                    "provider_submit_time",
+                    "provider_scheduled_time",
+                    "provider_end_time",
+                )
+            )
+        ):
+            raise ValueError(f"{label} Wan 2.2 dimension evidence is invalid")
+    elif (
+        primary.get("recorded_status") != "provider-failed"
+        or primary.get("recorded_provider_may_be_active") is not False
+        or not isinstance(primary.get("submitted_at"), str)
+        or not primary["submitted_at"].strip()
+        or not isinstance(primary.get("completed_at"), str)
+        or not primary["completed_at"].strip()
+    ):
+        raise ValueError(f"{label} Wan 2.7 dimension evidence is invalid")
+
+    superseding_attempt = _validate_extension_normalized_supersede(
+        output,
+        retry,
+        label=label,
+        exhausted=exhausted,
+    )
+    selected_attempt = superseding_attempt or retry_attempt
+    if (
+        not isinstance(selected_attempt, dict)
+        or selected_attempt.get("status") != output.get("recorded_status")
+        or selected_attempt.get("provider_may_be_active") is not False
+        or not isinstance(selected_attempt.get("provider_job_id"), str)
+        or not selected_attempt["provider_job_id"].strip()
+        or not isinstance(selected_attempt.get("submitted_at"), str)
+        or not selected_attempt["submitted_at"].strip()
+        or not isinstance(selected_attempt.get("completed_at"), str)
+        or not selected_attempt["completed_at"].strip()
+        or selected_attempt.get("error") != output.get("error")
+    ):
+        raise ValueError(f"{label} extension normalized selected attempt is not terminal")
+    for attempt_name, attempt in (("primary", primary), ("selected", selected_attempt)):
+        for field in ("provider_run_id", "run_path", "prompt_path"):
+            if not isinstance(attempt.get(field), str) or not attempt[field].strip():
+                raise ValueError(f"{label} {attempt_name} audit is missing {field}")
+            if field.endswith("_path"):
+                _safe_extension_audit_path(
+                    attempt[field], label=f"{label} {attempt_name} {field}"
+                )
+        for field in ("run_sha256", "prompt_sha256", "request_sha256"):
+            if not _is_sha256(attempt.get(field)):
+                raise ValueError(f"{label} {attempt_name} audit has invalid {field}")
+    if (
+        output.get("provider_run_id") != selected_attempt["provider_run_id"]
+        or primary["provider_run_id"] == selected_attempt["provider_run_id"]
+        or primary["request_sha256"] == selected_attempt["request_sha256"]
+    ):
+        raise ValueError(f"{label} extension normalized retry binding is invalid")
+
+    expected_selection = (
+        (
+            PROMOPAGES_10060_NORMALIZED_SUPERSEDE_EXHAUSTED_SELECTION
+            if exhausted
+            else PROMOPAGES_10060_NORMALIZED_SUPERSEDE_SELECTION
+        )
+        if superseding_attempt is not None
+        else PROMOPAGES_10060_NORMALIZED_RETRY_EXHAUSTED_SELECTION
+        if exhausted
+        else PROMOPAGES_10060_NORMALIZED_RETRY_SELECTION
+    )
+    if output.get("selected_attempt") != expected_selection:
+        raise ValueError(f"{label} normalized selected attempt is invalid")
+    if exhausted:
+        if (
+            output.get("status") != PROMOPAGES_10060_UNAVAILABLE_STATUS
+            or output.get("recorded_status") != "provider-failed"
+            or output.get("video_path") is not None
+            or output.get("media") is not None
+            or output.get("contract_check") is not None
+            or not isinstance(output.get("error"), str)
+            or not output["error"].strip()
+        ):
+            raise ValueError(f"{label} exhausted normalized retry state is invalid")
+    else:
+        status = output.get("status")
+        contract_check = output.get("contract_check")
+        if (
+            status not in PROMOPAGES_10060_MEDIA_STATUSES
+            or not isinstance(output.get("media"), dict)
+            or not isinstance(contract_check, dict)
+        ):
+            raise ValueError(
+                f"{label} successful normalized retry has no accepted media"
+            )
+        if status == "succeeded" and (
+            output.get("error") is not None
+            or contract_check.get("conforms") is not True
+        ):
+            raise ValueError(f"{label} normalized succeeded media audit is invalid")
+        if status == "verification-failed" and (
+            not isinstance(output.get("error"), str)
+            or not output["error"].strip()
+            or contract_check.get("conforms") is not False
+            or not isinstance(contract_check.get("warnings"), list)
+            or not contract_check["warnings"]
+        ):
+            raise ValueError(
+                f"{label} normalized verification warning audit is invalid"
+            )
+
+    asset_identity = (
+        normalized["url"],
+        normalized["repository_path"],
+        normalized["sha256"],
+        normalized["bytes"],
+        normalized["width"],
+        normalized["height"],
+        normalized["format"],
+        normalized["source_commit_sha"],
+        normalized["metadata_path"],
+        normalized["metadata_sha256"],
+    )
+    return source_key, asset_identity, {repository_path, metadata_path}, namespace
+
+
+def _collect_promopages_10060_extension_paths(
+    manifest: dict[str, Any],
+    legacy_manifest: dict[str, Any],
+    remote_repository_paths: set[Path],
+) -> None:
+    """Validate one additive campaign sidecar and register raw media paths."""
+
+    label = "PROMOPAGES-10060 campaign extension"
+    if (
+        manifest.get("schema_version") != 1
+        or manifest.get("manifest_role") != PROMOPAGES_10060_EXTENSION_ROLE
+        or manifest.get("ticket") != "PROMOPAGES-10060"
+        or manifest.get("batch_id") != PROMOPAGES_10060_EXTENSION_BATCH_ID
+        or manifest.get("agent_id") != "clipmaker-lite"
+        or manifest.get("models") != list(PROMOPAGES_10060_MODELS)
+    ):
+        raise ValueError(f"{label} identity is invalid")
+
+    article_count = manifest.get("article_count")
+    image_count = manifest.get("image_count")
+    expected_outputs = manifest.get("expected_outputs")
+    if (
+        not isinstance(article_count, int)
+        or isinstance(article_count, bool)
+        or article_count <= 0
+        or not isinstance(image_count, int)
+        or isinstance(image_count, bool)
+        or image_count <= 0
+        or not isinstance(expected_outputs, int)
+        or isinstance(expected_outputs, bool)
+        or expected_outputs != image_count * len(PROMOPAGES_10060_MODELS)
+    ):
+        raise ValueError(f"{label} dynamic counts are invalid")
+
+    provider_filtered_count = manifest.get("provider_filtered_output_count")
+    provider_unavailable_count = manifest.get("provider_unavailable_output_count")
+    if (
+        not isinstance(provider_filtered_count, int)
+        or isinstance(provider_filtered_count, bool)
+        or provider_filtered_count < 0
+        or not isinstance(provider_unavailable_count, int)
+        or isinstance(provider_unavailable_count, bool)
+        or provider_unavailable_count < 0
+        or manifest.get("accepted_output_count")
+        != expected_outputs - provider_filtered_count - provider_unavailable_count
+        or manifest.get("terminal_accounted_output_count") != expected_outputs
+    ):
+        raise ValueError(f"{label} terminal accounting is invalid")
+
+    status_summary = manifest.get("status_summary")
+    acceptance_policy = manifest.get("acceptance_policy")
+    if (
+        not isinstance(status_summary, dict)
+        or status_summary.get(PROMOPAGES_10060_FILTERED_STATUS, 0)
+        != provider_filtered_count
+        or status_summary.get(PROMOPAGES_10060_UNAVAILABLE_STATUS, 0)
+        != provider_unavailable_count
+        or any(
+            not isinstance(count, int) or isinstance(count, bool) or count < 0
+            for count in status_summary.values()
+        )
+        or sum(status_summary.values()) != expected_outputs
+        or not isinstance(acceptance_policy, dict)
+        or acceptance_policy.get("requires_mp4_and_media") is not True
+        or set(acceptance_policy.get("terminal_accounted_without_media", []))
+        != {
+            PROMOPAGES_10060_FILTERED_STATUS,
+            PROMOPAGES_10060_UNAVAILABLE_STATUS,
+        }
+        or acceptance_policy.get(
+            "provider_filtered_requires_exhausted_retry_v1"
+        )
+        is not True
+        or acceptance_policy.get(
+            "provider_unavailable_requires_ambiguous_submit_retry_v1"
+        )
+        is not True
+        or acceptance_policy.get("provider_unavailable_requires_retry_v1")
+        != ["ambiguous-submit", "normalized-input"]
+    ):
+        raise ValueError(f"{label} acceptance policy is invalid")
+
+    legacy_articles = legacy_manifest.get("articles", [])
+    existing_article_numbers = {
+        article.get("article_number")
+        for article in legacy_articles
+        if isinstance(article, dict)
+    }
+    existing_article_slugs = {
+        article.get("article_slug")
+        for article in legacy_articles
+        if isinstance(article, dict)
+    }
+    existing_source_paths = {
+        _safe_relative_path(record["image"]["source_path"])
+        for article in legacy_articles
+        for record in article.get("images", [])
+    }
+    existing_video_paths = {
+        _safe_relative_path(output["video_path"])
+        for article in legacy_articles
+        for record in article.get("images", [])
+        for output in record.get("outputs", [])
+        if isinstance(output.get("video_path"), str) and output["video_path"]
+    }
+    existing_unavailable_numbers = {
+        article.get("article_number")
+        for article in legacy_manifest.get("unavailable_articles", [])
+        if isinstance(article, dict)
+    }
+    existing_unavailable_slugs = {
+        article.get("article_slug")
+        for article in legacy_manifest.get("unavailable_articles", [])
+        if isinstance(article, dict)
+    }
+
+    articles = manifest.get("articles")
+    if not isinstance(articles, list) or len(articles) != article_count:
+        raise ValueError(f"{label} articles do not match article_count")
+    article_numbers: set[str] = set()
+    article_slugs: set[str] = set()
+    source_paths: set[Path] = set()
+    video_paths: set[Path] = set()
+    nested_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    actual_image_count = 0
+    actual_filtered_count = 0
+    actual_unavailable_count = 0
+    previous_article_number = 0
+    normalized_retry_keys: set[tuple[str, str, str]] = set()
+    normalized_asset_by_source: dict[tuple[str, str], tuple[Any, ...]] = {}
+    normalized_source_by_asset: dict[tuple[Any, ...], tuple[str, str]] = {}
+    normalized_repository_path_owners: dict[Path, tuple[str, str]] = {}
+    normalized_retry_namespaces: set[Path] = set()
+    normalized_supersede_keys: set[tuple[str, str, str]] = set()
+
+    def record_normalized_retry(
+        output: dict[str, Any],
+        image: dict[str, Any],
+        *,
+        output_label: str,
+        exhausted: bool,
+    ) -> None:
+        source_key, asset_identity, repository_paths, namespace = (
+            _validate_extension_normalized_input_retry(
+                output,
+                image,
+                label=output_label,
+                exhausted=exhausted,
+            )
+        )
+        logical_key = (*source_key, output["model_id"])
+        if logical_key in normalized_retry_keys:
+            raise ValueError(f"{output_label} duplicate normalized logical output")
+        if namespace in normalized_retry_namespaces:
+            raise ValueError(f"{output_label} normalized retry namespace is reused")
+        normalized_retry_keys.add(logical_key)
+        normalized_retry_namespaces.add(namespace)
+        if isinstance(output.get("retry", {}).get("supersede"), dict):
+            if logical_key in normalized_supersede_keys:
+                raise ValueError(f"{output_label} duplicate normalized supersede")
+            normalized_supersede_keys.add(logical_key)
+
+        prior_identity = normalized_asset_by_source.get(source_key)
+        if prior_identity is not None and prior_identity != asset_identity:
+            raise ValueError(
+                f"{output_label} normalized models do not share one frozen image asset"
+            )
+        prior_source = normalized_source_by_asset.get(asset_identity)
+        if prior_source is not None and prior_source != source_key:
+            raise ValueError(
+                f"{output_label} normalized frozen asset is shared across images"
+            )
+        normalized_asset_by_source[source_key] = asset_identity
+        normalized_source_by_asset[asset_identity] = source_key
+        for repository_path in repository_paths:
+            prior_owner = normalized_repository_path_owners.get(repository_path)
+            if prior_owner is not None and prior_owner != source_key:
+                raise ValueError(
+                    f"{output_label} normalized repository path is shared across images"
+                )
+            normalized_repository_path_owners[repository_path] = source_key
+
+    for article in articles:
+        if not isinstance(article, dict):
+            raise ValueError(f"{label} article must be an object")
+        article_number = article.get("article_number")
+        article_slug = article.get("article_slug")
+        if (
+            not isinstance(article_number, str)
+            or len(article_number) != 2
+            or not article_number.isdigit()
+            or int(article_number) <= previous_article_number
+            or article_number in article_numbers
+            or article_number in existing_article_numbers
+            or article_number in existing_unavailable_numbers
+            or not isinstance(article_slug, str)
+            or not article_slug.strip()
+            or article_slug in article_slugs
+            or article_slug in existing_article_slugs
+            or article_slug in existing_unavailable_slugs
+        ):
+            raise ValueError(f"{label} article identity collides or is unordered")
+        previous_article_number = int(article_number)
+        article_numbers.add(article_number)
+        article_slugs.add(article_slug)
+        image_records = article.get("images")
+        context_path = _safe_extension_audit_path(
+            article.get("context_path"),
+            label=f"{label}/{article_number} context_path",
+        )
+        expected_context_path = (
+            PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT
+            / article_slug
+            / "content.json"
+        )
+        if context_path != expected_context_path:
+            raise ValueError(
+                f"{label} context_path is outside its extension namespace"
+            )
+        if (
+            not isinstance(article.get("title"), str)
+            or not article["title"].strip()
+            or not isinstance(article.get("url"), str)
+            or not article["url"].startswith("https://")
+            or not isinstance(image_records, list)
+            or not image_records
+            or article.get("image_count") != len(image_records)
+        ):
+            raise ValueError(f"{label} article payload is incomplete")
+
+        image_ids: set[str] = set()
+        for record in image_records:
+            image = record.get("image") if isinstance(record, dict) else None
+            image_id = image.get("image_id") if isinstance(image, dict) else None
+            planning = record.get("lite_planning") if isinstance(record, dict) else None
+            if (
+                not isinstance(image_id, str)
+                or len(image_id) != 2
+                or not image_id.isdigit()
+                or image_id in image_ids
+                or image.get("delivery") not in {None, "repository-raw"}
+                or not _is_sha256(image.get("sha256"))
+                or not isinstance(image.get("manifest_file_path"), str)
+                or not image["manifest_file_path"].strip()
+                or not isinstance(planning, dict)
+                or planning.get("provenance", {}).get("verified") is not True
+                or planning.get("provenance", {}).get("agent_id") != "clipmaker-lite"
+            ):
+                raise ValueError(f"{label} image or Lite provenance is invalid")
+            image_ids.add(image_id)
+            manifest_file_path = _safe_extension_audit_path(
+                image.get("manifest_file_path"),
+                label=(
+                    f"{label}/{article_number}/{image_id} manifest_file_path"
+                ),
+            )
+            expected_manifest_parent = (
+                PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT / article_slug
+            )
+            if manifest_file_path.parent != expected_manifest_parent:
+                raise ValueError(
+                    f"{label} manifest_file_path is outside its extension namespace"
+                )
+            source_path = _safe_relative_path(image.get("source_path"))
+            if (
+                source_path in source_paths
+                or source_path in existing_source_paths
+                or source_path in remote_repository_paths
+            ):
+                raise ValueError(f"{label} source path collision: {source_path}")
+            source_paths.add(source_path)
+            remote_repository_paths.add(source_path)
+
+            outputs = record.get("outputs")
+            if (
+                not isinstance(outputs, list)
+                or len(outputs) != len(PROMOPAGES_10060_MODELS)
+                or tuple(
+                    output.get("model_id")
+                    for output in outputs
+                    if isinstance(output, dict)
+                )
+                != PROMOPAGES_10060_MODELS
+            ):
+                raise ValueError(f"{label} image must contain all three models")
+            for output in outputs:
+                if (
+                    not isinstance(output, dict)
+                    or output.get("article_slug") != article_slug
+                    or output.get("image_id") != image_id
+                    or output.get("delivery") not in {None, "repository-raw"}
+                ):
+                    raise ValueError(f"{label} output identity or delivery is invalid")
+                key = (article_slug, image_id, output["model_id"])
+                if key in nested_by_key:
+                    raise ValueError(f"{label} logical output collision")
+                nested_by_key[key] = output
+                status = output.get("status")
+                if status == PROMOPAGES_10060_FILTERED_STATUS:
+                    _validate_provider_filtered_output(
+                        output,
+                        label=f"{label}/{article_number}/{image_id}/{output['model_id']}",
+                    )
+                    actual_filtered_count += 1
+                    continue
+                if status == PROMOPAGES_10060_UNAVAILABLE_STATUS:
+                    retry = output.get("retry")
+                    if (
+                        isinstance(retry, dict)
+                        and retry.get("retry_kind") == "normalized-input"
+                    ):
+                        record_normalized_retry(
+                            output,
+                            image,
+                            output_label=(
+                                f"{label}/{article_number}/{image_id}/"
+                                f"{output['model_id']}"
+                            ),
+                            exhausted=True,
+                        )
+                    else:
+                        _validate_provider_unavailable_output(
+                            output,
+                            label=(
+                                f"{label}/{article_number}/{image_id}/"
+                                f"{output['model_id']}"
+                            ),
+                        )
+                    actual_unavailable_count += 1
+                    continue
+                if status not in PROMOPAGES_10060_MEDIA_STATUSES:
+                    raise ValueError(f"{label} output status is invalid")
+                video_path = _safe_relative_path(output.get("video_path"))
+                if (
+                    video_path.suffix.lower() != ".mp4"
+                    or video_path in video_paths
+                    or video_path in existing_video_paths
+                    or video_path in remote_repository_paths
+                ):
+                    raise ValueError(f"{label} video path collision or invalid MP4")
+                retry = output.get("retry")
+                if (
+                    isinstance(retry, dict)
+                    and retry.get("retry_kind") == "normalized-input"
+                ):
+                    record_normalized_retry(
+                        output,
+                        image,
+                        output_label=(
+                            f"{label}/{article_number}/{image_id}/"
+                            f"{output['model_id']}"
+                        ),
+                        exhausted=False,
+                    )
+                elif (
+                    isinstance(retry, dict)
+                    and retry.get("retry_kind") == "ambiguous-submit"
+                ):
+                    _validate_ambiguous_submit_retry(
+                        output,
+                        label=f"{label}/{article_number}/{image_id}/{output['model_id']}",
+                        exhausted=False,
+                    )
+                video_paths.add(video_path)
+                remote_repository_paths.add(video_path)
+            actual_image_count += 1
+
+    if normalized_retry_keys:
+        expected_normalized_retry_keys = {
+            (*source_key, model_id)
+            for source_key in PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES
+            for model_id in ("alibaba/wan-2.2", "alibaba/wan-2.7")
+        }
+        if (
+            normalized_retry_keys != expected_normalized_retry_keys
+            or set(normalized_asset_by_source)
+            != set(PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES)
+        ):
+            raise ValueError(
+                f"{label} must contain both Wan normalized retries for images 05/07/08"
+            )
+
+        generation_policy = manifest.get("generation_policy")
+        normalized_policy = (
+            generation_policy.get("normalized_input_retry")
+            if isinstance(generation_policy, dict)
+            else None
+        )
+        expected_eligible_sources = [
+            {
+                "article_slug": article_slug,
+                "image_id": image_id,
+                "source_sha256": asset["source_sha256"],
+                "models": ["alibaba/wan-2.2", "alibaba/wan-2.7"],
+                "failure_kind": "minimum-dimension",
+                "normalization_strategy": "deterministic-uniform-upscale",
+            }
+            for (article_slug, image_id), asset in (
+                PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES.items()
+            )
+        ]
+        if (
+            not isinstance(normalized_policy, dict)
+            or normalized_policy.get("version") != 1
+            or normalized_policy.get("namespace")
+            != PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE.as_posix()
+            or normalized_policy.get("shared_asset_namespace")
+            != PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE.as_posix()
+            or normalized_policy.get("eligible_sources")
+            != expected_eligible_sources
+            or normalized_policy.get("explicit_operator_command_required") is not True
+            or normalized_policy.get(
+                "maximum_new_paid_submissions_per_eligible_output"
+            )
+            != 1
+            or normalized_policy.get("retry2_forbidden") is not True
+            or normalized_policy.get("automatic_paid_retries") is not False
+            or normalized_policy.get("fallback") is not False
+            or normalized_policy.get("primary_receipts_immutable") is not True
+            or normalized_policy.get("request_delta_only_image_pointer") is not True
+        ):
+            raise ValueError(f"{label} normalized-input generation policy is invalid")
+
+        cost = manifest.get("cost")
+        retry_count_fields = (
+            "terminal_retry_reservations",
+            "ambiguous_submit_retry_reservations",
+            "normalized_input_retry_reservations",
+        )
+        supersede_count = len(normalized_supersede_keys)
+        supersede_policy = (
+            generation_policy.get("normalized_input_supersede")
+            if isinstance(generation_policy, dict)
+            else None
+        )
+        if (
+            not isinstance(cost, dict)
+            or cost.get("normalized_input_retry_version") != 1
+            or isinstance(
+                cost.get("normalized_input_retry_accounting_cost_usd"), bool
+            )
+            or cost.get("normalized_input_retry_accounting_cost_usd") != 0.35
+            or cost.get("normalized_input_retry_reservations")
+            != len(normalized_retry_keys)
+            or cost.get("maximum_new_paid_submissions_per_normalized_input_output")
+            != 1
+            or cost.get("automatic_paid_retries") is not False
+            or any(
+                not isinstance(cost.get(field), int)
+                or isinstance(cost.get(field), bool)
+                or cost[field] < 0
+                for field in retry_count_fields
+            )
+            or cost.get("total_retry_reservations")
+            != sum(cost[field] for field in retry_count_fields) + supersede_count
+        ):
+            raise ValueError(f"{label} normalized-input cost accounting is invalid")
+
+        if supersede_count:
+            if (
+                normalized_supersede_keys
+                != {PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_KEY}
+                or cost.get("normalized_input_supersede_version") != 1
+                or isinstance(
+                    cost.get("normalized_input_supersede_accounting_cost_usd"),
+                    bool,
+                )
+                or cost.get("normalized_input_supersede_accounting_cost_usd")
+                != 0.35
+                or cost.get("normalized_input_supersede_reservations") != 1
+                or cost.get("maximum_new_paid_submissions_per_superseded_output")
+                != 1
+            ):
+                raise ValueError(f"{label} normalized supersede cost is invalid")
+            if supersede_policy != _extension_normalized_supersede_policy():
+                raise ValueError(f"{label} normalized supersede policy is invalid")
+        elif any(
+            field in cost
+            for field in (
+                "normalized_input_supersede_version",
+                "normalized_input_supersede_accounting_cost_usd",
+                "normalized_input_supersede_reservations",
+                "maximum_new_paid_submissions_per_superseded_output",
+            )
+        ) or supersede_policy is not None:
+            raise ValueError(f"{label} unbound normalized supersede metadata")
+
+        for repository_path in normalized_repository_path_owners:
+            if repository_path in remote_repository_paths:
+                raise ValueError(
+                    f"{label} normalized repository path collides: {repository_path}"
+                )
+            remote_repository_paths.add(repository_path)
+
+    if (
+        actual_image_count != image_count
+        or len(nested_by_key) != expected_outputs
+        or actual_filtered_count != provider_filtered_count
+        or actual_unavailable_count != provider_unavailable_count
+    ):
+        raise ValueError(f"{label} declared counts do not match nested records")
+
+    flat_outputs = manifest.get("outputs")
+    if not isinstance(flat_outputs, list) or len(flat_outputs) != expected_outputs:
+        raise ValueError(f"{label} flat outputs do not match nested outputs")
+    flat_by_key = {
+        (
+            output.get("article_slug"),
+            output.get("image_id"),
+            output.get("model_id"),
+        ): output
+        for output in flat_outputs
+        if isinstance(output, dict)
+    }
+    if set(flat_by_key) != set(nested_by_key):
+        raise ValueError(f"{label} flat output keys do not match nested outputs")
+    for key, nested in nested_by_key.items():
+        flat = flat_by_key[key]
+        for field in (
+            "status",
+            "video_path",
+            "provider_run_id",
+            "recorded_status",
+            "selected_attempt",
+            "error",
+            "media",
+            "contract_check",
+            "retry",
+        ):
+            if flat.get(field) != nested.get(field):
+                raise ValueError(f"{label} flat output audit differs from nested")
+
+    unavailable_articles = manifest.get("unavailable_articles", [])
+    if not isinstance(unavailable_articles, list):
+        raise ValueError(f"{label} unavailable_articles is invalid")
+    unavailable_numbers: set[str] = set()
+    unavailable_slugs: set[str] = set()
+    for article in unavailable_articles:
+        if (
+            not isinstance(article, dict)
+            or not isinstance(article.get("article_number"), str)
+            or len(article["article_number"]) != 2
+            or not article["article_number"].isdigit()
+            or not isinstance(article.get("article_slug"), str)
+            or not article["article_slug"].strip()
+            or not isinstance(article.get("url"), str)
+            or not article["url"].startswith("https://")
+            or article.get("status") != "source-unavailable"
+            or not isinstance(article.get("error"), str)
+            or not article["error"].strip()
+            or article["article_number"] in article_numbers
+            or article["article_number"] in existing_article_numbers
+            or article["article_number"] in existing_unavailable_numbers
+            or article["article_number"] in unavailable_numbers
+            or article["article_slug"] in article_slugs
+            or article["article_slug"] in existing_article_slugs
+            or article["article_slug"] in existing_unavailable_slugs
+            or article["article_slug"] in unavailable_slugs
+        ):
+            raise ValueError(f"{label} unavailable article collides or is invalid")
+        unavailable_numbers.add(article["article_number"])
+        unavailable_slugs.add(article["article_slug"])
+
+    actual_article_numbers = article_numbers | unavailable_numbers
+    if actual_article_numbers != set(PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS):
+        raise ValueError(
+            f"{label} must account for registered articles 15 through 18"
+        )
 
 
 def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
@@ -1094,6 +2233,24 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
                 raise ValueError(
                     "PROMOPAGES-10060 flat output status/audit differs from nested output"
                 )
+
+    promopages_10060_extension_path = (
+        root / PROMOPAGES_10060_EXTENSION_RELATIVE_PATH
+    )
+    if promopages_10060_extension_path.is_file():
+        if not promopages_10060_path.is_file():
+            raise ValueError(
+                "PROMOPAGES-10060 campaign extension requires the legacy sidecar"
+            )
+        relative_paths.add(PROMOPAGES_10060_EXTENSION_RELATIVE_PATH)
+        extension_manifest = json.loads(
+            promopages_10060_extension_path.read_text(encoding="utf-8")
+        )
+        _collect_promopages_10060_extension_paths(
+            extension_manifest,
+            promopages_10060_manifest,
+            remote_repository_paths,
+        )
 
     for relative_path in remote_repository_paths:
         source = root / relative_path

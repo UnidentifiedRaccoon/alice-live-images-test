@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "15-marykay-sredstva-04",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The top white bottle slips slightly downward into the packed cosmetic bag, softly jostling the adjacent dark pump and clear bottle. Keep the camera fixed; finish with the products settled closely together and the bag unmistakably overcrowded.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "40bded134d1b97684bb0eff8ca5678c341c3d9df58364e6df22f2e1287d9d599",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ckx6d6B1NYuUqBR8w7jL",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T15:28:52Z",
+  "completed_at": "2026-08-05T15:33:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2923257,
+    "sha256": "1a5f4c60fb533ad39b72ca746efe346bc6ee2811f341ab5ee88c35064b827fdc"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04-veo-3-1-lite",
+  "lite_result_sha256": "469c03b99d6e3a987297f86e6275e715102de770d60007435b3dc978780e104f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

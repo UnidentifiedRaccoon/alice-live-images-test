@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/10.png",
+    "sha256": "07681c2ce16f49fa3d99a7ce8873a068a81648a2ec7447be5beef845d3593b22",
+    "width": 1000,
+    "height": 450
+  },
+  "structured_intent": {
+    "editorial_meaning": "Принудительный локальный нагрев нарушает равномерное естественное высыхание наливного пола и создаёт риск дефектов.",
+    "primary_action": "Поток горячего воздуха от тепловой пушки локально подсушивает влажный пол.",
+    "terminal_state": "Перед тепловой пушкой заметен локальный участок пола с ослабленным влажным блеском, окружённый всё ещё мокрой отражающей поверхностью.",
+    "semantic_invariant": "Тепловая пушка остаётся источником вредного локального перегрева, а пол высыхает неравномерно."
+  },
+  "prompt": {
+    "positive": "With the camera fixed, hot air from the heater sweeps the low haze left across the wet floor and lightly disturbs the puddle reflections. By the final frame, a small matte drying zone is visible directly in front of the heater, contrasting with the surrounding glossy floor.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10/result.json",
+    "sha256": "a9062b8441f4762e129811505495bf3e30bd0dd44ad125b6812acc4e9b786986",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "07681c2ce16f49fa3d99a7ce8873a068a81648a2ec7447be5beef845d3593b22",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The vacuum head glides steadily forward over the concrete, continuously collecting the dust and small debris while the hose follows with a soft sway. Keep the camera fixed; end with a broad, visibly clean path behind the vacuum head.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "386f6df22869c5f6f4584ca321ac0d0f34e8b839a52ee0c178aa9a1b3b506f46",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "KXwPiMAPWksgSfWMn6RD",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:38:58Z",
+  "completed_at": "2026-08-05T16:40:14Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1936,
+    "height": 1070,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5181364,
+    "sha256": "f53d5b9e3d71b1c1920bb67151a61875992b3db25b3eed91d0095c5aa19476cd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05-wan-2-7",
+  "lite_result_sha256": "022d68692b9eef3c1abb7265cf77af1a00a7ac4f3681f5940baf4749e6d7ccc9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

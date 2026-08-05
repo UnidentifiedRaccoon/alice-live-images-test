@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+    "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a",
+    "width": 752,
+    "height": 502
+  },
+  "structured_intent": {
+    "editorial_meaning": "Аккуратное нанесение плиточного клея тонким равномерным слоем поддерживает рекомендацию правильно подготовить ровный наливной пол перед укладкой плитки.",
+    "primary_action": "Мастер одним непрерывным проходом зубчатого шпателя прочёсывает тонкий слой плиточного клея на открытом участке основания.",
+    "terminal_state": "Открытый участок у края уложенной плитки покрыт новой ровной полосой параллельных клеевых борозд.",
+    "semantic_invariant": "Основание остаётся ровным и подготовленным, а работа — точной и технологичной до последнего кадра."
+  },
+  "prompt": {
+    "positive": "The worker steadily pulls the notched trowel across the exposed floor, combing a thin layer of adhesive into uniform parallel ridges. Keep the camera fixed overhead and finish with the expanded ridged area even along the tile edge.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06/result.json",
+    "sha256": "8d52478580a20d8554c9a91e03eafb4d4cc0982d886ed2a8c0562212a512fc64",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.6",
+      "contract_fingerprint": "sha256:e6925c11163c02899ea6001ee23bd8b70f5184f0aa6d7dc477ee763e7c4ed51a",
+      "instruction_bundle_sha256": "688db98f5cf83306f6ff966a531a3bc4c544259c98cc9f0ecde5fd70d3a7ec63",
+      "source_image_sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

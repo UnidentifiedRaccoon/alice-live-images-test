@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-10",
+  "image_id": "10",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/10.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With the camera fixed, hot air from the heater sweeps the low haze left across the wet floor and lightly disturbs the puddle reflections. By the final frame, a small matte drying zone is visible directly in front of the heater, contrasting with the surrounding glossy floor.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d26a/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "1665bf3411af44bc4bbd9cf656f59d24897d55b99ad44072dfd45ac2eb76ca6b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "xUNv29oMlxgfoHfpbLkB",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:48:03Z",
+  "completed_at": "2026-08-05T16:49:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2481606,
+    "sha256": "7d0fcd1a7021f3520fcc15e8d7c6d11a3fe76c2e1123372559cfd43589c4fabc"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10-veo-3-1-lite",
+  "lite_result_sha256": "a9062b8441f4762e129811505495bf3e30bd0dd44ad125b6812acc4e9b786986",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
