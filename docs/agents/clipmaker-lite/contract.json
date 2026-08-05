@@ -1,20 +1,20 @@
 {
   "schema_version": 1,
   "agent_id": "clipmaker-lite",
-  "contract_version": "2.0.2",
+  "contract_version": "2.0.6",
   "loader_version": 1,
   "runner": {
     "runner_id": "clipmaker-lite-runner",
-    "runner_version": 4,
+    "runner_version": 7,
     "path": "scripts/clipmaker_lite_runner.py",
-    "sha256": "0fc2dffdd0a808790dbba69db357337e1fee8adef06c6358a1cd6bea0eba175b"
+    "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
   },
   "execution": {
     "executor_id": "codex-exec",
     "binary": {
       "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
-      "sha256": "6d8be49e49751554df16572369e636cbe02c84b208cad3dc35528c846eeca223",
-      "version": "codex-cli 0.146.0-alpha.3.1"
+      "sha256": "d96ae1ca1ff6fc8587842fa04c92d3ee4d31651a811c2f89b65fcfd9c28473e2",
+      "version": "codex-cli 0.146.0-alpha.9.2"
     },
     "sandbox": "read-only",
     "ephemeral": true,
@@ -31,14 +31,14 @@
   },
   "base_instruction": {
     "path": "docs/agents/clipmaker-lite/README.md",
-    "sha256": "65968cb6b537bb2dc00bedaa6b5dfedcc10fe76e92e4ac2393e4ef6423a72ed7"
+    "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
   },
   "models": {
     "alibaba/wan-2.2": {
       "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
-      "spec_sha256": "3508cf668f94db62019101d81c1964259612915f06d869b4f8c98b3aa9b3ef15",
+      "spec_sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3",
       "runtime": {
-        "duration_seconds": 3.2,
+        "duration_seconds": 5,
         "resolution": "720p",
         "aspect_ratios": [
           "source"
@@ -47,19 +47,24 @@
         "frame_inputs": [
           "first_frame"
         ],
-        "provider": "wan-streamlit",
-        "adapter": "wan-demo",
-        "frames": 97,
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
         "fps": 30,
-        "seed": 1,
-        "loop": false,
-        "last_frame": null,
+        "seed": 220214,
+        "watermark": false,
         "prompt_expansion": {
-          "mode": "not_exposed"
+          "parameter": "prompt_extend",
+          "value": false
         },
         "negative_prompt_transport": {
-          "mode": "combined_prompt",
-          "separator": "\n\nAvoid: "
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
         }
       }
     },

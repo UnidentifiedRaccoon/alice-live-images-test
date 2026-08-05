@@ -48,8 +48,10 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         wan22 = (MODELS / "alibaba-wan-2.2.md").read_text(encoding="utf-8")
         wan = (MODELS / "alibaba-wan-2.7.md").read_text(encoding="utf-8")
         veo = (MODELS / "google-veo-3.1-lite.md").read_text(encoding="utf-8")
-        self.assertIn("| Planning duration | `3.2 s` |", wan22)
-        self.assertIn("Prompt expansion | Not exposed", wan22)
+        self.assertIn("| Planning duration | `5 s` |", wan22)
+        self.assertIn("Prompt expansion | `prompt_extend: false`", wan22)
+        self.assertIn("authored `null`", wan22)
+        self.assertIn("пустая строка `\"\"`", wan22)
         self.assertIn("межмодельный replay запрещены", wan22)
         self.assertIn("| Duration | `5 s` |", wan)
         self.assertIn("`prompt_extend: true`", wan)
@@ -59,8 +61,8 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.2")
-        self.assertEqual(contract["runner"]["runner_version"], 4)
+        self.assertEqual(contract["contract_version"], "2.0.6")
+        self.assertEqual(contract["runner"]["runner_version"], 7)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
         self.assertEqual(contract["execution"]["tool_event_policy"], "reject-run")
@@ -88,16 +90,32 @@ class ClipmakerLiteContractTest(unittest.TestCase):
                 sha256_file(MODELS / filename),
             )
         wan22_runtime = contract["models"]["alibaba/wan-2.2"]["runtime"]
-        self.assertEqual(wan22_runtime["duration_seconds"], 3.2)
+        self.assertEqual(wan22_runtime["duration_seconds"], 5)
         self.assertEqual(wan22_runtime["resolution"], "720p")
         self.assertEqual(wan22_runtime["aspect_ratios"], ["source"])
-        self.assertEqual(wan22_runtime["provider"], "wan-streamlit")
-        self.assertEqual(wan22_runtime["adapter"], "wan-demo")
-        self.assertEqual((wan22_runtime["frames"], wan22_runtime["fps"]), (97, 30))
-        self.assertEqual(wan22_runtime["prompt_expansion"], {"mode": "not_exposed"})
+        self.assertEqual(wan22_runtime["gateway"], "eliza")
+        self.assertEqual(wan22_runtime["provider"], "segmind")
+        self.assertEqual(
+            wan22_runtime["provider_model_id"],
+            "segmind/wan-2.2-i2v-flash",
+        )
+        self.assertEqual(wan22_runtime["adapter"], "eliza-segmind")
+        self.assertTrue(wan22_runtime["synchronous"])
+        self.assertFalse(wan22_runtime["automatic_retry"])
+        self.assertEqual((wan22_runtime["frames"], wan22_runtime["fps"]), (150, 30))
+        self.assertEqual(wan22_runtime["seed"], 220214)
+        self.assertFalse(wan22_runtime["watermark"])
+        self.assertEqual(
+            wan22_runtime["prompt_expansion"],
+            {"parameter": "prompt_extend", "value": False},
+        )
         self.assertEqual(
             wan22_runtime["negative_prompt_transport"],
-            {"mode": "combined_prompt", "separator": "\n\nAvoid: "},
+            {
+                "mode": "separate_field",
+                "parameter": "negative_prompt",
+                "null_serialization": "empty_string",
+            },
         )
         self.assertEqual(contract["models"]["alibaba/wan-2.7"]["runtime"]["duration_seconds"], 5)
         self.assertEqual(contract["models"]["google/veo-3.1-lite"]["runtime"]["duration_seconds"], 4)

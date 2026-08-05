@@ -79,6 +79,12 @@ DEFAULT_ELIZA_CONCURRENCY = DEFAULT_WAN_27_CONCURRENCY
 # Only isolated historical/diagnostic wrappers may override this.  Normal
 # batches leave it unset and therefore use the registry's legacy Wan route.
 WAN_SUBMIT_MODE: str | None = None
+# Programmatic-only terminal scheduling exclusions. A higher-level coordinator
+# may populate this scoped set only after it has independently verified a
+# terminal logical-output overlay. The rows remain in the immutable matrix and
+# aggregate manifest; they are merely withheld from provider workers and from
+# automatic unresolved-job widening for that invocation.
+SCHEDULING_EXCLUDED_RUN_IDS: frozenset[str] = frozenset()
 BLOCKED_STATUSES = {
     "stale",
     "failed",
@@ -94,6 +100,19 @@ TERMINAL_PROVIDER_FAILURE_MARKERS = (
     "canceled",
     "expired",
     "session_not_found",
+)
+LEGACY_ELIZA_DNS_PRE_SUBMIT_ERROR = (
+    "POST https://api.eliza.yandex.net/openrouter/v1/videos failed: "
+    "[Errno 8] nodename nor servname provided, or not known"
+)
+# One receipt written before PreSubmitRejectedError existed. Hashing the exact
+# dynamic error avoids embedding quota-account metadata in source while keeping
+# this migration scoped to that receipt and request only.
+LEGACY_SEGMIND_QUOTA_ERROR_SHA256 = (
+    "fa3dfebe3283a1ac3e9cc32f2973e2d1006ac39ee246cd5a098b8b6f10194df2"
+)
+LEGACY_SEGMIND_QUOTA_REQUEST_SHA256 = (
+    "6d148c413381576069d9964a34805cfa1a9dccda881ec7aa5cb0646fc1e5bd34"
 )
 
 
@@ -201,6 +220,7 @@ class ProviderOperations:
     http_json: Callable[..., Any]
     eliza_poll: Callable[..., dict[str, Any]]
     http_download: Callable[..., None]
+    segmind_generate: Callable[..., dict[str, Any]]
     wan_generate: Callable[..., None]
     media_probe: Callable[[Path], dict[str, Any]]
 
@@ -308,6 +328,7 @@ def default_provider_operations() -> ProviderOperations:
         http_json=transport.http_json,
         eliza_poll=transport.eliza_poll,
         http_download=transport.http_download,
+        segmind_generate=transport.segmind_generate,
         wan_generate=transport.wan_generate,
         media_probe=transport.ffprobe_media,
     )
@@ -781,6 +802,54 @@ def _active_request_is_exact(
     )
 
 
+def _is_exact_legacy_eliza_dns_pre_submit_failure(
+    run: dict[str, Any],
+    request: dict[str, Any],
+    fingerprint: str,
+    adapter: str,
+) -> bool:
+    """Recognize only the one historical DNS failure proven pre-submit."""
+
+    return (
+        adapter == "eliza-openrouter"
+        and run.get("status") == "submit-unknown"
+        and "provider_job_id" in run
+        and run["provider_job_id"] is None
+        and "submitted_at" in run
+        and run["submitted_at"] is None
+        and run.get("completed_at") is None
+        and run.get("provider_may_be_active") is True
+        and run.get("error") == LEGACY_ELIZA_DNS_PRE_SUBMIT_ERROR
+        and _active_request_is_exact(run, request, fingerprint)
+    )
+
+
+def _is_exact_legacy_segmind_quota_pre_submit_failure(
+    run: dict[str, Any],
+    request: dict[str, Any],
+    fingerprint: str,
+    adapter: str,
+) -> bool:
+    """Recognize only the current Segmind HTTP 429 quota receipt."""
+
+    error = run.get("error")
+    return (
+        adapter == "eliza-segmind"
+        and run.get("status") == "submit-unknown"
+        and "provider_job_id" in run
+        and run["provider_job_id"] is None
+        and "submitted_at" in run
+        and run["submitted_at"] is None
+        and run.get("completed_at") is None
+        and run.get("provider_may_be_active") is True
+        and fingerprint == LEGACY_SEGMIND_QUOTA_REQUEST_SHA256
+        and isinstance(error, str)
+        and hashlib.sha256(error.encode("utf-8")).hexdigest()
+        == LEGACY_SEGMIND_QUOTA_ERROR_SHA256
+        and _active_request_is_exact(run, request, fingerprint)
+    )
+
+
 def _verification_result(
     row: dict[str, Any],
     run: dict[str, Any],
@@ -838,12 +907,31 @@ def _provider_failure(
     exc: BaseException | str,
 ) -> WorkerResult:
     error = transport.safe_error(exc)
+    if isinstance(exc, transport.SegmindProviderTaskFailedError):
+        # This typed HTTP 400 response proves that Segmind created the task and
+        # that the task is already terminal, even though no success response
+        # supplied the usual request ID header.
+        evidence = dict(exc.evidence)
+        provider_task_id = exc.provider_task_id
+        run.update(
+            {
+                "provider_job_id": provider_task_id,
+                "provider_task_id": provider_task_id,
+                "provider_failure": evidence,
+            }
+        )
     has_provider_id = bool(run.get("provider_job_id"))
+    definitive_pre_submit = isinstance(
+        exc,
+        (transport.PreSubmitNetworkError, transport.PreSubmitRejectedError),
+    )
     terminal = isinstance(exc, transport.ProviderTerminalError) or any(
         marker in error.lower() for marker in TERMINAL_PROVIDER_FAILURE_MARKERS
     )
     if has_provider_id:
         status = "provider-failed" if terminal else "submitted"
+    elif definitive_pre_submit:
+        status = "failed-pre-submit"
     else:
         status = "submit-unknown" if run.get("status") == "submitting" else "failed-pre-submit"
     run.update(
@@ -919,6 +1007,30 @@ def _run_eliza_worker(
                 raise transport.PipelineError(
                     "Eliza/OpenRouter submit response did not contain a job ID"
                 )
+        except (
+            transport.PreSubmitNetworkError,
+            transport.PreSubmitRejectedError,
+        ) as exc:
+            # A typed DNS failure happened before a connection, or the provider
+            # definitively rejected the HTTP request before creating a job.
+            run.update(
+                {
+                    "status": "failed-pre-submit",
+                    "provider_job_id": None,
+                    "submitted_at": None,
+                    "completed_at": None,
+                    "provider_may_be_active": False,
+                    "error": transport.safe_error(exc),
+                }
+            )
+            _persist_run(paths["run"], run)
+            return _result(
+                row,
+                failed=True,
+                status="failed-pre-submit",
+                error=run["error"],
+                holds_provider_slot=False,
+            )
         except Exception as exc:
             # Once POST starts, its outcome is ambiguous unless a provider ID was
             # durably observed. Never repeat this paid submit automatically.
@@ -981,6 +1093,98 @@ def _run_eliza_worker(
             headers=headers,
             timeout=600,
         )
+    except Exception as exc:
+        return _provider_failure(row, run, exc)
+    return _verification_result(row, run, operations)
+
+
+def _run_segmind_worker(
+    row: dict[str, Any],
+    run: dict[str, Any],
+    args: argparse.Namespace,
+    operations: ProviderOperations,
+    root: Path,
+    *,
+    resume: bool,
+) -> WorkerResult:
+    """Run the canonical synchronous Wan 2.2 route exactly once."""
+
+    paths = row["paths"]
+    if resume:
+        # A synchronous response has no poll/download endpoint. A crash after
+        # the response may resume local verification only when the MP4 and the
+        # provider request identity were already persisted.
+        if not paths["video"].is_file():
+            error = "Synchronous Eliza/Segmind response has no resumable MP4; resubmit is blocked"
+            run.update(
+                {
+                    "status": "stale",
+                    "provider_may_be_active": False,
+                    "completed_at": None,
+                    "error": error,
+                }
+            )
+            _persist_run(paths["run"], run)
+            return _result(row, failed=True, status="stale", error=error)
+        run.update(
+            {
+                "status": "running",
+                "provider_may_be_active": False,
+                "last_worker_failure": None,
+                "error": None,
+            }
+        )
+        _persist_run(paths["run"], run)
+        return _verification_result(row, run, operations)
+
+    def on_submitting(source_preflight: dict[str, Any]) -> None:
+        # Revalidate the immutable Lite request after the remote source digest
+        # check and immediately before the one non-idempotent paid POST.
+        fresh = materialize_entry(row["entry"], root)
+        fresh_request = provider_request_preview(fresh["sample"], fresh["prompt"])
+        current_request = provider_request_preview(row["sample"], row["prompt"])
+        if fresh_request != current_request:
+            raise BatchPipelineError(
+                "Eliza/Segmind provider request changed after source preflight"
+            )
+        run.update(
+            {
+                "status": "submitting",
+                "provider_may_be_active": True,
+                "source_preflight": source_preflight,
+                "last_worker_failure": None,
+                "error": None,
+            }
+        )
+        _persist_run(paths["run"], run)
+
+    try:
+        response = operations.segmind_generate(
+            row["sample"],
+            row["prompt"],
+            paths["video"],
+            args.segmind_base_url,
+            args.timeout,
+            on_submitting,
+        )
+        request_id = response.get("request_id") if isinstance(response, dict) else None
+        if not isinstance(request_id, str) or not request_id:
+            raise BatchPipelineError(
+                "Eliza/Segmind completed without a provider request ID"
+            )
+        run.update(
+            {
+                "status": "running",
+                "provider_job_id": request_id,
+                "provider_session_hash": None,
+                "submitted_at": transport.utc_now(),
+                "provider_response": response,
+                "provider_may_be_active": False,
+                "last_worker_failure": None,
+                "error": None,
+            }
+        )
+        _persist_run(paths["run"], run)
     except Exception as exc:
         return _provider_failure(row, run, exc)
     return _verification_result(row, run, operations)
@@ -1100,6 +1304,31 @@ def run_provider_worker(
         )
         return _result(row, failed=True, status=str(status), error=error)
 
+    legacy_recovery: str | None = None
+    if _is_exact_legacy_eliza_dns_pre_submit_failure(
+        run, request, fingerprint, adapter
+    ):
+        legacy_recovery = "reclassified-pre-submit-dns"
+    elif _is_exact_legacy_segmind_quota_pre_submit_failure(
+        run, request, fingerprint, adapter
+    ):
+        legacy_recovery = "reclassified-pre-submit-http-429"
+
+    if legacy_recovery is not None:
+        # Older http_json versions erased socket.gaierror's type and therefore
+        # recorded DNS resolution as ambiguous; the Segmind transport likewise
+        # used to erase a definitive quota rejection. Exact receipt bindings
+        # allow only those two proven pre-submit failures to be recovered.
+        run.update(
+            {
+                "status": "failed-pre-submit",
+                "provider_may_be_active": False,
+                "last_worker_failure": legacy_recovery,
+            }
+        )
+        _persist_run(paths["run"], run)
+        status = "failed-pre-submit"
+
     if status == "succeeded" and paths["video"].is_file() and not force:
         effective_status = effective_run_status(run)
         if effective_status == "verification-failed":
@@ -1159,7 +1388,7 @@ def run_provider_worker(
         active_is_valid = bool(provider_id) and _active_request_is_exact(
             run, request, fingerprint
         )
-        if row["entry"].model_id == WAN_MODEL_ID:
+        if adapter == "wan-demo":
             active_is_valid = active_is_valid and bool(wan_session)
         if not active_is_valid:
             error = "Active provider job is missing its exact request, fingerprint, or provider identity"
@@ -1197,7 +1426,11 @@ def run_provider_worker(
         return _result(row, failed=False, status="dry-run")
 
     if not resume:
-        pre_submit_status = "preparing" if adapter == "wan-demo" else "submitting"
+        pre_submit_status = (
+            "preparing"
+            if adapter in {"wan-demo", "eliza-segmind"}
+            else "submitting"
+        )
         run.update(
             {
                 "status": pre_submit_status,
@@ -1217,6 +1450,8 @@ def run_provider_worker(
         )
         _persist_run(paths["run"], run)
 
+    if adapter == "eliza-segmind":
+        return _run_segmind_worker(row, run, args, operations, root, resume=resume)
     if adapter == "wan-demo":
         return _run_wan_worker(row, run, args, operations, root, resume=resume)
     if adapter == "eliza-openrouter":
@@ -1605,6 +1840,8 @@ def _provider_queue_priority(row: dict[str, Any]) -> int:
 
 
 def _row_has_unresolved_provider(row: dict[str, Any]) -> bool:
+    if row["entry"].run_id in SCHEDULING_EXCLUDED_RUN_IDS:
+        return False
     path = row["paths"]["run"]
     if not path.is_file():
         return False
@@ -1634,8 +1871,20 @@ def run_selected(
             "Real generation requires --allow-external-processing because images and Lite prompts are sent to providers"
         )
     selected = select_rows(rows, args.run_id, args.model)
+    known_run_ids = {row["entry"].run_id for row in rows}
+    unknown_exclusions = set(SCHEDULING_EXCLUDED_RUN_IDS) - known_run_ids
+    if unknown_exclusions:
+        raise BatchPipelineError(
+            "Unknown scheduling exclusions: "
+            + ", ".join(sorted(unknown_exclusions))
+        )
+    selected = [
+        row
+        for row in selected
+        if row["entry"].run_id not in SCHEDULING_EXCLUDED_RUN_IDS
+    ]
     if not selected:
-        raise BatchPipelineError("Filters selected no batch entries")
+        raise BatchPipelineError("Filters selected no executable batch entries")
     selected_entries = {row["entry"] for row in selected}
     unresolved = [
         row
@@ -1848,10 +2097,25 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--timeout", type=int, default=1800)
     run.add_argument("--poll-interval", type=float, default=10.0)
     run.add_argument("--allow-external-processing", action="store_true")
-    run.add_argument("--wan-base-url", default=os.environ.get("WAN_DEMO_BASE_URL", transport.DEFAULT_WAN_BASE_URL))
+    run.add_argument(
+        "--segmind-base-url",
+        default=os.environ.get(
+            "ELIZA_SEGMIND_BASE_URL",
+            transport.DEFAULT_SEGMIND_BASE_URL,
+        ),
+        help="Wan 2.2 / Segmind base URL (normal route is fixed by the registry)",
+    )
+    # Retained only for isolated historical Gradio wrappers. The canonical
+    # alibaba/wan-2.2 adapter never reads these options.
+    run.add_argument(
+        "--wan-base-url",
+        default=os.environ.get("WAN_DEMO_BASE_URL"),
+        help="historical Gradio wrapper only; canonical Wan 2.2 does not use it",
+    )
     run.add_argument(
         "--wan-stream-base-url",
-        default=os.environ.get("WAN_DEMO_STREAM_BASE_URL", transport.DEFAULT_WAN_STREAM_BASE_URL),
+        default=os.environ.get("WAN_DEMO_STREAM_BASE_URL"),
+        help="historical Gradio wrapper only; canonical Wan 2.2 does not use it",
     )
     run.add_argument(
         "--eliza-base-url",

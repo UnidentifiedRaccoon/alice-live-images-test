@@ -1,0 +1,6579 @@
+#!/usr/bin/env python3
+"""Coordinate the resumable PROMOPAGES-10060 Clipmaker Lite batch.
+
+The batch is discovered from the ticket article configuration plus the
+namespaced image manifest and article contexts.  It includes every manifest
+image from every successfully extracted article, including each cover, in
+article/block order.  One isolated Lite plan contains independent plans for all
+three exact model IDs, and the provider matrix uses the locked generation
+registry without discovery or fallback.
+
+This module intentionally writes only its own batch namespace and the final
+``clipmaker-lite-test/promopages-10060-manifest.json`` sidecar.  Existing demo
+and generation manifests are immutable inputs outside this coordinator.
+"""
+
+from __future__ import annotations
+
+import argparse
+import copy
+import csv
+import fcntl
+import hashlib
+import json
+import subprocess
+import sys
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
+from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
+from pathlib import Path, PurePosixPath
+from typing import Any, Iterable, Sequence
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
+from scripts import clipmaker_lite_runner as runner  # noqa: E402
+from scripts import video_generation_pipeline as transport  # noqa: E402
+
+
+TICKET = "PROMOPAGES-10060"
+BATCH_ID = "promopages-10060-lite-all-images-20260805-v2"
+PLANNING_BATCH_ID = BATCH_ID
+AGENT_ID = "clipmaker-lite"
+MODEL_IDS = (
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite",
+)
+REQUIRED_CONTRACT_VERSION = "2.0.6"
+
+# Ticket/extraction inputs.  All are namespaced so the historical 9857/9884
+# manifests and contexts remain untouched.
+TICKET_CONFIG_REL = Path("PROMOPAGES-10060/articles.json")
+EXTRACTION_REPORT_REL = Path("PROMOPAGES-10060/extraction-report.json")
+SOURCE_MANIFEST_REL = Path(
+    "PROMOPAGES-9857/PROMOPAGES-10060/articles/manifest.csv"
+)
+SOURCE_IMAGE_ROOT_REL = Path("PROMOPAGES-9857/PROMOPAGES-10060/articles")
+SOURCE_CONTEXT_ROOT_REL = Path("PROMOPAGES-9884/PROMOPAGES-10060/articles")
+CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
+ROUTES_REL = Path("docs/agents/clipmaker-lite/generation-routes.json")
+ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
+
+# New batch outputs.  No old manifest is rewritten or extended in place.
+BATCH_ROOT_REL = Path("clipmaker-lite-test/runs") / BATCH_ID
+INVENTORY_MANIFEST_REL = BATCH_ROOT_REL / "inventory.json"
+GENERATION_MANIFEST_REL = BATCH_ROOT_REL / "generation-manifest.json"
+VERIFICATION_REPORT_REL = BATCH_ROOT_REL / "verification-report.json"
+FINAL_MANIFEST_REL = Path("clipmaker-lite-test/promopages-10060-manifest.json")
+
+# A provider-confirmed terminal failure may be retried only by an explicit
+# operator command in a new, deterministic namespace.  The primary batch
+# receipts are immutable evidence and are never rewritten by this mechanism.
+TERMINAL_RETRY_VERSION = 1
+TERMINAL_RETRY_NAMESPACE_REL = BATCH_ROOT_REL / "terminal-provider-retries-v1"
+TERMINAL_RETRY_ACCOUNTING_COST_USD = Decimal("0.35")
+
+# A synchronous Segmind POST can be left in an honestly ambiguous state when
+# the client loses the response after the paid request may already have
+# reached the provider.  Such a receipt is never rewritten or reclassified as
+# pre-submit.  The only escape hatch is one operator-authorized, separately
+# accounted retry in this quarantine namespace.
+AMBIGUOUS_SUBMIT_RETRY_VERSION = 1
+AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL = (
+    BATCH_ROOT_REL / "ambiguous-submit-retries-v1"
+)
+AMBIGUOUS_SUBMIT_RETRY_ACCOUNTING_COST_USD = Decimal("0.35")
+
+# One source in the frozen inventory exceeded both Wan transports' 20 MiB
+# input limit.  The only allowed remediation is one explicit retry per exact
+# failed primary, replacing only the provider request's image URL with the
+# source manifest's already-published /scale_1200 variant.  The original Lite
+# analysis, prompts, model routes, and primary receipts remain immutable.
+NORMALIZED_INPUT_RETRY_VERSION = 1
+NORMALIZED_INPUT_RETRY_NAMESPACE_REL = (
+    BATCH_ROOT_REL / "normalized-input-retries-v1"
+)
+NORMALIZED_INPUT_ASSET_NAMESPACE_REL = (
+    BATCH_ROOT_REL / "normalized-input-assets-v1"
+)
+NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD = Decimal("0.35")
+NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG = "12-dream-island-7-fishek"
+NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID = "08"
+NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256 = (
+    "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d"
+)
+NORMALIZED_INPUT_ELIGIBLE_MODELS = (
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+)
+NORMALIZED_INPUT_MAX_BYTES = 20 * 1024 * 1024
+
+HARD_BUDGET_CAP_USD = Decimal("100.00")
+# Ticket-local accounting envelope used to admit whole articles in their
+# configured order. The frozen PROMOPAGES-9930 estimate reserves $0.35 for
+# every output. This is conservative for Wan 2.2 compared with its observed
+# $0.18 Segmind response cost. Runtime route discovery remains forbidden.
+ACCOUNTING_COST_PER_OUTPUT_USD = {
+    "alibaba/wan-2.2": Decimal("0.35"),
+    "alibaba/wan-2.7": Decimal("0.35"),
+    "google/veo-3.1-lite": Decimal("0.35"),
+}
+ROUTE_CAPACITIES = {
+    "alibaba/wan-2.2": 1,
+    "alibaba/wan-2.7": 3,
+    "google/veo-3.1-lite": 3,
+}
+ROUTE_IDENTITIES = {
+    "alibaba/wan-2.2": ("eliza-segmind", "eliza-synchronous-binary"),
+    "alibaba/wan-2.7": ("eliza-openrouter", "eliza-video-jobs"),
+    "google/veo-3.1-lite": ("eliza-openrouter", "eliza-video-jobs"),
+}
+
+
+class PipelineError(RuntimeError):
+    """A fail-closed error in the PROMOPAGES-10060 coordinator."""
+
+
+@dataclass(frozen=True)
+class ArticleConfig:
+    number: int
+    label: str
+    folder: str
+    url: str
+
+    @property
+    def number_key(self) -> str:
+        return f"{self.number:02d}"
+
+
+@dataclass(frozen=True)
+class NamespacedSample:
+    """The subset of ``native.Sample`` with ticket-specific bound paths."""
+
+    sample_id: str
+    article_slug: str
+    image_id: str
+    filename: str
+    source_sha256: str
+    width: int
+    height: int
+    bound_source_path: str
+    bound_context_path: str
+
+    @property
+    def source_path(self) -> str:
+        return self.bound_source_path
+
+    @property
+    def context_path(self) -> str:
+        return self.bound_context_path
+
+    @property
+    def planning_run_id(self) -> str:
+        return f"{PLANNING_BATCH_ID}-{self.sample_id}"
+
+
+@dataclass(frozen=True)
+class Article:
+    number: str
+    slug: str
+    label: str
+    url: str
+    title: str
+    lead: str
+    context_path: str
+    context_sha256: str
+    cover_image: dict[str, Any]
+    images: tuple[dict[str, Any], ...]
+
+
+@dataclass(frozen=True)
+class Source:
+    article_number: str
+    article_slug: str
+    context_path: str
+    context_sha256: str
+    image: dict[str, Any]
+
+    @property
+    def sample_id(self) -> str:
+        return f"{self.article_slug}-{self.image['image_id']}"
+
+    @property
+    def planning_run_id(self) -> str:
+        return f"{PLANNING_BATCH_ID}-{self.sample_id}"
+
+    @property
+    def sample(self) -> NamespacedSample:
+        return NamespacedSample(
+            sample_id=self.sample_id,
+            article_slug=self.article_slug,
+            image_id=self.image["image_id"],
+            filename=self.image["file"],
+            source_sha256=self.image["sha256"],
+            width=self.image["width"],
+            height=self.image["height"],
+            bound_source_path=self.image["source_path"],
+            bound_context_path=self.context_path,
+        )
+
+
+@dataclass(frozen=True)
+class TerminalRetryBinding:
+    """Deterministic retry-v1 identity for one primary logical output."""
+
+    source: Source
+    model_id: str
+    primary_provider_run_id: str
+    retry_key: str
+    retry_batch_id: str
+    retry_provider_run_id: str
+
+    @property
+    def directory_rel(self) -> Path:
+        return TERMINAL_RETRY_NAMESPACE_REL / self.retry_key
+
+    @property
+    def envelope_rel(self) -> Path:
+        return self.directory_rel / "retry.json"
+
+    @property
+    def manifest_rel(self) -> Path:
+        return self.directory_rel / "generation-manifest.json"
+
+    @property
+    def media_directory_rel(self) -> Path:
+        return (
+            self.directory_rel
+            / "videos"
+            / native.MODEL_DIRECTORIES[self.model_id]
+        )
+
+    @property
+    def prompt_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.prompt.json"
+
+    @property
+    def run_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.run.json"
+
+    @property
+    def video_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.mp4"
+
+
+@dataclass(frozen=True)
+class AmbiguousSubmitRetryBinding:
+    """Deterministic retry-v1 identity for one quarantined Segmind submit."""
+
+    source: Source
+    model_id: str
+    primary_provider_run_id: str
+    retry_key: str
+    retry_batch_id: str
+    retry_provider_run_id: str
+
+    @property
+    def directory_rel(self) -> Path:
+        return AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL / self.retry_key
+
+    @property
+    def envelope_rel(self) -> Path:
+        return self.directory_rel / "retry.json"
+
+    @property
+    def manifest_rel(self) -> Path:
+        return self.directory_rel / "generation-manifest.json"
+
+    @property
+    def media_directory_rel(self) -> Path:
+        return (
+            self.directory_rel
+            / "videos"
+            / native.MODEL_DIRECTORIES[self.model_id]
+        )
+
+    @property
+    def prompt_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.prompt.json"
+
+    @property
+    def run_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.run.json"
+
+    @property
+    def video_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.mp4"
+
+
+@dataclass(frozen=True)
+class NormalizedInputRetryBinding:
+    """Retry-v1 identity for one exact oversize primary logical output."""
+
+    source: Source
+    model_id: str
+    primary_provider_run_id: str
+    retry_key: str
+    retry_batch_id: str
+    retry_provider_run_id: str
+    asset_key: str
+
+    @property
+    def directory_rel(self) -> Path:
+        return NORMALIZED_INPUT_RETRY_NAMESPACE_REL / self.retry_key
+
+    @property
+    def envelope_rel(self) -> Path:
+        return self.directory_rel / "retry.json"
+
+    @property
+    def manifest_rel(self) -> Path:
+        return self.directory_rel / "generation-manifest.json"
+
+    @property
+    def asset_metadata_rel(self) -> Path:
+        return NORMALIZED_INPUT_ASSET_NAMESPACE_REL / self.asset_key / "asset.json"
+
+    @property
+    def media_directory_rel(self) -> Path:
+        return (
+            self.directory_rel
+            / "videos"
+            / native.MODEL_DIRECTORIES[self.model_id]
+        )
+
+    @property
+    def prompt_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.prompt.json"
+
+    @property
+    def run_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.run.json"
+
+    @property
+    def video_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.mp4"
+
+
+@dataclass(frozen=True)
+class Discovery:
+    articles: tuple[Article, ...]
+    sources: tuple[Source, ...]
+    unavailable_articles: tuple[dict[str, Any], ...]
+    source_manifest_row_count: int
+    extraction_report_sha256: str | None
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    try:
+        with path.open("rb") as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(chunk)
+    except OSError as exc:
+        raise PipelineError(f"Cannot read {path}: {exc}") from exc
+    return digest.hexdigest()
+
+
+def read_json(path: Path) -> Any:
+    try:
+        with path.open("r", encoding="utf-8") as stream:
+            return json.load(stream)
+    except FileNotFoundError as exc:
+        raise PipelineError(f"Missing JSON file: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise PipelineError(f"Invalid JSON in {path}: {exc}") from exc
+
+
+def relative(path: Path, root: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError as exc:
+        raise PipelineError(f"Path escapes workspace: {path}") from exc
+
+
+def _safe_component(value: Any, field: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise PipelineError(f"{field} must be a non-empty string")
+    if value in {".", ".."} or "/" in value or "\\" in value:
+        raise PipelineError(f"{field} must be one safe path component: {value!r}")
+    if value != value.strip() or any(
+        not (character.isalnum() or character in "._-") for character in value
+    ):
+        raise PipelineError(f"{field} contains unsafe characters: {value!r}")
+    return value
+
+
+def load_ticket_config(root: Path = ROOT) -> tuple[ArticleConfig, ...]:
+    value = read_json(root / TICKET_CONFIG_REL)
+    if not isinstance(value, list) or not value:
+        raise PipelineError("Ticket article config must be a non-empty JSON array")
+    articles: list[ArticleConfig] = []
+    for index, item in enumerate(value, 1):
+        if not isinstance(item, dict):
+            raise PipelineError(f"Ticket article {index} is not an object")
+        number = item.get("number")
+        label = item.get("label")
+        url = item.get("url")
+        if isinstance(number, bool) or not isinstance(number, int) or number < 1:
+            raise PipelineError(f"Ticket article {index} has invalid number")
+        if not isinstance(label, str) or not label.strip():
+            raise PipelineError(f"Ticket article {index} has invalid label")
+        if not isinstance(url, str) or not url.startswith("https://"):
+            raise PipelineError(f"Ticket article {index} has invalid URL")
+        articles.append(
+            ArticleConfig(
+                number=number,
+                label=label,
+                folder=_safe_component(item.get("folder"), "article folder"),
+                url=url,
+            )
+        )
+    articles.sort(key=lambda article: article.number)
+    if [article.number for article in articles] != list(range(1, len(articles) + 1)):
+        raise PipelineError("Ticket article numbers must be unique and contiguous")
+    folders = [article.folder for article in articles]
+    if len(folders) != len(set(folders)):
+        raise PipelineError("Ticket article folders must be unique")
+    return tuple(articles)
+
+
+def _normalized_report_record(
+    config: ArticleConfig,
+    report: dict[str, Any] | None,
+    *,
+    fallback_error: str | None = None,
+) -> dict[str, Any]:
+    status = report.get("status") if isinstance(report, dict) else "source-unavailable"
+    image_count = report.get("image_count") if isinstance(report, dict) else None
+    error = report.get("error") if isinstance(report, dict) else fallback_error
+    return {
+        "article_number": config.number_key,
+        "article_slug": config.folder,
+        "label": config.label,
+        "url": config.url,
+        "status": status,
+        "image_count": image_count,
+        "error": error,
+    }
+
+
+def _availability(
+    configs: Sequence[ArticleConfig], root: Path
+) -> tuple[set[str], tuple[dict[str, Any], ...], str | None]:
+    report_path = root / EXTRACTION_REPORT_REL
+    if not report_path.is_file():
+        available: set[str] = set()
+        unavailable: list[dict[str, Any]] = []
+        for config in configs:
+            context = root / SOURCE_CONTEXT_ROOT_REL / config.folder / "content.json"
+            has_rows = False
+            manifest = root / SOURCE_MANIFEST_REL
+            if manifest.is_file():
+                with manifest.open("r", encoding="utf-8", newline="") as stream:
+                    has_rows = any(
+                        row.get("article_number") == config.number_key
+                        for row in csv.DictReader(stream)
+                    )
+            if context.is_file() and has_rows:
+                available.add(config.folder)
+            else:
+                unavailable.append(
+                    _normalized_report_record(
+                        config,
+                        None,
+                        fallback_error="missing_extracted_context_or_manifest_rows",
+                    )
+                )
+        return available, tuple(unavailable), None
+
+    report = read_json(report_path)
+    if (
+        not isinstance(report, dict)
+        or report.get("schema_version") != 1
+        or report.get("ticket") != TICKET
+        or report.get("dataset_prefix") != TICKET
+        or report.get("article_config") != TICKET_CONFIG_REL.as_posix()
+    ):
+        raise PipelineError("Unexpected PROMOPAGES-10060 extraction report identity")
+    records = report.get("articles")
+    if not isinstance(records, list) or len(records) != len(configs):
+        raise PipelineError("Extraction report must describe every configured article")
+    by_number: dict[str, dict[str, Any]] = {}
+    for record in records:
+        if not isinstance(record, dict):
+            raise PipelineError("Extraction report article is not an object")
+        number = record.get("article_number")
+        if not isinstance(number, str) or number in by_number:
+            raise PipelineError("Extraction report article numbers are invalid")
+        by_number[number] = record
+
+    available: set[str] = set()
+    unavailable: list[dict[str, Any]] = []
+    for config in configs:
+        record = by_number.get(config.number_key)
+        if (
+            record is None
+            or record.get("article_slug") != config.folder
+            or record.get("url") != config.url
+        ):
+            raise PipelineError(
+                f"Extraction report differs from config for article {config.number_key}"
+            )
+        status = record.get("status")
+        if status == "ok":
+            if not isinstance(record.get("image_count"), int) or record["image_count"] < 1:
+                raise PipelineError(
+                    f"Available article has invalid image_count: {config.folder}"
+                )
+            if record.get("error") is not None:
+                raise PipelineError(f"Available article has an error: {config.folder}")
+            available.add(config.folder)
+        elif status == "source-unavailable":
+            unavailable.append(_normalized_report_record(config, record))
+        else:
+            raise PipelineError(
+                f"Unsupported extraction status for {config.folder}: {status!r}"
+            )
+    normalized_report_unavailable = report.get("unavailable_articles")
+    if not isinstance(normalized_report_unavailable, list):
+        raise PipelineError("Extraction report unavailable_articles must be a list")
+    expected_unavailable_numbers = [item["article_number"] for item in unavailable]
+    actual_unavailable_numbers = [
+        item.get("article_number")
+        for item in normalized_report_unavailable
+        if isinstance(item, dict)
+    ]
+    if actual_unavailable_numbers != expected_unavailable_numbers:
+        raise PipelineError("Extraction report unavailable_articles differs from articles")
+    if report.get("available_article_count") != len(available):
+        raise PipelineError("Extraction report available_article_count is inconsistent")
+    return available, tuple(unavailable), sha256_file(report_path)
+
+
+def _source_rows(
+    configs: Sequence[ArticleConfig], available: set[str], root: Path
+) -> dict[str, dict[str, str]]:
+    path = root / SOURCE_MANIFEST_REL
+    try:
+        with path.open("r", encoding="utf-8", newline="") as stream:
+            reader = csv.DictReader(stream)
+            fieldnames = set(reader.fieldnames or ())
+            required = {
+                "article_number",
+                "article_label",
+                "article_url",
+                "image_number",
+                "image_role",
+                "orig_url",
+                "file_path",
+                "actual_width",
+                "actual_height",
+                "sha256",
+                "download_status",
+                "duplicate_of",
+            }
+            if not required.issubset(fieldnames):
+                raise PipelineError(
+                    f"Source manifest is missing fields: {sorted(required - fieldnames)}"
+                )
+            rows = list(reader)
+    except OSError as exc:
+        raise PipelineError(f"Cannot read source manifest {path}: {exc}") from exc
+    if not rows:
+        raise PipelineError("Source manifest has no rows")
+
+    config_by_number = {config.number_key: config for config in configs}
+    indexed: dict[str, dict[str, str]] = {}
+    row_slugs: set[str] = set()
+    for row in rows:
+        config = config_by_number.get(row.get("article_number", ""))
+        if config is None:
+            raise PipelineError(
+                f"Source manifest has unknown article number: {row.get('article_number')!r}"
+            )
+        if config.folder not in available:
+            raise PipelineError(f"Unavailable article has source rows: {config.folder}")
+        file_path = row.get("file_path", "")
+        parts = PurePosixPath(file_path).parts
+        if (
+            len(parts) != 4
+            or parts[0] != TICKET
+            or parts[1] != "articles"
+            or parts[2] != config.folder
+            or PurePosixPath(file_path).is_absolute()
+            or ".." in parts
+        ):
+            raise PipelineError(f"Invalid namespaced manifest path: {file_path!r}")
+        if (
+            row.get("article_url") != config.url
+            or row.get("download_status") != "ok"
+            or not row.get("sha256")
+            or not row.get("orig_url", "").startswith("https://")
+        ):
+            raise PipelineError(f"Invalid manifest source row: {file_path}")
+        if file_path in indexed:
+            raise PipelineError(f"Duplicate manifest file_path: {file_path}")
+        indexed[file_path] = row
+        row_slugs.add(config.folder)
+    if row_slugs != available:
+        raise PipelineError(
+            "Source manifest article coverage differs from available articles: "
+            f"manifest={sorted(row_slugs)}, available={sorted(available)}"
+        )
+    return indexed
+
+
+def _image_record(
+    *,
+    root: Path,
+    article: ArticleConfig,
+    order: int,
+    block: dict[str, Any],
+    row: dict[str, str],
+) -> dict[str, Any]:
+    image_id = block.get("image_id")
+    filename = block.get("file")
+    expected_manifest_path = f"{TICKET}/articles/{article.folder}/{filename}"
+    if (
+        not isinstance(image_id, str)
+        or not image_id
+        or not isinstance(filename, str)
+        or not filename
+        or block.get("manifest_file_path") != expected_manifest_path
+        or row.get("image_number") != image_id
+    ):
+        raise PipelineError(f"Invalid context/manifest image binding: {article.folder}")
+    source_path = root / "PROMOPAGES-9857" / expected_manifest_path
+    digest = sha256_file(source_path)
+    if digest != row.get("sha256"):
+        raise PipelineError(f"Source image digest mismatch: {source_path}")
+    try:
+        width = int(row["actual_width"])
+        height = int(row["actual_height"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise PipelineError(f"Invalid source dimensions: {source_path}") from exc
+    if width < 1 or height < 1:
+        raise PipelineError(f"Invalid source dimensions: {source_path}")
+    duplicate_of = row.get("duplicate_of") or None
+    if (block.get("duplicate_of") or None) != duplicate_of:
+        raise PipelineError(f"duplicate_of mismatch: {expected_manifest_path}")
+    return {
+        "order": order,
+        "image_id": image_id,
+        "file": filename,
+        "role": block.get("role"),
+        "caption": block.get("caption") or "",
+        "source_block_index": block.get("source_block_index"),
+        "gallery_index": block.get("gallery_index"),
+        "source_path": f"PROMOPAGES-9857/{expected_manifest_path}",
+        "manifest_file_path": expected_manifest_path,
+        "orig_url": row["orig_url"],
+        "sha256": digest,
+        "width": width,
+        "height": height,
+        "duplicate_of": duplicate_of,
+    }
+
+
+def discover(root: Path = ROOT) -> Discovery:
+    """Discover every available image in deterministic article/block order."""
+
+    configs = load_ticket_config(root)
+    available, unavailable, report_sha256 = _availability(configs, root)
+    rows = _source_rows(configs, available, root)
+    seen_paths: set[str] = set()
+    articles: list[Article] = []
+    sources: list[Source] = []
+    for config in configs:
+        context_path = root / SOURCE_CONTEXT_ROOT_REL / config.folder / "content.json"
+        if config.folder not in available:
+            if context_path.exists():
+                raise PipelineError(
+                    f"Unavailable article unexpectedly has context: {config.folder}"
+                )
+            continue
+        if not context_path.is_file() or context_path.is_symlink():
+            raise PipelineError(f"Available article context is missing: {context_path}")
+        value = read_json(context_path)
+        blocks = value.get("blocks") if isinstance(value, dict) else None
+        if not isinstance(blocks, list):
+            raise PipelineError(f"Article blocks are missing: {context_path}")
+        image_blocks = [
+            block
+            for block in blocks
+            if isinstance(block, dict) and block.get("type") == "image"
+        ]
+        if not image_blocks:
+            raise PipelineError(f"Article has no image blocks: {context_path}")
+        records: list[dict[str, Any]] = []
+        for order, block in enumerate(image_blocks, 1):
+            manifest_path = block.get("manifest_file_path")
+            row = rows.get(manifest_path) if isinstance(manifest_path, str) else None
+            if row is None:
+                raise PipelineError(
+                    f"Context image is absent from source manifest: {manifest_path!r}"
+                )
+            if manifest_path in seen_paths:
+                raise PipelineError(f"Manifest image appears twice: {manifest_path}")
+            seen_paths.add(manifest_path)
+            records.append(
+                _image_record(
+                    root=root,
+                    article=config,
+                    order=order,
+                    block=block,
+                    row=row,
+                )
+            )
+        if records[0]["role"] != "cover":
+            raise PipelineError(f"First image block is not the cover: {config.folder}")
+        cover = records[0]
+        context_relative = relative(context_path, root)
+        context_digest = sha256_file(context_path)
+        article = Article(
+            number=config.number_key,
+            slug=config.folder,
+            label=config.label,
+            url=config.url,
+            title=str(value.get("title") or ""),
+            lead=str(value.get("lead") or ""),
+            context_path=context_relative,
+            context_sha256=context_digest,
+            cover_image=cover,
+            images=tuple(records),
+        )
+        articles.append(article)
+        sources.extend(
+            Source(
+                article_number=config.number_key,
+                article_slug=config.folder,
+                context_path=context_relative,
+                context_sha256=context_digest,
+                image=image,
+            )
+            for image in records
+        )
+
+    if seen_paths != set(rows):
+        raise PipelineError(
+            "Article contexts do not exactly cover the source manifest: "
+            f"missing={sorted(set(rows) - seen_paths)}, "
+            f"extra={sorted(seen_paths - set(rows))}"
+        )
+    if not articles or not sources:
+        raise PipelineError("No complete article/image matrix was discovered")
+    if [article.number for article in articles] != sorted(
+        (article.number for article in articles), key=int
+    ):
+        raise PipelineError("Available articles are not in ticket-config order")
+    if len({source.sample_id for source in sources}) != len(sources):
+        raise PipelineError("Source sample IDs are not unique")
+    if len(sources) != len(rows):
+        raise PipelineError(
+            "Discovered source count differs from the source manifest: "
+            f"sources={len(sources)}, manifest={len(rows)}"
+        )
+    expected_source_order = [
+        (article.slug, image["image_id"])
+        for article in articles
+        for image in article.images
+    ]
+    actual_source_order = [
+        (source.article_slug, source.image["image_id"])
+        for source in sources
+    ]
+    if actual_source_order != expected_source_order:
+        raise PipelineError("Sources are not in article/block order")
+    context_slugs = {
+        path.parent.name
+        for path in (root / SOURCE_CONTEXT_ROOT_REL).glob("*/content.json")
+    }
+    if context_slugs != available:
+        raise PipelineError(
+            "Context directory coverage differs from extraction availability: "
+            f"contexts={sorted(context_slugs)}, available={sorted(available)}"
+        )
+    return Discovery(
+        articles=tuple(articles),
+        sources=tuple(sources),
+        unavailable_articles=unavailable,
+        source_manifest_row_count=len(rows),
+        extraction_report_sha256=report_sha256,
+    )
+
+
+def parse_budget(value: str | Decimal) -> Decimal:
+    try:
+        parsed = Decimal(str(value)).quantize(Decimal("0.01"))
+    except (InvalidOperation, ValueError) as exc:
+        raise PipelineError(f"Invalid USD budget cap: {value!r}") from exc
+    if not parsed.is_finite() or parsed <= 0:
+        raise PipelineError("USD budget cap must be positive")
+    if parsed > HARD_BUDGET_CAP_USD:
+        raise PipelineError(
+            f"USD budget cap ${parsed:.2f} exceeds the hard "
+            f"${HARD_BUDGET_CAP_USD:.2f} cap"
+        )
+    return parsed
+
+
+def budget_arg(value: str) -> Decimal:
+    try:
+        return parse_budget(value)
+    except PipelineError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from exc
+
+
+def _contract_snapshot(root: Path) -> dict[str, Any]:
+    path = root / CONTRACT_REL
+    contract = read_json(path)
+    if (
+        not isinstance(contract, dict)
+        or contract.get("agent_id") != AGENT_ID
+        or contract.get("contract_version") != REQUIRED_CONTRACT_VERSION
+        or list(contract.get("models", {})) != list(MODEL_IDS)
+    ):
+        raise PipelineError("Unexpected current Clipmaker Lite contract")
+    binding = contract.get("input_binding")
+    if not isinstance(binding, dict) or binding != {
+        "image_root": "PROMOPAGES-9857",
+        "context_root": "PROMOPAGES-9884",
+        "context_filename": "content.json",
+    }:
+        raise PipelineError("Clipmaker Lite input binding changed")
+    return {
+        "path": CONTRACT_REL.as_posix(),
+        "sha256": sha256_file(path),
+        "contract_version": contract["contract_version"],
+        "runner_version": contract.get("runner", {}).get("runner_version"),
+    }
+
+
+def _route_snapshot(root: Path) -> dict[str, Any]:
+    path = root / ROUTES_REL
+    routes = read_json(path)
+    policy = routes.get("policy") if isinstance(routes, dict) else None
+    models = routes.get("models") if isinstance(routes, dict) else None
+    if (
+        not isinstance(policy, dict)
+        or policy.get("resolution") != "exact-model-id"
+        or policy.get("automatic_fallback") is not False
+        or policy.get("normal_run_discovery") is not False
+        or not isinstance(models, dict)
+        or list(models) != list(MODEL_IDS)
+    ):
+        raise PipelineError("Generation route policy or model order changed")
+    snapshot_models: dict[str, Any] = {}
+    for model_id in MODEL_IDS:
+        route = models[model_id]
+        expected_adapter, expected_transport = ROUTE_IDENTITIES[model_id]
+        if (
+            not isinstance(route, dict)
+            or route.get("adapter") != expected_adapter
+            or route.get("transport") != expected_transport
+            or route.get("capacity") != ROUTE_CAPACITIES[model_id]
+            or transport.route_for_model(model_id) != route
+        ):
+            raise PipelineError(f"Exact generation route changed: {model_id}")
+        snapshot_models[model_id] = {
+            "adapter": expected_adapter,
+            "transport": expected_transport,
+            "capacity": ROUTE_CAPACITIES[model_id],
+        }
+    return {
+        "path": ROUTES_REL.as_posix(),
+        "sha256": sha256_file(path),
+        "policy": {
+            "resolution": "exact-model-id",
+            "automatic_fallback": False,
+            "normal_run_discovery": False,
+        },
+        "models": snapshot_models,
+    }
+
+
+def cost_metadata(budget: str | Decimal, job_count: int) -> dict[str, Any]:
+    parsed = parse_budget(budget)
+    if job_count < 1:
+        raise PipelineError("Budget admission requires at least one provider job")
+    if job_count % len(MODEL_IDS):
+        raise PipelineError("Budget admission requires a complete three-model matrix")
+    image_count = job_count // len(MODEL_IDS)
+    estimated_per_image = sum(ACCOUNTING_COST_PER_OUTPUT_USD.values())
+    maximum_estimated_cost = (
+        estimated_per_image * image_count
+    ).quantize(Decimal("0.01"))
+    if maximum_estimated_cost > parsed:
+        raise PipelineError(
+            f"Estimated full-matrix cost ${maximum_estimated_cost:.2f} exceeds "
+            f"the operator ${parsed:.2f} cap"
+        )
+    return {
+        "currency": "USD",
+        "operator_budget_cap_usd": float(parsed),
+        "hard_budget_cap_usd": float(HARD_BUDGET_CAP_USD),
+        "accounting_cost_per_output_usd": {
+            model_id: float(ACCOUNTING_COST_PER_OUTPUT_USD[model_id])
+            for model_id in MODEL_IDS
+        },
+        "accounting_cost_per_image_usd": float(estimated_per_image),
+        "maximum_estimated_cost_usd": float(maximum_estimated_cost),
+        "estimated_headroom_usd": float(parsed - maximum_estimated_cost),
+        "planned_paid_submissions": job_count,
+        "maximum_paid_submissions": job_count,
+        "maximum_paid_submissions_per_job": 1,
+        "automatic_paid_retries": False,
+        "actual_billing_available": False,
+        "enforcement": (
+            "admit only complete articles in ticket-config order within the "
+            "accounting envelope; each admitted immutable job may submit once; "
+            "resume may poll/download an existing provider identity but never "
+            "automatically resubmit a paid job"
+        ),
+        "pricing_basis": (
+            "local frozen accounting evidence only: reserve $0.35 for every "
+            "output using the existing PROMOPAGES-9930 20x2 estimate; this is "
+            "conservative for Wan 2.2 versus its observed Eliza/Segmind "
+            "X-Response-Cost of $0.18; no live price or model discovery"
+        ),
+    }
+
+
+def terminal_retry_budget_metadata(
+    inventory: dict[str, Any],
+    retry_reservations: int,
+) -> dict[str, Any]:
+    """Compatibility wrapper for primary + terminal provider retry-v1."""
+
+    return aggregate_retry_budget_metadata(
+        inventory,
+        terminal_retry_reservations=retry_reservations,
+        ambiguous_submit_retry_reservations=0,
+        normalized_input_retry_reservations=0,
+    )
+
+
+def aggregate_retry_budget_metadata(
+    inventory: dict[str, Any],
+    *,
+    terminal_retry_reservations: int,
+    ambiguous_submit_retry_reservations: int,
+    normalized_input_retry_reservations: int = 0,
+) -> dict[str, Any]:
+    """Return conservative accounting for every immutable retry namespace.
+
+    A reservation is counted even if its transport later fails before submit.
+    This deliberately favors a fail-closed budget ledger over trying to infer
+    provider billing from partial receipts.
+    """
+
+    reservation_counts = {
+        "terminal": terminal_retry_reservations,
+        "ambiguous submit": ambiguous_submit_retry_reservations,
+        "normalized input": normalized_input_retry_reservations,
+    }
+    for label, count in reservation_counts.items():
+        if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+            raise PipelineError(
+                f"{label.capitalize()} retry reservation count must be a "
+                "non-negative integer"
+            )
+    primary = inventory.get("cost") if isinstance(inventory, dict) else None
+    if not isinstance(primary, dict):
+        raise PipelineError("Frozen inventory cost metadata is missing")
+    try:
+        operator_cap = Decimal(str(primary["operator_budget_cap_usd"]))
+        primary_maximum = Decimal(str(primary["maximum_estimated_cost_usd"]))
+        primary_submissions = int(primary["maximum_paid_submissions"])
+    except (KeyError, InvalidOperation, TypeError, ValueError) as exc:
+        raise PipelineError("Frozen inventory cost metadata is invalid") from exc
+    terminal_retry_maximum = (
+        TERMINAL_RETRY_ACCOUNTING_COST_USD * terminal_retry_reservations
+    )
+    ambiguous_retry_maximum = (
+        AMBIGUOUS_SUBMIT_RETRY_ACCOUNTING_COST_USD
+        * ambiguous_submit_retry_reservations
+    )
+    normalized_retry_maximum = (
+        NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD
+        * normalized_input_retry_reservations
+    )
+    retry_maximum = (
+        terminal_retry_maximum
+        + ambiguous_retry_maximum
+        + normalized_retry_maximum
+    ).quantize(Decimal("0.01"))
+    aggregate_maximum = (primary_maximum + retry_maximum).quantize(
+        Decimal("0.01")
+    )
+    if aggregate_maximum > operator_cap or aggregate_maximum > HARD_BUDGET_CAP_USD:
+        raise PipelineError(
+            f"Retry reservation would raise the aggregate accounting maximum "
+            f"to ${aggregate_maximum:.2f}, above the ${operator_cap:.2f} cap"
+        )
+    return {
+        **primary,
+        "maximum_estimated_cost_usd": float(aggregate_maximum),
+        "estimated_headroom_usd": float(operator_cap - aggregate_maximum),
+        "maximum_paid_submissions": primary_submissions
+        + terminal_retry_reservations
+        + ambiguous_submit_retry_reservations
+        + normalized_input_retry_reservations,
+        "terminal_retry_version": TERMINAL_RETRY_VERSION,
+        "terminal_retry_accounting_cost_usd": float(
+            TERMINAL_RETRY_ACCOUNTING_COST_USD
+        ),
+        "terminal_retry_reservations": terminal_retry_reservations,
+        "ambiguous_submit_retry_version": AMBIGUOUS_SUBMIT_RETRY_VERSION,
+        "ambiguous_submit_retry_accounting_cost_usd": float(
+            AMBIGUOUS_SUBMIT_RETRY_ACCOUNTING_COST_USD
+        ),
+        "ambiguous_submit_retry_reservations": (
+            ambiguous_submit_retry_reservations
+        ),
+        "normalized_input_retry_version": NORMALIZED_INPUT_RETRY_VERSION,
+        "normalized_input_retry_accounting_cost_usd": float(
+            NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD
+        ),
+        "normalized_input_retry_reservations": (
+            normalized_input_retry_reservations
+        ),
+        "total_retry_reservations": (
+            terminal_retry_reservations
+            + ambiguous_submit_retry_reservations
+            + normalized_input_retry_reservations
+        ),
+        "maximum_new_paid_submissions_per_failed_output": 1,
+        "maximum_new_paid_submissions_per_ambiguous_output": 1,
+        "maximum_new_paid_submissions_per_normalized_input_output": 1,
+        "automatic_paid_retries": False,
+        "enforcement": (
+            f"{primary.get('enforcement', '')}; provider-confirmed terminal "
+            "failures may receive at most one separately namespaced, explicit "
+            "retry-v1 submit; a quarantined synchronous Segmind submit with "
+            "unknown outcome may receive at most one separately namespaced, "
+            "explicit ambiguous-submit retry-v1; each exact oversize Wan "
+            "primary may receive one separately namespaced normalized-input "
+            "retry-v1 whose only request change is the frozen image URL; "
+            "every immutable reservation "
+            "is included in the aggregate accounting maximum"
+        ).strip("; "),
+    }
+
+
+def primary_provider_run_id(source: Source, model_id: str) -> str:
+    if model_id not in MODEL_IDS:
+        raise PipelineError(f"Unsupported retry model: {model_id}")
+    return (
+        f"{BATCH_ID}-{source.sample_id}-{native.MODEL_SUFFIXES[model_id]}"
+    )
+
+
+def terminal_retry_binding(source: Source, model_id: str) -> TerminalRetryBinding:
+    primary_run_id = primary_provider_run_id(source, model_id)
+    retry_key = hashlib.sha256(primary_run_id.encode("utf-8")).hexdigest()[:20]
+    retry_batch_id = f"{BATCH_ID}-terminal-retry-v1-{retry_key}"
+    retry_provider_run_id = (
+        f"{retry_batch_id}-{source.sample_id}-{native.MODEL_SUFFIXES[model_id]}"
+    )
+    return TerminalRetryBinding(
+        source=source,
+        model_id=model_id,
+        primary_provider_run_id=primary_run_id,
+        retry_key=retry_key,
+        retry_batch_id=retry_batch_id,
+        retry_provider_run_id=retry_provider_run_id,
+    )
+
+
+def ambiguous_submit_retry_binding(
+    source: Source,
+    model_id: str,
+) -> AmbiguousSubmitRetryBinding:
+    """Bind one logical Wan 2.2 output to its only quarantine retry."""
+
+    if model_id != "alibaba/wan-2.2":
+        raise PipelineError(
+            "Ambiguous-submit retry is restricted to the synchronous "
+            "Eliza/Segmind alibaba/wan-2.2 route"
+        )
+    primary_run_id = primary_provider_run_id(source, model_id)
+    retry_key = hashlib.sha256(
+        f"ambiguous-submit-v1:{primary_run_id}".encode("utf-8")
+    ).hexdigest()[:20]
+    retry_batch_id = f"{BATCH_ID}-ambiguous-submit-retry-v1-{retry_key}"
+    retry_provider_run_id = (
+        f"{retry_batch_id}-{source.sample_id}-{native.MODEL_SUFFIXES[model_id]}"
+    )
+    return AmbiguousSubmitRetryBinding(
+        source=source,
+        model_id=model_id,
+        primary_provider_run_id=primary_run_id,
+        retry_key=retry_key,
+        retry_batch_id=retry_batch_id,
+        retry_provider_run_id=retry_provider_run_id,
+    )
+
+
+def _require_normalized_input_target(source: Source, model_id: str) -> None:
+    if (
+        source.article_slug != NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
+        or source.image.get("image_id") != NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+        or source.image.get("sha256") != NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256
+        or model_id not in NORMALIZED_INPUT_ELIGIBLE_MODELS
+    ):
+        raise PipelineError(
+            "Normalized-input retry is restricted to exact source "
+            f"{NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG}/"
+            f"{NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID} and Wan 2.2/Wan 2.7"
+        )
+
+
+def normalized_input_retry_binding(
+    source: Source,
+    model_id: str,
+) -> NormalizedInputRetryBinding:
+    """Bind each exact failed primary to one model-isolated retry identity."""
+
+    _require_normalized_input_target(source, model_id)
+    primary_run_id = primary_provider_run_id(source, model_id)
+    retry_key = hashlib.sha256(
+        f"normalized-input-v1:{primary_run_id}".encode("utf-8")
+    ).hexdigest()[:20]
+    asset_key = hashlib.sha256(
+        (
+            "scale-1200-v1:"
+            f"{source.sample_id}:{source.image['sha256']}"
+        ).encode("utf-8")
+    ).hexdigest()[:20]
+    retry_batch_id = f"{BATCH_ID}-normalized-input-retry-v1-{retry_key}"
+    retry_provider_run_id = (
+        f"{retry_batch_id}-{source.sample_id}-{native.MODEL_SUFFIXES[model_id]}"
+    )
+    return NormalizedInputRetryBinding(
+        source=source,
+        model_id=model_id,
+        primary_provider_run_id=primary_run_id,
+        retry_key=retry_key,
+        retry_batch_id=retry_batch_id,
+        retry_provider_run_id=retry_provider_run_id,
+        asset_key=asset_key,
+    )
+
+
+def primary_artifact_paths(
+    source: Source,
+    model_id: str,
+    root: Path,
+) -> dict[str, Path]:
+    base = (
+        root
+        / BATCH_ROOT_REL
+        / "videos"
+        / source.article_slug
+        / native.MODEL_DIRECTORIES[model_id]
+    )
+    stem = source.image["image_id"]
+    return {
+        "directory": base,
+        "prompt": base / f"{stem}.prompt.json",
+        "run": base / f"{stem}.run.json",
+        "video": base / f"{stem}.mp4",
+    }
+
+
+def _normalized_input_page_variant_url(source: Source, root: Path) -> str:
+    """Read the exact frozen /scale_1200 URL without changing inventory.json."""
+
+    _require_normalized_input_target(source, "alibaba/wan-2.2")
+    manifest_path = root / SOURCE_MANIFEST_REL
+    try:
+        with manifest_path.open("r", encoding="utf-8", newline="") as stream:
+            matches = [
+                row
+                for row in csv.DictReader(stream)
+                if row.get("file_path") == source.image["manifest_file_path"]
+            ]
+    except OSError as exc:
+        raise PipelineError(
+            f"Cannot read normalized-input source manifest {manifest_path}: {exc}"
+        ) from exc
+    if len(matches) != 1:
+        raise PipelineError(
+            "Normalized-input source must have one exact manifest row: "
+            f"{source.image['manifest_file_path']}"
+        )
+    row = matches[0]
+    url = row.get("page_variant_url")
+    parsed = urlparse(url) if isinstance(url, str) else None
+    if (
+        row.get("article_number") != source.article_number
+        or row.get("image_number") != source.image["image_id"]
+        or row.get("orig_url") != source.image["orig_url"]
+        or row.get("sha256") != source.image["sha256"]
+        or not isinstance(parsed, type(urlparse("https://example.test/")))
+        or parsed.scheme != "https"
+        or parsed.hostname != "avatars.mds.yandex.net"
+        or not parsed.path.endswith("/scale_1200")
+        or parsed.params
+        or parsed.query
+        or parsed.fragment
+    ):
+        raise PipelineError(
+            "Normalized-input page_variant_url is not the exact manifest-bound "
+            "/scale_1200 MDS asset"
+        )
+    return url
+
+
+def _encoded_image_dimensions(payload: bytes) -> tuple[str, int, int]:
+    """Read dimensions from a normalized PNG/JPEG payload without dependencies."""
+
+    if payload.startswith(b"\x89PNG\r\n\x1a\n") and len(payload) >= 24:
+        width = int.from_bytes(payload[16:20], "big")
+        height = int.from_bytes(payload[20:24], "big")
+        if width > 0 and height > 0:
+            return "PNG", width, height
+    if payload.startswith(b"\xff\xd8"):
+        offset = 2
+        sof_markers = {
+            0xC0,
+            0xC1,
+            0xC2,
+            0xC3,
+            0xC5,
+            0xC6,
+            0xC7,
+            0xC9,
+            0xCA,
+            0xCB,
+            0xCD,
+            0xCE,
+            0xCF,
+        }
+        while offset + 4 <= len(payload):
+            if payload[offset] != 0xFF:
+                offset += 1
+                continue
+            while offset < len(payload) and payload[offset] == 0xFF:
+                offset += 1
+            if offset >= len(payload):
+                break
+            marker = payload[offset]
+            offset += 1
+            if marker in {0x01, 0xD8, 0xD9}:
+                continue
+            if offset + 2 > len(payload):
+                break
+            segment_length = int.from_bytes(payload[offset : offset + 2], "big")
+            if segment_length < 2 or offset + segment_length > len(payload):
+                break
+            if marker in sof_markers and segment_length >= 7:
+                height = int.from_bytes(payload[offset + 3 : offset + 5], "big")
+                width = int.from_bytes(payload[offset + 5 : offset + 7], "big")
+                if width > 0 and height > 0:
+                    return "JPEG", width, height
+            offset += segment_length
+    raise PipelineError("Normalized /scale_1200 payload is not a supported PNG/JPEG")
+
+
+def preflight_normalized_input_asset(
+    url: str,
+    *,
+    timeout: int = 60,
+) -> dict[str, Any]:
+    """Fetch and measure the public MDS variant; never contacts a video provider."""
+
+    parsed = urlparse(url)
+    if (
+        parsed.scheme != "https"
+        or parsed.hostname != "avatars.mds.yandex.net"
+        or not parsed.path.endswith("/scale_1200")
+        or parsed.query
+        or parsed.fragment
+    ):
+        raise PipelineError("Refusing normalized-input preflight for an unsafe URL")
+    request = Request(
+        url,
+        headers={"Accept": "image/*", "User-Agent": "clipmaker-lite/1"},
+        method="GET",
+    )
+    try:
+        with urlopen(request, timeout=timeout) as response:
+            status = int(response.getcode())
+            final_url = response.geturl()
+            payload = response.read(NORMALIZED_INPUT_MAX_BYTES + 1)
+    except OSError as exc:
+        raise PipelineError(
+            f"Normalized-input MDS preflight failed: {transport.safe_error(exc)}"
+        ) from exc
+    if status != 200 or final_url != url:
+        raise PipelineError(
+            "Normalized-input MDS preflight did not return the exact URL with HTTP 200"
+        )
+    if not payload or len(payload) > NORMALIZED_INPUT_MAX_BYTES:
+        raise PipelineError(
+            "Normalized /scale_1200 asset is empty or still exceeds 20 MiB"
+        )
+    image_format, width, height = _encoded_image_dimensions(payload)
+    return {
+        "http_status": 200,
+        "url": url,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "bytes": len(payload),
+        "width": width,
+        "height": height,
+        "format": image_format,
+    }
+
+
+def _normalized_input_original_source(source: Source, root: Path) -> dict[str, Any]:
+    source_path = root / source.image["source_path"]
+    if not source_path.is_file() or source_path.is_symlink():
+        raise PipelineError(f"Normalized-input original source is missing: {source_path}")
+    byte_size = source_path.stat().st_size
+    if byte_size <= NORMALIZED_INPUT_MAX_BYTES:
+        raise PipelineError("Normalized-input target no longer exceeds the 20 MiB limit")
+    return {
+        "url": source.image["orig_url"],
+        "path": source.image["source_path"],
+        "sha256": source.image["sha256"],
+        "bytes": byte_size,
+        "width": source.image["width"],
+        "height": source.image["height"],
+    }
+
+
+def _normalized_input_asset_document(
+    binding: NormalizedInputRetryBinding,
+    preflight: dict[str, Any],
+    *,
+    root: Path,
+) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-normalized-input-asset",
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "strategy": "frozen-page-variant",
+        "source_key": {
+            "article_slug": binding.source.article_slug,
+            "image_id": binding.source.image["image_id"],
+        },
+        "original": _normalized_input_original_source(binding.source, root),
+        "normalized": dict(preflight),
+        "maximum_provider_input_bytes": NORMALIZED_INPUT_MAX_BYTES,
+    }
+
+
+def _validated_normalized_input_asset(
+    binding: NormalizedInputRetryBinding,
+    *,
+    root: Path,
+) -> tuple[dict[str, Any], str]:
+    path = root / binding.asset_metadata_rel
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(f"Normalized-input asset metadata is missing: {path}")
+    document = read_json(path)
+    normalized = document.get("normalized") if isinstance(document, dict) else None
+    if (
+        not isinstance(document, dict)
+        or document.get("schema_version") != 1
+        or document.get("manifest_role")
+        != "promopages-10060-normalized-input-asset"
+        or document.get("ticket") != TICKET
+        or document.get("batch_id") != BATCH_ID
+        or document.get("strategy") != "frozen-page-variant"
+        or document.get("source_key")
+        != {
+            "article_slug": binding.source.article_slug,
+            "image_id": binding.source.image["image_id"],
+        }
+        or document.get("original")
+        != _normalized_input_original_source(binding.source, root)
+        or document.get("maximum_provider_input_bytes")
+        != NORMALIZED_INPUT_MAX_BYTES
+        or not isinstance(normalized, dict)
+        or normalized.get("http_status") != 200
+        or normalized.get("url")
+        != _normalized_input_page_variant_url(binding.source, root)
+        or not isinstance(normalized.get("bytes"), int)
+        or not 0 < normalized["bytes"] <= NORMALIZED_INPUT_MAX_BYTES
+        or not isinstance(normalized.get("width"), int)
+        or normalized["width"] < 1
+        or not isinstance(normalized.get("height"), int)
+        or normalized["height"] < 1
+        or normalized.get("format") not in {"JPEG", "PNG"}
+        or not isinstance(normalized.get("sha256"), str)
+        or len(normalized["sha256"]) != 64
+    ):
+        raise PipelineError(f"Normalized-input asset metadata differs: {path}")
+    return document, sha256_file(path)
+
+
+def _set_request_pointer(document: dict[str, Any], pointer: str, value: str) -> None:
+    parts = [part for part in pointer.split("/") if part]
+    current: Any = document
+    try:
+        for part in parts[:-1]:
+            current = current[int(part)] if isinstance(current, list) else current[part]
+        leaf = parts[-1]
+        if isinstance(current, list):
+            current[int(leaf)] = value
+        else:
+            current[leaf] = value
+    except (IndexError, KeyError, TypeError, ValueError) as exc:
+        raise PipelineError(f"Normalized request pointer is absent: {pointer}") from exc
+
+
+def _request_leaf_differences(
+    left: Any,
+    right: Any,
+    pointer: str = "",
+) -> list[tuple[str, Any, Any]]:
+    if isinstance(left, dict) and isinstance(right, dict) and left.keys() == right.keys():
+        differences: list[tuple[str, Any, Any]] = []
+        for key in left:
+            escaped = str(key).replace("~", "~0").replace("/", "~1")
+            differences.extend(
+                _request_leaf_differences(left[key], right[key], f"{pointer}/{escaped}")
+            )
+        return differences
+    if isinstance(left, list) and isinstance(right, list) and len(left) == len(right):
+        differences = []
+        for index, (left_item, right_item) in enumerate(zip(left, right)):
+            differences.extend(
+                _request_leaf_differences(
+                    left_item,
+                    right_item,
+                    f"{pointer}/{index}",
+                )
+            )
+        return differences
+    return [] if left == right else [(pointer or "/", left, right)]
+
+
+def _normalized_retry_request(
+    primary_request: dict[str, Any],
+    model_id: str,
+    original_url: str,
+    normalized_url: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    pointer = {
+        "alibaba/wan-2.2": "/input/image",
+        "alibaba/wan-2.7": "/frame_images/0/image_url/url",
+    }.get(model_id)
+    if pointer is None:
+        raise PipelineError(f"Unsupported normalized-input retry model: {model_id}")
+    retry_request = copy.deepcopy(primary_request)
+    _set_request_pointer(retry_request, pointer, normalized_url)
+    differences = _request_leaf_differences(primary_request, retry_request)
+    expected = [(pointer, original_url, normalized_url)]
+    if differences != expected:
+        raise PipelineError(
+            "Normalized-input retry must change exactly one model-specific image URL"
+        )
+    return retry_request, {
+        "json_pointer": pointer,
+        "from": original_url,
+        "to": normalized_url,
+        "changed_leaf_count": 1,
+    }
+
+
+def _known_retry_envelopes(root: Path) -> tuple[dict[str, Any], ...]:
+    namespace = root / TERMINAL_RETRY_NAMESPACE_REL
+    if not namespace.exists():
+        return ()
+    if not namespace.is_dir() or namespace.is_symlink():
+        raise PipelineError(f"Retry namespace is not a real directory: {namespace}")
+    documents: list[dict[str, Any]] = []
+    for path in sorted(namespace.glob("*/retry.json")):
+        if path.parent.is_symlink() or not path.is_file() or path.is_symlink():
+            raise PipelineError(f"Retry envelope is not a regular file: {path}")
+        document = read_json(path)
+        if not isinstance(document, dict):
+            raise PipelineError(f"Retry envelope is not an object: {path}")
+        primary = document.get("primary_attempt")
+        retry = document.get("retry_attempt")
+        if (
+            document.get("schema_version") != 1
+            or document.get("manifest_role")
+            != "promopages-10060-terminal-provider-retry"
+            or document.get("ticket") != TICKET
+            or document.get("primary_batch_id") != BATCH_ID
+            or document.get("retry_number") != TERMINAL_RETRY_VERSION
+            or not isinstance(primary, dict)
+            or not isinstance(retry, dict)
+        ):
+            raise PipelineError(f"Retry envelope identity is invalid: {path}")
+        primary_id = primary.get("provider_run_id")
+        logical_key = document.get("logical_output_key")
+        if not isinstance(primary_id, str) or not primary_id:
+            raise PipelineError(f"Retry envelope primary identity is missing: {path}")
+        expected_key = hashlib.sha256(primary_id.encode("utf-8")).hexdigest()[:20]
+        if path.parent.name != expected_key or retry.get("retry_key") != expected_key:
+            raise PipelineError(f"Retry envelope path binding differs: {path}")
+        if any(
+            existing.get("primary_attempt", {}).get("provider_run_id") == primary_id
+            for existing in documents
+        ):
+            raise PipelineError(f"Duplicate retry reservation for {primary_id}")
+        documents.append(document)
+    unexpected = [
+        child
+        for child in namespace.iterdir()
+        if child.is_dir() and not (child / "retry.json").is_file()
+    ]
+    if unexpected:
+        raise PipelineError(
+            "Retry namespace contains an unbound directory: "
+            + ", ".join(str(path) for path in unexpected[:3])
+        )
+    return tuple(documents)
+
+
+def _known_ambiguous_submit_retry_envelopes(
+    root: Path,
+) -> tuple[dict[str, Any], ...]:
+    """Inventory immutable quarantine reservations without provider access."""
+
+    namespace = root / AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL
+    if not namespace.exists():
+        return ()
+    if not namespace.is_dir() or namespace.is_symlink():
+        raise PipelineError(
+            f"Ambiguous-submit retry namespace is not a real directory: {namespace}"
+        )
+    documents: list[dict[str, Any]] = []
+    for path in sorted(namespace.glob("*/retry.json")):
+        if path.parent.is_symlink() or not path.is_file() or path.is_symlink():
+            raise PipelineError(
+                f"Ambiguous-submit retry envelope is not a regular file: {path}"
+            )
+        document = read_json(path)
+        if not isinstance(document, dict):
+            raise PipelineError(
+                f"Ambiguous-submit retry envelope is not an object: {path}"
+            )
+        primary = document.get("primary_attempt")
+        retry = document.get("retry_attempt")
+        if (
+            document.get("schema_version") != 1
+            or document.get("manifest_role")
+            != "promopages-10060-ambiguous-submit-retry"
+            or document.get("ticket") != TICKET
+            or document.get("primary_batch_id") != BATCH_ID
+            or document.get("retry_number") != AMBIGUOUS_SUBMIT_RETRY_VERSION
+            or document.get("policy") != _ambiguous_submit_retry_policy()
+            or not isinstance(primary, dict)
+            or not isinstance(retry, dict)
+        ):
+            raise PipelineError(
+                f"Ambiguous-submit retry envelope identity is invalid: {path}"
+            )
+        primary_id = primary.get("provider_run_id")
+        if not isinstance(primary_id, str) or not primary_id:
+            raise PipelineError(
+                f"Ambiguous-submit retry primary identity is missing: {path}"
+            )
+        expected_key = hashlib.sha256(
+            f"ambiguous-submit-v1:{primary_id}".encode("utf-8")
+        ).hexdigest()[:20]
+        if path.parent.name != expected_key or retry.get("retry_key") != expected_key:
+            raise PipelineError(
+                f"Ambiguous-submit retry envelope path binding differs: {path}"
+            )
+        if any(
+            existing.get("primary_attempt", {}).get("provider_run_id")
+            == primary_id
+            for existing in documents
+        ):
+            raise PipelineError(
+                f"Duplicate ambiguous-submit retry reservation for {primary_id}"
+            )
+        documents.append(document)
+    unexpected = [
+        child
+        for child in namespace.iterdir()
+        if child.is_dir() and not (child / "retry.json").is_file()
+    ]
+    if unexpected:
+        raise PipelineError(
+            "Ambiguous-submit retry namespace contains an unbound directory: "
+            + ", ".join(str(path) for path in unexpected[:3])
+        )
+    return tuple(documents)
+
+
+def _known_normalized_input_retry_envelopes(
+    root: Path,
+) -> tuple[dict[str, Any], ...]:
+    """Inventory the two model-isolated oversize remediation reservations."""
+
+    namespace = root / NORMALIZED_INPUT_RETRY_NAMESPACE_REL
+    if not namespace.exists():
+        return ()
+    if not namespace.is_dir() or namespace.is_symlink():
+        raise PipelineError(
+            f"Normalized-input retry namespace is not a real directory: {namespace}"
+        )
+    documents: list[dict[str, Any]] = []
+    for path in sorted(namespace.glob("*/retry.json")):
+        if path.parent.is_symlink() or not path.is_file() or path.is_symlink():
+            raise PipelineError(
+                f"Normalized-input retry envelope is not a regular file: {path}"
+            )
+        document = read_json(path)
+        primary = document.get("primary_attempt") if isinstance(document, dict) else None
+        retry = document.get("retry_attempt") if isinstance(document, dict) else None
+        logical_key = (
+            document.get("logical_output_key")
+            if isinstance(document, dict)
+            else None
+        )
+        if (
+            not isinstance(document, dict)
+            or document.get("schema_version") != 1
+            or document.get("manifest_role")
+            != "promopages-10060-normalized-input-retry"
+            or document.get("ticket") != TICKET
+            or document.get("primary_batch_id") != BATCH_ID
+            or document.get("retry_number") != NORMALIZED_INPUT_RETRY_VERSION
+            or document.get("policy") != _normalized_input_retry_policy()
+            or not isinstance(primary, dict)
+            or not isinstance(retry, dict)
+        ):
+            raise PipelineError(
+                f"Normalized-input retry envelope identity is invalid: {path}"
+            )
+        primary_id = primary.get("provider_run_id")
+        if not isinstance(primary_id, str) or not primary_id:
+            raise PipelineError(
+                f"Normalized-input retry primary identity is missing: {path}"
+            )
+        if (
+            not isinstance(logical_key, dict)
+            or logical_key.get("article_slug")
+            != NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
+            or logical_key.get("image_id") != NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+            or logical_key.get("model_id") not in NORMALIZED_INPUT_ELIGIBLE_MODELS
+            or primary_id
+            != (
+                f"{BATCH_ID}-{NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG}-"
+                f"{NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID}-"
+                f"{native.MODEL_SUFFIXES[logical_key['model_id']]}"
+            )
+        ):
+            raise PipelineError(
+                f"Normalized-input retry logical output is ineligible: {path}"
+            )
+        expected_key = hashlib.sha256(
+            f"normalized-input-v1:{primary_id}".encode("utf-8")
+        ).hexdigest()[:20]
+        if path.parent.name != expected_key or retry.get("retry_key") != expected_key:
+            raise PipelineError(
+                f"Normalized-input retry envelope path binding differs: {path}"
+            )
+        if any(
+            existing.get("primary_attempt", {}).get("provider_run_id") == primary_id
+            for existing in documents
+        ):
+            raise PipelineError(
+                f"Duplicate normalized-input retry reservation for {primary_id}"
+            )
+        documents.append(document)
+    unexpected = [
+        child
+        for child in namespace.iterdir()
+        if child.is_dir() and not (child / "retry.json").is_file()
+    ]
+    if unexpected:
+        raise PipelineError(
+            "Normalized-input retry namespace contains an unbound directory: "
+            + ", ".join(str(path) for path in unexpected[:3])
+        )
+    if len(documents) > len(NORMALIZED_INPUT_ELIGIBLE_MODELS):
+        raise PipelineError("Too many normalized-input retry reservations")
+    return tuple(documents)
+
+
+def _enforce_retry_namespace_conflicts(
+    terminal: Iterable[dict[str, Any]],
+    ambiguous: Iterable[dict[str, Any]],
+    normalized: Iterable[dict[str, Any]],
+) -> None:
+    seen: dict[str, str] = {}
+    for label, documents in (
+        ("terminal", terminal),
+        ("ambiguous-submit", ambiguous),
+        ("normalized-input", normalized),
+    ):
+        for document in documents:
+            primary = document.get("primary_attempt")
+            primary_id = primary.get("provider_run_id") if isinstance(primary, dict) else None
+            if not isinstance(primary_id, str) or not primary_id:
+                raise PipelineError(f"{label} retry primary identity is missing")
+            previous = seen.setdefault(primary_id, label)
+            if previous != label:
+                raise PipelineError(
+                    f"Logical output {primary_id} has conflicting {previous} and "
+                    f"{label} retry reservations"
+                )
+
+
+def _aggregate_retry_cost(
+    inventory: dict[str, Any],
+    *,
+    root: Path,
+    additional_terminal: int = 0,
+    additional_ambiguous: int = 0,
+    additional_normalized: int = 0,
+) -> dict[str, Any]:
+    """Count every immutable namespace before admitting another reservation."""
+
+    terminal = _known_retry_envelopes(root)
+    ambiguous = _known_ambiguous_submit_retry_envelopes(root)
+    normalized = _known_normalized_input_retry_envelopes(root)
+    _enforce_retry_namespace_conflicts(terminal, ambiguous, normalized)
+
+    return aggregate_retry_budget_metadata(
+        inventory,
+        terminal_retry_reservations=(
+            len(terminal) + additional_terminal
+        ),
+        ambiguous_submit_retry_reservations=(
+            len(ambiguous) + additional_ambiguous
+        ),
+        normalized_input_retry_reservations=(
+            len(normalized) + additional_normalized
+        ),
+    )
+
+
+def inventory_document(
+    discovery: Discovery,
+    budget: str | Decimal,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    expected_outputs = len(discovery.sources) * len(MODEL_IDS)
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-frozen-generation-inventory",
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "agent_id": AGENT_ID,
+        "article_config": {
+            "path": TICKET_CONFIG_REL.as_posix(),
+            "sha256": sha256_file(root / TICKET_CONFIG_REL),
+        },
+        "extraction_report": {
+            "path": EXTRACTION_REPORT_REL.as_posix(),
+            "sha256": discovery.extraction_report_sha256,
+        },
+        "source_manifest": {
+            "path": SOURCE_MANIFEST_REL.as_posix(),
+            "sha256": sha256_file(root / SOURCE_MANIFEST_REL),
+            "row_count": discovery.source_manifest_row_count,
+        },
+        "contract": _contract_snapshot(root),
+        "generation_routes": _route_snapshot(root),
+        "models": list(MODEL_IDS),
+        "article_count": len(discovery.articles),
+        "image_count": len(discovery.sources),
+        "expected_outputs": expected_outputs,
+        "selection_rule": (
+            "in ticket-config order, include every image block from every "
+            "successfully extracted article, including the cover, in original "
+            "block order; preserve original article numbers"
+        ),
+        "generation_policy": {
+            "independent_route_pools": True,
+            "route_capacities": dict(ROUTE_CAPACITIES),
+            "article_order": "ticket-config-order",
+            "article_barrier": True,
+            "exact_model_routes_only": True,
+            "route_discovery": False,
+            "automatic_fallback": False,
+            "automatic_paid_retries": False,
+            "maximum_paid_submissions_per_job": 1,
+            "aggregate_manifest_writer": "coordinator-only",
+        },
+        "cost": cost_metadata(budget, expected_outputs),
+        "unavailable_articles": list(discovery.unavailable_articles),
+        "articles": [
+            {
+                "article_number": article.number,
+                "article_slug": article.slug,
+                "label": article.label,
+                "url": article.url,
+                "title": article.title,
+                "lead": article.lead,
+                "context": {
+                    "path": article.context_path,
+                    "sha256": article.context_sha256,
+                },
+                "cover_image": article.cover_image,
+                "image_count": len(article.images),
+                "images": [
+                    {
+                        "image": source.image,
+                        "planning_run_id": source.planning_run_id,
+                    }
+                    for source in discovery.sources
+                    if source.article_slug == article.slug
+                ],
+            }
+            for article in discovery.articles
+        ],
+    }
+
+
+def write_inventory(
+    discovery: Discovery,
+    budget: str | Decimal,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    document = inventory_document(discovery, budget, root)
+    path = root / INVENTORY_MANIFEST_REL
+    if path.is_file():
+        if read_json(path) != document:
+            raise PipelineError(f"Immutable inventory differs: {path}")
+        return document
+    if path.exists():
+        raise PipelineError(f"Inventory target is not a regular file: {path}")
+    transport.atomic_write_json(path, document)
+    return document
+
+
+def require_inventory(
+    discovery: Discovery,
+    budget: str | Decimal,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    expected = inventory_document(discovery, budget, root)
+    path = root / INVENTORY_MANIFEST_REL
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(
+            f"Frozen inventory is missing; run the inventory command first: {path}"
+        )
+    if read_json(path) != expected:
+        raise PipelineError("Frozen inventory or its bound extraction/route inputs changed")
+    return expected
+
+
+@contextmanager
+def inventory_run_lock(root: Path):
+    path = root / INVENTORY_MANIFEST_REL
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(f"Frozen inventory cannot be locked: {path}")
+    with path.open("rb") as stream:
+        try:
+            fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise PipelineError(
+                "another PROMOPAGES-10060 coordinator holds the batch lock"
+            ) from exc
+        try:
+            yield
+        finally:
+            fcntl.flock(stream.fileno(), fcntl.LOCK_UN)
+
+
+def configure_native(sources: Iterable[Source], root: Path = ROOT) -> None:
+    """Bind the tested provider bridge to this exact namespaced matrix."""
+
+    sources = tuple(sources)
+    if not sources:
+        raise PipelineError("Cannot configure an empty provider matrix")
+    _contract_snapshot(root)
+    _route_snapshot(root)
+    by_sample_id = {source.sample_id: source for source in sources}
+    if len(by_sample_id) != len(sources):
+        raise PipelineError("Provider sample IDs are not unique")
+
+    native.BATCH_ID = BATCH_ID
+    native.PLANNING_BATCH_ID = PLANNING_BATCH_ID
+    native.MODEL_IDS = MODEL_IDS
+    native.PLANNING_MODEL_IDS = MODEL_IDS
+    native.TICKET = TICKET
+    native.MANIFEST_PATH = GENERATION_MANIFEST_REL
+    native.CONTRACT_PATH = root / CONTRACT_REL
+    native.PLANNING_WORKSPACE = None
+    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.SAMPLES = tuple(source.sample for source in sources)
+    native.WAN_SUBMIT_MODE = None
+    native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
+
+    def provider_sample(entry: native.Entry) -> dict[str, Any]:
+        source = by_sample_id.get(entry.sample.sample_id)
+        if source is None:
+            raise PipelineError(f"Unknown provider sample: {entry.sample.sample_id}")
+        image = source.image
+        return {
+            "sample_id": source.sample_id,
+            "article_slug": source.article_slug,
+            "image_id": image["image_id"],
+            "image_number": image["image_id"],
+            "source_path": image["source_path"],
+            # The public source-of-truth MDS original avoids depending on a
+            # repository push before the Eliza image_url request is submitted.
+            "source_url": image["orig_url"],
+            "sha256": image["sha256"],
+            "width": image["width"],
+            "height": image["height"],
+        }
+
+    def artifact_paths(entry: native.Entry, workspace: Path = root) -> dict[str, Path]:
+        base = (
+            workspace
+            / BATCH_ROOT_REL
+            / "videos"
+            / entry.sample.article_slug
+            / native.MODEL_DIRECTORIES[entry.model_id]
+        )
+        stem = entry.sample.image_id
+        return {
+            "directory": base,
+            "prompt": base / f"{stem}.prompt.json",
+            "run": base / f"{stem}.run.json",
+            "video": base / f"{stem}.mp4",
+        }
+
+    native.provider_sample = provider_sample
+    native.artifact_paths = artifact_paths
+    matrix = native.matrix()
+    if len(matrix) != len(sources) * len(MODEL_IDS):
+        raise PipelineError("Native provider matrix size changed")
+
+
+def resolve_primary_retry_target(
+    sources: Iterable[Source],
+    provider_run_id: str,
+) -> tuple[Source, str]:
+    matches = [
+        (source, model_id)
+        for source in sources
+        for model_id in MODEL_IDS
+        if primary_provider_run_id(source, model_id) == provider_run_id
+    ]
+    if len(matches) != 1:
+        raise PipelineError(
+            f"Unknown primary provider run ID for terminal retry: {provider_run_id}"
+        )
+    return matches[0]
+
+
+def _primary_terminal_failure_evidence(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any]:
+    """Validate one definitive primary failure without writing any artifact."""
+
+    entry = native.Entry(source.sample, model_id)
+    expected_provider_run_id = primary_provider_run_id(source, model_id)
+    if entry.provider_run_id != expected_provider_run_id:
+        raise PipelineError("Primary native retry target is not configured")
+    paths = primary_artifact_paths(source, model_id, root)
+    if not paths["run"].is_file() or paths["run"].is_symlink():
+        raise PipelineError(f"Primary terminal receipt is missing: {paths['run']}")
+    if not paths["prompt"].is_file() or paths["prompt"].is_symlink():
+        raise PipelineError(f"Primary immutable prompt is missing: {paths['prompt']}")
+    run = read_json(paths["run"])
+    if not isinstance(run, dict):
+        raise PipelineError(f"Primary terminal receipt is not an object: {paths['run']}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": expected_provider_run_id,
+        "model_id": model_id,
+    }
+    mismatches = [
+        key for key, expected in expected_identity.items() if run.get(key) != expected
+    ]
+    if mismatches:
+        raise PipelineError(
+            "Primary terminal receipt identity differs "
+            f"({', '.join(mismatches)}): {paths['run']}"
+        )
+    if (
+        run.get("status") != "provider-failed"
+        or run.get("provider_may_be_active") is not False
+        or not isinstance(run.get("provider_job_id"), str)
+        or not run.get("provider_job_id")
+        or not isinstance(run.get("completed_at"), str)
+    ):
+        raise PipelineError(
+            "Explicit retry requires a definitive provider-failed primary "
+            "receipt with a provider identity and no active job"
+        )
+    if paths["video"].exists():
+        raise PipelineError(
+            f"Primary provider-failed receipt unexpectedly has media: {paths['video']}"
+        )
+    job = native.load_lite_job(entry, root)
+    expected_prompt_artifact = native.prompt_artifact(job)
+    actual_prompt_artifact = read_json(paths["prompt"])
+    if actual_prompt_artifact != expected_prompt_artifact:
+        raise PipelineError(
+            f"Primary prompt differs from verified Lite result: {entry.provider_run_id}"
+        )
+    sample = native.provider_sample(entry)
+    prompt = native.provider_prompt(job)
+    expected_request = native.provider_request_preview(sample, prompt)
+    expected_request_sha256 = transport.request_fingerprint(
+        expected_request, sample
+    )
+    if (
+        run.get("request") != expected_request
+        or run.get("request_sha256") != expected_request_sha256
+    ):
+        raise PipelineError(
+            f"Primary provider request differs from verified Lite binding: "
+            f"{entry.provider_run_id}"
+        )
+    return {
+        "provider_run_id": expected_provider_run_id,
+        "provider_job_id": run["provider_job_id"],
+        "status": "provider-failed",
+        "provider_may_be_active": False,
+        "submitted_at": run.get("submitted_at"),
+        "completed_at": run["completed_at"],
+        "error": run.get("error"),
+        "run_path": relative(paths["run"], root),
+        "run_sha256": sha256_file(paths["run"]),
+        "prompt_path": relative(paths["prompt"], root),
+        "prompt_sha256": sha256_file(paths["prompt"]),
+        "request": expected_request,
+        "request_sha256": expected_request_sha256,
+        "lite_result_path": job.result_path,
+        "lite_result_sha256": job.result_sha256,
+        "source_path": source.image["source_path"],
+        "source_sha256": source.image["sha256"],
+        "model_id": model_id,
+        "lite_run_id": source.planning_run_id,
+    }
+
+
+def _terminal_retry_envelope_document(
+    binding: TerminalRetryBinding,
+    primary: dict[str, Any],
+    aggregate_cost: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-terminal-provider-retry",
+        "ticket": TICKET,
+        "primary_batch_id": BATCH_ID,
+        "retry_number": TERMINAL_RETRY_VERSION,
+        "agent_id": AGENT_ID,
+        "logical_output_key": {
+            "article_slug": binding.source.article_slug,
+            "image_id": binding.source.image["image_id"],
+            "model_id": binding.model_id,
+        },
+        "primary_attempt": primary,
+        "retry_attempt": {
+            "retry_key": binding.retry_key,
+            "batch_id": binding.retry_batch_id,
+            "provider_run_id": binding.retry_provider_run_id,
+            "lite_run_id": binding.source.planning_run_id,
+            "model_id": binding.model_id,
+            "source_path": binding.source.image["source_path"],
+            "source_sha256": binding.source.image["sha256"],
+            "prompt_path": binding.prompt_rel.as_posix(),
+            "run_path": binding.run_rel.as_posix(),
+            "video_path": binding.video_rel.as_posix(),
+            "generation_manifest_path": binding.manifest_rel.as_posix(),
+        },
+        "cost": aggregate_cost,
+        "policy": {
+            "explicit_operator_command_required": True,
+            "automatic_retry": False,
+            "maximum_new_paid_submissions": 1,
+            "same_verified_lite_result": True,
+            "same_source": True,
+            "same_prompt": True,
+            "same_model": True,
+            "fallback": False,
+            "primary_receipt_immutable": True,
+        },
+    }
+
+
+def configure_terminal_retry_native(
+    binding: TerminalRetryBinding,
+    root: Path = ROOT,
+) -> None:
+    """Bind the native one-submit guard to one isolated retry-v1 output."""
+
+    _contract_snapshot(root)
+    _route_snapshot(root)
+    source = binding.source
+    model_id = binding.model_id
+    native.BATCH_ID = binding.retry_batch_id
+    # Planning remains the exact original verified three-model Lite result.
+    native.PLANNING_BATCH_ID = PLANNING_BATCH_ID
+    native.MODEL_IDS = (model_id,)
+    native.PLANNING_MODEL_IDS = MODEL_IDS
+    native.TICKET = TICKET
+    native.MANIFEST_PATH = binding.manifest_rel
+    native.CONTRACT_PATH = root / CONTRACT_REL
+    native.PLANNING_WORKSPACE = None
+    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.SAMPLES = (source.sample,)
+    native.WAN_SUBMIT_MODE = None
+    native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
+
+    def provider_sample(entry: native.Entry) -> dict[str, Any]:
+        if (
+            entry.sample.sample_id != source.sample_id
+            or entry.model_id != model_id
+        ):
+            raise PipelineError(f"Unknown retry provider entry: {entry.run_id}")
+        image = source.image
+        return {
+            "sample_id": source.sample_id,
+            "article_slug": source.article_slug,
+            "image_id": image["image_id"],
+            "image_number": image["image_id"],
+            "source_path": image["source_path"],
+            "source_url": image["orig_url"],
+            "sha256": image["sha256"],
+            "width": image["width"],
+            "height": image["height"],
+        }
+
+    def artifact_paths(entry: native.Entry, workspace: Path = root) -> dict[str, Path]:
+        if entry.provider_run_id != binding.retry_provider_run_id:
+            raise PipelineError(
+                f"Retry provider identity changed: {entry.provider_run_id}"
+            )
+        directory = workspace / binding.media_directory_rel
+        return {
+            "directory": directory,
+            "prompt": workspace / binding.prompt_rel,
+            "run": workspace / binding.run_rel,
+            "video": workspace / binding.video_rel,
+        }
+
+    native.provider_sample = provider_sample
+    native.artifact_paths = artifact_paths
+    matrix = native.matrix()
+    if (
+        len(matrix) != 1
+        or matrix[0].provider_run_id != binding.retry_provider_run_id
+        or matrix[0].planning_run_id != source.planning_run_id
+        or matrix[0].model_id != model_id
+    ):
+        raise PipelineError("Terminal retry native matrix identity changed")
+
+
+def _primary_ambiguous_submit_evidence(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any]:
+    """Bind one genuinely unknown synchronous POST without reclassifying it."""
+
+    if model_id != "alibaba/wan-2.2":
+        raise PipelineError(
+            "Ambiguous-submit retry requires the synchronous alibaba/wan-2.2 route"
+        )
+    entry = native.Entry(source.sample, model_id)
+    expected_provider_run_id = primary_provider_run_id(source, model_id)
+    if entry.provider_run_id != expected_provider_run_id:
+        raise PipelineError("Primary ambiguous-submit target is not configured")
+    paths = primary_artifact_paths(source, model_id, root)
+    if not paths["run"].is_file() or paths["run"].is_symlink():
+        raise PipelineError(f"Primary ambiguous receipt is missing: {paths['run']}")
+    if not paths["prompt"].is_file() or paths["prompt"].is_symlink():
+        raise PipelineError(f"Primary immutable prompt is missing: {paths['prompt']}")
+    if paths["video"].exists():
+        raise PipelineError(
+            f"Ambiguous primary unexpectedly has media: {paths['video']}"
+        )
+    run = read_json(paths["run"])
+    if not isinstance(run, dict):
+        raise PipelineError(f"Primary ambiguous receipt is not an object: {paths['run']}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": expected_provider_run_id,
+        "model_id": model_id,
+        "adapter": "eliza-segmind",
+    }
+    mismatches = [
+        key for key, expected in expected_identity.items() if run.get(key) != expected
+    ]
+    if mismatches:
+        raise PipelineError(
+            "Primary ambiguous receipt identity differs "
+            f"({', '.join(mismatches)}): {paths['run']}"
+        )
+    recorded_status = run.get("status")
+    if (
+        recorded_status not in {"submitting", "submit-unknown"}
+        or run.get("provider_may_be_active") is not True
+        or run.get("provider_job_id") is not None
+        or run.get("provider_session_hash") is not None
+        or run.get("submitted_at") is not None
+        or run.get("completed_at") is not None
+        or run.get("media") is not None
+        or run.get("contract_check") is not None
+    ):
+        raise PipelineError(
+            "Explicit ambiguous-submit retry requires an unresolved synchronous "
+            "Segmind receipt with no provider identity, timestamps, or media"
+        )
+
+    job = native.load_lite_job(entry, root)
+    expected_prompt_artifact = native.prompt_artifact(job)
+    if read_json(paths["prompt"]) != expected_prompt_artifact:
+        raise PipelineError(
+            f"Primary prompt differs from verified Lite result: {entry.provider_run_id}"
+        )
+    sample = native.provider_sample(entry)
+    prompt = native.provider_prompt(job)
+    expected_request = native.provider_request_preview(sample, prompt)
+    expected_request_sha256 = transport.request_fingerprint(
+        expected_request, sample
+    )
+    if (
+        run.get("request") != expected_request
+        or run.get("request_sha256") != expected_request_sha256
+    ):
+        raise PipelineError(
+            f"Primary provider request differs from verified Lite binding: "
+            f"{entry.provider_run_id}"
+        )
+    if native._is_exact_legacy_segmind_quota_pre_submit_failure(
+        run,
+        expected_request,
+        expected_request_sha256,
+        "eliza-segmind",
+    ):
+        raise PipelineError(
+            "The primary receipt is exact known pre-submit quota evidence, not "
+            "an ambiguous provider outcome"
+        )
+    source_preflight = run.get("source_preflight")
+    if (
+        not isinstance(source_preflight, dict)
+        or source_preflight.get("http_status") != 200
+        or not isinstance(source_preflight.get("bytes"), int)
+        or source_preflight["bytes"] < 1
+        or source_preflight.get("sha256") != source.image["sha256"]
+    ):
+        raise PipelineError(
+            "Ambiguous Segmind receipt lacks the exact successful source preflight"
+        )
+    receipt_error = run.get("error")
+    if receipt_error is not None and (
+        not isinstance(receipt_error, str) or not receipt_error
+    ):
+        raise PipelineError("Ambiguous primary receipt error is invalid")
+    ambiguity_reason = receipt_error or (
+        "Synchronous Segmind POST may have reached the provider, but no "
+        "response or provider request identity was durably recorded"
+    )
+    return {
+        "provider_run_id": expected_provider_run_id,
+        # The envelope exposes a stable semantic status while preserving the
+        # byte-identical primary receipt and its recorded transition below.
+        "status": "submit-unknown",
+        "recorded_status": recorded_status,
+        "outcome": "unknown",
+        "outcome_unknown": True,
+        "ambiguity_reason": ambiguity_reason,
+        "provider_may_be_active": True,
+        "provider_job_id": None,
+        "provider_session_hash": None,
+        "submitted_at": None,
+        "completed_at": None,
+        "error": receipt_error,
+        "run_path": relative(paths["run"], root),
+        "run_sha256": sha256_file(paths["run"]),
+        "prompt_path": relative(paths["prompt"], root),
+        "prompt_sha256": sha256_file(paths["prompt"]),
+        "request": expected_request,
+        "request_sha256": expected_request_sha256,
+        "source_preflight": source_preflight,
+        "lite_result_path": job.result_path,
+        "lite_result_sha256": job.result_sha256,
+        "source_path": source.image["source_path"],
+        "source_sha256": source.image["sha256"],
+        "model_id": model_id,
+        "adapter": "eliza-segmind",
+        "lite_run_id": source.planning_run_id,
+    }
+
+
+def _ambiguous_submit_retry_envelope_document(
+    binding: AmbiguousSubmitRetryBinding,
+    primary: dict[str, Any],
+    aggregate_cost: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-ambiguous-submit-retry",
+        "ticket": TICKET,
+        "primary_batch_id": BATCH_ID,
+        "retry_number": AMBIGUOUS_SUBMIT_RETRY_VERSION,
+        "agent_id": AGENT_ID,
+        "logical_output_key": {
+            "article_slug": binding.source.article_slug,
+            "image_id": binding.source.image["image_id"],
+            "model_id": binding.model_id,
+        },
+        "primary_attempt": primary,
+        "retry_attempt": {
+            "retry_key": binding.retry_key,
+            "batch_id": binding.retry_batch_id,
+            "provider_run_id": binding.retry_provider_run_id,
+            "lite_run_id": binding.source.planning_run_id,
+            "model_id": binding.model_id,
+            "source_path": binding.source.image["source_path"],
+            "source_sha256": binding.source.image["sha256"],
+            "prompt_path": binding.prompt_rel.as_posix(),
+            "run_path": binding.run_rel.as_posix(),
+            "video_path": binding.video_rel.as_posix(),
+            "generation_manifest_path": binding.manifest_rel.as_posix(),
+        },
+        "cost": aggregate_cost,
+        "policy": _ambiguous_submit_retry_policy(),
+    }
+
+
+def _ambiguous_submit_retry_policy() -> dict[str, Any]:
+    return {
+        "explicit_operator_command_required": True,
+        "automatic_retry": False,
+        "maximum_new_paid_submissions": 1,
+        "retry2_forbidden": True,
+        "same_verified_lite_result": True,
+        "same_source": True,
+        "same_prompt": True,
+        "same_model": True,
+        "same_request": True,
+        "fallback": False,
+        "primary_receipt_immutable": True,
+        "primary_outcome": "unknown",
+        "primary_is_definitive_pre_submit": False,
+        "duplicate_submission_risk_acknowledged": True,
+    }
+
+
+def configure_ambiguous_submit_retry_native(
+    binding: AmbiguousSubmitRetryBinding,
+    root: Path = ROOT,
+) -> None:
+    """Bind one quarantine namespace to the exact synchronous Wan 2.2 route."""
+
+    _contract_snapshot(root)
+    _route_snapshot(root)
+    source = binding.source
+    model_id = binding.model_id
+    if model_id != "alibaba/wan-2.2":
+        raise PipelineError("Ambiguous-submit native matrix must use Wan 2.2")
+    native.BATCH_ID = binding.retry_batch_id
+    native.PLANNING_BATCH_ID = PLANNING_BATCH_ID
+    native.MODEL_IDS = (model_id,)
+    native.PLANNING_MODEL_IDS = MODEL_IDS
+    native.TICKET = TICKET
+    native.MANIFEST_PATH = binding.manifest_rel
+    native.CONTRACT_PATH = root / CONTRACT_REL
+    native.PLANNING_WORKSPACE = None
+    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.SAMPLES = (source.sample,)
+    native.WAN_SUBMIT_MODE = None
+    native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
+
+    def provider_sample(entry: native.Entry) -> dict[str, Any]:
+        if entry.sample.sample_id != source.sample_id or entry.model_id != model_id:
+            raise PipelineError(
+                f"Unknown ambiguous-submit retry provider entry: {entry.run_id}"
+            )
+        image = source.image
+        return {
+            "sample_id": source.sample_id,
+            "article_slug": source.article_slug,
+            "image_id": image["image_id"],
+            "image_number": image["image_id"],
+            "source_path": image["source_path"],
+            "source_url": image["orig_url"],
+            "sha256": image["sha256"],
+            "width": image["width"],
+            "height": image["height"],
+        }
+
+    def artifact_paths(entry: native.Entry, workspace: Path = root) -> dict[str, Path]:
+        if entry.provider_run_id != binding.retry_provider_run_id:
+            raise PipelineError(
+                f"Ambiguous-submit retry identity changed: {entry.provider_run_id}"
+            )
+        return {
+            "directory": workspace / binding.media_directory_rel,
+            "prompt": workspace / binding.prompt_rel,
+            "run": workspace / binding.run_rel,
+            "video": workspace / binding.video_rel,
+        }
+
+    native.provider_sample = provider_sample
+    native.artifact_paths = artifact_paths
+    matrix = native.matrix()
+    if (
+        len(matrix) != 1
+        or matrix[0].provider_run_id != binding.retry_provider_run_id
+        or matrix[0].planning_run_id != source.planning_run_id
+        or matrix[0].model_id != model_id
+    ):
+        raise PipelineError("Ambiguous-submit retry native matrix identity changed")
+
+
+def _verified_primary_normalized_input_evidence(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> tuple[dict[str, Any], dict[str, Any], Any, dict[str, Path]]:
+    """Bind the immutable primary prompt/request before interpreting failure."""
+
+    _require_normalized_input_target(source, model_id)
+    entry = native.Entry(source.sample, model_id)
+    expected_provider_run_id = primary_provider_run_id(source, model_id)
+    if entry.provider_run_id != expected_provider_run_id:
+        raise PipelineError("Primary normalized-input target is not configured")
+    paths = primary_artifact_paths(source, model_id, root)
+    if not paths["run"].is_file() or paths["run"].is_symlink():
+        raise PipelineError(f"Primary oversize receipt is missing: {paths['run']}")
+    if not paths["prompt"].is_file() or paths["prompt"].is_symlink():
+        raise PipelineError(f"Primary immutable prompt is missing: {paths['prompt']}")
+    if paths["video"].exists():
+        raise PipelineError(f"Primary oversize failure unexpectedly has media: {paths['video']}")
+    run = read_json(paths["run"])
+    if not isinstance(run, dict):
+        raise PipelineError(f"Primary oversize receipt is not an object: {paths['run']}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": expected_provider_run_id,
+        "model_id": model_id,
+        "adapter": ROUTE_IDENTITIES[model_id][0],
+    }
+    mismatches = [
+        key for key, expected in expected_identity.items() if run.get(key) != expected
+    ]
+    if mismatches:
+        raise PipelineError(
+            "Primary oversize receipt identity differs "
+            f"({', '.join(mismatches)}): {paths['run']}"
+        )
+    if run.get("media") is not None or run.get("contract_check") is not None:
+        raise PipelineError("Primary oversize receipt unexpectedly contains media audit")
+    job = native.load_lite_job(entry, root)
+    if read_json(paths["prompt"]) != native.prompt_artifact(job):
+        raise PipelineError(
+            f"Primary prompt differs from verified Lite result: {expected_provider_run_id}"
+        )
+    sample = native.provider_sample(entry)
+    prompt = native.provider_prompt(job)
+    expected_request = native.provider_request_preview(sample, prompt)
+    expected_request_sha256 = transport.request_fingerprint(expected_request, sample)
+    if (
+        run.get("request") != expected_request
+        or run.get("request_sha256") != expected_request_sha256
+        or run.get("request_fingerprint_version")
+        != transport.REQUEST_FINGERPRINT_VERSION
+    ):
+        raise PipelineError(
+            f"Primary oversize request differs from verified Lite binding: "
+            f"{expected_provider_run_id}"
+        )
+    return run, expected_request, job, paths
+
+
+def _primary_normalized_input_failure_evidence(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any]:
+    """Recognize only the two exact oversize failures; never rewrite them."""
+
+    run, request, job, paths = _verified_primary_normalized_input_evidence(
+        source,
+        model_id,
+        root=root,
+    )
+    recorded_status = run.get("status")
+    recorded_active = run.get("provider_may_be_active")
+    provider_failure: dict[str, Any] | None = None
+    recorded_provider_job_id = run.get("provider_job_id")
+    if model_id == "alibaba/wan-2.2":
+        prefix = "Eliza/Segmind POST failed with HTTP 400: "
+        error = run.get("error")
+        if not isinstance(error, str) or not error.startswith(prefix):
+            raise PipelineError("Wan 2.2 primary is not the exact oversize HTTP 400")
+        provider_failure = transport.parse_segmind_oversize_task_failure(
+            400,
+            error[len(prefix) :],
+        )
+        source_preflight = run.get("source_preflight")
+        original = _normalized_input_original_source(source, root)
+        if (
+            provider_failure is None
+            or recorded_status != "submit-unknown"
+            or recorded_active is not True
+            or recorded_provider_job_id is not None
+            or run.get("submitted_at") is not None
+            or run.get("completed_at") is not None
+            or not isinstance(source_preflight, dict)
+            or source_preflight.get("http_status") != 200
+            or source_preflight.get("bytes") != original["bytes"]
+            or source_preflight.get("sha256") != original["sha256"]
+        ):
+            raise PipelineError(
+                "Wan 2.2 primary lacks exact terminal Segmind oversize evidence"
+            )
+        provider_job_id = provider_failure["provider_task_id"]
+    else:
+        provider_job_id = run.get("provider_job_id")
+        exact_error = (
+            f"Eliza/OpenRouter job {provider_job_id} failed with status failed: "
+            "File size exceeds maximum allowed size of 20971520 bytes"
+        )
+        if (
+            recorded_status != "provider-failed"
+            or recorded_active is not False
+            or not isinstance(provider_job_id, str)
+            or not provider_job_id
+            or not isinstance(run.get("submitted_at"), str)
+            or not run.get("submitted_at")
+            or not isinstance(run.get("completed_at"), str)
+            or not run.get("completed_at")
+            or run.get("error") != exact_error
+        ):
+            raise PipelineError(
+                "Wan 2.7 primary is not the exact terminal 20971520-byte failure"
+            )
+    evidence: dict[str, Any] = {
+        "provider_run_id": primary_provider_run_id(source, model_id),
+        "provider_job_id": provider_job_id,
+        "provider_task_id": (
+            provider_failure.get("provider_task_id")
+            if isinstance(provider_failure, dict)
+            else None
+        ),
+        "status": "provider-failed",
+        "recorded_status": recorded_status,
+        "provider_may_be_active": False,
+        "recorded_provider_may_be_active": recorded_active,
+        "recorded_provider_job_id": recorded_provider_job_id,
+        "submitted_at": run.get("submitted_at"),
+        "completed_at": run.get("completed_at"),
+        "error": run.get("error"),
+        "run_path": relative(paths["run"], root),
+        "run_sha256": sha256_file(paths["run"]),
+        "prompt_path": relative(paths["prompt"], root),
+        "prompt_sha256": sha256_file(paths["prompt"]),
+        "request": request,
+        "request_sha256": run["request_sha256"],
+        "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+        "lite_result_path": job.result_path,
+        "lite_result_sha256": job.result_sha256,
+        "source": _normalized_input_original_source(source, root),
+        "model_id": model_id,
+        "adapter": ROUTE_IDENTITIES[model_id][0],
+        "lite_run_id": source.planning_run_id,
+    }
+    if provider_failure is not None:
+        evidence["provider_failure"] = provider_failure
+        evidence["provider_submit_time"] = provider_failure.get("submit_time")
+        evidence["provider_scheduled_time"] = provider_failure.get("scheduled_time")
+        evidence["provider_end_time"] = provider_failure.get("end_time")
+    return evidence
+
+
+def _normalized_input_retry_policy() -> dict[str, Any]:
+    return {
+        "explicit_operator_command_required": True,
+        "automatic_retry": False,
+        "maximum_new_paid_submissions": 1,
+        "retry2_forbidden": True,
+        "same_verified_lite_result": True,
+        "same_prompt": True,
+        "same_model": True,
+        "request_delta_only_image_pointer": True,
+        "shared_frozen_scale_1200_asset": True,
+        "local_reencode": False,
+        "fallback": False,
+        "primary_receipt_immutable": True,
+    }
+
+
+def _normalized_input_retry_envelope_document(
+    binding: NormalizedInputRetryBinding,
+    primary: dict[str, Any],
+    asset: dict[str, Any],
+    asset_sha256: str,
+    aggregate_cost: dict[str, Any],
+) -> dict[str, Any]:
+    normalized = asset["normalized"]
+    retry_request, request_delta = _normalized_retry_request(
+        primary["request"],
+        binding.model_id,
+        primary["source"]["url"],
+        normalized["url"],
+    )
+    normalized_sample = {
+        "source_path": binding.source.image["source_path"],
+        "sha256": normalized["sha256"],
+    }
+    retry_request_sha256 = transport.request_fingerprint(
+        retry_request,
+        normalized_sample,
+    )
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-normalized-input-retry",
+        "ticket": TICKET,
+        "primary_batch_id": BATCH_ID,
+        "retry_number": NORMALIZED_INPUT_RETRY_VERSION,
+        "agent_id": AGENT_ID,
+        "logical_output_key": {
+            "article_slug": binding.source.article_slug,
+            "image_id": binding.source.image["image_id"],
+            "model_id": binding.model_id,
+        },
+        "primary_attempt": primary,
+        "retry_attempt": {
+            "retry_key": binding.retry_key,
+            "batch_id": binding.retry_batch_id,
+            "provider_run_id": binding.retry_provider_run_id,
+            "lite_run_id": binding.source.planning_run_id,
+            "model_id": binding.model_id,
+            "source_path": binding.source.image["source_path"],
+            "source_sha256": normalized["sha256"],
+            "source_url": normalized["url"],
+            "prompt_path": binding.prompt_rel.as_posix(),
+            "run_path": binding.run_rel.as_posix(),
+            "video_path": binding.video_rel.as_posix(),
+            "generation_manifest_path": binding.manifest_rel.as_posix(),
+            "request": retry_request,
+            "request_sha256": retry_request_sha256,
+            "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
+        },
+        "source_transform": {
+            "strategy": "frozen-page-variant",
+            "original": asset["original"],
+            "normalized": {
+                **normalized,
+                "metadata_path": binding.asset_metadata_rel.as_posix(),
+                "metadata_sha256": asset_sha256,
+            },
+            "request_delta": request_delta,
+        },
+        "cost": aggregate_cost,
+        "policy": _normalized_input_retry_policy(),
+    }
+
+
+def configure_normalized_input_retry_native(
+    binding: NormalizedInputRetryBinding,
+    asset: dict[str, Any],
+    root: Path = ROOT,
+) -> None:
+    """Bind one isolated retry to the normalized URL and original Lite plan."""
+
+    _contract_snapshot(root)
+    _route_snapshot(root)
+    source = binding.source
+    model_id = binding.model_id
+    normalized = asset.get("normalized") if isinstance(asset, dict) else None
+    if not isinstance(normalized, dict):
+        raise PipelineError("Normalized-input asset metadata is invalid")
+    native.BATCH_ID = binding.retry_batch_id
+    native.PLANNING_BATCH_ID = PLANNING_BATCH_ID
+    native.MODEL_IDS = (model_id,)
+    native.PLANNING_MODEL_IDS = MODEL_IDS
+    native.TICKET = TICKET
+    native.MANIFEST_PATH = binding.manifest_rel
+    native.CONTRACT_PATH = root / CONTRACT_REL
+    native.PLANNING_WORKSPACE = None
+    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.SAMPLES = (source.sample,)
+    native.WAN_SUBMIT_MODE = None
+    native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
+
+    def provider_sample(entry: native.Entry) -> dict[str, Any]:
+        if entry.sample.sample_id != source.sample_id or entry.model_id != model_id:
+            raise PipelineError(
+                f"Unknown normalized-input retry provider entry: {entry.run_id}"
+            )
+        image = source.image
+        return {
+            "sample_id": source.sample_id,
+            "article_slug": source.article_slug,
+            "image_id": image["image_id"],
+            "image_number": image["image_id"],
+            # Keep the logical/source provenance path original. Only the
+            # provider URL and its byte fingerprint are normalized.
+            "source_path": image["source_path"],
+            "source_url": normalized["url"],
+            "sha256": normalized["sha256"],
+            "width": normalized["width"],
+            "height": normalized["height"],
+        }
+
+    def artifact_paths(entry: native.Entry, workspace: Path = root) -> dict[str, Path]:
+        if entry.provider_run_id != binding.retry_provider_run_id:
+            raise PipelineError(
+                f"Normalized-input retry identity changed: {entry.provider_run_id}"
+            )
+        return {
+            "directory": workspace / binding.media_directory_rel,
+            "prompt": workspace / binding.prompt_rel,
+            "run": workspace / binding.run_rel,
+            "video": workspace / binding.video_rel,
+        }
+
+    native.provider_sample = provider_sample
+    native.artifact_paths = artifact_paths
+    matrix = native.matrix()
+    if (
+        len(matrix) != 1
+        or matrix[0].provider_run_id != binding.retry_provider_run_id
+        or matrix[0].planning_run_id != source.planning_run_id
+        or matrix[0].model_id != model_id
+    ):
+        raise PipelineError("Normalized-input retry native matrix identity changed")
+
+
+def runner_command(root: Path, *parts: str) -> list[str]:
+    return [sys.executable, str(root / "scripts/clipmaker_lite_runner.py"), *parts]
+
+
+def _planning_state(source: Source, root: Path) -> str | None:
+    directory = root / ARTIFACT_NAMESPACE / source.planning_run_id
+    result_path = directory / "result.json"
+    job_path = directory / "job.json"
+    if result_path.is_file():
+        summary = runner.provenance_summary(root, source.planning_run_id)
+        if (
+            summary.get("verified") is not True
+            or summary.get("agent_id") != AGENT_ID
+            or summary.get("contract_version") != REQUIRED_CONTRACT_VERSION
+            or summary.get("models") != list(MODEL_IDS)
+            or summary.get("source_image_sha256") != source.image["sha256"]
+            or summary.get("article_context_sha256") != source.context_sha256
+        ):
+            raise PipelineError(
+                f"Existing planning provenance differs: {source.planning_run_id}"
+            )
+        return "verified"
+    if job_path.is_file():
+        _job, selection, _directory = runner.validate_prepared_job(
+            root, source.planning_run_id
+        )
+        selected_ids = [
+            item.get("model_id") for item in selection.get("selected_models", [])
+        ]
+        if selected_ids != list(MODEL_IDS):
+            raise PipelineError(
+                f"Existing planning model set differs: {source.planning_run_id}"
+            )
+        return "prepared"
+    return None
+
+
+def select_sources(
+    sources: Iterable[Source],
+    *,
+    article_slugs: Iterable[str] = (),
+    planning_run_ids: Iterable[str] = (),
+) -> tuple[Source, ...]:
+    sources = tuple(sources)
+    article_slugs = tuple(article_slugs)
+    planning_run_ids = tuple(planning_run_ids)
+    unknown_articles = set(article_slugs) - {
+        source.article_slug for source in sources
+    }
+    unknown_runs = set(planning_run_ids) - {
+        source.planning_run_id for source in sources
+    }
+    if unknown_articles:
+        raise PipelineError(
+            f"Unknown article slugs: {', '.join(sorted(unknown_articles))}"
+        )
+    if unknown_runs:
+        raise PipelineError(
+            f"Unknown planning run IDs: {', '.join(sorted(unknown_runs))}"
+        )
+    selected = tuple(
+        source
+        for source in sources
+        if (not article_slugs or source.article_slug in article_slugs)
+        and (not planning_run_ids or source.planning_run_id in planning_run_ids)
+    )
+    if not selected:
+        raise PipelineError("Planning filters selected no image sources")
+    return selected
+
+
+def prepare_planning_runs(
+    sources: Iterable[Source],
+    *,
+    root: Path = ROOT,
+    dry_run: bool,
+) -> dict[str, int]:
+    counts = {"verified": 0, "prepared": 0, "pending": 0}
+    for source in sources:
+        state = _planning_state(source, root)
+        if state is not None:
+            counts[state] += 1
+            print(
+                f"planning prepare {source.planning_run_id} -> existing-{state}",
+                flush=True,
+            )
+            continue
+        if dry_run:
+            counts["pending"] += 1
+            print(
+                f"planning prepare {source.planning_run_id} -> would-prepare",
+                flush=True,
+            )
+            continue
+        command = runner_command(
+            root,
+            "prepare",
+            "--run-id",
+            source.planning_run_id,
+            "--image",
+            source.image["source_path"],
+            "--context",
+            source.context_path,
+            "--image-id",
+            source.image["image_id"],
+        )
+        for model_id in MODEL_IDS:
+            command.extend(("--model", model_id))
+        completed = subprocess.run(
+            command,
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if completed.returncode:
+            raise PipelineError(
+                f"Planning prepare failed for {source.planning_run_id}: "
+                f"{transport.safe_error(completed.stderr or completed.stdout)}"
+            )
+        if _planning_state(source, root) != "prepared":
+            raise PipelineError(
+                f"Runner did not create a valid planning job: {source.planning_run_id}"
+            )
+        counts["prepared"] += 1
+        print(f"planning prepare {source.planning_run_id} -> prepared", flush=True)
+    return counts
+
+
+def _run_one_planning(
+    source: Source,
+    *,
+    root: Path,
+    timeout: int,
+    author_model: str | None,
+) -> tuple[str, str, str | None]:
+    try:
+        if _planning_state(source, root) == "verified":
+            return source.planning_run_id, "existing", None
+    except Exception as exc:
+        return source.planning_run_id, "failed", transport.safe_error(exc)
+    command = runner_command(
+        root,
+        "run",
+        "--run-id",
+        source.planning_run_id,
+        "--timeout",
+        str(timeout),
+        "--allow-external-processing",
+    )
+    if author_model:
+        command.extend(("--author-model", author_model))
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=timeout + 60,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return source.planning_run_id, "failed", f"planning timed out: {exc}"
+    if completed.returncode:
+        return (
+            source.planning_run_id,
+            "failed",
+            transport.safe_error(completed.stderr or completed.stdout),
+        )
+    try:
+        state = _planning_state(source, root)
+    except Exception as exc:
+        return source.planning_run_id, "failed", transport.safe_error(exc)
+    if state != "verified":
+        return source.planning_run_id, "failed", "planning provenance is not verified"
+    return source.planning_run_id, "completed", None
+
+
+def run_planning_runs(
+    sources: Iterable[Source],
+    *,
+    root: Path,
+    concurrency: int,
+    timeout: int,
+    dry_run: bool,
+    allow_external_processing: bool,
+    author_model: str | None,
+) -> int:
+    sources = tuple(sources)
+    if dry_run:
+        prepare_planning_runs(sources, root=root, dry_run=True)
+        for source in sources:
+            state = _planning_state(source, root)
+            print(
+                f"planning run {source.planning_run_id} -> "
+                f"{'existing' if state == 'verified' else 'would-run'}",
+                flush=True,
+            )
+        return 0
+    if not allow_external_processing:
+        raise PipelineError(
+            "Real planning requires --allow-external-processing because the "
+            "image and article context are sent to the isolated Codex execution"
+        )
+    failures: list[str] = []
+    completed_count = 0
+    with inventory_run_lock(root):
+        prepare_planning_runs(sources, root=root, dry_run=False)
+        with ThreadPoolExecutor(
+            max_workers=concurrency,
+            thread_name_prefix="promopages-10060-lite-plan",
+        ) as executor:
+            futures: dict[Future[tuple[str, str, str | None]], Source] = {
+                executor.submit(
+                    _run_one_planning,
+                    source,
+                    root=root,
+                    timeout=timeout,
+                    author_model=author_model,
+                ): source
+                for source in sources
+            }
+            for future in as_completed(futures):
+                run_id, status, error = future.result()
+                completed_count += 1
+                print(
+                    f"planning [{completed_count}/{len(sources)}] {run_id} -> "
+                    f"{status}{f': {error}' if error else ''}",
+                    flush=True,
+                )
+                if error:
+                    failures.append(f"{run_id}: {error}")
+    if failures:
+        raise PipelineError(
+            f"{len(failures)} planning run(s) failed: "
+            + "; ".join(failures[:5])
+        )
+    return 0
+
+
+def materialize_generation(
+    sources: Iterable[Source],
+    *,
+    root: Path,
+    dry_run: bool,
+) -> int:
+    sources = tuple(sources)
+    configure_native(sources, root)
+    expected = len(sources) * len(MODEL_IDS)
+    if dry_run:
+        for entry in native.matrix():
+            job = native.load_lite_job(entry, root)
+            native.provider_request_preview(
+                native.provider_sample(entry), native.provider_prompt(job)
+            )
+        print(f"PASS: validated {expected} exact provider jobs; no files written")
+        return 0
+    rows = native.materialize(root)
+    if len(rows) != expected:
+        raise PipelineError(f"Expected {expected} provider jobs, got {len(rows)}")
+    print(
+        f"PASS: materialized {len(rows)} provider jobs from "
+        f"{len(sources)} verified Lite plans"
+    )
+    return 0
+
+
+UNRESOLVED_PROVIDER_STATUSES = {
+    "submitting",
+    "submitted",
+    "running",
+    "submit-unknown",
+}
+
+
+@dataclass(frozen=True)
+class GenerationArticleState:
+    """Network-free summary of the native receipts for one article."""
+
+    article_slug: str
+    accepted_outputs: int
+    terminal_accounted_outputs: int
+    provider_filtered_outputs: int
+    expected_outputs: int
+    unresolved_run_ids: tuple[str, ...]
+    provider_unavailable_outputs: int = 0
+
+    @property
+    def complete(self) -> bool:
+        return self.terminal_accounted_outputs == self.expected_outputs
+
+
+def _native_run_receipt(
+    entry: native.Entry,
+    *,
+    root: Path,
+) -> tuple[dict[str, Any] | None, Path]:
+    """Read and bind one native receipt without materializing or calling a provider."""
+
+    path = native.artifact_paths(entry, root)["run"]
+    if not path.is_file():
+        return None, path
+    receipt = read_json(path)
+    if not isinstance(receipt, dict):
+        raise PipelineError(f"Native run receipt is not an object: {path}")
+    expected_identity = {
+        "batch_id": BATCH_ID,
+        "agent_id": AGENT_ID,
+        "lite_run_id": entry.planning_run_id,
+        "provider_run_id": entry.provider_run_id,
+        "model_id": entry.model_id,
+    }
+    mismatches = [
+        key
+        for key, expected in expected_identity.items()
+        if receipt.get(key) != expected
+    ]
+    if mismatches:
+        raise PipelineError(
+            f"Native run receipt identity differs ({', '.join(mismatches)}): {path}"
+        )
+    return receipt, path
+
+
+def _native_receipt_is_unresolved(receipt: dict[str, Any]) -> bool:
+    return (
+        receipt.get("status") in UNRESOLVED_PROVIDER_STATUSES
+        or receipt.get("provider_may_be_active") is True
+    )
+
+
+def _normalized_input_retry_envelope(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> tuple[NormalizedInputRetryBinding, dict[str, Any]] | None:
+    """Validate one reserved normalized retry and all immutable bindings."""
+
+    if (
+        source.article_slug != NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
+        or source.image.get("image_id") != NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+        or model_id not in NORMALIZED_INPUT_ELIGIBLE_MODELS
+    ):
+        return None
+    binding = normalized_input_retry_binding(source, model_id)
+    path = root / binding.envelope_rel
+    if not path.exists():
+        return None
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(
+            f"Normalized-input retry envelope is not a regular file: {path}"
+        )
+    envelope = read_json(path)
+    if not isinstance(envelope, dict):
+        raise PipelineError(f"Normalized-input retry envelope is invalid: {path}")
+    primary = envelope.get("primary_attempt")
+    retry = envelope.get("retry_attempt")
+    transform = envelope.get("source_transform")
+    expected_logical_key = {
+        "article_slug": source.article_slug,
+        "image_id": source.image["image_id"],
+        "model_id": model_id,
+    }
+    asset, asset_sha256 = _validated_normalized_input_asset(binding, root=root)
+    normalized = asset["normalized"]
+    expected_retry_identity = {
+        "retry_key": binding.retry_key,
+        "batch_id": binding.retry_batch_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "lite_run_id": source.planning_run_id,
+        "model_id": model_id,
+        "source_path": source.image["source_path"],
+        "source_sha256": normalized["sha256"],
+        "source_url": normalized["url"],
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": binding.video_rel.as_posix(),
+        "generation_manifest_path": binding.manifest_rel.as_posix(),
+    }
+    if (
+        envelope.get("schema_version") != 1
+        or envelope.get("manifest_role")
+        != "promopages-10060-normalized-input-retry"
+        or envelope.get("ticket") != TICKET
+        or envelope.get("primary_batch_id") != BATCH_ID
+        or envelope.get("retry_number") != NORMALIZED_INPUT_RETRY_VERSION
+        or envelope.get("agent_id") != AGENT_ID
+        or envelope.get("logical_output_key") != expected_logical_key
+        or envelope.get("policy") != _normalized_input_retry_policy()
+        or not isinstance(primary, dict)
+        or primary.get("provider_run_id") != binding.primary_provider_run_id
+        or primary.get("status") != "provider-failed"
+        or primary.get("provider_may_be_active") is not False
+        or not isinstance(retry, dict)
+        or any(retry.get(key) != value for key, value in expected_retry_identity.items())
+        or not isinstance(transform, dict)
+        or transform.get("strategy") != "frozen-page-variant"
+        or transform.get("original") != asset["original"]
+        or transform.get("normalized")
+        != {
+            **normalized,
+            "metadata_path": binding.asset_metadata_rel.as_posix(),
+            "metadata_sha256": asset_sha256,
+        }
+    ):
+        raise PipelineError(f"Normalized-input retry envelope binding differs: {path}")
+    cost = envelope.get("cost")
+    if not isinstance(cost, dict):
+        raise PipelineError(f"Normalized-input retry cost ledger is missing: {path}")
+    try:
+        operator_cap = Decimal(str(cost["operator_budget_cap_usd"]))
+        hard_cap = Decimal(str(cost["hard_budget_cap_usd"]))
+        maximum = Decimal(str(cost["maximum_estimated_cost_usd"]))
+        accounting_cost = Decimal(
+            str(cost["normalized_input_retry_accounting_cost_usd"])
+        )
+        normalized_count = int(cost["normalized_input_retry_reservations"])
+        ambiguous_count = int(cost["ambiguous_submit_retry_reservations"])
+        terminal_count = int(cost["terminal_retry_reservations"])
+        total_count = int(cost["total_retry_reservations"])
+    except (InvalidOperation, KeyError, TypeError, ValueError) as exc:
+        raise PipelineError(
+            f"Normalized-input retry cost ledger is invalid: {path}"
+        ) from exc
+    if (
+        accounting_cost != NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD
+        or normalized_count < 1
+        or ambiguous_count < 0
+        or terminal_count < 0
+        or total_count
+        != normalized_count + ambiguous_count + terminal_count
+        or maximum > operator_cap
+        or maximum > hard_cap
+        or hard_cap != HARD_BUDGET_CAP_USD
+    ):
+        raise PipelineError(f"Normalized-input retry cost ledger differs: {path}")
+    expected_request, expected_delta = _normalized_retry_request(
+        primary.get("request"),
+        model_id,
+        asset["original"]["url"],
+        normalized["url"],
+    )
+    expected_request_sha256 = transport.request_fingerprint(
+        expected_request,
+        {
+            "source_path": source.image["source_path"],
+            "sha256": normalized["sha256"],
+        },
+    )
+    if (
+        retry.get("request") != expected_request
+        or retry.get("request_sha256") != expected_request_sha256
+        or retry.get("request_fingerprint_version")
+        != transport.REQUEST_FINGERPRINT_VERSION
+        or transform.get("request_delta") != expected_delta
+    ):
+        raise PipelineError(
+            f"Normalized-input request delta differs after reservation: {path}"
+        )
+    primary_paths = primary_artifact_paths(source, model_id, root)
+    if (
+        not primary_paths["run"].is_file()
+        or primary_paths["run"].is_symlink()
+        or sha256_file(primary_paths["run"]) != primary.get("run_sha256")
+        or not primary_paths["prompt"].is_file()
+        or primary_paths["prompt"].is_symlink()
+        or sha256_file(primary_paths["prompt"]) != primary.get("prompt_sha256")
+        or primary_paths["video"].exists()
+    ):
+        raise PipelineError(
+            "Primary oversize evidence changed after retry reservation: "
+            f"{binding.primary_provider_run_id}"
+        )
+    return binding, envelope
+
+
+def _normalized_input_retry_provider_record(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any] | None:
+    """Select normalized retry media or terminal provider-unavailable audit."""
+
+    loaded = _normalized_input_retry_envelope(source, model_id, root=root)
+    if loaded is None:
+        return None
+    binding, envelope = loaded
+    primary = envelope["primary_attempt"]
+    prompt_path = root / binding.prompt_rel
+    run_path = root / binding.run_rel
+    video_path = root / binding.video_rel
+    if not prompt_path.is_file() or prompt_path.is_symlink():
+        return None
+    primary_prompt = read_json(root / primary["prompt_path"])
+    retry_prompt = read_json(prompt_path)
+    if not isinstance(primary_prompt, dict) or not isinstance(retry_prompt, dict):
+        raise PipelineError(f"Normalized-input retry prompt is invalid: {prompt_path}")
+    shared_prompt_fields = (
+        "ticket",
+        "agent_id",
+        "lite_run_id",
+        "model_id",
+        "source",
+        "structured_intent",
+        "prompt",
+        "runtime",
+        "lite_result",
+    )
+    if any(
+        retry_prompt.get(field) != primary_prompt.get(field)
+        for field in shared_prompt_fields
+    ) or retry_prompt.get("batch_id") != binding.retry_batch_id or retry_prompt.get(
+        "provider_run_id"
+    ) != binding.retry_provider_run_id:
+        raise PipelineError(
+            "Normalized-input retry changed the verified Lite prompt: "
+            f"{prompt_path}"
+        )
+    if not run_path.is_file() or run_path.is_symlink():
+        return None
+    run = read_json(run_path)
+    if not isinstance(run, dict):
+        raise PipelineError(f"Normalized-input retry receipt is invalid: {run_path}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": binding.retry_batch_id,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "model_id": model_id,
+        "adapter": ROUTE_IDENTITIES[model_id][0],
+    }
+    if any(run.get(key) != value for key, value in expected_identity.items()):
+        raise PipelineError(f"Normalized-input retry receipt identity differs: {run_path}")
+    if _native_receipt_is_unresolved(run):
+        return None
+    status = native.effective_run_status(run)
+    check = run.get("contract_check")
+    media_accepted = (
+        status in {"succeeded", "verification-failed"}
+        and run.get("provider_may_be_active") is False
+        and video_path.is_file()
+        and isinstance(run.get("media"), dict)
+        and native.complete_media_is_accepted(
+            status,
+            check,
+            allow_contract_warnings=True,
+        )
+    )
+    retry_exhausted = (
+        run.get("status") == "provider-failed"
+        and run.get("provider_may_be_active") is False
+        and isinstance(run.get("provider_job_id"), str)
+        and bool(run.get("provider_job_id"))
+        and isinstance(run.get("completed_at"), str)
+        and bool(run.get("completed_at"))
+        and isinstance(run.get("error"), str)
+        and bool(run.get("error"))
+        and not video_path.exists()
+        and run.get("media") is None
+        and run.get("contract_check") is None
+    )
+    if not media_accepted and not retry_exhausted:
+        return None
+    expected_retry = envelope["retry_attempt"]
+    if (
+        run.get("request") != expected_retry["request"]
+        or run.get("request_sha256") != expected_retry["request_sha256"]
+        or run.get("request_fingerprint_version")
+        != transport.REQUEST_FINGERPRINT_VERSION
+    ):
+        raise PipelineError(
+            f"Normalized-input retry request differs from envelope: {run_path}"
+        )
+    retry_attempt = {
+        "provider_run_id": binding.retry_provider_run_id,
+        "provider_job_id": run.get("provider_job_id"),
+        "provider_task_id": run.get("provider_task_id"),
+        "status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "submitted_at": run.get("submitted_at"),
+        "completed_at": run.get("completed_at"),
+        "error": run.get("error"),
+        "run_path": binding.run_rel.as_posix(),
+        "run_sha256": sha256_file(run_path),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "prompt_sha256": sha256_file(prompt_path),
+        "request_sha256": run.get("request_sha256"),
+    }
+    primary_attempt = {
+        key: primary.get(key)
+        for key in (
+            "provider_run_id",
+            "provider_job_id",
+            "provider_task_id",
+            "status",
+            "recorded_status",
+            "provider_may_be_active",
+            "recorded_provider_may_be_active",
+            "recorded_provider_job_id",
+            "submitted_at",
+            "completed_at",
+            "provider_submit_time",
+            "provider_scheduled_time",
+            "provider_end_time",
+            "error",
+            "run_path",
+            "run_sha256",
+            "prompt_path",
+            "prompt_sha256",
+            "request_sha256",
+        )
+    }
+    return {
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "sample_id": source.sample_id,
+        "article_slug": source.article_slug,
+        "source_path": source.image["source_path"],
+        "model_id": model_id,
+        "status": "provider-unavailable" if retry_exhausted else status,
+        "recorded_status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": None if retry_exhausted else binding.video_rel.as_posix(),
+        "media": None if retry_exhausted else run.get("media"),
+        "contract_check": None if retry_exhausted else check,
+        "error": run.get("error"),
+        "retry_selection": {
+            "retry_kind": "normalized-input",
+            "retry_number": NORMALIZED_INPUT_RETRY_VERSION,
+            "namespace": binding.directory_rel.as_posix(),
+            "envelope_path": binding.envelope_rel.as_posix(),
+            "envelope_sha256": sha256_file(root / binding.envelope_rel),
+            "exhausted": retry_exhausted,
+            "primary_attempt": primary_attempt,
+            "retry_attempt": retry_attempt,
+            "source_transform": envelope["source_transform"],
+        },
+    }
+
+
+def _terminal_retry_envelope(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> tuple[TerminalRetryBinding, dict[str, Any]] | None:
+    """Read and validate an existing retry envelope without configuring native."""
+
+    binding = terminal_retry_binding(source, model_id)
+    path = root / binding.envelope_rel
+    if not path.exists():
+        return None
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(f"Retry envelope is not a regular file: {path}")
+    envelope = read_json(path)
+    if not isinstance(envelope, dict):
+        raise PipelineError(f"Retry envelope is not an object: {path}")
+    primary = envelope.get("primary_attempt")
+    retry = envelope.get("retry_attempt")
+    expected_logical_key = {
+        "article_slug": source.article_slug,
+        "image_id": source.image["image_id"],
+        "model_id": model_id,
+    }
+    expected_retry = {
+        "retry_key": binding.retry_key,
+        "batch_id": binding.retry_batch_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "lite_run_id": source.planning_run_id,
+        "model_id": model_id,
+        "source_path": source.image["source_path"],
+        "source_sha256": source.image["sha256"],
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": binding.video_rel.as_posix(),
+        "generation_manifest_path": binding.manifest_rel.as_posix(),
+    }
+    if (
+        envelope.get("schema_version") != 1
+        or envelope.get("manifest_role")
+        != "promopages-10060-terminal-provider-retry"
+        or envelope.get("ticket") != TICKET
+        or envelope.get("primary_batch_id") != BATCH_ID
+        or envelope.get("retry_number") != TERMINAL_RETRY_VERSION
+        or envelope.get("agent_id") != AGENT_ID
+        or envelope.get("logical_output_key") != expected_logical_key
+        or retry != expected_retry
+        or not isinstance(primary, dict)
+        or primary.get("provider_run_id") != binding.primary_provider_run_id
+        or primary.get("status") != "provider-failed"
+        or primary.get("provider_may_be_active") is not False
+    ):
+        raise PipelineError(f"Retry envelope binding differs: {path}")
+    primary_paths = primary_artifact_paths(source, model_id, root)
+    if (
+        not primary_paths["run"].is_file()
+        or primary_paths["run"].is_symlink()
+        or sha256_file(primary_paths["run"]) != primary.get("run_sha256")
+        or not primary_paths["prompt"].is_file()
+        or primary_paths["prompt"].is_symlink()
+        or sha256_file(primary_paths["prompt"]) != primary.get("prompt_sha256")
+        or primary_paths["video"].exists()
+    ):
+        raise PipelineError(
+            f"Primary terminal evidence changed after retry reservation: "
+            f"{binding.primary_provider_run_id}"
+        )
+    current_primary_run = read_json(primary_paths["run"])
+    if (
+        not isinstance(current_primary_run, dict)
+        or current_primary_run.get("request") != primary.get("request")
+        or current_primary_run.get("request_sha256")
+        != primary.get("request_sha256")
+    ):
+        raise PipelineError(
+            f"Primary provider request changed after retry reservation: "
+            f"{binding.primary_provider_run_id}"
+        )
+    return binding, envelope
+
+
+def _terminal_retry_provider_record(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any] | None:
+    """Return an accepted retry attempt in generation-manifest shape."""
+
+    loaded = _terminal_retry_envelope(source, model_id, root=root)
+    if loaded is None:
+        return None
+    binding, envelope = loaded
+    prompt_path = root / binding.prompt_rel
+    run_path = root / binding.run_rel
+    video_path = root / binding.video_rel
+    if not prompt_path.is_file() or prompt_path.is_symlink():
+        return None
+    primary = envelope["primary_attempt"]
+    primary_prompt = read_json(root / primary["prompt_path"])
+    retry_prompt = read_json(prompt_path)
+    if not isinstance(primary_prompt, dict) or not isinstance(retry_prompt, dict):
+        raise PipelineError(f"Retry prompt is invalid: {prompt_path}")
+    shared_prompt_fields = (
+        "ticket",
+        "agent_id",
+        "lite_run_id",
+        "model_id",
+        "source",
+        "structured_intent",
+        "prompt",
+        "runtime",
+        "lite_result",
+    )
+    if any(
+        retry_prompt.get(field) != primary_prompt.get(field)
+        for field in shared_prompt_fields
+    ) or retry_prompt.get("batch_id") != binding.retry_batch_id or retry_prompt.get(
+        "provider_run_id"
+    ) != binding.retry_provider_run_id:
+        raise PipelineError(
+            f"Retry prompt is not the exact original verified Lite prompt: {prompt_path}"
+        )
+    if not run_path.is_file() or run_path.is_symlink():
+        return None
+    run = read_json(run_path)
+    if not isinstance(run, dict):
+        raise PipelineError(f"Retry receipt is not an object: {run_path}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": binding.retry_batch_id,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "model_id": model_id,
+    }
+    if any(run.get(key) != value for key, value in expected_identity.items()):
+        raise PipelineError(f"Retry receipt identity differs: {run_path}")
+    if _native_receipt_is_unresolved(run):
+        return None
+    status = native.effective_run_status(run)
+    check = run.get("contract_check")
+    media_accepted = (
+        status in {"succeeded", "verification-failed"}
+        and video_path.is_file()
+        and isinstance(run.get("media"), dict)
+        and native.complete_media_is_accepted(
+            status,
+            check,
+            allow_contract_warnings=True,
+        )
+    )
+    retry_exhausted = (
+        run.get("status") == "provider-failed"
+        and run.get("provider_may_be_active") is False
+        and isinstance(run.get("provider_job_id"), str)
+        and bool(run.get("provider_job_id"))
+        and isinstance(run.get("completed_at"), str)
+        and isinstance(run.get("error"), str)
+        and bool(run.get("error"))
+        and not video_path.exists()
+        and run.get("media") is None
+        and run.get("contract_check") is None
+    )
+    if not media_accepted and not retry_exhausted:
+        return None
+    if (
+        run.get("request") != primary.get("request")
+        or run.get("request_sha256") != primary.get("request_sha256")
+    ):
+        raise PipelineError(
+            f"Retry provider request is not exactly the primary request: {run_path}"
+        )
+    reported_status = "provider-filtered" if retry_exhausted else status
+    retry_attempt = {
+        "provider_run_id": binding.retry_provider_run_id,
+        "provider_job_id": run.get("provider_job_id"),
+        "status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "submitted_at": run.get("submitted_at"),
+        "completed_at": run.get("completed_at"),
+        "error": run.get("error"),
+        "run_path": binding.run_rel.as_posix(),
+        "run_sha256": sha256_file(run_path),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "prompt_sha256": sha256_file(prompt_path),
+        "request_sha256": run.get("request_sha256"),
+    }
+    return {
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "sample_id": source.sample_id,
+        "article_slug": source.article_slug,
+        "source_path": source.image["source_path"],
+        "model_id": model_id,
+        "status": reported_status,
+        "recorded_status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": None if retry_exhausted else binding.video_rel.as_posix(),
+        "media": None if retry_exhausted else run.get("media"),
+        "contract_check": None if retry_exhausted else check,
+        "error": run.get("error"),
+        "retry_selection": {
+            "retry_number": TERMINAL_RETRY_VERSION,
+            "namespace": binding.directory_rel.as_posix(),
+            "envelope_path": binding.envelope_rel.as_posix(),
+            "exhausted": retry_exhausted,
+            "primary_attempt": {
+                key: primary.get(key)
+                for key in (
+                    "provider_run_id",
+                    "provider_job_id",
+                    "status",
+                    "submitted_at",
+                    "completed_at",
+                    "error",
+                    "run_path",
+                    "run_sha256",
+                    "prompt_path",
+                    "prompt_sha256",
+                    "request_sha256",
+                )
+            },
+            "retry_attempt": retry_attempt,
+        },
+    }
+
+
+def _ambiguous_submit_retry_envelope(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> tuple[AmbiguousSubmitRetryBinding, dict[str, Any]] | None:
+    """Read and fully bind an existing ambiguous-submit retry reservation."""
+
+    binding = ambiguous_submit_retry_binding(source, model_id)
+    path = root / binding.envelope_rel
+    if not path.exists():
+        return None
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(
+            f"Ambiguous-submit retry envelope is not a regular file: {path}"
+        )
+    envelope = read_json(path)
+    if not isinstance(envelope, dict):
+        raise PipelineError(f"Ambiguous-submit retry envelope is not an object: {path}")
+    primary = envelope.get("primary_attempt")
+    retry = envelope.get("retry_attempt")
+    expected_logical_key = {
+        "article_slug": source.article_slug,
+        "image_id": source.image["image_id"],
+        "model_id": model_id,
+    }
+    expected_retry = {
+        "retry_key": binding.retry_key,
+        "batch_id": binding.retry_batch_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "lite_run_id": source.planning_run_id,
+        "model_id": model_id,
+        "source_path": source.image["source_path"],
+        "source_sha256": source.image["sha256"],
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": binding.video_rel.as_posix(),
+        "generation_manifest_path": binding.manifest_rel.as_posix(),
+    }
+    if (
+        envelope.get("schema_version") != 1
+        or envelope.get("manifest_role")
+        != "promopages-10060-ambiguous-submit-retry"
+        or envelope.get("ticket") != TICKET
+        or envelope.get("primary_batch_id") != BATCH_ID
+        or envelope.get("retry_number") != AMBIGUOUS_SUBMIT_RETRY_VERSION
+        or envelope.get("agent_id") != AGENT_ID
+        or envelope.get("logical_output_key") != expected_logical_key
+        or retry != expected_retry
+        or envelope.get("policy") != _ambiguous_submit_retry_policy()
+        or not isinstance(primary, dict)
+        or primary.get("provider_run_id") != binding.primary_provider_run_id
+        or primary.get("status") != "submit-unknown"
+        or primary.get("recorded_status") not in {"submitting", "submit-unknown"}
+        or primary.get("outcome") != "unknown"
+        or primary.get("outcome_unknown") is not True
+        or primary.get("provider_may_be_active") is not True
+        or primary.get("provider_job_id") is not None
+        or primary.get("submitted_at") is not None
+        or primary.get("completed_at") is not None
+        or not isinstance(primary.get("ambiguity_reason"), str)
+        or not primary.get("ambiguity_reason")
+    ):
+        raise PipelineError(f"Ambiguous-submit retry envelope binding differs: {path}")
+    cost = envelope.get("cost")
+    if not isinstance(cost, dict):
+        raise PipelineError(f"Ambiguous-submit retry cost ledger is missing: {path}")
+    try:
+        operator_cap = Decimal(str(cost["operator_budget_cap_usd"]))
+        hard_cap = Decimal(str(cost["hard_budget_cap_usd"]))
+        maximum = Decimal(str(cost["maximum_estimated_cost_usd"]))
+        accounting_cost = Decimal(
+            str(cost["ambiguous_submit_retry_accounting_cost_usd"])
+        )
+        ambiguous_count = int(cost["ambiguous_submit_retry_reservations"])
+        terminal_count = int(cost["terminal_retry_reservations"])
+        total_count = int(cost["total_retry_reservations"])
+    except (InvalidOperation, KeyError, TypeError, ValueError) as exc:
+        raise PipelineError(
+            f"Ambiguous-submit retry cost ledger is invalid: {path}"
+        ) from exc
+    if (
+        accounting_cost != AMBIGUOUS_SUBMIT_RETRY_ACCOUNTING_COST_USD
+        or ambiguous_count < 1
+        or terminal_count < 0
+        or total_count != ambiguous_count + terminal_count
+        or maximum > operator_cap
+        or maximum > hard_cap
+        or hard_cap != HARD_BUDGET_CAP_USD
+    ):
+        raise PipelineError(f"Ambiguous-submit retry cost ledger differs: {path}")
+    primary_paths = primary_artifact_paths(source, model_id, root)
+    if (
+        not primary_paths["run"].is_file()
+        or primary_paths["run"].is_symlink()
+        or not primary_paths["prompt"].is_file()
+        or primary_paths["prompt"].is_symlink()
+        or sha256_file(primary_paths["prompt"]) != primary.get("prompt_sha256")
+        or primary_paths["video"].exists()
+    ):
+        raise PipelineError(
+            "Primary ambiguous evidence changed after retry reservation: "
+            f"{binding.primary_provider_run_id}"
+        )
+    current_primary = _ambiguous_primary_receipt_state(
+        primary,
+        primary_paths["run"],
+    )
+    current_primary_run = current_primary["receipt"]
+    if (
+        current_primary_run.get("provider_may_be_active") is not True
+        or current_primary_run.get("request") != primary.get("request")
+        or current_primary_run.get("request_sha256")
+        != primary.get("request_sha256")
+    ):
+        raise PipelineError(
+            "Primary ambiguous provider receipt changed after retry reservation: "
+            f"{binding.primary_provider_run_id}"
+        )
+    return binding, envelope
+
+
+AMBIGUOUS_PRIMARY_SCHEDULER_NORMALIZATION_ERROR = (
+    "Previous submit outcome is unknown; automatic retry is blocked"
+)
+
+
+def _json_document_sha256(document: dict[str, Any]) -> str:
+    payload = (
+        json.dumps(document, ensure_ascii=False, indent=2) + "\n"
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _ambiguous_primary_receipt_state(
+    reserved_primary: dict[str, Any],
+    run_path: Path,
+) -> dict[str, Any]:
+    """Validate an immutable primary or the one legacy scheduler normalization.
+
+    The first real resume before scheduling exclusion was added changed only
+    ``submitting`` to ``submit-unknown`` and attached the native guard message.
+    Accept that exact, reconstructably bound transition without writing the
+    primary receipt again. Any other drift remains fatal.
+    """
+
+    receipt = read_json(run_path)
+    if not isinstance(receipt, dict):
+        raise PipelineError(f"Primary ambiguous receipt is not an object: {run_path}")
+    current_sha256 = sha256_file(run_path)
+    reserved_sha256 = reserved_primary.get("run_sha256")
+    if current_sha256 == reserved_sha256:
+        if receipt.get("status") != reserved_primary.get("recorded_status"):
+            raise PipelineError(
+                f"Primary ambiguous receipt status differs: {run_path}"
+            )
+        return {
+            "receipt": receipt,
+            "run_sha256": current_sha256,
+            "scheduler_normalized": False,
+        }
+    restored = dict(receipt)
+    scheduler_normalized = (
+        reserved_primary.get("recorded_status") == "submitting"
+        and reserved_primary.get("error") is None
+        and receipt.get("status") == "submit-unknown"
+        and receipt.get("error")
+        == AMBIGUOUS_PRIMARY_SCHEDULER_NORMALIZATION_ERROR
+    )
+    if scheduler_normalized:
+        restored["status"] = "submitting"
+        restored["error"] = None
+        scheduler_normalized = (
+            _json_document_sha256(restored) == reserved_sha256
+        )
+    if not scheduler_normalized:
+        raise PipelineError(
+            f"Primary ambiguous evidence changed after retry reservation: {run_path}"
+        )
+    return {
+        "receipt": receipt,
+        "run_sha256": current_sha256,
+        "scheduler_normalized": True,
+    }
+
+
+def _ambiguous_submit_retry_provider_record(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any] | None:
+    """Return terminal retry media or a strictly audited unavailable output."""
+
+    loaded = _ambiguous_submit_retry_envelope(source, model_id, root=root)
+    if loaded is None:
+        return None
+    binding, envelope = loaded
+    primary = envelope["primary_attempt"]
+    primary_state = _ambiguous_primary_receipt_state(
+        primary,
+        root / primary["run_path"],
+    )
+    current_primary_run = primary_state["receipt"]
+    prompt_path = root / binding.prompt_rel
+    run_path = root / binding.run_rel
+    video_path = root / binding.video_rel
+    if not prompt_path.is_file() or prompt_path.is_symlink():
+        return None
+    primary_prompt = read_json(root / primary["prompt_path"])
+    retry_prompt = read_json(prompt_path)
+    if not isinstance(primary_prompt, dict) or not isinstance(retry_prompt, dict):
+        raise PipelineError(f"Ambiguous-submit retry prompt is invalid: {prompt_path}")
+    shared_prompt_fields = (
+        "ticket",
+        "agent_id",
+        "lite_run_id",
+        "model_id",
+        "source",
+        "structured_intent",
+        "prompt",
+        "runtime",
+        "lite_result",
+    )
+    if any(
+        retry_prompt.get(field) != primary_prompt.get(field)
+        for field in shared_prompt_fields
+    ) or retry_prompt.get("batch_id") != binding.retry_batch_id or retry_prompt.get(
+        "provider_run_id"
+    ) != binding.retry_provider_run_id:
+        raise PipelineError(
+            "Ambiguous-submit retry prompt is not the exact original verified "
+            f"Lite prompt: {prompt_path}"
+        )
+    if not run_path.is_file() or run_path.is_symlink():
+        return None
+    run = read_json(run_path)
+    if not isinstance(run, dict):
+        raise PipelineError(f"Ambiguous-submit retry receipt is not an object: {run_path}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": binding.retry_batch_id,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "model_id": model_id,
+        "adapter": "eliza-segmind",
+    }
+    if any(run.get(key) != value for key, value in expected_identity.items()):
+        raise PipelineError(f"Ambiguous-submit retry receipt identity differs: {run_path}")
+    if _native_receipt_is_unresolved(run):
+        return None
+    status = native.effective_run_status(run)
+    check = run.get("contract_check")
+    media_accepted = (
+        status in {"succeeded", "verification-failed"}
+        and run.get("provider_may_be_active") is False
+        and video_path.is_file()
+        and isinstance(run.get("media"), dict)
+        and native.complete_media_is_accepted(
+            status,
+            check,
+            allow_contract_warnings=True,
+        )
+    )
+    retry_exhausted = (
+        run.get("status") == "provider-failed"
+        and run.get("provider_may_be_active") is False
+        and isinstance(run.get("provider_job_id"), str)
+        and bool(run.get("provider_job_id"))
+        and isinstance(run.get("submitted_at"), str)
+        and bool(run.get("submitted_at"))
+        and isinstance(run.get("completed_at"), str)
+        and bool(run.get("completed_at"))
+        and isinstance(run.get("error"), str)
+        and bool(run.get("error"))
+        and not video_path.exists()
+        and run.get("media") is None
+        and run.get("contract_check") is None
+    )
+    if not media_accepted and not retry_exhausted:
+        return None
+    if (
+        run.get("request") != primary.get("request")
+        or run.get("request_sha256") != primary.get("request_sha256")
+    ):
+        raise PipelineError(
+            f"Ambiguous-submit retry request is not exactly the primary request: {run_path}"
+        )
+    reported_status = "provider-unavailable" if retry_exhausted else status
+    retry_attempt = {
+        "provider_run_id": binding.retry_provider_run_id,
+        "provider_job_id": run.get("provider_job_id"),
+        "status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "submitted_at": run.get("submitted_at"),
+        "completed_at": run.get("completed_at"),
+        "error": run.get("error"),
+        "run_path": binding.run_rel.as_posix(),
+        "run_sha256": sha256_file(run_path),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "prompt_sha256": sha256_file(prompt_path),
+        "request_sha256": run.get("request_sha256"),
+    }
+    primary_attempt = {
+        key: primary.get(key)
+        for key in (
+            "provider_run_id",
+            "provider_job_id",
+            "status",
+            "recorded_status",
+            "outcome",
+            "outcome_unknown",
+            "ambiguity_reason",
+            "provider_may_be_active",
+            "submitted_at",
+            "completed_at",
+            "error",
+            "run_path",
+            "run_sha256",
+            "prompt_path",
+            "prompt_sha256",
+            "request_sha256",
+        )
+    }
+    primary_attempt.update(
+        {
+            # The envelope retains the original reservation hash. The final
+            # audit points at the current evidence file and separately records
+            # the one reconstructable legacy scheduler normalization, if any.
+            "recorded_status": current_primary_run.get("status"),
+            "error": current_primary_run.get("error"),
+            "run_sha256": primary_state["run_sha256"],
+            "reserved_recorded_status": primary.get("recorded_status"),
+            "reserved_run_sha256": primary.get("run_sha256"),
+            "scheduler_normalized_after_reservation": primary_state[
+                "scheduler_normalized"
+            ],
+        }
+    )
+    return {
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.retry_provider_run_id,
+        "sample_id": source.sample_id,
+        "article_slug": source.article_slug,
+        "source_path": source.image["source_path"],
+        "model_id": model_id,
+        "status": reported_status,
+        "recorded_status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": None if retry_exhausted else binding.video_rel.as_posix(),
+        "media": None if retry_exhausted else run.get("media"),
+        "contract_check": None if retry_exhausted else check,
+        "error": run.get("error"),
+        "retry_selection": {
+            "retry_kind": "ambiguous-submit",
+            "retry_number": AMBIGUOUS_SUBMIT_RETRY_VERSION,
+            "namespace": binding.directory_rel.as_posix(),
+            "envelope_path": binding.envelope_rel.as_posix(),
+            "envelope_sha256": sha256_file(root / binding.envelope_rel),
+            "exhausted": retry_exhausted,
+            "primary_outcome_unknown": True,
+            "primary_attempt": primary_attempt,
+            "retry_attempt": retry_attempt,
+        },
+    }
+
+
+def _native_output_is_accepted(
+    entry: native.Entry,
+    receipt: dict[str, Any] | None,
+    *,
+    root: Path,
+) -> bool:
+    """Apply the native terminal-media acceptance policy without network I/O."""
+
+    if receipt is None or _native_receipt_is_unresolved(receipt):
+        return False
+    paths = native.artifact_paths(entry, root)
+    if not paths["video"].is_file() or not isinstance(receipt.get("media"), dict):
+        return False
+    status = native.effective_run_status(receipt)
+    check = receipt.get("contract_check")
+    return native.complete_media_is_accepted(
+        status,
+        check,
+        # Existing raw MP4s with explicitly recorded contract deviations are
+        # terminal experiment outputs; their warning remains in the receipt.
+        allow_contract_warnings=True,
+    )
+
+
+def generation_article_states(
+    sources: Iterable[Source],
+    *,
+    root: Path,
+) -> tuple[GenerationArticleState, ...]:
+    """Inspect every expected native receipt in configured article order."""
+
+    sources = tuple(sources)
+    article_order = tuple(dict.fromkeys(source.article_slug for source in sources))
+    expected_by_article = {slug: 0 for slug in article_order}
+    accepted_by_article = {slug: 0 for slug in article_order}
+    accounted_by_article = {slug: 0 for slug in article_order}
+    filtered_by_article = {slug: 0 for slug in article_order}
+    unavailable_by_article = {slug: 0 for slug in article_order}
+    unresolved_by_article: dict[str, list[str]] = {
+        slug: [] for slug in article_order
+    }
+    for source in sources:
+        for model_id in MODEL_IDS:
+            entry = native.Entry(source.sample, model_id)
+            expected_by_article[source.article_slug] += 1
+            receipt, _path = _native_run_receipt(entry, root=root)
+            primary_accepted = _native_output_is_accepted(entry, receipt, root=root)
+            retry_record = _terminal_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            ambiguous_loaded = (
+                _ambiguous_submit_retry_envelope(source, model_id, root=root)
+                if model_id == "alibaba/wan-2.2"
+                else None
+            )
+            ambiguous_record = (
+                _ambiguous_submit_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if ambiguous_loaded is not None
+                else None
+            )
+            normalized_loaded = _normalized_input_retry_envelope(
+                source,
+                model_id,
+                root=root,
+            )
+            normalized_record = (
+                _normalized_input_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if normalized_loaded is not None
+                else None
+            )
+            overlay_count = sum(
+                candidate is not None
+                for candidate in (
+                    retry_record,
+                    ambiguous_loaded,
+                    normalized_loaded,
+                )
+            )
+            if overlay_count > 1:
+                raise PipelineError(
+                    "A logical output cannot use conflicting retry namespaces: "
+                    f"{entry.provider_run_id}"
+                )
+            if ambiguous_loaded is None and normalized_loaded is None:
+                if receipt is not None and _native_receipt_is_unresolved(receipt):
+                    unresolved_by_article[source.article_slug].append(entry.run_id)
+            elif ambiguous_record is None and normalized_record is None:
+                active_overlay = ambiguous_loaded or normalized_loaded
+                assert active_overlay is not None
+                overlay_binding, _envelope = active_overlay
+                unresolved_by_article[source.article_slug].append(
+                    overlay_binding.retry_provider_run_id
+                )
+            retry_accepted = (
+                isinstance(retry_record, dict)
+                and retry_record.get("status")
+                in {"succeeded", "verification-failed"}
+            )
+            retry_filtered = (
+                isinstance(retry_record, dict)
+                and retry_record.get("status") == "provider-filtered"
+            )
+            ambiguous_accepted = (
+                isinstance(ambiguous_record, dict)
+                and ambiguous_record.get("status")
+                in {"succeeded", "verification-failed"}
+            )
+            ambiguous_unavailable = (
+                isinstance(ambiguous_record, dict)
+                and ambiguous_record.get("status") == "provider-unavailable"
+            )
+            normalized_accepted = (
+                isinstance(normalized_record, dict)
+                and normalized_record.get("status")
+                in {"succeeded", "verification-failed"}
+            )
+            normalized_unavailable = (
+                isinstance(normalized_record, dict)
+                and normalized_record.get("status") == "provider-unavailable"
+            )
+            if (
+                primary_accepted
+                or retry_accepted
+                or ambiguous_accepted
+                or normalized_accepted
+            ):
+                accepted_by_article[source.article_slug] += 1
+            if (
+                primary_accepted
+                or retry_accepted
+                or retry_filtered
+                or ambiguous_accepted
+                or ambiguous_unavailable
+                or normalized_accepted
+                or normalized_unavailable
+            ):
+                accounted_by_article[source.article_slug] += 1
+            if retry_filtered:
+                filtered_by_article[source.article_slug] += 1
+            if ambiguous_unavailable or normalized_unavailable:
+                unavailable_by_article[source.article_slug] += 1
+    return tuple(
+        GenerationArticleState(
+            article_slug=slug,
+            accepted_outputs=accepted_by_article[slug],
+            terminal_accounted_outputs=accounted_by_article[slug],
+            provider_filtered_outputs=filtered_by_article[slug],
+            expected_outputs=expected_by_article[slug],
+            unresolved_run_ids=tuple(unresolved_by_article[slug]),
+            provider_unavailable_outputs=unavailable_by_article[slug],
+        )
+        for slug in article_order
+    )
+
+
+def enforce_real_generation_article_order(
+    sources: Iterable[Source],
+    selected_sources: Iterable[Source],
+    *,
+    root: Path,
+) -> GenerationArticleState:
+    """Require one whole next-incomplete article and reject cross-article work."""
+
+    sources = tuple(sources)
+    selected_sources = tuple(selected_sources)
+    selected_slugs = tuple(
+        dict.fromkeys(source.article_slug for source in selected_sources)
+    )
+    if len(selected_slugs) != 1:
+        raise PipelineError(
+            "Real generation requires exactly one --article; "
+            "an unfiltered or multi-article provider run is forbidden"
+        )
+    selected_slug = selected_slugs[0]
+    complete_article_selection = tuple(
+        source for source in sources if source.article_slug == selected_slug
+    )
+    if selected_sources != complete_article_selection:
+        raise PipelineError(
+            f"Real generation must select every image of exactly one article: "
+            f"{selected_slug}"
+        )
+
+    states = generation_article_states(sources, root=root)
+    next_incomplete = next((state for state in states if not state.complete), None)
+    if next_incomplete is None:
+        raise PipelineError("All available articles already have accepted complete outputs")
+    if selected_slug != next_incomplete.article_slug:
+        raise PipelineError(
+            f"Next incomplete article is {next_incomplete.article_slug}; "
+            f"refusing out-of-order article {selected_slug}"
+        )
+
+    current_index = states.index(next_incomplete)
+    outside_prefix = [
+        run_id
+        for state in states[current_index + 1 :]
+        for run_id in state.unresolved_run_ids
+    ]
+    if outside_prefix:
+        raise PipelineError(
+            "Unresolved provider jobs exist outside the current article prefix; "
+            "refusing a run that the native coordinator could widen: "
+            + ", ".join(outside_prefix[:5])
+        )
+    return next_incomplete
+
+
+def generation_scheduling_plan(
+    sources: Iterable[Source],
+    selected_sources: Iterable[Source],
+    *,
+    root: Path,
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """Select primary workers while quarantining terminal retry overlays.
+
+    Source-level article completeness remains unchanged. Only the exact model
+    row represented by a terminal retry overlay is removed from provider
+    scheduling. An ambiguous envelope without a terminal retry result blocks
+    normal generation rather than reopening its unknown primary POST.
+    """
+
+    sources = tuple(sources)
+    selected_sources = tuple(selected_sources)
+    scheduled: list[str] = []
+    exclusions: list[str] = []
+    for source in sources:
+        for model_id in MODEL_IDS:
+            entry = native.Entry(source.sample, model_id)
+            terminal_loaded = _terminal_retry_envelope(
+                source,
+                model_id,
+                root=root,
+            )
+            terminal_record = (
+                _terminal_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if terminal_loaded is not None
+                else None
+            )
+            ambiguous_loaded = (
+                _ambiguous_submit_retry_envelope(source, model_id, root=root)
+                if model_id == "alibaba/wan-2.2"
+                else None
+            )
+            ambiguous_record = (
+                _ambiguous_submit_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if ambiguous_loaded is not None
+                else None
+            )
+            normalized_loaded = _normalized_input_retry_envelope(
+                source,
+                model_id,
+                root=root,
+            )
+            normalized_record = (
+                _normalized_input_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if normalized_loaded is not None
+                else None
+            )
+            if sum(
+                candidate is not None
+                for candidate in (
+                    terminal_loaded,
+                    ambiguous_loaded,
+                    normalized_loaded,
+                )
+            ) > 1:
+                raise PipelineError(
+                    "A logical output cannot have conflicting retry namespaces: "
+                    f"{entry.provider_run_id}"
+                )
+            if terminal_loaded is not None and terminal_record is None:
+                raise PipelineError(
+                    "Terminal retry is not terminal; resume its explicit "
+                    f"namespace before normal generation: {entry.provider_run_id}"
+                )
+            if ambiguous_loaded is not None:
+                if ambiguous_record is None:
+                    raise PipelineError(
+                        "Ambiguous-submit retry is not terminal; resume its "
+                        "explicit namespace before normal generation: "
+                        f"{entry.provider_run_id}"
+                    )
+                if ambiguous_record.get("status") not in {
+                    "succeeded",
+                    "verification-failed",
+                    "provider-unavailable",
+                }:
+                    raise PipelineError(
+                        "Ambiguous-submit retry has a non-terminal scheduling "
+                        f"status: {entry.provider_run_id}"
+                    )
+                # This exact primary remains audit evidence but must never be
+                # fed to a worker or auto-added as an unresolved job again.
+                exclusions.append(entry.run_id)
+            if normalized_loaded is not None:
+                if normalized_record is None:
+                    raise PipelineError(
+                        "Normalized-input retry is not terminal; resume its "
+                        "explicit namespace before normal generation: "
+                        f"{entry.provider_run_id}"
+                    )
+                if normalized_record.get("status") not in {
+                    "succeeded",
+                    "verification-failed",
+                    "provider-unavailable",
+                }:
+                    raise PipelineError(
+                        "Normalized-input retry has a non-terminal scheduling "
+                        f"status: {entry.provider_run_id}"
+                    )
+                exclusions.append(entry.run_id)
+            if source not in selected_sources:
+                continue
+            if (
+                terminal_record is not None
+                or ambiguous_record is not None
+                or normalized_record is not None
+            ):
+                continue
+            scheduled.append(entry.run_id)
+    if not scheduled:
+        raise PipelineError("Generation article has no executable provider rows")
+    if len(scheduled) != len(set(scheduled)) or len(exclusions) != len(
+        set(exclusions)
+    ):
+        raise PipelineError("Generation scheduling identities are not unique")
+    return tuple(scheduled), tuple(exclusions)
+
+
+@contextmanager
+def native_scheduling_exclusions(run_ids: Iterable[str]):
+    """Scope terminal exclusions to one native invocation and restore state."""
+
+    exclusions = frozenset(run_ids)
+    known = {entry.run_id for entry in native.matrix()}
+    unknown = exclusions - known
+    if unknown:
+        raise PipelineError(
+            "Unknown native scheduling exclusions: "
+            + ", ".join(sorted(unknown))
+        )
+    original = native.SCHEDULING_EXCLUDED_RUN_IDS
+    if original:
+        raise PipelineError("Native scheduling exclusions leaked from a prior run")
+    native.SCHEDULING_EXCLUDED_RUN_IDS = exclusions
+    try:
+        yield
+    finally:
+        native.SCHEDULING_EXCLUDED_RUN_IDS = original
+
+
+def run_generation(
+    sources: Iterable[Source],
+    *,
+    selected_sources: Iterable[Source] | None = None,
+    root: Path,
+    dry_run: bool,
+    allow_external_processing: bool,
+    timeout: int,
+    poll_interval: float,
+    fail_fast: bool,
+) -> int:
+    sources = tuple(sources)
+    selected_sources = (
+        sources if selected_sources is None else tuple(selected_sources)
+    )
+    if not selected_sources:
+        raise PipelineError("Generation selection is empty")
+    unknown_sources = [source for source in selected_sources if source not in sources]
+    if unknown_sources:
+        raise PipelineError("Generation selection contains unknown sources")
+    if not dry_run and not allow_external_processing:
+        raise PipelineError(
+            "Real generation requires --allow-external-processing because "
+            "images and prompts are sent to the three providers"
+        )
+    configure_native(sources, root)
+    argv = [
+        "run",
+        "--wan22-concurrency",
+        "1",
+        "--wan27-concurrency",
+        "3",
+        "--veo31-concurrency",
+        "3",
+        "--timeout",
+        str(timeout),
+        "--poll-interval",
+        str(poll_interval),
+        "--dry-run" if dry_run else "--allow-external-processing",
+    ]
+    if fail_fast:
+        argv.append("--fail-fast")
+    if dry_run and selected_sources != sources:
+        for source in selected_sources:
+            for model_id in MODEL_IDS:
+                argv.extend(
+                    ["--run-id", native.Entry(source.sample, model_id).run_id]
+                )
+    # No model filter is passed: native.run_provider_pools starts the three
+    # exact route queues together.  Succeeded jobs are skipped and submitted
+    # identities are only polled/downloaded, which provides safe resume.
+    if dry_run:
+        return native.main(argv, root)
+    with inventory_run_lock(root):
+        state = enforce_real_generation_article_order(
+            sources,
+            selected_sources,
+            root=root,
+        )
+        print(
+            f"generation article barrier {state.article_slug}: "
+            f"accepted={state.accepted_outputs}, "
+            f"provider-filtered={state.provider_filtered_outputs}, "
+            f"provider-unavailable={state.provider_unavailable_outputs}, "
+            f"terminal-accounted={state.terminal_accounted_outputs}/"
+            f"{state.expected_outputs}",
+            flush=True,
+        )
+        scheduled_run_ids, scheduling_exclusions = generation_scheduling_plan(
+            sources,
+            selected_sources,
+            root=root,
+        )
+        for run_id in scheduled_run_ids:
+            argv.extend(["--run-id", run_id])
+        if scheduling_exclusions:
+            print(
+                "generation scheduling exclusions (terminal retry overlays): "
+                + ", ".join(scheduling_exclusions),
+                flush=True,
+            )
+        with native_scheduling_exclusions(scheduling_exclusions):
+            return native.main(argv, root)
+
+
+def _enforce_terminal_retry_order(
+    sources: Iterable[Source],
+    target_source: Source,
+    target_model_id: str,
+    *,
+    root: Path,
+) -> None:
+    """Admit only the first unresolved logical output of the current article."""
+
+    sources = tuple(sources)
+    states = generation_article_states(sources, root=root)
+    next_incomplete = next((state for state in states if not state.complete), None)
+    if next_incomplete is None:
+        raise PipelineError("All available articles already have accepted outputs")
+    if target_source.article_slug != next_incomplete.article_slug:
+        raise PipelineError(
+            f"Next incomplete article is {next_incomplete.article_slug}; refusing "
+            f"terminal retry in {target_source.article_slug}"
+        )
+    unresolved: list[str] = []
+    first_incomplete: tuple[Source, str] | None = None
+    for source in sources:
+        for model_id in MODEL_IDS:
+            entry = native.Entry(source.sample, model_id)
+            receipt, _path = _native_run_receipt(entry, root=root)
+            ambiguous_loaded = (
+                _ambiguous_submit_retry_envelope(source, model_id, root=root)
+                if model_id == "alibaba/wan-2.2"
+                else None
+            )
+            ambiguous_record = (
+                _ambiguous_submit_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if ambiguous_loaded is not None
+                else None
+            )
+            normalized_loaded = _normalized_input_retry_envelope(
+                source,
+                model_id,
+                root=root,
+            )
+            normalized_record = (
+                _normalized_input_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if normalized_loaded is not None
+                else None
+            )
+            if ambiguous_loaded is None and normalized_loaded is None:
+                if receipt is not None and _native_receipt_is_unresolved(receipt):
+                    unresolved.append(primary_provider_run_id(source, model_id))
+            elif ambiguous_record is None and normalized_record is None:
+                active_overlay = ambiguous_loaded or normalized_loaded
+                assert active_overlay is not None
+                unresolved.append(active_overlay[0].retry_provider_run_id)
+            if source.article_slug != next_incomplete.article_slug:
+                continue
+            accepted = _native_output_is_accepted(entry, receipt, root=root) or (
+                _terminal_retry_provider_record(source, model_id, root=root)
+                is not None
+            ) or (
+                ambiguous_record is not None
+            ) or (
+                normalized_record is not None
+            )
+            if not accepted and first_incomplete is None:
+                first_incomplete = (source, model_id)
+    if unresolved:
+        raise PipelineError(
+            "Terminal retry is blocked while any primary provider identity is "
+            "unresolved: " + ", ".join(unresolved[:5])
+        )
+    if first_incomplete != (target_source, target_model_id):
+        label = (
+            primary_provider_run_id(*first_incomplete)
+            if first_incomplete is not None
+            else "unknown"
+        )
+        raise PipelineError(
+            "Terminal retries must preserve logical output order; first "
+            f"incomplete output is {label}"
+        )
+
+
+def run_terminal_provider_retry(
+    sources: Iterable[Source],
+    inventory: dict[str, Any],
+    *,
+    primary_provider_run_id_value: str,
+    root: Path,
+    dry_run: bool,
+    allow_external_processing: bool,
+    timeout: int,
+    poll_interval: float,
+) -> int:
+    """Create/resume one explicit retry-v1 attempt without touching primary."""
+
+    sources = tuple(sources)
+    if not dry_run and not allow_external_processing:
+        raise PipelineError(
+            "Real terminal retry requires --allow-external-processing because "
+            "the exact original image and Lite prompt are sent to the same provider"
+        )
+
+    def execute() -> int:
+        configure_native(sources, root)
+        source, model_id = resolve_primary_retry_target(
+            sources, primary_provider_run_id_value
+        )
+        binding = terminal_retry_binding(source, model_id)
+        existing = _terminal_retry_envelope(source, model_id, root=root)
+        ambiguous_existing = (
+            _ambiguous_submit_retry_envelope(source, model_id, root=root)
+            if model_id == "alibaba/wan-2.2"
+            else None
+        )
+        if ambiguous_existing is not None:
+            raise PipelineError(
+                "A logical output with an ambiguous-submit retry reservation "
+                "cannot also receive a terminal retry"
+            )
+        if (
+            source.article_slug == NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
+            and source.image.get("image_id") == NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+            and model_id in NORMALIZED_INPUT_ELIGIBLE_MODELS
+            and _normalized_input_retry_envelope(source, model_id, root=root)
+            is not None
+        ):
+            raise PipelineError(
+                "A logical output with a normalized-input retry reservation "
+                "cannot also receive a terminal retry"
+            )
+        existing_retry_record = (
+            _terminal_retry_provider_record(source, model_id, root=root)
+            if existing is not None
+            else None
+        )
+        if existing is None:
+            _enforce_terminal_retry_order(
+                sources,
+                source,
+                model_id,
+                root=root,
+            )
+            primary = _primary_terminal_failure_evidence(
+                source,
+                model_id,
+                root=root,
+            )
+            aggregate_cost = _aggregate_retry_cost(
+                inventory,
+                root=root,
+                additional_terminal=1,
+            )
+            envelope = _terminal_retry_envelope_document(
+                binding,
+                primary,
+                aggregate_cost,
+            )
+        else:
+            _existing_binding, envelope = existing
+            primary = envelope["primary_attempt"]
+            aggregate_cost = _aggregate_retry_cost(
+                inventory,
+                root=root,
+            )
+
+        configure_terminal_retry_native(binding, root)
+        entry = native.matrix()[0]
+        job = native.load_lite_job(entry, root)
+        sample = native.provider_sample(entry)
+        prompt = native.provider_prompt(job)
+        retry_request = native.provider_request_preview(sample, prompt)
+        retry_request_sha256 = transport.request_fingerprint(
+            retry_request, sample
+        )
+        if (
+            retry_request != primary.get("request")
+            or retry_request_sha256 != primary.get("request_sha256")
+        ):
+            raise PipelineError(
+                "Retry-v1 request is not byte-semantically identical to the "
+                "primary verified source/prompt/model request"
+            )
+        if dry_run:
+            action = (
+                "existing-exhausted-retry2-forbidden"
+                if isinstance(existing_retry_record, dict)
+                and existing_retry_record.get("status") == "provider-filtered"
+                else ("existing" if existing is not None else "would-reserve")
+            )
+            print(
+                f"PASS: terminal retry {binding.retry_provider_run_id} -> {action}; "
+                f"aggregate maximum=${aggregate_cost['maximum_estimated_cost_usd']:.2f}; "
+                "no files written and no provider call"
+            )
+            return 0
+
+        if (
+            isinstance(existing_retry_record, dict)
+            and existing_retry_record.get("status") == "provider-filtered"
+        ):
+            raise PipelineError(
+                f"Terminal retry-v1 is exhausted for "
+                f"{binding.primary_provider_run_id}; retry2 is forbidden"
+            )
+
+        envelope_path = root / binding.envelope_rel
+        if envelope_path.is_file():
+            if read_json(envelope_path) != envelope:
+                raise PipelineError(
+                    f"Immutable terminal retry envelope differs: {envelope_path}"
+                )
+        else:
+            if envelope_path.exists():
+                raise PipelineError(
+                    f"Retry envelope target is not a regular file: {envelope_path}"
+                )
+            transport.atomic_write_json(envelope_path, envelope)
+        row = native.materialize_entry(entry, root)
+        materialized_request = native.provider_request_preview(
+            row["sample"], row["prompt"]
+        )
+        if materialized_request != primary["request"]:
+            raise PipelineError(
+                "Materialized retry request differs from the immutable primary request"
+            )
+        argv = [
+            "run",
+            "--run-id",
+            binding.retry_provider_run_id,
+            "--wan22-concurrency",
+            "1",
+            "--wan27-concurrency",
+            "3",
+            "--veo31-concurrency",
+            "3",
+            "--timeout",
+            str(timeout),
+            "--poll-interval",
+            str(poll_interval),
+            "--allow-external-processing",
+        ]
+        result = native.main(argv, root)
+        if result == 0:
+            selected = _terminal_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if selected is None:
+                raise PipelineError(
+                    "Retry command returned success without accepted retry media"
+                )
+        return result
+
+    if dry_run:
+        return execute()
+    with inventory_run_lock(root):
+        return execute()
+
+
+def _enforce_ambiguous_submit_retry_order(
+    sources: Iterable[Source],
+    target_source: Source,
+    *,
+    root: Path,
+) -> None:
+    """Admit the first incomplete output of only the current article."""
+
+    sources = tuple(sources)
+    target_model_id = "alibaba/wan-2.2"
+    states = generation_article_states(sources, root=root)
+    next_incomplete = next((state for state in states if not state.complete), None)
+    if next_incomplete is None:
+        raise PipelineError("All available articles already have accepted outputs")
+    if target_source.article_slug != next_incomplete.article_slug:
+        raise PipelineError(
+            f"Next incomplete article is {next_incomplete.article_slug}; refusing "
+            f"ambiguous-submit retry in {target_source.article_slug}"
+        )
+    first_incomplete: tuple[Source, str] | None = None
+    unsafe_outside_article: list[str] = []
+    for source in sources:
+        for model_id in MODEL_IDS:
+            entry = native.Entry(source.sample, model_id)
+            receipt, _path = _native_run_receipt(entry, root=root)
+            terminal_record = _terminal_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            ambiguous_loaded = (
+                _ambiguous_submit_retry_envelope(source, model_id, root=root)
+                if model_id == target_model_id
+                else None
+            )
+            ambiguous_record = (
+                _ambiguous_submit_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if ambiguous_loaded is not None
+                else None
+            )
+            normalized_loaded = _normalized_input_retry_envelope(
+                source,
+                model_id,
+                root=root,
+            )
+            normalized_record = (
+                _normalized_input_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if normalized_loaded is not None
+                else None
+            )
+            accepted = (
+                _native_output_is_accepted(entry, receipt, root=root)
+                or terminal_record is not None
+                or ambiguous_record is not None
+                or normalized_record is not None
+            )
+            if (
+                source.article_slug == next_incomplete.article_slug
+                and not accepted
+                and first_incomplete is None
+            ):
+                first_incomplete = (source, model_id)
+            if (
+                source.article_slug != next_incomplete.article_slug
+                and receipt is not None
+                and _native_receipt_is_unresolved(receipt)
+                and ambiguous_loaded is None
+                and normalized_loaded is None
+            ):
+                unsafe_outside_article.append(entry.provider_run_id)
+    if unsafe_outside_article:
+        raise PipelineError(
+            "Ambiguous-submit retry is blocked by unresolved provider identities "
+            "outside the current article: "
+            + ", ".join(unsafe_outside_article[:5])
+        )
+    if first_incomplete != (target_source, target_model_id):
+        label = (
+            primary_provider_run_id(*first_incomplete)
+            if first_incomplete is not None
+            else "unknown"
+        )
+        raise PipelineError(
+            "Ambiguous-submit retry must preserve logical output order; first "
+            f"incomplete output is {label}"
+        )
+
+
+def run_ambiguous_submit_retry(
+    sources: Iterable[Source],
+    inventory: dict[str, Any],
+    *,
+    primary_provider_run_id_value: str,
+    root: Path,
+    dry_run: bool,
+    allow_external_processing: bool,
+    timeout: int,
+    poll_interval: float,
+) -> int:
+    """Create/resume the sole explicit retry of a quarantined Segmind POST."""
+
+    sources = tuple(sources)
+    if not dry_run and not allow_external_processing:
+        raise PipelineError(
+            "Real ambiguous-submit retry requires --allow-external-processing "
+            "because the exact original image and Lite prompt are sent to Segmind"
+        )
+
+    def execute() -> int:
+        configure_native(sources, root)
+        source, model_id = resolve_primary_retry_target(
+            sources,
+            primary_provider_run_id_value,
+        )
+        if model_id != "alibaba/wan-2.2":
+            raise PipelineError(
+                "Ambiguous-submit retry is only valid for alibaba/wan-2.2"
+            )
+        if _terminal_retry_envelope(source, model_id, root=root) is not None:
+            raise PipelineError(
+                "A logical output with a terminal retry reservation cannot also "
+                "receive an ambiguous-submit retry"
+            )
+        if (
+            source.article_slug == NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
+            and source.image.get("image_id") == NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+            and _normalized_input_retry_envelope(source, model_id, root=root)
+            is not None
+        ):
+            raise PipelineError(
+                "A logical output with a normalized-input retry reservation "
+                "cannot also receive an ambiguous-submit retry"
+            )
+        binding = ambiguous_submit_retry_binding(source, model_id)
+        existing = _ambiguous_submit_retry_envelope(
+            source,
+            model_id,
+            root=root,
+        )
+        existing_retry_record = (
+            _ambiguous_submit_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if existing is not None
+            else None
+        )
+        if existing is None:
+            _enforce_ambiguous_submit_retry_order(
+                sources,
+                source,
+                root=root,
+            )
+            primary = _primary_ambiguous_submit_evidence(
+                source,
+                model_id,
+                root=root,
+            )
+            aggregate_cost = _aggregate_retry_cost(
+                inventory,
+                root=root,
+                additional_ambiguous=1,
+            )
+            envelope = _ambiguous_submit_retry_envelope_document(
+                binding,
+                primary,
+                aggregate_cost,
+            )
+        else:
+            _existing_binding, envelope = existing
+            primary = envelope["primary_attempt"]
+            aggregate_cost = _aggregate_retry_cost(
+                inventory,
+                root=root,
+            )
+
+        configure_ambiguous_submit_retry_native(binding, root)
+        entry = native.matrix()[0]
+        job = native.load_lite_job(entry, root)
+        sample = native.provider_sample(entry)
+        prompt = native.provider_prompt(job)
+        retry_request = native.provider_request_preview(sample, prompt)
+        retry_request_sha256 = transport.request_fingerprint(
+            retry_request,
+            sample,
+        )
+        if (
+            retry_request != primary.get("request")
+            or retry_request_sha256 != primary.get("request_sha256")
+        ):
+            raise PipelineError(
+                "Ambiguous-submit retry request is not byte-semantically "
+                "identical to the primary verified source/prompt/model request"
+            )
+        retry_is_unavailable = (
+            isinstance(existing_retry_record, dict)
+            and existing_retry_record.get("status") == "provider-unavailable"
+        )
+        retry_has_media = (
+            isinstance(existing_retry_record, dict)
+            and existing_retry_record.get("status")
+            in {"succeeded", "verification-failed"}
+        )
+        if dry_run:
+            action = (
+                "existing-exhausted-retry2-forbidden"
+                if retry_is_unavailable
+                else "existing-complete"
+                if retry_has_media
+                else "existing"
+                if existing is not None
+                else "would-reserve"
+            )
+            print(
+                f"PASS: ambiguous-submit retry {binding.retry_provider_run_id} "
+                f"-> {action}; aggregate maximum="
+                f"${aggregate_cost['maximum_estimated_cost_usd']:.2f}; "
+                "primary outcome remains unknown; no files written and no provider call"
+            )
+            return 0
+        if retry_is_unavailable:
+            raise PipelineError(
+                f"Ambiguous-submit retry-v1 is exhausted for "
+                f"{binding.primary_provider_run_id}; retry2 is forbidden"
+            )
+        if retry_has_media:
+            print(
+                f"PASS: ambiguous-submit retry already complete: "
+                f"{binding.retry_provider_run_id}",
+                flush=True,
+            )
+            return 0
+
+        envelope_path = root / binding.envelope_rel
+        if envelope_path.is_file():
+            if read_json(envelope_path) != envelope:
+                raise PipelineError(
+                    f"Immutable ambiguous-submit retry envelope differs: {envelope_path}"
+                )
+        else:
+            if envelope_path.exists():
+                raise PipelineError(
+                    "Ambiguous-submit retry envelope target is not a regular "
+                    f"file: {envelope_path}"
+                )
+            transport.atomic_write_json(envelope_path, envelope)
+        row = native.materialize_entry(entry, root)
+        materialized_request = native.provider_request_preview(
+            row["sample"],
+            row["prompt"],
+        )
+        if materialized_request != primary["request"]:
+            raise PipelineError(
+                "Materialized ambiguous-submit retry request differs from the "
+                "immutable primary request"
+            )
+        argv = [
+            "run",
+            "--run-id",
+            binding.retry_provider_run_id,
+            "--wan22-concurrency",
+            "1",
+            "--wan27-concurrency",
+            "3",
+            "--veo31-concurrency",
+            "3",
+            "--timeout",
+            str(timeout),
+            "--poll-interval",
+            str(poll_interval),
+            "--allow-external-processing",
+        ]
+        result = native.main(argv, root)
+        if result == 0:
+            selected = _ambiguous_submit_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if (
+                not isinstance(selected, dict)
+                or selected.get("status")
+                not in {"succeeded", "verification-failed"}
+            ):
+                raise PipelineError(
+                    "Ambiguous-submit retry command returned success without "
+                    "accepted retry media"
+                )
+        return result
+
+    if dry_run:
+        return execute()
+    with inventory_run_lock(root):
+        return execute()
+
+
+def _effective_terminal_retry_overlay(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any] | None:
+    """Return the selected terminal overlay which retires a raw primary receipt.
+
+    This intentionally mirrors normal scheduler semantics. A primary receipt
+    may remain ``submit-unknown`` forever as immutable audit evidence after an
+    explicit retry succeeds or exhausts; it must not continue consuming route
+    capacity. An absent or nonterminal overlay returns ``None``, so a genuinely
+    unresolved primary still fails closed in the caller.
+    """
+
+    terminal_loaded = _terminal_retry_envelope(source, model_id, root=root)
+    ambiguous_loaded = (
+        _ambiguous_submit_retry_envelope(source, model_id, root=root)
+        if model_id == "alibaba/wan-2.2"
+        else None
+    )
+    normalized_loaded = _normalized_input_retry_envelope(
+        source,
+        model_id,
+        root=root,
+    )
+    loaded = tuple(
+        candidate
+        for candidate in (terminal_loaded, ambiguous_loaded, normalized_loaded)
+        if candidate is not None
+    )
+    if len(loaded) > 1:
+        raise PipelineError(
+            "A logical output has conflicting retry overlays while calculating "
+            f"route capacity: {primary_provider_run_id(source, model_id)}"
+        )
+    if not loaded:
+        return None
+    if terminal_loaded is not None:
+        record = _terminal_retry_provider_record(source, model_id, root=root)
+    elif ambiguous_loaded is not None:
+        record = _ambiguous_submit_retry_provider_record(
+            source,
+            model_id,
+            root=root,
+        )
+    else:
+        record = _normalized_input_retry_provider_record(
+            source,
+            model_id,
+            root=root,
+        )
+    if record is None:
+        return None
+    allowed = {
+        "succeeded",
+        "verification-failed",
+        "provider-filtered",
+        "provider-unavailable",
+    }
+    if record.get("status") not in allowed:
+        raise PipelineError(
+            "Retry overlay has a nonterminal effective status while calculating "
+            f"route capacity: {primary_provider_run_id(source, model_id)}"
+        )
+    return record
+
+
+def _enforce_normalized_input_retry_order(
+    sources: Iterable[Source],
+    target_source: Source,
+    target_model_id: str,
+    *,
+    root: Path,
+) -> None:
+    """Keep the remediation in the current article and respect route capacity."""
+
+    states = generation_article_states(tuple(sources), root=root)
+    next_incomplete = next((state for state in states if not state.complete), None)
+    if next_incomplete is None:
+        raise PipelineError("All available articles already have terminal outputs")
+    if target_source.article_slug != next_incomplete.article_slug:
+        raise PipelineError(
+            f"Next incomplete article is {next_incomplete.article_slug}; refusing "
+            f"normalized-input retry in {target_source.article_slug}"
+        )
+    active_same_route: list[str] = []
+    for source in sources:
+        entry = native.Entry(source.sample, target_model_id)
+        receipt, _path = _native_run_receipt(entry, root=root)
+        effective_overlay = _effective_terminal_retry_overlay(
+            source,
+            target_model_id,
+            root=root,
+        )
+        if (
+            entry.provider_run_id != primary_provider_run_id(
+                target_source,
+                target_model_id,
+            )
+            and effective_overlay is None
+            and receipt is not None
+            and _native_receipt_is_unresolved(receipt)
+        ):
+            active_same_route.append(entry.provider_run_id)
+    if len(active_same_route) >= ROUTE_CAPACITIES[target_model_id]:
+        raise PipelineError(
+            f"Normalized-input retry would exceed the active "
+            f"{target_model_id} route capacity; resume these jobs first: "
+            + ", ".join(active_same_route[:5])
+        )
+
+
+def run_normalized_input_retry(
+    sources: Iterable[Source],
+    inventory: dict[str, Any],
+    *,
+    primary_provider_run_id_value: str,
+    root: Path,
+    dry_run: bool,
+    allow_external_processing: bool,
+    timeout: int,
+    poll_interval: float,
+) -> int:
+    """Reserve/run the one /scale_1200 retry for an exact oversize primary."""
+
+    sources = tuple(sources)
+    if not dry_run and not allow_external_processing:
+        raise PipelineError(
+            "Real normalized-input retry requires --allow-external-processing "
+            "because the frozen /scale_1200 image and Lite prompt are sent to "
+            "the exact original provider route"
+        )
+
+    def execute() -> int:
+        configure_native(sources, root)
+        source, model_id = resolve_primary_retry_target(
+            sources,
+            primary_provider_run_id_value,
+        )
+        _require_normalized_input_target(source, model_id)
+        if _terminal_retry_envelope(source, model_id, root=root) is not None:
+            raise PipelineError(
+                "A terminal retry reservation conflicts with normalized-input retry"
+            )
+        if (
+            model_id == "alibaba/wan-2.2"
+            and _ambiguous_submit_retry_envelope(source, model_id, root=root)
+            is not None
+        ):
+            raise PipelineError(
+                "An ambiguous-submit retry reservation conflicts with "
+                "normalized-input retry"
+            )
+        binding = normalized_input_retry_binding(source, model_id)
+        existing = _normalized_input_retry_envelope(
+            source,
+            model_id,
+            root=root,
+        )
+        existing_record = (
+            _normalized_input_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if existing is not None
+            else None
+        )
+        if existing is None:
+            primary = _primary_normalized_input_failure_evidence(
+                source,
+                model_id,
+                root=root,
+            )
+            aggregate_cost = _aggregate_retry_cost(
+                inventory,
+                root=root,
+                additional_normalized=1,
+            )
+        else:
+            _existing_binding, envelope = existing
+            primary = envelope["primary_attempt"]
+            aggregate_cost = _aggregate_retry_cost(inventory, root=root)
+        normalized_url = _normalized_input_page_variant_url(source, root)
+        _preview_request, request_delta = _normalized_retry_request(
+            primary["request"],
+            model_id,
+            source.image["orig_url"],
+            normalized_url,
+        )
+        exhausted = (
+            isinstance(existing_record, dict)
+            and existing_record.get("status") == "provider-unavailable"
+        )
+        complete = (
+            isinstance(existing_record, dict)
+            and existing_record.get("status")
+            in {"succeeded", "verification-failed"}
+        )
+        if dry_run:
+            action = (
+                "existing-exhausted-retry2-forbidden"
+                if exhausted
+                else "existing-complete"
+                if complete
+                else "existing"
+                if existing is not None
+                else "would-preflight-and-reserve"
+            )
+            print(
+                f"PASS: normalized-input retry {binding.retry_provider_run_id} "
+                f"-> {action}; request delta={request_delta['json_pointer']}; "
+                f"aggregate maximum="
+                f"${aggregate_cost['maximum_estimated_cost_usd']:.2f}; "
+                "no files written, no MDS fetch, and no provider call"
+            )
+            return 0
+        if exhausted:
+            raise PipelineError(
+                f"Normalized-input retry-v1 is exhausted for "
+                f"{binding.primary_provider_run_id}; retry2 is forbidden"
+            )
+        if complete:
+            print(
+                f"PASS: normalized-input retry already complete: "
+                f"{binding.retry_provider_run_id}",
+                flush=True,
+            )
+            return 0
+        if existing is None:
+            _enforce_normalized_input_retry_order(
+                sources,
+                source,
+                model_id,
+                root=root,
+            )
+
+        preflight = preflight_normalized_input_asset(normalized_url)
+        candidate_asset = _normalized_input_asset_document(
+            binding,
+            preflight,
+            root=root,
+        )
+        asset_path = root / binding.asset_metadata_rel
+        if asset_path.is_file():
+            asset, asset_sha256 = _validated_normalized_input_asset(
+                binding,
+                root=root,
+            )
+            if asset != candidate_asset:
+                raise PipelineError(
+                    "Remote /scale_1200 bytes changed after the normalized asset "
+                    "was frozen"
+                )
+        else:
+            if asset_path.exists():
+                raise PipelineError(
+                    f"Normalized asset metadata target is unsafe: {asset_path}"
+                )
+            transport.atomic_write_json(asset_path, candidate_asset)
+            asset, asset_sha256 = _validated_normalized_input_asset(
+                binding,
+                root=root,
+            )
+        if existing is not None:
+            envelope = existing[1]
+        else:
+            envelope = _normalized_input_retry_envelope_document(
+                binding,
+                primary,
+                asset,
+                asset_sha256,
+                aggregate_cost,
+            )
+        configure_normalized_input_retry_native(binding, asset, root)
+        entry = native.matrix()[0]
+        job = native.load_lite_job(entry, root)
+        sample = native.provider_sample(entry)
+        prompt = native.provider_prompt(job)
+        retry_request = native.provider_request_preview(sample, prompt)
+        retry_request_sha256 = transport.request_fingerprint(retry_request, sample)
+        expected_retry = envelope["retry_attempt"]
+        if (
+            retry_request != expected_retry["request"]
+            or retry_request_sha256 != expected_retry["request_sha256"]
+        ):
+            raise PipelineError(
+                "Normalized-input native request differs from the one-leaf "
+                "immutable envelope"
+            )
+        envelope_path = root / binding.envelope_rel
+        if envelope_path.is_file():
+            if read_json(envelope_path) != envelope:
+                raise PipelineError(
+                    f"Immutable normalized-input retry envelope differs: {envelope_path}"
+                )
+        else:
+            if envelope_path.exists():
+                raise PipelineError(
+                    f"Normalized-input retry target is unsafe: {envelope_path}"
+                )
+            transport.atomic_write_json(envelope_path, envelope)
+        row = native.materialize_entry(entry, root)
+        materialized_request = native.provider_request_preview(
+            row["sample"],
+            row["prompt"],
+        )
+        if materialized_request != expected_retry["request"]:
+            raise PipelineError(
+                "Materialized normalized-input request changed after reservation"
+            )
+        argv = [
+            "run",
+            "--run-id",
+            binding.retry_provider_run_id,
+            "--wan22-concurrency",
+            "1",
+            "--wan27-concurrency",
+            "3",
+            "--veo31-concurrency",
+            "3",
+            "--timeout",
+            str(timeout),
+            "--poll-interval",
+            str(poll_interval),
+            "--allow-external-processing",
+        ]
+        result = native.main(argv, root)
+        if result == 0:
+            selected = _normalized_input_retry_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if (
+                not isinstance(selected, dict)
+                or selected.get("status")
+                not in {"succeeded", "verification-failed"}
+            ):
+                raise PipelineError(
+                    "Normalized-input retry returned success without accepted media"
+                )
+        return result
+
+    if dry_run:
+        return execute()
+    with inventory_run_lock(root):
+        return execute()
+
+
+def _planning_record(
+    source: Source, root: Path
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    if _planning_state(source, root) != "verified":
+        raise PipelineError(f"Planning run is not verified: {source.planning_run_id}")
+    summary = runner.provenance_summary(root, source.planning_run_id)
+    result_path = ARTIFACT_NAMESPACE / source.planning_run_id / "result.json"
+    if summary.get("result_path") != result_path.as_posix():
+        raise PipelineError(f"Unexpected planning result path: {source.planning_run_id}")
+    result = read_json(root / result_path)
+    models = result.get("models") if isinstance(result, dict) else None
+    if (
+        result.get("job_id") != source.planning_run_id
+        or not isinstance(models, list)
+        or [model.get("model_id") for model in models if isinstance(model, dict)]
+        != list(MODEL_IDS)
+    ):
+        raise PipelineError(f"Planning result identity/model set differs: {source.planning_run_id}")
+    return summary, result
+
+
+def _output_record(
+    *,
+    article: Article,
+    source: Source,
+    model_id: str,
+    model: dict[str, Any],
+    provider: dict[str, Any],
+) -> dict[str, Any]:
+    retry = provider.get("retry_selection")
+    if isinstance(retry, dict) and retry.get("retry_kind") == "normalized-input":
+        selected_attempt = (
+            "normalized-input-retry-v1-exhausted"
+            if provider.get("status") == "provider-unavailable"
+            else "normalized-input-retry-v1"
+        )
+    elif isinstance(retry, dict) and retry.get("retry_kind") == "ambiguous-submit":
+        selected_attempt = (
+            "ambiguous-submit-retry-v1-exhausted"
+            if provider.get("status") == "provider-unavailable"
+            else "ambiguous-submit-retry-v1"
+        )
+    elif isinstance(retry, dict):
+        selected_attempt = (
+            "terminal-retry-v1-exhausted"
+            if provider.get("status") == "provider-filtered"
+            else "terminal-retry-v1"
+        )
+    else:
+        selected_attempt = "primary"
+    return {
+        "article_slug": article.slug,
+        "image_id": source.image["image_id"],
+        "source_path": source.image["source_path"],
+        "sample_id": source.sample_id,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": provider.get("provider_run_id"),
+        "model_id": model_id,
+        "scene_plan": model.get("scene_plan"),
+        "positive_prompt": model.get("positive_prompt"),
+        "negative_prompt": model.get("negative_prompt"),
+        "status": provider.get("status"),
+        "recorded_status": provider.get("recorded_status"),
+        "prompt_path": provider.get("prompt_path"),
+        "run_path": provider.get("run_path"),
+        "video_path": provider.get("video_path"),
+        "media": provider.get("media"),
+        "contract_check": provider.get("contract_check"),
+        "error": provider.get("error"),
+        "selected_attempt": selected_attempt,
+        "retry": retry,
+    }
+
+
+def final_output_acceptance_error(
+    output: Any,
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> str | None:
+    if not isinstance(output, dict):
+        return "final output is not an object"
+    label = output.get("provider_run_id") or "unknown output"
+    status = output.get("status")
+    if status not in {"succeeded", "verification-failed"}:
+        return f"{label}: status {status!r} is not complete"
+    video_path = output.get("video_path")
+    if not isinstance(video_path, str) or not video_path:
+        return f"{label}: video_path is missing"
+    relative_video = Path(video_path)
+    if relative_video.is_absolute() or ".." in relative_video.parts:
+        return f"{label}: video_path is unsafe"
+    if not (root / relative_video).is_file():
+        return f"{label}: MP4 is missing"
+    if not isinstance(output.get("media"), dict):
+        return f"{label}: measured media is missing"
+    check = output.get("contract_check")
+    if not isinstance(check, dict):
+        return f"{label}: media contract is missing"
+    if status == "succeeded":
+        return None if check.get("conforms") is True else f"{label}: succeeded output does not conform"
+    warnings = check.get("warnings")
+    if (
+        not allow_contract_warnings
+        or check.get("conforms") is not False
+        or not isinstance(warnings, list)
+        or not warnings
+    ):
+        return f"{label}: media-contract warnings were not accepted"
+    return None
+
+
+def final_output_terminal_error(
+    output: Any,
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> str | None:
+    """Accept media or one strictly audited exhausted retry namespace."""
+
+    media_error = final_output_acceptance_error(
+        output,
+        root=root,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    if isinstance(output, dict) and output.get("status") == "provider-unavailable":
+        normalized_retry = output.get("retry")
+        if (
+            isinstance(normalized_retry, dict)
+            and normalized_retry.get("retry_kind") == "normalized-input"
+        ):
+            label = output.get("provider_run_id") or "unknown output"
+            if (
+                output.get("recorded_status") != "provider-failed"
+                or output.get("selected_attempt")
+                != "normalized-input-retry-v1-exhausted"
+                or output.get("video_path") is not None
+                or output.get("media") is not None
+                or output.get("contract_check") is not None
+                or not isinstance(output.get("error"), str)
+                or not output.get("error")
+                or normalized_retry.get("retry_number")
+                != NORMALIZED_INPUT_RETRY_VERSION
+                or normalized_retry.get("exhausted") is not True
+            ):
+                return f"{label}: provider-unavailable normalized retry audit is invalid"
+            primary = normalized_retry.get("primary_attempt")
+            retry_attempt = normalized_retry.get("retry_attempt")
+            transform = normalized_retry.get("source_transform")
+            if (
+                not isinstance(primary, dict)
+                or not isinstance(retry_attempt, dict)
+                or not isinstance(transform, dict)
+            ):
+                return f"{label}: normalized retry attempt/source audit is missing"
+            if (
+                primary.get("status") != "provider-failed"
+                or primary.get("provider_may_be_active") is not False
+                or retry_attempt.get("status") != "provider-failed"
+                or retry_attempt.get("provider_may_be_active") is not False
+                or retry_attempt.get("provider_run_id")
+                != output.get("provider_run_id")
+                or retry_attempt.get("provider_run_id")
+                == primary.get("provider_run_id")
+                or retry_attempt.get("error") != output.get("error")
+                or primary.get("request_sha256")
+                == retry_attempt.get("request_sha256")
+            ):
+                return f"{label}: normalized retry primary/retry audit differs"
+            expected_pointer = {
+                "alibaba/wan-2.2": "/input/image",
+                "alibaba/wan-2.7": "/frame_images/0/image_url/url",
+            }.get(output.get("model_id"))
+            original = transform.get("original")
+            normalized = transform.get("normalized")
+            delta = transform.get("request_delta")
+            if (
+                transform.get("strategy") != "frozen-page-variant"
+                or not isinstance(original, dict)
+                or not isinstance(normalized, dict)
+                or not isinstance(delta, dict)
+                or delta.get("json_pointer") != expected_pointer
+                or delta.get("from") != original.get("url")
+                or delta.get("to") != normalized.get("url")
+                or delta.get("changed_leaf_count") != 1
+                or original.get("path") != output.get("source_path")
+                or original.get("sha256")
+                != NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256
+                or not isinstance(original.get("bytes"), int)
+                or original["bytes"] <= NORMALIZED_INPUT_MAX_BYTES
+                or not isinstance(normalized.get("bytes"), int)
+                or not 0 < normalized["bytes"] <= NORMALIZED_INPUT_MAX_BYTES
+            ):
+                return f"{label}: normalized source/request delta audit differs"
+            for attempt_name, attempt in (
+                ("primary", primary),
+                ("retry", retry_attempt),
+            ):
+                for field in ("provider_run_id", "provider_job_id", "error"):
+                    if not isinstance(attempt.get(field), str) or not attempt.get(field):
+                        return f"{label}: normalized {attempt_name} {field} is missing"
+                for field in ("run_sha256", "prompt_sha256", "request_sha256"):
+                    value = attempt.get(field)
+                    if (
+                        not isinstance(value, str)
+                        or len(value) != 64
+                        or any(
+                            character not in "0123456789abcdef"
+                            for character in value
+                        )
+                    ):
+                        return f"{label}: normalized {attempt_name} {field} is invalid"
+                for field, digest_field in (
+                    ("run_path", "run_sha256"),
+                    ("prompt_path", "prompt_sha256"),
+                ):
+                    value = attempt.get(field)
+                    artifact = Path(value) if isinstance(value, str) else None
+                    if (
+                        artifact is None
+                        or artifact.is_absolute()
+                        or ".." in artifact.parts
+                        or not (root / artifact).is_file()
+                        or sha256_file(root / artifact) != attempt[digest_field]
+                    ):
+                        return (
+                            f"{label}: normalized {attempt_name} {field} "
+                            "evidence differs"
+                        )
+            for field, digest_field in (
+                ("envelope_path", "envelope_sha256"),
+                ("metadata_path", "metadata_sha256"),
+            ):
+                if field.startswith("metadata"):
+                    value = normalized.get(field)
+                    digest = normalized.get(digest_field)
+                else:
+                    value = normalized_retry.get(field)
+                    digest = normalized_retry.get(digest_field)
+                artifact = Path(value) if isinstance(value, str) else None
+                if (
+                    artifact is None
+                    or artifact.is_absolute()
+                    or ".." in artifact.parts
+                    or not (root / artifact).is_file()
+                    or not isinstance(digest, str)
+                    or sha256_file(root / artifact) != digest
+                ):
+                    return f"{label}: normalized {field} evidence differs"
+            return None
+    if isinstance(output, dict) and output.get("status") == "provider-unavailable":
+        label = output.get("provider_run_id") or "unknown output"
+        retry = output.get("retry")
+        if (
+            output.get("recorded_status") != "provider-failed"
+            or output.get("selected_attempt")
+            != "ambiguous-submit-retry-v1-exhausted"
+            or output.get("video_path") is not None
+            or output.get("media") is not None
+            or output.get("contract_check") is not None
+            or not isinstance(output.get("error"), str)
+            or not output.get("error")
+            or not isinstance(retry, dict)
+            or retry.get("retry_kind") != "ambiguous-submit"
+            or retry.get("retry_number") != AMBIGUOUS_SUBMIT_RETRY_VERSION
+            or retry.get("exhausted") is not True
+            or retry.get("primary_outcome_unknown") is not True
+        ):
+            return f"{label}: provider-unavailable ambiguous retry audit is invalid"
+        primary = retry.get("primary_attempt")
+        retry_attempt = retry.get("retry_attempt")
+        if not isinstance(primary, dict) or not isinstance(retry_attempt, dict):
+            return f"{label}: provider-unavailable attempt audit is missing"
+        if (
+            primary.get("status") != "submit-unknown"
+            or primary.get("recorded_status")
+            not in {"submitting", "submit-unknown"}
+            or primary.get("outcome") != "unknown"
+            or primary.get("outcome_unknown") is not True
+            or primary.get("provider_may_be_active") is not True
+            or primary.get("provider_job_id") is not None
+            or primary.get("submitted_at") is not None
+            or primary.get("completed_at") is not None
+            or not isinstance(primary.get("ambiguity_reason"), str)
+            or not primary.get("ambiguity_reason")
+            or retry_attempt.get("status") != "provider-failed"
+            or retry_attempt.get("provider_may_be_active") is not False
+            or retry_attempt.get("provider_run_id") != output.get("provider_run_id")
+            or retry_attempt.get("provider_run_id")
+            == primary.get("provider_run_id")
+            or retry_attempt.get("error") != output.get("error")
+            or primary.get("request_sha256")
+            != retry_attempt.get("request_sha256")
+        ):
+            return f"{label}: provider-unavailable primary/retry audit differs"
+        for field in (
+            "provider_run_id",
+            "ambiguity_reason",
+        ):
+            if not isinstance(primary.get(field), str) or not primary.get(field):
+                return f"{label}: ambiguous primary {field} is missing"
+        for field in (
+            "provider_run_id",
+            "provider_job_id",
+            "submitted_at",
+            "completed_at",
+            "error",
+        ):
+            if (
+                not isinstance(retry_attempt.get(field), str)
+                or not retry_attempt.get(field)
+            ):
+                return f"{label}: ambiguous retry {field} is missing"
+        for attempt_name, attempt in (
+            ("primary", primary),
+            ("retry", retry_attempt),
+        ):
+            for field in ("run_sha256", "prompt_sha256", "request_sha256"):
+                value = attempt.get(field)
+                if (
+                    not isinstance(value, str)
+                    or len(value) != 64
+                    or any(
+                        character not in "0123456789abcdef"
+                        for character in value
+                    )
+                ):
+                    return f"{label}: ambiguous {attempt_name} {field} is invalid"
+            for field, digest_field in (
+                ("run_path", "run_sha256"),
+                ("prompt_path", "prompt_sha256"),
+            ):
+                value = attempt.get(field)
+                if not isinstance(value, str) or not value:
+                    return f"{label}: ambiguous {attempt_name} {field} is missing"
+                artifact = Path(value)
+                if artifact.is_absolute() or ".." in artifact.parts:
+                    return f"{label}: ambiguous {attempt_name} {field} is unsafe"
+                path = root / artifact
+                if not path.is_file() or sha256_file(path) != attempt[digest_field]:
+                    return f"{label}: ambiguous {attempt_name} {field} evidence differs"
+        envelope_value = retry.get("envelope_path")
+        envelope_digest = retry.get("envelope_sha256")
+        if not isinstance(envelope_value, str) or not envelope_value:
+            return f"{label}: ambiguous retry envelope_path is missing"
+        envelope_path = Path(envelope_value)
+        if (
+            envelope_path.is_absolute()
+            or ".." in envelope_path.parts
+            or not (root / envelope_path).is_file()
+            or not isinstance(envelope_digest, str)
+            or sha256_file(root / envelope_path) != envelope_digest
+        ):
+            return f"{label}: ambiguous retry envelope evidence differs"
+        return None
+    if not isinstance(output, dict) or output.get("status") != "provider-filtered":
+        return media_error
+    label = output.get("provider_run_id") or "unknown output"
+    retry = output.get("retry")
+    if (
+        output.get("recorded_status") != "provider-failed"
+        or output.get("selected_attempt") != "terminal-retry-v1-exhausted"
+        or output.get("video_path") is not None
+        or output.get("media") is not None
+        or output.get("contract_check") is not None
+        or not isinstance(output.get("error"), str)
+        or not output.get("error")
+        or not isinstance(retry, dict)
+        or retry.get("retry_number") != TERMINAL_RETRY_VERSION
+        or retry.get("exhausted") is not True
+    ):
+        return f"{label}: provider-filtered retry exhaustion is invalid"
+    primary = retry.get("primary_attempt")
+    retry_attempt = retry.get("retry_attempt")
+    if not isinstance(primary, dict) or not isinstance(retry_attempt, dict):
+        return f"{label}: provider-filtered attempt audit is missing"
+    if (
+        primary.get("status") != "provider-failed"
+        or retry_attempt.get("status") != "provider-failed"
+        or retry_attempt.get("provider_may_be_active") is not False
+        or retry_attempt.get("provider_run_id") != output.get("provider_run_id")
+        or retry_attempt.get("error") != output.get("error")
+        or primary.get("request_sha256") != retry_attempt.get("request_sha256")
+    ):
+        return f"{label}: provider-filtered primary/retry audit differs"
+    for attempt_name, attempt in (
+        ("primary", primary),
+        ("retry", retry_attempt),
+    ):
+        for field in ("provider_run_id", "provider_job_id", "error"):
+            if not isinstance(attempt.get(field), str) or not attempt.get(field):
+                return f"{label}: {attempt_name} {field} is missing"
+        for field in ("run_sha256", "prompt_sha256", "request_sha256"):
+            value = attempt.get(field)
+            if (
+                not isinstance(value, str)
+                or len(value) != 64
+                or any(character not in "0123456789abcdef" for character in value)
+            ):
+                return f"{label}: {attempt_name} {field} is invalid"
+        for field, digest_field in (
+            ("run_path", "run_sha256"),
+            ("prompt_path", "prompt_sha256"),
+        ):
+            value = attempt.get(field)
+            if not isinstance(value, str) or not value:
+                return f"{label}: {attempt_name} {field} is missing"
+            artifact = Path(value)
+            if artifact.is_absolute() or ".." in artifact.parts:
+                return f"{label}: {attempt_name} {field} is unsafe"
+            path = root / artifact
+            if not path.is_file() or sha256_file(path) != attempt[digest_field]:
+                return f"{label}: {attempt_name} {field} evidence differs"
+    envelope_value = retry.get("envelope_path")
+    if not isinstance(envelope_value, str) or not envelope_value:
+        return f"{label}: retry envelope_path is missing"
+    envelope_path = Path(envelope_value)
+    if (
+        envelope_path.is_absolute()
+        or ".." in envelope_path.parts
+        or not (root / envelope_path).is_file()
+    ):
+        return f"{label}: retry envelope_path is invalid"
+    return None
+
+
+def _acceptance_audit(
+    outputs: Iterable[dict[str, Any]],
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> dict[str, int]:
+    outputs = tuple(outputs)
+    return {
+        "accepted_output_count": sum(
+            final_output_acceptance_error(
+                output,
+                root=root,
+                allow_contract_warnings=allow_contract_warnings,
+            )
+            is None
+            for output in outputs
+        ),
+        "conforming_output_count": sum(
+            output.get("status") == "succeeded"
+            and isinstance(output.get("contract_check"), dict)
+            and output["contract_check"].get("conforms") is True
+            for output in outputs
+        ),
+        "terminal_accounted_output_count": sum(
+            final_output_terminal_error(
+                output,
+                root=root,
+                allow_contract_warnings=allow_contract_warnings,
+            )
+            is None
+            for output in outputs
+        ),
+        "provider_filtered_output_count": sum(
+            output.get("status") == "provider-filtered" for output in outputs
+        ),
+        "provider_unavailable_output_count": sum(
+            output.get("status") == "provider-unavailable" for output in outputs
+        ),
+    }
+
+
+def build_final_manifest(
+    discovery: Discovery,
+    inventory: dict[str, Any],
+    *,
+    root: Path,
+    updated_at: str | None = None,
+    allow_contract_warnings: bool,
+) -> dict[str, Any]:
+    configure_native(discovery.sources, root)
+    native.materialize(root)
+    generation = read_json(root / GENERATION_MANIFEST_REL)
+    generation_outputs = generation.get("outputs") if isinstance(generation, dict) else None
+    expected_outputs = len(discovery.sources) * len(MODEL_IDS)
+    if not isinstance(generation_outputs, list) or len(generation_outputs) != expected_outputs:
+        raise PipelineError(
+            f"Generation manifest must contain {expected_outputs} outputs"
+        )
+    provider_by_key: dict[tuple[str, str], dict[str, Any]] = {}
+    for provider in generation_outputs:
+        if not isinstance(provider, dict):
+            raise PipelineError("Generation output is not an object")
+        key = (str(provider.get("source_path")), str(provider.get("model_id")))
+        if key in provider_by_key:
+            raise PipelineError(f"Duplicate generation output key: {key}")
+        provider_by_key[key] = provider
+
+    sources_by_slug: dict[str, list[Source]] = {}
+    for source in discovery.sources:
+        sources_by_slug.setdefault(source.article_slug, []).append(source)
+    articles: list[dict[str, Any]] = []
+    outputs: list[dict[str, Any]] = []
+    for article in discovery.articles:
+        article_sources = sources_by_slug.get(article.slug, [])
+        if tuple(source.image for source in article_sources) != article.images:
+            raise PipelineError(
+                f"Article source order differs from discovery: {article.slug}"
+            )
+        image_records: list[dict[str, Any]] = []
+        for source in article_sources:
+            summary, result = _planning_record(source, root)
+            model_by_id = {
+                model.get("model_id"): model
+                for model in result["models"]
+                if isinstance(model, dict)
+            }
+            image_outputs: list[dict[str, Any]] = []
+            for model_id in MODEL_IDS:
+                provider = provider_by_key.get(
+                    (source.image["source_path"], model_id)
+                )
+                retry_provider = _terminal_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                ambiguous_provider = (
+                    _ambiguous_submit_retry_provider_record(
+                        source,
+                        model_id,
+                        root=root,
+                    )
+                    if model_id == "alibaba/wan-2.2"
+                    else None
+                )
+                normalized_provider = _normalized_input_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
+                )
+                if sum(
+                    candidate is not None
+                    for candidate in (
+                        retry_provider,
+                        ambiguous_provider,
+                        normalized_provider,
+                    )
+                ) > 1:
+                    raise PipelineError(
+                        "A logical output has conflicting retry results: "
+                        f"{source.sample_id}/{model_id}"
+                    )
+                if retry_provider is not None:
+                    provider = retry_provider
+                if ambiguous_provider is not None:
+                    provider = ambiguous_provider
+                if normalized_provider is not None:
+                    provider = normalized_provider
+                model = model_by_id.get(model_id)
+                if provider is None or model is None:
+                    raise PipelineError(
+                        f"Missing output binding: {source.sample_id}/{model_id}"
+                    )
+                if normalized_provider is not None:
+                    expected_run_id = normalized_input_retry_binding(
+                        source,
+                        model_id,
+                    ).retry_provider_run_id
+                elif ambiguous_provider is not None:
+                    expected_run_id = ambiguous_submit_retry_binding(
+                        source,
+                        model_id,
+                    ).retry_provider_run_id
+                elif retry_provider is not None:
+                    expected_run_id = terminal_retry_binding(
+                        source,
+                        model_id,
+                    ).retry_provider_run_id
+                else:
+                    expected_run_id = primary_provider_run_id(source, model_id)
+                if provider.get("provider_run_id") != expected_run_id:
+                    raise PipelineError(
+                        f"Provider identity mismatch: {source.sample_id}/{model_id}"
+                    )
+                output = _output_record(
+                    article=article,
+                    source=source,
+                    model_id=model_id,
+                    model=model,
+                    provider=provider,
+                )
+                image_outputs.append(output)
+                outputs.append(output)
+            image_records.append(
+                {
+                    "image": source.image,
+                    "lite_planning": {
+                        "run_id": source.planning_run_id,
+                        "result_path": summary.get("result_path"),
+                        "structured_intent": result.get("analysis", {}).get(
+                            "structured_intent"
+                        ),
+                        "provenance": summary,
+                    },
+                    "outputs": image_outputs,
+                }
+            )
+        articles.append(
+            {
+                "article_number": article.number,
+                "article_slug": article.slug,
+                "label": article.label,
+                "url": article.url,
+                "title": article.title,
+                "lead": article.lead,
+                "context_path": article.context_path,
+                # Keep the cover as the article-level representative for demo
+                # compatibility. Every image, including this cover, is planned
+                # and generated independently below articles[].images[].
+                "selected_image": article.cover_image,
+                "image_count": len(image_records),
+                "images": image_records,
+            }
+        )
+
+    if len(outputs) != expected_outputs:
+        raise PipelineError("Final output count changed")
+    output_keys = {
+        (output["article_slug"], output["image_id"], output["model_id"])
+        for output in outputs
+    }
+    if len(output_keys) != expected_outputs:
+        raise PipelineError("Final output keys are not unique")
+    status_summary: dict[str, int] = {}
+    for output in outputs:
+        status = str(output.get("status") or "missing")
+        status_summary[status] = status_summary.get(status, 0) + 1
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-all-images",
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "agent_id": AGENT_ID,
+        "updated_at": updated_at or transport.utc_now(),
+        "merge_contract": {
+            "article_key": ["article_slug"],
+            "image_key": ["article_slug", "image_id"],
+            "output_key": ["article_slug", "image_id", "model_id"],
+            "target_field": "articles[].images[]",
+        },
+        "models": list(MODEL_IDS),
+        "article_count": len(articles),
+        "image_count": len(discovery.sources),
+        "expected_outputs": expected_outputs,
+        "unavailable_articles": list(discovery.unavailable_articles),
+        "cost": _aggregate_retry_cost(inventory, root=root),
+        "generation_policy": {
+            **inventory["generation_policy"],
+            "terminal_provider_retry": {
+                "version": TERMINAL_RETRY_VERSION,
+                "namespace": TERMINAL_RETRY_NAMESPACE_REL.as_posix(),
+                "explicit_operator_command_required": True,
+                "maximum_new_paid_submissions_per_failed_output": 1,
+                "automatic_paid_retries": False,
+                "fallback": False,
+                "primary_receipts_immutable": True,
+            },
+            "ambiguous_submit_retry": {
+                "version": AMBIGUOUS_SUBMIT_RETRY_VERSION,
+                "namespace": AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL.as_posix(),
+                "route": "eliza-segmind/alibaba/wan-2.2",
+                "explicit_operator_command_required": True,
+                "maximum_new_paid_submissions_per_ambiguous_output": 1,
+                "retry2_forbidden": True,
+                "automatic_paid_retries": False,
+                "fallback": False,
+                "primary_receipts_immutable": True,
+                "primary_outcome_remains_unknown": True,
+            },
+            "normalized_input_retry": {
+                "version": NORMALIZED_INPUT_RETRY_VERSION,
+                "namespace": NORMALIZED_INPUT_RETRY_NAMESPACE_REL.as_posix(),
+                "shared_asset_namespace": (
+                    NORMALIZED_INPUT_ASSET_NAMESPACE_REL.as_posix()
+                ),
+                "eligible_source": {
+                    "article_slug": NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG,
+                    "image_id": NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID,
+                },
+                "models": list(NORMALIZED_INPUT_ELIGIBLE_MODELS),
+                "explicit_operator_command_required": True,
+                "maximum_new_paid_submissions_per_eligible_output": 1,
+                "retry2_forbidden": True,
+                "automatic_paid_retries": False,
+                "fallback": False,
+                "primary_receipts_immutable": True,
+                "request_delta_only_image_pointer": True,
+            },
+        },
+        "status_summary": status_summary,
+        "acceptance_policy": {
+            "allow_contract_warnings": allow_contract_warnings,
+            "accepted_complete_statuses": (
+                ["succeeded", "verification-failed"]
+                if allow_contract_warnings
+                else ["succeeded"]
+            ),
+            "requires_mp4_and_media": True,
+            "terminal_accounted_without_media": [
+                "provider-filtered",
+                "provider-unavailable",
+            ],
+            "provider_filtered_requires_exhausted_retry_v1": True,
+            "provider_unavailable_requires_retry_v1": [
+                "ambiguous-submit",
+                "normalized-input",
+            ],
+            "provider_unavailable_requires_ambiguous_submit_retry_v1": True,
+            "preserve_recorded_status": True,
+        },
+        **_acceptance_audit(
+            outputs,
+            root=root,
+            allow_contract_warnings=allow_contract_warnings,
+        ),
+        "inventory_manifest": INVENTORY_MANIFEST_REL.as_posix(),
+        "generation_manifest": GENERATION_MANIFEST_REL.as_posix(),
+        "articles": articles,
+        "outputs": outputs,
+    }
+
+
+def final_manifest_errors(
+    document: Any,
+    *,
+    discovery: Discovery,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> list[str]:
+    if not isinstance(document, dict):
+        return ["Final manifest is not an object"]
+    outputs = document.get("outputs")
+    errors: list[str] = []
+    expected_outputs = len(discovery.sources) * len(MODEL_IDS)
+    if document.get("article_count") != len(discovery.articles):
+        errors.append("Final article_count differs from frozen inventory")
+    if document.get("image_count") != len(discovery.sources):
+        errors.append("Final image_count differs from frozen inventory")
+    if document.get("expected_outputs") != expected_outputs:
+        errors.append("Final expected_outputs differs from frozen inventory")
+    if document.get("unavailable_articles") != list(discovery.unavailable_articles):
+        errors.append("Final unavailable_articles differs from extraction report")
+    if not isinstance(outputs, list) or len(outputs) != expected_outputs:
+        errors.append("Final flat output list has the wrong size")
+        return errors
+    seen: set[tuple[Any, Any, Any]] = set()
+    for output in outputs:
+        if isinstance(output, dict):
+            key = (
+                output.get("article_slug"),
+                output.get("image_id"),
+                output.get("model_id"),
+            )
+            if key in seen:
+                errors.append(f"Duplicate final output key: {key}")
+            seen.add(key)
+        error = final_output_terminal_error(
+            output,
+            root=root,
+            allow_contract_warnings=allow_contract_warnings,
+        )
+        if error:
+            errors.append(error)
+    expected_audit = _acceptance_audit(
+        outputs,
+        root=root,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    for key, expected in expected_audit.items():
+        if document.get(key) != expected:
+            errors.append(f"Final {key} does not match artifacts")
+    return errors
+
+
+def finalize(
+    discovery: Discovery,
+    inventory: dict[str, Any],
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> dict[str, Any]:
+    document = build_final_manifest(
+        discovery,
+        inventory,
+        root=root,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    errors = final_manifest_errors(
+        document,
+        discovery=discovery,
+        root=root,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    if errors:
+        raise PipelineError(
+            f"Cannot finalize: {len(errors)} acceptance error(s): "
+            + "; ".join(errors[:5])
+        )
+    transport.atomic_write_json(root / FINAL_MANIFEST_REL, document)
+    return document
+
+
+def verify_all(
+    discovery: Discovery,
+    inventory: dict[str, Any],
+    *,
+    root: Path,
+    allow_incomplete: bool,
+    allow_contract_warnings: bool,
+) -> tuple[bool, list[str]]:
+    errors: list[str] = []
+    configure_native(discovery.sources, root)
+    terminal_retry_count = len(_known_retry_envelopes(root))
+    ambiguous_retry_count = len(_known_ambiguous_submit_retry_envelopes(root))
+    normalized_retry_count = len(_known_normalized_input_retry_envelopes(root))
+    _enforce_retry_namespace_conflicts(
+        _known_retry_envelopes(root),
+        _known_ambiguous_submit_retry_envelopes(root),
+        _known_normalized_input_retry_envelopes(root),
+    )
+    retry_count = (
+        terminal_retry_count + ambiguous_retry_count + normalized_retry_count
+    )
+    native_ok, native_errors = native.verify(
+        root,
+        # A selected retry intentionally leaves its immutable primary receipt
+        # in provider-failed. Final logical-output acceptance below remains
+        # strict and is the completeness authority when retry-v1 is present.
+        allow_incomplete=allow_incomplete or retry_count > 0,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    if not native_ok:
+        errors.extend(native_errors)
+    final_path = root / FINAL_MANIFEST_REL
+    if not final_path.is_file():
+        if not allow_incomplete:
+            errors.append(f"Missing final manifest: {FINAL_MANIFEST_REL}")
+    else:
+        actual = read_json(final_path)
+        updated_at = actual.get("updated_at") if isinstance(actual, dict) else None
+        rebuilt = (
+            build_final_manifest(
+                discovery,
+                inventory,
+                root=root,
+                updated_at=updated_at,
+                allow_contract_warnings=allow_contract_warnings,
+            )
+            if isinstance(updated_at, str)
+            else None
+        )
+        if rebuilt is None or actual != rebuilt:
+            errors.append("Final sidecar does not match current planning/provider artifacts")
+        if not allow_incomplete and rebuilt is not None:
+            errors.extend(
+                final_manifest_errors(
+                    rebuilt,
+                    discovery=discovery,
+                    root=root,
+                    allow_contract_warnings=allow_contract_warnings,
+                )
+            )
+    report = {
+        "schema_version": 1,
+        "ticket": TICKET,
+        "batch_id": BATCH_ID,
+        "passed": not errors,
+        "allow_incomplete": allow_incomplete,
+        "allow_contract_warnings": allow_contract_warnings,
+        "article_count": len(discovery.articles),
+        "unavailable_article_count": len(discovery.unavailable_articles),
+        "image_count": len(discovery.sources),
+        "expected_outputs": len(discovery.sources) * len(MODEL_IDS),
+        "terminal_retry_reservations": terminal_retry_count,
+        "ambiguous_submit_retry_reservations": ambiguous_retry_count,
+        "normalized_input_retry_reservations": normalized_retry_count,
+        "total_retry_reservations": retry_count,
+        "errors": errors,
+    }
+    transport.atomic_write_json(root / VERIFICATION_REPORT_REL, report)
+    return not errors, errors
+
+
+def positive_int(value: str) -> int:
+    try:
+        parsed = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("value must be an integer") from exc
+    if parsed < 1:
+        raise argparse.ArgumentTypeError("value must be at least 1")
+    return parsed
+
+
+def _add_budget(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--budget-cap-usd",
+        type=budget_arg,
+        default=HARD_BUDGET_CAP_USD,
+        help=(
+            "operator aggregate cap; must cover the complete frozen matrix "
+            f"and be no more than {HARD_BUDGET_CAP_USD:.2f}"
+        ),
+    )
+
+
+def _add_planning_filters(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--article", action="append", default=[])
+    parser.add_argument("--planning-run-id", action="append", default=[])
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest="command", required=True)
+
+    inventory = commands.add_parser(
+        "inventory", help="discover and freeze the ticket-specific all-image matrix"
+    )
+    inventory.add_argument("--dry-run", action="store_true")
+    _add_budget(inventory)
+
+    prepare = commands.add_parser(
+        "prepare-plans", help="prepare or resume all selected three-model Lite jobs"
+    )
+    prepare.add_argument("--dry-run", action="store_true")
+    _add_planning_filters(prepare)
+    _add_budget(prepare)
+
+    run_plans = commands.add_parser(
+        "run-plans", help="run or resume isolated three-model Lite analyses"
+    )
+    run_plans.add_argument("--concurrency", type=positive_int, default=3)
+    run_plans.add_argument("--timeout", type=positive_int, default=1800)
+    run_plans.add_argument("--author-model")
+    run_plans.add_argument("--dry-run", action="store_true")
+    run_plans.add_argument("--allow-external-processing", action="store_true")
+    _add_planning_filters(run_plans)
+    _add_budget(run_plans)
+
+    plan_generation = commands.add_parser(
+        "plan-generation", help="materialize or preview the frozen provider matrix"
+    )
+    plan_generation.add_argument("--dry-run", action="store_true")
+    _add_budget(plan_generation)
+
+    generate = commands.add_parser(
+        "generate", help="run/resume independent route pools at capacities 1/3/3"
+    )
+    generate.add_argument("--timeout", type=positive_int, default=1800)
+    generate.add_argument("--poll-interval", type=float, default=10.0)
+    generate.add_argument("--dry-run", action="store_true")
+    generate.add_argument("--allow-external-processing", action="store_true")
+    generate.add_argument("--fail-fast", action="store_true")
+    generate.add_argument("--article", action="append", default=[])
+    _add_budget(generate)
+
+    retry = commands.add_parser(
+        "retry-terminal-failure",
+        help=(
+            "explicitly submit one provider-confirmed terminal failure in an "
+            "immutable retry-v1 namespace"
+        ),
+    )
+    retry.add_argument(
+        "--provider-run-id",
+        required=True,
+        help="exact primary provider_run_id with terminal provider-failed status",
+    )
+    retry.add_argument("--timeout", type=positive_int, default=1800)
+    retry.add_argument("--poll-interval", type=float, default=10.0)
+    retry.add_argument("--dry-run", action="store_true")
+    retry.add_argument("--allow-external-processing", action="store_true")
+    _add_budget(retry)
+
+    ambiguous_retry = commands.add_parser(
+        "retry-ambiguous-submit",
+        help=(
+            "explicitly quarantine and retry one synchronous Segmind submit "
+            "whose primary outcome is unknown"
+        ),
+    )
+    ambiguous_retry.add_argument(
+        "--provider-run-id",
+        required=True,
+        help=(
+            "exact primary Wan 2.2 provider_run_id with submitting or "
+            "submit-unknown status"
+        ),
+    )
+    ambiguous_retry.add_argument("--timeout", type=positive_int, default=1800)
+    ambiguous_retry.add_argument("--poll-interval", type=float, default=10.0)
+    ambiguous_retry.add_argument("--dry-run", action="store_true")
+    ambiguous_retry.add_argument(
+        "--allow-external-processing",
+        action="store_true",
+    )
+    _add_budget(ambiguous_retry)
+
+    normalized_retry = commands.add_parser(
+        "retry-normalized-input",
+        help=(
+            "explicitly retry one exact oversize Wan primary using only its "
+            "frozen manifest /scale_1200 image URL"
+        ),
+    )
+    normalized_retry.add_argument(
+        "--provider-run-id",
+        required=True,
+        help=(
+            "exact Wan 2.2 or Wan 2.7 primary provider_run_id for "
+            "12-dream-island-7-fishek/08"
+        ),
+    )
+    normalized_retry.add_argument("--timeout", type=positive_int, default=1800)
+    normalized_retry.add_argument("--poll-interval", type=float, default=10.0)
+    normalized_retry.add_argument("--dry-run", action="store_true")
+    normalized_retry.add_argument(
+        "--allow-external-processing",
+        action="store_true",
+    )
+    _add_budget(normalized_retry)
+
+    finalize_parser = commands.add_parser(
+        "finalize", help="write the isolated PROMOPAGES-10060 Step-5 sidecar"
+    )
+    finalize_parser.add_argument("--allow-contract-warnings", action="store_true")
+    _add_budget(finalize_parser)
+
+    verify = commands.add_parser(
+        "verify", help="verify frozen inputs, Lite provenance, receipts, media, and sidecar"
+    )
+    verify.add_argument("--allow-incomplete", action="store_true")
+    verify.add_argument("--allow-contract-warnings", action="store_true")
+    _add_budget(verify)
+    return parser
+
+
+def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        budget = parse_budget(args.budget_cap_usd)
+        discovery = discover(root)
+        if args.command == "inventory":
+            document = inventory_document(discovery, budget, root)
+            if not args.dry_run:
+                write_inventory(discovery, budget, root)
+            print(
+                f"PASS: available={document['article_count']}, "
+                f"unavailable={len(document['unavailable_articles'])}, "
+                f"images={document['image_count']}, "
+                f"outputs={document['expected_outputs']}"
+            )
+            return 0
+
+        inventory = require_inventory(discovery, budget, root)
+        if args.command in {"prepare-plans", "run-plans"}:
+            selected = select_sources(
+                discovery.sources,
+                article_slugs=args.article,
+                planning_run_ids=args.planning_run_id,
+            )
+            if args.command == "prepare-plans":
+                counts = prepare_planning_runs(
+                    selected, root=root, dry_run=args.dry_run
+                )
+                print(
+                    f"PASS: selection={len(selected)}, verified={counts['verified']}, "
+                    f"prepared={counts['prepared']}, pending={counts['pending']}"
+                )
+                return 0
+            return run_planning_runs(
+                selected,
+                root=root,
+                concurrency=args.concurrency,
+                timeout=args.timeout,
+                dry_run=args.dry_run,
+                allow_external_processing=args.allow_external_processing,
+                author_model=args.author_model,
+            )
+        if args.command == "plan-generation":
+            return materialize_generation(
+                discovery.sources, root=root, dry_run=args.dry_run
+            )
+        if args.command == "generate":
+            if not args.dry_run and len(args.article) != 1:
+                raise PipelineError(
+                    "Real generation requires exactly one --article in ticket order"
+                )
+            selected = select_sources(
+                discovery.sources,
+                article_slugs=args.article,
+            )
+            return run_generation(
+                discovery.sources,
+                selected_sources=selected,
+                root=root,
+                dry_run=args.dry_run,
+                allow_external_processing=args.allow_external_processing,
+                timeout=args.timeout,
+                poll_interval=args.poll_interval,
+                fail_fast=args.fail_fast,
+            )
+        if args.command == "retry-terminal-failure":
+            return run_terminal_provider_retry(
+                discovery.sources,
+                inventory,
+                primary_provider_run_id_value=args.provider_run_id,
+                root=root,
+                dry_run=args.dry_run,
+                allow_external_processing=args.allow_external_processing,
+                timeout=args.timeout,
+                poll_interval=args.poll_interval,
+            )
+        if args.command == "retry-ambiguous-submit":
+            return run_ambiguous_submit_retry(
+                discovery.sources,
+                inventory,
+                primary_provider_run_id_value=args.provider_run_id,
+                root=root,
+                dry_run=args.dry_run,
+                allow_external_processing=args.allow_external_processing,
+                timeout=args.timeout,
+                poll_interval=args.poll_interval,
+            )
+        if args.command == "retry-normalized-input":
+            return run_normalized_input_retry(
+                discovery.sources,
+                inventory,
+                primary_provider_run_id_value=args.provider_run_id,
+                root=root,
+                dry_run=args.dry_run,
+                allow_external_processing=args.allow_external_processing,
+                timeout=args.timeout,
+                poll_interval=args.poll_interval,
+            )
+        if args.command == "finalize":
+            document = finalize(
+                discovery,
+                inventory,
+                root=root,
+                allow_contract_warnings=args.allow_contract_warnings,
+            )
+            print(
+                f"PASS: sidecar articles={document['article_count']}, "
+                f"unavailable={len(document['unavailable_articles'])}, "
+                f"outputs={document['expected_outputs']}"
+            )
+            return 0
+        if args.command == "verify":
+            passed, errors = verify_all(
+                discovery,
+                inventory,
+                root=root,
+                allow_incomplete=args.allow_incomplete,
+                allow_contract_warnings=args.allow_contract_warnings,
+            )
+            if not passed:
+                for error in errors:
+                    print(f"FAIL: {transport.safe_error(error)}", file=sys.stderr)
+                return 1
+            print("PASS: PROMOPAGES-10060 Clipmaker Lite batch is valid")
+            return 0
+        raise PipelineError(f"Unknown command: {args.command}")
+    except (
+        PipelineError,
+        native.BatchPipelineError,
+        runner.LiteRunnerError,
+        transport.PipelineError,
+        OSError,
+    ) as exc:
+        print(f"error: {transport.safe_error(exc)}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

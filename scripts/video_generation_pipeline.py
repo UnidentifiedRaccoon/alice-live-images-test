@@ -14,6 +14,7 @@ import math
 import mimetypes
 import os
 import re
+import socket
 import subprocess
 import sys
 import tempfile
@@ -25,7 +26,7 @@ from pathlib import Path
 from typing import Any, Callable, Iterable
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlencode, urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +38,115 @@ class PipelineError(RuntimeError):
 
 class ProviderTerminalError(PipelineError):
     """The provider reported a definitive terminal job failure."""
+
+
+class SegmindProviderTaskFailedError(ProviderTerminalError):
+    """Segmind created a task and returned its exact terminal failure evidence."""
+
+    def __init__(self, message: str, evidence: dict[str, Any]) -> None:
+        super().__init__(message)
+        self.evidence = dict(evidence)
+        self.http_status = evidence["http_status"]
+        self.provider_task_id = evidence["provider_task_id"]
+
+
+class PreSubmitNetworkError(PipelineError):
+    """A transport failure proven to have happened before request submission."""
+
+
+class PreSubmitRejectedError(PipelineError):
+    """A definitive HTTP rejection received before a provider job was created."""
+
+    def __init__(self, message: str, http_status: int) -> None:
+        super().__init__(message)
+        self.http_status = http_status
+
+
+PRE_SUBMIT_REJECTED_HTTP_STATUSES = frozenset({429})
+SEGMIND_OVERSIZE_ERROR_MESSAGE = "Image size is too large than 20.0 mb"
+SEGMIND_PROVIDER_FAILURE_PREFIX = "the provider task failed: "
+SEGMIND_PROVIDER_FAILURE_REQUIRED_KEYS = frozenset(
+    {"task_id", "task_status", "video_url", "code", "message"}
+)
+SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS = (
+    "submit_time",
+    "scheduled_time",
+    "end_time",
+)
+
+
+def parse_segmind_oversize_task_failure(
+    http_status: int,
+    detail: str,
+) -> dict[str, Any] | None:
+    """Return exact terminal evidence for Segmind's known >20 MB task failure.
+
+    A synchronous POST may return HTTP 400 after Segmind has already created and
+    terminally failed a provider task.  Only the fully nested, known response is
+    safe to classify that way; malformed bodies and all near matches remain
+    ambiguous submit failures.
+    """
+
+    if http_status != 400 or not isinstance(detail, str):
+        return None
+    try:
+        outer = json.loads(detail)
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(outer, dict) or set(outer) != {"error"}:
+        return None
+    outer_error = outer.get("error")
+    if (
+        not isinstance(outer_error, str)
+        or not outer_error.startswith(SEGMIND_PROVIDER_FAILURE_PREFIX)
+    ):
+        return None
+    nested_detail = outer_error[len(SEGMIND_PROVIDER_FAILURE_PREFIX) :]
+    try:
+        provider = json.loads(nested_detail)
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(provider, dict):
+        return None
+
+    optional_time_keys = set(SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS)
+    provider_keys = set(provider)
+    if not (
+        SEGMIND_PROVIDER_FAILURE_REQUIRED_KEYS <= provider_keys
+        and provider_keys
+        <= SEGMIND_PROVIDER_FAILURE_REQUIRED_KEYS | optional_time_keys
+    ):
+        return None
+    task_id = provider.get("task_id")
+    if (
+        not isinstance(task_id, str)
+        or not task_id
+        or task_id.strip() != task_id
+        or provider.get("task_status") != "FAILED"
+        or provider.get("video_url") != ""
+        or provider.get("code") != "InvalidParameter"
+        or provider.get("message") != SEGMIND_OVERSIZE_ERROR_MESSAGE
+    ):
+        return None
+    for key in SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS:
+        if key in provider and (
+            not isinstance(provider[key], str)
+            or not provider[key]
+            or provider[key].strip() != provider[key]
+        ):
+            return None
+
+    evidence: dict[str, Any] = {
+        "http_status": 400,
+        "provider_task_id": task_id,
+        "provider_task_status": "FAILED",
+        "provider_error_code": "InvalidParameter",
+        "provider_error_message": SEGMIND_OVERSIZE_ERROR_MESSAGE,
+    }
+    for key in SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS:
+        if key in provider:
+            evidence[key] = provider[key]
+    return evidence
 
 
 GENERATION_ROUTES_PATH = ROOT / "docs/agents/clipmaker-lite/generation-routes.json"
@@ -67,7 +177,11 @@ def _load_generation_routes(path: Path = GENERATION_ROUTES_PATH) -> dict[str, An
     for model_id, route in routes.items():
         if not isinstance(model_id, str) or not isinstance(route, dict):
             raise PipelineError("Generation route entries must map model IDs to objects")
-        if route.get("adapter") not in {"wan-demo", "eliza-openrouter"}:
+        if route.get("adapter") not in {
+            "eliza-segmind",
+            "wan-demo",
+            "eliza-openrouter",
+        }:
             raise PipelineError(f"Unsupported adapter in generation route for {model_id}")
         paths = route.get("paths")
         if not isinstance(paths, dict) or not paths:
@@ -97,13 +211,20 @@ DEFAULT_SAMPLES = ROOT / "PROMOPAGES-9857/video-samples.json"
 DEFAULT_PROMPTS = ROOT / "PROMOPAGES-9857/video-prompts.json"
 DEFAULT_MANIFEST = ROOT / "PROMOPAGES-9857/video-generation-manifest.json"
 _WAN_ROUTE = route_for_model("alibaba/wan-2.2")
-DEFAULT_WAN_BASE_URL = _WAN_ROUTE["default_base_url"]
-DEFAULT_WAN_STREAM_BASE_URL = _WAN_ROUTE["default_stream_base_url"]
-WAN_UPLOAD_ENDPOINT = _WAN_ROUTE["paths"]["upload"]
-WAN_LEGACY_ENDPOINT = _WAN_ROUTE["paths"]["submit"]
-WAN_STREAM_ENDPOINT = _WAN_ROUTE["paths"]["events"]
-WAN_FILE_PREFIX = _WAN_ROUTE["paths"]["file_prefix"]
-WAN_NAMED_ENDPOINT = _WAN_ROUTE["diagnostic_only"]["submit_path"]
+DEFAULT_SEGMIND_BASE_URL = _WAN_ROUTE["default_base_url"]
+SEGMIND_SUBMIT_ENDPOINT = _WAN_ROUTE["paths"]["submit"]
+SEGMIND_ACCEPT = _WAN_ROUTE["request_headers"]["accept"]
+SEGMIND_CONTENT_TYPES = frozenset(_WAN_ROUTE["response"]["content_types"])
+SEGMIND_REQUEST_ID_HEADER = _WAN_ROUTE["response"]["request_id_header"]
+SEGMIND_COST_HEADER = _WAN_ROUTE["response"]["cost_header"]
+
+# Historical explicit Gradio helpers remain import-compatible for frozen old
+# receipts. The canonical alibaba/wan-2.2 route above never selects them.
+WAN_UPLOAD_ENDPOINT = "/gradio_api/upload"
+WAN_LEGACY_ENDPOINT = "/gradio_api/queue/join"
+WAN_STREAM_ENDPOINT = "/gradio_api/queue/data"
+WAN_FILE_PREFIX = "/gradio_api/file="
+WAN_NAMED_ENDPOINT = "/gradio_api/call/text2video"
 WAN_NAMED_SESSION_MARKER = "named-api:text2video"
 WAN_DOD_HOST_SUFFIX = ".dod.yandex.net"
 DEFAULT_ELIZA_BASE_URL = route_for_model("alibaba/wan-2.7")["default_base_url"]
@@ -111,14 +232,16 @@ DEFAULT_ELIZA_BASE_URL = route_for_model("alibaba/wan-2.7")["default_base_url"]
 _MODEL_RUNTIME_CONFIGS: dict[str, dict[str, Any]] = {
     "alibaba/wan-2.2": {
         "directory": "wan-2.2",
-        "duration": 3.2,
-        "durations": [3.2],
+        "duration": 5,
+        "durations": [5],
         "resolution": "720p",
         "aspect_ratios": ["source"],
-        "seed": 1,
-        "frames": 97,
+        "seed": 220214,
+        "frames": 150,
         "fps": 30,
         "generate_audio": False,
+        "prompt_extend": False,
+        "watermark": False,
     },
     "alibaba/wan-2.7": {
         "directory": "wan-2.7",
@@ -193,8 +316,18 @@ def atomic_write_json(path: Path, value: Any) -> None:
     ) as handle:
         json.dump(value, handle, ensure_ascii=False, indent=2)
         handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
         temp_path = Path(handle.name)
     temp_path.replace(path)
+    # The synchronous Segmind transport relies on the ``submitting`` receipt
+    # surviving a process/host crash before its non-idempotent POST.  Fsync the
+    # containing directory so the atomic rename is durable as well.
+    directory_fd = os.open(path.parent, os.O_RDONLY)
+    try:
+        os.fsync(directory_fd)
+    finally:
+        os.close(directory_fd)
 
 
 def sha256_file(path: Path) -> str:
@@ -207,7 +340,13 @@ def sha256_file(path: Path) -> str:
 
 def safe_error(error: BaseException | str) -> str:
     message = str(error)
-    for env_name in ("DOD_TOKEN", "YA_TOKEN"):
+    for env_name in (
+        "DOD_TOKEN",
+        "YA_TOKEN",
+        "ELIZA_OAUTH_TOKEN",
+        "ELIZA_TOKEN",
+        "ANTHROPIC_AUTH_TOKEN",
+    ):
         secret = os.environ.get(env_name)
         if secret:
             message = message.replace(secret, "[REDACTED]")
@@ -593,6 +732,35 @@ def materialize_plan(
     return rows
 
 
+def segmind_request_payload(sample: dict, prompt: dict) -> dict[str, Any]:
+    """Build the exact synchronous Eliza -> Segmind JSON body."""
+
+    route = route_for_model("alibaba/wan-2.2")
+    if route.get("adapter") != "eliza-segmind":
+        raise PipelineError("Canonical alibaba/wan-2.2 route is not Eliza/Segmind")
+    fixed = route.get("submit_payload", {}).get("fixed")
+    if not isinstance(fixed, dict):
+        raise PipelineError("Eliza/Segmind route has no fixed submit payload")
+    negative_prompt = prompt.get("negative_prompt")
+    if negative_prompt is None:
+        # The Lite authoring contract intentionally permits null.  Segmind's
+        # proven request shape requires a string field, so null has one locked
+        # wire representation rather than being sent as unverified JSON null.
+        negative_prompt = ""
+    elif not isinstance(negative_prompt, str):
+        raise PipelineError("Eliza/Segmind negative_prompt must be a string or null")
+    payload = {
+        "image": sample["source_url"],
+        "prompt": prompt["positive_prompt"],
+        "negative_prompt": negative_prompt,
+        **fixed,
+    }
+    expected_fields = route.get("submit_payload", {}).get("fields")
+    if list(payload) != expected_fields:
+        raise PipelineError("Eliza/Segmind request fields differ from the fixed route")
+    return payload
+
+
 def build_request_preview(
     sample: dict,
     prompt: dict,
@@ -602,6 +770,19 @@ def build_request_preview(
     model_id = prompt["model_id"]
     config = MODEL_CONFIGS[model_id]
     route = route_for_model(model_id)
+    if config["adapter"] == "eliza-segmind":
+        if wan_submit_mode is not None:
+            raise PipelineError(
+                "alibaba/wan-2.2 uses only the canonical Eliza/Segmind route; "
+                "Gradio submit modes are disabled"
+            )
+        return {
+            "endpoint": route["paths"]["submit"],
+            "model": model_id,
+            "provider": route["provider_key"],
+            "provider_model_id": route["provider_model_id"],
+            "input": segmind_request_payload(sample, prompt),
+        }
     if config["adapter"] == "wan-demo":
         if wan_submit_mode not in {None, "legacy", "named"}:
             raise PipelineError(
@@ -703,10 +884,34 @@ def http_json(
         with urlopen(request, timeout=timeout) as response:
             raw = response.read().decode("utf-8", errors="replace")
     except HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        raise PipelineError(safe_error(f"{method} {url} failed with HTTP {exc.code}: {detail[:1000]}")) from exc
+        try:
+            detail = exc.read().decode("utf-8", errors="replace")
+        finally:
+            exc.close()
+        error = safe_error(
+            f"{method} {url} failed with HTTP {exc.code}: {detail[:1000]}"
+        )
+        if (
+            method.upper() == "POST"
+            and exc.code in PRE_SUBMIT_REJECTED_HTTP_STATUSES
+        ):
+            # A quota rejection is a completed HTTP exchange: unlike a timeout,
+            # it definitively rejected this request and created no provider job.
+            raise PreSubmitRejectedError(error, exc.code) from exc
+        raise PipelineError(error) from exc
     except URLError as exc:
-        raise PipelineError(safe_error(f"{method} {url} failed: {exc.reason}")) from exc
+        error = safe_error(f"{method} {url} failed: {exc.reason}")
+        if isinstance(exc.reason, socket.gaierror):
+            # getaddrinfo failed before a socket connection existed, so no
+            # request bytes could have reached the non-idempotent endpoint.
+            raise PreSubmitNetworkError(error) from exc
+        raise PipelineError(error) from exc
+    except socket.gaierror as exc:
+        # urllib normally wraps this in URLError, but preserve the same strong
+        # pre-submit guarantee for injected/custom openers as well.
+        raise PreSubmitNetworkError(
+            safe_error(f"{method} {url} failed: {exc}")
+        ) from exc
     try:
         return json.loads(raw)
     except json.JSONDecodeError as exc:
@@ -892,7 +1097,7 @@ def wan_wait_for_named_result(
             "Wan named API credentials may only be sent to HTTPS *.dod.yandex.net"
         )
     request_headers = wan_named_headers(base_url) if headers is None else headers
-    result_path = _WAN_ROUTE["diagnostic_only"]["events_path_template"].format(
+    result_path = "/gradio_api/call/text2video/{event_id}".format(
         event_id=quote(str(event_id), safe="")
     )
     result_url = f"{base_url.rstrip('/')}{result_path}"
@@ -1054,7 +1259,15 @@ def wan_generate(
                 headers=named_request_headers,
             )
             mime_type = mimetypes.guess_type(image_path.name)[0] or "image/jpeg"
-            config = MODEL_CONFIGS[prompt["model_id"]]
+            # Frozen compatibility for historical Gradio receipts only.  The
+            # canonical alibaba/wan-2.2 route is Segmind and never reaches this
+            # helper or inherits these retired parameters.
+            config = {
+                "resolution": "720p",
+                "seed": 1,
+                "frames": 97,
+                "fps": 30,
+            }
             file_data = {
                 "path": server_path,
                 "orig_name": image_path.name,
@@ -1077,7 +1290,16 @@ def wan_generate(
             }
             data = [
                 values[name]
-                for name in _WAN_ROUTE["submit_payload"]["data_order"]
+                for name in (
+                    "prompt",
+                    "image_file_data",
+                    "resolution",
+                    "seed",
+                    "loop",
+                    "last_frame",
+                    "frames",
+                    "fps",
+                )
             ]
             if on_submitting is not None:
                 on_submitting()
@@ -1089,13 +1311,12 @@ def wan_generate(
                 session_hash = f"promopages9856-{uuid.uuid4().hex[:12]}"
                 payload = {
                     "data": data,
-                    **_WAN_ROUTE["submit_payload"]["fixed"],
+                    "event_data": None,
+                    "fn_index": 0,
+                    "trigger_id": 19,
                     "session_hash": session_hash,
                 }
-                submit_url = (
-                    f"{base_url.rstrip('/')}"
-                    f"{_WAN_ROUTE['paths']['submit']}"
-                )
+                submit_url = f"{base_url.rstrip('/')}{WAN_LEGACY_ENDPOINT}"
             response = http_json(
                 "POST",
                 submit_url,
@@ -1246,6 +1467,187 @@ def eliza_headers(token: str | None = None) -> dict[str, str]:
             "ANTHROPIC_AUTH_TOKEN before a real Eliza run"
         )
     return {"Authorization": f"OAuth {resolved}", "X-Retries": "1"}
+
+
+def segmind_headers(token: str | None = None) -> dict[str, str]:
+    """Return the exact single-attempt headers for synchronous Segmind."""
+
+    route_headers = route_for_model("alibaba/wan-2.2")["request_headers"]
+    headers = {
+        **eliza_headers(token),
+        "Accept": route_headers["accept"],
+        "X-Retries": route_headers["x_retries"],
+        "X-Include-Cost": route_headers["x_include_cost"],
+    }
+    pool = os.environ.get("ELIZA_POOL") or os.environ.get("YA_POOL")
+    if pool:
+        headers["Ya-Pool"] = pool
+    return headers
+
+
+def verify_remote_source_digest(
+    source_url: str,
+    expected_sha256: str,
+    *,
+    timeout: int = 120,
+    opener: Callable[..., Any] = urlopen,
+) -> dict[str, Any]:
+    """Read the public source once and prove the bytes bound to the request."""
+
+    parsed = urlparse(source_url)
+    if parsed.scheme != "https" or not parsed.hostname:
+        raise PipelineError("Eliza/Segmind source URL must be absolute HTTPS")
+    if not re.fullmatch(r"[0-9a-f]{64}", expected_sha256):
+        raise PipelineError("Eliza/Segmind source SHA-256 is invalid")
+    request = Request(source_url, headers={"Accept": "image/*"}, method="GET")
+    digest = hashlib.sha256()
+    size = 0
+    try:
+        with opener(request, timeout=timeout) as response:
+            status = int(getattr(response, "status", 200))
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                digest.update(chunk)
+                size += len(chunk)
+    except HTTPError as exc:
+        raise PipelineError(f"Eliza/Segmind source preflight failed with HTTP {exc.code}") from exc
+    except (URLError, OSError) as exc:
+        raise PipelineError(safe_error(f"Eliza/Segmind source preflight failed: {exc}")) from exc
+    if status != 200:
+        raise PipelineError(f"Eliza/Segmind source preflight returned HTTP {status}")
+    actual_sha256 = digest.hexdigest()
+    if actual_sha256 != expected_sha256:
+        raise PipelineError(
+            "Eliza/Segmind source preflight digest changed: "
+            f"expected {expected_sha256}, got {actual_sha256}"
+        )
+    return {"http_status": status, "bytes": size, "sha256": actual_sha256}
+
+
+class RejectNonIdempotentRedirects(HTTPRedirectHandler):
+    """Never replay the synchronous paid POST at a redirect target."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # noqa: ANN001
+        return None
+
+
+def segmind_generate(
+    sample: dict,
+    prompt: dict,
+    destination: Path,
+    base_url: str,
+    timeout: int,
+    on_submitting: Callable[[dict[str, Any]], None],
+    *,
+    source_opener: Callable[..., Any] = urlopen,
+    post_opener: Any | None = None,
+) -> dict[str, Any]:
+    """Perform the one synchronous Eliza -> Segmind request without retries."""
+
+    if prompt.get("model_id") != "alibaba/wan-2.2":
+        raise PipelineError("Segmind transport only accepts canonical alibaba/wan-2.2")
+    route = route_for_model("alibaba/wan-2.2")
+    if (
+        route.get("adapter") != "eliza-segmind"
+        or route.get("automatic_retry") is not False
+        or route.get("synchronous") is not True
+    ):
+        raise PipelineError("Canonical Eliza/Segmind route contract changed")
+
+    headers = segmind_headers()
+    preflight = verify_remote_source_digest(
+        sample["source_url"],
+        sample["sha256"],
+        timeout=min(timeout, 120),
+        opener=source_opener,
+    )
+    payload = segmind_request_payload(sample, prompt)
+    on_submitting(preflight)
+
+    submit_url = generation_route_url(base_url, "alibaba/wan-2.2", "submit")
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    request = _request_with_scoped_headers(
+        submit_url,
+        method="POST",
+        headers=headers,
+        data=body,
+    )
+    request.add_header("Content-Type", "application/json")
+    client = post_opener or build_opener(RejectNonIdempotentRedirects())
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary: Path | None = None
+    try:
+        with client.open(request, timeout=timeout) as response, tempfile.NamedTemporaryFile(
+            "wb",
+            dir=destination.parent,
+            prefix=f".{destination.name}.",
+            delete=False,
+        ) as stream:
+            temporary = Path(stream.name)
+            while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                    break
+                stream.write(chunk)
+            status = int(getattr(response, "status", 200))
+            content_type = response.headers.get("Content-Type", "").split(";", 1)[0].lower()
+            request_id = response.headers.get(SEGMIND_REQUEST_ID_HEADER)
+            response_cost = response.headers.get(SEGMIND_COST_HEADER)
+        if status != 200:
+            error = f"Eliza/Segmind returned HTTP {status}"
+            if status in PRE_SUBMIT_REJECTED_HTTP_STATUSES:
+                raise PreSubmitRejectedError(error, status)
+            raise PipelineError(error)
+        if content_type not in SEGMIND_CONTENT_TYPES:
+            raise PipelineError(
+                "Eliza/Segmind returned unexpected Content-Type: "
+                f"{content_type or '[missing]'}"
+            )
+        if not request_id:
+            raise PipelineError(f"Eliza/Segmind response has no {SEGMIND_REQUEST_ID_HEADER}")
+        if temporary.stat().st_size == 0:
+            raise PipelineError("Eliza/Segmind returned an empty MP4")
+        temporary.replace(destination)
+        temporary = None
+        return {
+            "http_status": status,
+            "content_type": content_type,
+            "request_id": request_id,
+            "response_cost": response_cost,
+            "automatic_retry": False,
+        }
+    except HTTPError as exc:
+        try:
+            raw_detail = exc.read(65537)
+        finally:
+            exc.close()
+        detail = raw_detail[:1000].decode("utf-8", errors="replace")
+        error = safe_error(
+            f"Eliza/Segmind POST failed with HTTP {exc.code}: {detail}"
+        )
+        if exc.code in PRE_SUBMIT_REJECTED_HTTP_STATUSES:
+            raise PreSubmitRejectedError(error, exc.code) from exc
+        exact_detail = None
+        if len(raw_detail) <= 65536:
+            try:
+                exact_detail = raw_detail.decode("utf-8")
+            except UnicodeDecodeError:
+                pass
+        evidence = (
+            parse_segmind_oversize_task_failure(exc.code, exact_detail)
+            if exact_detail is not None
+            else None
+        )
+        if evidence is not None:
+            raise SegmindProviderTaskFailedError(error, evidence) from exc
+        raise PipelineError(error) from exc
+    except (URLError, OSError) as exc:
+        raise PipelineError(safe_error(f"Eliza/Segmind POST failed: {exc}")) from exc
+    finally:
+        if temporary and temporary.exists():
+            temporary.unlink()
 
 
 def generation_route_url(
@@ -1498,6 +1900,7 @@ def run_rows(
     for index, row in enumerate(rows, start=1):
         sample, prompt, paths = row["sample"], row["prompt"], row["paths"]
         run = read_json(paths["run"])
+        adapter = MODEL_CONFIGS[prompt["model_id"]]["adapter"]
         label = f"{sample['sample_id']} / {prompt['model_id']}"
         print(f"[{index}/{len(rows)}] {label}", flush=True)
         request_preview = build_request_preview(sample, prompt)
@@ -1508,6 +1911,26 @@ def run_rows(
         if run.get("status") == "stale" and not args.force:
             failures += 1
             print("  stale output; review the request diff and rerun with --force", file=sys.stderr, flush=True)
+            continue
+        if adapter == "eliza-segmind" and run.get("status") in {
+            "submitting",
+            "submit-unknown",
+        }:
+            failures += 1
+            if run.get("status") == "submitting":
+                run.update(
+                    {
+                        "status": "submit-unknown",
+                        "provider_may_be_active": True,
+                        "error": "Previous synchronous submit outcome is unknown; automatic retry is blocked",
+                    }
+                )
+                atomic_write_json(paths["run"], run)
+            print(
+                "  synchronous submit outcome is unknown; automatic retry is blocked",
+                file=sys.stderr,
+                flush=True,
+            )
             continue
         if args.dry_run:
             run.update(
@@ -1532,7 +1955,13 @@ def run_rows(
         resume = run if run.get("status") in {"submitted", "running"} and not args.force else None
         run.update(
             {
-                "status": "running" if resume else "prepared",
+                "status": (
+                    "running"
+                    if resume
+                    else "preparing"
+                    if adapter == "eliza-segmind"
+                    else "prepared"
+                ),
                 "request": request_preview,
                 "request_sha256": request_sha256,
                 "request_fingerprint_version": REQUEST_FINGERPRINT_VERSION,
@@ -1563,9 +1992,50 @@ def run_rows(
             atomic_write_json(paths["run"], run)
             print(f"  submitted as {job_id}", flush=True)
 
+        def on_segmind_submitting(source_preflight: dict[str, Any]) -> None:
+            run.update(
+                {
+                    "status": "submitting",
+                    "source_preflight": source_preflight,
+                    "provider_may_be_active": True,
+                    "error": None,
+                }
+            )
+            atomic_write_json(paths["run"], run)
+
         try:
-            adapter = MODEL_CONFIGS[prompt["model_id"]]["adapter"]
-            if adapter == "wan-demo":
+            if adapter == "eliza-segmind":
+                if resume:
+                    if not paths["video"].is_file():
+                        raise PipelineError(
+                            "Synchronous Eliza/Segmind response has no resumable MP4; resubmit is blocked"
+                        )
+                else:
+                    response = segmind_generate(
+                        sample,
+                        prompt,
+                        paths["video"],
+                        args.segmind_base_url,
+                        args.timeout,
+                        on_segmind_submitting,
+                    )
+                    request_id = response.get("request_id")
+                    if not isinstance(request_id, str) or not request_id:
+                        raise PipelineError(
+                            "Eliza/Segmind completed without a provider request ID"
+                        )
+                    run.update(
+                        {
+                            "status": "running",
+                            "provider_job_id": request_id,
+                            "provider_session_hash": None,
+                            "provider_response": response,
+                            "provider_may_be_active": False,
+                            "submitted_at": utc_now(),
+                        }
+                    )
+                    atomic_write_json(paths["run"], run)
+            elif adapter == "wan-demo":
                 wan_generate(
                     sample,
                     prompt,
@@ -1612,13 +2082,26 @@ def run_rows(
         except Exception as exc:  # Keep the rest of the 15-item matrix resumable.
             failures += 1
             error = safe_error(exc)
-            resumable = bool(run.get("provider_job_id")) and not any(
-                marker in error.lower() for marker in ("failed with status", "cancelled", "canceled", "expired")
-            )
+            if adapter == "eliza-segmind" and run.get("status") == "submitting":
+                failure_status = "submit-unknown"
+                resumable = False
+            elif adapter == "eliza-segmind" and not run.get("provider_job_id"):
+                failure_status = "failed-pre-submit"
+                resumable = False
+            else:
+                resumable = bool(run.get("provider_job_id")) and not any(
+                    marker in error.lower() for marker in ("failed with status", "cancelled", "canceled", "expired")
+                )
+                failure_status = "submitted" if resumable else "failed"
             run.update(
                 {
-                    "status": "submitted" if resumable else "failed",
-                    "completed_at": None if resumable else utc_now(),
+                    "status": failure_status,
+                    "completed_at": (
+                        None
+                        if resumable or failure_status == "submit-unknown"
+                        else utc_now()
+                    ),
+                    "provider_may_be_active": failure_status == "submit-unknown",
                     "error": error,
                 }
             )
@@ -1714,9 +2197,20 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--fail-fast", action="store_true")
     run_parser.add_argument("--timeout", type=int, default=1800, help="per-job wait timeout in seconds")
     run_parser.add_argument("--poll-interval", type=float, default=10.0)
-    run_parser.add_argument("--wan-base-url", default=os.environ.get("WAN_DEMO_BASE_URL", DEFAULT_WAN_BASE_URL))
     run_parser.add_argument(
-        "--wan-stream-base-url", default=os.environ.get("WAN_DEMO_STREAM_BASE_URL", DEFAULT_WAN_STREAM_BASE_URL)
+        "--segmind-base-url",
+        default=os.environ.get("ELIZA_SEGMIND_BASE_URL", DEFAULT_SEGMIND_BASE_URL),
+        help="Wan 2.2 / Segmind base URL (normal route is fixed by the registry)",
+    )
+    run_parser.add_argument(
+        "--wan-base-url",
+        default=os.environ.get("WAN_DEMO_BASE_URL"),
+        help="historical Gradio wrapper only; canonical Wan 2.2 does not use it",
+    )
+    run_parser.add_argument(
+        "--wan-stream-base-url",
+        default=os.environ.get("WAN_DEMO_STREAM_BASE_URL"),
+        help="historical Gradio wrapper only; canonical Wan 2.2 does not use it",
     )
     run_parser.add_argument(
         "--eliza-base-url", default=os.environ.get("ELIZA_OPENROUTER_BASE_URL", DEFAULT_ELIZA_BASE_URL)

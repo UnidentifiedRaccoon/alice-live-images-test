@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Collect untouched PromoPages article originals for PROMOPAGES-9857.
+"""Collect untouched PromoPages article originals.
 
 The public article HTML embeds the editor state and the MDS image catalogue in
 ``window._data``.  The editor state is the source of truth for content order;
 the catalogue is the source of truth for the ``orig`` URL and dimensions.
 No displayed resize is ever used as a fallback for a missing original.
+
+With no command-line overrides this still collects the original
+PROMOPAGES-9857 dataset.  Other tickets can provide a JSON article list and a
+single safe dataset prefix below the same output root.
 """
 
 from __future__ import annotations
@@ -21,7 +25,7 @@ import urllib.request
 from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable, Sequence
 
 from PIL import Image
 
@@ -225,6 +229,83 @@ GRAPHIC_KIND_VALUES = (
     "text_document",
     "collage",
 )
+
+
+def _safe_path_component(value: str, field: str) -> str:
+    """Return one traversal-safe relative path component."""
+
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{field} must be a non-empty string")
+    if value in {".", ".."} or "/" in value or "\\" in value:
+        raise ValueError(f"{field} must be one relative path component: {value!r}")
+    if value != value.strip() or any(
+        not (character.isalnum() or character in "._-") for character in value
+    ):
+        raise ValueError(f"{field} contains unsafe characters: {value!r}")
+    return value
+
+
+def normalize_dataset_prefix(value: str | None) -> str:
+    """Validate an optional single-directory dataset namespace."""
+
+    if value is None or value == "":
+        return ""
+    return _safe_path_component(value, "dataset prefix")
+
+
+def load_articles(
+    path: Path,
+    exclude_article_numbers: Sequence[int] = (),
+) -> tuple[Article, ...]:
+    """Load and validate an external JSON array of article definitions."""
+
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"Article list must be a non-empty JSON array: {path}")
+
+    articles: list[Article] = []
+    for index, item in enumerate(value, 1):
+        if not isinstance(item, dict):
+            raise ValueError(f"Article {index} must be an object")
+        number = item.get("number")
+        if isinstance(number, bool) or not isinstance(number, int) or number < 1:
+            raise ValueError(f"Article {index} number must be a positive integer")
+        label = item.get("label")
+        url = item.get("url")
+        if not isinstance(label, str) or not label.strip():
+            raise ValueError(f"Article {index} label must be a non-empty string")
+        if not isinstance(url, str) or not url.strip():
+            raise ValueError(f"Article {index} url must be a non-empty string")
+        folder = _safe_path_component(item.get("folder"), f"article {index} folder")
+        articles.append(Article(number, label, folder, url))
+
+    articles.sort(key=lambda article: article.number)
+    numbers = [article.number for article in articles]
+    if len(numbers) != len(set(numbers)):
+        raise ValueError(f"Article numbers must be unique: {numbers}")
+    folders = [article.folder for article in articles]
+    if len(folders) != len(set(folders)):
+        raise ValueError("Article folders must be unique")
+
+    exclusions = list(exclude_article_numbers)
+    if any(
+        isinstance(number, bool) or not isinstance(number, int) or number < 1
+        for number in exclusions
+    ):
+        raise ValueError("Excluded article numbers must be positive integers")
+    if len(exclusions) != len(set(exclusions)):
+        raise ValueError("Excluded article numbers must be unique")
+    missing_exclusions = sorted(set(exclusions) - set(numbers))
+    if missing_exclusions:
+        raise ValueError(
+            "Excluded article numbers are absent from the article list: "
+            f"{missing_exclusions}"
+        )
+    filtered = [article for article in articles if article.number not in exclusions]
+    if not filtered:
+        raise ValueError("Article exclusions removed every article")
+    return tuple(filtered)
+
 
 MANIFEST_FIELDS = (
     "article_number",
@@ -438,17 +519,43 @@ def serialize_graphic_routing(annotation: dict[str, Any]) -> tuple[str, str]:
     return active_kind, "; ".join(kinds)
 
 
-def collect(output_root: Path, annotations_path: Path) -> list[dict[str, Any]]:
-    articles_root = output_root / "articles"
+def collect(
+    output_root: Path,
+    annotations_path: Path,
+    *,
+    articles: Iterable[Article] = ARTICLES,
+    dataset_prefix: str = "",
+) -> list[dict[str, Any]]:
+    dataset_prefix = normalize_dataset_prefix(dataset_prefix)
+    articles = tuple(articles)
+    if not articles:
+        raise ValueError("Article collection must not be empty")
+    article_numbers = [article.number for article in articles]
+    if any(
+        isinstance(number, bool) or not isinstance(number, int) or number < 1
+        for number in article_numbers
+    ):
+        raise ValueError("Article numbers must be positive integers")
+    if len(article_numbers) != len(set(article_numbers)):
+        raise ValueError(f"Article numbers must be unique: {article_numbers}")
+    article_folders = [
+        _safe_path_component(article.folder, "article folder") for article in articles
+    ]
+    if len(article_folders) != len(set(article_folders)):
+        raise ValueError("Article folders must be unique")
+    relative_articles_root = (
+        Path(dataset_prefix) / "articles" if dataset_prefix else Path("articles")
+    )
+    articles_root = output_root / relative_articles_root
     articles_root.mkdir(parents=True, exist_ok=True)
     annotations = load_annotations(annotations_path)
     rows: list[dict[str, Any]] = []
     downloaded: dict[str, dict[str, Any]] = {}
     first_occurrence: dict[str, str] = {}
 
-    for article in ARTICLES:
+    for article in articles:
         print(
-            f"[{article.number:02d}/{len(ARTICLES):02d}] {article.label}",
+            f"[{article.number:02d}/{len(articles):02d}] {article.label}",
             flush=True,
         )
         page_html, _, _ = fetch(article.url)
@@ -520,7 +627,11 @@ def collect(output_root: Path, annotations_path: Path) -> list[dict[str, Any]]:
                 rows.append(row)
                 continue
 
-            relative_path = Path("articles") / article.folder / f"{image_number:02d}.{extension}"
+            relative_path = (
+                relative_articles_root
+                / article.folder
+                / f"{image_number:02d}.{extension}"
+            )
             target_path = output_root / relative_path
             row["file_path"] = relative_path.as_posix()
 
@@ -596,14 +707,56 @@ def main() -> int:
         default=Path("PROMOPAGES-9857/classifications.json"),
         help="Optional image-id keyed classification JSON",
     )
+    parser.add_argument(
+        "--articles",
+        "--articles-json",
+        dest="articles_path",
+        type=Path,
+        help=(
+            "JSON array of article objects with number, label, folder, and url; "
+            "defaults to the built-in PROMOPAGES-9857 list"
+        ),
+    )
+    parser.add_argument(
+        "--dataset-prefix",
+        default="",
+        help=(
+            "Optional safe directory name below --output-root, for example "
+            "PROMOPAGES-10060"
+        ),
+    )
+    parser.add_argument(
+        "--exclude-article-number",
+        type=int,
+        action="append",
+        default=[],
+        help=(
+            "Article number to omit from an external list without renumbering; "
+            "repeat for multiple exclusions"
+        ),
+    )
     args = parser.parse_args()
-    rows = collect(args.output_root, args.annotations)
+    if args.exclude_article_number and not args.articles_path:
+        parser.error("--exclude-article-number requires --articles")
+    articles = (
+        load_articles(args.articles_path, args.exclude_article_number)
+        if args.articles_path
+        else ARTICLES
+    )
+    dataset_prefix = normalize_dataset_prefix(args.dataset_prefix)
+    rows = collect(
+        args.output_root,
+        args.annotations,
+        articles=articles,
+        dataset_prefix=dataset_prefix,
+    )
     ok = sum(row["download_status"] == "ok" for row in rows)
     exceptions = len(rows) - ok
     print(
         f"Collected {ok}/{len(rows)} image occurrences; "
         f"orig exceptions: {exceptions}; "
-        f"manifest: {args.output_root / 'articles' / 'manifest.csv'}"
+        "manifest: "
+        f"{args.output_root / dataset_prefix / 'articles' / 'manifest.csv'}"
     )
     return 0 if exceptions == 0 else 2
 

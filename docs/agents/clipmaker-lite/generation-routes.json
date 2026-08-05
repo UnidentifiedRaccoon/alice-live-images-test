@@ -12,39 +12,52 @@
   },
   "models": {
     "alibaba/wan-2.2": {
-      "adapter": "wan-demo",
-      "transport": "gradio-legacy-queue",
-      "default_base_url": "https://wan-streamlit.dod.yandex.net",
-      "default_stream_base_url": "http://wan-streamlit.dod.yandex.net",
+      "adapter": "eliza-segmind",
+      "transport": "eliza-synchronous-binary",
+      "default_base_url": "https://api.eliza.yandex.net/segmind/v1",
       "capacity": 1,
+      "gateway": "eliza",
+      "provider_key": "segmind",
+      "provider_model_id": "segmind/wan-2.2-i2v-flash",
       "paths": {
-        "upload": "/gradio_api/upload",
-        "submit": "/gradio_api/queue/join",
-        "events": "/gradio_api/queue/data",
-        "file_prefix": "/gradio_api/file="
+        "submit": "/wan-2.2-i2v-flash"
       },
       "submit_payload": {
-        "data_order": [
+        "fields": [
+          "image",
           "prompt",
-          "image_file_data",
+          "negative_prompt",
           "resolution",
-          "seed",
-          "loop",
-          "last_frame",
-          "frames",
-          "fps"
+          "prompt_extend",
+          "watermark",
+          "seed"
         ],
         "fixed": {
-          "event_data": null,
-          "fn_index": 0,
-          "trigger_id": 19
+          "resolution": "720p",
+          "prompt_extend": false,
+          "watermark": false,
+          "seed": 220214
         }
       },
-      "diagnostic_only": {
-        "transport": "gradio-named-endpoint",
-        "submit_path": "/gradio_api/call/text2video",
-        "events_path_template": "/gradio_api/call/text2video/{event_id}"
-      }
+      "request_headers": {
+        "accept": "video/mp4, application/octet-stream",
+        "x_retries": "1",
+        "x_include_cost": "true",
+        "optional_pool_env": [
+          "ELIZA_POOL",
+          "YA_POOL"
+        ]
+      },
+      "response": {
+        "content_types": [
+          "video/mp4",
+          "application/octet-stream"
+        ],
+        "request_id_header": "X-Segmind-Request-Id",
+        "cost_header": "X-Response-Cost"
+      },
+      "synchronous": true,
+      "automatic_retry": false
     },
     "alibaba/wan-2.7": {
       "adapter": "eliza-openrouter",
