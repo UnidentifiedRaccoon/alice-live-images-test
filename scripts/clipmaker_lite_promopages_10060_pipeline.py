@@ -8,9 +8,10 @@ article/block order.  One isolated Lite plan contains independent plans for all
 three exact model IDs, and the provider matrix uses the locked generation
 registry without discovery or fallback.
 
-This module intentionally writes only its own batch namespace and the final
-``clipmaker-lite-test/promopages-10060-manifest.json`` sidecar.  Existing demo
-and generation manifests are immutable inputs outside this coordinator.
+This module intentionally writes only the selected registered batch namespace
+and that batch's separate final sidecar.  With no ``--batch`` it preserves the
+frozen legacy PROMOPAGES-10060 behavior; extension runs never rewrite or extend
+the legacy inventory, provider receipts, or final sidecar in place.
 """
 
 from __future__ import annotations
@@ -43,8 +44,8 @@ from scripts import video_generation_pipeline as transport  # noqa: E402
 
 
 TICKET = "PROMOPAGES-10060"
-BATCH_ID = "promopages-10060-lite-all-images-20260805-v2"
-PLANNING_BATCH_ID = BATCH_ID
+LEGACY_BATCH_ID = "promopages-10060-lite-all-images-20260805-v2"
+CAMPAIGN_EXTENSION_BATCH_ID = "promopages-10060-campaigns-20260805-v1"
 AGENT_ID = "clipmaker-lite"
 MODEL_IDS = (
     "alibaba/wan-2.2",
@@ -53,69 +54,57 @@ MODEL_IDS = (
 )
 REQUIRED_CONTRACT_VERSION = "2.0.6"
 
-# Ticket/extraction inputs.  All are namespaced so the historical 9857/9884
-# manifests and contexts remain untouched.
-TICKET_CONFIG_REL = Path("PROMOPAGES-10060/articles.json")
-EXTRACTION_REPORT_REL = Path("PROMOPAGES-10060/extraction-report.json")
-SOURCE_MANIFEST_REL = Path(
-    "PROMOPAGES-9857/PROMOPAGES-10060/articles/manifest.csv"
-)
-SOURCE_IMAGE_ROOT_REL = Path("PROMOPAGES-9857/PROMOPAGES-10060/articles")
-SOURCE_CONTEXT_ROOT_REL = Path("PROMOPAGES-9884/PROMOPAGES-10060/articles")
 CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
 ROUTES_REL = Path("docs/agents/clipmaker-lite/generation-routes.json")
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
-
-# New batch outputs.  No old manifest is rewritten or extended in place.
-BATCH_ROOT_REL = Path("clipmaker-lite-test/runs") / BATCH_ID
-INVENTORY_MANIFEST_REL = BATCH_ROOT_REL / "inventory.json"
-GENERATION_MANIFEST_REL = BATCH_ROOT_REL / "generation-manifest.json"
-VERIFICATION_REPORT_REL = BATCH_ROOT_REL / "verification-report.json"
-FINAL_MANIFEST_REL = Path("clipmaker-lite-test/promopages-10060-manifest.json")
 
 # A provider-confirmed terminal failure may be retried only by an explicit
 # operator command in a new, deterministic namespace.  The primary batch
 # receipts are immutable evidence and are never rewritten by this mechanism.
 TERMINAL_RETRY_VERSION = 1
-TERMINAL_RETRY_NAMESPACE_REL = BATCH_ROOT_REL / "terminal-provider-retries-v1"
 TERMINAL_RETRY_ACCOUNTING_COST_USD = Decimal("0.35")
 
-# A synchronous Segmind POST can be left in an honestly ambiguous state when
-# the client loses the response after the paid request may already have
-# reached the provider.  Such a receipt is never rewritten or reclassified as
-# pre-submit.  The only escape hatch is one operator-authorized, separately
-# accounted retry in this quarantine namespace.
+# A provider POST can be left in an honestly ambiguous state when the client
+# loses the response after the paid request may already have reached the
+# provider. Such a receipt is never rewritten or reclassified as pre-submit.
+# The only escape hatch is one operator-authorized, separately accounted retry
+# on the exact frozen route in this quarantine namespace.
 AMBIGUOUS_SUBMIT_RETRY_VERSION = 1
-AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL = (
-    BATCH_ROOT_REL / "ambiguous-submit-retries-v1"
-)
 AMBIGUOUS_SUBMIT_RETRY_ACCOUNTING_COST_USD = Decimal("0.35")
 
-# One source in the frozen inventory exceeded both Wan transports' 20 MiB
-# input limit.  The only allowed remediation is one explicit retry per exact
-# failed primary, replacing only the provider request's image URL with the
-# source manifest's already-published /scale_1200 variant.  The original Lite
-# analysis, prompts, model routes, and primary receipts remain immutable.
+# A small, batch-local allowlist covers sources rejected by both Wan transports
+# for a provider input constraint (the legacy >20 MiB image or an extension
+# image below the 240 px minimum dimension).  The only allowed remediation is
+# one explicit retry per exact failed primary, replacing only the provider
+# request's image URL with the batch policy's frozen normalized replacement
+# (a manifest-published /scale_1200 variant for legacy sources, or an exact
+# commit-pinned repository asset for registered extension sources). The
+# original Lite analysis, prompts, model routes, and primary receipts remain
+# immutable.
 NORMALIZED_INPUT_RETRY_VERSION = 1
-NORMALIZED_INPUT_RETRY_NAMESPACE_REL = (
-    BATCH_ROOT_REL / "normalized-input-retries-v1"
-)
-NORMALIZED_INPUT_ASSET_NAMESPACE_REL = (
-    BATCH_ROOT_REL / "normalized-input-assets-v1"
-)
 NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD = Decimal("0.35")
-NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG = "12-dream-island-7-fishek"
-NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID = "08"
-NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256 = (
-    "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d"
-)
-NORMALIZED_INPUT_ELIGIBLE_MODELS = (
-    "alibaba/wan-2.2",
-    "alibaba/wan-2.7",
-)
+# One ticket-specific normalized-input provider job remained active beyond the
+# operator's acceptable wait window.  The operator may explicitly supersede
+# that exact job once.  This is not retry-v2: the original retry envelope,
+# receipt, and provider identity remain immutable evidence, while the new paid
+# attempt lives below a separate nested namespace and has its own reservation.
+NORMALIZED_INPUT_SUPERSEDE_VERSION = 1
+NORMALIZED_INPUT_SUPERSEDE_ACCOUNTING_COST_USD = Decimal("0.35")
+NORMALIZED_INPUT_SUPERSEDE_DIRECTORY_NAME = "superseding-attempt-v1"
+NORMALIZED_INPUT_SUPERSEDE_TARGET = {
+    "batch_id": CAMPAIGN_EXTENSION_BATCH_ID,
+    "article_slug": "18-volma-plitochnyi-klei",
+    "image_id": "07",
+    "model_id": "alibaba/wan-2.7",
+    "normalized_retry_provider_run_id": (
+        "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-"
+        "c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7"
+    ),
+    "active_provider_job_id": "novcFDcwbuZkgtrmgQIY",
+}
 NORMALIZED_INPUT_MAX_BYTES = 20 * 1024 * 1024
-
-HARD_BUDGET_CAP_USD = Decimal("100.00")
+NORMALIZED_INPUT_MIN_DIMENSION = 240
+DEFAULT_OPERATOR_BUDGET_CAP_USD = Decimal("100.00")
 # Ticket-local accounting envelope used to admit whole articles in their
 # configured order. The frozen PROMOPAGES-9930 estimate reserves $0.35 for
 # every output. This is conservative for Wan 2.2 compared with its observed
@@ -139,6 +128,467 @@ ROUTE_IDENTITIES = {
 
 class PipelineError(RuntimeError):
     """A fail-closed error in the PROMOPAGES-10060 coordinator."""
+
+
+@dataclass(frozen=True)
+class NormalizedInputReplacement:
+    """One immutable, publicly fetchable normalized source artifact."""
+
+    strategy: str
+    repository_path: str
+    url: str
+    sha256: str
+    byte_size: int
+    width: int
+    height: int
+    image_format: str
+
+
+@dataclass(frozen=True)
+class NormalizedInputRetryTarget:
+    """One immutable source/model allowlist entry for input normalization."""
+
+    article_slug: str
+    image_id: str
+    source_sha256: str
+    model_ids: tuple[str, ...]
+    failure_kind: str = "maximum-bytes"
+    replacement: NormalizedInputReplacement | None = None
+
+
+@dataclass(frozen=True)
+class BatchSpec:
+    """Registered immutable input/output binding for one coordinator batch."""
+
+    batch_id: str
+    dataset_prefix: str
+    article_numbers: tuple[int, ...]
+    ticket_config_rel: Path
+    extraction_report_rel: Path
+    source_manifest_rel: Path
+    source_image_root_rel: Path
+    source_context_root_rel: Path
+    final_manifest_rel: Path
+    inventory_manifest_role: str
+    final_manifest_role: str
+    terminal_retry_manifest_role: str
+    ambiguous_retry_manifest_role: str
+    normalized_retry_manifest_role: str
+    normalized_asset_manifest_role: str
+    hard_budget_cap_usd: Decimal | None
+    normalized_input_retry_allowlist: tuple[NormalizedInputRetryTarget, ...]
+
+
+LEGACY_NORMALIZED_INPUT_TARGET = NormalizedInputRetryTarget(
+    article_slug="12-dream-island-7-fishek",
+    image_id="08",
+    source_sha256=(
+        "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d"
+    ),
+    model_ids=("alibaba/wan-2.2", "alibaba/wan-2.7"),
+)
+
+CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS = (
+    NormalizedInputRetryTarget(
+        article_slug="18-volma-plitochnyi-klei",
+        image_id="05",
+        source_sha256=(
+            "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543"
+        ),
+        model_ids=("alibaba/wan-2.2", "alibaba/wan-2.7"),
+        failure_kind="minimum-dimension",
+        replacement=NormalizedInputReplacement(
+            strategy="deterministic-uniform-upscale",
+            repository_path=(
+                "clipmaker-lite-test/runs/"
+                "promopages-10060-campaigns-20260805-v1/"
+                "normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png"
+            ),
+            url=(
+                "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
+                "alice-live-images-test/"
+                "25995ee6ea168d2ae7025e5a416bc008ae17a908/"
+                "clipmaker-lite-test/runs/"
+                "promopages-10060-campaigns-20260805-v1/"
+                "normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png"
+            ),
+            sha256=(
+                "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23"
+            ),
+            byte_size=46_883,
+            width=882,
+            height=256,
+            image_format="PNG",
+        ),
+    ),
+    NormalizedInputRetryTarget(
+        article_slug="18-volma-plitochnyi-klei",
+        image_id="07",
+        source_sha256=(
+            "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8"
+        ),
+        model_ids=("alibaba/wan-2.2", "alibaba/wan-2.7"),
+        failure_kind="minimum-dimension",
+        replacement=NormalizedInputReplacement(
+            strategy="deterministic-uniform-upscale",
+            repository_path=(
+                "clipmaker-lite-test/runs/"
+                "promopages-10060-campaigns-20260805-v1/"
+                "normalized-input-assets-v1/0535f187b92384618210/normalized.png"
+            ),
+            url=(
+                "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
+                "alice-live-images-test/"
+                "25995ee6ea168d2ae7025e5a416bc008ae17a908/"
+                "clipmaker-lite-test/runs/"
+                "promopages-10060-campaigns-20260805-v1/"
+                "normalized-input-assets-v1/0535f187b92384618210/normalized.png"
+            ),
+            sha256=(
+                "7f71227971a99ca0f204eccadb89a706128eabfb6022657bf8718e952fca70e4"
+            ),
+            byte_size=57_771,
+            width=828,
+            height=256,
+            image_format="PNG",
+        ),
+    ),
+    NormalizedInputRetryTarget(
+        article_slug="18-volma-plitochnyi-klei",
+        image_id="08",
+        source_sha256=(
+            "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03"
+        ),
+        model_ids=("alibaba/wan-2.2", "alibaba/wan-2.7"),
+        failure_kind="minimum-dimension",
+        replacement=NormalizedInputReplacement(
+            strategy="deterministic-uniform-upscale",
+            repository_path=(
+                "clipmaker-lite-test/runs/"
+                "promopages-10060-campaigns-20260805-v1/"
+                "normalized-input-assets-v1/2d974dbe489b2e6617a3/normalized.png"
+            ),
+            url=(
+                "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
+                "alice-live-images-test/"
+                "25995ee6ea168d2ae7025e5a416bc008ae17a908/"
+                "clipmaker-lite-test/runs/"
+                "promopages-10060-campaigns-20260805-v1/"
+                "normalized-input-assets-v1/2d974dbe489b2e6617a3/normalized.png"
+            ),
+            sha256=(
+                "1a005159d7efaee55f2124844851b7135f28cccfcad0463ad1ac2f5dec1f589a"
+            ),
+            byte_size=246_119,
+            width=998,
+            height=256,
+            image_format="PNG",
+        ),
+    ),
+)
+
+BATCH_SPECS = {
+    LEGACY_BATCH_ID: BatchSpec(
+        batch_id=LEGACY_BATCH_ID,
+        dataset_prefix="PROMOPAGES-10060",
+        article_numbers=tuple(range(1, 15)),
+        ticket_config_rel=Path("PROMOPAGES-10060/articles.json"),
+        extraction_report_rel=Path("PROMOPAGES-10060/extraction-report.json"),
+        source_manifest_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060/articles/manifest.csv"
+        ),
+        source_image_root_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060/articles"
+        ),
+        source_context_root_rel=Path(
+            "PROMOPAGES-9884/PROMOPAGES-10060/articles"
+        ),
+        final_manifest_rel=Path(
+            "clipmaker-lite-test/promopages-10060-manifest.json"
+        ),
+        inventory_manifest_role="promopages-10060-frozen-generation-inventory",
+        final_manifest_role="promopages-10060-all-images",
+        terminal_retry_manifest_role="promopages-10060-terminal-provider-retry",
+        ambiguous_retry_manifest_role="promopages-10060-ambiguous-submit-retry",
+        normalized_retry_manifest_role="promopages-10060-normalized-input-retry",
+        normalized_asset_manifest_role="promopages-10060-normalized-input-asset",
+        hard_budget_cap_usd=Decimal("100.00"),
+        normalized_input_retry_allowlist=(LEGACY_NORMALIZED_INPUT_TARGET,),
+    ),
+    CAMPAIGN_EXTENSION_BATCH_ID: BatchSpec(
+        batch_id=CAMPAIGN_EXTENSION_BATCH_ID,
+        dataset_prefix="PROMOPAGES-10060-campaigns-20260805-v1",
+        article_numbers=(15, 16, 17, 18),
+        ticket_config_rel=Path(
+            "PROMOPAGES-10060/campaigns-20260805-v1/articles.json"
+        ),
+        extraction_report_rel=Path(
+            "PROMOPAGES-10060/campaigns-20260805-v1/extraction-report.json"
+        ),
+        source_manifest_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/"
+            "articles/manifest.csv"
+        ),
+        source_image_root_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles"
+        ),
+        source_context_root_rel=Path(
+            "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles"
+        ),
+        final_manifest_rel=Path(
+            "clipmaker-lite-test/"
+            "promopages-10060-campaigns-20260805-v1-manifest.json"
+        ),
+        inventory_manifest_role=(
+            "promopages-10060-campaign-extension-frozen-generation-inventory"
+        ),
+        final_manifest_role="promopages-10060-campaign-extension",
+        terminal_retry_manifest_role=(
+            "promopages-10060-campaign-extension-terminal-provider-retry"
+        ),
+        ambiguous_retry_manifest_role=(
+            "promopages-10060-campaign-extension-ambiguous-submit-retry"
+        ),
+        normalized_retry_manifest_role=(
+            "promopages-10060-campaign-extension-normalized-input-retry"
+        ),
+        normalized_asset_manifest_role=(
+            "promopages-10060-campaign-extension-normalized-input-asset"
+        ),
+        # This extension was explicitly authorized without the legacy $100
+        # ceiling.  The operator must still provide a positive aggregate cap;
+        # the frozen inventory binds that exact cap for every resume/retry.
+        hard_budget_cap_usd=None,
+        normalized_input_retry_allowlist=(
+            CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS
+        ),
+    ),
+}
+
+
+def _validate_batch_specs() -> None:
+    seen_paths: set[tuple[str, str]] = set()
+    for selector, spec in BATCH_SPECS.items():
+        if selector != spec.batch_id:
+            raise PipelineError(f"Batch selector/id mismatch: {selector!r}")
+        if not spec.article_numbers or any(
+            isinstance(number, bool) or not isinstance(number, int) or number < 1
+            for number in spec.article_numbers
+        ):
+            raise PipelineError(f"Batch article numbers are invalid: {selector}")
+        if len(spec.article_numbers) != len(set(spec.article_numbers)):
+            raise PipelineError(f"Batch article numbers are duplicated: {selector}")
+        for label, path in (
+            ("ticket config", spec.ticket_config_rel),
+            ("extraction report", spec.extraction_report_rel),
+            ("source manifest", spec.source_manifest_rel),
+            ("source image root", spec.source_image_root_rel),
+            ("source context root", spec.source_context_root_rel),
+            ("final manifest", spec.final_manifest_rel),
+        ):
+            if path.is_absolute() or ".." in path.parts:
+                raise PipelineError(
+                    f"Registered batch {label} escapes the workspace: {path}"
+                )
+            identity = (label, path.as_posix())
+            if identity in seen_paths:
+                raise PipelineError(
+                    f"Registered batches share the same {label}: {path}"
+                )
+            seen_paths.add(identity)
+        logical_keys: set[tuple[str, str, str]] = set()
+        for target in spec.normalized_input_retry_allowlist:
+            if (
+                len(target.source_sha256) != 64
+                or any(
+                    character not in "0123456789abcdef"
+                    for character in target.source_sha256
+                )
+                or not target.model_ids
+                or any(
+                    model_id not in {"alibaba/wan-2.2", "alibaba/wan-2.7"}
+                    for model_id in target.model_ids
+                )
+                or target.failure_kind
+                not in {"maximum-bytes", "minimum-dimension"}
+            ):
+                raise PipelineError(
+                    f"Invalid normalized-input allowlist in batch {selector}"
+                )
+            replacement = target.replacement
+            if target.failure_kind == "maximum-bytes" and replacement is not None:
+                raise PipelineError(
+                    f"Legacy maximum-bytes target cannot replace its MDS strategy: "
+                    f"{target.article_slug}/{target.image_id}"
+                )
+            if target.failure_kind == "minimum-dimension":
+                parsed = (
+                    urlparse(replacement.url)
+                    if isinstance(replacement, NormalizedInputReplacement)
+                    else None
+                )
+                repository_path = (
+                    PurePosixPath(replacement.repository_path)
+                    if isinstance(replacement, NormalizedInputReplacement)
+                    else None
+                )
+                raw_prefix = (
+                    "/UnidentifiedRaccoon/alice-live-images-test/"
+                    if parsed is not None
+                    else ""
+                )
+                raw_tail = (
+                    parsed.path.removeprefix(raw_prefix)
+                    if parsed is not None and parsed.path.startswith(raw_prefix)
+                    else ""
+                )
+                commit_sha, separator, raw_repository_path = raw_tail.partition("/")
+                if (
+                    replacement is None
+                    or replacement.strategy != "deterministic-uniform-upscale"
+                    or repository_path is None
+                    or repository_path.is_absolute()
+                    or ".." in repository_path.parts
+                    or parsed is None
+                    or parsed.scheme != "https"
+                    or parsed.hostname != "raw.githubusercontent.com"
+                    or parsed.params
+                    or parsed.query
+                    or parsed.fragment
+                    or not separator
+                    or len(commit_sha) != 40
+                    or any(character not in "0123456789abcdef" for character in commit_sha)
+                    or raw_repository_path != replacement.repository_path
+                    or len(replacement.sha256) != 64
+                    or any(
+                        character not in "0123456789abcdef"
+                        for character in replacement.sha256
+                    )
+                    or not 0 < replacement.byte_size <= NORMALIZED_INPUT_MAX_BYTES
+                    or replacement.width < NORMALIZED_INPUT_MIN_DIMENSION
+                    or replacement.height < NORMALIZED_INPUT_MIN_DIMENSION
+                    or replacement.image_format not in {"JPEG", "PNG"}
+                ):
+                    raise PipelineError(
+                        f"Invalid commit-pinned normalized replacement in batch "
+                        f"{selector}: {target.article_slug}/{target.image_id}"
+                    )
+            for model_id in target.model_ids:
+                key = (target.article_slug, target.image_id, model_id)
+                if key in logical_keys:
+                    raise PipelineError(
+                        f"Duplicate normalized-input allowlist key: {key}"
+                    )
+                logical_keys.add(key)
+
+
+def activate_batch(batch_id: str) -> BatchSpec:
+    """Activate one registered batch before reading inputs or parsing budget."""
+
+    try:
+        spec = BATCH_SPECS[batch_id]
+    except KeyError as exc:
+        raise PipelineError(f"Unknown registered batch: {batch_id!r}") from exc
+
+    global ACTIVE_BATCH_SPEC
+    global BATCH_ID, PLANNING_BATCH_ID, DATASET_PREFIX, EXPECTED_ARTICLE_NUMBERS
+    global TICKET_CONFIG_REL, EXTRACTION_REPORT_REL, SOURCE_MANIFEST_REL
+    global SOURCE_IMAGE_ROOT_REL, SOURCE_CONTEXT_ROOT_REL
+    global BATCH_ROOT_REL, INVENTORY_MANIFEST_REL, GENERATION_MANIFEST_REL
+    global VERIFICATION_REPORT_REL, FINAL_MANIFEST_REL
+    global TERMINAL_RETRY_NAMESPACE_REL, AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL
+    global NORMALIZED_INPUT_RETRY_NAMESPACE_REL
+    global NORMALIZED_INPUT_ASSET_NAMESPACE_REL
+    global NORMALIZED_INPUT_SUPERSEDE_NAMESPACE_REL
+    global INVENTORY_MANIFEST_ROLE, FINAL_MANIFEST_ROLE
+    global TERMINAL_RETRY_MANIFEST_ROLE, AMBIGUOUS_RETRY_MANIFEST_ROLE
+    global NORMALIZED_RETRY_MANIFEST_ROLE, NORMALIZED_ASSET_MANIFEST_ROLE
+    global NORMALIZED_INPUT_SUPERSEDE_MANIFEST_ROLE
+    global HARD_BUDGET_CAP_USD, NORMALIZED_INPUT_RETRY_ALLOWLIST
+    global NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
+    global NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+    global NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256
+    global NORMALIZED_INPUT_ELIGIBLE_MODELS
+
+    ACTIVE_BATCH_SPEC = spec
+    BATCH_ID = spec.batch_id
+    PLANNING_BATCH_ID = spec.batch_id
+    DATASET_PREFIX = spec.dataset_prefix
+    EXPECTED_ARTICLE_NUMBERS = spec.article_numbers
+    TICKET_CONFIG_REL = spec.ticket_config_rel
+    EXTRACTION_REPORT_REL = spec.extraction_report_rel
+    SOURCE_MANIFEST_REL = spec.source_manifest_rel
+    SOURCE_IMAGE_ROOT_REL = spec.source_image_root_rel
+    SOURCE_CONTEXT_ROOT_REL = spec.source_context_root_rel
+    BATCH_ROOT_REL = Path("clipmaker-lite-test/runs") / spec.batch_id
+    INVENTORY_MANIFEST_REL = BATCH_ROOT_REL / "inventory.json"
+    GENERATION_MANIFEST_REL = BATCH_ROOT_REL / "generation-manifest.json"
+    VERIFICATION_REPORT_REL = BATCH_ROOT_REL / "verification-report.json"
+    FINAL_MANIFEST_REL = spec.final_manifest_rel
+    TERMINAL_RETRY_NAMESPACE_REL = (
+        BATCH_ROOT_REL / "terminal-provider-retries-v1"
+    )
+    AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL = (
+        BATCH_ROOT_REL / "ambiguous-submit-retries-v1"
+    )
+    NORMALIZED_INPUT_RETRY_NAMESPACE_REL = (
+        BATCH_ROOT_REL / "normalized-input-retries-v1"
+    )
+    NORMALIZED_INPUT_ASSET_NAMESPACE_REL = (
+        BATCH_ROOT_REL / "normalized-input-assets-v1"
+    )
+    if spec.batch_id == NORMALIZED_INPUT_SUPERSEDE_TARGET["batch_id"]:
+        superseded_primary_id = (
+            f"{spec.batch_id}-"
+            f"{NORMALIZED_INPUT_SUPERSEDE_TARGET['article_slug']}-"
+            f"{NORMALIZED_INPUT_SUPERSEDE_TARGET['image_id']}-"
+            f"{native.MODEL_SUFFIXES[NORMALIZED_INPUT_SUPERSEDE_TARGET['model_id']]}"
+        )
+        superseded_key = hashlib.sha256(
+            f"normalized-input-v1:{superseded_primary_id}".encode("utf-8")
+        ).hexdigest()[:20]
+        # Fail closed if the registered exact run identity and the deterministic
+        # normalized retry binding ever drift apart.
+        if superseded_key != "c45a8447813d1b4e4df0":
+            raise PipelineError("Normalized-input supersede target binding changed")
+        NORMALIZED_INPUT_SUPERSEDE_NAMESPACE_REL = (
+            NORMALIZED_INPUT_RETRY_NAMESPACE_REL
+            / superseded_key
+            / NORMALIZED_INPUT_SUPERSEDE_DIRECTORY_NAME
+        )
+    else:
+        # No other registered batch is authorized to create this namespace.
+        NORMALIZED_INPUT_SUPERSEDE_NAMESPACE_REL = (
+            BATCH_ROOT_REL / "normalized-input-supersede-disabled"
+        )
+    INVENTORY_MANIFEST_ROLE = spec.inventory_manifest_role
+    FINAL_MANIFEST_ROLE = spec.final_manifest_role
+    TERMINAL_RETRY_MANIFEST_ROLE = spec.terminal_retry_manifest_role
+    AMBIGUOUS_RETRY_MANIFEST_ROLE = spec.ambiguous_retry_manifest_role
+    NORMALIZED_RETRY_MANIFEST_ROLE = spec.normalized_retry_manifest_role
+    NORMALIZED_ASSET_MANIFEST_ROLE = spec.normalized_asset_manifest_role
+    NORMALIZED_INPUT_SUPERSEDE_MANIFEST_ROLE = (
+        f"{spec.normalized_retry_manifest_role}-supersede"
+    )
+    HARD_BUDGET_CAP_USD = spec.hard_budget_cap_usd
+    NORMALIZED_INPUT_RETRY_ALLOWLIST = spec.normalized_input_retry_allowlist
+
+    # Compatibility aliases for the frozen legacy tests and audit documents.
+    # Runtime authorization always consults NORMALIZED_INPUT_RETRY_ALLOWLIST.
+    target = (
+        spec.normalized_input_retry_allowlist[0]
+        if spec.normalized_input_retry_allowlist
+        else None
+    )
+    NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG = target.article_slug if target else ""
+    NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID = target.image_id if target else ""
+    NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256 = target.source_sha256 if target else ""
+    NORMALIZED_INPUT_ELIGIBLE_MODELS = target.model_ids if target else ()
+    return spec
+
+
+_validate_batch_specs()
+activate_batch(LEGACY_BATCH_ID)
 
 
 @dataclass(frozen=True)
@@ -271,7 +721,7 @@ class TerminalRetryBinding:
 
 @dataclass(frozen=True)
 class AmbiguousSubmitRetryBinding:
-    """Deterministic retry-v1 identity for one quarantined Segmind submit."""
+    """Deterministic retry-v1 identity for one quarantined provider submit."""
 
     source: Source
     model_id: str
@@ -363,6 +813,47 @@ class NormalizedInputRetryBinding:
 
 
 @dataclass(frozen=True)
+class NormalizedInputSupersedeBinding:
+    """One deterministic operator-authorized successor to an active retry."""
+
+    source: Source
+    model_id: str
+    normalized_retry_provider_run_id: str
+    supersede_key: str
+    supersede_batch_id: str
+    supersede_provider_run_id: str
+
+    @property
+    def directory_rel(self) -> Path:
+        normalized = normalized_input_retry_binding(self.source, self.model_id)
+        return normalized.directory_rel / NORMALIZED_INPUT_SUPERSEDE_DIRECTORY_NAME
+
+    @property
+    def envelope_rel(self) -> Path:
+        return self.directory_rel / "supersede.json"
+
+    @property
+    def manifest_rel(self) -> Path:
+        return self.directory_rel / "generation-manifest.json"
+
+    @property
+    def media_directory_rel(self) -> Path:
+        return self.directory_rel / "videos" / native.MODEL_DIRECTORIES[self.model_id]
+
+    @property
+    def prompt_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.prompt.json"
+
+    @property
+    def run_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.run.json"
+
+    @property
+    def video_rel(self) -> Path:
+        return self.media_directory_rel / f"{self.source.image['image_id']}.mp4"
+
+
+@dataclass(frozen=True)
 class Discovery:
     articles: tuple[Article, ...]
     sources: tuple[Source, ...]
@@ -436,9 +927,13 @@ def load_ticket_config(root: Path = ROOT) -> tuple[ArticleConfig, ...]:
                 url=url,
             )
         )
-    articles.sort(key=lambda article: article.number)
-    if [article.number for article in articles] != list(range(1, len(articles) + 1)):
-        raise PipelineError("Ticket article numbers must be unique and contiguous")
+    actual_numbers = tuple(article.number for article in articles)
+    if actual_numbers != EXPECTED_ARTICLE_NUMBERS:
+        raise PipelineError(
+            "Ticket article numbers/order differ from registered batch: "
+            f"expected={list(EXPECTED_ARTICLE_NUMBERS)}, "
+            f"actual={list(actual_numbers)}"
+        )
     folders = [article.folder for article in articles]
     if len(folders) != len(set(folders)):
         raise PipelineError("Ticket article folders must be unique")
@@ -499,7 +994,7 @@ def _availability(
         not isinstance(report, dict)
         or report.get("schema_version") != 1
         or report.get("ticket") != TICKET
-        or report.get("dataset_prefix") != TICKET
+        or report.get("dataset_prefix") != DATASET_PREFIX
         or report.get("article_config") != TICKET_CONFIG_REL.as_posix()
     ):
         raise PipelineError("Unexpected PROMOPAGES-10060 extraction report identity")
@@ -605,7 +1100,7 @@ def _source_rows(
         parts = PurePosixPath(file_path).parts
         if (
             len(parts) != 4
-            or parts[0] != TICKET
+            or parts[0] != DATASET_PREFIX
             or parts[1] != "articles"
             or parts[2] != config.folder
             or PurePosixPath(file_path).is_absolute()
@@ -641,7 +1136,9 @@ def _image_record(
 ) -> dict[str, Any]:
     image_id = block.get("image_id")
     filename = block.get("file")
-    expected_manifest_path = f"{TICKET}/articles/{article.folder}/{filename}"
+    expected_manifest_path = (
+        f"{DATASET_PREFIX}/articles/{article.folder}/{filename}"
+    )
     if (
         not isinstance(image_id, str)
         or not image_id
@@ -651,7 +1148,7 @@ def _image_record(
         or row.get("image_number") != image_id
     ):
         raise PipelineError(f"Invalid context/manifest image binding: {article.folder}")
-    source_path = root / "PROMOPAGES-9857" / expected_manifest_path
+    source_path = root / SOURCE_IMAGE_ROOT_REL / article.folder / str(filename)
     digest = sha256_file(source_path)
     if digest != row.get("sha256"):
         raise PipelineError(f"Source image digest mismatch: {source_path}")
@@ -673,7 +1170,7 @@ def _image_record(
         "caption": block.get("caption") or "",
         "source_block_index": block.get("source_block_index"),
         "gallery_index": block.get("gallery_index"),
-        "source_path": f"PROMOPAGES-9857/{expected_manifest_path}",
+        "source_path": relative(source_path, root),
         "manifest_file_path": expected_manifest_path,
         "orig_url": row["orig_url"],
         "sha256": digest,
@@ -810,14 +1307,19 @@ def discover(root: Path = ROOT) -> Discovery:
     )
 
 
-def parse_budget(value: str | Decimal) -> Decimal:
+def _positive_budget(value: str | Decimal) -> Decimal:
     try:
         parsed = Decimal(str(value)).quantize(Decimal("0.01"))
     except (InvalidOperation, ValueError) as exc:
         raise PipelineError(f"Invalid USD budget cap: {value!r}") from exc
     if not parsed.is_finite() or parsed <= 0:
         raise PipelineError("USD budget cap must be positive")
-    if parsed > HARD_BUDGET_CAP_USD:
+    return parsed
+
+
+def parse_budget(value: str | Decimal) -> Decimal:
+    parsed = _positive_budget(value)
+    if HARD_BUDGET_CAP_USD is not None and parsed > HARD_BUDGET_CAP_USD:
         raise PipelineError(
             f"USD budget cap ${parsed:.2f} exceeds the hard "
             f"${HARD_BUDGET_CAP_USD:.2f} cap"
@@ -827,7 +1329,9 @@ def parse_budget(value: str | Decimal) -> Decimal:
 
 def budget_arg(value: str) -> Decimal:
     try:
-        return parse_budget(value)
+        # argparse runs before main activates --batch.  Validate only syntax
+        # and positivity here; parse_budget applies the selected batch policy.
+        return _positive_budget(value)
     except PipelineError as exc:
         raise argparse.ArgumentTypeError(str(exc)) from exc
 
@@ -919,7 +1423,11 @@ def cost_metadata(budget: str | Decimal, job_count: int) -> dict[str, Any]:
     return {
         "currency": "USD",
         "operator_budget_cap_usd": float(parsed),
-        "hard_budget_cap_usd": float(HARD_BUDGET_CAP_USD),
+        "hard_budget_cap_usd": float(
+            HARD_BUDGET_CAP_USD
+            if HARD_BUDGET_CAP_USD is not None
+            else parsed
+        ),
         "accounting_cost_per_output_usd": {
             model_id: float(ACCOUNTING_COST_PER_OUTPUT_USD[model_id])
             for model_id in MODEL_IDS
@@ -967,6 +1475,7 @@ def aggregate_retry_budget_metadata(
     terminal_retry_reservations: int,
     ambiguous_submit_retry_reservations: int,
     normalized_input_retry_reservations: int = 0,
+    normalized_input_supersede_reservations: int = 0,
 ) -> dict[str, Any]:
     """Return conservative accounting for every immutable retry namespace.
 
@@ -979,6 +1488,7 @@ def aggregate_retry_budget_metadata(
         "terminal": terminal_retry_reservations,
         "ambiguous submit": ambiguous_submit_retry_reservations,
         "normalized input": normalized_input_retry_reservations,
+        "normalized input supersede": normalized_input_supersede_reservations,
     }
     for label, count in reservation_counts.items():
         if isinstance(count, bool) or not isinstance(count, int) or count < 0:
@@ -1006,15 +1516,23 @@ def aggregate_retry_budget_metadata(
         NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD
         * normalized_input_retry_reservations
     )
+    normalized_supersede_maximum = (
+        NORMALIZED_INPUT_SUPERSEDE_ACCOUNTING_COST_USD
+        * normalized_input_supersede_reservations
+    )
     retry_maximum = (
         terminal_retry_maximum
         + ambiguous_retry_maximum
         + normalized_retry_maximum
+        + normalized_supersede_maximum
     ).quantize(Decimal("0.01"))
     aggregate_maximum = (primary_maximum + retry_maximum).quantize(
         Decimal("0.01")
     )
-    if aggregate_maximum > operator_cap or aggregate_maximum > HARD_BUDGET_CAP_USD:
+    if aggregate_maximum > operator_cap or (
+        HARD_BUDGET_CAP_USD is not None
+        and aggregate_maximum > HARD_BUDGET_CAP_USD
+    ):
         raise PipelineError(
             f"Retry reservation would raise the aggregate accounting maximum "
             f"to ${aggregate_maximum:.2f}, above the ${operator_cap:.2f} cap"
@@ -1026,7 +1544,10 @@ def aggregate_retry_budget_metadata(
         "maximum_paid_submissions": primary_submissions
         + terminal_retry_reservations
         + ambiguous_submit_retry_reservations
-        + normalized_input_retry_reservations,
+        + normalized_input_retry_reservations
+        + normalized_input_supersede_reservations,
+        # The remaining superseding reservation fields are added below only
+        # when used, preserving the byte-shape of the frozen legacy batch.
         "terminal_retry_version": TERMINAL_RETRY_VERSION,
         "terminal_retry_accounting_cost_usd": float(
             TERMINAL_RETRY_ACCOUNTING_COST_USD
@@ -1050,6 +1571,7 @@ def aggregate_retry_budget_metadata(
             terminal_retry_reservations
             + ambiguous_submit_retry_reservations
             + normalized_input_retry_reservations
+            + normalized_input_supersede_reservations
         ),
         "maximum_new_paid_submissions_per_failed_output": 1,
         "maximum_new_paid_submissions_per_ambiguous_output": 1,
@@ -1058,14 +1580,32 @@ def aggregate_retry_budget_metadata(
         "enforcement": (
             f"{primary.get('enforcement', '')}; provider-confirmed terminal "
             "failures may receive at most one separately namespaced, explicit "
-            "retry-v1 submit; a quarantined synchronous Segmind submit with "
+            "retry-v1 submit; a quarantined exact-route provider submit with "
             "unknown outcome may receive at most one separately namespaced, "
             "explicit ambiguous-submit retry-v1; each exact oversize Wan "
             "primary may receive one separately namespaced normalized-input "
             "retry-v1 whose only request change is the frozen image URL; "
+            "one explicitly authorized active normalized-input job may receive "
+            "one separately namespaced byte-identical superseding attempt; "
             "every immutable reservation "
             "is included in the aggregate accounting maximum"
         ).strip("; "),
+        **(
+            {
+                "normalized_input_supersede_version": (
+                    NORMALIZED_INPUT_SUPERSEDE_VERSION
+                ),
+                "normalized_input_supersede_accounting_cost_usd": float(
+                    NORMALIZED_INPUT_SUPERSEDE_ACCOUNTING_COST_USD
+                ),
+                "normalized_input_supersede_reservations": (
+                    normalized_input_supersede_reservations
+                ),
+                "maximum_new_paid_submissions_per_superseded_output": 1,
+            }
+            if normalized_input_supersede_reservations
+            else {}
+        ),
     }
 
 
@@ -1098,12 +1638,14 @@ def ambiguous_submit_retry_binding(
     source: Source,
     model_id: str,
 ) -> AmbiguousSubmitRetryBinding:
-    """Bind one logical Wan 2.2 output to its only quarantine retry."""
+    """Bind one logical output to its only exact-route quarantine retry."""
 
-    if model_id != "alibaba/wan-2.2":
+    route_identity = ROUTE_IDENTITIES.get(model_id)
+    if model_id not in MODEL_IDS or route_identity is None:
+        raise PipelineError(f"Ambiguous-submit retry model is unsupported: {model_id}")
+    if route_identity[0] not in {"eliza-segmind", "eliza-openrouter"}:
         raise PipelineError(
-            "Ambiguous-submit retry is restricted to the synchronous "
-            "Eliza/Segmind alibaba/wan-2.2 route"
+            f"Ambiguous-submit retry adapter is unsupported: {route_identity[0]}"
         )
     primary_run_id = primary_provider_run_id(source, model_id)
     retry_key = hashlib.sha256(
@@ -1123,17 +1665,55 @@ def ambiguous_submit_retry_binding(
     )
 
 
-def _require_normalized_input_target(source: Source, model_id: str) -> None:
-    if (
-        source.article_slug != NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
-        or source.image.get("image_id") != NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
-        or source.image.get("sha256") != NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256
-        or model_id not in NORMALIZED_INPUT_ELIGIBLE_MODELS
-    ):
+def _normalized_input_target_for_key(
+    article_slug: Any,
+    image_id: Any,
+    model_id: Any,
+) -> NormalizedInputRetryTarget | None:
+    for target in NORMALIZED_INPUT_RETRY_ALLOWLIST:
+        if (
+            article_slug == target.article_slug
+            and image_id == target.image_id
+            and model_id in target.model_ids
+        ):
+            return target
+    return None
+
+
+def _normalized_input_target(
+    source: Source,
+    model_id: str,
+) -> NormalizedInputRetryTarget | None:
+    target = _normalized_input_target_for_key(
+        source.article_slug,
+        source.image.get("image_id"),
+        model_id,
+    )
+    if target is None or source.image.get("sha256") != target.source_sha256:
+        return None
+    return target
+
+
+def _normalized_input_target_for_source(source: Source) -> NormalizedInputRetryTarget:
+    targets = {
+        target
+        for model_id in MODEL_IDS
+        if (target := _normalized_input_target(source, model_id)) is not None
+    }
+    if len(targets) != 1:
         raise PipelineError(
-            "Normalized-input retry is restricted to exact source "
-            f"{NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG}/"
-            f"{NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID} and Wan 2.2/Wan 2.7"
+            "Normalized-input source must resolve to one exact batch target: "
+            f"{source.article_slug}/{source.image.get('image_id')}"
+        )
+    return next(iter(targets))
+
+
+def _require_normalized_input_target(source: Source, model_id: str) -> None:
+    if _normalized_input_target(source, model_id) is None:
+        raise PipelineError(
+            "Normalized-input retry is restricted to exact targets in the "
+            f"selected batch allowlist: {source.article_slug}/"
+            f"{source.image.get('image_id')}/{model_id}"
         )
 
 
@@ -1169,6 +1749,94 @@ def normalized_input_retry_binding(
     )
 
 
+def _require_normalized_input_supersede_target(
+    source: Source,
+    model_id: str,
+) -> NormalizedInputRetryBinding:
+    """Authorize only the exact active job named by the operator."""
+
+    target = NORMALIZED_INPUT_SUPERSEDE_TARGET
+    if (
+        BATCH_ID != target["batch_id"]
+        or source.article_slug != target["article_slug"]
+        or source.image.get("image_id") != target["image_id"]
+        or model_id != target["model_id"]
+    ):
+        raise PipelineError(
+            "Normalized-input supersede is authorized only for the exact "
+            "ticket-specific active Wan 2.7 job"
+        )
+    normalized = normalized_input_retry_binding(source, model_id)
+    if (
+        normalized.retry_provider_run_id
+        != target["normalized_retry_provider_run_id"]
+    ):
+        raise PipelineError("Normalized-input supersede run binding changed")
+    return normalized
+
+
+def normalized_input_supersede_binding(
+    source: Source,
+    model_id: str,
+) -> NormalizedInputSupersedeBinding:
+    """Bind the one permitted successor to the exact active normalized retry."""
+
+    normalized = _require_normalized_input_supersede_target(source, model_id)
+    supersede_key = hashlib.sha256(
+        (
+            "normalized-input-supersede-v1:"
+            f"{normalized.retry_provider_run_id}"
+        ).encode("utf-8")
+    ).hexdigest()[:20]
+    supersede_batch_id = (
+        f"{BATCH_ID}-normalized-input-supersede-v1-{supersede_key}"
+    )
+    supersede_provider_run_id = (
+        f"{supersede_batch_id}-{source.sample_id}-"
+        f"{native.MODEL_SUFFIXES[model_id]}"
+    )
+    return NormalizedInputSupersedeBinding(
+        source=source,
+        model_id=model_id,
+        normalized_retry_provider_run_id=normalized.retry_provider_run_id,
+        supersede_key=supersede_key,
+        supersede_batch_id=supersede_batch_id,
+        supersede_provider_run_id=supersede_provider_run_id,
+    )
+
+
+def resolve_normalized_input_supersede_target(
+    sources: Iterable[Source],
+    normalized_retry_provider_run_id: str,
+) -> tuple[Source, str]:
+    """Resolve only the registered normalized retry identity, never a primary."""
+
+    target = NORMALIZED_INPUT_SUPERSEDE_TARGET
+    if (
+        BATCH_ID != target["batch_id"]
+        or normalized_retry_provider_run_id
+        != target["normalized_retry_provider_run_id"]
+    ):
+        raise PipelineError(
+            "Unknown or unauthorized normalized-input retry provider run ID "
+            "for supersede"
+        )
+    matches = [
+        source
+        for source in sources
+        if source.article_slug == target["article_slug"]
+        and source.image.get("image_id") == target["image_id"]
+    ]
+    if len(matches) != 1:
+        raise PipelineError("Normalized-input supersede source binding is missing")
+    source = matches[0]
+    model_id = str(target["model_id"])
+    normalized = _require_normalized_input_supersede_target(source, model_id)
+    if normalized.retry_provider_run_id != normalized_retry_provider_run_id:
+        raise PipelineError("Normalized-input supersede provider identity differs")
+    return source, model_id
+
+
 def primary_artifact_paths(
     source: Source,
     model_id: str,
@@ -1191,9 +1859,11 @@ def primary_artifact_paths(
 
 
 def _normalized_input_page_variant_url(source: Source, root: Path) -> str:
-    """Read the exact frozen /scale_1200 URL without changing inventory.json."""
+    """Resolve the exact allowlisted normalized URL without changing inventory."""
 
-    _require_normalized_input_target(source, "alibaba/wan-2.2")
+    target = _normalized_input_target_for_source(source)
+    if target.replacement is not None:
+        return target.replacement.url
     manifest_path = root / SOURCE_MANIFEST_REL
     try:
         with manifest_path.open("r", encoding="utf-8", newline="") as stream:
@@ -1293,13 +1963,30 @@ def preflight_normalized_input_asset(
     """Fetch and measure the public MDS variant; never contacts a video provider."""
 
     parsed = urlparse(url)
-    if (
-        parsed.scheme != "https"
-        or parsed.hostname != "avatars.mds.yandex.net"
-        or not parsed.path.endswith("/scale_1200")
-        or parsed.query
-        or parsed.fragment
-    ):
+    is_mds_scale = (
+        parsed.scheme == "https"
+        and parsed.hostname == "avatars.mds.yandex.net"
+        and parsed.path.endswith("/scale_1200")
+        and not parsed.params
+        and not parsed.query
+        and not parsed.fragment
+    )
+    raw_prefix = "/UnidentifiedRaccoon/alice-live-images-test/"
+    raw_tail = parsed.path.removeprefix(raw_prefix)
+    raw_commit, raw_separator, raw_repository_path = raw_tail.partition("/")
+    is_commit_pinned_raw = (
+        parsed.scheme == "https"
+        and parsed.hostname == "raw.githubusercontent.com"
+        and parsed.path.startswith(raw_prefix)
+        and bool(raw_separator)
+        and len(raw_commit) == 40
+        and all(character in "0123456789abcdef" for character in raw_commit)
+        and bool(raw_repository_path)
+        and not parsed.params
+        and not parsed.query
+        and not parsed.fragment
+    )
+    if not is_mds_scale and not is_commit_pinned_raw:
         raise PipelineError("Refusing normalized-input preflight for an unsafe URL")
     request = Request(
         url,
@@ -1324,6 +2011,10 @@ def preflight_normalized_input_asset(
             "Normalized /scale_1200 asset is empty or still exceeds 20 MiB"
         )
     image_format, width, height = _encoded_image_dimensions(payload)
+    if width < NORMALIZED_INPUT_MIN_DIMENSION or height < NORMALIZED_INPUT_MIN_DIMENSION:
+        raise PipelineError(
+            "Normalized /scale_1200 asset still has a dimension below 240 px"
+        )
     return {
         "http_status": 200,
         "url": url,
@@ -1335,13 +2026,54 @@ def preflight_normalized_input_asset(
     }
 
 
-def _normalized_input_original_source(source: Source, root: Path) -> dict[str, Any]:
+def _normalized_input_constraint(source: Source, root: Path) -> str:
+    """Return the one provider constraint proven by the frozen local source."""
+
     source_path = root / source.image["source_path"]
     if not source_path.is_file() or source_path.is_symlink():
         raise PipelineError(f"Normalized-input original source is missing: {source_path}")
+    payload = source_path.read_bytes()
+    if hashlib.sha256(payload).hexdigest() != source.image["sha256"]:
+        raise PipelineError(
+            f"Normalized-input original source hash differs: {source_path}"
+        )
+    _image_format, actual_width, actual_height = _encoded_image_dimensions(payload)
+    width = source.image.get("width")
+    height = source.image.get("height")
+    if actual_width != width or actual_height != height:
+        raise PipelineError(
+            f"Normalized-input original dimensions differ: {source_path}"
+        )
+    byte_size = len(payload)
+    constraint: str | None = None
+    if byte_size > NORMALIZED_INPUT_MAX_BYTES:
+        constraint = "maximum-bytes"
+    elif (
+        isinstance(width, int)
+        and isinstance(height, int)
+        and (
+            width < NORMALIZED_INPUT_MIN_DIMENSION
+            or height < NORMALIZED_INPUT_MIN_DIMENSION
+        )
+    ):
+        constraint = "minimum-dimension"
+    if constraint is None:
+        raise PipelineError(
+            "Normalized-input target no longer violates the known provider input "
+            "constraints"
+        )
+    target = _normalized_input_target_for_source(source)
+    if target.failure_kind != constraint:
+        raise PipelineError(
+            "Normalized-input target failure kind differs from the frozen source"
+        )
+    return constraint
+
+
+def _normalized_input_original_source(source: Source, root: Path) -> dict[str, Any]:
+    source_path = root / source.image["source_path"]
+    _normalized_input_constraint(source, root)
     byte_size = source_path.stat().st_size
-    if byte_size <= NORMALIZED_INPUT_MAX_BYTES:
-        raise PipelineError("Normalized-input target no longer exceeds the 20 MiB limit")
     return {
         "url": source.image["orig_url"],
         "path": source.image["source_path"],
@@ -1352,26 +2084,113 @@ def _normalized_input_original_source(source: Source, root: Path) -> dict[str, A
     }
 
 
+def _commit_pinned_replacement_record(
+    binding: NormalizedInputRetryBinding,
+    preflight: dict[str, Any],
+    *,
+    root: Path,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    target = _normalized_input_target(binding.source, binding.model_id)
+    replacement = target.replacement if target is not None else None
+    if replacement is None:
+        raise PipelineError("Normalized-input target has no commit-pinned replacement")
+    expected_preflight = {
+        "http_status": 200,
+        "url": replacement.url,
+        "sha256": replacement.sha256,
+        "bytes": replacement.byte_size,
+        "width": replacement.width,
+        "height": replacement.height,
+        "format": replacement.image_format,
+    }
+    if preflight != expected_preflight:
+        raise PipelineError(
+            "Commit-pinned normalized asset differs from its exact allowlist metadata"
+        )
+    repository_path = Path(replacement.repository_path)
+    if repository_path.parent != binding.asset_metadata_rel.parent:
+        raise PipelineError(
+            "Commit-pinned normalized asset is outside its deterministic asset key"
+        )
+    local_path = root / repository_path
+    if not local_path.is_file() or local_path.is_symlink():
+        raise PipelineError(
+            f"Commit-pinned normalized asset is missing locally: {local_path}"
+        )
+    local_payload = local_path.read_bytes()
+    local_format, local_width, local_height = _encoded_image_dimensions(local_payload)
+    if (
+        hashlib.sha256(local_payload).hexdigest() != replacement.sha256
+        or len(local_payload) != replacement.byte_size
+        or local_width != replacement.width
+        or local_height != replacement.height
+        or local_format != replacement.image_format
+    ):
+        raise PipelineError(
+            f"Commit-pinned normalized local asset differs: {local_path}"
+        )
+    parsed = urlparse(replacement.url)
+    raw_tail = parsed.path.removeprefix(
+        "/UnidentifiedRaccoon/alice-live-images-test/"
+    )
+    commit_sha, separator, raw_repository_path = raw_tail.partition("/")
+    if not separator or raw_repository_path != replacement.repository_path:
+        raise PipelineError("Commit-pinned normalized URL path differs")
+    normalized = {
+        **expected_preflight,
+        "delivery": "repository-raw",
+        "repository_path": replacement.repository_path,
+        "source_commit_sha": commit_sha,
+    }
+    transform = {
+        "operation": "uniform-scale",
+        "target_height": replacement.height,
+        "resampler": "lanczos",
+        "crop": False,
+        "local_reencode": True,
+    }
+    return normalized, transform
+
+
 def _normalized_input_asset_document(
     binding: NormalizedInputRetryBinding,
     preflight: dict[str, Any],
     *,
     root: Path,
 ) -> dict[str, Any]:
-    return {
+    target = _normalized_input_target(binding.source, binding.model_id)
+    if target is None:
+        raise PipelineError("Normalized-input asset target is not allowlisted")
+    normalized = dict(preflight)
+    transform: dict[str, Any] | None = None
+    strategy = "frozen-page-variant"
+    if target.replacement is not None:
+        strategy = target.replacement.strategy
+        normalized, transform = _commit_pinned_replacement_record(
+            binding,
+            preflight,
+            root=root,
+        )
+    document = {
         "schema_version": 1,
-        "manifest_role": "promopages-10060-normalized-input-asset",
+        "manifest_role": NORMALIZED_ASSET_MANIFEST_ROLE,
         "ticket": TICKET,
         "batch_id": BATCH_ID,
-        "strategy": "frozen-page-variant",
+        "strategy": strategy,
         "source_key": {
             "article_slug": binding.source.article_slug,
             "image_id": binding.source.image["image_id"],
         },
         "original": _normalized_input_original_source(binding.source, root),
-        "normalized": dict(preflight),
+        "normalized": normalized,
         "maximum_provider_input_bytes": NORMALIZED_INPUT_MAX_BYTES,
     }
+    if transform is not None:
+        document["transform"] = transform
+        document["minimum_provider_input_dimension"] = (
+            NORMALIZED_INPUT_MIN_DIMENSION
+        )
+    return document
 
 
 def _validated_normalized_input_asset(
@@ -1384,37 +2203,20 @@ def _validated_normalized_input_asset(
         raise PipelineError(f"Normalized-input asset metadata is missing: {path}")
     document = read_json(path)
     normalized = document.get("normalized") if isinstance(document, dict) else None
-    if (
-        not isinstance(document, dict)
-        or document.get("schema_version") != 1
-        or document.get("manifest_role")
-        != "promopages-10060-normalized-input-asset"
-        or document.get("ticket") != TICKET
-        or document.get("batch_id") != BATCH_ID
-        or document.get("strategy") != "frozen-page-variant"
-        or document.get("source_key")
-        != {
-            "article_slug": binding.source.article_slug,
-            "image_id": binding.source.image["image_id"],
-        }
-        or document.get("original")
-        != _normalized_input_original_source(binding.source, root)
-        or document.get("maximum_provider_input_bytes")
-        != NORMALIZED_INPUT_MAX_BYTES
-        or not isinstance(normalized, dict)
-        or normalized.get("http_status") != 200
-        or normalized.get("url")
-        != _normalized_input_page_variant_url(binding.source, root)
-        or not isinstance(normalized.get("bytes"), int)
-        or not 0 < normalized["bytes"] <= NORMALIZED_INPUT_MAX_BYTES
-        or not isinstance(normalized.get("width"), int)
-        or normalized["width"] < 1
-        or not isinstance(normalized.get("height"), int)
-        or normalized["height"] < 1
-        or normalized.get("format") not in {"JPEG", "PNG"}
-        or not isinstance(normalized.get("sha256"), str)
-        or len(normalized["sha256"]) != 64
-    ):
+    if not isinstance(document, dict) or not isinstance(normalized, dict):
+        raise PipelineError(f"Normalized-input asset metadata differs: {path}")
+    preflight_fields = (
+        "http_status",
+        "url",
+        "sha256",
+        "bytes",
+        "width",
+        "height",
+        "format",
+    )
+    preflight = {field: normalized.get(field) for field in preflight_fields}
+    expected = _normalized_input_asset_document(binding, preflight, root=root)
+    if document != expected:
         raise PipelineError(f"Normalized-input asset metadata differs: {path}")
     return document, sha256_file(path)
 
@@ -1507,7 +2309,7 @@ def _known_retry_envelopes(root: Path) -> tuple[dict[str, Any], ...]:
         if (
             document.get("schema_version") != 1
             or document.get("manifest_role")
-            != "promopages-10060-terminal-provider-retry"
+            != TERMINAL_RETRY_MANIFEST_ROLE
             or document.get("ticket") != TICKET
             or document.get("primary_batch_id") != BATCH_ID
             or document.get("retry_number") != TERMINAL_RETRY_VERSION
@@ -1569,7 +2371,7 @@ def _known_ambiguous_submit_retry_envelopes(
         if (
             document.get("schema_version") != 1
             or document.get("manifest_role")
-            != "promopages-10060-ambiguous-submit-retry"
+            != AMBIGUOUS_RETRY_MANIFEST_ROLE
             or document.get("ticket") != TICKET
             or document.get("primary_batch_id") != BATCH_ID
             or document.get("retry_number") != AMBIGUOUS_SUBMIT_RETRY_VERSION
@@ -1644,11 +2446,10 @@ def _known_normalized_input_retry_envelopes(
             not isinstance(document, dict)
             or document.get("schema_version") != 1
             or document.get("manifest_role")
-            != "promopages-10060-normalized-input-retry"
+            != NORMALIZED_RETRY_MANIFEST_ROLE
             or document.get("ticket") != TICKET
             or document.get("primary_batch_id") != BATCH_ID
             or document.get("retry_number") != NORMALIZED_INPUT_RETRY_VERSION
-            or document.get("policy") != _normalized_input_retry_policy()
             or not isinstance(primary, dict)
             or not isinstance(retry, dict)
         ):
@@ -1660,21 +2461,27 @@ def _known_normalized_input_retry_envelopes(
             raise PipelineError(
                 f"Normalized-input retry primary identity is missing: {path}"
             )
-        if (
-            not isinstance(logical_key, dict)
-            or logical_key.get("article_slug")
-            != NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
-            or logical_key.get("image_id") != NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
-            or logical_key.get("model_id") not in NORMALIZED_INPUT_ELIGIBLE_MODELS
-            or primary_id
-            != (
-                f"{BATCH_ID}-{NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG}-"
-                f"{NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID}-"
-                f"{native.MODEL_SUFFIXES[logical_key['model_id']]}"
+        target = (
+            _normalized_input_target_for_key(
+                logical_key.get("article_slug"),
+                logical_key.get("image_id"),
+                logical_key.get("model_id"),
             )
+            if isinstance(logical_key, dict)
+            else None
+        )
+        if target is None or primary_id != (
+            f"{BATCH_ID}-{target.article_slug}-{target.image_id}-"
+            f"{native.MODEL_SUFFIXES[logical_key['model_id']]}"
         ):
             raise PipelineError(
                 f"Normalized-input retry logical output is ineligible: {path}"
+            )
+        if document.get("policy") != _normalized_input_retry_policy(
+            target=target
+        ):
+            raise PipelineError(
+                f"Normalized-input retry policy differs for its target: {path}"
             )
         expected_key = hashlib.sha256(
             f"normalized-input-v1:{primary_id}".encode("utf-8")
@@ -1701,9 +2508,65 @@ def _known_normalized_input_retry_envelopes(
             "Normalized-input retry namespace contains an unbound directory: "
             + ", ".join(str(path) for path in unexpected[:3])
         )
-    if len(documents) > len(NORMALIZED_INPUT_ELIGIBLE_MODELS):
+    allowed_output_count = sum(
+        len(target.model_ids) for target in NORMALIZED_INPUT_RETRY_ALLOWLIST
+    )
+    if len(documents) > allowed_output_count:
         raise PipelineError("Too many normalized-input retry reservations")
     return tuple(documents)
+
+
+def _known_normalized_input_supersede_envelopes(
+    root: Path,
+) -> tuple[dict[str, Any], ...]:
+    """Inventory the one exact nested supersede reservation without I/O."""
+
+    if BATCH_ID != NORMALIZED_INPUT_SUPERSEDE_TARGET["batch_id"]:
+        return ()
+    path = root / NORMALIZED_INPUT_SUPERSEDE_NAMESPACE_REL / "supersede.json"
+    candidates = list(
+        (root / NORMALIZED_INPUT_RETRY_NAMESPACE_REL).glob(
+            f"*/{NORMALIZED_INPUT_SUPERSEDE_DIRECTORY_NAME}/supersede.json"
+        )
+    )
+    if not path.exists():
+        if candidates:
+            raise PipelineError(
+                "Normalized-input supersede exists outside the exact allowlist"
+            )
+        return ()
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(
+            f"Normalized-input supersede envelope is not a regular file: {path}"
+        )
+    document = read_json(path)
+    normalized = document.get("normalized_retry") if isinstance(document, dict) else None
+    supersede = document.get("superseding_attempt") if isinstance(document, dict) else None
+    if (
+        not isinstance(document, dict)
+        or document.get("schema_version") != 1
+        or document.get("manifest_role")
+        != NORMALIZED_INPUT_SUPERSEDE_MANIFEST_ROLE
+        or document.get("ticket") != TICKET
+        or document.get("primary_batch_id") != BATCH_ID
+        or document.get("supersede_number")
+        != NORMALIZED_INPUT_SUPERSEDE_VERSION
+        or not isinstance(normalized, dict)
+        or normalized.get("provider_run_id")
+        != NORMALIZED_INPUT_SUPERSEDE_TARGET[
+            "normalized_retry_provider_run_id"
+        ]
+        or not isinstance(supersede, dict)
+    ):
+        raise PipelineError(
+            f"Normalized-input supersede envelope identity is invalid: {path}"
+        )
+    unexpected = [candidate for candidate in candidates if candidate != path]
+    if unexpected:
+        raise PipelineError(
+            "More than one normalized-input supersede reservation is forbidden"
+        )
+    return (document,)
 
 
 def _enforce_retry_namespace_conflicts(
@@ -1737,12 +2600,14 @@ def _aggregate_retry_cost(
     additional_terminal: int = 0,
     additional_ambiguous: int = 0,
     additional_normalized: int = 0,
+    additional_normalized_supersede: int = 0,
 ) -> dict[str, Any]:
     """Count every immutable namespace before admitting another reservation."""
 
     terminal = _known_retry_envelopes(root)
     ambiguous = _known_ambiguous_submit_retry_envelopes(root)
     normalized = _known_normalized_input_retry_envelopes(root)
+    normalized_supersedes = _known_normalized_input_supersede_envelopes(root)
     _enforce_retry_namespace_conflicts(terminal, ambiguous, normalized)
 
     return aggregate_retry_budget_metadata(
@@ -1756,6 +2621,9 @@ def _aggregate_retry_cost(
         normalized_input_retry_reservations=(
             len(normalized) + additional_normalized
         ),
+        normalized_input_supersede_reservations=(
+            len(normalized_supersedes) + additional_normalized_supersede
+        ),
     )
 
 
@@ -1767,7 +2635,7 @@ def inventory_document(
     expected_outputs = len(discovery.sources) * len(MODEL_IDS)
     return {
         "schema_version": 1,
-        "manifest_role": "promopages-10060-frozen-generation-inventory",
+        "manifest_role": INVENTORY_MANIFEST_ROLE,
         "ticket": TICKET,
         "batch_id": BATCH_ID,
         "agent_id": AGENT_ID,
@@ -2074,7 +2942,7 @@ def _terminal_retry_envelope_document(
 ) -> dict[str, Any]:
     return {
         "schema_version": 1,
-        "manifest_role": "promopages-10060-terminal-provider-retry",
+        "manifest_role": TERMINAL_RETRY_MANIFEST_ROLE,
         "ticket": TICKET,
         "primary_batch_id": BATCH_ID,
         "retry_number": TERMINAL_RETRY_VERSION,
@@ -2187,11 +3055,15 @@ def _primary_ambiguous_submit_evidence(
     *,
     root: Path,
 ) -> dict[str, Any]:
-    """Bind one genuinely unknown synchronous POST without reclassifying it."""
+    """Bind one genuinely unknown provider POST without reclassifying it."""
 
-    if model_id != "alibaba/wan-2.2":
+    route_identity = ROUTE_IDENTITIES.get(model_id)
+    if model_id not in MODEL_IDS or route_identity is None:
+        raise PipelineError(f"Ambiguous-submit retry model is unsupported: {model_id}")
+    expected_adapter, _expected_transport = route_identity
+    if expected_adapter not in {"eliza-segmind", "eliza-openrouter"}:
         raise PipelineError(
-            "Ambiguous-submit retry requires the synchronous alibaba/wan-2.2 route"
+            f"Ambiguous-submit retry adapter is unsupported: {expected_adapter}"
         )
     entry = native.Entry(source.sample, model_id)
     expected_provider_run_id = primary_provider_run_id(source, model_id)
@@ -2216,7 +3088,7 @@ def _primary_ambiguous_submit_evidence(
         "lite_run_id": source.planning_run_id,
         "provider_run_id": expected_provider_run_id,
         "model_id": model_id,
-        "adapter": "eliza-segmind",
+        "adapter": expected_adapter,
     }
     mismatches = [
         key for key, expected in expected_identity.items() if run.get(key) != expected
@@ -2238,8 +3110,8 @@ def _primary_ambiguous_submit_evidence(
         or run.get("contract_check") is not None
     ):
         raise PipelineError(
-            "Explicit ambiguous-submit retry requires an unresolved synchronous "
-            "Segmind receipt with no provider identity, timestamps, or media"
+            "Explicit ambiguous-submit retry requires an unresolved provider "
+            "receipt with no provider identity, timestamps, or media"
         )
 
     job = native.load_lite_job(entry, root)
@@ -2262,26 +3134,42 @@ def _primary_ambiguous_submit_evidence(
             f"Primary provider request differs from verified Lite binding: "
             f"{entry.provider_run_id}"
         )
-    if native._is_exact_legacy_segmind_quota_pre_submit_failure(
+    if expected_adapter == "eliza-segmind":
+        if native._is_exact_legacy_segmind_quota_pre_submit_failure(
+            run,
+            expected_request,
+            expected_request_sha256,
+            expected_adapter,
+        ):
+            raise PipelineError(
+                "The primary receipt is exact known pre-submit quota evidence, "
+                "not an ambiguous provider outcome"
+            )
+    elif native._is_exact_legacy_eliza_dns_pre_submit_failure(
         run,
         expected_request,
         expected_request_sha256,
-        "eliza-segmind",
+        expected_adapter,
     ):
         raise PipelineError(
-            "The primary receipt is exact known pre-submit quota evidence, not "
+            "The primary receipt is exact known pre-submit DNS evidence, not "
             "an ambiguous provider outcome"
         )
     source_preflight = run.get("source_preflight")
-    if (
-        not isinstance(source_preflight, dict)
-        or source_preflight.get("http_status") != 200
-        or not isinstance(source_preflight.get("bytes"), int)
-        or source_preflight["bytes"] < 1
-        or source_preflight.get("sha256") != source.image["sha256"]
-    ):
+    if expected_adapter == "eliza-segmind":
+        if (
+            not isinstance(source_preflight, dict)
+            or source_preflight.get("http_status") != 200
+            or not isinstance(source_preflight.get("bytes"), int)
+            or source_preflight["bytes"] < 1
+            or source_preflight.get("sha256") != source.image["sha256"]
+        ):
+            raise PipelineError(
+                "Ambiguous Segmind receipt lacks the exact successful source preflight"
+            )
+    elif source_preflight is not None:
         raise PipelineError(
-            "Ambiguous Segmind receipt lacks the exact successful source preflight"
+            "Ambiguous Eliza/OpenRouter receipt unexpectedly has source preflight"
         )
     receipt_error = run.get("error")
     if receipt_error is not None and (
@@ -2289,7 +3177,7 @@ def _primary_ambiguous_submit_evidence(
     ):
         raise PipelineError("Ambiguous primary receipt error is invalid")
     ambiguity_reason = receipt_error or (
-        "Synchronous Segmind POST may have reached the provider, but no "
+        "Provider POST may have reached the exact configured route, but no "
         "response or provider request identity was durably recorded"
     )
     return {
@@ -2319,7 +3207,7 @@ def _primary_ambiguous_submit_evidence(
         "source_path": source.image["source_path"],
         "source_sha256": source.image["sha256"],
         "model_id": model_id,
-        "adapter": "eliza-segmind",
+        "adapter": expected_adapter,
         "lite_run_id": source.planning_run_id,
     }
 
@@ -2331,7 +3219,7 @@ def _ambiguous_submit_retry_envelope_document(
 ) -> dict[str, Any]:
     return {
         "schema_version": 1,
-        "manifest_role": "promopages-10060-ambiguous-submit-retry",
+        "manifest_role": AMBIGUOUS_RETRY_MANIFEST_ROLE,
         "ticket": TICKET,
         "primary_batch_id": BATCH_ID,
         "retry_number": AMBIGUOUS_SUBMIT_RETRY_VERSION,
@@ -2383,14 +3271,19 @@ def configure_ambiguous_submit_retry_native(
     binding: AmbiguousSubmitRetryBinding,
     root: Path = ROOT,
 ) -> None:
-    """Bind one quarantine namespace to the exact synchronous Wan 2.2 route."""
+    """Bind one quarantine namespace to the exact frozen provider route."""
 
     _contract_snapshot(root)
     _route_snapshot(root)
     source = binding.source
     model_id = binding.model_id
-    if model_id != "alibaba/wan-2.2":
-        raise PipelineError("Ambiguous-submit native matrix must use Wan 2.2")
+    route_identity = ROUTE_IDENTITIES.get(model_id)
+    if model_id not in MODEL_IDS or route_identity is None:
+        raise PipelineError(f"Ambiguous-submit retry model is unsupported: {model_id}")
+    if route_identity[0] not in {"eliza-segmind", "eliza-openrouter"}:
+        raise PipelineError(
+            f"Ambiguous-submit retry adapter is unsupported: {route_identity[0]}"
+        )
     native.BATCH_ID = binding.retry_batch_id
     native.PLANNING_BATCH_ID = PLANNING_BATCH_ID
     native.MODEL_IDS = (model_id,)
@@ -2461,14 +3354,21 @@ def _verified_primary_normalized_input_evidence(
         raise PipelineError("Primary normalized-input target is not configured")
     paths = primary_artifact_paths(source, model_id, root)
     if not paths["run"].is_file() or paths["run"].is_symlink():
-        raise PipelineError(f"Primary oversize receipt is missing: {paths['run']}")
+        raise PipelineError(
+            f"Primary normalized-input receipt is missing: {paths['run']}"
+        )
     if not paths["prompt"].is_file() or paths["prompt"].is_symlink():
         raise PipelineError(f"Primary immutable prompt is missing: {paths['prompt']}")
     if paths["video"].exists():
-        raise PipelineError(f"Primary oversize failure unexpectedly has media: {paths['video']}")
+        raise PipelineError(
+            "Primary normalized-input failure unexpectedly has media: "
+            f"{paths['video']}"
+        )
     run = read_json(paths["run"])
     if not isinstance(run, dict):
-        raise PipelineError(f"Primary oversize receipt is not an object: {paths['run']}")
+        raise PipelineError(
+            f"Primary normalized-input receipt is not an object: {paths['run']}"
+        )
     expected_identity = {
         "ticket": TICKET,
         "batch_id": BATCH_ID,
@@ -2483,11 +3383,13 @@ def _verified_primary_normalized_input_evidence(
     ]
     if mismatches:
         raise PipelineError(
-            "Primary oversize receipt identity differs "
+            "Primary normalized-input receipt identity differs "
             f"({', '.join(mismatches)}): {paths['run']}"
         )
     if run.get("media") is not None or run.get("contract_check") is not None:
-        raise PipelineError("Primary oversize receipt unexpectedly contains media audit")
+        raise PipelineError(
+            "Primary normalized-input receipt unexpectedly contains media audit"
+        )
     job = native.load_lite_job(entry, root)
     if read_json(paths["prompt"]) != native.prompt_artifact(job):
         raise PipelineError(
@@ -2504,7 +3406,7 @@ def _verified_primary_normalized_input_evidence(
         != transport.REQUEST_FINGERPRINT_VERSION
     ):
         raise PipelineError(
-            f"Primary oversize request differs from verified Lite binding: "
+            f"Primary normalized-input request differs from verified Lite binding: "
             f"{expected_provider_run_id}"
         )
     return run, expected_request, job, paths
@@ -2516,7 +3418,7 @@ def _primary_normalized_input_failure_evidence(
     *,
     root: Path,
 ) -> dict[str, Any]:
-    """Recognize only the two exact oversize failures; never rewrite them."""
+    """Recognize only an exact allowlisted input failure; never rewrite it."""
 
     run, request, job, paths = _verified_primary_normalized_input_evidence(
         source,
@@ -2527,15 +3429,20 @@ def _primary_normalized_input_failure_evidence(
     recorded_active = run.get("provider_may_be_active")
     provider_failure: dict[str, Any] | None = None
     recorded_provider_job_id = run.get("provider_job_id")
+    constraint = _normalized_input_constraint(source, root)
     if model_id == "alibaba/wan-2.2":
         prefix = "Eliza/Segmind POST failed with HTTP 400: "
         error = run.get("error")
         if not isinstance(error, str) or not error.startswith(prefix):
-            raise PipelineError("Wan 2.2 primary is not the exact oversize HTTP 400")
-        provider_failure = transport.parse_segmind_oversize_task_failure(
-            400,
-            error[len(prefix) :],
+            raise PipelineError(
+                "Wan 2.2 primary is not the exact normalized-input HTTP 400"
+            )
+        parser = (
+            transport.parse_segmind_oversize_task_failure
+            if constraint == "maximum-bytes"
+            else transport.parse_segmind_undersize_task_failure
         )
+        provider_failure = parser(400, error[len(prefix) :])
         source_preflight = run.get("source_preflight")
         original = _normalized_input_original_source(source, root)
         if (
@@ -2551,15 +3458,26 @@ def _primary_normalized_input_failure_evidence(
             or source_preflight.get("sha256") != original["sha256"]
         ):
             raise PipelineError(
-                "Wan 2.2 primary lacks exact terminal Segmind oversize evidence"
+                "Wan 2.2 primary lacks exact terminal Segmind normalized-input "
+                "evidence"
             )
         provider_job_id = provider_failure["provider_task_id"]
     else:
         provider_job_id = run.get("provider_job_id")
-        exact_error = (
-            f"Eliza/OpenRouter job {provider_job_id} failed with status failed: "
-            "File size exceeds maximum allowed size of 20971520 bytes"
-        )
+        if constraint == "maximum-bytes":
+            exact_error = (
+                f"Eliza/OpenRouter job {provider_job_id} failed with status failed: "
+                "File size exceeds maximum allowed size of 20971520 bytes"
+            )
+        else:
+            exact_error = (
+                f"Eliza/OpenRouter job {provider_job_id} failed with status failed: "
+                "Error validating image resolution: "
+                '{"name": "InvalidParameter", "code": 400, "message": '
+                '"image *** resolution must be at least 240x240, got '
+                f'{source.image["width"]}x{source.image["height"]}", '
+                '"internal_name": "InvalidParameter"}'
+            )
         if (
             recorded_status != "provider-failed"
             or recorded_active is not False
@@ -2572,7 +3490,8 @@ def _primary_normalized_input_failure_evidence(
             or run.get("error") != exact_error
         ):
             raise PipelineError(
-                "Wan 2.7 primary is not the exact terminal 20971520-byte failure"
+                "Wan 2.7 primary is not the exact terminal normalized-input "
+                "failure"
             )
     evidence: dict[str, Any] = {
         "provider_run_id": primary_provider_run_id(source, model_id),
@@ -2612,8 +3531,12 @@ def _primary_normalized_input_failure_evidence(
     return evidence
 
 
-def _normalized_input_retry_policy() -> dict[str, Any]:
-    return {
+def _normalized_input_retry_policy(
+    binding: NormalizedInputRetryBinding | None = None,
+    *,
+    target: NormalizedInputRetryTarget | None = None,
+) -> dict[str, Any]:
+    policy = {
         "explicit_operator_command_required": True,
         "automatic_retry": False,
         "maximum_new_paid_submissions": 1,
@@ -2627,6 +3550,97 @@ def _normalized_input_retry_policy() -> dict[str, Any]:
         "fallback": False,
         "primary_receipt_immutable": True,
     }
+    if binding is not None and target is not None:
+        raise PipelineError("Normalized-input retry policy target is ambiguous")
+    if binding is not None:
+        target = _normalized_input_target(binding.source, binding.model_id)
+        if target is None:
+            raise PipelineError("Normalized-input retry policy target is not allowlisted")
+    if target is not None and target.replacement is not None:
+        policy.update(
+            {
+                "shared_frozen_scale_1200_asset": False,
+                "local_reencode": True,
+                "commit_pinned_repository_asset": True,
+                "normalization_strategy": target.replacement.strategy,
+            }
+        )
+    return policy
+
+
+def _normalized_input_generation_policy() -> dict[str, Any]:
+    """Describe the selected batch allowlist without inventing retry targets."""
+
+    policy: dict[str, Any] = {
+        "version": NORMALIZED_INPUT_RETRY_VERSION,
+        "namespace": NORMALIZED_INPUT_RETRY_NAMESPACE_REL.as_posix(),
+        "shared_asset_namespace": NORMALIZED_INPUT_ASSET_NAMESPACE_REL.as_posix(),
+    }
+    if len(NORMALIZED_INPUT_RETRY_ALLOWLIST) == 1:
+        # Preserve the frozen legacy sidecar shape exactly.
+        target = NORMALIZED_INPUT_RETRY_ALLOWLIST[0]
+        policy.update(
+            {
+                "eligible_source": {
+                    "article_slug": target.article_slug,
+                    "image_id": target.image_id,
+                },
+                "models": list(target.model_ids),
+            }
+        )
+    else:
+        policy["eligible_sources"] = [
+            {
+                "article_slug": target.article_slug,
+                "image_id": target.image_id,
+                "source_sha256": target.source_sha256,
+                "models": list(target.model_ids),
+                "failure_kind": target.failure_kind,
+                "normalization_strategy": (
+                    target.replacement.strategy
+                    if target.replacement is not None
+                    else "frozen-page-variant"
+                ),
+            }
+            for target in NORMALIZED_INPUT_RETRY_ALLOWLIST
+        ]
+    policy.update(
+        {
+            "explicit_operator_command_required": True,
+            "maximum_new_paid_submissions_per_eligible_output": 1,
+            "retry2_forbidden": True,
+            "automatic_paid_retries": False,
+            "fallback": False,
+            "primary_receipts_immutable": True,
+            "request_delta_only_image_pointer": True,
+        }
+    )
+    return policy
+
+
+def _normalized_input_source_transform(
+    binding: NormalizedInputRetryBinding,
+    asset: dict[str, Any],
+    asset_sha256: str,
+    request_delta: dict[str, Any],
+) -> dict[str, Any]:
+    normalized = asset["normalized"]
+    transform = {
+        "strategy": asset["strategy"],
+        "original": asset["original"],
+        "normalized": {
+            **normalized,
+            "metadata_path": binding.asset_metadata_rel.as_posix(),
+            "metadata_sha256": asset_sha256,
+        },
+        "request_delta": request_delta,
+    }
+    if asset["strategy"] == "deterministic-uniform-upscale":
+        transform["preparation"] = asset["transform"]
+        transform["minimum_provider_input_dimension"] = (
+            asset["minimum_provider_input_dimension"]
+        )
+    return transform
 
 
 def _normalized_input_retry_envelope_document(
@@ -2653,7 +3667,7 @@ def _normalized_input_retry_envelope_document(
     )
     return {
         "schema_version": 1,
-        "manifest_role": "promopages-10060-normalized-input-retry",
+        "manifest_role": NORMALIZED_RETRY_MANIFEST_ROLE,
         "ticket": TICKET,
         "primary_batch_id": BATCH_ID,
         "retry_number": NORMALIZED_INPUT_RETRY_VERSION,
@@ -2681,21 +3695,166 @@ def _normalized_input_retry_envelope_document(
             "request_sha256": retry_request_sha256,
             "request_fingerprint_version": transport.REQUEST_FINGERPRINT_VERSION,
         },
-        "source_transform": {
-            "strategy": "frozen-page-variant",
-            "original": asset["original"],
-            "normalized": {
-                **normalized,
-                "metadata_path": binding.asset_metadata_rel.as_posix(),
-                "metadata_sha256": asset_sha256,
-            },
-            "request_delta": request_delta,
-        },
+        "source_transform": _normalized_input_source_transform(
+            binding,
+            asset,
+            asset_sha256,
+            request_delta,
+        ),
         "cost": aggregate_cost,
-        "policy": _normalized_input_retry_policy(),
+        "policy": _normalized_input_retry_policy(binding),
     }
 
 
+def _normalized_input_supersede_policy() -> dict[str, Any]:
+    target = NORMALIZED_INPUT_SUPERSEDE_TARGET
+    return {
+        "explicit_operator_command_required": True,
+        "operator_authorized_active_job": True,
+        "automatic_retry": False,
+        "maximum_new_paid_submissions": 1,
+        "retry2_forbidden": True,
+        "one_off_allowlist": {
+            "article_slug": target["article_slug"],
+            "image_id": target["image_id"],
+            "model_id": target["model_id"],
+            "normalized_retry_provider_run_id": target[
+                "normalized_retry_provider_run_id"
+            ],
+            "active_provider_job_id": target["active_provider_job_id"],
+        },
+        "duplicate_submission_risk_acknowledged": True,
+        "duplicate_billing_risk_acknowledged": True,
+        "same_verified_lite_result": True,
+        "same_normalized_source": True,
+        "same_prompt": True,
+        "same_model": True,
+        "same_route": True,
+        "same_seed": True,
+        "same_request": True,
+        "fallback": False,
+        "route_discovery": False,
+        "primary_receipt_immutable": True,
+        "normalized_retry_envelope_immutable": True,
+        "superseded_receipt_immutable": True,
+    }
+
+
+def _normalized_input_supersede_envelope_document(
+    binding: NormalizedInputSupersedeBinding,
+    normalized_envelope: dict[str, Any],
+    active_run: dict[str, Any],
+    active_run_sha256: str,
+    aggregate_cost: dict[str, Any],
+    *,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Freeze the exact active retry and a byte-identical successor request."""
+
+    normalized = _require_normalized_input_supersede_target(
+        binding.source,
+        binding.model_id,
+    )
+    retry = normalized_envelope.get("retry_attempt")
+    transform = normalized_envelope.get("source_transform")
+    if (
+        not isinstance(retry, dict)
+        or retry.get("provider_run_id") != binding.normalized_retry_provider_run_id
+        or not isinstance(transform, dict)
+        or active_run.get("provider_run_id")
+        != binding.normalized_retry_provider_run_id
+        or active_run.get("provider_job_id")
+        != NORMALIZED_INPUT_SUPERSEDE_TARGET["active_provider_job_id"]
+        or active_run.get("status") not in UNRESOLVED_PROVIDER_STATUSES
+        or active_run.get("provider_may_be_active") is not True
+        or not isinstance(active_run.get("submitted_at"), str)
+        or not active_run.get("submitted_at")
+        or active_run.get("completed_at") is not None
+        or active_run.get("media") is not None
+        or active_run.get("contract_check") is not None
+        or active_run.get("request") != retry.get("request")
+        or active_run.get("request_sha256") != retry.get("request_sha256")
+        or active_run.get("request_fingerprint_version")
+        != transport.REQUEST_FINGERPRINT_VERSION
+    ):
+        raise PipelineError(
+            "Active normalized-input retry differs from its immutable envelope"
+        )
+    normalized_prompt_path = root / normalized.prompt_rel
+    normalized_manifest_path = root / normalized.manifest_rel
+    normalized_envelope_path = root / normalized.envelope_rel
+    if (
+        not normalized_prompt_path.is_file()
+        or normalized_prompt_path.is_symlink()
+        or not normalized_manifest_path.is_file()
+        or normalized_manifest_path.is_symlink()
+        or not normalized_envelope_path.is_file()
+        or normalized_envelope_path.is_symlink()
+    ):
+        raise PipelineError("Normalized-input supersede evidence is incomplete")
+    return {
+        "schema_version": 1,
+        "manifest_role": NORMALIZED_INPUT_SUPERSEDE_MANIFEST_ROLE,
+        "ticket": TICKET,
+        "primary_batch_id": BATCH_ID,
+        "supersede_number": NORMALIZED_INPUT_SUPERSEDE_VERSION,
+        "agent_id": AGENT_ID,
+        "logical_output_key": {
+            "article_slug": binding.source.article_slug,
+            "image_id": binding.source.image["image_id"],
+            "model_id": binding.model_id,
+        },
+        "normalized_retry": {
+            "retry_key": normalized.retry_key,
+            "batch_id": normalized.retry_batch_id,
+            "provider_run_id": normalized.retry_provider_run_id,
+            "envelope_path": normalized.envelope_rel.as_posix(),
+            "envelope_sha256": sha256_file(normalized_envelope_path),
+            "generation_manifest_path": normalized.manifest_rel.as_posix(),
+            "generation_manifest_sha256": sha256_file(normalized_manifest_path),
+        },
+        "superseded_attempt": {
+            "provider_run_id": normalized.retry_provider_run_id,
+            "provider_job_id": active_run.get("provider_job_id"),
+            "provider_task_id": active_run.get("provider_task_id"),
+            "status": active_run.get("status"),
+            "provider_may_be_active": active_run.get("provider_may_be_active"),
+            "submitted_at": active_run.get("submitted_at"),
+            "completed_at": active_run.get("completed_at"),
+            "error": active_run.get("error"),
+            "run_path": normalized.run_rel.as_posix(),
+            "run_sha256": active_run_sha256,
+            "prompt_path": normalized.prompt_rel.as_posix(),
+            "prompt_sha256": sha256_file(normalized_prompt_path),
+            "request": retry["request"],
+            "request_sha256": retry["request_sha256"],
+            "request_fingerprint_version": (
+                transport.REQUEST_FINGERPRINT_VERSION
+            ),
+        },
+        "superseding_attempt": {
+            "supersede_key": binding.supersede_key,
+            "batch_id": binding.supersede_batch_id,
+            "provider_run_id": binding.supersede_provider_run_id,
+            "lite_run_id": binding.source.planning_run_id,
+            "model_id": binding.model_id,
+            "source_path": binding.source.image["source_path"],
+            "source_sha256": retry["source_sha256"],
+            "source_url": retry["source_url"],
+            "prompt_path": binding.prompt_rel.as_posix(),
+            "run_path": binding.run_rel.as_posix(),
+            "video_path": binding.video_rel.as_posix(),
+            "generation_manifest_path": binding.manifest_rel.as_posix(),
+            "request": retry["request"],
+            "request_sha256": retry["request_sha256"],
+            "request_fingerprint_version": (
+                transport.REQUEST_FINGERPRINT_VERSION
+            ),
+        },
+        "source_transform": transform,
+        "cost": aggregate_cost,
+        "policy": _normalized_input_supersede_policy(),
+    }
 def configure_normalized_input_retry_native(
     binding: NormalizedInputRetryBinding,
     asset: dict[str, Any],
@@ -2765,6 +3924,76 @@ def configure_normalized_input_retry_native(
         or matrix[0].model_id != model_id
     ):
         raise PipelineError("Normalized-input retry native matrix identity changed")
+
+
+def configure_normalized_input_supersede_native(
+    binding: NormalizedInputSupersedeBinding,
+    asset: dict[str, Any],
+    root: Path = ROOT,
+) -> None:
+    """Bind the successor to the same frozen normalized source and route."""
+
+    _contract_snapshot(root)
+    _route_snapshot(root)
+    source = binding.source
+    model_id = binding.model_id
+    _require_normalized_input_supersede_target(source, model_id)
+    normalized = asset.get("normalized") if isinstance(asset, dict) else None
+    if not isinstance(normalized, dict):
+        raise PipelineError("Normalized-input supersede asset metadata is invalid")
+    native.BATCH_ID = binding.supersede_batch_id
+    native.PLANNING_BATCH_ID = PLANNING_BATCH_ID
+    native.MODEL_IDS = (model_id,)
+    native.PLANNING_MODEL_IDS = MODEL_IDS
+    native.TICKET = TICKET
+    native.MANIFEST_PATH = binding.manifest_rel
+    native.CONTRACT_PATH = root / CONTRACT_REL
+    native.PLANNING_WORKSPACE = None
+    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.SAMPLES = (source.sample,)
+    native.WAN_SUBMIT_MODE = None
+    native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
+
+    def provider_sample(entry: native.Entry) -> dict[str, Any]:
+        if entry.sample.sample_id != source.sample_id or entry.model_id != model_id:
+            raise PipelineError(
+                f"Unknown normalized-input supersede entry: {entry.run_id}"
+            )
+        image = source.image
+        return {
+            "sample_id": source.sample_id,
+            "article_slug": source.article_slug,
+            "image_id": image["image_id"],
+            "image_number": image["image_id"],
+            "source_path": image["source_path"],
+            "source_url": normalized["url"],
+            "sha256": normalized["sha256"],
+            "width": normalized["width"],
+            "height": normalized["height"],
+        }
+
+    def artifact_paths(entry: native.Entry, workspace: Path = root) -> dict[str, Path]:
+        if entry.provider_run_id != binding.supersede_provider_run_id:
+            raise PipelineError(
+                f"Normalized-input supersede identity changed: {entry.provider_run_id}"
+            )
+        return {
+            "directory": workspace / binding.media_directory_rel,
+            "prompt": workspace / binding.prompt_rel,
+            "run": workspace / binding.run_rel,
+            "video": workspace / binding.video_rel,
+        }
+
+    native.provider_sample = provider_sample
+    native.artifact_paths = artifact_paths
+    matrix = native.matrix()
+    if (
+        len(matrix) != 1
+        or matrix[0].provider_run_id != binding.supersede_provider_run_id
+        or matrix[0].planning_run_id != source.planning_run_id
+        or matrix[0].model_id != model_id
+    ):
+        raise PipelineError("Normalized-input supersede native matrix identity changed")
 
 
 def runner_command(root: Path, *parts: str) -> list[str]:
@@ -3108,11 +4337,7 @@ def _normalized_input_retry_envelope(
 ) -> tuple[NormalizedInputRetryBinding, dict[str, Any]] | None:
     """Validate one reserved normalized retry and all immutable bindings."""
 
-    if (
-        source.article_slug != NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
-        or source.image.get("image_id") != NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
-        or model_id not in NORMALIZED_INPUT_ELIGIBLE_MODELS
-    ):
+    if _normalized_input_target(source, model_id) is None:
         return None
     binding = normalized_input_retry_binding(source, model_id)
     path = root / binding.envelope_rel
@@ -3152,13 +4377,13 @@ def _normalized_input_retry_envelope(
     if (
         envelope.get("schema_version") != 1
         or envelope.get("manifest_role")
-        != "promopages-10060-normalized-input-retry"
+        != NORMALIZED_RETRY_MANIFEST_ROLE
         or envelope.get("ticket") != TICKET
         or envelope.get("primary_batch_id") != BATCH_ID
         or envelope.get("retry_number") != NORMALIZED_INPUT_RETRY_VERSION
         or envelope.get("agent_id") != AGENT_ID
         or envelope.get("logical_output_key") != expected_logical_key
-        or envelope.get("policy") != _normalized_input_retry_policy()
+        or envelope.get("policy") != _normalized_input_retry_policy(binding)
         or not isinstance(primary, dict)
         or primary.get("provider_run_id") != binding.primary_provider_run_id
         or primary.get("status") != "provider-failed"
@@ -3166,14 +4391,6 @@ def _normalized_input_retry_envelope(
         or not isinstance(retry, dict)
         or any(retry.get(key) != value for key, value in expected_retry_identity.items())
         or not isinstance(transform, dict)
-        or transform.get("strategy") != "frozen-page-variant"
-        or transform.get("original") != asset["original"]
-        or transform.get("normalized")
-        != {
-            **normalized,
-            "metadata_path": binding.asset_metadata_rel.as_posix(),
-            "metadata_sha256": asset_sha256,
-        }
     ):
         raise PipelineError(f"Normalized-input retry envelope binding differs: {path}")
     cost = envelope.get("cost")
@@ -3190,20 +4407,111 @@ def _normalized_input_retry_envelope(
         ambiguous_count = int(cost["ambiguous_submit_retry_reservations"])
         terminal_count = int(cost["terminal_retry_reservations"])
         total_count = int(cost["total_retry_reservations"])
+        supersede_keys = (
+            "normalized_input_supersede_version",
+            "normalized_input_supersede_accounting_cost_usd",
+            "normalized_input_supersede_reservations",
+            "maximum_new_paid_submissions_per_superseded_output",
+        )
+        present_supersede_keys = tuple(key in cost for key in supersede_keys)
+        if any(present_supersede_keys) and not all(present_supersede_keys):
+            raise ValueError("partial normalized-input supersede ledger")
+        if all(present_supersede_keys):
+            supersede_version = int(cost[supersede_keys[0]])
+            supersede_accounting_cost = Decimal(str(cost[supersede_keys[1]]))
+            supersede_count = int(cost[supersede_keys[2]])
+            supersede_max_per_output = int(cost[supersede_keys[3]])
+        else:
+            supersede_version = None
+            supersede_accounting_cost = None
+            supersede_count = 0
+            supersede_max_per_output = None
     except (InvalidOperation, KeyError, TypeError, ValueError) as exc:
         raise PipelineError(
             f"Normalized-input retry cost ledger is invalid: {path}"
         ) from exc
+    supersede_documents = _known_normalized_input_supersede_envelopes(root)
+    if supersede_count:
+        supersede_state_valid = (
+            supersede_version == NORMALIZED_INPUT_SUPERSEDE_VERSION
+            and supersede_accounting_cost
+            == NORMALIZED_INPUT_SUPERSEDE_ACCOUNTING_COST_USD
+            and supersede_count == 1
+            and supersede_max_per_output == 1
+            and len(supersede_documents) == 1
+        )
+    else:
+        # A retry envelope written before the supersede does not gain new
+        # ledger fields retroactively. Once the supersede exists, its frozen
+        # cost snapshot is the reservation boundary proving that this older
+        # envelope was admitted first.
+        supersede_state_valid = True
+        if supersede_documents:
+            boundary = supersede_documents[0].get("cost")
+            if not isinstance(boundary, dict):
+                supersede_state_valid = False
+            else:
+                try:
+                    boundary_counts = (
+                        int(boundary["terminal_retry_reservations"]),
+                        int(boundary["ambiguous_submit_retry_reservations"]),
+                        int(boundary["normalized_input_retry_reservations"]),
+                    )
+                    boundary_supersede_version = int(
+                        boundary["normalized_input_supersede_version"]
+                    )
+                    boundary_supersede_cost = Decimal(
+                        str(
+                            boundary[
+                                "normalized_input_supersede_accounting_cost_usd"
+                            ]
+                        )
+                    )
+                    boundary_supersede_count = int(
+                        boundary["normalized_input_supersede_reservations"]
+                    )
+                except (InvalidOperation, KeyError, TypeError, ValueError):
+                    supersede_state_valid = False
+                else:
+                    supersede_state_valid = (
+                        boundary_supersede_version
+                        == NORMALIZED_INPUT_SUPERSEDE_VERSION
+                        and boundary_supersede_cost
+                        == NORMALIZED_INPUT_SUPERSEDE_ACCOUNTING_COST_USD
+                        and boundary_supersede_count == 1
+                        and all(
+                            value <= boundary_value
+                            for value, boundary_value in zip(
+                                (
+                                    terminal_count,
+                                    ambiguous_count,
+                                    normalized_count,
+                                ),
+                                boundary_counts,
+                            )
+                        )
+                    )
     if (
         accounting_cost != NORMALIZED_INPUT_RETRY_ACCOUNTING_COST_USD
         or normalized_count < 1
         or ambiguous_count < 0
         or terminal_count < 0
+        or not supersede_state_valid
         or total_count
-        != normalized_count + ambiguous_count + terminal_count
+        != (
+            normalized_count
+            + ambiguous_count
+            + terminal_count
+            + supersede_count
+        )
         or maximum > operator_cap
         or maximum > hard_cap
-        or hard_cap != HARD_BUDGET_CAP_USD
+        or hard_cap
+        != (
+            HARD_BUDGET_CAP_USD
+            if HARD_BUDGET_CAP_USD is not None
+            else operator_cap
+        )
     ):
         raise PipelineError(f"Normalized-input retry cost ledger differs: {path}")
     expected_request, expected_delta = _normalized_retry_request(
@@ -3219,12 +4527,18 @@ def _normalized_input_retry_envelope(
             "sha256": normalized["sha256"],
         },
     )
+    expected_transform = _normalized_input_source_transform(
+        binding,
+        asset,
+        asset_sha256,
+        expected_delta,
+    )
     if (
         retry.get("request") != expected_request
         or retry.get("request_sha256") != expected_request_sha256
         or retry.get("request_fingerprint_version")
         != transport.REQUEST_FINGERPRINT_VERSION
-        or transform.get("request_delta") != expected_delta
+        or transform != expected_transform
     ):
         raise PipelineError(
             f"Normalized-input request delta differs after reservation: {path}"
@@ -3240,10 +4554,366 @@ def _normalized_input_retry_envelope(
         or primary_paths["video"].exists()
     ):
         raise PipelineError(
-            "Primary oversize evidence changed after retry reservation: "
+            "Primary normalized-input evidence changed after retry reservation: "
             f"{binding.primary_provider_run_id}"
         )
     return binding, envelope
+
+
+def _active_normalized_input_retry_evidence(
+    source: Source,
+    model_id: str,
+    normalized_envelope: dict[str, Any],
+    *,
+    root: Path,
+) -> tuple[dict[str, Any], str]:
+    """Validate the exact still-active receipt the operator chose to ignore."""
+
+    normalized = _require_normalized_input_supersede_target(source, model_id)
+    run_path = root / normalized.run_rel
+    prompt_path = root / normalized.prompt_rel
+    video_path = root / normalized.video_rel
+    if (
+        not run_path.is_file()
+        or run_path.is_symlink()
+        or not prompt_path.is_file()
+        or prompt_path.is_symlink()
+        or video_path.exists()
+    ):
+        raise PipelineError(
+            "The authorized normalized-input retry no longer has exact active evidence"
+        )
+    run = read_json(run_path)
+    retry = normalized_envelope.get("retry_attempt")
+    primary = normalized_envelope.get("primary_attempt")
+    if not isinstance(run, dict) or not isinstance(retry, dict) or not isinstance(primary, dict):
+        raise PipelineError("Active normalized-input retry evidence is invalid")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": normalized.retry_batch_id,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": normalized.retry_provider_run_id,
+        "model_id": model_id,
+        "adapter": ROUTE_IDENTITIES[model_id][0],
+    }
+    if any(run.get(key) != value for key, value in expected_identity.items()):
+        raise PipelineError("Active normalized-input retry identity differs")
+    if (
+        run.get("provider_job_id")
+        != NORMALIZED_INPUT_SUPERSEDE_TARGET["active_provider_job_id"]
+        or run.get("status") not in UNRESOLVED_PROVIDER_STATUSES
+        or run.get("provider_may_be_active") is not True
+        or not isinstance(run.get("submitted_at"), str)
+        or not run.get("submitted_at")
+        or run.get("completed_at") is not None
+        or run.get("media") is not None
+        or run.get("contract_check") is not None
+        or run.get("request") != retry.get("request")
+        or run.get("request_sha256") != retry.get("request_sha256")
+        or run.get("request_fingerprint_version")
+        != transport.REQUEST_FINGERPRINT_VERSION
+    ):
+        raise PipelineError(
+            "Supersede requires the exact allowlisted active normalized-input job"
+        )
+    primary_prompt_path = root / primary["prompt_path"]
+    if not primary_prompt_path.is_file() or primary_prompt_path.is_symlink():
+        raise PipelineError("Primary normalized-input prompt evidence is missing")
+    primary_prompt = read_json(primary_prompt_path)
+    retry_prompt = read_json(prompt_path)
+    shared_prompt_fields = (
+        "ticket",
+        "agent_id",
+        "lite_run_id",
+        "model_id",
+        "source",
+        "structured_intent",
+        "prompt",
+        "runtime",
+        "lite_result",
+    )
+    if (
+        not isinstance(primary_prompt, dict)
+        or not isinstance(retry_prompt, dict)
+        or any(
+            retry_prompt.get(field) != primary_prompt.get(field)
+            for field in shared_prompt_fields
+        )
+        or retry_prompt.get("batch_id") != normalized.retry_batch_id
+        or retry_prompt.get("provider_run_id")
+        != normalized.retry_provider_run_id
+    ):
+        raise PipelineError("Active normalized-input retry prompt differs")
+    return run, sha256_file(run_path)
+
+
+def _normalized_input_supersede_envelope(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> tuple[NormalizedInputSupersedeBinding, dict[str, Any]] | None:
+    """Validate the single nested supersede reservation and immutable parent."""
+
+    target = NORMALIZED_INPUT_SUPERSEDE_TARGET
+    if (
+        BATCH_ID != target["batch_id"]
+        or source.article_slug != target["article_slug"]
+        or source.image.get("image_id") != target["image_id"]
+        or model_id != target["model_id"]
+    ):
+        return None
+    binding = normalized_input_supersede_binding(source, model_id)
+    path = root / binding.envelope_rel
+    if not path.exists():
+        return None
+    if not path.is_file() or path.is_symlink():
+        raise PipelineError(
+            f"Normalized-input supersede envelope is not a regular file: {path}"
+        )
+    document = read_json(path)
+    normalized_loaded = _normalized_input_retry_envelope(
+        source,
+        model_id,
+        root=root,
+    )
+    if normalized_loaded is None:
+        raise PipelineError("Superseded normalized-input retry envelope is missing")
+    _normalized_binding, normalized_envelope = normalized_loaded
+    active_run, active_run_sha256 = _active_normalized_input_retry_evidence(
+        source,
+        model_id,
+        normalized_envelope,
+        root=root,
+    )
+    if not isinstance(document, dict):
+        raise PipelineError(f"Normalized-input supersede envelope is invalid: {path}")
+    cost = document.get("cost")
+    if not isinstance(cost, dict):
+        raise PipelineError(f"Normalized-input supersede cost ledger is missing: {path}")
+    try:
+        supersede_cost = Decimal(
+            str(cost["normalized_input_supersede_accounting_cost_usd"])
+        )
+        supersede_count = int(cost["normalized_input_supersede_reservations"])
+        maximum = Decimal(str(cost["maximum_estimated_cost_usd"]))
+        operator_cap = Decimal(str(cost["operator_budget_cap_usd"]))
+    except (InvalidOperation, KeyError, TypeError, ValueError) as exc:
+        raise PipelineError(
+            f"Normalized-input supersede cost ledger is invalid: {path}"
+        ) from exc
+    if (
+        supersede_cost != NORMALIZED_INPUT_SUPERSEDE_ACCOUNTING_COST_USD
+        or supersede_count != 1
+        or maximum > operator_cap
+    ):
+        raise PipelineError(f"Normalized-input supersede cost ledger differs: {path}")
+    expected = _normalized_input_supersede_envelope_document(
+        binding,
+        normalized_envelope,
+        active_run,
+        active_run_sha256,
+        cost,
+        root=root,
+    )
+    if document != expected:
+        raise PipelineError(f"Normalized-input supersede envelope differs: {path}")
+    return binding, document
+
+
+def _normalized_input_supersede_provider_record(
+    source: Source,
+    model_id: str,
+    *,
+    root: Path,
+) -> dict[str, Any] | None:
+    """Select terminal media from the successor while retaining both attempts."""
+
+    loaded = _normalized_input_supersede_envelope(source, model_id, root=root)
+    if loaded is None:
+        return None
+    binding, envelope = loaded
+    prompt_path = root / binding.prompt_rel
+    run_path = root / binding.run_rel
+    video_path = root / binding.video_rel
+    if not prompt_path.is_file() or prompt_path.is_symlink():
+        return None
+    superseded = envelope["superseded_attempt"]
+    old_prompt = read_json(root / superseded["prompt_path"])
+    new_prompt = read_json(prompt_path)
+    shared_prompt_fields = (
+        "ticket",
+        "agent_id",
+        "lite_run_id",
+        "model_id",
+        "source",
+        "structured_intent",
+        "prompt",
+        "runtime",
+        "lite_result",
+    )
+    if (
+        not isinstance(old_prompt, dict)
+        or not isinstance(new_prompt, dict)
+        or any(
+            new_prompt.get(field) != old_prompt.get(field)
+            for field in shared_prompt_fields
+        )
+        or new_prompt.get("batch_id") != binding.supersede_batch_id
+        or new_prompt.get("provider_run_id") != binding.supersede_provider_run_id
+    ):
+        raise PipelineError("Normalized-input supersede changed the Lite prompt")
+    if not run_path.is_file() or run_path.is_symlink():
+        return None
+    run = read_json(run_path)
+    if not isinstance(run, dict):
+        raise PipelineError(f"Normalized-input supersede receipt is invalid: {run_path}")
+    expected_identity = {
+        "ticket": TICKET,
+        "batch_id": binding.supersede_batch_id,
+        "agent_id": AGENT_ID,
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.supersede_provider_run_id,
+        "model_id": model_id,
+        "adapter": ROUTE_IDENTITIES[model_id][0],
+    }
+    if any(run.get(key) != value for key, value in expected_identity.items()):
+        raise PipelineError(f"Normalized-input supersede receipt identity differs: {run_path}")
+    if _native_receipt_is_unresolved(run):
+        return None
+    status = native.effective_run_status(run)
+    check = run.get("contract_check")
+    media_accepted = (
+        status in {"succeeded", "verification-failed"}
+        and run.get("provider_may_be_active") is False
+        and video_path.is_file()
+        and isinstance(run.get("media"), dict)
+        and native.complete_media_is_accepted(
+            status,
+            check,
+            allow_contract_warnings=True,
+        )
+    )
+    exhausted = (
+        run.get("status") == "provider-failed"
+        and run.get("provider_may_be_active") is False
+        and isinstance(run.get("provider_job_id"), str)
+        and bool(run.get("provider_job_id"))
+        and isinstance(run.get("completed_at"), str)
+        and bool(run.get("completed_at"))
+        and isinstance(run.get("error"), str)
+        and bool(run.get("error"))
+        and not video_path.exists()
+        and run.get("media") is None
+        and run.get("contract_check") is None
+    )
+    if not media_accepted and not exhausted:
+        return None
+    expected_attempt = envelope["superseding_attempt"]
+    if (
+        run.get("request") != expected_attempt["request"]
+        or run.get("request_sha256") != expected_attempt["request_sha256"]
+        or run.get("request_fingerprint_version")
+        != transport.REQUEST_FINGERPRINT_VERSION
+    ):
+        raise PipelineError("Normalized-input supersede request differs from envelope")
+
+    def attempt_audit(attempt: dict[str, Any], *, current: bool) -> dict[str, Any]:
+        return {
+            "provider_run_id": attempt.get("provider_run_id"),
+            "provider_job_id": attempt.get("provider_job_id"),
+            "provider_task_id": attempt.get("provider_task_id"),
+            "status": attempt.get("status"),
+            "provider_may_be_active": attempt.get("provider_may_be_active"),
+            "submitted_at": attempt.get("submitted_at"),
+            "completed_at": attempt.get("completed_at"),
+            "error": attempt.get("error"),
+            "run_path": (
+                binding.run_rel.as_posix() if current else attempt.get("run_path")
+            ),
+            "run_sha256": (
+                sha256_file(run_path) if current else attempt.get("run_sha256")
+            ),
+            "prompt_path": (
+                binding.prompt_rel.as_posix()
+                if current
+                else attempt.get("prompt_path")
+            ),
+            "prompt_sha256": (
+                sha256_file(prompt_path)
+                if current
+                else attempt.get("prompt_sha256")
+            ),
+            "request_sha256": attempt.get("request_sha256"),
+        }
+
+    current_attempt = attempt_audit({**run}, current=True)
+    superseded_attempt = attempt_audit(superseded, current=False)
+    normalized_envelope_path = Path(envelope["normalized_retry"]["envelope_path"])
+    normalized_envelope = read_json(root / normalized_envelope_path)
+    primary = normalized_envelope["primary_attempt"]
+    primary_attempt = {
+        key: primary.get(key)
+        for key in (
+            "provider_run_id",
+            "provider_job_id",
+            "provider_task_id",
+            "status",
+            "recorded_status",
+            "provider_may_be_active",
+            "recorded_provider_may_be_active",
+            "recorded_provider_job_id",
+            "submitted_at",
+            "completed_at",
+            "provider_submit_time",
+            "provider_scheduled_time",
+            "provider_end_time",
+            "error",
+            "run_path",
+            "run_sha256",
+            "prompt_path",
+            "prompt_sha256",
+            "request_sha256",
+        )
+    }
+    return {
+        "lite_run_id": source.planning_run_id,
+        "provider_run_id": binding.supersede_provider_run_id,
+        "sample_id": source.sample_id,
+        "article_slug": source.article_slug,
+        "source_path": source.image["source_path"],
+        "model_id": model_id,
+        "status": "provider-unavailable" if exhausted else status,
+        "recorded_status": run.get("status"),
+        "provider_may_be_active": run.get("provider_may_be_active"),
+        "prompt_path": binding.prompt_rel.as_posix(),
+        "run_path": binding.run_rel.as_posix(),
+        "video_path": None if exhausted else binding.video_rel.as_posix(),
+        "media": None if exhausted else run.get("media"),
+        "contract_check": None if exhausted else check,
+        "error": run.get("error"),
+        "retry_selection": {
+            "retry_kind": "normalized-input",
+            "retry_number": NORMALIZED_INPUT_RETRY_VERSION,
+            "namespace": normalized_envelope_path.parent.as_posix(),
+            "envelope_path": normalized_envelope_path.as_posix(),
+            "envelope_sha256": envelope["normalized_retry"]["envelope_sha256"],
+            "exhausted": False,
+            "primary_attempt": primary_attempt,
+            "retry_attempt": superseded_attempt,
+            "source_transform": envelope["source_transform"],
+            "supersede": {
+                "version": NORMALIZED_INPUT_SUPERSEDE_VERSION,
+                "namespace": binding.directory_rel.as_posix(),
+                "envelope_path": binding.envelope_rel.as_posix(),
+                "envelope_sha256": sha256_file(root / binding.envelope_rel),
+                "exhausted": exhausted,
+                "superseded_attempt": superseded_attempt,
+                "superseding_attempt": current_attempt,
+            },
+        },
+    }
 
 
 def _normalized_input_retry_provider_record(
@@ -3253,6 +4923,14 @@ def _normalized_input_retry_provider_record(
     root: Path,
 ) -> dict[str, Any] | None:
     """Select normalized retry media or terminal provider-unavailable audit."""
+
+    supersede = _normalized_input_supersede_envelope(source, model_id, root=root)
+    if supersede is not None:
+        return _normalized_input_supersede_provider_record(
+            source,
+            model_id,
+            root=root,
+        )
 
     loaded = _normalized_input_retry_envelope(source, model_id, root=root)
     if loaded is None:
@@ -3454,7 +5132,7 @@ def _terminal_retry_envelope(
     if (
         envelope.get("schema_version") != 1
         or envelope.get("manifest_role")
-        != "promopages-10060-terminal-provider-retry"
+        != TERMINAL_RETRY_MANIFEST_ROLE
         or envelope.get("ticket") != TICKET
         or envelope.get("primary_batch_id") != BATCH_ID
         or envelope.get("retry_number") != TERMINAL_RETRY_VERSION
@@ -3686,7 +5364,7 @@ def _ambiguous_submit_retry_envelope(
     if (
         envelope.get("schema_version") != 1
         or envelope.get("manifest_role")
-        != "promopages-10060-ambiguous-submit-retry"
+        != AMBIGUOUS_RETRY_MANIFEST_ROLE
         or envelope.get("ticket") != TICKET
         or envelope.get("primary_batch_id") != BATCH_ID
         or envelope.get("retry_number") != AMBIGUOUS_SUBMIT_RETRY_VERSION
@@ -3704,6 +5382,7 @@ def _ambiguous_submit_retry_envelope(
         or primary.get("provider_job_id") is not None
         or primary.get("submitted_at") is not None
         or primary.get("completed_at") is not None
+        or primary.get("adapter") != ROUTE_IDENTITIES[model_id][0]
         or not isinstance(primary.get("ambiguity_reason"), str)
         or not primary.get("ambiguity_reason")
     ):
@@ -3720,6 +5399,7 @@ def _ambiguous_submit_retry_envelope(
         )
         ambiguous_count = int(cost["ambiguous_submit_retry_reservations"])
         terminal_count = int(cost["terminal_retry_reservations"])
+        normalized_count = int(cost.get("normalized_input_retry_reservations", 0))
         total_count = int(cost["total_retry_reservations"])
     except (InvalidOperation, KeyError, TypeError, ValueError) as exc:
         raise PipelineError(
@@ -3729,10 +5409,16 @@ def _ambiguous_submit_retry_envelope(
         accounting_cost != AMBIGUOUS_SUBMIT_RETRY_ACCOUNTING_COST_USD
         or ambiguous_count < 1
         or terminal_count < 0
-        or total_count != ambiguous_count + terminal_count
+        or normalized_count < 0
+        or total_count != ambiguous_count + terminal_count + normalized_count
         or maximum > operator_cap
         or maximum > hard_cap
-        or hard_cap != HARD_BUDGET_CAP_USD
+        or hard_cap
+        != (
+            HARD_BUDGET_CAP_USD
+            if HARD_BUDGET_CAP_USD is not None
+            else operator_cap
+        )
     ):
         raise PipelineError(f"Ambiguous-submit retry cost ledger differs: {path}")
     primary_paths = primary_artifact_paths(source, model_id, root)
@@ -3890,7 +5576,7 @@ def _ambiguous_submit_retry_provider_record(
         "lite_run_id": source.planning_run_id,
         "provider_run_id": binding.retry_provider_run_id,
         "model_id": model_id,
-        "adapter": "eliza-segmind",
+        "adapter": ROUTE_IDENTITIES[model_id][0],
     }
     if any(run.get(key) != value for key, value in expected_identity.items()):
         raise PipelineError(f"Ambiguous-submit retry receipt identity differs: {run_path}")
@@ -4066,10 +5752,10 @@ def generation_article_states(
                 model_id,
                 root=root,
             )
-            ambiguous_loaded = (
-                _ambiguous_submit_retry_envelope(source, model_id, root=root)
-                if model_id == "alibaba/wan-2.2"
-                else None
+            ambiguous_loaded = _ambiguous_submit_retry_envelope(
+                source,
+                model_id,
+                root=root,
             )
             ambiguous_record = (
                 _ambiguous_submit_retry_provider_record(
@@ -4267,10 +5953,10 @@ def generation_scheduling_plan(
                 if terminal_loaded is not None
                 else None
             )
-            ambiguous_loaded = (
-                _ambiguous_submit_retry_envelope(source, model_id, root=root)
-                if model_id == "alibaba/wan-2.2"
-                else None
+            ambiguous_loaded = _ambiguous_submit_retry_envelope(
+                source,
+                model_id,
+                root=root,
             )
             ambiguous_record = (
                 _ambiguous_submit_retry_provider_record(
@@ -4430,17 +6116,19 @@ def run_generation(
     ]
     if fail_fast:
         argv.append("--fail-fast")
-    if dry_run and selected_sources != sources:
-        for source in selected_sources:
-            for model_id in MODEL_IDS:
-                argv.extend(
-                    ["--run-id", native.Entry(source.sample, model_id).run_id]
-                )
     # No model filter is passed: native.run_provider_pools starts the three
     # exact route queues together.  Succeeded jobs are skipped and submitted
     # identities are only polled/downloaded, which provides safe resume.
     if dry_run:
-        return native.main(argv, root)
+        scheduled_run_ids, scheduling_exclusions = generation_scheduling_plan(
+            sources,
+            selected_sources,
+            root=root,
+        )
+        for run_id in scheduled_run_ids:
+            argv.extend(["--run-id", run_id])
+        with native_scheduling_exclusions(scheduling_exclusions):
+            return native.main(argv, root)
     with inventory_run_lock(root):
         state = enforce_real_generation_article_order(
             sources,
@@ -4498,10 +6186,10 @@ def _enforce_terminal_retry_order(
         for model_id in MODEL_IDS:
             entry = native.Entry(source.sample, model_id)
             receipt, _path = _native_run_receipt(entry, root=root)
-            ambiguous_loaded = (
-                _ambiguous_submit_retry_envelope(source, model_id, root=root)
-                if model_id == "alibaba/wan-2.2"
-                else None
+            ambiguous_loaded = _ambiguous_submit_retry_envelope(
+                source,
+                model_id,
+                root=root,
             )
             ambiguous_record = (
                 _ambiguous_submit_retry_provider_record(
@@ -4589,10 +6277,10 @@ def run_terminal_provider_retry(
         )
         binding = terminal_retry_binding(source, model_id)
         existing = _terminal_retry_envelope(source, model_id, root=root)
-        ambiguous_existing = (
-            _ambiguous_submit_retry_envelope(source, model_id, root=root)
-            if model_id == "alibaba/wan-2.2"
-            else None
+        ambiguous_existing = _ambiguous_submit_retry_envelope(
+            source,
+            model_id,
+            root=root,
         )
         if ambiguous_existing is not None:
             raise PipelineError(
@@ -4600,9 +6288,7 @@ def run_terminal_provider_retry(
                 "cannot also receive a terminal retry"
             )
         if (
-            source.article_slug == NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
-            and source.image.get("image_id") == NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
-            and model_id in NORMALIZED_INPUT_ELIGIBLE_MODELS
+            _normalized_input_target(source, model_id) is not None
             and _normalized_input_retry_envelope(source, model_id, root=root)
             is not None
         ):
@@ -4743,13 +6429,17 @@ def run_terminal_provider_retry(
 def _enforce_ambiguous_submit_retry_order(
     sources: Iterable[Source],
     target_source: Source,
+    target_model_id: str,
     *,
     root: Path,
 ) -> None:
     """Admit the first incomplete output of only the current article."""
 
     sources = tuple(sources)
-    target_model_id = "alibaba/wan-2.2"
+    if target_model_id not in MODEL_IDS:
+        raise PipelineError(
+            f"Ambiguous-submit retry model is unsupported: {target_model_id}"
+        )
     states = generation_article_states(sources, root=root)
     next_incomplete = next((state for state in states if not state.complete), None)
     if next_incomplete is None:
@@ -4761,6 +6451,8 @@ def _enforce_ambiguous_submit_retry_order(
         )
     first_incomplete: tuple[Source, str] | None = None
     unsafe_outside_article: list[str] = []
+    active_same_route: list[str] = []
+    target_primary_id = primary_provider_run_id(target_source, target_model_id)
     for source in sources:
         for model_id in MODEL_IDS:
             entry = native.Entry(source.sample, model_id)
@@ -4770,10 +6462,10 @@ def _enforce_ambiguous_submit_retry_order(
                 model_id,
                 root=root,
             )
-            ambiguous_loaded = (
-                _ambiguous_submit_retry_envelope(source, model_id, root=root)
-                if model_id == target_model_id
-                else None
+            ambiguous_loaded = _ambiguous_submit_retry_envelope(
+                source,
+                model_id,
+                root=root,
             )
             ambiguous_record = (
                 _ambiguous_submit_retry_provider_record(
@@ -4805,6 +6497,16 @@ def _enforce_ambiguous_submit_retry_order(
                 or normalized_record is not None
             )
             if (
+                model_id == target_model_id
+                and entry.provider_run_id != target_primary_id
+                and receipt is not None
+                and _native_receipt_is_unresolved(receipt)
+                and terminal_record is None
+                and ambiguous_record is None
+                and normalized_record is None
+            ):
+                active_same_route.append(entry.provider_run_id)
+            if (
                 source.article_slug == next_incomplete.article_slug
                 and not accepted
                 and first_incomplete is None
@@ -4823,6 +6525,16 @@ def _enforce_ambiguous_submit_retry_order(
             "Ambiguous-submit retry is blocked by unresolved provider identities "
             "outside the current article: "
             + ", ".join(unsafe_outside_article[:5])
+        )
+    expected_adapter = ROUTE_IDENTITIES[target_model_id][0]
+    if (
+        expected_adapter == "eliza-openrouter"
+        and len(active_same_route) + 2 > ROUTE_CAPACITIES[target_model_id]
+    ):
+        raise PipelineError(
+            f"Ambiguous-submit retry would exceed the active "
+            f"{target_model_id} route capacity; resume these jobs first: "
+            + ", ".join(active_same_route[:5])
         )
     if first_incomplete != (target_source, target_model_id):
         label = (
@@ -4847,13 +6559,14 @@ def run_ambiguous_submit_retry(
     timeout: int,
     poll_interval: float,
 ) -> int:
-    """Create/resume the sole explicit retry of a quarantined Segmind POST."""
+    """Create/resume the sole explicit retry of a quarantined provider POST."""
 
     sources = tuple(sources)
     if not dry_run and not allow_external_processing:
         raise PipelineError(
             "Real ambiguous-submit retry requires --allow-external-processing "
-            "because the exact original image and Lite prompt are sent to Segmind"
+            "because the exact original image and Lite prompt are sent to the "
+            "same provider route"
         )
 
     def execute() -> int:
@@ -4862,18 +6575,13 @@ def run_ambiguous_submit_retry(
             sources,
             primary_provider_run_id_value,
         )
-        if model_id != "alibaba/wan-2.2":
-            raise PipelineError(
-                "Ambiguous-submit retry is only valid for alibaba/wan-2.2"
-            )
         if _terminal_retry_envelope(source, model_id, root=root) is not None:
             raise PipelineError(
                 "A logical output with a terminal retry reservation cannot also "
                 "receive an ambiguous-submit retry"
             )
         if (
-            source.article_slug == NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG
-            and source.image.get("image_id") == NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID
+            _normalized_input_target(source, model_id) is not None
             and _normalized_input_retry_envelope(source, model_id, root=root)
             is not None
         ):
@@ -4900,6 +6608,7 @@ def run_ambiguous_submit_retry(
             _enforce_ambiguous_submit_retry_order(
                 sources,
                 source,
+                model_id,
                 root=root,
             )
             primary = _primary_ambiguous_submit_evidence(
@@ -5061,10 +6770,10 @@ def _effective_terminal_retry_overlay(
     """
 
     terminal_loaded = _terminal_retry_envelope(source, model_id, root=root)
-    ambiguous_loaded = (
-        _ambiguous_submit_retry_envelope(source, model_id, root=root)
-        if model_id == "alibaba/wan-2.2"
-        else None
+    ambiguous_loaded = _ambiguous_submit_retry_envelope(
+        source,
+        model_id,
+        root=root,
     )
     normalized_loaded = _normalized_input_retry_envelope(
         source,
@@ -5169,13 +6878,13 @@ def run_normalized_input_retry(
     timeout: int,
     poll_interval: float,
 ) -> int:
-    """Reserve/run the one /scale_1200 retry for an exact oversize primary."""
+    """Reserve/run the one frozen-input retry for an exact rejected primary."""
 
     sources = tuple(sources)
     if not dry_run and not allow_external_processing:
         raise PipelineError(
             "Real normalized-input retry requires --allow-external-processing "
-            "because the frozen /scale_1200 image and Lite prompt are sent to "
+            "because the frozen normalized image and Lite prompt are sent to "
             "the exact original provider route"
         )
 
@@ -5191,8 +6900,7 @@ def run_normalized_input_retry(
                 "A terminal retry reservation conflicts with normalized-input retry"
             )
         if (
-            model_id == "alibaba/wan-2.2"
-            and _ambiguous_submit_retry_envelope(source, model_id, root=root)
+            _ambiguous_submit_retry_envelope(source, model_id, root=root)
             is not None
         ):
             raise PipelineError(
@@ -5396,6 +7104,230 @@ def run_normalized_input_retry(
         return execute()
 
 
+def run_normalized_input_supersede(
+    sources: Iterable[Source],
+    inventory: dict[str, Any],
+    *,
+    normalized_retry_provider_run_id_value: str,
+    operator_authorized: bool,
+    root: Path,
+    dry_run: bool,
+    allow_external_processing: bool,
+    timeout: int,
+    poll_interval: float,
+) -> int:
+    """Create/resume the one paid successor to the exact active retry job."""
+
+    sources = tuple(sources)
+    if not dry_run and not operator_authorized:
+        raise PipelineError(
+            "Real normalized-input supersede requires "
+            "--operator-authorized-active-job"
+        )
+    if not dry_run and not allow_external_processing:
+        raise PipelineError(
+            "Real normalized-input supersede requires --allow-external-processing"
+        )
+
+    def execute() -> int:
+        source, model_id = resolve_normalized_input_supersede_target(
+            sources,
+            normalized_retry_provider_run_id_value,
+        )
+        configure_native(sources, root)
+        binding = normalized_input_supersede_binding(source, model_id)
+        normalized_loaded = _normalized_input_retry_envelope(
+            source,
+            model_id,
+            root=root,
+        )
+        if normalized_loaded is None:
+            raise PipelineError(
+                "The exact normalized-input retry reservation is missing"
+            )
+        normalized_binding, normalized_envelope = normalized_loaded
+        if (
+            normalized_binding.retry_provider_run_id
+            != normalized_retry_provider_run_id_value
+        ):
+            raise PipelineError("Normalized-input supersede parent identity differs")
+        active_run, active_run_sha256 = _active_normalized_input_retry_evidence(
+            source,
+            model_id,
+            normalized_envelope,
+            root=root,
+        )
+        states = generation_article_states(sources, root=root)
+        next_incomplete = next((state for state in states if not state.complete), None)
+        if (
+            next_incomplete is None
+            or next_incomplete.article_slug != source.article_slug
+        ):
+            raise PipelineError(
+                "Normalized-input supersede is outside the next incomplete article"
+            )
+        existing = _normalized_input_supersede_envelope(
+            source,
+            model_id,
+            root=root,
+        )
+        if existing is None:
+            other_active_same_route = []
+            for candidate in sources:
+                primary_entry = native.Entry(candidate.sample, model_id)
+                primary_receipt, _path = _native_run_receipt(
+                    primary_entry,
+                    root=root,
+                )
+                if (
+                    primary_receipt is not None
+                    and _native_receipt_is_unresolved(primary_receipt)
+                    and primary_entry.provider_run_id
+                    != primary_provider_run_id(source, model_id)
+                ):
+                    other_active_same_route.append(
+                        primary_entry.provider_run_id
+                    )
+            # The exact superseded job remains active and the new attempt takes
+            # one additional slot; both count against the frozen Wan 2.7 pool.
+            if len(other_active_same_route) + 2 > ROUTE_CAPACITIES[model_id]:
+                raise PipelineError(
+                    "Normalized-input supersede would exceed the exact route "
+                    "capacity; resume other jobs first: "
+                    + ", ".join(other_active_same_route[:5])
+                )
+            aggregate_cost = _aggregate_retry_cost(
+                inventory,
+                root=root,
+                additional_normalized_supersede=1,
+            )
+            envelope = _normalized_input_supersede_envelope_document(
+                binding,
+                normalized_envelope,
+                active_run,
+                active_run_sha256,
+                aggregate_cost,
+                root=root,
+            )
+        else:
+            existing_binding, envelope = existing
+            if existing_binding != binding:
+                raise PipelineError("Normalized-input supersede binding differs")
+            aggregate_cost = _aggregate_retry_cost(inventory, root=root)
+        if dry_run:
+            action = "existing" if existing is not None else "would-reserve"
+            print(
+                f"PASS: normalized-input supersede "
+                f"{binding.supersede_provider_run_id} -> {action}; "
+                f"supersedes active job {active_run['provider_job_id']}; "
+                f"aggregate maximum="
+                f"${aggregate_cost['maximum_estimated_cost_usd']:.2f}; "
+                "no files written and no provider call"
+            )
+            return 0
+
+        selected = (
+            _normalized_input_supersede_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if existing is not None
+            else None
+        )
+        if isinstance(selected, dict):
+            print(
+                f"PASS: normalized-input supersede already terminal: "
+                f"{binding.supersede_provider_run_id} -> {selected['status']}",
+                flush=True,
+            )
+            return 0
+
+        asset, _asset_sha256 = _validated_normalized_input_asset(
+            normalized_binding,
+            root=root,
+        )
+        configure_normalized_input_supersede_native(binding, asset, root)
+        entry = native.matrix()[0]
+        job = native.load_lite_job(entry, root)
+        sample = native.provider_sample(entry)
+        prompt = native.provider_prompt(job)
+        request = native.provider_request_preview(sample, prompt)
+        expected = envelope["superseding_attempt"]
+        if (
+            request != expected["request"]
+            or transport.request_fingerprint(request, sample)
+            != expected["request_sha256"]
+        ):
+            raise PipelineError(
+                "Normalized-input supersede is not byte-identical to the "
+                "superseded provider request"
+            )
+        envelope_path = root / binding.envelope_rel
+        if envelope_path.is_file():
+            if read_json(envelope_path) != envelope:
+                raise PipelineError(
+                    f"Immutable normalized-input supersede differs: {envelope_path}"
+                )
+        else:
+            if envelope_path.exists():
+                raise PipelineError(
+                    f"Normalized-input supersede target is unsafe: {envelope_path}"
+                )
+            transport.atomic_write_json(envelope_path, envelope)
+        row = native.materialize_entry(entry, root)
+        materialized_request = native.provider_request_preview(
+            row["sample"],
+            row["prompt"],
+        )
+        if materialized_request != expected["request"]:
+            raise PipelineError(
+                "Materialized normalized-input supersede request changed"
+            )
+        argv = [
+            "run",
+            "--run-id",
+            binding.supersede_provider_run_id,
+            "--wan22-concurrency",
+            "1",
+            "--wan27-concurrency",
+            "3",
+            "--veo31-concurrency",
+            "3",
+            "--timeout",
+            str(timeout),
+            "--poll-interval",
+            str(poll_interval),
+            "--allow-external-processing",
+        ]
+        result = native.main(argv, root)
+        if result == 0:
+            selected = _normalized_input_supersede_provider_record(
+                source,
+                model_id,
+                root=root,
+            )
+            if (
+                not isinstance(selected, dict)
+                or selected.get("status")
+                not in {
+                    "succeeded",
+                    "verification-failed",
+                    "provider-unavailable",
+                }
+            ):
+                raise PipelineError(
+                    "Normalized-input supersede returned success without a "
+                    "terminal audited result"
+                )
+        return result
+
+    if dry_run:
+        return execute()
+    with inventory_run_lock(root):
+        return execute()
+
+
 def _planning_record(
     source: Source, root: Path
 ) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -5427,11 +7359,18 @@ def _output_record(
 ) -> dict[str, Any]:
     retry = provider.get("retry_selection")
     if isinstance(retry, dict) and retry.get("retry_kind") == "normalized-input":
-        selected_attempt = (
-            "normalized-input-retry-v1-exhausted"
-            if provider.get("status") == "provider-unavailable"
-            else "normalized-input-retry-v1"
-        )
+        if isinstance(retry.get("supersede"), dict):
+            selected_attempt = (
+                "normalized-input-superseding-attempt-v1-exhausted"
+                if provider.get("status") == "provider-unavailable"
+                else "normalized-input-superseding-attempt-v1"
+            )
+        else:
+            selected_attempt = (
+                "normalized-input-retry-v1-exhausted"
+                if provider.get("status") == "provider-unavailable"
+                else "normalized-input-retry-v1"
+            )
     elif isinstance(retry, dict) and retry.get("retry_kind") == "ambiguous-submit":
         selected_attempt = (
             "ambiguous-submit-retry-v1-exhausted"
@@ -5528,6 +7467,94 @@ def final_output_terminal_error(
             and normalized_retry.get("retry_kind") == "normalized-input"
         ):
             label = output.get("provider_run_id") or "unknown output"
+            supersede = normalized_retry.get("supersede")
+            if isinstance(supersede, dict):
+                superseded = supersede.get("superseded_attempt")
+                superseding = supersede.get("superseding_attempt")
+                if (
+                    output.get("recorded_status") != "provider-failed"
+                    or output.get("selected_attempt")
+                    != "normalized-input-superseding-attempt-v1-exhausted"
+                    or output.get("video_path") is not None
+                    or output.get("media") is not None
+                    or output.get("contract_check") is not None
+                    or not isinstance(output.get("error"), str)
+                    or not output.get("error")
+                    or supersede.get("version")
+                    != NORMALIZED_INPUT_SUPERSEDE_VERSION
+                    or supersede.get("exhausted") is not True
+                    or normalized_retry.get("exhausted") is not False
+                    or not isinstance(superseded, dict)
+                    or not isinstance(superseding, dict)
+                    or superseded.get("provider_run_id")
+                    != NORMALIZED_INPUT_SUPERSEDE_TARGET[
+                        "normalized_retry_provider_run_id"
+                    ]
+                    or superseded.get("provider_job_id")
+                    != NORMALIZED_INPUT_SUPERSEDE_TARGET[
+                        "active_provider_job_id"
+                    ]
+                    or superseded.get("status")
+                    not in UNRESOLVED_PROVIDER_STATUSES
+                    or superseded.get("provider_may_be_active") is not True
+                    or superseding.get("provider_run_id")
+                    != output.get("provider_run_id")
+                    or superseding.get("status") != "provider-failed"
+                    or superseding.get("provider_may_be_active") is not False
+                    or superseding.get("error") != output.get("error")
+                    or superseding.get("request_sha256")
+                    != superseded.get("request_sha256")
+                ):
+                    return f"{label}: normalized supersede exhaustion audit is invalid"
+                for attempt_name, attempt in (
+                    ("superseded", superseded),
+                    ("superseding", superseding),
+                ):
+                    for field in ("provider_run_id", "provider_job_id"):
+                        if not isinstance(attempt.get(field), str) or not attempt.get(field):
+                            return f"{label}: normalized {attempt_name} {field} is missing"
+                    for field, digest_field in (
+                        ("run_path", "run_sha256"),
+                        ("prompt_path", "prompt_sha256"),
+                    ):
+                        value = attempt.get(field)
+                        digest = attempt.get(digest_field)
+                        artifact = Path(value) if isinstance(value, str) else None
+                        if (
+                            artifact is None
+                            or artifact.is_absolute()
+                            or ".." in artifact.parts
+                            or not (root / artifact).is_file()
+                            or not isinstance(digest, str)
+                            or sha256_file(root / artifact) != digest
+                        ):
+                            return (
+                                f"{label}: normalized {attempt_name} "
+                                f"{field} evidence differs"
+                            )
+                for field, digest_field in (
+                    ("envelope_path", "envelope_sha256"),
+                ):
+                    value = supersede.get(field)
+                    digest = supersede.get(digest_field)
+                    artifact = Path(value) if isinstance(value, str) else None
+                    if (
+                        artifact is None
+                        or artifact.is_absolute()
+                        or ".." in artifact.parts
+                        or not (root / artifact).is_file()
+                        or not isinstance(digest, str)
+                        or sha256_file(root / artifact) != digest
+                    ):
+                        return f"{label}: normalized supersede envelope differs"
+                return None
+            normalized_target = _normalized_input_target_for_key(
+                output.get("article_slug"),
+                output.get("image_id"),
+                output.get("model_id"),
+            )
+            if normalized_target is None:
+                return f"{label}: normalized retry target is not allowlisted"
             if (
                 output.get("recorded_status") != "provider-failed"
                 or output.get("selected_attempt")
@@ -5572,8 +7599,13 @@ def final_output_terminal_error(
             original = transform.get("original")
             normalized = transform.get("normalized")
             delta = transform.get("request_delta")
+            expected_strategy = (
+                normalized_target.replacement.strategy
+                if normalized_target.replacement is not None
+                else "frozen-page-variant"
+            )
             if (
-                transform.get("strategy") != "frozen-page-variant"
+                transform.get("strategy") != expected_strategy
                 or not isinstance(original, dict)
                 or not isinstance(normalized, dict)
                 or not isinstance(delta, dict)
@@ -5582,14 +7614,51 @@ def final_output_terminal_error(
                 or delta.get("to") != normalized.get("url")
                 or delta.get("changed_leaf_count") != 1
                 or original.get("path") != output.get("source_path")
-                or original.get("sha256")
-                != NORMALIZED_INPUT_ELIGIBLE_SOURCE_SHA256
+                or original.get("sha256") != normalized_target.source_sha256
                 or not isinstance(original.get("bytes"), int)
-                or original["bytes"] <= NORMALIZED_INPUT_MAX_BYTES
                 or not isinstance(normalized.get("bytes"), int)
                 or not 0 < normalized["bytes"] <= NORMALIZED_INPUT_MAX_BYTES
+                or not isinstance(normalized.get("width"), int)
+                or normalized["width"] < NORMALIZED_INPUT_MIN_DIMENSION
+                or not isinstance(normalized.get("height"), int)
+                or normalized["height"] < NORMALIZED_INPUT_MIN_DIMENSION
             ):
                 return f"{label}: normalized source/request delta audit differs"
+            if normalized_target.failure_kind == "maximum-bytes":
+                if original["bytes"] <= NORMALIZED_INPUT_MAX_BYTES:
+                    return f"{label}: normalized oversize source audit differs"
+            else:
+                original_width = original.get("width")
+                original_height = original.get("height")
+                replacement = normalized_target.replacement
+                if (
+                    original["bytes"] > NORMALIZED_INPUT_MAX_BYTES
+                    or not isinstance(original_width, int)
+                    or not isinstance(original_height, int)
+                    or min(original_width, original_height)
+                    >= NORMALIZED_INPUT_MIN_DIMENSION
+                    or replacement is None
+                    or normalized.get("url") != replacement.url
+                    or normalized.get("sha256") != replacement.sha256
+                    or normalized.get("bytes") != replacement.byte_size
+                    or normalized.get("width") != replacement.width
+                    or normalized.get("height") != replacement.height
+                    or normalized.get("format") != replacement.image_format
+                    or normalized.get("delivery") != "repository-raw"
+                    or normalized.get("repository_path")
+                    != replacement.repository_path
+                    or transform.get("preparation")
+                    != {
+                        "operation": "uniform-scale",
+                        "target_height": replacement.height,
+                        "resampler": "lanczos",
+                        "crop": False,
+                        "local_reencode": True,
+                    }
+                    or transform.get("minimum_provider_input_dimension")
+                    != NORMALIZED_INPUT_MIN_DIMENSION
+                ):
+                    return f"{label}: normalized undersize source audit differs"
             for attempt_name, attempt in (
                 ("primary", primary),
                 ("retry", retry_attempt),
@@ -5918,14 +7987,10 @@ def build_final_manifest(
                     model_id,
                     root=root,
                 )
-                ambiguous_provider = (
-                    _ambiguous_submit_retry_provider_record(
-                        source,
-                        model_id,
-                        root=root,
-                    )
-                    if model_id == "alibaba/wan-2.2"
-                    else None
+                ambiguous_provider = _ambiguous_submit_retry_provider_record(
+                    source,
+                    model_id,
+                    root=root,
                 )
                 normalized_provider = _normalized_input_retry_provider_record(
                     source,
@@ -5956,10 +8021,25 @@ def build_final_manifest(
                         f"Missing output binding: {source.sample_id}/{model_id}"
                     )
                 if normalized_provider is not None:
-                    expected_run_id = normalized_input_retry_binding(
-                        source,
-                        model_id,
-                    ).retry_provider_run_id
+                    normalized_selection = normalized_provider.get(
+                        "retry_selection"
+                    )
+                    if (
+                        isinstance(normalized_selection, dict)
+                        and isinstance(
+                            normalized_selection.get("supersede"),
+                            dict,
+                        )
+                    ):
+                        expected_run_id = normalized_input_supersede_binding(
+                            source,
+                            model_id,
+                        ).supersede_provider_run_id
+                    else:
+                        expected_run_id = normalized_input_retry_binding(
+                            source,
+                            model_id,
+                        ).retry_provider_run_id
                 elif ambiguous_provider is not None:
                     expected_run_id = ambiguous_submit_retry_binding(
                         source,
@@ -6031,7 +8111,7 @@ def build_final_manifest(
         status_summary[status] = status_summary.get(status, 0) + 1
     return {
         "schema_version": 1,
-        "manifest_role": "promopages-10060-all-images",
+        "manifest_role": FINAL_MANIFEST_ROLE,
         "ticket": TICKET,
         "batch_id": BATCH_ID,
         "agent_id": AGENT_ID,
@@ -6062,7 +8142,14 @@ def build_final_manifest(
             "ambiguous_submit_retry": {
                 "version": AMBIGUOUS_SUBMIT_RETRY_VERSION,
                 "namespace": AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL.as_posix(),
-                "route": "eliza-segmind/alibaba/wan-2.2",
+                # Preserve the frozen legacy sidecar byte-semantics while the
+                # extension truthfully records that each retry stays on the
+                # logical output's exact registry-bound model route.
+                "route": (
+                    "eliza-segmind/alibaba/wan-2.2"
+                    if BATCH_ID == LEGACY_BATCH_ID
+                    else "exact-frozen-generation-route-per-model"
+                ),
                 "explicit_operator_command_required": True,
                 "maximum_new_paid_submissions_per_ambiguous_output": 1,
                 "retry2_forbidden": True,
@@ -6071,25 +8158,20 @@ def build_final_manifest(
                 "primary_receipts_immutable": True,
                 "primary_outcome_remains_unknown": True,
             },
-            "normalized_input_retry": {
-                "version": NORMALIZED_INPUT_RETRY_VERSION,
-                "namespace": NORMALIZED_INPUT_RETRY_NAMESPACE_REL.as_posix(),
-                "shared_asset_namespace": (
-                    NORMALIZED_INPUT_ASSET_NAMESPACE_REL.as_posix()
-                ),
-                "eligible_source": {
-                    "article_slug": NORMALIZED_INPUT_ELIGIBLE_ARTICLE_SLUG,
-                    "image_id": NORMALIZED_INPUT_ELIGIBLE_IMAGE_ID,
-                },
-                "models": list(NORMALIZED_INPUT_ELIGIBLE_MODELS),
-                "explicit_operator_command_required": True,
-                "maximum_new_paid_submissions_per_eligible_output": 1,
-                "retry2_forbidden": True,
-                "automatic_paid_retries": False,
-                "fallback": False,
-                "primary_receipts_immutable": True,
-                "request_delta_only_image_pointer": True,
-            },
+            "normalized_input_retry": _normalized_input_generation_policy(),
+            **(
+                {
+                    "normalized_input_supersede": {
+                        "version": NORMALIZED_INPUT_SUPERSEDE_VERSION,
+                        "namespace": (
+                            NORMALIZED_INPUT_SUPERSEDE_NAMESPACE_REL.as_posix()
+                        ),
+                        **_normalized_input_supersede_policy(),
+                    }
+                }
+                if _known_normalized_input_supersede_envelopes(root)
+                else {}
+            ),
         },
         "status_summary": status_summary,
         "acceptance_policy": {
@@ -6217,13 +8299,19 @@ def verify_all(
     terminal_retry_count = len(_known_retry_envelopes(root))
     ambiguous_retry_count = len(_known_ambiguous_submit_retry_envelopes(root))
     normalized_retry_count = len(_known_normalized_input_retry_envelopes(root))
+    normalized_supersede_count = len(
+        _known_normalized_input_supersede_envelopes(root)
+    )
     _enforce_retry_namespace_conflicts(
         _known_retry_envelopes(root),
         _known_ambiguous_submit_retry_envelopes(root),
         _known_normalized_input_retry_envelopes(root),
     )
     retry_count = (
-        terminal_retry_count + ambiguous_retry_count + normalized_retry_count
+        terminal_retry_count
+        + ambiguous_retry_count
+        + normalized_retry_count
+        + normalized_supersede_count
     )
     native_ok, native_errors = native.verify(
         root,
@@ -6278,6 +8366,15 @@ def verify_all(
         "terminal_retry_reservations": terminal_retry_count,
         "ambiguous_submit_retry_reservations": ambiguous_retry_count,
         "normalized_input_retry_reservations": normalized_retry_count,
+        **(
+            {
+                "normalized_input_supersede_reservations": (
+                    normalized_supersede_count
+                )
+            }
+            if normalized_supersede_count
+            else {}
+        ),
         "total_retry_reservations": retry_count,
         "errors": errors,
     }
@@ -6299,10 +8396,10 @@ def _add_budget(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--budget-cap-usd",
         type=budget_arg,
-        default=HARD_BUDGET_CAP_USD,
+        default=DEFAULT_OPERATOR_BUDGET_CAP_USD,
         help=(
             "operator aggregate cap; must cover the complete frozen matrix "
-            f"and be no more than {HARD_BUDGET_CAP_USD:.2f}"
+            "and comply with the selected registered batch policy"
         ),
     )
 
@@ -6314,6 +8411,15 @@ def _add_planning_filters(parser: argparse.ArgumentParser) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--batch",
+        choices=tuple(BATCH_SPECS),
+        default=LEGACY_BATCH_ID,
+        help=(
+            "registered immutable input/output batch; defaults to the frozen "
+            "legacy PROMOPAGES-10060 run"
+        ),
+    )
     commands = parser.add_subparsers(dest="command", required=True)
 
     inventory = commands.add_parser(
@@ -6378,7 +8484,7 @@ def build_parser() -> argparse.ArgumentParser:
     ambiguous_retry = commands.add_parser(
         "retry-ambiguous-submit",
         help=(
-            "explicitly quarantine and retry one synchronous Segmind submit "
+            "explicitly quarantine and retry one exact-route provider submit "
             "whose primary outcome is unknown"
         ),
     )
@@ -6386,8 +8492,8 @@ def build_parser() -> argparse.ArgumentParser:
         "--provider-run-id",
         required=True,
         help=(
-            "exact primary Wan 2.2 provider_run_id with submitting or "
-            "submit-unknown status"
+            "exact primary provider_run_id with submitting or submit-unknown "
+            "status"
         ),
     )
     ambiguous_retry.add_argument("--timeout", type=positive_int, default=1800)
@@ -6402,16 +8508,15 @@ def build_parser() -> argparse.ArgumentParser:
     normalized_retry = commands.add_parser(
         "retry-normalized-input",
         help=(
-            "explicitly retry one exact oversize Wan primary using only its "
-            "frozen manifest /scale_1200 image URL"
+            "explicitly retry one exact input-constrained Wan primary using "
+            "only its policy-bound frozen normalized image URL"
         ),
     )
     normalized_retry.add_argument(
         "--provider-run-id",
         required=True,
         help=(
-            "exact Wan 2.2 or Wan 2.7 primary provider_run_id for "
-            "12-dream-island-7-fishek/08"
+            "exact allowlisted Wan 2.2 or Wan 2.7 primary provider_run_id"
         ),
     )
     normalized_retry.add_argument("--timeout", type=positive_int, default=1800)
@@ -6422,6 +8527,39 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
     )
     _add_budget(normalized_retry)
+
+    normalized_supersede = commands.add_parser(
+        "supersede-normalized-input",
+        help=(
+            "explicitly submit one separately accounted successor to the "
+            "exact allowlisted active normalized-input retry job"
+        ),
+    )
+    normalized_supersede.add_argument(
+        "--provider-run-id",
+        required=True,
+        help="exact active normalized-input retry provider_run_id",
+    )
+    normalized_supersede.add_argument(
+        "--operator-authorized-active-job",
+        action="store_true",
+        help=(
+            "acknowledge the still-active old job and duplicate submission/"
+            "billing risk; required for a real supersede"
+        ),
+    )
+    normalized_supersede.add_argument("--timeout", type=positive_int, default=1800)
+    normalized_supersede.add_argument(
+        "--poll-interval",
+        type=float,
+        default=10.0,
+    )
+    normalized_supersede.add_argument("--dry-run", action="store_true")
+    normalized_supersede.add_argument(
+        "--allow-external-processing",
+        action="store_true",
+    )
+    _add_budget(normalized_supersede)
 
     finalize_parser = commands.add_parser(
         "finalize", help="write the isolated PROMOPAGES-10060 Step-5 sidecar"
@@ -6441,6 +8579,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     args = build_parser().parse_args(argv)
     try:
+        activate_batch(args.batch)
         budget = parse_budget(args.budget_cap_usd)
         discovery = discover(root)
         if args.command == "inventory":
@@ -6530,6 +8669,18 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
                 discovery.sources,
                 inventory,
                 primary_provider_run_id_value=args.provider_run_id,
+                root=root,
+                dry_run=args.dry_run,
+                allow_external_processing=args.allow_external_processing,
+                timeout=args.timeout,
+                poll_interval=args.poll_interval,
+            )
+        if args.command == "supersede-normalized-input":
+            return run_normalized_input_supersede(
+                discovery.sources,
+                inventory,
+                normalized_retry_provider_run_id_value=args.provider_run_id,
+                operator_authorized=args.operator_authorized_active_job,
                 root=root,
                 dry_run=args.dry_run,
                 allow_external_processing=args.allow_external_processing,

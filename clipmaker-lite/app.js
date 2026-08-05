@@ -7,6 +7,70 @@
   const CASE_21_MANIFEST_PATH = "../clipmaker-lite-test/case-21-manifest.json";
   const PROMOPAGES_10060_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-10060-manifest.json";
+  const PROMOPAGES_10060_EXTENSION_MANIFEST_PATH =
+    "../clipmaker-lite-test/promopages-10060-campaigns-20260805-v1-manifest.json";
+  const PROMOPAGES_10060_EXTENSION_ROLE =
+    "promopages-10060-campaign-extension";
+  const PROMOPAGES_10060_EXTENSION_BATCH_ID =
+    "promopages-10060-campaigns-20260805-v1";
+  const PROMOPAGES_10060_EXTENSION_DATASET_PREFIX =
+    "PROMOPAGES-10060-campaigns-20260805-v1";
+  const PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS = ["15", "16", "17", "18"];
+  const PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT =
+    `PROMOPAGES-9884/${PROMOPAGES_10060_EXTENSION_DATASET_PREFIX}/articles`;
+  const PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT =
+    `${PROMOPAGES_10060_EXTENSION_DATASET_PREFIX}/articles`;
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE =
+    `clipmaker-lite-test/runs/${PROMOPAGES_10060_EXTENSION_BATCH_ID}/normalized-input-retries-v1`;
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE =
+    `clipmaker-lite-test/runs/${PROMOPAGES_10060_EXTENSION_BATCH_ID}/normalized-input-assets-v1`;
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT =
+    "25995ee6ea168d2ae7025e5a416bc008ae17a908";
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES = {
+    "18-volma-plitochnyi-klei:05": {
+      source_sha256:
+        "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+      asset_key: "660c32c4d1331cb3a82d",
+      sha256:
+        "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23",
+      bytes: 46_883,
+      width: 882,
+      height: 256,
+      format: "PNG",
+    },
+    "18-volma-plitochnyi-klei:07": {
+      source_sha256:
+        "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      asset_key: "0535f187b92384618210",
+      sha256:
+        "7f71227971a99ca0f204eccadb89a706128eabfb6022657bf8718e952fca70e4",
+      bytes: 57_771,
+      width: 828,
+      height: 256,
+      format: "PNG",
+    },
+    "18-volma-plitochnyi-klei:08": {
+      source_sha256:
+        "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03",
+      asset_key: "2d974dbe489b2e6617a3",
+      sha256:
+        "1a005159d7efaee55f2124844851b7135f28cccfcad0463ad1ac2f5dec1f589a",
+      bytes: 246_119,
+      width: 998,
+      height: 256,
+      format: "PNG",
+    },
+  };
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_KEY =
+    "18-volma-plitochnyi-klei:07:alibaba/wan-2.7";
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID =
+    "novcFDcwbuZkgtrmgQIY";
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY =
+    "superseding-attempt-v1";
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_NAMESPACE =
+    `${PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE}/c45a8447813d1b4e4df0/${PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY}`;
+  const PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID =
+    "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7";
   const EXPECTED_BASE_ARTICLE_COUNT = 20;
   const EXPECTED_BASE_OUTPUT_COUNT = 60;
   const EXPECTED_ADDITIONAL_ARTICLE_COUNT = 20;
@@ -49,6 +113,10 @@
   const NORMALIZED_INPUT_RETRY_SELECTION = "normalized-input-retry-v1";
   const NORMALIZED_INPUT_RETRY_EXHAUSTED_SELECTION =
     "normalized-input-retry-v1-exhausted";
+  const NORMALIZED_INPUT_SUPERSEDE_SELECTION =
+    "normalized-input-superseding-attempt-v1";
+  const NORMALIZED_INPUT_SUPERSEDE_EXHAUSTED_SELECTION =
+    "normalized-input-superseding-attempt-v1-exhausted";
   const MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024;
   const LOOP_MODEL_ID = "alibaba/wan-2.7";
   const LOOP_REQUEST_CLASSIFICATION = "api-loop-closure-experiment";
@@ -188,6 +256,70 @@
 
   const hasOwn = (object, property) =>
     Object.prototype.hasOwnProperty.call(object, property);
+
+  const isCanonicalRelativePath = (value) => {
+    if (
+      typeof value !== "string" ||
+      !value ||
+      value !== value.trim() ||
+      value.startsWith("/") ||
+      value.includes("\\")
+    ) {
+      return false;
+    }
+    return value
+      .split("/")
+      .every((part) => part && part !== "." && part !== "..");
+  };
+
+  const isSha256 = (value) =>
+    typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
+
+  const canonicalJson = (value) => {
+    if (Array.isArray(value)) {
+      return `[${value.map(canonicalJson).join(",")}]`;
+    }
+    if (value && typeof value === "object") {
+      return `{${Object.keys(value)
+        .sort()
+        .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+        .join(",")}}`;
+    }
+    return JSON.stringify(value);
+  };
+
+  const extensionNormalizedSupersedePolicy = () => ({
+    version: 1,
+    namespace: PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_NAMESPACE,
+    explicit_operator_command_required: true,
+    operator_authorized_active_job: true,
+    automatic_retry: false,
+    maximum_new_paid_submissions: 1,
+    retry2_forbidden: true,
+    one_off_allowlist: {
+      article_slug: "18-volma-plitochnyi-klei",
+      image_id: "07",
+      model_id: "alibaba/wan-2.7",
+      normalized_retry_provider_run_id:
+        PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID,
+      active_provider_job_id:
+        PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID,
+    },
+    duplicate_submission_risk_acknowledged: true,
+    duplicate_billing_risk_acknowledged: true,
+    same_verified_lite_result: true,
+    same_normalized_source: true,
+    same_prompt: true,
+    same_model: true,
+    same_route: true,
+    same_seed: true,
+    same_request: true,
+    fallback: false,
+    route_discovery: false,
+    primary_receipt_immutable: true,
+    normalized_retry_envelope_immutable: true,
+    superseded_receipt_immutable: true,
+  });
 
   const makeCaseKey = (ticket, articleSlug) => {
     assert(
@@ -452,7 +584,7 @@
     };
   };
 
-  const validateNormalizedInputRetry = (
+  const validateLegacyNormalizedInputRetry = (
     output,
     image,
     contextLabel,
@@ -640,11 +772,406 @@
     return retry;
   };
 
+  const validateExtensionNormalizedInputSupersede = (
+    output,
+    retry,
+    contextLabel,
+    { exhausted },
+  ) => {
+    const supersede = retry.supersede;
+    if (supersede == null) return null;
+
+    const logicalKey = `${output.article_slug}:${output.image_id}:${output.model_id}`;
+    assert(
+      logicalKey === PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_KEY &&
+        supersede &&
+        typeof supersede === "object" &&
+        supersede.version === 1 &&
+        supersede.exhausted === exhausted &&
+        isCanonicalRelativePath(supersede.namespace) &&
+        isCanonicalRelativePath(supersede.envelope_path) &&
+        isSha256(supersede.envelope_sha256),
+      `${contextLabel}: normalized supersede audit некорректен.`,
+    );
+    assert(
+      supersede.namespace ===
+          `${retry.namespace}/${PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY}` &&
+        supersede.namespace ===
+          PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_NAMESPACE &&
+        supersede.envelope_path === `${supersede.namespace}/supersede.json`,
+      `${contextLabel}: normalized supersede вышел за разрешённый namespace.`,
+    );
+
+    const superseded = supersede.superseded_attempt;
+    const selected = supersede.superseding_attempt;
+    assert(
+      superseded &&
+        typeof superseded === "object" &&
+        selected &&
+        typeof selected === "object",
+      `${contextLabel}: normalized supersede attempts отсутствуют.`,
+    );
+    assert(
+      superseded.provider_job_id ===
+          PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID &&
+        superseded.provider_run_id ===
+          PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID &&
+        ["submitted", "running"].includes(superseded.status) &&
+        superseded.provider_may_be_active === true &&
+        typeof superseded.submitted_at === "string" &&
+        superseded.submitted_at.trim() &&
+        superseded.completed_at === null,
+      `${contextLabel}: superseded active job evidence некорректен.`,
+    );
+    assert(
+      selected.status === output.recorded_status &&
+        selected.provider_may_be_active === false &&
+        typeof selected.provider_job_id === "string" &&
+        selected.provider_job_id.trim() &&
+        selected.provider_job_id !== superseded.provider_job_id &&
+        typeof selected.submitted_at === "string" &&
+        selected.submitted_at.trim() &&
+        typeof selected.completed_at === "string" &&
+        selected.completed_at.trim() &&
+        selected.error === output.error,
+      `${contextLabel}: superseding attempt не является terminal.`,
+    );
+
+    [
+      ["superseded", superseded],
+      ["superseding", selected],
+    ].forEach(([attemptLabel, attempt]) => {
+      ["provider_run_id", "run_path", "prompt_path"].forEach((field) => {
+        assert(
+          typeof attempt[field] === "string" &&
+            attempt[field].trim() &&
+            (field === "provider_run_id" || isCanonicalRelativePath(attempt[field])),
+          `${contextLabel} / ${attemptLabel}: в аудите нет валидного ${field}.`,
+        );
+      });
+      ["run_sha256", "prompt_sha256", "request_sha256"].forEach((field) => {
+        assert(
+          isSha256(attempt[field]),
+          `${contextLabel} / ${attemptLabel}: в аудите нет валидного ${field}.`,
+        );
+      });
+    });
+
+    const oldRetry = retry.retry_attempt;
+    const expectedSelection = exhausted
+      ? NORMALIZED_INPUT_SUPERSEDE_EXHAUSTED_SELECTION
+      : NORMALIZED_INPUT_SUPERSEDE_SELECTION;
+    assert(
+      oldRetry &&
+        typeof oldRetry === "object" &&
+        superseded.provider_run_id === oldRetry.provider_run_id &&
+        superseded.request_sha256 === oldRetry.request_sha256 &&
+        selected.provider_run_id !== superseded.provider_run_id &&
+        selected.request_sha256 === superseded.request_sha256 &&
+        output.provider_run_id === selected.provider_run_id &&
+        output.selected_attempt === expectedSelection,
+      `${contextLabel}: normalized supersede identity/request отличается от immutable retry.`,
+    );
+    return selected;
+  };
+
+  const validateExtensionNormalizedInputRetry = (
+    output,
+    image,
+    contextLabel,
+    { exhausted },
+  ) => {
+    const retry = output.retry;
+    assert(
+      retry &&
+        typeof retry === "object" &&
+        retry.retry_kind === NORMALIZED_INPUT_RETRY_KIND &&
+        retry.retry_number === 1 &&
+        retry.exhausted === exhausted &&
+        isCanonicalRelativePath(retry.namespace) &&
+        isCanonicalRelativePath(retry.envelope_path) &&
+        retry.envelope_path === `${retry.namespace}/retry.json` &&
+        isSha256(retry.envelope_sha256),
+      `${contextLabel}: нет immutable extension normalized-input retry-v1 audit.`,
+    );
+    const sourceKey = `${output.article_slug}:${output.image_id}`;
+    const expectedAsset = PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES[sourceKey];
+    assert(
+      expectedAsset &&
+        ["alibaba/wan-2.2", "alibaba/wan-2.7"].includes(output.model_id),
+      `${contextLabel}: output не входит в allowlist extension normalized input.`,
+    );
+    const retryKey = retry.namespace.slice(
+      PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE.length + 1,
+    );
+    assert(
+      retry.namespace.startsWith(
+        `${PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE}/`,
+      ) &&
+        retryKey &&
+        !retryKey.includes("/"),
+      `${contextLabel}: extension normalized retry вышел за разрешённый namespace.`,
+    );
+
+    const transform = retry.source_transform;
+    const original = transform?.original;
+    const normalized = transform?.normalized;
+    const delta = transform?.request_delta;
+    const expectedTransformKeys = [
+      "minimum_provider_input_dimension",
+      "normalized",
+      "original",
+      "preparation",
+      "request_delta",
+      "strategy",
+    ];
+    assert(
+      transform &&
+        typeof transform === "object" &&
+        canonicalJson(Object.keys(transform).sort()) ===
+          canonicalJson(expectedTransformKeys) &&
+        transform.strategy === "deterministic-uniform-upscale" &&
+        transform.minimum_provider_input_dimension === 240 &&
+        transform.preparation?.operation === "uniform-scale" &&
+        transform.preparation?.target_height === expectedAsset.height &&
+        transform.preparation?.resampler === "lanczos" &&
+        transform.preparation?.crop === false &&
+        transform.preparation?.local_reencode === true &&
+        original &&
+        typeof original === "object" &&
+        normalized &&
+        typeof normalized === "object" &&
+        delta &&
+        typeof delta === "object",
+      `${contextLabel}: extension normalized source_transform audit некорректен.`,
+    );
+    assert(
+      canonicalJson(Object.keys(original).sort()) ===
+          canonicalJson(["bytes", "height", "path", "sha256", "url", "width"]) &&
+        typeof original.url === "string" &&
+        original.url.startsWith("https://avatars.mds.yandex.net/") &&
+        original.url === image.orig_url &&
+        original.path === output.source_path &&
+        original.path === image.source_path &&
+        original.sha256 === image.sha256 &&
+        original.sha256 === expectedAsset.source_sha256 &&
+        Number.isInteger(original.bytes) &&
+        original.bytes > 0 &&
+        original.bytes <= MAX_PROVIDER_SOURCE_BYTES &&
+        Number.isInteger(original.width) &&
+        original.width === image.width &&
+        original.width > 0 &&
+        Number.isInteger(original.height) &&
+        original.height === image.height &&
+        original.height > 0 &&
+        Math.min(original.width, original.height) < 240,
+      `${contextLabel}: extension original undersize source audit некорректен.`,
+    );
+    assert(
+      isCanonicalRelativePath(original.path),
+      `${contextLabel}: extension original source path некорректен.`,
+    );
+
+    const assetParent =
+      `${PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE}/${expectedAsset.asset_key}`;
+    const expectedRepositoryPath = `${assetParent}/normalized.png`;
+    const expectedMetadataPath = `${assetParent}/asset.json`;
+    const expectedUrl =
+      "https://raw.githubusercontent.com/UnidentifiedRaccoon/" +
+      `alice-live-images-test/${PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT}/` +
+      expectedRepositoryPath;
+    assert(
+      canonicalJson(Object.keys(normalized).sort()) ===
+          canonicalJson([
+            "bytes",
+            "delivery",
+            "format",
+            "height",
+            "http_status",
+            "metadata_path",
+            "metadata_sha256",
+            "repository_path",
+            "sha256",
+            "source_commit_sha",
+            "url",
+            "width",
+          ]) &&
+        normalized.http_status === 200 &&
+        normalized.url === expectedUrl &&
+        normalized.sha256 === expectedAsset.sha256 &&
+        normalized.bytes === expectedAsset.bytes &&
+        normalized.width === expectedAsset.width &&
+        normalized.height === expectedAsset.height &&
+        normalized.width >= 240 &&
+        normalized.height >= 240 &&
+        normalized.format === expectedAsset.format &&
+        normalized.delivery === "repository-raw" &&
+        normalized.repository_path === expectedRepositoryPath &&
+        normalized.source_commit_sha ===
+          PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT &&
+        normalized.metadata_path === expectedMetadataPath &&
+        isSha256(normalized.metadata_sha256) &&
+        isCanonicalRelativePath(normalized.repository_path) &&
+        isCanonicalRelativePath(normalized.metadata_path),
+      `${contextLabel}: extension normalized repository-raw asset audit некорректен.`,
+    );
+    const expectedPointer =
+      output.model_id === "alibaba/wan-2.2"
+        ? "/input/image"
+        : "/frame_images/0/image_url/url";
+    assert(
+      canonicalJson(Object.keys(delta).sort()) ===
+          canonicalJson(["changed_leaf_count", "from", "json_pointer", "to"]) &&
+        delta.json_pointer === expectedPointer &&
+        delta.from === original.url &&
+        delta.to === normalized.url &&
+        delta.changed_leaf_count === 1,
+      `${contextLabel}: normalized request delta должен менять один image leaf.`,
+    );
+
+    const primary = retry.primary_attempt;
+    assert(
+      primary &&
+        typeof primary === "object" &&
+        primary.status === "provider-failed" &&
+        primary.provider_may_be_active === false &&
+        typeof primary.provider_job_id === "string" &&
+        primary.provider_job_id.trim() &&
+        typeof primary.error === "string" &&
+        primary.error.includes("240"),
+      `${contextLabel}: normalized primary dimension failure audit некорректен.`,
+    );
+    if (output.model_id === "alibaba/wan-2.2") {
+      assert(
+        primary.recorded_status === "submit-unknown" &&
+          primary.recorded_provider_may_be_active === true &&
+          primary.submitted_at === null &&
+          primary.completed_at === null &&
+          ["provider_submit_time", "provider_scheduled_time", "provider_end_time"].every(
+            (field) => typeof primary[field] === "string" && primary[field].trim(),
+          ),
+        `${contextLabel}: Wan 2.2 dimension evidence отсутствует.`,
+      );
+    } else {
+      assert(
+        primary.recorded_status === "provider-failed" &&
+          primary.recorded_provider_may_be_active === false &&
+          typeof primary.submitted_at === "string" &&
+          primary.submitted_at.trim() &&
+          typeof primary.completed_at === "string" &&
+          primary.completed_at.trim(),
+        `${contextLabel}: Wan 2.7 dimension evidence отсутствует.`,
+      );
+    }
+
+    const supersedingAttempt = validateExtensionNormalizedInputSupersede(
+      output,
+      retry,
+      contextLabel,
+      { exhausted },
+    );
+    const selectedAttempt = supersedingAttempt || retry.retry_attempt;
+    assert(
+      selectedAttempt &&
+        typeof selectedAttempt === "object" &&
+        selectedAttempt.status === output.recorded_status &&
+        selectedAttempt.provider_may_be_active === false &&
+        typeof selectedAttempt.provider_job_id === "string" &&
+        selectedAttempt.provider_job_id.trim() &&
+        typeof selectedAttempt.submitted_at === "string" &&
+        selectedAttempt.submitted_at.trim() &&
+        typeof selectedAttempt.completed_at === "string" &&
+        selectedAttempt.completed_at.trim() &&
+        selectedAttempt.error === output.error,
+      `${contextLabel}: extension normalized selected attempt не является terminal.`,
+    );
+    [
+      ["primary", primary],
+      ["selected", selectedAttempt],
+    ].forEach(([attemptLabel, attempt]) => {
+      ["provider_run_id", "run_path", "prompt_path"].forEach((field) => {
+        assert(
+          typeof attempt[field] === "string" &&
+            attempt[field].trim() &&
+            (field === "provider_run_id" || isCanonicalRelativePath(attempt[field])),
+          `${contextLabel} / ${attemptLabel}: в аудите нет валидного ${field}.`,
+        );
+      });
+      ["run_sha256", "prompt_sha256", "request_sha256"].forEach((field) => {
+        assert(
+          isSha256(attempt[field]),
+          `${contextLabel} / ${attemptLabel}: в аудите нет валидного ${field}.`,
+        );
+      });
+    });
+    assert(
+      output.provider_run_id === selectedAttempt.provider_run_id &&
+        primary.provider_run_id !== selectedAttempt.provider_run_id &&
+        primary.request_sha256 !== selectedAttempt.request_sha256,
+      `${contextLabel}: extension normalized retry identity/request binding некорректен.`,
+    );
+    const expectedSelection = supersedingAttempt
+      ? exhausted
+        ? NORMALIZED_INPUT_SUPERSEDE_EXHAUSTED_SELECTION
+        : NORMALIZED_INPUT_SUPERSEDE_SELECTION
+      : exhausted
+        ? NORMALIZED_INPUT_RETRY_EXHAUSTED_SELECTION
+        : NORMALIZED_INPUT_RETRY_SELECTION;
+    assert(
+      output.selected_attempt === expectedSelection &&
+        (exhausted
+          ? output.status === PROVIDER_UNAVAILABLE_STATUS &&
+            output.recorded_status === "provider-failed" &&
+            typeof output.error === "string" &&
+            output.error.trim()
+          : ["succeeded", "verification-failed"].includes(output.status)),
+      `${contextLabel}: extension normalized selected attempt identity некорректна.`,
+    );
+    if (exhausted) {
+      assert(
+        output.video_path === null &&
+          output.media === null &&
+          output.contract_check === null,
+        `${contextLabel}: exhausted extension normalized retry не должен содержать MP4.`,
+      );
+    } else if (output.status === "succeeded") {
+      assert(
+        output.error === null && output.contract_check?.conforms === true,
+        `${contextLabel}: normalized succeeded media audit некорректен.`,
+      );
+    } else {
+      assert(
+        typeof output.error === "string" &&
+          output.error.trim() &&
+          output.contract_check?.conforms === false &&
+          Array.isArray(output.contract_check?.warnings) &&
+          output.contract_check.warnings.length > 0,
+        `${contextLabel}: normalized verification warning audit некорректен.`,
+      );
+    }
+    return retry;
+  };
+
+  const validateNormalizedInputRetry = (
+    output,
+    image,
+    contextLabel,
+    { exhausted, extension = false },
+  ) =>
+    extension
+      ? validateExtensionNormalizedInputRetry(output, image, contextLabel, {
+          exhausted,
+        })
+      : validateLegacyNormalizedInputRetry(output, image, contextLabel, {
+          exhausted,
+        });
+
   const validateNormalizedInputProviderUnavailable = (
     articleNumber,
     output,
     image,
     contextLabel,
+    { extension = false } = {},
   ) => {
     const label = `${articleNumber} / ${contextLabel}`;
     assert(
@@ -655,7 +1182,10 @@
       typeof output.positive_prompt === "string" && output.positive_prompt.trim(),
       `${label}: пустой positive prompt.`,
     );
-    validateNormalizedInputRetry(output, image, label, { exhausted: true });
+    validateNormalizedInputRetry(output, image, label, {
+      exhausted: true,
+      extension,
+    });
     return {
       ...output,
       availableVideo: false,
@@ -1021,16 +1551,32 @@
     return normalizedArticles;
   };
 
-  const validatePromopages10060Manifest = (manifest, historicalArticles) => {
+  const validatePromopages10060Manifest = (
+    manifest,
+    historicalArticles,
+    { extension = false } = {},
+  ) => {
+    const manifestLabel = extension
+      ? "PROMOPAGES-10060 campaign extension"
+      : "PROMOPAGES-10060";
     assert(
       manifest && typeof manifest === "object",
       "Манифест PROMOPAGES-10060 имеет неверный формат.",
     );
     assert(manifest.schema_version === 1, "PROMOPAGES-10060 должен использовать schema_version 1.");
     assert(
-      manifest.manifest_role === "promopages-10060-all-images",
-      "PROMOPAGES-10060 имеет неверный manifest_role.",
+      manifest.manifest_role ===
+        (extension
+          ? PROMOPAGES_10060_EXTENSION_ROLE
+          : "promopages-10060-all-images"),
+      `${manifestLabel} имеет неверный manifest_role.`,
     );
+    if (extension) {
+      assert(
+        manifest.batch_id === PROMOPAGES_10060_EXTENSION_BATCH_ID,
+        `${manifestLabel} имеет неверный batch_id.`,
+      );
+    }
     assert(manifest.ticket === "PROMOPAGES-10060", "PROMOPAGES-10060 имеет неверный ticket.");
     assert(
       manifest.agent_id === "clipmaker-lite",
@@ -1040,17 +1586,34 @@
       JSON.stringify(manifest.models) === JSON.stringify(MODEL_ORDER),
       "PROMOPAGES-10060 должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
     );
+    const expectedArticleCount = extension
+      ? manifest.article_count
+      : EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT;
+    const expectedImageCount = extension
+      ? manifest.image_count
+      : EXPECTED_PROMOPAGES_10060_IMAGE_COUNT;
+    const expectedOutputCount = extension
+      ? manifest.expected_outputs
+      : EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT;
+    if (!extension) {
+      assert(
+        manifest.article_count === EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT &&
+          manifest.image_count === EXPECTED_PROMOPAGES_10060_IMAGE_COUNT &&
+          manifest.expected_outputs === EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
+        "PROMOPAGES-10060 legacy audit должен оставаться 13 / 92 / 276.",
+      );
+    }
     assert(
-      manifest.article_count === EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT,
-      `PROMOPAGES-10060 должен содержать ${EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT} доступных статей.`,
+      Number.isInteger(expectedArticleCount) && expectedArticleCount > 0,
+      `${manifestLabel} должен содержать хотя бы одну доступную статью.`,
     );
     assert(
-      manifest.image_count === EXPECTED_PROMOPAGES_10060_IMAGE_COUNT,
-      `PROMOPAGES-10060 должен содержать все ${EXPECTED_PROMOPAGES_10060_IMAGE_COUNT} изображений.`,
+      Number.isInteger(expectedImageCount) && expectedImageCount > 0,
+      `${manifestLabel} должен содержать хотя бы одно изображение.`,
     );
     assert(
-      manifest.expected_outputs === EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
-      `PROMOPAGES-10060 должен содержать ${EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT} роликов.`,
+      Number.isInteger(expectedOutputCount) && expectedOutputCount > 0,
+      `${manifestLabel} должен содержать logical outputs.`,
     );
     const providerFilteredOutputCount = manifest.provider_filtered_output_count;
     const providerUnavailableOutputCount = manifest.provider_unavailable_output_count;
@@ -1060,17 +1623,17 @@
         Number.isInteger(providerUnavailableOutputCount) &&
         providerUnavailableOutputCount >= 0 &&
         manifest.accepted_output_count ===
-          EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT -
+          expectedOutputCount -
             providerFilteredOutputCount -
             providerUnavailableOutputCount &&
         manifest.terminal_accounted_output_count ===
-          EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
+          expectedOutputCount,
       "PROMOPAGES-10060 имеет неверные accepted/terminal/no-media счётчики.",
     );
     assert(
       manifest.status_summary &&
         typeof manifest.status_summary === "object" &&
-        manifest.status_summary[PROVIDER_FILTERED_STATUS] ===
+        (manifest.status_summary[PROVIDER_FILTERED_STATUS] ?? 0) ===
           providerFilteredOutputCount &&
         (manifest.status_summary[PROVIDER_UNAVAILABLE_STATUS] ?? 0) ===
           providerUnavailableOutputCount &&
@@ -1078,8 +1641,8 @@
           (count) => Number.isInteger(count) && count >= 0,
         ) &&
         Object.values(manifest.status_summary).reduce((sum, count) => sum + count, 0) ===
-          EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
-      "PROMOPAGES-10060 status_summary не совпадает с 276 logical outputs.",
+          expectedOutputCount,
+      `${manifestLabel} status_summary не совпадает с logical outputs.`,
     );
     assert(
       manifest.acceptance_policy?.requires_mp4_and_media === true &&
@@ -1122,6 +1685,15 @@
         ]).map((output) => output.video_path),
       ),
     );
+    const knownMediaPaths = new Set([...knownSourcePaths, ...usedVideoPaths]);
+    const knownArticleNumbers = new Set(
+      historicalArticles
+        .filter((article) => article.sourceTicket === manifest.ticket)
+        .map((article) => article.article_number),
+    );
+    const knownCaseKeys = new Set(
+      historicalArticles.map((article) => article.case_key),
+    );
     const articleNumbers = new Set();
     const articleSlugs = new Set();
     const nestedOutputs = [];
@@ -1131,7 +1703,12 @@
     let filteredOutputCount = 0;
     let unavailableProviderOutputCount = 0;
     let normalizedInputRetryOutputCount = 0;
+    let normalizedInputSupersedeOutputCount = 0;
     let normalizedInputAssetIdentity = null;
+    const normalizedInputRetryKeys = new Set();
+    const normalizedInputSupersedeKeys = new Set();
+    const normalizedInputAssetBySource = new Map();
+    const normalizedInputSourceByAsset = new Map();
 
     const articles = manifest.articles.map((article) => {
       assert(
@@ -1145,7 +1722,8 @@
       );
       previousArticleNumber = numericArticleNumber;
       assert(
-        !articleNumbers.has(article.article_number),
+        !articleNumbers.has(article.article_number) &&
+          !knownArticleNumbers.has(article.article_number),
         `Локальный номер PROMOPAGES-10060 повторяется: ${article.article_number}.`,
       );
       articleNumbers.add(article.article_number);
@@ -1154,7 +1732,8 @@
         `У PROMOPAGES-10060/${article.article_number} нет slug.`,
       );
       assert(
-        !articleSlugs.has(article.article_slug),
+        !articleSlugs.has(article.article_slug) &&
+          !knownCaseKeys.has(makeCaseKey(manifest.ticket, article.article_slug)),
         `Slug PROMOPAGES-10060 повторяется: ${article.article_slug}.`,
       );
       articleSlugs.add(article.article_slug);
@@ -1167,8 +1746,13 @@
         `У PROMOPAGES-10060/${article.article_number} нет URL статьи.`,
       );
       assert(
-        typeof article.context_path === "string" && article.context_path.trim(),
-        `У PROMOPAGES-10060/${article.article_number} нет пути к контексту.`,
+        typeof article.context_path === "string" &&
+          article.context_path.trim() &&
+          (!extension ||
+            (isCanonicalRelativePath(article.context_path) &&
+              article.context_path ===
+                `${PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT}/${article.article_slug}/content.json`)),
+        `У PROMOPAGES-10060/${article.article_number} неверный context_path.`,
       );
       assert(
         Array.isArray(article.images) && article.images.length > 0,
@@ -1183,6 +1767,8 @@
 
       const images = article.images.map((record) => {
         const image = record?.image;
+        const expectedExtensionManifestPrefix =
+          `${PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT}/${article.article_slug}/`;
         assert(
           image && typeof image === "object" && image.image_id && image.source_path,
           `У PROMOPAGES-10060/${article.article_number} нет данных изображения.`,
@@ -1201,8 +1787,17 @@
           `Исходник PROMOPAGES-10060/${article.article_number}/${image.image_id} имеет неверный delivery.`,
         );
         assert(
-          typeof image.manifest_file_path === "string" && image.manifest_file_path.trim(),
-          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет manifest_file_path.`,
+          typeof image.manifest_file_path === "string" &&
+            image.manifest_file_path.trim() &&
+            (!extension ||
+              (isCanonicalRelativePath(image.manifest_file_path) &&
+                image.manifest_file_path.startsWith(
+                  expectedExtensionManifestPrefix,
+                ) &&
+                !image.manifest_file_path
+                  .slice(expectedExtensionManifestPrefix.length)
+                  .includes("/"))),
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} неверный manifest_file_path.`,
         );
         assert(
           Number(image.width) > 0 && Number(image.height) > 0,
@@ -1213,10 +1808,11 @@
           `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет SHA-256.`,
         );
         assert(
-          !knownSourcePaths.has(image.source_path),
+          !knownMediaPaths.has(image.source_path),
           `Путь исходника PROMOPAGES-10060 уже использован: ${image.source_path}.`,
         );
         knownSourcePaths.add(image.source_path);
+        knownMediaPaths.add(image.source_path);
 
         const planning = record.lite_planning;
         assert(
@@ -1279,6 +1875,7 @@
                 output,
                 image,
                 `${image.image_id} · ${modelId}`,
+                { extension },
               );
               normalizedInputRetryOutputCount += 1;
             } else {
@@ -1297,6 +1894,10 @@
               ["succeeded", "verification-failed"].includes(output.status),
               `У PROMOPAGES-10060/${article.article_number}/${image.image_id}/${modelId} неверный статус.`,
             );
+            assert(
+              !knownMediaPaths.has(output.video_path),
+              `Путь MP4 или другого media уже использован: ${output.video_path}.`,
+            );
             validateOutput(
               articleIdentityLabel({
                 sourceTicket: manifest.ticket,
@@ -1306,6 +1907,7 @@
               usedVideoPaths,
               `${image.image_id} · ${modelId}`,
             );
+            knownMediaPaths.add(output.video_path);
             const hasAmbiguousRetryMarker =
               (typeof output.selected_attempt === "string" &&
                 output.selected_attempt.startsWith(AMBIGUOUS_SUBMIT_RETRY_SELECTION)) ||
@@ -1317,7 +1919,7 @@
                   sourceTicket: manifest.ticket,
                   article_number: article.article_number,
                 })} / ${image.image_id} · ${modelId}`,
-                { exhausted: false },
+                { exhausted: false, extension },
               );
             }
             const hasNormalizedInputRetryMarker =
@@ -1332,7 +1934,7 @@
                   sourceTicket: manifest.ticket,
                   article_number: article.article_number,
                 })} / ${image.image_id} · ${modelId}`,
-                { exhausted: false },
+                { exhausted: false, extension },
               );
               normalizedInputRetryOutputCount += 1;
             }
@@ -1346,17 +1948,43 @@
           }
           if (normalizedOutput.normalizedInputRetry === true) {
             const transform = normalizedOutput.retry.source_transform;
-            const assetIdentity = JSON.stringify({
+            const assetIdentity = canonicalJson({
               strategy: transform.strategy,
               original: transform.original,
               normalized: transform.normalized,
             });
-            assert(
-              normalizedInputAssetIdentity === null ||
-                normalizedInputAssetIdentity === assetIdentity,
-              "PROMOPAGES-10060 normalized-input retries должны использовать один frozen asset.",
-            );
-            normalizedInputAssetIdentity = assetIdentity;
+            if (extension) {
+              const sourceKey = `${output.article_slug}:${output.image_id}`;
+              const logicalKey = `${sourceKey}:${output.model_id}`;
+              assert(
+                !normalizedInputRetryKeys.has(logicalKey),
+                `${manifestLabel} повторяет normalized-input logical output ${logicalKey}.`,
+              );
+              normalizedInputRetryKeys.add(logicalKey);
+              const priorAsset = normalizedInputAssetBySource.get(sourceKey);
+              const priorSource = normalizedInputSourceByAsset.get(assetIdentity);
+              assert(
+                priorAsset == null || priorAsset === assetIdentity,
+                `${manifestLabel} Wan-модели используют разные frozen assets.`,
+              );
+              assert(
+                priorSource == null || priorSource === sourceKey,
+                `${manifestLabel} разделяет frozen asset между разными изображениями.`,
+              );
+              normalizedInputAssetBySource.set(sourceKey, assetIdentity);
+              normalizedInputSourceByAsset.set(assetIdentity, sourceKey);
+              if (normalizedOutput.retry.supersede != null) {
+                normalizedInputSupersedeOutputCount += 1;
+                normalizedInputSupersedeKeys.add(logicalKey);
+              }
+            } else {
+              assert(
+                normalizedInputAssetIdentity === null ||
+                  normalizedInputAssetIdentity === assetIdentity,
+                "PROMOPAGES-10060 normalized-input retries должны использовать один frozen asset.",
+              );
+              normalizedInputAssetIdentity = assetIdentity;
+            }
           }
           nestedOutputs.push(output);
           outputCount += 1;
@@ -1393,11 +2021,13 @@
       };
     });
 
-    assert(
-      JSON.stringify([...articleNumbers]) ===
-        JSON.stringify(EXPECTED_PROMOPAGES_10060_ARTICLE_NUMBERS),
-      "PROMOPAGES-10060 должен содержать доступные статьи 01 и 03–14.",
-    );
+    if (!extension) {
+      assert(
+        JSON.stringify([...articleNumbers]) ===
+          JSON.stringify(EXPECTED_PROMOPAGES_10060_ARTICLE_NUMBERS),
+        "PROMOPAGES-10060 должен содержать доступные статьи 01 и 03–14.",
+      );
+    }
 
     assert(
       imageCount === manifest.image_count,
@@ -1419,50 +2049,169 @@
     if (normalizedInputRetryOutputCount > 0) {
       const retryCost = manifest.cost;
       const retryPolicy = manifest.generation_policy?.normalized_input_retry;
-      assert(
-        retryCost?.normalized_input_retry_version === 1 &&
-          typeof retryCost.normalized_input_retry_accounting_cost_usd === "number" &&
-          Number.isFinite(retryCost.normalized_input_retry_accounting_cost_usd) &&
-          retryCost.normalized_input_retry_accounting_cost_usd > 0 &&
-          retryCost.normalized_input_retry_reservations ===
-            normalizedInputRetryOutputCount,
-        "PROMOPAGES-10060 normalized-input retry cost accounting не совпадает с outputs.",
-      );
-      assert(
-        retryPolicy?.version === 1 &&
-          typeof retryPolicy.namespace === "string" &&
-          retryPolicy.namespace.trim() &&
-          typeof retryPolicy.shared_asset_namespace === "string" &&
-          retryPolicy.shared_asset_namespace.trim() &&
-          retryPolicy.eligible_source?.article_slug ===
-            "12-dream-island-7-fishek" &&
-          retryPolicy.eligible_source?.image_id === "08" &&
-          JSON.stringify(retryPolicy.models) ===
-            JSON.stringify(["alibaba/wan-2.2", "alibaba/wan-2.7"]) &&
-          retryPolicy.explicit_operator_command_required === true &&
-          retryPolicy.maximum_new_paid_submissions_per_eligible_output === 1 &&
-          retryPolicy.retry2_forbidden === true &&
-          retryPolicy.automatic_paid_retries === false &&
-          retryPolicy.fallback === false &&
-          retryPolicy.primary_receipts_immutable === true &&
-          retryPolicy.request_delta_only_image_pointer === true,
-        "PROMOPAGES-10060 normalized-input generation policy некорректна.",
-      );
-      articles.forEach((article) => {
-        article.images.forEach((record) => {
-          record.outputs
-            .filter((output) => output.normalizedInputRetry === true)
-            .forEach((output) => {
-              assert(
-                output.retry.namespace.startsWith(`${retryPolicy.namespace}/`) &&
-                  output.retry.source_transform.normalized.metadata_path.startsWith(
-                    `${retryPolicy.shared_asset_namespace}/`,
-                  ),
-                "PROMOPAGES-10060 normalized-input retry вышел за разрешённые namespaces.",
-              );
-            });
+      if (extension) {
+        const expectedRetryKeys = new Set(
+          Object.keys(PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES).flatMap(
+            (sourceKey) => [
+              `${sourceKey}:alibaba/wan-2.2`,
+              `${sourceKey}:alibaba/wan-2.7`,
+            ],
+          ),
+        );
+        const expectedEligibleSources = Object.entries(
+          PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES,
+        ).map(([sourceKey, asset]) => {
+          const [article_slug, image_id] = sourceKey.split(":");
+          return {
+            article_slug,
+            image_id,
+            source_sha256: asset.source_sha256,
+            models: ["alibaba/wan-2.2", "alibaba/wan-2.7"],
+            failure_kind: "minimum-dimension",
+            normalization_strategy: "deterministic-uniform-upscale",
+          };
         });
-      });
+        assert(
+          normalizedInputRetryOutputCount === expectedRetryKeys.size &&
+            normalizedInputRetryKeys.size === expectedRetryKeys.size &&
+            [...expectedRetryKeys].every((key) => normalizedInputRetryKeys.has(key)) &&
+            normalizedInputAssetBySource.size ===
+              Object.keys(PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES).length,
+          `${manifestLabel} должен содержать оба Wan normalized retries для 05/07/08.`,
+        );
+        assert(
+          retryPolicy?.version === 1 &&
+            retryPolicy.namespace ===
+              PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE &&
+            retryPolicy.shared_asset_namespace ===
+              PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE &&
+            canonicalJson(retryPolicy.eligible_sources) ===
+              canonicalJson(expectedEligibleSources) &&
+            retryPolicy.explicit_operator_command_required === true &&
+            retryPolicy.maximum_new_paid_submissions_per_eligible_output === 1 &&
+            retryPolicy.retry2_forbidden === true &&
+            retryPolicy.automatic_paid_retries === false &&
+            retryPolicy.fallback === false &&
+            retryPolicy.primary_receipts_immutable === true &&
+            retryPolicy.request_delta_only_image_pointer === true,
+          `${manifestLabel} normalized-input generation policy некорректна.`,
+        );
+        const retryCountFields = [
+          "terminal_retry_reservations",
+          "ambiguous_submit_retry_reservations",
+          "normalized_input_retry_reservations",
+        ];
+        assert(
+          retryCost &&
+            typeof retryCost === "object" &&
+            retryCost.normalized_input_retry_version === 1 &&
+            retryCost.normalized_input_retry_accounting_cost_usd === 0.35 &&
+            retryCost.normalized_input_retry_reservations ===
+              normalizedInputRetryOutputCount &&
+            retryCost.maximum_new_paid_submissions_per_normalized_input_output === 1 &&
+            retryCost.automatic_paid_retries === false &&
+            retryCountFields.every(
+              (field) => Number.isInteger(retryCost[field]) && retryCost[field] >= 0,
+            ) &&
+            retryCost.total_retry_reservations ===
+              retryCountFields.reduce((total, field) => total + retryCost[field], 0) +
+                normalizedInputSupersedeOutputCount,
+          `${manifestLabel} normalized-input cost accounting не совпадает с outputs.`,
+        );
+
+        const supersedePolicy =
+          manifest.generation_policy?.normalized_input_supersede;
+        const supersedeCostFields = [
+          "normalized_input_supersede_version",
+          "normalized_input_supersede_accounting_cost_usd",
+          "normalized_input_supersede_reservations",
+          "maximum_new_paid_submissions_per_superseded_output",
+        ];
+        if (normalizedInputSupersedeOutputCount > 0) {
+          assert(
+            normalizedInputSupersedeOutputCount === 1 &&
+              normalizedInputSupersedeKeys.size === 1 &&
+              normalizedInputSupersedeKeys.has(
+                PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_KEY,
+              ) &&
+              retryCost.normalized_input_supersede_version === 1 &&
+              retryCost.normalized_input_supersede_accounting_cost_usd === 0.35 &&
+              retryCost.normalized_input_supersede_reservations === 1 &&
+              retryCost.maximum_new_paid_submissions_per_superseded_output === 1,
+            `${manifestLabel} normalized supersede cost некорректен.`,
+          );
+          assert(
+            canonicalJson(supersedePolicy) ===
+              canonicalJson(extensionNormalizedSupersedePolicy()),
+            `${manifestLabel} normalized supersede policy некорректна.`,
+          );
+        } else {
+          assert(
+            supersedePolicy == null &&
+              supersedeCostFields.every((field) => !hasOwn(retryCost, field)),
+            `${manifestLabel} содержит unbound normalized supersede metadata.`,
+          );
+        }
+      } else {
+        assert(
+          retryCost?.normalized_input_retry_version === 1 &&
+            typeof retryCost.normalized_input_retry_accounting_cost_usd === "number" &&
+            Number.isFinite(retryCost.normalized_input_retry_accounting_cost_usd) &&
+            retryCost.normalized_input_retry_accounting_cost_usd > 0 &&
+            retryCost.normalized_input_retry_reservations ===
+              normalizedInputRetryOutputCount,
+          "PROMOPAGES-10060 normalized-input retry cost accounting не совпадает с outputs.",
+        );
+        assert(
+          retryPolicy?.version === 1 &&
+            typeof retryPolicy.namespace === "string" &&
+            retryPolicy.namespace.trim() &&
+            typeof retryPolicy.shared_asset_namespace === "string" &&
+            retryPolicy.shared_asset_namespace.trim() &&
+            retryPolicy.eligible_source?.article_slug ===
+              "12-dream-island-7-fishek" &&
+            retryPolicy.eligible_source?.image_id === "08" &&
+            JSON.stringify(retryPolicy.models) ===
+              JSON.stringify(["alibaba/wan-2.2", "alibaba/wan-2.7"]) &&
+            retryPolicy.explicit_operator_command_required === true &&
+            retryPolicy.maximum_new_paid_submissions_per_eligible_output === 1 &&
+            retryPolicy.retry2_forbidden === true &&
+            retryPolicy.automatic_paid_retries === false &&
+            retryPolicy.fallback === false &&
+            retryPolicy.primary_receipts_immutable === true &&
+            retryPolicy.request_delta_only_image_pointer === true,
+          "PROMOPAGES-10060 normalized-input generation policy некорректна.",
+        );
+        articles.forEach((article) => {
+          article.images.forEach((record) => {
+            record.outputs
+              .filter((output) => output.normalizedInputRetry === true)
+              .forEach((output) => {
+                assert(
+                  output.retry.namespace.startsWith(`${retryPolicy.namespace}/`) &&
+                    output.retry.source_transform.normalized.metadata_path.startsWith(
+                      `${retryPolicy.shared_asset_namespace}/`,
+                    ),
+                  "PROMOPAGES-10060 normalized-input retry вышел за разрешённые namespaces.",
+                );
+              });
+          });
+        });
+      }
+    } else if (extension) {
+      const retryCost = manifest.cost;
+      const supersedePolicy = manifest.generation_policy?.normalized_input_supersede;
+      assert(
+        supersedePolicy == null &&
+          (!retryCost ||
+            [
+              "normalized_input_supersede_version",
+              "normalized_input_supersede_accounting_cost_usd",
+              "normalized_input_supersede_reservations",
+              "maximum_new_paid_submissions_per_superseded_output",
+            ].every((field) => !hasOwn(retryCost, field))),
+        `${manifestLabel} содержит unbound normalized supersede metadata.`,
+      );
     }
     assert(
       Array.isArray(manifest.outputs) && manifest.outputs.length === outputCount,
@@ -1501,8 +2250,11 @@
 
     const unavailableArticles = manifest.unavailable_articles ?? [];
     assert(
-      Array.isArray(unavailableArticles) && unavailableArticles.length === 1,
-      "PROMOPAGES-10060 должен содержать одну недоступную статью.",
+      Array.isArray(unavailableArticles) &&
+        (extension || unavailableArticles.length === 1),
+      extension
+        ? `${manifestLabel} содержит некорректный unavailable_articles.`
+        : "PROMOPAGES-10060 должен содержать одну недоступную статью.",
     );
     const unavailableNumbers = new Set();
     const unavailableSlugs = new Set();
@@ -1528,17 +2280,34 @@
       assert(
         !articleNumbers.has(article.article_number) &&
           !unavailableNumbers.has(article.article_number) &&
+          !knownArticleNumbers.has(article.article_number) &&
           !articleSlugs.has(article.article_slug) &&
-          !unavailableSlugs.has(article.article_slug),
+          !unavailableSlugs.has(article.article_slug) &&
+          !knownCaseKeys.has(makeCaseKey(manifest.ticket, article.article_slug)),
         "Недоступная статья PROMOPAGES-10060 дублирует доступную или другую недоступную статью.",
       );
       unavailableNumbers.add(article.article_number);
       unavailableSlugs.add(article.article_slug);
     });
-    assert(
-      unavailableNumbers.has(EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER),
-      "Недоступной статьёй PROMOPAGES-10060 должна быть статья 02.",
-    );
+    if (!extension) {
+      assert(
+        unavailableNumbers.has(EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER),
+        "Недоступной статьёй PROMOPAGES-10060 должна быть статья 02.",
+      );
+    } else {
+      const accountedArticleNumbers = new Set([
+        ...articleNumbers,
+        ...unavailableNumbers,
+      ]);
+      assert(
+        accountedArticleNumbers.size ===
+          PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS.length &&
+          PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS.every((number) =>
+            accountedArticleNumbers.has(number),
+          ),
+        `${manifestLabel} должен учитывать зарегистрированные статьи 15–18.`,
+      );
+    }
 
     return {
       articles,
@@ -1547,6 +2316,7 @@
       providerUnavailableOutputCount,
       unavailableOutputCount: filteredOutputCount + unavailableProviderOutputCount,
       normalizedInputRetryOutputCount,
+      normalizedInputSupersedeOutputCount,
     };
   };
 
@@ -2305,6 +3075,7 @@
   const mergeArticleCollections = (historicalArticles, reviewArticles) => {
     const merged = [...historicalArticles, ...reviewArticles];
     const caseKeys = new Set();
+    const articleIdentities = new Set();
     merged.forEach((article) => {
       assert(
         typeof article.case_key === "string" && article.case_key.trim(),
@@ -2312,10 +3083,51 @@
       );
       assert(!caseKeys.has(article.case_key), `Case key повторяется: ${article.case_key}.`);
       caseKeys.add(article.case_key);
+      if (
+        typeof article.sourceTicket === "string" &&
+        article.sourceTicket.trim() &&
+        typeof article.article_number === "string" &&
+        article.article_number.trim()
+      ) {
+        const articleIdentity = `${article.sourceTicket}\u0000${article.article_number}`;
+        assert(
+          !articleIdentities.has(articleIdentity),
+          `Номер статьи повторяется внутри ${article.sourceTicket}: ${article.article_number}.`,
+        );
+        articleIdentities.add(articleIdentity);
+      }
       assert(
         Array.isArray(article.images) && article.images.length > 0,
         `У ${article.case_key} нет изображений для демо.`,
       );
+    });
+    return merged;
+  };
+
+  const mergeUnavailableArticleCollections = (availableArticles, ...collections) => {
+    const merged = collections.flat();
+    const availableIdentities = new Set(
+      availableArticles.map(
+        (article) => `${article.sourceTicket}\u0000${article.article_number}`,
+      ),
+    );
+    const availableCaseKeys = new Set(
+      availableArticles.map((article) => article.case_key),
+    );
+    const identities = new Set();
+    const caseKeys = new Set();
+    merged.forEach((article) => {
+      const identity = `PROMOPAGES-10060\u0000${article.article_number}`;
+      const caseKey = makeCaseKey("PROMOPAGES-10060", article.article_slug);
+      assert(
+        !identities.has(identity) &&
+          !caseKeys.has(caseKey) &&
+          !availableIdentities.has(identity) &&
+          !availableCaseKeys.has(caseKey),
+        `Недоступная статья PROMOPAGES-10060 повторяется: ${article.article_number}.`,
+      );
+      identities.add(identity);
+      caseKeys.add(caseKey);
     });
     return merged;
   };
@@ -2485,16 +3297,51 @@
     </li>
   `;
 
+  const renderNormalizedInputSupersedeAudit = (supersede) => {
+    if (!supersede) return "";
+    return `
+      <section class="providerFilterAudit" aria-label="Аудит operator-authorized supersede">
+        <div class="providerFilterAuditHeader">
+          <p class="panelKicker">Supersede audit</p>
+          <h4>Выбран результат новой terminal-попытки</h4>
+          <p>
+            Предыдущая provider job оставалась активной. Оператор явно разрешил одну
+            новую отправку с тем же prompt, моделью, route, seed и request.
+          </p>
+        </div>
+        <ol class="providerAttemptList">
+          ${renderProviderAttemptAudit(
+            "Предыдущая попытка · может оставаться активной",
+            supersede.superseded_attempt,
+          )}
+          ${renderProviderAttemptAudit(
+            "Superseding attempt · выбрана",
+            supersede.superseding_attempt,
+          )}
+        </ol>
+        <dl class="providerFilterBinding">
+          <div><dt>Supersede namespace</dt><dd><code>${escapeHtml(supersede.namespace)}</code></dd></div>
+          <div><dt>Envelope</dt><dd><code>${escapeHtml(supersede.envelope_path)}</code></dd></div>
+          <div><dt>Envelope SHA-256</dt><dd><code>${escapeHtml(supersede.envelope_sha256)}</code></dd></div>
+          <div><dt>Immutable request SHA-256</dt><dd><code>${escapeHtml(supersede.superseding_attempt.request_sha256)}</code></dd></div>
+        </dl>
+      </section>
+    `;
+  };
+
   const renderNormalizedInputAudit = (retry) => {
     const transform = retry.source_transform;
     const original = transform.original;
     const normalized = transform.normalized;
     const delta = transform.request_delta;
+    const undersize = transform.strategy === "deterministic-uniform-upscale";
     return `
       <section class="providerFilterAudit" aria-label="Аудит нормализации provider input">
         <div class="providerFilterAuditHeader">
           <p class="panelKicker">Input audit</p>
-          <h4>Исходник нормализован из-за размера больше 20 MiB</h4>
+          <h4>${undersize
+            ? "Исходник нормализован из-за стороны меньше 240 px"
+            : "Исходник нормализован из-за размера больше 20 MiB"}</h4>
           <p>
             Prompt и модель сохранены. В provider request изменён ровно один leaf:
             ${escapeHtml(delta.json_pointer)}.
@@ -2519,6 +3366,7 @@
           </dl>
         </details>
       </section>
+      ${renderNormalizedInputSupersedeAudit(retry.supersede)}
     `;
   };
 
@@ -2728,7 +3576,10 @@
     const headingTag = headingLevel === 4 ? "h4" : "h3";
     const retry = output.retry;
     const primaryAttempt = retry.primary_attempt;
-    const retryAttempt = retry.retry_attempt;
+    const retryAttempt = retry.supersede?.superseding_attempt || retry.retry_attempt;
+    const superseded = retry.supersede != null;
+    const undersize =
+      retry.source_transform?.strategy === "deterministic-uniform-upscale";
     const sourceAspect = `${imageRecord.image.width} / ${imageRecord.image.height}`;
 
     return `
@@ -2749,8 +3600,12 @@
             <p class="providerFilteredKicker">Видео недоступно</p>
             <strong>Normalized-input retry завершился без MP4</strong>
             <p>
-              Исходник больше 20 MiB был заменён frozen page-вариантом только в
-              provider request. Явный retry-v1 завершился provider-failed.
+              ${undersize
+                ? "Исходник со стороной меньше 240 px был детерминированно увеличен только для provider request."
+                : "Исходник больше 20 MiB был заменён frozen page-вариантом только в provider request."}
+              ${superseded
+                ? "Явная superseding-попытка завершилась provider-failed."
+                : "Явный retry-v1 завершился provider-failed."}
             </p>
           </div>
         </div>
@@ -2758,7 +3613,9 @@
         <div class="panelIdentity">
           <div>
             <p class="contractWarning providerFilteredWarning">
-              Source normalized · one image URL delta · retry-v1 exhausted
+              Source normalized · one image URL delta · ${superseded
+                ? "superseding attempt exhausted"
+                : "retry-v1 exhausted"}
             </p>
             <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
             <${headingTag} id="${titleId}">${escapeHtml(presentation.name)}</${headingTag}>
@@ -2773,7 +3630,12 @@
         ${renderFacts([
           ["Статус", output.status],
           ["Recorded status", output.recorded_status],
-          ["Выбрана", "normalized-input retry-v1 · exhausted"],
+          [
+            "Выбрана",
+            superseded
+              ? "normalized-input superseding attempt · exhausted"
+              : "normalized-input retry-v1 · exhausted",
+          ],
           ["Видео", "MP4 не получен"],
         ])}
 
@@ -2782,12 +3644,19 @@
         <section class="providerFilterAudit" aria-label="Аудит primary и normalized-input retry-v1">
           <div class="providerFilterAuditHeader">
             <p class="panelKicker">Provider attempts</p>
-            <h4>Primary failure и normalized-input retry-v1</h4>
-            <p>Обе попытки terminal; исходный logical source сохранён.</p>
+            <h4>Primary failure и ${superseded
+              ? "selected superseding attempt"
+              : "normalized-input retry-v1"}</h4>
+            <p>Выбранная попытка terminal; исходный logical source сохранён.</p>
           </div>
           <ol class="providerAttemptList">
             ${renderProviderAttemptAudit("Primary · provider-failed", primaryAttempt)}
-            ${renderProviderAttemptAudit("Normalized-input retry-v1 · provider-failed", retryAttempt)}
+            ${renderProviderAttemptAudit(
+              superseded
+                ? "Superseding attempt · provider-failed"
+                : "Normalized-input retry-v1 · provider-failed",
+              retryAttempt,
+            )}
           </ol>
         </section>
 
@@ -2858,7 +3727,12 @@
         ? '<p class="contractWarning">Raw output · media contract warning</p>'
         : "";
     const normalizedInputWarning = output.normalizedInputRetry
-      ? '<p class="contractWarning providerFilteredWarning">Source normalized · original больше 20 MiB · prompt/model сохранены</p>'
+      ? `<p class="contractWarning providerFilteredWarning">${output.retry?.supersede
+          ? "Superseding attempt selected · тот же normalized input / prompt / model / route / seed / request"
+          : output.retry?.source_transform?.strategy ===
+              "deterministic-uniform-upscale"
+            ? "Source normalized · исходная сторона меньше 240 px · prompt/model сохранены"
+            : "Source normalized · original больше 20 MiB · prompt/model сохранены"}</p>`
       : "";
     const fidelityWarning =
       !smoothExperiment && output.visual_review?.status === "fidelity-failed"
@@ -3529,11 +4403,18 @@
 
   const initialise = async () => {
     try {
-      const [baseResponse, additionalResponse, case21Response, reviewResponse] = await Promise.all([
+      const [
+        baseResponse,
+        additionalResponse,
+        case21Response,
+        reviewResponse,
+        reviewExtensionResponse,
+      ] = await Promise.all([
         fetch(BASE_MANIFEST_PATH, { cache: "no-store" }),
         fetch(ADDITIONAL_MANIFEST_PATH, { cache: "no-store" }),
         fetch(CASE_21_MANIFEST_PATH, { cache: "no-store" }),
         fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
+        fetch(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH, { cache: "no-store" }),
       ]);
       if (!baseResponse.ok) {
         throw new Error(`Базовый манифест вернул HTTP ${baseResponse.status}.`);
@@ -3551,6 +4432,16 @@
           `Манифест PROMOPAGES-10060 вернул HTTP ${reviewResponse.status}.`,
         );
       }
+      if (!reviewExtensionResponse.ok && reviewExtensionResponse.status !== 404) {
+        throw new Error(
+          `Campaign extension PROMOPAGES-10060 вернул HTTP ${reviewExtensionResponse.status}.`,
+        );
+      }
+      if (reviewExtensionResponse.ok && !reviewResponse.ok) {
+        throw new Error(
+          "Campaign extension PROMOPAGES-10060 опубликован без обязательного legacy sidecar.",
+        );
+      }
 
       const [baseManifest, additionalManifest, case21Manifest] = await Promise.all([
         baseResponse.json(),
@@ -3558,6 +4449,9 @@
         case21Response.json(),
       ]);
       const reviewManifest = reviewResponse.ok ? await reviewResponse.json() : null;
+      const reviewExtensionManifest = reviewExtensionResponse.ok
+        ? await reviewExtensionResponse.json()
+        : null;
       const baseArticles = validateBaseManifest(baseManifest);
       const additionalArticles = validateAdditionalManifest(
         additionalManifest,
@@ -3575,14 +4469,57 @@
       );
       const reviewDataset = reviewManifest
         ? validatePromopages10060Manifest(reviewManifest, historicalArticles)
-        : { articles: [], unavailableArticles: [] };
-      articles = mergeArticleCollections(historicalArticles, reviewDataset.articles);
+        : {
+            articles: [],
+            unavailableArticles: [],
+            filteredOutputCount: 0,
+            providerUnavailableOutputCount: 0,
+            unavailableOutputCount: 0,
+          };
+      const reviewExtensionDataset = reviewExtensionManifest
+        ? validatePromopages10060Manifest(
+            reviewExtensionManifest,
+            [...historicalArticles, ...reviewDataset.articles],
+            { extension: true },
+          )
+        : {
+            articles: [],
+            unavailableArticles: [],
+            filteredOutputCount: 0,
+            providerUnavailableOutputCount: 0,
+            unavailableOutputCount: 0,
+          };
+      const reviewArticles = [
+        ...reviewDataset.articles,
+        ...reviewExtensionDataset.articles,
+      ];
+      const unavailableArticles = mergeUnavailableArticleCollections(
+        reviewArticles,
+        reviewDataset.unavailableArticles,
+        reviewExtensionDataset.unavailableArticles,
+      );
+      articles = mergeArticleCollections(historicalArticles, reviewArticles);
       const counts = datasetCounts(articles);
       elements.articleCountSummary.textContent = String(counts.articleCount);
       elements.imageCountSummary.textContent = String(counts.imageCount);
       elements.videoCountSummary.textContent = String(counts.videoCount);
+      const reviewImageCount =
+        (reviewManifest?.image_count ?? 0) +
+        (reviewExtensionManifest?.image_count ?? 0);
+      const reviewOutputCount =
+        (reviewManifest?.expected_outputs ?? 0) +
+        (reviewExtensionManifest?.expected_outputs ?? 0);
+      const reviewUnavailableOutputCount =
+        reviewDataset.unavailableOutputCount +
+        reviewExtensionDataset.unavailableOutputCount;
+      const reviewFilteredOutputCount =
+        reviewDataset.filteredOutputCount +
+        reviewExtensionDataset.filteredOutputCount;
+      const reviewProviderUnavailableOutputCount =
+        reviewDataset.providerUnavailableOutputCount +
+        reviewExtensionDataset.providerUnavailableOutputCount;
       elements.datasetSourceStatus.textContent = reviewManifest
-        ? `PROMOPAGES-10060 · ${reviewDataset.articles.length} статей / ${reviewManifest.image_count} изображений / ${reviewManifest.expected_outputs} результатов · MP4 ${reviewManifest.expected_outputs - reviewDataset.unavailableOutputCount} · provider-filtered ${reviewDataset.filteredOutputCount} · provider-unavailable ${reviewDataset.providerUnavailableOutputCount} · недоступно статей ${reviewDataset.unavailableArticles.length}`
+        ? `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${reviewImageCount} изображений / ${reviewOutputCount} результатов · MP4 ${reviewOutputCount - reviewUnavailableOutputCount} · provider-filtered ${reviewFilteredOutputCount} · provider-unavailable ${reviewProviderUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`
         : "PROMOPAGES-10060 · sidecar ещё не опубликован; показана историческая выборка";
       elements.caseSelect.replaceChildren(
         ...articles.map(

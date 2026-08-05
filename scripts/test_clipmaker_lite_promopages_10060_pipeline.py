@@ -5,15 +5,103 @@ from __future__ import annotations
 
 import json
 import io
+import csv
+import hashlib
 import subprocess
 import tempfile
 import unittest
 from contextlib import contextmanager, redirect_stdout
+from decimal import Decimal
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
 
 from scripts import clipmaker_lite_promopages_10060_pipeline as pipeline
+
+
+def write_campaign_extension_fixture(
+    root: Path,
+    *,
+    article_numbers: tuple[int, ...] = (15, 16, 17, 18),
+) -> None:
+    """Write a tiny four-article extraction fixture in the extension namespace."""
+
+    spec = pipeline.BATCH_SPECS[pipeline.CAMPAIGN_EXTENSION_BATCH_ID]
+    configs = []
+    manifest_rows = []
+    for number in article_numbers:
+        folder = f"{number:02d}-campaign-{number}"
+        label = f"Campaign {number}"
+        url = f"https://example.test/articles/{number}"
+        filename = "01.png"
+        manifest_file_path = (
+            f"{spec.dataset_prefix}/articles/{folder}/{filename}"
+        )
+        configs.append(
+            {
+                "number": number,
+                "label": label,
+                "folder": folder,
+                "url": url,
+            }
+        )
+        image_bytes = f"fixture-image-{number}".encode("utf-8")
+        image_path = root / spec.source_image_root_rel / folder / filename
+        image_path.parent.mkdir(parents=True, exist_ok=True)
+        image_path.write_bytes(image_bytes)
+        context_path = root / spec.source_context_root_rel / folder / "content.json"
+        context_path.parent.mkdir(parents=True, exist_ok=True)
+        context_path.write_text(
+            json.dumps(
+                {
+                    "title": f"Article {number}",
+                    "lead": f"Lead {number}",
+                    "blocks": [
+                        {
+                            "type": "image",
+                            "image_id": "01",
+                            "file": filename,
+                            "manifest_file_path": manifest_file_path,
+                            "role": "cover",
+                            "caption": "",
+                            "source_block_index": 0,
+                            "gallery_index": None,
+                            "duplicate_of": None,
+                        }
+                    ],
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+        manifest_rows.append(
+            {
+                "article_number": f"{number:02d}",
+                "article_label": label,
+                "article_url": url,
+                "image_number": "01",
+                "image_role": "cover",
+                "orig_url": f"https://avatars.mds.yandex.net/{number}/orig",
+                "file_path": manifest_file_path,
+                "actual_width": "1200",
+                "actual_height": "800",
+                "sha256": hashlib.sha256(image_bytes).hexdigest(),
+                "download_status": "ok",
+                "duplicate_of": "",
+            }
+        )
+    config_path = root / spec.ticket_config_rel
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(
+        json.dumps(configs, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    manifest_path = root / spec.source_manifest_rel
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    with manifest_path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(manifest_rows[0]))
+        writer.writeheader()
+        writer.writerows(manifest_rows)
 
 
 @contextmanager
@@ -40,6 +128,914 @@ def preserved_native_state():
     finally:
         for name, value in original.items():
             setattr(pipeline.native, name, value)
+
+
+class CampaignExtensionBatchTest(unittest.TestCase):
+    def setUp(self) -> None:
+        pipeline.activate_batch(pipeline.CAMPAIGN_EXTENSION_BATCH_ID)
+
+    def tearDown(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+
+    def test_registered_extension_has_isolated_immutable_namespaces(self) -> None:
+        spec = pipeline.ACTIVE_BATCH_SPEC
+        self.assertEqual(spec.batch_id, pipeline.CAMPAIGN_EXTENSION_BATCH_ID)
+        self.assertEqual(spec.article_numbers, (15, 16, 17, 18))
+        self.assertEqual(
+            spec.ticket_config_rel.as_posix(),
+            "PROMOPAGES-10060/campaigns-20260805-v1/articles.json",
+        )
+        self.assertEqual(
+            spec.dataset_prefix,
+            "PROMOPAGES-10060-campaigns-20260805-v1",
+        )
+        self.assertEqual(
+            pipeline.FINAL_MANIFEST_REL.as_posix(),
+            "clipmaker-lite-test/"
+            "promopages-10060-campaigns-20260805-v1-manifest.json",
+        )
+        self.assertEqual(
+            pipeline.FINAL_MANIFEST_ROLE,
+            "promopages-10060-campaign-extension",
+        )
+        self.assertEqual(
+            pipeline.NORMALIZED_INPUT_RETRY_ALLOWLIST,
+            pipeline.CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS,
+        )
+        self.assertEqual(
+            [target.image_id for target in pipeline.NORMALIZED_INPUT_RETRY_ALLOWLIST],
+            ["05", "07", "08"],
+        )
+        self.assertIn(
+            pipeline.CAMPAIGN_EXTENSION_BATCH_ID,
+            pipeline.INVENTORY_MANIFEST_REL.parts,
+        )
+
+    def test_extension_discovery_requires_exact_ordered_articles_15_to_18(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_campaign_extension_fixture(root)
+            discovery = pipeline.discover(root)
+        self.assertEqual(
+            [article.number for article in discovery.articles],
+            ["15", "16", "17", "18"],
+        )
+        self.assertEqual(len(discovery.sources), 4)
+        self.assertEqual(discovery.source_manifest_row_count, 4)
+        for source in discovery.sources:
+            self.assertTrue(
+                source.image["manifest_file_path"].startswith(
+                    "PROMOPAGES-10060-campaigns-20260805-v1/articles/"
+                )
+            )
+            self.assertTrue(
+                source.image["source_path"].startswith(
+                    "PROMOPAGES-9857/"
+                    "PROMOPAGES-10060-campaigns-20260805-v1/articles/"
+                )
+            )
+
+    def test_extension_rejects_reordered_or_renumbered_config(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_campaign_extension_fixture(
+                root,
+                article_numbers=(15, 17, 16, 18),
+            )
+            with self.assertRaisesRegex(
+                pipeline.PipelineError,
+                "numbers/order differ from registered batch",
+            ):
+                pipeline.load_ticket_config(root)
+
+    def test_extension_inventory_uses_separate_role_and_operator_cap(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_campaign_extension_fixture(root)
+            discovery = pipeline.discover(root)
+            with (
+                mock.patch.object(
+                    pipeline,
+                    "_contract_snapshot",
+                    return_value={"contract_version": "fixture"},
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "_route_snapshot",
+                    return_value={"policy": "fixture"},
+                ),
+            ):
+                inventory = pipeline.inventory_document(
+                    discovery,
+                    Decimal("250.00"),
+                    root,
+                )
+        self.assertEqual(
+            inventory["manifest_role"],
+            "promopages-10060-campaign-extension-frozen-generation-inventory",
+        )
+        self.assertEqual(inventory["batch_id"], pipeline.CAMPAIGN_EXTENSION_BATCH_ID)
+        self.assertEqual(inventory["article_count"], 4)
+        self.assertEqual(inventory["image_count"], 4)
+        self.assertEqual(inventory["expected_outputs"], 12)
+        self.assertEqual(inventory["cost"]["operator_budget_cap_usd"], 250.0)
+        self.assertEqual(inventory["cost"]["hard_budget_cap_usd"], 250.0)
+        self.assertEqual(
+            inventory["article_config"]["path"],
+            "PROMOPAGES-10060/campaigns-20260805-v1/articles.json",
+        )
+
+    def test_extension_accepts_explicit_cap_above_100_but_legacy_does_not(self) -> None:
+        parser = pipeline.build_parser()
+        args = parser.parse_args(
+            [
+                "--batch",
+                pipeline.CAMPAIGN_EXTENSION_BATCH_ID,
+                "inventory",
+                "--budget-cap-usd",
+                "250",
+                "--dry-run",
+            ]
+        )
+        pipeline.activate_batch(args.batch)
+        self.assertEqual(pipeline.parse_budget(args.budget_cap_usd), Decimal("250.00"))
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+        with self.assertRaisesRegex(pipeline.PipelineError, r"hard \$100.00 cap"):
+            pipeline.parse_budget(args.budget_cap_usd)
+
+    def test_extension_normalized_retry_allowlist_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_campaign_extension_fixture(root)
+            source = pipeline.discover(root).sources[0]
+        with self.assertRaisesRegex(
+            pipeline.PipelineError,
+            "selected batch allowlist",
+        ):
+            pipeline.normalized_input_retry_binding(source, "alibaba/wan-2.2")
+
+    def test_extension_commit_pinned_allowlist_is_exact_three_by_two(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        sources = {
+            (source.article_slug, source.image["image_id"]): source
+            for source in discovery.sources
+        }
+        targets = pipeline.CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS
+        models = ("alibaba/wan-2.2", "alibaba/wan-2.7")
+        self.assertEqual(
+            [(target.article_slug, target.image_id) for target in targets],
+            [
+                ("18-volma-plitochnyi-klei", "05"),
+                ("18-volma-plitochnyi-klei", "07"),
+                ("18-volma-plitochnyi-klei", "08"),
+            ],
+        )
+
+        bindings = []
+        for target in targets:
+            source = sources[(target.article_slug, target.image_id)]
+            self.assertEqual(source.image["sha256"], target.source_sha256)
+            self.assertEqual(target.model_ids, models)
+            self.assertEqual(target.failure_kind, "minimum-dimension")
+            self.assertIsNotNone(target.replacement)
+            target_bindings = [
+                pipeline.normalized_input_retry_binding(source, model_id)
+                for model_id in models
+            ]
+            self.assertEqual(
+                {binding.asset_key for binding in target_bindings},
+                {target_bindings[0].asset_key},
+            )
+            self.assertEqual(
+                {
+                    binding.asset_metadata_rel
+                    for binding in target_bindings
+                },
+                {target_bindings[0].asset_metadata_rel},
+            )
+            self.assertIsNone(
+                pipeline._normalized_input_target_for_key(
+                    target.article_slug,
+                    target.image_id,
+                    "google/veo-3.1-lite",
+                )
+            )
+            bindings.extend(target_bindings)
+
+        self.assertEqual(len(bindings), 6)
+        self.assertEqual(len({binding.primary_provider_run_id for binding in bindings}), 6)
+        self.assertEqual(len({binding.retry_provider_run_id for binding in bindings}), 6)
+        self.assertEqual(len({binding.asset_key for binding in bindings}), 3)
+
+    def test_extension_local_assets_match_commit_pinned_binding_metadata(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        sources = {
+            (source.article_slug, source.image["image_id"]): source
+            for source in discovery.sources
+        }
+        for target in pipeline.CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS:
+            replacement = target.replacement
+            self.assertIsNotNone(replacement)
+            assert replacement is not None
+            source = sources[(target.article_slug, target.image_id)]
+            preflight = {
+                "http_status": 200,
+                "url": replacement.url,
+                "sha256": replacement.sha256,
+                "bytes": replacement.byte_size,
+                "width": replacement.width,
+                "height": replacement.height,
+                "format": replacement.image_format,
+            }
+            documents = []
+            for model_id in target.model_ids:
+                binding = pipeline.normalized_input_retry_binding(source, model_id)
+                self.assertEqual(
+                    Path(replacement.repository_path).parent,
+                    binding.asset_metadata_rel.parent,
+                )
+                normalized, transform = pipeline._commit_pinned_replacement_record(
+                    binding,
+                    preflight,
+                    root=pipeline.ROOT,
+                )
+                self.assertEqual(
+                    normalized["repository_path"],
+                    replacement.repository_path,
+                )
+                self.assertEqual(normalized["sha256"], replacement.sha256)
+                self.assertEqual(normalized["bytes"], replacement.byte_size)
+                self.assertEqual(transform["operation"], "uniform-scale")
+                documents.append(
+                    pipeline._normalized_input_asset_document(
+                        binding,
+                        preflight,
+                        root=pipeline.ROOT,
+                    )
+                )
+            self.assertEqual(documents[0], documents[1])
+            self.assertEqual(
+                documents[0]["source_key"],
+                {
+                    "article_slug": target.article_slug,
+                    "image_id": target.image_id,
+                },
+            )
+            self.assertEqual(
+                documents[0]["normalized"]["source_commit_sha"],
+                replacement.url.split("/")[5],
+            )
+
+    def test_extension_commit_pinned_bindings_reject_mutations(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        sources = {
+            (source.article_slug, source.image["image_id"]): source
+            for source in discovery.sources
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for target in pipeline.CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS:
+                source = sources[(target.article_slug, target.image_id)]
+                mutated_source = pipeline.Source(
+                    article_number=source.article_number,
+                    article_slug=source.article_slug,
+                    context_path=source.context_path,
+                    context_sha256=source.context_sha256,
+                    image={**source.image, "sha256": "0" * 64},
+                )
+                for model_id in target.model_ids:
+                    with self.assertRaisesRegex(
+                        pipeline.PipelineError,
+                        "selected batch allowlist",
+                    ):
+                        pipeline.normalized_input_retry_binding(
+                            mutated_source,
+                            model_id,
+                        )
+
+                replacement = target.replacement
+                self.assertIsNotNone(replacement)
+                assert replacement is not None
+                local_payload = (pipeline.ROOT / replacement.repository_path).read_bytes()
+                mutated_path = root / replacement.repository_path
+                mutated_path.parent.mkdir(parents=True, exist_ok=True)
+                mutated_path.write_bytes(local_payload[:-1] + bytes([local_payload[-1] ^ 1]))
+                binding = pipeline.normalized_input_retry_binding(
+                    source,
+                    target.model_ids[0],
+                )
+                exact_preflight = {
+                    "http_status": 200,
+                    "url": replacement.url,
+                    "sha256": replacement.sha256,
+                    "bytes": replacement.byte_size,
+                    "width": replacement.width,
+                    "height": replacement.height,
+                    "format": replacement.image_format,
+                }
+                with self.assertRaisesRegex(
+                    pipeline.PipelineError,
+                    "local asset differs",
+                ):
+                    pipeline._commit_pinned_replacement_record(
+                        binding,
+                        exact_preflight,
+                        root=root,
+                    )
+                with self.assertRaisesRegex(
+                    pipeline.PipelineError,
+                    "allowlist metadata",
+                ):
+                    pipeline._commit_pinned_replacement_record(
+                        binding,
+                        {**exact_preflight, "sha256": "f" * 64},
+                        root=pipeline.ROOT,
+                    )
+
+    def test_extension_retry_scan_requires_binding_specific_policy(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        sources = {
+            (source.article_slug, source.image["image_id"]): source
+            for source in discovery.sources
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            bindings = []
+            for target in pipeline.CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS:
+                source = sources[(target.article_slug, target.image_id)]
+                for model_id in target.model_ids:
+                    binding = pipeline.normalized_input_retry_binding(source, model_id)
+                    bindings.append(binding)
+                    pipeline.transport.atomic_write_json(
+                        root / binding.envelope_rel,
+                        {
+                            "schema_version": 1,
+                            "manifest_role": pipeline.NORMALIZED_RETRY_MANIFEST_ROLE,
+                            "ticket": pipeline.TICKET,
+                            "primary_batch_id": pipeline.BATCH_ID,
+                            "retry_number": pipeline.NORMALIZED_INPUT_RETRY_VERSION,
+                            "logical_output_key": {
+                                "article_slug": source.article_slug,
+                                "image_id": source.image["image_id"],
+                                "model_id": model_id,
+                            },
+                            "primary_attempt": {
+                                "provider_run_id": binding.primary_provider_run_id,
+                            },
+                            "retry_attempt": {"retry_key": binding.retry_key},
+                            "policy": pipeline._normalized_input_retry_policy(binding),
+                        },
+                    )
+            documents = pipeline._known_normalized_input_retry_envelopes(root)
+            self.assertEqual(len(documents), 6)
+            self.assertEqual(
+                {
+                    document["primary_attempt"]["provider_run_id"]
+                    for document in documents
+                },
+                {binding.primary_provider_run_id for binding in bindings},
+            )
+
+            mutated = pipeline.read_json(root / bindings[0].envelope_rel)
+            mutated["policy"] = pipeline._normalized_input_retry_policy()
+            pipeline.transport.atomic_write_json(
+                root / bindings[0].envelope_rel,
+                mutated,
+            )
+            with self.assertRaisesRegex(
+                pipeline.PipelineError,
+                "policy differs for its target",
+            ):
+                pipeline._known_normalized_input_retry_envelopes(root)
+
+    def test_legacy_normalized_policy_and_sidecar_shape_are_unchanged(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+        self.assertEqual(
+            pipeline._normalized_input_retry_policy(
+                target=pipeline.LEGACY_NORMALIZED_INPUT_TARGET
+            ),
+            {
+                "explicit_operator_command_required": True,
+                "automatic_retry": False,
+                "maximum_new_paid_submissions": 1,
+                "retry2_forbidden": True,
+                "same_verified_lite_result": True,
+                "same_prompt": True,
+                "same_model": True,
+                "request_delta_only_image_pointer": True,
+                "shared_frozen_scale_1200_asset": True,
+                "local_reencode": False,
+                "fallback": False,
+                "primary_receipt_immutable": True,
+            },
+        )
+        generation_policy = pipeline._normalized_input_generation_policy()
+        self.assertNotIn("eligible_sources", generation_policy)
+        self.assertEqual(
+            generation_policy,
+            {
+                "version": 1,
+                "namespace": (
+                    "clipmaker-lite-test/runs/"
+                    "promopages-10060-lite-all-images-20260805-v2/"
+                    "normalized-input-retries-v1"
+                ),
+                "shared_asset_namespace": (
+                    "clipmaker-lite-test/runs/"
+                    "promopages-10060-lite-all-images-20260805-v2/"
+                    "normalized-input-assets-v1"
+                ),
+                "eligible_source": {
+                    "article_slug": "12-dream-island-7-fishek",
+                    "image_id": "08",
+                },
+                "models": ["alibaba/wan-2.2", "alibaba/wan-2.7"],
+                "explicit_operator_command_required": True,
+                "maximum_new_paid_submissions_per_eligible_output": 1,
+                "retry2_forbidden": True,
+                "automatic_paid_retries": False,
+                "fallback": False,
+                "primary_receipts_immutable": True,
+                "request_delta_only_image_pointer": True,
+            },
+        )
+
+    def test_exact_extension_undersized_primaries_are_terminal_evidence(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        source = next(
+            source
+            for source in discovery.sources
+            if source.article_slug == "18-volma-plitochnyi-klei"
+            and source.image["image_id"] == "05"
+        )
+        self.assertEqual(
+            pipeline._normalized_input_constraint(source, pipeline.ROOT),
+            "minimum-dimension",
+        )
+        with preserved_native_state():
+            pipeline.configure_native(discovery.sources, pipeline.ROOT)
+            before = {
+                model_id: pipeline.sha256_file(
+                    pipeline.primary_artifact_paths(
+                        source,
+                        model_id,
+                        pipeline.ROOT,
+                    )["run"]
+                )
+                for model_id in ("alibaba/wan-2.2", "alibaba/wan-2.7")
+            }
+            evidence = {
+                model_id: pipeline._primary_normalized_input_failure_evidence(
+                    source,
+                    model_id,
+                    root=pipeline.ROOT,
+                )
+                for model_id in ("alibaba/wan-2.2", "alibaba/wan-2.7")
+            }
+            after = {
+                model_id: pipeline.sha256_file(
+                    pipeline.primary_artifact_paths(
+                        source,
+                        model_id,
+                        pipeline.ROOT,
+                    )["run"]
+                )
+                for model_id in ("alibaba/wan-2.2", "alibaba/wan-2.7")
+            }
+        self.assertEqual(before, after)
+        self.assertEqual(evidence["alibaba/wan-2.2"]["status"], "provider-failed")
+        self.assertEqual(
+            evidence["alibaba/wan-2.2"]["recorded_status"],
+            "submit-unknown",
+        )
+        self.assertEqual(
+            evidence["alibaba/wan-2.2"]["provider_task_id"],
+            "9d2d4347-7fbd-473c-adf2-cc2b7f5199c2",
+        )
+        self.assertEqual(
+            evidence["alibaba/wan-2.7"]["recorded_status"],
+            "provider-failed",
+        )
+        self.assertEqual(
+            evidence["alibaba/wan-2.7"]["provider_job_id"],
+            "PyF26u7pxzE0fNJ0DGgB",
+        )
+
+    def _supersede_target(self) -> pipeline.Source:
+        return next(
+            source
+            for source in pipeline.discover(pipeline.ROOT).sources
+            if source.article_slug == "18-volma-plitochnyi-klei"
+            and source.image["image_id"] == "07"
+        )
+
+    def test_active_wan27_supersede_has_one_deterministic_isolated_identity(
+        self,
+    ) -> None:
+        source = self._supersede_target()
+        normalized = pipeline.normalized_input_retry_binding(
+            source,
+            "alibaba/wan-2.7",
+        )
+        first = pipeline.normalized_input_supersede_binding(
+            source,
+            "alibaba/wan-2.7",
+        )
+        second = pipeline.normalized_input_supersede_binding(
+            source,
+            "alibaba/wan-2.7",
+        )
+
+        self.assertEqual(first, second)
+        self.assertEqual(
+            first.normalized_retry_provider_run_id,
+            normalized.retry_provider_run_id,
+        )
+        self.assertNotEqual(
+            first.supersede_provider_run_id,
+            normalized.retry_provider_run_id,
+        )
+        self.assertEqual(
+            first.supersede_key,
+            hashlib.sha256(
+                (
+                    "normalized-input-supersede-v1:"
+                    f"{normalized.retry_provider_run_id}"
+                ).encode("utf-8")
+            ).hexdigest()[:20],
+        )
+        self.assertEqual(
+            first.directory_rel,
+            normalized.directory_rel / "superseding-attempt-v1",
+        )
+        self.assertEqual(first.envelope_rel, first.directory_rel / "supersede.json")
+
+        # The operator authorized only the exact stuck image-07 Wan 2.7 job,
+        # not a reusable escape hatch for another model or normalized target.
+        for image_id, model_id in (
+            ("07", "alibaba/wan-2.2"),
+            ("05", "alibaba/wan-2.7"),
+            ("08", "alibaba/wan-2.7"),
+        ):
+            other = next(
+                candidate
+                for candidate in pipeline.discover(pipeline.ROOT).sources
+                if candidate.article_slug == "18-volma-plitochnyi-klei"
+                and candidate.image["image_id"] == image_id
+            )
+            with self.subTest(image_id=image_id, model_id=model_id):
+                with self.assertRaisesRegex(
+                    pipeline.PipelineError,
+                    "supersed|operator-authorized|allowlist",
+                ):
+                    pipeline.normalized_input_supersede_binding(other, model_id)
+
+    def test_supersede_is_a_separate_conservative_paid_reservation(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        inventory = pipeline.inventory_document(
+            discovery,
+            Decimal("1000.00"),
+            pipeline.ROOT,
+        )
+        before = pipeline.aggregate_retry_budget_metadata(
+            inventory,
+            terminal_retry_reservations=2,
+            ambiguous_submit_retry_reservations=1,
+            normalized_input_retry_reservations=4,
+            normalized_input_supersede_reservations=0,
+        )
+        after = pipeline.aggregate_retry_budget_metadata(
+            inventory,
+            terminal_retry_reservations=2,
+            ambiguous_submit_retry_reservations=1,
+            normalized_input_retry_reservations=4,
+            normalized_input_supersede_reservations=1,
+        )
+
+        self.assertEqual(after["normalized_input_supersede_reservations"], 1)
+        self.assertEqual(
+            after["normalized_input_supersede_accounting_cost_usd"],
+            0.35,
+        )
+        self.assertEqual(
+            Decimal(str(after["maximum_estimated_cost_usd"]))
+            - Decimal(str(before["maximum_estimated_cost_usd"])),
+            Decimal("0.35"),
+        )
+        self.assertEqual(
+            after["maximum_paid_submissions"],
+            before["maximum_paid_submissions"] + 1,
+        )
+        self.assertEqual(
+            after["total_retry_reservations"],
+            before["total_retry_reservations"] + 1,
+        )
+
+    def test_supersede_scanner_allows_exactly_one_nested_reservation(self) -> None:
+        source = self._supersede_target()
+        normalized = pipeline.normalized_input_retry_binding(
+            source,
+            "alibaba/wan-2.7",
+        )
+        binding = pipeline.normalized_input_supersede_binding(
+            source,
+            "alibaba/wan-2.7",
+        )
+        document = {
+            "schema_version": 1,
+            "manifest_role": pipeline.NORMALIZED_INPUT_SUPERSEDE_MANIFEST_ROLE,
+            "ticket": pipeline.TICKET,
+            "primary_batch_id": pipeline.BATCH_ID,
+            "supersede_number": pipeline.NORMALIZED_INPUT_SUPERSEDE_VERSION,
+            "normalized_retry": {
+                "provider_run_id": normalized.retry_provider_run_id,
+            },
+            "superseding_attempt": {
+                "provider_run_id": binding.supersede_provider_run_id,
+            },
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pipeline.transport.atomic_write_json(
+                root / binding.envelope_rel,
+                document,
+            )
+            self.assertEqual(
+                pipeline._known_normalized_input_supersede_envelopes(root),
+                (document,),
+            )
+
+            second = (
+                root
+                / pipeline.NORMALIZED_INPUT_RETRY_NAMESPACE_REL
+                / "another-normalized-retry"
+                / pipeline.NORMALIZED_INPUT_SUPERSEDE_DIRECTORY_NAME
+                / "supersede.json"
+            )
+            pipeline.transport.atomic_write_json(second, document)
+            with self.assertRaisesRegex(
+                pipeline.PipelineError,
+                "More than one normalized-input supersede",
+            ):
+                pipeline._known_normalized_input_supersede_envelopes(root)
+
+    def test_supersede_envelope_preserves_the_active_attempt_and_exact_request(
+        self,
+    ) -> None:
+        source = self._supersede_target()
+        model_id = "alibaba/wan-2.7"
+        normalized = pipeline.normalized_input_retry_binding(source, model_id)
+        binding = pipeline.normalized_input_supersede_binding(source, model_id)
+        replacement = next(
+            target.replacement
+            for target in pipeline.CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS
+            if target.article_slug == source.article_slug
+            and target.image_id == source.image["image_id"]
+        )
+        self.assertIsNotNone(replacement)
+        assert replacement is not None
+        normalized_envelope = pipeline.read_json(
+            pipeline.ROOT / normalized.envelope_rel
+        )
+        active_run = pipeline.read_json(pipeline.ROOT / normalized.run_rel)
+        active_run_sha256 = pipeline.sha256_file(
+            pipeline.ROOT / normalized.run_rel
+        )
+        normalized_envelope_sha256 = pipeline.sha256_file(
+            pipeline.ROOT / normalized.envelope_rel
+        )
+        normalized_prompt_sha256 = pipeline.sha256_file(
+            pipeline.ROOT / normalized.prompt_rel
+        )
+        request = normalized_envelope["retry_attempt"]["request"]
+        request_sha256 = normalized_envelope["retry_attempt"]["request_sha256"]
+        self.assertEqual(active_run["provider_job_id"], "novcFDcwbuZkgtrmgQIY")
+        self.assertEqual(active_run["status"], "running")
+        self.assertTrue(active_run["provider_may_be_active"])
+        self.assertEqual(active_run["request"], request)
+        self.assertEqual(active_run["request_sha256"], request_sha256)
+        inventory = pipeline.inventory_document(
+            pipeline.discover(pipeline.ROOT),
+            Decimal("1000.00"),
+            pipeline.ROOT,
+        )
+        aggregate_cost = pipeline.aggregate_retry_budget_metadata(
+            inventory,
+            terminal_retry_reservations=2,
+            ambiguous_submit_retry_reservations=1,
+            normalized_input_retry_reservations=4,
+            normalized_input_supersede_reservations=1,
+        )
+        frozen_envelope = json.loads(json.dumps(normalized_envelope))
+        frozen_run = json.loads(json.dumps(active_run))
+
+        document = pipeline._normalized_input_supersede_envelope_document(
+            binding,
+            normalized_envelope,
+            active_run,
+            active_run_sha256,
+            aggregate_cost,
+        )
+
+        self.assertEqual(normalized_envelope, frozen_envelope)
+        self.assertEqual(active_run, frozen_run)
+        self.assertEqual(
+            pipeline.sha256_file(pipeline.ROOT / normalized.run_rel),
+            active_run_sha256,
+        )
+        self.assertEqual(
+            pipeline.sha256_file(pipeline.ROOT / normalized.envelope_rel),
+            normalized_envelope_sha256,
+        )
+        self.assertEqual(
+            pipeline.sha256_file(pipeline.ROOT / normalized.prompt_rel),
+            normalized_prompt_sha256,
+        )
+        self.assertEqual(
+            document["manifest_role"],
+            pipeline.NORMALIZED_INPUT_SUPERSEDE_MANIFEST_ROLE,
+        )
+        self.assertEqual(document["supersede_number"], 1)
+        self.assertEqual(
+            document["superseded_attempt"]["provider_run_id"],
+            normalized.retry_provider_run_id,
+        )
+        self.assertEqual(
+            document["superseded_attempt"]["provider_job_id"],
+            "novcFDcwbuZkgtrmgQIY",
+        )
+        self.assertEqual(
+            document["superseded_attempt"]["run_sha256"],
+            active_run_sha256,
+        )
+        superseding = document["superseding_attempt"]
+        self.assertEqual(
+            superseding["provider_run_id"],
+            binding.supersede_provider_run_id,
+        )
+        self.assertEqual(superseding["model_id"], model_id)
+        self.assertEqual(superseding["lite_run_id"], source.planning_run_id)
+        self.assertEqual(superseding["source_url"], replacement.url)
+        self.assertEqual(superseding["source_sha256"], replacement.sha256)
+        self.assertEqual(superseding["request"], request)
+        self.assertEqual(superseding["request_sha256"], request_sha256)
+        self.assertEqual(document["cost"], aggregate_cost)
+        self.assertEqual(
+            document["policy"]["maximum_new_paid_submissions"],
+            1,
+        )
+        self.assertTrue(document["policy"]["superseded_receipt_immutable"])
+        self.assertTrue(
+            document["policy"]["duplicate_billing_risk_acknowledged"]
+        )
+        self.assertTrue(document["policy"]["same_request"])
+        self.assertTrue(document["policy"]["same_route"])
+
+        # A terminal or request-mutated receipt is not the job the operator
+        # authorized and must fail before a new reservation can be authored.
+        for mutation in (
+            {"provider_may_be_active": False, "status": "provider-failed"},
+            {"request": {**request, "seed": 1}},
+            {"provider_job_id": None},
+        ):
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(pipeline.PipelineError):
+                    pipeline._normalized_input_supersede_envelope_document(
+                        binding,
+                        normalized_envelope,
+                        {**active_run, **mutation},
+                        active_run_sha256,
+                        aggregate_cost,
+                    )
+
+    def test_normalized_retry_ledgers_straddle_supersede_reservation(self) -> None:
+        """Pre-supersede snapshots and post-supersede ledgers both validate."""
+
+        discovery = pipeline.discover(pipeline.ROOT)
+        by_image = {
+            source.image["image_id"]: source
+            for source in discovery.sources
+            if source.article_slug == "18-volma-plitochnyi-klei"
+        }
+        with preserved_native_state():
+            pipeline.configure_native(discovery.sources, pipeline.ROOT)
+            pre_supersede = pipeline._normalized_input_retry_envelope(
+                by_image["07"],
+                "alibaba/wan-2.7",
+                root=pipeline.ROOT,
+            )
+            post_supersede = pipeline._normalized_input_retry_envelope(
+                by_image["08"],
+                "alibaba/wan-2.2",
+                root=pipeline.ROOT,
+            )
+
+        self.assertIsNotNone(pre_supersede)
+        self.assertIsNotNone(post_supersede)
+        assert pre_supersede is not None
+        assert post_supersede is not None
+        old_cost = pre_supersede[1]["cost"]
+        new_cost = post_supersede[1]["cost"]
+        self.assertNotIn("normalized_input_supersede_reservations", old_cost)
+        self.assertEqual(new_cost["normalized_input_supersede_version"], 1)
+        self.assertEqual(
+            new_cost["normalized_input_supersede_accounting_cost_usd"],
+            0.35,
+        )
+        self.assertEqual(new_cost["normalized_input_supersede_reservations"], 1)
+        self.assertEqual(
+            new_cost["total_retry_reservations"],
+            new_cost["terminal_retry_reservations"]
+            + new_cost["ambiguous_submit_retry_reservations"]
+            + new_cost["normalized_input_retry_reservations"]
+            + new_cost["normalized_input_supersede_reservations"],
+        )
+
+    def test_supersede_requires_explicit_operator_authorization_before_io(
+        self,
+    ) -> None:
+        source = self._supersede_target()
+        normalized = pipeline.normalized_input_retry_binding(
+            source,
+            "alibaba/wan-2.7",
+        )
+        discovery = pipeline.discover(pipeline.ROOT)
+        inventory = pipeline.inventory_document(
+            discovery,
+            Decimal("1000.00"),
+            pipeline.ROOT,
+        )
+        parser = pipeline.build_parser()
+        without_flag = parser.parse_args(
+            [
+                "--batch",
+                pipeline.CAMPAIGN_EXTENSION_BATCH_ID,
+                "supersede-normalized-input",
+                "--provider-run-id",
+                normalized.retry_provider_run_id,
+                "--dry-run",
+            ]
+        )
+        with_flag = parser.parse_args(
+            [
+                "--batch",
+                pipeline.CAMPAIGN_EXTENSION_BATCH_ID,
+                "supersede-normalized-input",
+                "--provider-run-id",
+                normalized.retry_provider_run_id,
+                "--operator-authorized-active-job",
+                "--dry-run",
+            ]
+        )
+        self.assertFalse(without_flag.operator_authorized_active_job)
+        self.assertTrue(with_flag.operator_authorized_active_job)
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with (
+                mock.patch.object(pipeline, "configure_native") as configure,
+                mock.patch.object(
+                    pipeline.transport,
+                    "atomic_write_json",
+                    side_effect=AssertionError("authorization failure wrote a file"),
+                ) as writer,
+                mock.patch.object(
+                    pipeline.native,
+                    "main",
+                    side_effect=AssertionError("authorization failure called provider"),
+                ) as provider_main,
+            ):
+                with self.assertRaisesRegex(
+                    pipeline.PipelineError,
+                    "operator.*authoriz|authorization",
+                ):
+                    pipeline.run_normalized_input_supersede(
+                        discovery.sources,
+                        inventory,
+                        normalized_retry_provider_run_id_value=(
+                            normalized.retry_provider_run_id
+                        ),
+                        root=root,
+                        dry_run=False,
+                        operator_authorized=False,
+                        allow_external_processing=True,
+                        timeout=901,
+                        poll_interval=7.5,
+                    )
+        configure.assert_not_called()
+        writer.assert_not_called()
+        provider_main.assert_not_called()
+
+    def test_default_cli_selection_preserves_legacy_batch(self) -> None:
+        args = pipeline.build_parser().parse_args(["inventory", "--dry-run"])
+        self.assertEqual(args.batch, pipeline.LEGACY_BATCH_ID)
+        pipeline.activate_batch(args.batch)
+        self.assertEqual(pipeline.BATCH_ID, pipeline.LEGACY_BATCH_ID)
+        self.assertEqual(pipeline.HARD_BUDGET_CAP_USD, Decimal("100.00"))
+        self.assertEqual(
+            pipeline.FINAL_MANIFEST_REL.as_posix(),
+            "clipmaker-lite-test/promopages-10060-manifest.json",
+        )
 
 
 class Promopages10060PipelineTest(unittest.TestCase):
@@ -231,35 +1227,36 @@ class Promopages10060PipelineTest(unittest.TestCase):
         )
         self.assertIn("terminal-provider-retries-v1", first.envelope_rel.parts)
 
-    def test_ambiguous_retry_identity_is_deterministic_and_wan22_only(self) -> None:
+    def test_ambiguous_retry_identity_is_deterministic_and_model_isolated(self) -> None:
         source = self.discovery.sources[0]
-        first = pipeline.ambiguous_submit_retry_binding(
-            source,
-            "alibaba/wan-2.2",
-        )
-        second = pipeline.ambiguous_submit_retry_binding(
-            source,
-            "alibaba/wan-2.2",
-        )
-        self.assertEqual(first, second)
-        self.assertNotEqual(first.retry_batch_id, pipeline.BATCH_ID)
-        self.assertNotEqual(
-            first.retry_provider_run_id,
-            first.primary_provider_run_id,
-        )
-        self.assertTrue(
-            first.envelope_rel.is_relative_to(
-                pipeline.AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL
+        bindings = []
+        for model_id in pipeline.MODEL_IDS:
+            first = pipeline.ambiguous_submit_retry_binding(source, model_id)
+            second = pipeline.ambiguous_submit_retry_binding(source, model_id)
+            self.assertEqual(first, second)
+            self.assertNotEqual(first.retry_batch_id, pipeline.BATCH_ID)
+            self.assertNotEqual(
+                first.retry_provider_run_id,
+                first.primary_provider_run_id,
             )
-        )
-        self.assertIn("ambiguous-submit-retries-v1", first.envelope_rel.parts)
+            self.assertTrue(
+                first.envelope_rel.is_relative_to(
+                    pipeline.AMBIGUOUS_SUBMIT_RETRY_NAMESPACE_REL
+                )
+            )
+            self.assertIn(
+                "ambiguous-submit-retries-v1",
+                first.envelope_rel.parts,
+            )
+            bindings.append(first)
+        self.assertEqual(len({binding.retry_key for binding in bindings}), 3)
         with self.assertRaisesRegex(
             pipeline.PipelineError,
-            "restricted to the synchronous",
+            "unsupported",
         ):
             pipeline.ambiguous_submit_retry_binding(
                 source,
-                "google/veo-3.1-lite",
+                "unsupported/model",
             )
 
     def test_normalized_retry_identity_is_model_isolated_but_asset_is_shared(self) -> None:
@@ -1124,6 +2121,114 @@ class Promopages10060PipelineTest(unittest.TestCase):
         self.assertEqual(evidence["request_sha256"], request_sha256)
         self.assertEqual(before, after)
 
+    def test_openrouter_ambiguous_primary_evidence_preserves_unknown_receipt(self) -> None:
+        source = self.discovery.sources[0]
+        model_id = "google/veo-3.1-lite"
+        request = {
+            "model": model_id,
+            "prompt": "same",
+            "frame_images": [{"type": "image_url"}],
+        }
+        request_sha256 = "9" * 64
+        sample = {"source_path": source.image["source_path"]}
+        prompt = {"positive_prompt": "same"}
+        expected_prompt = {"bound": "verified-lite-prompt"}
+        fake_job = SimpleNamespace(
+            result_path="artifacts/result.json",
+            result_sha256="8" * 64,
+        )
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            preserved_native_state(),
+        ):
+            root = Path(directory)
+            pipeline.configure_native(self.discovery.sources, pipeline.ROOT)
+            primary_paths = pipeline.primary_artifact_paths(source, model_id, root)
+            primary_paths["directory"].mkdir(parents=True)
+            pipeline.transport.atomic_write_json(
+                primary_paths["prompt"],
+                expected_prompt,
+            )
+            primary_receipt = {
+                "schema_version": 1,
+                "ticket": pipeline.TICKET,
+                "batch_id": pipeline.BATCH_ID,
+                "agent_id": pipeline.AGENT_ID,
+                "lite_run_id": source.planning_run_id,
+                "provider_run_id": pipeline.primary_provider_run_id(
+                    source,
+                    model_id,
+                ),
+                "model_id": model_id,
+                "adapter": "eliza-openrouter",
+                "status": "submit-unknown",
+                "provider_may_be_active": True,
+                "provider_job_id": None,
+                "provider_session_hash": None,
+                "submitted_at": None,
+                "completed_at": None,
+                "media": None,
+                "contract_check": None,
+                "error": "The read operation timed out",
+                "request": request,
+                "request_sha256": request_sha256,
+                "request_fingerprint_version": (
+                    pipeline.transport.REQUEST_FINGERPRINT_VERSION
+                ),
+            }
+            pipeline.transport.atomic_write_json(
+                primary_paths["run"],
+                primary_receipt,
+            )
+            before = pipeline.sha256_file(primary_paths["run"])
+            with (
+                mock.patch.object(
+                    pipeline.native,
+                    "load_lite_job",
+                    return_value=fake_job,
+                ),
+                mock.patch.object(
+                    pipeline.native,
+                    "prompt_artifact",
+                    return_value=expected_prompt,
+                ),
+                mock.patch.object(
+                    pipeline.native,
+                    "provider_sample",
+                    return_value=sample,
+                ),
+                mock.patch.object(
+                    pipeline.native,
+                    "provider_prompt",
+                    return_value=prompt,
+                ),
+                mock.patch.object(
+                    pipeline.native,
+                    "provider_request_preview",
+                    return_value=request,
+                ),
+                mock.patch.object(
+                    pipeline.transport,
+                    "request_fingerprint",
+                    return_value=request_sha256,
+                ),
+            ):
+                evidence = pipeline._primary_ambiguous_submit_evidence(
+                    source,
+                    model_id,
+                    root=root,
+                )
+            after = pipeline.sha256_file(primary_paths["run"])
+        self.assertEqual(evidence["status"], "submit-unknown")
+        self.assertEqual(evidence["recorded_status"], "submit-unknown")
+        self.assertEqual(evidence["adapter"], "eliza-openrouter")
+        self.assertTrue(evidence["outcome_unknown"])
+        self.assertTrue(evidence["provider_may_be_active"])
+        self.assertIsNone(evidence["provider_job_id"])
+        self.assertIsNone(evidence["source_preflight"])
+        self.assertEqual(evidence["request_sha256"], request_sha256)
+        self.assertEqual(before, after)
+
     def test_exact_scheduler_normalization_is_audited_without_rewriting_primary(self) -> None:
         original = {
             "status": "submitting",
@@ -1326,7 +2431,7 @@ class Promopages10060PipelineTest(unittest.TestCase):
 
     def test_ambiguous_retry_success_and_terminal_unavailable_are_audited(self) -> None:
         source = self.discovery.sources[0]
-        model_id = "alibaba/wan-2.2"
+        model_id = "google/veo-3.1-lite"
         binding = pipeline.ambiguous_submit_retry_binding(source, model_id)
         shared = {
             "ticket": pipeline.TICKET,
@@ -1387,7 +2492,7 @@ class Promopages10060PipelineTest(unittest.TestCase):
                 "source_path": source.image["source_path"],
                 "source_sha256": source.image["sha256"],
                 "model_id": model_id,
-                "adapter": "eliza-segmind",
+                "adapter": "eliza-openrouter",
                 "lite_run_id": source.planning_run_id,
             }
             envelope = pipeline._ambiguous_submit_retry_envelope_document(
@@ -1419,7 +2524,7 @@ class Promopages10060PipelineTest(unittest.TestCase):
                 "lite_run_id": source.planning_run_id,
                 "provider_run_id": binding.retry_provider_run_id,
                 "model_id": model_id,
-                "adapter": "eliza-segmind",
+                "adapter": "eliza-openrouter",
                 "status": "succeeded",
                 "provider_may_be_active": False,
                 "provider_job_id": "retry-job",
@@ -1801,7 +2906,7 @@ class Promopages10060PipelineTest(unittest.TestCase):
         self.assertEqual(result, 0)
         argv = main.call_args.args[0]
         self.assertEqual(
-            argv,
+            argv[:12],
             [
                 "run",
                 "--wan22-concurrency",
@@ -1817,6 +2922,12 @@ class Promopages10060PipelineTest(unittest.TestCase):
                 "--dry-run",
             ],
         )
+        selected_run_ids = [
+            argv[index + 1]
+            for index, value in enumerate(argv)
+            if value == "--run-id"
+        ]
+        self.assertEqual(len(selected_run_ids), len(set(selected_run_ids)))
         self.assertNotIn("--model", argv)
         self.assertNotIn("--force", argv)
 

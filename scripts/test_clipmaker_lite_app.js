@@ -31,7 +31,8 @@ const loadHooks = () => {
     .replace(
       "  const renderFacts",
       "  globalThis.__validatePromopages10060Manifest = validatePromopages10060Manifest;\n" +
-        "  globalThis.__mergeArticleCollections = mergeArticleCollections;\n" +
+      "  globalThis.__mergeArticleCollections = mergeArticleCollections;\n" +
+        "  globalThis.__mergeUnavailableArticleCollections = mergeUnavailableArticleCollections;\n" +
         "  globalThis.__datasetCounts = datasetCounts;\n" +
         "  globalThis.__availableOutputCount = availableOutputCount;\n" +
         "  globalThis.__resolveRequestedArticleIndex = resolveRequestedArticleIndex;\n\n" +
@@ -102,6 +103,68 @@ const NORMALIZED_ORIGINAL_URL =
   "https://avatars.mds.yandex.net/get-direct-picture/117225/oversize/orig";
 const NORMALIZED_URL =
   "https://avatars.mds.yandex.net/get-direct-picture/117225/oversize/scale_1200";
+const EXTENSION_BATCH_ID = "promopages-10060-campaigns-20260805-v1";
+const EXTENSION_RETRY_NAMESPACE =
+  `clipmaker-lite-test/runs/${EXTENSION_BATCH_ID}/normalized-input-retries-v1`;
+const EXTENSION_ASSET_NAMESPACE =
+  `clipmaker-lite-test/runs/${EXTENSION_BATCH_ID}/normalized-input-assets-v1`;
+const EXTENSION_SOURCE_COMMIT = "25995ee6ea168d2ae7025e5a416bc008ae17a908";
+const EXTENSION_SUPERSEDED_RUN_ID =
+  "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7";
+const EXTENSION_SUPERSEDED_JOB_ID = "novcFDcwbuZkgtrmgQIY";
+const EXTENSION_NORMALIZED_SOURCES = {
+  "05": {
+    file: "05.png",
+    orig_url:
+      "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+    source_sha256:
+      "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+    source_bytes: 17_569,
+    source_width: 758,
+    source_height: 220,
+    asset_key: "660c32c4d1331cb3a82d",
+    sha256:
+      "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23",
+    bytes: 46_883,
+    width: 882,
+    height: 256,
+    format: "PNG",
+  },
+  "07": {
+    file: "07.png",
+    orig_url:
+      "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+    source_sha256:
+      "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+    source_bytes: 27_754,
+    source_width: 773,
+    source_height: 239,
+    asset_key: "0535f187b92384618210",
+    sha256:
+      "7f71227971a99ca0f204eccadb89a706128eabfb6022657bf8718e952fca70e4",
+    bytes: 57_771,
+    width: 828,
+    height: 256,
+    format: "PNG",
+  },
+  "08": {
+    file: "08.jpeg",
+    orig_url:
+      "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fc6621a31e5630ed8/orig",
+    source_sha256:
+      "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03",
+    source_bytes: 30_852,
+    source_width: 752,
+    source_height: 193,
+    asset_key: "2d974dbe489b2e6617a3",
+    sha256:
+      "1a005159d7efaee55f2124844851b7135f28cccfcad0463ad1ac2f5dec1f589a",
+    bytes: 246_119,
+    width: 998,
+    height: 256,
+    format: "PNG",
+  },
+};
 
 const providerFilteredOutput = (articleSlug, imageId, modelId) => {
   const requestSha = "1".repeat(64);
@@ -478,6 +541,431 @@ const reviewManifest = () => {
   };
 };
 
+const campaignExtensionManifest = () => {
+  const source = reviewManifest();
+  const article = clone(source.articles[0]);
+  const oldSlug = article.article_slug;
+  const articleSlug = "15-campaign-6a3d17575c59bd0e6d046aa6";
+  article.article_number = "15";
+  article.article_slug = articleSlug;
+  article.title = "Campaign article 15";
+  article.url = "https://example.promo.page/media/campaign-15";
+  article.context_path =
+    `PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/${articleSlug}/content.json`;
+  article.images.forEach((record) => {
+    record.image.source_path = record.image.source_path.replace(oldSlug, articleSlug);
+    record.image.manifest_file_path =
+      `PROMOPAGES-10060-campaigns-20260805-v1/articles/${articleSlug}/${record.image.file}`;
+    record.lite_planning.run_id = record.lite_planning.run_id.replace("-01-", "-15-");
+    record.lite_planning.result_path = record.lite_planning.result_path.replace(
+      "-01-",
+      "-15-",
+    );
+    record.outputs.forEach((output) => {
+      output.article_slug = articleSlug;
+      output.video_path = output.video_path.replace("/01-", "/15-");
+    });
+  });
+  const outputs = article.images.flatMap((record) => record.outputs.map(clone));
+  return {
+    schema_version: 1,
+    manifest_role: "promopages-10060-campaign-extension",
+    ticket: "PROMOPAGES-10060",
+    batch_id: "promopages-10060-campaigns-20260805-v1",
+    agent_id: "clipmaker-lite",
+    models: source.models,
+    article_count: 1,
+    image_count: article.image_count,
+    expected_outputs: outputs.length,
+    accepted_output_count: outputs.length,
+    terminal_accounted_output_count: outputs.length,
+    provider_filtered_output_count: 0,
+    provider_unavailable_output_count: 0,
+    status_summary: {
+      succeeded: outputs.length,
+    },
+    acceptance_policy: source.acceptance_policy,
+    articles: [article],
+    outputs,
+    unavailable_articles: ["16", "17", "18"].map((number) => ({
+      article_number: number,
+      article_slug: `${number}-unavailable-campaign`,
+      url: `https://example.promo.page/media/campaign-${number}`,
+      status: "source-unavailable",
+      error: "Article source is unavailable.",
+    })),
+  };
+};
+
+const extensionNormalizedRetryOutput = (articleSlug, image, modelId) => {
+  const asset = EXTENSION_NORMALIZED_SOURCES[image.image_id];
+  const modelSuffix = modelId === "alibaba/wan-2.2" ? "wan-2.2" : "wan-2.7";
+  const retryKey =
+    image.image_id === "07" && modelId === "alibaba/wan-2.7"
+      ? "c45a8447813d1b4e4df0"
+      : `${image.image_id}-${modelSuffix}-retry-key`;
+  const namespace = `${EXTENSION_RETRY_NAMESPACE}/${retryKey}`;
+  const assetParent = `${EXTENSION_ASSET_NAMESPACE}/${asset.asset_key}`;
+  const normalizedUrl =
+    "https://raw.githubusercontent.com/UnidentifiedRaccoon/" +
+    `alice-live-images-test/${EXTENSION_SOURCE_COMMIT}/${assetParent}/normalized.png`;
+  const providerRunId =
+    retryKey === "c45a8447813d1b4e4df0"
+      ? EXTENSION_SUPERSEDED_RUN_ID
+      : `${image.image_id}-${modelSuffix}-normalized-retry`;
+  const acceptedStatus =
+    modelId === "alibaba/wan-2.2" ? "succeeded" : "verification-failed";
+  const acceptedError =
+    acceptedStatus === "succeeded"
+      ? null
+      : "Media contract verification failed: audio, resolution, aspect_ratio";
+  const primary = {
+    provider_run_id: `${image.image_id}-${modelSuffix}-primary`,
+    provider_job_id: `${image.image_id}-${modelSuffix}-primary-job`,
+    status: "provider-failed",
+    recorded_status:
+      modelId === "alibaba/wan-2.2" ? "submit-unknown" : "provider-failed",
+    provider_may_be_active: false,
+    recorded_provider_may_be_active: modelId === "alibaba/wan-2.2",
+    submitted_at:
+      modelId === "alibaba/wan-2.2" ? null : "2026-08-05T18:00:00Z",
+    completed_at:
+      modelId === "alibaba/wan-2.2" ? null : "2026-08-05T18:01:00Z",
+    error:
+      modelId === "alibaba/wan-2.2"
+        ? "Image height or width is too small than 240"
+        : `Error validating image resolution: resolution must be at least 240x240, got ${image.width}x${image.height}`,
+    run_path: `runs/${image.image_id}-${modelSuffix}-primary.run.json`,
+    run_sha256: "1".repeat(64),
+    prompt_path: `runs/${image.image_id}-${modelSuffix}-primary.prompt.json`,
+    prompt_sha256: "2".repeat(64),
+    request_sha256: "3".repeat(64),
+  };
+  if (modelId === "alibaba/wan-2.2") {
+    Object.assign(primary, {
+      provider_submit_time: "2026-08-05 18:00:00.000",
+      provider_scheduled_time: "2026-08-05 18:00:00.010",
+      provider_end_time: "2026-08-05 18:00:01.000",
+    });
+  }
+  return {
+    article_slug: articleSlug,
+    image_id: image.image_id,
+    source_path: image.source_path,
+    model_id: modelId,
+    provider_run_id: providerRunId,
+    positive_prompt: "Keep the source stable with restrained motion.",
+    negative_prompt: "Do not alter the composition.",
+    status: acceptedStatus,
+    recorded_status: acceptedStatus,
+    selected_attempt: "normalized-input-retry-v1",
+    video_path:
+      `clipmaker-lite-test/runs/${EXTENSION_BATCH_ID}/videos/` +
+      `${articleSlug}/${modelSuffix}/${image.image_id}.mp4`,
+    media: { width: 1280, height: 720, duration_seconds: 5, bytes: 2048 },
+    contract_check:
+      acceptedStatus === "succeeded"
+        ? { conforms: true, warnings: [] }
+        : {
+            conforms: false,
+            warnings: ["audio", "resolution", "aspect_ratio"],
+          },
+    error: acceptedError,
+    retry: {
+      retry_kind: "normalized-input",
+      retry_number: 1,
+      namespace,
+      envelope_path: `${namespace}/retry.json`,
+      envelope_sha256: "4".repeat(64),
+      exhausted: false,
+      primary_attempt: primary,
+      retry_attempt: {
+        provider_run_id: providerRunId,
+        provider_job_id: `${providerRunId}-job`,
+        status: acceptedStatus,
+        provider_may_be_active: false,
+        submitted_at: "2026-08-05T18:02:00Z",
+        completed_at: "2026-08-05T18:03:00Z",
+        error: acceptedError,
+        run_path: `runs/${retryKey}.run.json`,
+        run_sha256: "5".repeat(64),
+        prompt_path: `runs/${retryKey}.prompt.json`,
+        prompt_sha256: "6".repeat(64),
+        request_sha256: "7".repeat(64),
+      },
+      source_transform: {
+        strategy: "deterministic-uniform-upscale",
+        original: {
+          url: image.orig_url,
+          path: image.source_path,
+          sha256: image.sha256,
+          bytes: image.bytes,
+          width: image.width,
+          height: image.height,
+        },
+        normalized: {
+          http_status: 200,
+          url: normalizedUrl,
+          sha256: asset.sha256,
+          bytes: asset.bytes,
+          width: asset.width,
+          height: asset.height,
+          format: asset.format,
+          delivery: "repository-raw",
+          repository_path: `${assetParent}/normalized.png`,
+          source_commit_sha: EXTENSION_SOURCE_COMMIT,
+          metadata_path: `${assetParent}/asset.json`,
+          metadata_sha256: image.image_id.repeat(32),
+        },
+        request_delta: {
+          json_pointer:
+            modelId === "alibaba/wan-2.2"
+              ? "/input/image"
+              : "/frame_images/0/image_url/url",
+          from: image.orig_url,
+          to: normalizedUrl,
+          changed_leaf_count: 1,
+        },
+        preparation: {
+          operation: "uniform-scale",
+          target_height: asset.height,
+          resampler: "lanczos",
+          crop: false,
+          local_reencode: true,
+        },
+        minimum_provider_input_dimension: 240,
+      },
+    },
+  };
+};
+
+const extensionSupersedeOutput = (sourceOutput) => {
+  const output = clone(sourceOutput);
+  const supersedeNamespace = `${output.retry.namespace}/superseding-attempt-v1`;
+  const superseded = clone(output.retry.retry_attempt);
+  Object.assign(superseded, {
+    provider_run_id: EXTENSION_SUPERSEDED_RUN_ID,
+    provider_job_id: EXTENSION_SUPERSEDED_JOB_ID,
+    status: "running",
+    provider_may_be_active: true,
+    completed_at: null,
+    error: null,
+  });
+  const selected = {
+    provider_run_id:
+      "promopages-10060-campaigns-20260805-v1-normalized-input-supersede-v1-658980e5ab1ada676dbe-18-volma-plitochnyi-klei-07-wan-2-7",
+    provider_job_id: "replacement-wan27-job",
+    status: output.recorded_status,
+    provider_may_be_active: false,
+    submitted_at: "2026-08-06T02:00:00Z",
+    completed_at: "2026-08-06T02:03:00Z",
+    error: output.error,
+    run_path: `${supersedeNamespace}/videos/wan-2.7/07.run.json`,
+    run_sha256: "8".repeat(64),
+    prompt_path: `${supersedeNamespace}/videos/wan-2.7/07.prompt.json`,
+    prompt_sha256: "9".repeat(64),
+    request_sha256: superseded.request_sha256,
+  };
+  Object.assign(output, {
+    provider_run_id: selected.provider_run_id,
+    selected_attempt: "normalized-input-superseding-attempt-v1",
+    video_path: `${supersedeNamespace}/videos/wan-2.7/07.mp4`,
+  });
+  output.retry.retry_attempt = clone(superseded);
+  output.retry.supersede = {
+    version: 1,
+    namespace: supersedeNamespace,
+    envelope_path: `${supersedeNamespace}/supersede.json`,
+    envelope_sha256: "a".repeat(64),
+    exhausted: false,
+    superseded_attempt: superseded,
+    superseding_attempt: selected,
+  };
+  return output;
+};
+
+const extensionSupersedePolicy = () => ({
+  version: 1,
+  namespace:
+    `${EXTENSION_RETRY_NAMESPACE}/c45a8447813d1b4e4df0/superseding-attempt-v1`,
+  explicit_operator_command_required: true,
+  operator_authorized_active_job: true,
+  automatic_retry: false,
+  maximum_new_paid_submissions: 1,
+  retry2_forbidden: true,
+  one_off_allowlist: {
+    article_slug: "18-volma-plitochnyi-klei",
+    image_id: "07",
+    model_id: "alibaba/wan-2.7",
+    normalized_retry_provider_run_id: EXTENSION_SUPERSEDED_RUN_ID,
+    active_provider_job_id: EXTENSION_SUPERSEDED_JOB_ID,
+  },
+  duplicate_submission_risk_acknowledged: true,
+  duplicate_billing_risk_acknowledged: true,
+  same_verified_lite_result: true,
+  same_normalized_source: true,
+  same_prompt: true,
+  same_model: true,
+  same_route: true,
+  same_seed: true,
+  same_request: true,
+  fallback: false,
+  route_discovery: false,
+  primary_receipt_immutable: true,
+  normalized_retry_envelope_immutable: true,
+  superseded_receipt_immutable: true,
+});
+
+const campaignNormalizedExtensionManifest = () => {
+  const articleSlug = "18-volma-plitochnyi-klei";
+  const models = [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite",
+  ];
+  const records = Object.entries(EXTENSION_NORMALIZED_SOURCES).map(
+    ([imageId, source]) => {
+      const sourcePath =
+        `PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/` +
+        `${articleSlug}/${source.file}`;
+      const image = {
+        image_id: imageId,
+        file: source.file,
+        role: "article_image",
+        source_path: sourcePath,
+        manifest_file_path:
+          `PROMOPAGES-10060-campaigns-20260805-v1/articles/` +
+          `${articleSlug}/${source.file}`,
+        orig_url: source.orig_url,
+        sha256: source.source_sha256,
+        bytes: source.source_bytes,
+        width: source.source_width,
+        height: source.source_height,
+      };
+      const outputs = models.map((modelId) => {
+        if (modelId !== "google/veo-3.1-lite") {
+          return extensionNormalizedRetryOutput(articleSlug, image, modelId);
+        }
+        return {
+          article_slug: articleSlug,
+          image_id: imageId,
+          source_path: sourcePath,
+          model_id: modelId,
+          provider_run_id: `${imageId}-veo-primary`,
+          positive_prompt: "Keep the source stable.",
+          negative_prompt: "",
+          status: "succeeded",
+          recorded_status: "succeeded",
+          selected_attempt: "primary",
+          video_path:
+            `clipmaker-lite-test/runs/${EXTENSION_BATCH_ID}/videos/` +
+            `${articleSlug}/veo-3.1-lite/${imageId}.mp4`,
+          media: { width: 1280, height: 720, duration_seconds: 5, bytes: 2048 },
+          contract_check: { conforms: true, warnings: [] },
+          error: null,
+          retry: null,
+        };
+      });
+      return {
+        image,
+        lite_planning: {
+          run_id: `extension-${articleSlug}-${imageId}`,
+          result_path: `artifacts/clipmaker-lite/v1/${articleSlug}-${imageId}/result.json`,
+          structured_intent: { primary_action: "Subtle motion." },
+          provenance: { verified: true, agent_id: "clipmaker-lite" },
+        },
+        outputs,
+      };
+    },
+  );
+  const record07 = records.find((record) => record.image.image_id === "07");
+  const wan27Index = record07.outputs.findIndex(
+    (output) => output.model_id === "alibaba/wan-2.7",
+  );
+  record07.outputs[wan27Index] = extensionSupersedeOutput(
+    record07.outputs[wan27Index],
+  );
+  const outputs = records.flatMap((record) => record.outputs.map(clone));
+  const eligibleSources = Object.entries(EXTENSION_NORMALIZED_SOURCES).map(
+    ([imageId, source]) => ({
+      article_slug: articleSlug,
+      image_id: imageId,
+      source_sha256: source.source_sha256,
+      models: ["alibaba/wan-2.2", "alibaba/wan-2.7"],
+      failure_kind: "minimum-dimension",
+      normalization_strategy: "deterministic-uniform-upscale",
+    }),
+  );
+  return {
+    schema_version: 1,
+    manifest_role: "promopages-10060-campaign-extension",
+    ticket: "PROMOPAGES-10060",
+    batch_id: EXTENSION_BATCH_ID,
+    agent_id: "clipmaker-lite",
+    models,
+    article_count: 1,
+    image_count: 3,
+    expected_outputs: 9,
+    accepted_output_count: 9,
+    terminal_accounted_output_count: 9,
+    provider_filtered_output_count: 0,
+    provider_unavailable_output_count: 0,
+    status_summary: { succeeded: 6, "verification-failed": 3 },
+    acceptance_policy: reviewManifest().acceptance_policy,
+    cost: {
+      terminal_retry_reservations: 0,
+      ambiguous_submit_retry_reservations: 0,
+      normalized_input_retry_version: 1,
+      normalized_input_retry_accounting_cost_usd: 0.35,
+      normalized_input_retry_reservations: 6,
+      normalized_input_supersede_version: 1,
+      normalized_input_supersede_accounting_cost_usd: 0.35,
+      normalized_input_supersede_reservations: 1,
+      maximum_new_paid_submissions_per_superseded_output: 1,
+      total_retry_reservations: 7,
+      maximum_new_paid_submissions_per_normalized_input_output: 1,
+      automatic_paid_retries: false,
+    },
+    generation_policy: {
+      normalized_input_retry: {
+        version: 1,
+        namespace: EXTENSION_RETRY_NAMESPACE,
+        shared_asset_namespace: EXTENSION_ASSET_NAMESPACE,
+        eligible_sources: eligibleSources,
+        explicit_operator_command_required: true,
+        maximum_new_paid_submissions_per_eligible_output: 1,
+        retry2_forbidden: true,
+        automatic_paid_retries: false,
+        fallback: false,
+        primary_receipts_immutable: true,
+        request_delta_only_image_pointer: true,
+      },
+      normalized_input_supersede: extensionSupersedePolicy(),
+    },
+    articles: [
+      {
+        article_number: "18",
+        article_slug: articleSlug,
+        title: "Плиточный клей: 5 вопросов экспертам по ремонту",
+        url: "https://volma.promo.page/promo/example",
+        context_path:
+          `PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/` +
+          `${articleSlug}/content.json`,
+        image_count: records.length,
+        images: records,
+      },
+    ],
+    outputs,
+    unavailable_articles: ["15", "16", "17"].map((number) => ({
+      article_number: number,
+      article_slug: `${number}-unavailable-campaign`,
+      url: `https://example.promo.page/media/campaign-${number}`,
+      status: "source-unavailable",
+      error: "Article source is unavailable.",
+    })),
+  };
+};
+
 const reviewManifestWithProviderUnavailable = () => {
   const manifest = reviewManifest();
   const article = manifest.articles.find((item) => item.article_number === "10");
@@ -653,6 +1141,16 @@ test("PROMOPAGES-10060 validation fails closed when Lite provenance is invalid",
   assert.throws(
     () => hooks.__validatePromopages10060Manifest(manifest, []),
     /Lite provenance/,
+  );
+});
+
+test("legacy PROMOPAGES-10060 keeps the frozen 13 / 92 / 276 audit", () => {
+  const hooks = loadHooks();
+  const manifest = reviewManifest();
+  manifest.image_count = 93;
+  assert.throws(
+    () => hooks.__validatePromopages10060Manifest(manifest, []),
+    /legacy audit.*13 \/ 92 \/ 276/,
   );
 });
 
@@ -982,6 +1480,261 @@ test("all-image sidecar produces the final 34 / 133 / 415 demo totals", () => {
       unavailableOutputCount: 1,
     },
   );
+});
+
+test("campaign extension is optional, additive, and derives aggregate counts", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+  const extensionManifest = campaignExtensionManifest();
+  const extension = hooks.__validatePromopages10060Manifest(
+    extensionManifest,
+    legacy.articles,
+    { extension: true },
+  );
+  const merged = hooks.__mergeArticleCollections(legacy.articles, extension.articles);
+  const unavailable = hooks.__mergeUnavailableArticleCollections(
+    merged,
+    legacy.unavailableArticles,
+    extension.unavailableArticles,
+  );
+
+  assert.deepEqual(
+    { ...hooks.__datasetCounts(merged) },
+    {
+      articleCount: 14,
+      imageCount: 96,
+      videoCount: 288,
+      availableVideoCount: 287,
+      unavailableOutputCount: 1,
+    },
+  );
+  assert.equal(unavailable.length, 4);
+  assert.equal(extension.articles[0].case_key, "PROMOPAGES-10060:15-campaign-6a3d17575c59bd0e6d046aa6");
+});
+
+test("campaign normalized supersede selects the terminal MP4 and renders both attempts", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+  const extension = hooks.__validatePromopages10060Manifest(
+    campaignNormalizedExtensionManifest(),
+    legacy.articles,
+    { extension: true },
+  );
+
+  assert.equal(extension.normalizedInputRetryOutputCount, 6);
+  assert.equal(extension.normalizedInputSupersedeOutputCount, 1);
+  const article = extension.articles[0];
+  const imageRecord = article.images.find(
+    (record) => record.image.image_id === "07",
+  );
+  const output = imageRecord.outputs.find(
+    (item) => item.model_id === "alibaba/wan-2.7",
+  );
+  const markup = hooks.__renderModel(article, imageRecord, output, 1);
+
+  assert.equal(output.availableVideo, true);
+  assert.equal(output.normalizedInputRetry, true);
+  assert.equal(
+    output.selected_attempt,
+    "normalized-input-superseding-attempt-v1",
+  );
+  assert.match(markup, /<video/);
+  assert.match(markup, /superseding-attempt-v1\/videos\/wan-2\.7\/07\.mp4/);
+  assert.match(markup, /Superseding attempt selected/);
+  assert.match(markup, /Выбран результат новой terminal-попытки/);
+  assert.match(markup, /Предыдущая попытка · может оставаться активной/);
+  assert.match(markup, new RegExp(EXTENSION_SUPERSEDED_JOB_ID));
+  assert.match(markup, /replacement-wan27-job/);
+  assert.match(markup, /стороны меньше 240 px/);
+  assert.match(markup, /тот же normalized input \/ prompt \/ model \/ route \/ seed \/ request/);
+  assert.doesNotMatch(markup, /data-provider-unavailable/);
+});
+
+test("campaign normalized supersede fails closed on audit, policy, or cost tampering", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+  const selectedOutput = (manifest) => {
+    const record = manifest.articles[0].images.find(
+      (item) => item.image.image_id === "07",
+    );
+    return record.outputs.find(
+      (output) => output.model_id === "alibaba/wan-2.7",
+    );
+  };
+  const cases = [
+    [
+      /superseded active job evidence/,
+      (manifest) => {
+        selectedOutput(manifest).retry.supersede.superseded_attempt.provider_job_id =
+          "other-job";
+      },
+    ],
+    [
+      /superseded active job evidence/,
+      (manifest) => {
+        selectedOutput(
+          manifest,
+        ).retry.supersede.superseded_attempt.provider_may_be_active = false;
+      },
+    ],
+    [
+      /identity\/request/,
+      (manifest) => {
+        selectedOutput(
+          manifest,
+        ).retry.supersede.superseding_attempt.request_sha256 = "b".repeat(64);
+      },
+    ],
+    [
+      /разрешённый namespace/,
+      (manifest) => {
+        selectedOutput(manifest).retry.supersede.namespace =
+          `${EXTENSION_RETRY_NAMESPACE}/other/superseding-attempt-v1`;
+      },
+    ],
+    [
+      /identity\/request/,
+      (manifest) => {
+        selectedOutput(manifest).selected_attempt = "normalized-input-retry-v1";
+      },
+    ],
+    [
+      /supersede policy/,
+      (manifest) => {
+        manifest.generation_policy.normalized_input_supersede.duplicate_billing_risk_acknowledged =
+          false;
+      },
+    ],
+    [
+      /supersede cost/,
+      (manifest) => {
+        manifest.cost.normalized_input_supersede_reservations = 0;
+      },
+    ],
+  ];
+
+  cases.forEach(([pattern, mutate]) => {
+    const manifest = campaignNormalizedExtensionManifest();
+    mutate(manifest);
+    assert.throws(
+      () =>
+        hooks.__validatePromopages10060Manifest(manifest, legacy.articles, {
+          extension: true,
+        }),
+      pattern,
+    );
+  });
+});
+
+test("campaign extension rejects identity and media collisions with legacy", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+
+  const duplicateNumber = campaignExtensionManifest();
+  duplicateNumber.articles[0].article_number = "01";
+  assert.throws(
+    () =>
+      hooks.__validatePromopages10060Manifest(
+        duplicateNumber,
+        legacy.articles,
+        { extension: true },
+      ),
+    /номер.*повторяется/i,
+  );
+
+  const duplicateSource = campaignExtensionManifest();
+  duplicateSource.articles[0].images[0].image.source_path =
+    reviewManifest().articles[0].images[0].image.source_path;
+  assert.throws(
+    () =>
+      hooks.__validatePromopages10060Manifest(
+        duplicateSource,
+        legacy.articles,
+        { extension: true },
+      ),
+    /Путь исходника.*использован/,
+  );
+
+  const sourceCollidesWithVideo = campaignExtensionManifest();
+  sourceCollidesWithVideo.articles[0].images[0].image.source_path =
+    legacy.articles[0].images[0].outputs[0].video_path;
+  assert.throws(
+    () =>
+      hooks.__validatePromopages10060Manifest(
+        sourceCollidesWithVideo,
+        legacy.articles,
+        { extension: true },
+      ),
+    /Путь исходника.*использован/,
+  );
+
+  const videoCollidesWithSource = campaignExtensionManifest();
+  videoCollidesWithSource.articles[0].images[0].outputs[0].video_path =
+    legacy.articles[0].images[0].image.source_path;
+  assert.throws(
+    () =>
+      hooks.__validatePromopages10060Manifest(
+        videoCollidesWithSource,
+        legacy.articles,
+        { extension: true },
+      ),
+    /MP4.*media.*использован/,
+  );
+});
+
+test("campaign extension requires exact registered article union 15–18", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+  const extension = campaignExtensionManifest();
+  extension.articles[0].article_number = "99";
+  assert.throws(
+    () =>
+      hooks.__validatePromopages10060Manifest(
+        extension,
+        legacy.articles,
+        { extension: true },
+      ),
+    /зарегистрированные статьи 15–18/,
+  );
+});
+
+test("campaign extension rejects unsafe or foreign audit paths", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+
+  for (const contextPath of [
+    "../../outside.json",
+    "PROMOPAGES-10060/articles/15-campaign/content.json",
+  ]) {
+    const extension = campaignExtensionManifest();
+    extension.articles[0].context_path = contextPath;
+    assert.throws(
+      () =>
+        hooks.__validatePromopages10060Manifest(
+          extension,
+          legacy.articles,
+          { extension: true },
+        ),
+      /context_path/,
+    );
+  }
+
+  for (const manifestPath of [
+    "/absolute/source.jpg",
+    "PROMOPAGES-10060/articles/15-campaign/source.jpg",
+  ]) {
+    const extension = campaignExtensionManifest();
+    extension.articles[0].images[0].image.manifest_file_path = manifestPath;
+    assert.throws(
+      () =>
+        hooks.__validatePromopages10060Manifest(
+          extension,
+          legacy.articles,
+          { extension: true },
+        ),
+      /manifest_file_path/,
+    );
+  }
 });
 
 

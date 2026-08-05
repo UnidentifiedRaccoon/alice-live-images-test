@@ -1,0 +1,870 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-campaign-extension-frozen-generation-inventory",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "article_config": {
+    "path": "PROMOPAGES-10060/campaigns-20260805-v1/articles.json",
+    "sha256": "b40eb0b587f20297a744c07010c6894586b70edf596f1f9186ac6ca9fe900272"
+  },
+  "extraction_report": {
+    "path": "PROMOPAGES-10060/campaigns-20260805-v1/extraction-report.json",
+    "sha256": null
+  },
+  "source_manifest": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/manifest.csv",
+    "sha256": "2fc2422b7d4c16dc204178a3705d6dec6e69db1153a54f4bd41424313058ac71",
+    "row_count": 34
+  },
+  "contract": {
+    "path": "docs/agents/clipmaker-lite/contract.json",
+    "sha256": "1182f8d6dc3d3bdb460979b143458274e94b7a9750f57d1510a32576f7bcad5b",
+    "contract_version": "2.0.6",
+    "runner_version": 7
+  },
+  "generation_routes": {
+    "path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "policy": {
+      "resolution": "exact-model-id",
+      "automatic_fallback": false,
+      "normal_run_discovery": false
+    },
+    "models": {
+      "alibaba/wan-2.2": {
+        "adapter": "eliza-segmind",
+        "transport": "eliza-synchronous-binary",
+        "capacity": 1
+      },
+      "alibaba/wan-2.7": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      },
+      "google/veo-3.1-lite": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      }
+    }
+  },
+  "models": [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 4,
+  "image_count": 34,
+  "expected_outputs": 102,
+  "selection_rule": "in ticket-config order, include every image block from every successfully extracted article, including the cover, in original block order; preserve original article numbers",
+  "generation_policy": {
+    "independent_route_pools": true,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "article_order": "ticket-config-order",
+    "article_barrier": true,
+    "exact_model_routes_only": true,
+    "route_discovery": false,
+    "automatic_fallback": false,
+    "automatic_paid_retries": false,
+    "maximum_paid_submissions_per_job": 1,
+    "aggregate_manifest_writer": "coordinator-only"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 1000.0,
+    "hard_budget_cap_usd": 1000.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 35.7,
+    "estimated_headroom_usd": 964.3,
+    "planned_paid_submissions": 102,
+    "maximum_paid_submissions": 102,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery"
+  },
+  "unavailable_articles": [],
+  "articles": [
+    {
+      "article_number": "15",
+      "article_slug": "15-marykay-sredstva",
+      "label": "Mary Kay — Средства Mary Kay®, которые заменили мне десятки других",
+      "url": "https://marykay.promo.page/media/sredstva-mary-kay-kotorye-zamenili-mne-desiatki-drugih-6a3d0f7c5a8cab7b46b606c7_0_0",
+      "title": "Средства Mary Kay®, которые заменили мне десятки других",
+      "lead": "Делюсь, почему выбрала бренд с историей, который при этом идет в ногу со временем",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/content.json",
+        "sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103e5a8cab7b46b62589/orig",
+        "sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+        "width": 1500,
+        "height": 917,
+        "duplicate_of": null
+      },
+      "image_count": 8,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103e5a8cab7b46b62589/orig",
+            "sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+            "width": 1500,
+            "height": 917,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "cover_mobile",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a3d0f7c5a8cab7b46b606c7_6a3d103a3046bd041c2df0e1/orig",
+            "sha256": "9836bc0a8a8a00ae2f0893a25462e29457d4561327a5e9c89a2a5e2b6abe04c0",
+            "width": 1500,
+            "height": 917,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Меня зовут Кристина. Мне 35 лет, и только недавно я нашла косметический бренд, которому можно доверять",
+            "source_block_index": 2,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f5a8cab7b46b60c64/orig",
+            "sha256": "893dcbadf34d476231cc91eb6d66305eb2f4afd264bb61da6e62ba73d52206ca",
+            "width": 1500,
+            "height": 1000,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Раньше я часто покупала новинки разных брендов в поиске идеального результата",
+            "source_block_index": 7,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig",
+            "sha256": "0da169fe5bf12eb74627485d969ea6f8bff626ebe9aa5a0fb5d9c33cc9a047ae",
+            "width": 1500,
+            "height": 1000,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "Теперь вместо множества неизвестных средств я выбираю базу и проверенное качество косметики",
+            "source_block_index": 12,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f5c59bd0e6d031e47/orig",
+            "sha256": "b96b5000ea29daa38e94537b578b9d1b3903a0453bf052272c4683c19feaa443",
+            "width": 1152,
+            "height": 896,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.png",
+            "role": "article_image",
+            "caption": "Очищающая пенка, артикул 10235217",
+            "source_block_index": 17,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/06.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/06.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa05c59bd0e6d031e48/orig",
+            "sha256": "358e447b373d66ca047ec38d96cd46e84380f7b70a23fc22a0459203faba56e6",
+            "width": 1024,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "article_image",
+            "caption": "Тоник, артикул 10090005",
+            "source_block_index": 19,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/07.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa05f6eb774ed004b2a/orig",
+            "sha256": "87a52d11b4ba40bf9bb2fd71e7949227206d7d43b88cf3ddc98f0d6117c8f4e2",
+            "width": 1536,
+            "height": 1024,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.png",
+            "role": "article_image",
+            "caption": "Крем, артикул 10109824",
+            "source_block_index": 21,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/08.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/08.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0fa0a447d75722940ef2/orig",
+            "sha256": "df3ac3e632ddf849e347ae149af1f3a4312311566baa47d41315fdafc1eebdfb",
+            "width": 1435,
+            "height": 1096,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08"
+        }
+      ]
+    },
+    {
+      "article_number": "16",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "label": "Mary Kay — Тренды красоты: что нового в косметике и уходе за кожей",
+      "url": "https://marykay.promo.page/media/trendy-krasoty-chto-novogo-v-kosmetike-i-uhode-za-kojei-6a3d13553046bd041c2e78a2_0_0",
+      "title": "Тренды красоты: что нового в косметике и уходе за кожей",
+      "lead": "Бьюти-индустрия последних лет совершает заметный поворот в сторону осознанности. Многоступенчатые рутины с десятком средств уступают место минимализму, а агрессивные процедуры — поддержке естественных процессов кожи.\nMary Kay® предлагает решения, которые соответствуют современным запросам. Разберем четыре актуальных направления и продукты, которые их закрывают.\nЕстественность и здоровье кожи",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/content.json",
+        "sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a3d13553046bd041c2e78a2_6a3d13bfa447d7572294bb95/orig",
+        "sha256": "5bfb98290c6a8f676456d62e92a91482ce9e5a283b46cd92376ddcef0cb08849",
+        "width": 1000,
+        "height": 667,
+        "duplicate_of": null
+      },
+      "image_count": 7,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a3d13553046bd041c2e78a2_6a3d13bfa447d7572294bb95/orig",
+            "sha256": "5bfb98290c6a8f676456d62e92a91482ce9e5a283b46cd92376ddcef0cb08849",
+            "width": 1000,
+            "height": 667,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "cover_mobile",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a3d13553046bd041c2e78a2_6a3d13bc5a8cab7b46b6b732/orig",
+            "sha256": "5bfb98290c6a8f676456d62e92a91482ce9e5a283b46cd92376ddcef0cb08849",
+            "width": 1000,
+            "height": 667,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "Естественность и здоровье кожи всегда в тренде",
+            "source_block_index": 2,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/03.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d13685f6eb774ed00e30c/orig",
+            "sha256": "22e8f9e71ca155afbdf60cc6e8685f88f9aa7890d344bca305a48e5ed6213176",
+            "width": 2048,
+            "height": 1143,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "Пенка для умывания, тоник и крем — основа ухода за собой на все времена",
+            "source_block_index": 7,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d1368a447d7572294ade2/orig",
+            "sha256": "49e688993933ee097b64357682f536f158ae5391e3c1000f54ef8cad0ba4bc9e",
+            "width": 1000,
+            "height": 781,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "article_image",
+            "caption": "Помада есть в четырех оттенках",
+            "source_block_index": 12,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/05.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d13553046bd041c2e78a2_6a3d1368a447d7572294ade3/orig",
+            "sha256": "55940a7f8872ac1cbf754b1cbe72c6c73389cf27c7b34f13febc1946029d6b3b",
+            "width": 768,
+            "height": 768,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.png",
+            "role": "article_image",
+            "caption": "Подходит для профилактики старения кожи женщинам в любом возрасте, но особенно от 35 лет",
+            "source_block_index": 21,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d13685a8cab7b46b6a8f0/orig",
+            "sha256": "036300677b23cb195036f3b5c72aa14549de5d1cc4ad9fe257385c5e35b0d40b",
+            "width": 768,
+            "height": 768,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "article_image",
+            "caption": "Вечерний уход не менее важен, чем дневной",
+            "source_block_index": 25,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a3d13553046bd041c2e78a2_6a3d1369a447d7572294ade4/orig",
+            "sha256": "30da3d2c26c8011a16865975f96053dfb425e057cf15331f8c610a96288be6b9",
+            "width": 1402,
+            "height": 1122,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07"
+        }
+      ]
+    },
+    {
+      "article_number": "17",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "label": "ВОЛМА — Наливной пол трескается и пылит? В чем может быть ошибка",
+      "url": "https://volma.promo.page/promo/nalivnoi-pol-treskaetsia-i-pylit-v-chem-mojet-byt-oshibka-6a268ddbbf5214766a58cd74_0_0",
+      "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+      "lead": "Разбираем ошибки при заливке наливного пола, которые часто приводят к проблемам",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/content.json",
+        "sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268ef3bf5214766a59098a/orig",
+        "sha256": "c0bbdf8d577aeb4e5c4e2c725b75d0e25e3abb27f268775b757841ffee3da9b6",
+        "width": 2554,
+        "height": 1806,
+        "duplicate_of": null
+      },
+      "image_count": 11,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268ef3bf5214766a59098a/orig",
+            "sha256": "c0bbdf8d577aeb4e5c4e2c725b75d0e25e3abb27f268775b757841ffee3da9b6",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "cover_mobile",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a268ddbbf5214766a58cd74_6a268eef0531384d521a250e/orig",
+            "sha256": "c0bbdf8d577aeb4e5c4e2c725b75d0e25e3abb27f268775b757841ffee3da9b6",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 1,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/03.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/03.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3b55c4222ecf5576e/orig",
+            "sha256": "e101c745034dfa157c843b823bf3e1d1c99aa06f757822a9d4c735d4bbcc53d9",
+            "width": 1080,
+            "height": 722,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 4,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/04.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/04.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df381cbac61b6b9a322/orig",
+            "sha256": "3321542f6d64427bee141ea96952fc1df48a5ab57939bde5c1e48c0aa72f0ab7",
+            "width": 1080,
+            "height": 670,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 8,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/05.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cb/orig",
+            "sha256": "7d6fb18ea70ffa9627cd569327016230d77b8bd24dc62282e732fa134e2f29b2",
+            "width": 618,
+            "height": 342,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 18,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/06.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/06.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df30531384d5219f20d/orig",
+            "sha256": "00dfb63c374b57bda3ed61fded9701459373fb0ad64d65fb6b46c1a82e2dbcfc",
+            "width": 1010,
+            "height": 670,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 22,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df381cbac61b6b9a323/orig",
+            "sha256": "8145903ee322fc593365b5372f839c37bca0dd20cc52b496bf6ca1e801b991c9",
+            "width": 786,
+            "height": 524,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 26,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+            "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+            "width": 1068,
+            "height": 699,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 30,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d269/orig",
+            "sha256": "a2a7fb67485d3b1ba9c79cb0d379a575883c73a2926909b94cbe7023ce36d0e7",
+            "width": 640,
+            "height": 426,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09"
+        },
+        {
+          "image": {
+            "order": 10,
+            "image_id": "10",
+            "file": "10.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 40,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/10.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/10.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d26a/orig",
+            "sha256": "07681c2ce16f49fa3d99a7ce8873a068a81648a2ec7447be5beef845d3593b22",
+            "width": 1000,
+            "height": 450,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10"
+        },
+        {
+          "image": {
+            "order": 11,
+            "image_id": "11",
+            "file": "11.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 47,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df8bf5214766a58d277/orig",
+            "sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+            "width": 1940,
+            "height": 500,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11"
+        }
+      ]
+    },
+    {
+      "article_number": "18",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "label": "ВОЛМА — Плиточный клей: 5 вопросов экспертам по ремонту",
+      "url": "https://volma.promo.page/promo/plitochnyi-klei-5-voprosov-ekspertam-po-remontu-6a267e54c6621a31e5630a18_0_0",
+      "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+      "lead": "В статье — ответы экспертов на главные вопросы по плитке во время ремонта",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/content.json",
+        "sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a30e9cc66e1c52e2cb60ab1/orig",
+        "sha256": "7c3918845b00e5b559513f5ac1187bb895555be6a1e977fcfda9c88332758df6",
+        "width": 1280,
+        "height": 640,
+        "duplicate_of": null
+      },
+      "image_count": 8,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a30e9cc66e1c52e2cb60ab1/orig",
+            "sha256": "7c3918845b00e5b559513f5ac1187bb895555be6a1e977fcfda9c88332758df6",
+            "width": 1280,
+            "height": 640,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 2,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf27224/orig",
+            "sha256": "8f0380c64bc13052ba2998cc3d886567e0670b8804703ab396fdc31a6e8cb2e3",
+            "width": 752,
+            "height": 377,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 10,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a267e54c6621a31e5630a18_6a267e6f81cbac61b6b6a8cf/orig",
+            "sha256": "e1953d89b9aca64214e9ede065ab4d6695a618b6e229ab3f64bc9ef2f775f347",
+            "width": 752,
+            "height": 459,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 16,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf27231/orig",
+            "sha256": "c90e9fa04a55052d06bc20cad6fce60b1a7df420b53510639e9cfa07952c57ab",
+            "width": 752,
+            "height": 500,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 17,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+            "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+            "width": 758,
+            "height": 220,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 19,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf2723e/orig",
+            "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a",
+            "width": 752,
+            "height": 502,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 35,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+            "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+            "width": 773,
+            "height": 239,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 48,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fc6621a31e5630ed8/orig",
+            "sha256": "ff2fa123c99e8b82a954af9870660faa5306e3d6ebb7c57675df542077fbaa03",
+            "width": 752,
+            "height": 193,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08"
+        }
+      ]
+    }
+  ]
+}

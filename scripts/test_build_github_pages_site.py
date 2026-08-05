@@ -15,6 +15,11 @@ CASE_21_MANIFEST_PATH = ROOT / "clipmaker-lite-test" / "case-21-manifest.json"
 PROMOPAGES_10060_MANIFEST_PATH = (
     ROOT / "clipmaker-lite-test" / "promopages-10060-manifest.json"
 )
+PROMOPAGES_10060_EXTENSION_PATH = (
+    ROOT
+    / "clipmaker-lite-test"
+    / "promopages-10060-campaigns-20260805-v1-manifest.json"
+)
 PROMOPAGES_10060_IMAGE_COUNTS = (
     ("01", 4),
     ("03", 9),
@@ -424,7 +429,994 @@ def _promopages_10060_fixture(first_source_delivery=None):
     return manifest, source_paths, video_paths
 
 
+def _promopages_10060_campaign_extension_fixture():
+    article_slug = "15-campaign-6a3d17575c59bd0e6d046aa6"
+    image_id = "01"
+    source_path = f"raw/promopages-10060/{article_slug}/{image_id}.jpg"
+    image = {
+        "image_id": image_id,
+        "source_path": source_path,
+        "manifest_file_path": (
+            pages.PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT
+            / article_slug
+            / f"{image_id}.jpg"
+        ).as_posix(),
+        "sha256": "c" * 64,
+        "width": 1200,
+        "height": 800,
+    }
+    outputs = []
+    video_paths = []
+    for model_index, model_id in enumerate(
+        pages.PROMOPAGES_10060_MODELS, start=1
+    ):
+        video_path = (
+            f"raw/promopages-10060/{article_slug}/{image_id}-model-{model_index}.mp4"
+        )
+        video_paths.append(video_path)
+        outputs.append(
+            {
+                "article_slug": article_slug,
+                "image_id": image_id,
+                "model_id": model_id,
+                "positive_prompt": "Keep the source stable with restrained motion.",
+                "status": "succeeded",
+                "video_path": video_path,
+                "media": {
+                    "width": 1280,
+                    "height": 720,
+                    "duration_seconds": 5,
+                    "bytes": 2048,
+                },
+            }
+        )
+    article = {
+        "article_number": "15",
+        "article_slug": article_slug,
+        "title": "Campaign article 15",
+        "url": "https://example.promo.page/media/campaign-15",
+        "context_path": (
+            pages.PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT
+            / article_slug
+            / "content.json"
+        ).as_posix(),
+        "image_count": 1,
+        "images": [
+            {
+                "image": image,
+                "lite_planning": {
+                    "run_id": "promopages-10060-campaign-15-01",
+                    "result_path": "artifacts/clipmaker-lite/v1/campaign-15-01/result.json",
+                    "structured_intent": {"primary_action": "Subtle motion."},
+                    "provenance": {
+                        "verified": True,
+                        "agent_id": "clipmaker-lite",
+                    },
+                },
+                "outputs": outputs,
+            }
+        ],
+    }
+    manifest = {
+        "schema_version": 1,
+        "manifest_role": pages.PROMOPAGES_10060_EXTENSION_ROLE,
+        "ticket": "PROMOPAGES-10060",
+        "batch_id": pages.PROMOPAGES_10060_EXTENSION_BATCH_ID,
+        "agent_id": "clipmaker-lite",
+        "models": list(pages.PROMOPAGES_10060_MODELS),
+        "article_count": 1,
+        "image_count": 1,
+        "expected_outputs": 3,
+        "accepted_output_count": 3,
+        "terminal_accounted_output_count": 3,
+        "provider_filtered_output_count": 0,
+        "provider_unavailable_output_count": 0,
+        "status_summary": {
+            "succeeded": 3,
+        },
+        "acceptance_policy": {
+            "requires_mp4_and_media": True,
+            "terminal_accounted_without_media": [
+                "provider-filtered",
+                "provider-unavailable",
+            ],
+            "provider_filtered_requires_exhausted_retry_v1": True,
+            "provider_unavailable_requires_ambiguous_submit_retry_v1": True,
+            "provider_unavailable_requires_retry_v1": [
+                "ambiguous-submit",
+                "normalized-input",
+            ],
+        },
+        "articles": [article],
+        "outputs": [output.copy() for output in outputs],
+        "unavailable_articles": [
+            {
+                "article_number": number,
+                "article_slug": f"{number}-unavailable-campaign",
+                "url": f"https://example.promo.page/media/campaign-{number}",
+                "status": "source-unavailable",
+                "error": "Article source is unavailable.",
+            }
+            for number in ("16", "17", "18")
+        ],
+    }
+    return manifest, [source_path], video_paths
+
+
+def _extension_normalized_input_retry_output(
+    article_slug,
+    image,
+    model_id,
+    video_path,
+    *,
+    metadata_sha256,
+):
+    source_key = (article_slug, image["image_id"])
+    asset = pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES[source_key]
+    model_suffix = "wan-2.2" if model_id == "alibaba/wan-2.2" else "wan-2.7"
+    retry_key = (
+        "c45a8447813d1b4e4df0"
+        if image["image_id"] == "07" and model_id == "alibaba/wan-2.7"
+        else f"{image['image_id']}-{model_suffix}-retry-key"
+    )
+    namespace = (
+        pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE / retry_key
+    )
+    asset_parent = (
+        pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE
+        / asset["asset_key"]
+    )
+    repository_path = asset_parent / "normalized.png"
+    metadata_path = asset_parent / "asset.json"
+    normalized_url = (
+        "https://raw.githubusercontent.com/UnidentifiedRaccoon/"
+        "alice-live-images-test/"
+        f"{pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT}/"
+        f"{repository_path.as_posix()}"
+    )
+    primary = {
+        "provider_run_id": f"{image['image_id']}-{model_suffix}-primary",
+        "provider_job_id": f"{image['image_id']}-{model_suffix}-primary-job",
+        "status": "provider-failed",
+        "recorded_status": (
+            "submit-unknown" if model_id == "alibaba/wan-2.2" else "provider-failed"
+        ),
+        "provider_may_be_active": False,
+        "recorded_provider_may_be_active": model_id == "alibaba/wan-2.2",
+        "submitted_at": (
+            None if model_id == "alibaba/wan-2.2" else "2026-08-05T18:00:00Z"
+        ),
+        "completed_at": (
+            None if model_id == "alibaba/wan-2.2" else "2026-08-05T18:01:00Z"
+        ),
+        "error": (
+            "Image height or width is too small than 240"
+            if model_id == "alibaba/wan-2.2"
+            else (
+                "Error validating image resolution: resolution must be at least "
+                f"240x240, got {image['width']}x{image['height']}"
+            )
+        ),
+        "run_path": f"runs/{image['image_id']}-{model_suffix}-primary.run.json",
+        "run_sha256": "1" * 64,
+        "prompt_path": (
+            f"runs/{image['image_id']}-{model_suffix}-primary.prompt.json"
+        ),
+        "prompt_sha256": "2" * 64,
+        "request_sha256": "3" * 64,
+    }
+    if model_id == "alibaba/wan-2.2":
+        primary.update(
+            {
+                "provider_submit_time": "2026-08-05 18:00:00.000",
+                "provider_scheduled_time": "2026-08-05 18:00:00.010",
+                "provider_end_time": "2026-08-05 18:00:01.000",
+            }
+        )
+    retry_provider_run_id = f"{image['image_id']}-{model_suffix}-normalized-retry"
+    accepted_status = (
+        "succeeded"
+        if model_id == "alibaba/wan-2.2"
+        else "verification-failed"
+    )
+    accepted_error = (
+        None
+        if accepted_status == "succeeded"
+        else "Media contract verification failed: audio, resolution, aspect_ratio"
+    )
+    contract_check = (
+        {"conforms": True, "warnings": []}
+        if accepted_status == "succeeded"
+        else {
+            "conforms": False,
+            "warnings": ["audio", "resolution", "aspect_ratio"],
+        }
+    )
+    return {
+        "article_slug": article_slug,
+        "image_id": image["image_id"],
+        "source_path": image["source_path"],
+        "model_id": model_id,
+        "provider_run_id": retry_provider_run_id,
+        "positive_prompt": "Keep the source stable with restrained motion.",
+        "status": accepted_status,
+        "recorded_status": accepted_status,
+        "selected_attempt": "normalized-input-retry-v1",
+        "video_path": video_path,
+        "media": {
+            "width": 1280,
+            "height": 720,
+            "duration_seconds": 5,
+            "bytes": 2048,
+        },
+        "contract_check": contract_check,
+        "error": accepted_error,
+        "retry": {
+            "retry_kind": "normalized-input",
+            "retry_number": 1,
+            "namespace": namespace.as_posix(),
+            "envelope_path": (namespace / "retry.json").as_posix(),
+            "envelope_sha256": "4" * 64,
+            "exhausted": False,
+            "primary_attempt": primary,
+            "retry_attempt": {
+                "provider_run_id": retry_provider_run_id,
+                "provider_job_id": f"{retry_provider_run_id}-job",
+                "status": accepted_status,
+                "provider_may_be_active": False,
+                "submitted_at": "2026-08-05T18:02:00Z",
+                "completed_at": "2026-08-05T18:03:00Z",
+                "error": accepted_error,
+                "run_path": f"runs/{retry_key}.run.json",
+                "run_sha256": "5" * 64,
+                "prompt_path": f"runs/{retry_key}.prompt.json",
+                "prompt_sha256": "6" * 64,
+                "request_sha256": "7" * 64,
+            },
+            "source_transform": {
+                "strategy": "deterministic-uniform-upscale",
+                "original": {
+                    "url": image["orig_url"],
+                    "path": image["source_path"],
+                    "sha256": image["sha256"],
+                    "bytes": image["bytes"],
+                    "width": image["width"],
+                    "height": image["height"],
+                },
+                "normalized": {
+                    "http_status": 200,
+                    "url": normalized_url,
+                    "sha256": asset["sha256"],
+                    "bytes": asset["bytes"],
+                    "width": asset["width"],
+                    "height": asset["height"],
+                    "format": asset["format"],
+                    "delivery": "repository-raw",
+                    "repository_path": repository_path.as_posix(),
+                    "source_commit_sha": (
+                        pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCE_COMMIT
+                    ),
+                    "metadata_path": metadata_path.as_posix(),
+                    "metadata_sha256": metadata_sha256,
+                },
+                "request_delta": {
+                    "json_pointer": (
+                        "/input/image"
+                        if model_id == "alibaba/wan-2.2"
+                        else "/frame_images/0/image_url/url"
+                    ),
+                    "from": image["orig_url"],
+                    "to": normalized_url,
+                    "changed_leaf_count": 1,
+                },
+                "preparation": {
+                    "operation": "uniform-scale",
+                    "target_height": asset["height"],
+                    "resampler": "lanczos",
+                    "crop": False,
+                    "local_reencode": True,
+                },
+                "minimum_provider_input_dimension": 240,
+            },
+        },
+    }
+
+
+def _extension_normalized_supersede_output(output):
+    output = json.loads(json.dumps(output))
+    retry = output["retry"]
+    namespace = Path(retry["namespace"])
+    supersede_namespace = (
+        namespace / pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY
+    )
+    superseded = json.loads(json.dumps(retry["retry_attempt"]))
+    superseded.update(
+        {
+            "provider_run_id": (
+                pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID
+            ),
+            "provider_job_id": (
+                pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_JOB_ID
+            ),
+            "status": "running",
+            "provider_may_be_active": True,
+            "completed_at": None,
+            "error": None,
+        }
+    )
+    selected_provider_run_id = (
+        "promopages-10060-campaigns-20260805-v1-normalized-input-"
+        "supersede-v1-selected-18-volma-plitochnyi-klei-07-wan-2-7"
+    )
+    selected = {
+        "provider_run_id": selected_provider_run_id,
+        "provider_job_id": "replacement-wan27-job",
+        "status": output["recorded_status"],
+        "provider_may_be_active": False,
+        "submitted_at": "2026-08-06T02:00:00Z",
+        "completed_at": "2026-08-06T02:03:00Z",
+        "error": output["error"],
+        "run_path": (
+            supersede_namespace / "videos/wan-2.7/07.run.json"
+        ).as_posix(),
+        "run_sha256": "8" * 64,
+        "prompt_path": (
+            supersede_namespace / "videos/wan-2.7/07.prompt.json"
+        ).as_posix(),
+        "prompt_sha256": "9" * 64,
+        "request_sha256": superseded["request_sha256"],
+    }
+    output.update(
+        {
+            "provider_run_id": selected_provider_run_id,
+            "selected_attempt": pages.PROMOPAGES_10060_NORMALIZED_SUPERSEDE_SELECTION,
+            "video_path": (
+                supersede_namespace / "videos/wan-2.7/07.mp4"
+            ).as_posix(),
+        }
+    )
+    retry["retry_attempt"] = json.loads(json.dumps(superseded))
+    retry["supersede"] = {
+        "version": 1,
+        "namespace": supersede_namespace.as_posix(),
+        "envelope_path": (supersede_namespace / "supersede.json").as_posix(),
+        "envelope_sha256": "a" * 64,
+        "exhausted": False,
+        "superseded_attempt": superseded,
+        "superseding_attempt": selected,
+    }
+    return output
+
+
+def _promopages_10060_campaign_normalized_extension_fixture():
+    article_slug = "18-volma-plitochnyi-klei"
+    source_details = {
+        "05": {
+            "file": "05.png",
+            "orig_url": (
+                "https://avatars.mds.yandex.net/get-promoarticles/5400274/"
+                "pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig"
+            ),
+            "bytes": 17_569,
+            "width": 758,
+            "height": 220,
+        },
+        "07": {
+            "file": "07.png",
+            "orig_url": (
+                "https://avatars.mds.yandex.net/get-promoarticles/5096941/"
+                "pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig"
+            ),
+            "bytes": 27_754,
+            "width": 773,
+            "height": 239,
+        },
+        "08": {
+            "file": "08.jpeg",
+            "orig_url": (
+                "https://avatars.mds.yandex.net/get-promoarticles/5400274/"
+                "pub_6a267e54c6621a31e5630a18_6a267e6fc6621a31e5630ed8/orig"
+            ),
+            "bytes": 30_852,
+            "width": 752,
+            "height": 193,
+        },
+    }
+    records = []
+    flat_outputs = []
+    source_paths = []
+    video_paths = []
+    for image_id, details in source_details.items():
+        source_path = (
+            "PROMOPAGES-9857/"
+            f"{pages.PROMOPAGES_10060_EXTENSION_DATASET_PREFIX}/articles/"
+            f"{article_slug}/{details['file']}"
+        )
+        source_paths.append(source_path)
+        asset = pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES[
+            (article_slug, image_id)
+        ]
+        image = {
+            "image_id": image_id,
+            "source_path": source_path,
+            "manifest_file_path": (
+                pages.PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT
+                / article_slug
+                / details["file"]
+            ).as_posix(),
+            "orig_url": details["orig_url"],
+            "sha256": asset["source_sha256"],
+            "bytes": details["bytes"],
+            "width": details["width"],
+            "height": details["height"],
+        }
+        outputs = []
+        metadata_sha256 = str(int(image_id)) * 64
+        for model_index, model_id in enumerate(
+            pages.PROMOPAGES_10060_MODELS, start=1
+        ):
+            video_path = (
+                "clipmaker-lite-test/runs/"
+                f"{pages.PROMOPAGES_10060_EXTENSION_BATCH_ID}/videos/"
+                f"{article_slug}/model-{model_index}/{image_id}.mp4"
+            )
+            video_paths.append(video_path)
+            if model_id in {"alibaba/wan-2.2", "alibaba/wan-2.7"}:
+                output = _extension_normalized_input_retry_output(
+                    article_slug,
+                    image,
+                    model_id,
+                    video_path,
+                    metadata_sha256=metadata_sha256,
+                )
+            else:
+                output = {
+                    "article_slug": article_slug,
+                    "image_id": image_id,
+                    "source_path": source_path,
+                    "model_id": model_id,
+                    "provider_run_id": f"{image_id}-veo-primary",
+                    "positive_prompt": "Keep the source stable.",
+                    "status": "succeeded",
+                    "recorded_status": "succeeded",
+                    "selected_attempt": "primary",
+                    "video_path": video_path,
+                    "media": {"width": 1280, "height": 720, "bytes": 2048},
+                    "contract_check": {"conforms": True, "warnings": []},
+                    "error": None,
+                    "retry": None,
+                }
+            outputs.append(output)
+            flat_outputs.append(json.loads(json.dumps(output)))
+        records.append(
+            {
+                "image": image,
+                "lite_planning": {
+                    "run_id": f"extension-{article_slug}-{image_id}",
+                    "result_path": (
+                        f"artifacts/clipmaker-lite/v1/{article_slug}-{image_id}/"
+                        "result.json"
+                    ),
+                    "structured_intent": {"primary_action": "Subtle motion."},
+                    "provenance": {
+                        "verified": True,
+                        "agent_id": "clipmaker-lite",
+                    },
+                },
+                "outputs": outputs,
+            }
+        )
+
+    eligible_sources = [
+        {
+            "article_slug": source_article_slug,
+            "image_id": image_id,
+            "source_sha256": asset["source_sha256"],
+            "models": ["alibaba/wan-2.2", "alibaba/wan-2.7"],
+            "failure_kind": "minimum-dimension",
+            "normalization_strategy": "deterministic-uniform-upscale",
+        }
+        for (source_article_slug, image_id), asset in (
+            pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES.items()
+        )
+    ]
+    supersede_record = next(
+        record for record in records if record["image"]["image_id"] == "07"
+    )
+    supersede_index = next(
+        index
+        for index, output in enumerate(supersede_record["outputs"])
+        if output["model_id"] == "alibaba/wan-2.7"
+    )
+    previous_video_path = supersede_record["outputs"][supersede_index]["video_path"]
+    supersede_output = _extension_normalized_supersede_output(
+        supersede_record["outputs"][supersede_index]
+    )
+    supersede_record["outputs"][supersede_index] = supersede_output
+    flat_index = next(
+        index
+        for index, output in enumerate(flat_outputs)
+        if output["article_slug"] == "18-volma-plitochnyi-klei"
+        and output["image_id"] == "07"
+        and output["model_id"] == "alibaba/wan-2.7"
+    )
+    flat_outputs[flat_index] = json.loads(json.dumps(supersede_output))
+    video_paths[video_paths.index(previous_video_path)] = supersede_output["video_path"]
+
+    manifest = {
+        "schema_version": 1,
+        "manifest_role": pages.PROMOPAGES_10060_EXTENSION_ROLE,
+        "ticket": "PROMOPAGES-10060",
+        "batch_id": pages.PROMOPAGES_10060_EXTENSION_BATCH_ID,
+        "agent_id": "clipmaker-lite",
+        "models": list(pages.PROMOPAGES_10060_MODELS),
+        "article_count": 1,
+        "image_count": 3,
+        "expected_outputs": 9,
+        "accepted_output_count": 9,
+        "terminal_accounted_output_count": 9,
+        "provider_filtered_output_count": 0,
+        "provider_unavailable_output_count": 0,
+        "status_summary": {"succeeded": 6, "verification-failed": 3},
+        "acceptance_policy": {
+            "requires_mp4_and_media": True,
+            "terminal_accounted_without_media": [
+                "provider-filtered",
+                "provider-unavailable",
+            ],
+            "provider_filtered_requires_exhausted_retry_v1": True,
+            "provider_unavailable_requires_ambiguous_submit_retry_v1": True,
+            "provider_unavailable_requires_retry_v1": [
+                "ambiguous-submit",
+                "normalized-input",
+            ],
+        },
+        "cost": {
+            "terminal_retry_reservations": 0,
+            "ambiguous_submit_retry_reservations": 0,
+            "normalized_input_retry_version": 1,
+            "normalized_input_retry_accounting_cost_usd": 0.35,
+            "normalized_input_retry_reservations": 6,
+            "normalized_input_supersede_version": 1,
+            "normalized_input_supersede_accounting_cost_usd": 0.35,
+            "normalized_input_supersede_reservations": 1,
+            "maximum_new_paid_submissions_per_superseded_output": 1,
+            "total_retry_reservations": 7,
+            "maximum_new_paid_submissions_per_normalized_input_output": 1,
+            "automatic_paid_retries": False,
+        },
+        "generation_policy": {
+            "normalized_input_retry": {
+                "version": 1,
+                "namespace": (
+                    pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE
+                ).as_posix(),
+                "shared_asset_namespace": (
+                    pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE
+                ).as_posix(),
+                "eligible_sources": eligible_sources,
+                "explicit_operator_command_required": True,
+                "maximum_new_paid_submissions_per_eligible_output": 1,
+                "retry2_forbidden": True,
+                "automatic_paid_retries": False,
+                "fallback": False,
+                "primary_receipts_immutable": True,
+                "request_delta_only_image_pointer": True,
+            },
+            "normalized_input_supersede": (
+                pages._extension_normalized_supersede_policy()
+            ),
+        },
+        "articles": [
+            {
+                "article_number": "18",
+                "article_slug": article_slug,
+                "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+                "url": "https://volma.promo.page/promo/example",
+                "context_path": (
+                    pages.PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT
+                    / article_slug
+                    / "content.json"
+                ).as_posix(),
+                "image_count": 3,
+                "images": records,
+            }
+        ],
+        "outputs": flat_outputs,
+        "unavailable_articles": [
+            {
+                "article_number": number,
+                "article_slug": f"{number}-unavailable-campaign",
+                "url": f"https://example.promo.page/media/campaign-{number}",
+                "status": "source-unavailable",
+                "error": "Article source is unavailable.",
+            }
+            for number in ("15", "16", "17")
+        ],
+    }
+    return manifest, source_paths, video_paths
+
+
+def _write_promopages_collection_fixture(root, *, include_campaign_extension):
+    def write_text(relative_path, content):
+        path = root / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+
+    write_text("generated-gallery-data.js", "window.generatedGalleryData = [];\n")
+    write_text(
+        "manual-review/review-data.js",
+        'window.qualityReviewDataset = {"items": []};\n',
+    )
+    write_text("clipmaker-lite-test/manifest.json", '{"articles": []}\n')
+    write_text(
+        "clipmaker-lite-test/promopages-9930-manifest.json",
+        '{"articles": []}\n',
+    )
+    write_text(
+        "clipmaker-lite-test/case-21-manifest.json",
+        '{"articles": []}\n',
+    )
+    legacy, legacy_sources, legacy_videos = _promopages_10060_fixture()
+    write_text(
+        "clipmaker-lite-test/promopages-10060-manifest.json",
+        json.dumps(legacy),
+    )
+    for relative_path in [*legacy_sources, *legacy_videos]:
+        path = root / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"legacy-media")
+
+    extension_paths = []
+    if include_campaign_extension:
+        extension, extension_sources, extension_videos = (
+            _promopages_10060_campaign_extension_fixture()
+        )
+        write_text(
+            pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH.as_posix(),
+            json.dumps(extension),
+        )
+        extension_paths = [*extension_sources, *extension_videos]
+        for relative_path in extension_paths:
+            path = root / relative_path
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"campaign-media")
+    return extension_paths
+
+
 class GitHubPagesSiteTest(unittest.TestCase):
+    def test_campaign_extension_is_optional_and_missing_sidecar_is_ignored(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            _write_promopages_collection_fixture(
+                root, include_campaign_extension=False
+            )
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+                "clipmaker-lite-test/promopages-10060-manifest.json",
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+            ):
+                paths = pages.collect_site_paths(root)
+
+            self.assertNotIn(
+                pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH, paths
+            )
+
+    def test_campaign_extension_manifest_is_published_but_media_stays_raw(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            extension_paths = _write_promopages_collection_fixture(
+                root, include_campaign_extension=True
+            )
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+                "clipmaker-lite-test/promopages-10060-manifest.json",
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+            ):
+                paths = pages.collect_site_paths(root)
+
+            self.assertIn(
+                pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH, paths
+            )
+            for relative_path in extension_paths:
+                self.assertNotIn(Path(relative_path), paths)
+
+    def test_campaign_extension_collisions_fail_closed(self):
+        legacy, _, _ = _promopages_10060_fixture()
+        extension, _, _ = _promopages_10060_campaign_extension_fixture()
+        extension["articles"][0]["article_number"] = "01"
+        with self.assertRaisesRegex(ValueError, "identity collides"):
+            pages._collect_promopages_10060_extension_paths(
+                extension, legacy, set()
+            )
+
+    def test_campaign_extension_requires_registered_article_union(self):
+        legacy, _, _ = _promopages_10060_fixture()
+        extension, _, _ = _promopages_10060_campaign_extension_fixture()
+        extension["articles"][0]["article_number"] = "99"
+        with self.assertRaisesRegex(ValueError, "registered articles 15 through 18"):
+            pages._collect_promopages_10060_extension_paths(
+                extension, legacy, set()
+            )
+
+    def test_campaign_extension_audit_paths_are_safe_and_namespaced(self):
+        legacy, _, _ = _promopages_10060_fixture()
+
+        for context_path in (
+            "../../outside.json",
+            "PROMOPAGES-10060/articles/15-campaign/content.json",
+        ):
+            with self.subTest(context_path=context_path):
+                extension, _, _ = _promopages_10060_campaign_extension_fixture()
+                extension["articles"][0]["context_path"] = context_path
+                with self.assertRaisesRegex(ValueError, "context_path"):
+                    pages._collect_promopages_10060_extension_paths(
+                        extension, legacy, set()
+                    )
+
+        for manifest_file_path in (
+            "/absolute/source.jpg",
+            "PROMOPAGES-10060/articles/15-campaign/source.jpg",
+        ):
+            with self.subTest(manifest_file_path=manifest_file_path):
+                extension, _, _ = _promopages_10060_campaign_extension_fixture()
+                extension["articles"][0]["images"][0]["image"][
+                    "manifest_file_path"
+                ] = manifest_file_path
+                with self.assertRaisesRegex(ValueError, "manifest_file_path"):
+                    pages._collect_promopages_10060_extension_paths(
+                        extension, legacy, set()
+                    )
+
+    def test_campaign_extension_media_collides_with_any_aggregated_raw_path(self):
+        legacy, _, _ = _promopages_10060_fixture()
+
+        extension, source_paths, _ = _promopages_10060_campaign_extension_fixture()
+        with self.assertRaisesRegex(ValueError, "source path collision"):
+            pages._collect_promopages_10060_extension_paths(
+                extension,
+                legacy,
+                {Path(source_paths[0])},
+            )
+
+        extension, _, video_paths = _promopages_10060_campaign_extension_fixture()
+        with self.assertRaisesRegex(ValueError, "video path collision"):
+            pages._collect_promopages_10060_extension_paths(
+                extension,
+                legacy,
+                {Path(video_paths[0])},
+            )
+
+    def test_campaign_extension_accepts_exact_normalized_input_assets(self):
+        legacy, _, _ = _promopages_10060_fixture()
+        extension, source_paths, video_paths = (
+            _promopages_10060_campaign_normalized_extension_fixture()
+        )
+        remote_paths = set()
+
+        pages._collect_promopages_10060_extension_paths(
+            extension, legacy, remote_paths
+        )
+
+        self.assertTrue({Path(path) for path in source_paths} <= remote_paths)
+        self.assertTrue({Path(path) for path in video_paths} <= remote_paths)
+        for asset in pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_SOURCES.values():
+            asset_parent = (
+                pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE
+                / asset["asset_key"]
+            )
+            self.assertIn(asset_parent / "normalized.png", remote_paths)
+            self.assertIn(asset_parent / "asset.json", remote_paths)
+
+    def test_campaign_extension_normalized_supersede_tampering_fails_closed(self):
+        legacy, _, _ = _promopages_10060_fixture()
+
+        def supersede_output(manifest):
+            record = next(
+                item
+                for item in manifest["articles"][0]["images"]
+                if item["image"]["image_id"] == "07"
+            )
+            return next(
+                output
+                for output in record["outputs"]
+                if output["model_id"] == "alibaba/wan-2.7"
+            )
+
+        mutations = {
+            "wrong_abandoned_job": (
+                "superseded active job evidence",
+                lambda manifest: supersede_output(manifest)["retry"]["supersede"]
+                ["superseded_attempt"].update({"provider_job_id": "other-job"}),
+            ),
+            "old_job_not_active": (
+                "superseded active job evidence",
+                lambda manifest: supersede_output(manifest)["retry"]["supersede"]
+                ["superseded_attempt"].update({"provider_may_be_active": False}),
+            ),
+            "request_changed": (
+                "identity/request differs",
+                lambda manifest: supersede_output(manifest)["retry"]["supersede"]
+                ["superseding_attempt"].update({"request_sha256": "b" * 64}),
+            ),
+            "namespace_escape": (
+                "escaped its namespace",
+                lambda manifest: supersede_output(manifest)["retry"]["supersede"].update(
+                    {
+                        "namespace": (
+                            pages.PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE
+                            / "other"
+                            / "superseding-attempt-v1"
+                        ).as_posix()
+                    }
+                ),
+            ),
+            "selection_hidden": (
+                "identity/request differs",
+                lambda manifest: supersede_output(manifest).update(
+                    {"selected_attempt": "normalized-input-retry-v1"}
+                ),
+            ),
+            "policy_ack_removed": (
+                "supersede policy",
+                lambda manifest: manifest["generation_policy"][
+                    "normalized_input_supersede"
+                ].update({"duplicate_billing_risk_acknowledged": False}),
+            ),
+            "cost_unreserved": (
+                "supersede cost",
+                lambda manifest: manifest["cost"].update(
+                    {"normalized_input_supersede_reservations": 0}
+                ),
+            ),
+        }
+        for name, (error, mutate) in mutations.items():
+            with self.subTest(name=name):
+                extension, _, _ = (
+                    _promopages_10060_campaign_normalized_extension_fixture()
+                )
+                mutate(extension)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._collect_promopages_10060_extension_paths(
+                        extension,
+                        legacy,
+                        set(),
+                    )
+
+    def test_campaign_extension_normalized_input_mutations_fail_closed(self):
+        legacy, _, _ = _promopages_10060_fixture()
+
+        def nested_output(manifest, image_id, model_id):
+            for record in manifest["articles"][0]["images"]:
+                if record["image"]["image_id"] != image_id:
+                    continue
+                return next(
+                    output
+                    for output in record["outputs"]
+                    if output["model_id"] == model_id
+                )
+            raise AssertionError(f"Missing fixture output {image_id}/{model_id}")
+
+        mutations = {
+            "original_bytes": (
+                "original undersize source audit",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"]["source_transform"]["original"].update(
+                    {"bytes": pages.MAX_PROVIDER_SOURCE_BYTES + 1}
+                ),
+            ),
+            "original_dimensions": (
+                "original undersize source audit",
+                lambda manifest: (
+                    manifest["articles"][0]["images"][0]["image"].update(
+                        {"width": 300, "height": 300}
+                    ),
+                    nested_output(manifest, "05", "alibaba/wan-2.2")["retry"]
+                    ["source_transform"]["original"].update(
+                        {"width": 300, "height": 300}
+                    ),
+                ),
+            ),
+            "normalized_sha": (
+                "repository-raw asset audit",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"]["source_transform"]["normalized"].update(
+                    {"sha256": "f" * 64}
+                ),
+            ),
+            "normalized_dimensions": (
+                "repository-raw asset audit",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"]["source_transform"]["normalized"].update(
+                    {"height": 239}
+                ),
+            ),
+            "normalized_format": (
+                "repository-raw asset audit",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"]["source_transform"]["normalized"].update(
+                    {"format": "JPEG"}
+                ),
+            ),
+            "raw_commit": (
+                "repository-raw asset audit",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"]["source_transform"]["normalized"].update(
+                    {"source_commit_sha": "0" * 40}
+                ),
+            ),
+            "unsafe_raw_path": (
+                "repository_path",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"]["source_transform"]["normalized"].update(
+                    {"repository_path": "../normalized.png"}
+                ),
+            ),
+            "per_model_asset_drift": (
+                "share one frozen image asset",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.7"
+                )["retry"]["source_transform"]["normalized"].update(
+                    {"metadata_sha256": "f" * 64}
+                ),
+            ),
+            "retry_namespace": (
+                "allowed namespace",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                )["retry"].update(
+                    {
+                        "namespace": "wrong/normalized-retry",
+                        "envelope_path": "wrong/normalized-retry/retry.json",
+                    }
+                ),
+            ),
+            "reservation_count": (
+                "cost accounting",
+                lambda manifest: manifest["cost"].update(
+                    {"normalized_input_retry_reservations": 5}
+                ),
+            ),
+            "policy_source": (
+                "generation policy",
+                lambda manifest: manifest["generation_policy"][
+                    "normalized_input_retry"
+                ]["eligible_sources"][0].update({"image_id": "99"}),
+            ),
+            "missing_wan_retry": (
+                "both Wan normalized retries",
+                lambda manifest: nested_output(
+                    manifest, "05", "alibaba/wan-2.2"
+                ).update({"retry": None, "selected_attempt": "primary"}),
+            ),
+        }
+        for name, (error, mutate) in mutations.items():
+            with self.subTest(name=name):
+                extension, _, _ = (
+                    _promopages_10060_campaign_normalized_extension_fixture()
+                )
+                mutate(extension)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._collect_promopages_10060_extension_paths(
+                        extension, legacy, set()
+                    )
+
     def test_runtime_allowlist_is_complete_and_within_pages_limits(self):
         if (
             not ADDITIONAL_MANIFEST_PATH.is_file()
@@ -436,7 +1428,9 @@ class GitHubPagesSiteTest(unittest.TestCase):
         paths = pages.collect_site_paths(ROOT)
         total_bytes = pages.site_size(ROOT, paths)
 
-        self.assertEqual(len(paths), 251)
+        self.assertEqual(
+            len(paths), 251 + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
+        )
         self.assertGreater(total_bytes, 900_000_000)
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
         self.assertIn(Path("clipmaker-lite/index.html"), paths)
@@ -448,6 +1442,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
         self.assertIn(
             Path("clipmaker-lite-test/promopages-10060-manifest.json"), paths
         )
+        if PROMOPAGES_10060_EXTENSION_PATH.is_file():
+            self.assertIn(
+                pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH, paths
+            )
         self.assertIn(Path("manual-review/index.html"), paths)
         self.assertFalse(any("Prepared videos" in path.as_posix() for path in paths))
         self.assertEqual(

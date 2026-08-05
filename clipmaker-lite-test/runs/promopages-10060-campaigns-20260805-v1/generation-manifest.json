@@ -1,0 +1,4535 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-05T22:51:53Z",
+  "expected_outputs": 102,
+  "summary": {
+    "succeeded": 62,
+    "verification-failed": 31,
+    "provider-failed": 5,
+    "submit-unknown": 4
+  },
+  "conforming_outputs": 62,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01-wan-2-2",
+      "sample_id": "15-marykay-sredstva-01",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1216,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5458267,
+        "sha256": "1106b87d0f073ba5642ffffc44deea4bbcaa4db4d5b7a1f33ca0f75dd8eb7c4f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01-wan-2-7",
+      "sample_id": "15-marykay-sredstva-01",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1842,
+        "height": 1126,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4199233,
+        "sha256": "46d2de5dee2a6cac04c3eb4789ea5484d8e2043448d3c889efac65c23cd31665"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-01-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-01",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/01.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job 9ruKxqd4zpNsFtOqY95W failed with status failed: The service is currently experiencing high load and cannot process your request. Please try again later. Operation ID: 0bd8b20a-1972-4fa3-99bc-f1e96c63ee89."
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02-wan-2-2",
+      "sample_id": "15-marykay-sredstva-02",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/02.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1216,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5801424,
+        "sha256": "15a7ea8c4be19497e2bb5a8e2ac74f6264de0750edadcce81ef045320969bdd5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02-wan-2-7",
+      "sample_id": "15-marykay-sredstva-02",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/02.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1842,
+        "height": 1126,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3760936,
+        "sha256": "ed44e49e958f93b12a954c23090178d8f13406407cffd3b175b305d37ecaba95"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-02-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-02",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/02.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3447521,
+        "sha256": "9b645237d1b5830bc001872905a5857d7f3c4c203b2033cc4d7ade999dc6bf78"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03-wan-2-2",
+      "sample_id": "15-marykay-sredstva-03",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5120756,
+        "sha256": "e1dd537477a5a2ee832ac402ace9e218f328470ba5af5c78639ae081a38c4c12"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03-wan-2-7",
+      "sample_id": "15-marykay-sredstva-03",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4563282,
+        "sha256": "3db2f5ae26dc9978d8d716882bc7eb3801b99ffd91c750b79fefab4b0ef9d5f9"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-03-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-03",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/03.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/03.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job ZOUEuX0MjDX7h9ocUk4z failed with status failed: Video generation completed with no output (content may have been filtered)"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04-wan-2-2",
+      "sample_id": "15-marykay-sredstva-04",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/04.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7106644,
+        "sha256": "ffef68c9754931e3b3e8bfd511032d078330b6b86181c16fddc402095eb18afb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04-wan-2-7",
+      "sample_id": "15-marykay-sredstva-04",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/04.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 6663737,
+        "sha256": "53eb55ace0af36b3441eef03d8ffc9441c61f1c6f780c6e6ad200c606fd7c4c7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-04-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-04",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/04.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2923257,
+        "sha256": "1a5f4c60fb533ad39b72ca746efe346bc6ee2811f341ab5ee88c35064b827fdc"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05-wan-2-2",
+      "sample_id": "15-marykay-sredstva-05",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/05.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1088,
+        "height": 832,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7536326,
+        "sha256": "ebd20a47965622e0456b3e5aac104cc927a272c668d96e2dc64f5c6e8ca64a1d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05-wan-2-7",
+      "sample_id": "15-marykay-sredstva-05",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/05.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1632,
+        "height": 1270,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5061665,
+        "sha256": "488c1ccbbc7b4e1bb5f88810f509bd6aa93e420a028124dd088d56578b8d2c39"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-05-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-05",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/05.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3396299,
+        "sha256": "111b7d7fdcdf252ec539d0f926343840f6b37a83018071990c8cae251f45ca36"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06-wan-2-2",
+      "sample_id": "15-marykay-sredstva-06",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/06.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 960,
+        "height": 960,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 3053321,
+        "sha256": "7b291458e78adf97cb556bdf293a477807b5554dce56a23032adb606fecb1df2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06-wan-2-7",
+      "sample_id": "15-marykay-sredstva-06",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/06.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2371735,
+        "sha256": "a0e4e0f8171eab7720623f68d35b9621e65635f14962de36216203ae12d4e14b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-06-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-06",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/06.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1274083,
+        "sha256": "2b84bd7facc1c9fae854f9870ebe2c8bd9e910892685e2bf7cedabfa970e2c5c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07-wan-2-2",
+      "sample_id": "15-marykay-sredstva-07",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/07.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 3867395,
+        "sha256": "ed7db83830c7abff9370330fc9ebd8e12222788952d0bc5ec739a98ab1a8b1d6"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07-wan-2-7",
+      "sample_id": "15-marykay-sredstva-07",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/07.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2426507,
+        "sha256": "db4e8d730810049671a3923e83e2153f7ddc833b1d74352c894ec20fe107036d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-07-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-07",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/07.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1561155,
+        "sha256": "661c791bb55a7dbb7785509949b28537dce809f74c4c0d394024f9dc48c69a33"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08-wan-2-2",
+      "sample_id": "15-marykay-sredstva-08",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/08.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.2/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1088,
+        "height": 832,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4262358,
+        "sha256": "c71d7a87485c3dea08e8b870a9a7e2168f7d17f303a70e23d62e40440f6ed3cc"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08-wan-2-7",
+      "sample_id": "15-marykay-sredstva-08",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/08.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/wan-2.7/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1648,
+        "height": 1258,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2896829,
+        "sha256": "2511de5a3f2537f93a2fa1a21f6ac85e3b926237fd3843ce044ed6dea087a8f5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-15-marykay-sredstva-08-veo-3-1-lite",
+      "sample_id": "15-marykay-sredstva-08",
+      "article_slug": "15-marykay-sredstva",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/08.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/15-marykay-sredstva/veo-3.1-lite/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2046460,
+        "sha256": "0c84cdd0f6b0318f339f6f4932e95480487eb6b6c354a53133306933044a2f8e"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-01",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4648784,
+        "sha256": "43cdb2790f9396125fd8ac767a71f031bcf6892ecf618d7a590df07a709fbdee"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-01",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4381377,
+        "sha256": "1a7f452fcf6ecd18100a9c7ad6c454965b9c424760b84bbd63049329112ec461"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-01-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-01",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3499738,
+        "sha256": "482283d70ba16ba8b177b0be6112d1f298444ece1df6f379d0d691008f16b095"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-02",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/02.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4799153,
+        "sha256": "96de95434a1609c35908cdf10913343a70f080129c396ac6579e246dbf0cf2ec"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-02",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/02.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3802461,
+        "sha256": "ba016008c0b664a9e49dd33e31d2dbade1272281a98f355fde4c9a3e31cf7f7a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-02-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-02",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/02.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3542615,
+        "sha256": "92c7e8f6e9ef2393f0da08c0a3d4094344d1c3132aae38a8f79d7cd3e6cb21dd"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-03",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/03.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1280,
+        "height": 704,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4894445,
+        "sha256": "9c24afc93931ba8996ce633772e48089ac2ebf3fe167e2cc596231935c0593a6"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-03",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/03.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1928,
+        "height": 1076,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2908313,
+        "sha256": "7378394dc21cf3c5f172828ca30ff4e9372a36625e76a2ed157f01ac3d04f607"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-03-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-03",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/03.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2681182,
+        "sha256": "0c3a83f078e774329b1d10908cfbfb660e303da9f6d589a087f4059ad1e130dc"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-04",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/04.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1072,
+        "height": 848,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 9795533,
+        "sha256": "36ef30ab7effeb2973ef0a82fdb04fdcfe3846deaff1f3fddd4e71529b17573a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-04",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/04.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1628,
+        "height": 1272,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4358103,
+        "sha256": "95db6af1c5d61378d29ffa6fe2414dd100cc7e896b0d44aa4a2e5864753caf08"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-04-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-04",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/04.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3246756,
+        "sha256": "e5f49ca588935399befb98b18e48d031ae111e91b1cc74ecd244ea148fd537d6"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-05",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/05.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 960,
+        "height": 960,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 2307034,
+        "sha256": "c7a202d4225257c578b841b0b67aae63988f138c0b4b2d14f8a00bcb759da2ac"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-05",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/05.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2277175,
+        "sha256": "2e8a068fd41d2c7de0b40d702e33a38b102c6a7aab60dcb50609af83e4771878"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-05-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-05",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/05.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 845764,
+        "sha256": "132776aa6cb7f233aeb5d7464fd6f3010b2f94dd2880aa4a588d674f59f40782"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-06",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 960,
+        "height": 960,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 3553067,
+        "sha256": "3fc71f8c2fd8aecea7dd92780ef6b4f47673f7d50d88d99c5f15f39cfb3ec028"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-06",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 1946963,
+        "sha256": "faf5f14b2f8084a8ffb269b11f39f9f1c2be0f00e119c7db4c8781df353fb707"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "1:1",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-06-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-06",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "submit-unknown",
+      "recorded_status": "submit-unknown",
+      "provider_may_be_active": true,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/06.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "The read operation timed out"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07-wan-2-2",
+      "sample_id": "16-marykay-trendy-krasoty-07",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.2/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1072,
+        "height": 848,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5322682,
+        "sha256": "626048afc892b4c95c68001f0ea9e17f4104933b37e6acb61765c188ab42cc23"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07-wan-2-7",
+      "sample_id": "16-marykay-trendy-krasoty-07",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/wan-2.7/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1610,
+        "height": 1288,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2498821,
+        "sha256": "a19bb07a62cce9f2d33ab9e1abdf62aeb02254060748f7423af05bddad5abe60"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-16-marykay-trendy-krasoty-07-veo-3-1-lite",
+      "sample_id": "16-marykay-trendy-krasoty-07",
+      "article_slug": "16-marykay-trendy-krasoty",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/07.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/16-marykay-trendy-krasoty/veo-3.1-lite/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2738718,
+        "sha256": "136d8900bed8db06876f748d1599eb70239cbcf5e06e4939f14c03fc581a40d5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-01",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1136,
+        "height": 800,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 6981879,
+        "sha256": "37e2d12f86f309f305ec3e21fc6ddf14389fcbc6975eb66d1245f8acff4f05e1"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-01",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1712,
+        "height": 1210,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3989463,
+        "sha256": "0452642d1699f8cf7c0807ea4ef59addb86677692884afea9ce17cc0df36bfcb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-01-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-01",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2756284,
+        "sha256": "7683dcd38a05487aa8f1fc5686d46c42497f6b5f2f9e6fb80289e511e26d83e7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-02",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/02.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1136,
+        "height": 800,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7468286,
+        "sha256": "2cecb1ad5d1f825fead2b6f6d75e3bb2ac3aa1d55e8f931643848d73381dfe1d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-02",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/02.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1712,
+        "height": 1210,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2886318,
+        "sha256": "0617d89fac5f8980379ab709b3e056f0ac30cd47691faea5636dba5663ae8e58"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-02-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-02",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/02.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2797654,
+        "sha256": "37250f51e2e8e3e7eb34bbf3794ed0a3eef4fb6c0a1c23fc14d5b2e88a0e6543"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-03",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/03.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 10344075,
+        "sha256": "795b454a951031e2855d930413381fde651dc010cff90548bc5af947c930bdf4"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-03",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/03.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1760,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4978799,
+        "sha256": "e7d0ceaad1d2e580e883c795353b103e38421d5ab89677557163fb432beb865b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-03-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-03",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/03.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4386565,
+        "sha256": "613371c4d85d8d04b4060b1fb8a378c0d2195ea473cba8bb71b9f07ecb38cc3b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-04",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/04.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1216,
+        "height": 752,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 21637540,
+        "sha256": "0a88f94a26307633ddc73fe46af976bf665913b17e96c5f3d1916f2b6cd7a7a5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-04",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/04.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1828,
+        "height": 1134,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 21379853,
+        "sha256": "74d9ab9fc4229233e0d9ce80607c5af61245363b15839998d55555697ec59ec9"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-04-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-04",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/04.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 7427802,
+        "sha256": "94cbc77eb47e79f9e93121de81acbf0e12dcc362016bcd4a4411592145a60faa"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-05",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/05.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1280,
+        "height": 704,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 8820556,
+        "sha256": "4a524ff4636fc64542d2843cd8c86baf8ca658f7e92596dcf8861338806d43f7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-05",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/05.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1936,
+        "height": 1070,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5181364,
+        "sha256": "f53d5b9e3d71b1c1920bb67151a61875992b3db25b3eed91d0095c5aa19476cd"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-05-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-05",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/05.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3132343,
+        "sha256": "afbebdc228b4c0079fbdf2a7dd3a711ac0b166899f7f6091f199eb20177c82fa"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-06",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/06.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7243192,
+        "sha256": "2b762cc6778006e5fa9d921dd197ac1e41464cb0c490c595ed1d16390b106f20"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-06",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/06.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1768,
+        "height": 1172,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4408736,
+        "sha256": "d0ca76f6b0b4d2b1f5ddcd2a19681213ae5a69aabf57d5af830f3f031d888641"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-06",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/06.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2439221,
+        "sha256": "71e571fcf2f7d5c6cb6a14634b00e38af548c4e3c1307c640ae3d6b1ede5ba92"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-07",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 10793025,
+        "sha256": "b82afa0f0bf21c6ef30d97022d94aa9c78ef9f78e658256e5cf14752c1dd37da"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-07",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 8814242,
+        "sha256": "e24dab1b85efd4e81d4447b155a839bd05d979b6411bee847a7132c1105eb6d2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-07-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-07",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5410867,
+        "sha256": "2b93aecc109444ff21b6d966abbe76c60f6784e11cc7aaf4aef0938f951a3a80"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-08",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1184,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7782331,
+        "sha256": "a926639f871ed76ecf5eda3dcf4615d691625688f6f339a7947a2e311a9b1182"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-08",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1780,
+        "height": 1164,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 8239077,
+        "sha256": "76c70c251e4e1fe509e76363372b9499042da4a473428495fb9b4fc388953141"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-08",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 3942340,
+        "sha256": "3dc96d2b66fede0763b79a83f1fac002ec3b0cfbca95299c3825e5b7d51a899c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-09",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4047655,
+        "sha256": "5d5bcdb5056d20933b1df06f986a4e7d6bb7c77923eeb6af457d8f6d25b3037d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-09",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1174,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2085294,
+        "sha256": "0a50c6438bff5803e0e95feffa8ff05de583fb2241bcb04a2faabb83300f00e3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-09",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1605638,
+        "sha256": "7e5d12fa7337895d044b504e22aff951d36e0970babcc38699cc0f498533f98d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-10",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/10.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/10.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/10.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/10.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1424,
+        "height": 640,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4908325,
+        "sha256": "8ae55e80637ea268059dc0f9c67c8d0c98fe73fc3f18cc05b7f0d3739ea11c4c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-10",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/10.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/10.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/10.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/10.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2146,
+        "height": 966,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2828146,
+        "sha256": "b3758526e6fefe402747ea238ed1ebf369f4258ffee262112af106def450349c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-10-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-10",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/10.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/10.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/10.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/10.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2481606,
+        "sha256": "7d0fcd1a7021f3520fcc15e8d7c6d11a3fe76c2e1123372559cfd43589c4fabc"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11-wan-2-2",
+      "sample_id": "17-volma-nalivnoi-pol-11",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.2/11.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1888,
+        "height": 480,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4536177,
+        "sha256": "d886dd3681fc09904d66b86f6805818aa485966654e787a91e89991e5edb4fcd"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11-wan-2-7",
+      "sample_id": "17-volma-nalivnoi-pol-11",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/11.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/11.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/11.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2836,
+        "height": 730,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3652110,
+        "sha256": "6f5c7b38d4f8abac074cab3e865020d514c1539d3c4637ae6879c8a56d8484e7"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-11-veo-3-1-lite",
+      "sample_id": "17-volma-nalivnoi-pol-11",
+      "article_slug": "17-volma-nalivnoi-pol",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/11.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/11.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/11.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2481290,
+        "sha256": "cd657d5b01bd3da058b455d009bdfe7a47c4ea3d0eb6355cf2430e9033efae6b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-01",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1344,
+        "height": 672,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 12753994,
+        "sha256": "2411cff4e91563fdc492235ca095499fcc8e6e630235d57d6ca7e62da4e7b735"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-01",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2036,
+        "height": 1018,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5314950,
+        "sha256": "60766dc2ad6c51c19c3e7fd4568f0d8c7fa37c40845e823968bd8c6b6e6e7674"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-01-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-01",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/01.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5522847,
+        "sha256": "a0eda4b1bf91eb57adf764392ffba9b11023e69c473825e8729c663bce8aa8f1"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-02",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/02.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1344,
+        "height": 672,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4498989,
+        "sha256": "f1f233eb1ff00fe3925f1ef3b360661cc9ccd867ea3533cc886ca1ebd3e82f30"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-02",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/02.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 2034,
+        "height": 1020,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3735227,
+        "sha256": "20808e1eeb5aed289e98b445a099d828eb96643a3fdc308f6c84e26f73a986aa"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-02-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-02",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/02.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2825861,
+        "sha256": "a76e95ed04ddc8704817cdcccddf5970127cf3d41cdc46a1fe189f2cb04a29b3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-03",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/03.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1216,
+        "height": 736,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7183558,
+        "sha256": "44753229e9287d46b02c78503aca40d3101bd3038e3fe1f2e1897e5abb36f154"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-03",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/03.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1842,
+        "height": 1124,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 5975838,
+        "sha256": "4c700b345f3c17540444fe317b7be56af0078be64b7299b07c7b156852c85d61"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-03-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-03",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/03.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5006104,
+        "sha256": "418487e19166ef8ec272f3d674e155fb989fc38c6f61e77688825b9d7413dc20"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-04",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/04.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4753260,
+        "sha256": "fd48317ebe506d89c9ae829d97f3ccc76345b6f2679082af1d66fa89ab546c7c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-04",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/04.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1766,
+        "height": 1174,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 9251866,
+        "sha256": "e5eb941e9cb85544e0327f708b8022daced658c1db1475a2ec8edf718991bdc8"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-04-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-04",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/04.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2213321,
+        "sha256": "24aa8bc0789c0e7666ad5c75d4dee530468858ca7b44539dc635e32e1e9aa415"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-05",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "submit-unknown",
+      "recorded_status": "submit-unknown",
+      "provider_may_be_active": true,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/05.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"9d2d4347-7fbd-473c-adf2-cc2b7f5199c2\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-06 00:57:29.008\\\", \\\"scheduled_time\\\": \\\"2026-08-06 00:57:29.030\\\", \\\"end_time\\\": \\\"2026-08-06 00:57:30.228\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-05",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/05.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job PyF26u7pxzE0fNJ0DGgB failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 758x220\", \"internal_name\": \"InvalidParameter\"}"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-05-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-05",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 576374,
+        "sha256": "2f831777a9557e8bebb1ab1f37607648f634855c73dab57054d1b40b85550bcd"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-06",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5522960,
+        "sha256": "3f407986d3542ebaa52a8df3285d9f75fbd2fff5480c182ce999678059bd7189"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-06",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3408562,
+        "sha256": "157b16935385699bdc5f925b2e42d0381c7223de3033466dd068239a0f07e49a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-06-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-06",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2191852,
+        "sha256": "0b2a388d12b2c860b05093a27bcd4e2e24af5700e9e0e6d8d8a2dceaceb0ce58"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-07",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "model_id": "alibaba/wan-2.2",
+      "status": "submit-unknown",
+      "recorded_status": "submit-unknown",
+      "provider_may_be_active": true,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/07.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"eee19b04-85f8-4fb2-b7af-e1c65867d7b6\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-06 02:40:03.960\\\", \\\"scheduled_time\\\": \\\"2026-08-06 02:40:03.971\\\", \\\"end_time\\\": \\\"2026-08-06 02:40:05.123\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-07",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "model_id": "alibaba/wan-2.7",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/07.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job 6C4hzugE4O5couny93cp failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 773x239\", \"internal_name\": \"InvalidParameter\"}"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-07-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-07",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 869142,
+        "sha256": "1c2fd25ceae9c40c2fcae35a9fac63e631d05bc31842b5e5447085ad8be7a66f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08-wan-2-2",
+      "sample_id": "18-volma-plitochnyi-klei-08",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "submit-unknown",
+      "recorded_status": "submit-unknown",
+      "provider_may_be_active": true,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.2/08.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"5d654252-e2c1-4a80-822f-c9777a6e7ae0\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-06 06:51:49.753\\\", \\\"scheduled_time\\\": \\\"2026-08-06 06:51:49.774\\\", \\\"end_time\\\": \\\"2026-08-06 06:51:50.928\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08-wan-2-7",
+      "sample_id": "18-volma-plitochnyi-klei-08",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/wan-2.7/08.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job BODDvmrXVu4iVprGv5IN failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 752x193\", \"internal_name\": \"InvalidParameter\"}"
+    },
+    {
+      "lite_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08",
+      "provider_run_id": "promopages-10060-campaigns-20260805-v1-18-volma-plitochnyi-klei-08-veo-3-1-lite",
+      "sample_id": "18-volma-plitochnyi-klei-08",
+      "article_slug": "18-volma-plitochnyi-klei",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/08.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2163632,
+        "sha256": "05369cf85a94f72209fefcb959baa2ee25104c18d1d8e28779d1fb45504314ac"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

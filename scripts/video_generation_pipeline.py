@@ -64,6 +64,7 @@ class PreSubmitRejectedError(PipelineError):
 
 PRE_SUBMIT_REJECTED_HTTP_STATUSES = frozenset({429})
 SEGMIND_OVERSIZE_ERROR_MESSAGE = "Image size is too large than 20.0 mb"
+SEGMIND_UNDERSIZE_ERROR_MESSAGE = "Image height or width is too small than 240"
 SEGMIND_PROVIDER_FAILURE_PREFIX = "the provider task failed: "
 SEGMIND_PROVIDER_FAILURE_REQUIRED_KEYS = frozenset(
     {"task_id", "task_status", "video_url", "code", "message"}
@@ -75,11 +76,13 @@ SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS = (
 )
 
 
-def parse_segmind_oversize_task_failure(
+def _parse_segmind_known_terminal_task_failure(
     http_status: int,
     detail: str,
+    *,
+    expected_error_message: str,
 ) -> dict[str, Any] | None:
-    """Return exact terminal evidence for Segmind's known >20 MB task failure.
+    """Return exact terminal evidence for one known Segmind input rejection.
 
     A synchronous POST may return HTTP 400 after Segmind has already created and
     terminally failed a provider task.  Only the fully nested, known response is
@@ -125,7 +128,7 @@ def parse_segmind_oversize_task_failure(
         or provider.get("task_status") != "FAILED"
         or provider.get("video_url") != ""
         or provider.get("code") != "InvalidParameter"
-        or provider.get("message") != SEGMIND_OVERSIZE_ERROR_MESSAGE
+        or provider.get("message") != expected_error_message
     ):
         return None
     for key in SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS:
@@ -141,12 +144,38 @@ def parse_segmind_oversize_task_failure(
         "provider_task_id": task_id,
         "provider_task_status": "FAILED",
         "provider_error_code": "InvalidParameter",
-        "provider_error_message": SEGMIND_OVERSIZE_ERROR_MESSAGE,
+        "provider_error_message": expected_error_message,
     }
     for key in SEGMIND_PROVIDER_FAILURE_OPTIONAL_TIME_KEYS:
         if key in provider:
             evidence[key] = provider[key]
     return evidence
+
+
+def parse_segmind_oversize_task_failure(
+    http_status: int,
+    detail: str,
+) -> dict[str, Any] | None:
+    """Return exact terminal evidence for Segmind's known >20 MiB rejection."""
+
+    return _parse_segmind_known_terminal_task_failure(
+        http_status,
+        detail,
+        expected_error_message=SEGMIND_OVERSIZE_ERROR_MESSAGE,
+    )
+
+
+def parse_segmind_undersize_task_failure(
+    http_status: int,
+    detail: str,
+) -> dict[str, Any] | None:
+    """Return exact terminal evidence for Segmind's known <240 px rejection."""
+
+    return _parse_segmind_known_terminal_task_failure(
+        http_status,
+        detail,
+        expected_error_message=SEGMIND_UNDERSIZE_ERROR_MESSAGE,
+    )
 
 
 GENERATION_ROUTES_PATH = ROOT / "docs/agents/clipmaker-lite/generation-routes.json"
@@ -1635,11 +1664,11 @@ def segmind_generate(
                 exact_detail = raw_detail.decode("utf-8")
             except UnicodeDecodeError:
                 pass
-        evidence = (
-            parse_segmind_oversize_task_failure(exc.code, exact_detail)
-            if exact_detail is not None
-            else None
-        )
+        evidence = None
+        if exact_detail is not None:
+            evidence = parse_segmind_oversize_task_failure(
+                exc.code, exact_detail
+            ) or parse_segmind_undersize_task_failure(exc.code, exact_detail)
         if evidence is not None:
             raise SegmindProviderTaskFailedError(error, evidence) from exc
         raise PipelineError(error) from exc
