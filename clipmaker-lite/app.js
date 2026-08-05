@@ -5,6 +5,8 @@
   const ADDITIONAL_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-9930-manifest.json";
   const CASE_21_MANIFEST_PATH = "../clipmaker-lite-test/case-21-manifest.json";
+  const PROMOPAGES_10060_MANIFEST_PATH =
+    "../clipmaker-lite-test/promopages-10060-manifest.json";
   const EXPECTED_BASE_ARTICLE_COUNT = 20;
   const EXPECTED_BASE_OUTPUT_COUNT = 60;
   const EXPECTED_ADDITIONAL_ARTICLE_COUNT = 20;
@@ -16,6 +18,38 @@
   const EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT = 4;
   const EXPECTED_CASE_21_DISPLAY_OUTPUT_COUNT = 7;
   const EXPECTED_CASE_21_ATTEMPT_COUNT = 11;
+  const EXPECTED_PROMOPAGES_10060_ARTICLE_NUMBERS = [
+    "01",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+  ];
+  const EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT = 13;
+  const EXPECTED_PROMOPAGES_10060_IMAGE_COUNT = 92;
+  const EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT = 276;
+  const EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER = "02";
+  const PROVIDER_FILTERED_STATUS = "provider-filtered";
+  const PROVIDER_FILTERED_RECORDED_STATUS = "provider-failed";
+  const PROVIDER_FILTERED_SELECTION = "terminal-retry-v1-exhausted";
+  const PROVIDER_UNAVAILABLE_STATUS = "provider-unavailable";
+  const AMBIGUOUS_SUBMIT_RETRY_KIND = "ambiguous-submit";
+  const AMBIGUOUS_SUBMIT_RETRY_SELECTION = "ambiguous-submit-retry-v1";
+  const AMBIGUOUS_SUBMIT_RETRY_EXHAUSTED_SELECTION =
+    "ambiguous-submit-retry-v1-exhausted";
+  const NORMALIZED_INPUT_RETRY_KIND = "normalized-input";
+  const NORMALIZED_INPUT_RETRY_SELECTION = "normalized-input-retry-v1";
+  const NORMALIZED_INPUT_RETRY_EXHAUSTED_SELECTION =
+    "normalized-input-retry-v1-exhausted";
+  const MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024;
   const LOOP_MODEL_ID = "alibaba/wan-2.7";
   const LOOP_REQUEST_CLASSIFICATION = "api-loop-closure-experiment";
   const LOOP_REQUEST_MECHANISM = "same-source-first-and-last-frame";
@@ -43,10 +77,6 @@
     "failure-specific-negative",
     "held-end-states",
   ];
-  const EXPECTED_TOTAL_ARTICLE_COUNT = 21;
-  const EXPECTED_UNIQUE_IMAGE_COUNT = 41;
-  const EXPECTED_CANONICAL_OUTPUT_COUNT = 123;
-  const EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH = 139;
   const EXPECTED_EXPERIMENT_OUTPUT_COUNT = 2;
   const EXPECTED_EXTERNAL_OUTPUT_COUNT = 1;
   const MODEL_ORDER = [
@@ -104,7 +134,11 @@
     datasetError: document.querySelector("#datasetError"),
     datasetErrorText: document.querySelector("#datasetErrorText"),
     caseViewport: document.querySelector("#caseViewport"),
+    articleCountSummary: document.querySelector("#articleCountSummary"),
+    imageCountSummary: document.querySelector("#imageCountSummary"),
     videoCountSummary: document.querySelector("#videoCountSummary"),
+    datasetSourceStatus: document.querySelector("#datasetSourceStatus"),
+    caseDatasetMeta: document.querySelector("#caseDatasetMeta"),
   };
 
   const missingElement = Object.values(elements).some((element) => !element);
@@ -155,6 +189,23 @@
   const hasOwn = (object, property) =>
     Object.prototype.hasOwnProperty.call(object, property);
 
+  const makeCaseKey = (ticket, articleSlug) => {
+    assert(
+      typeof ticket === "string" && /^PROMOPAGES-\d+$/.test(ticket),
+      `Некорректный ticket для case key: ${ticket ?? "—"}.`,
+    );
+    assert(
+      typeof articleSlug === "string" && articleSlug.trim(),
+      `Некорректный slug для case key: ${articleSlug ?? "—"}.`,
+    );
+    return `${ticket}:${articleSlug}`;
+  };
+
+  const asDomIdPart = (value) => String(value).replace(/[^a-zA-Z0-9_-]/g, "-");
+
+  const articleIdentityLabel = (article) =>
+    `${article.sourceTicket || "источник не указан"} · ${article.article_number}`;
+
   const validateOutput = (articleNumber, output, videoPaths, contextLabel) => {
     assert(output && typeof output === "object", `У ${articleNumber} / ${contextLabel} нет данных.`);
     assert(output.video_path, `У ${articleNumber} / ${contextLabel} нет MP4.`);
@@ -175,6 +226,443 @@
       `У ${articleNumber} / ${contextLabel} нет метаданных видео.`,
     );
     videoPaths.add(output.video_path);
+  };
+
+  const validateProviderFilteredAttempt = (
+    attempt,
+    contextLabel,
+    { requireInactive = false } = {},
+  ) => {
+    assert(
+      attempt && typeof attempt === "object",
+      `${contextLabel}: нет аудита provider-попытки.`,
+    );
+    ["provider_run_id", "provider_job_id", "submitted_at", "completed_at", "error"].forEach(
+      (field) => {
+        assert(
+          typeof attempt[field] === "string" && attempt[field].trim(),
+          `${contextLabel}: в аудите попытки нет ${field}.`,
+        );
+      },
+    );
+    assert(
+      attempt.status === PROVIDER_FILTERED_RECORDED_STATUS,
+      `${contextLabel}: попытка должна иметь terminal provider-failed status.`,
+    );
+    assert(
+      /filter/i.test(attempt.error),
+      `${contextLabel}: terminal error не подтверждает content filtering.`,
+    );
+    ["run_path", "prompt_path"].forEach((field) => {
+      assert(
+        typeof attempt[field] === "string" && attempt[field].trim(),
+        `${contextLabel}: в аудите попытки нет ${field}.`,
+      );
+    });
+    ["run_sha256", "prompt_sha256", "request_sha256"].forEach((field) => {
+      assert(
+        typeof attempt[field] === "string" && /^[a-f0-9]{64}$/.test(attempt[field]),
+        `${contextLabel}: в аудите попытки нет валидного ${field}.`,
+      );
+    });
+    if (requireInactive) {
+      assert(
+        attempt.provider_may_be_active === false,
+        `${contextLabel}: retry-попытка не подтверждена как terminal.`,
+      );
+    }
+    return attempt;
+  };
+
+  const validateProviderFilteredOutput = (articleNumber, output, contextLabel) => {
+    const label = `${articleNumber} / ${contextLabel}`;
+    assert(
+      output.status === PROVIDER_FILTERED_STATUS &&
+        output.recorded_status === PROVIDER_FILTERED_RECORDED_STATUS &&
+        output.selected_attempt === PROVIDER_FILTERED_SELECTION,
+      `${label}: неверная terminal provider-filtered identity.`,
+    );
+    assert(
+      output.video_path === null && output.media === null && output.contract_check === null,
+      `${label}: provider-filtered output не должен содержать MP4 или media contract.`,
+    );
+    assert(
+      typeof output.positive_prompt === "string" && output.positive_prompt.trim(),
+      `${label}: пустой positive prompt.`,
+    );
+    assert(
+      typeof output.error === "string" && output.error.trim() && /filter/i.test(output.error),
+      `${label}: нет terminal content-filter error.`,
+    );
+    const retry = output.retry;
+    assert(
+      retry &&
+        typeof retry === "object" &&
+        retry.retry_number === 1 &&
+        retry.exhausted === true &&
+        typeof retry.namespace === "string" &&
+        retry.namespace.trim() &&
+        typeof retry.envelope_path === "string" &&
+        retry.envelope_path === `${retry.namespace}/retry.json`,
+      `${label}: нет immutable retry-v1 envelope audit.`,
+    );
+    const primaryAttempt = validateProviderFilteredAttempt(
+      retry.primary_attempt,
+      `${label} / primary`,
+    );
+    const retryAttempt = validateProviderFilteredAttempt(
+      retry.retry_attempt,
+      `${label} / retry-v1`,
+      { requireInactive: true },
+    );
+    assert(
+      output.provider_run_id === retryAttempt.provider_run_id &&
+        output.error === retryAttempt.error,
+      `${label}: selected retry identity или error не совпадает с output.`,
+    );
+    assert(
+      primaryAttempt.provider_run_id !== retryAttempt.provider_run_id &&
+        primaryAttempt.provider_job_id !== retryAttempt.provider_job_id,
+      `${label}: primary и retry должны иметь разные provider identities.`,
+    );
+    assert(
+      primaryAttempt.request_sha256 === retryAttempt.request_sha256,
+      `${label}: retry изменил immutable provider request.`,
+    );
+    return {
+      ...output,
+      availableVideo: false,
+      providerFiltered: true,
+      providerUnavailable: false,
+    };
+  };
+
+  const validateAmbiguousSubmitRetry = (
+    output,
+    contextLabel,
+    { exhausted },
+  ) => {
+    const retry = output.retry;
+    assert(
+      retry &&
+        typeof retry === "object" &&
+        retry.retry_kind === AMBIGUOUS_SUBMIT_RETRY_KIND &&
+        retry.retry_number === 1 &&
+        retry.exhausted === exhausted &&
+        retry.primary_outcome_unknown === true &&
+        typeof retry.namespace === "string" &&
+        retry.namespace.trim() &&
+        retry.envelope_path === `${retry.namespace}/retry.json` &&
+        typeof retry.envelope_sha256 === "string" &&
+        /^[a-f0-9]{64}$/.test(retry.envelope_sha256),
+      `${contextLabel}: нет immutable ambiguous-submit retry-v1 audit.`,
+    );
+
+    const primary = retry.primary_attempt;
+    assert(
+      primary &&
+        typeof primary === "object" &&
+        primary.status === "submit-unknown" &&
+        ["submitting", "submit-unknown"].includes(primary.recorded_status) &&
+        primary.outcome === "unknown" &&
+        primary.outcome_unknown === true &&
+        primary.provider_may_be_active === true &&
+        primary.provider_job_id === null &&
+        primary.submitted_at === null &&
+        primary.completed_at === null &&
+        typeof primary.ambiguity_reason === "string" &&
+        primary.ambiguity_reason.trim() &&
+        (primary.error === null ||
+          (typeof primary.error === "string" && primary.error.trim())),
+      `${contextLabel}: primary outcome должен оставаться строго unknown.`,
+    );
+
+    const retryAttempt = retry.retry_attempt;
+    assert(
+      retryAttempt &&
+        typeof retryAttempt === "object" &&
+        typeof retryAttempt.provider_job_id === "string" &&
+        retryAttempt.provider_job_id.trim() &&
+        retryAttempt.status === output.recorded_status &&
+        retryAttempt.provider_may_be_active === false &&
+        typeof retryAttempt.submitted_at === "string" &&
+        retryAttempt.submitted_at.trim() &&
+        typeof retryAttempt.completed_at === "string" &&
+        retryAttempt.completed_at.trim() &&
+        retryAttempt.error === output.error,
+      `${contextLabel}: retry-v1 не подтверждён как terminal selected attempt.`,
+    );
+
+    [primary, retryAttempt].forEach((attempt, index) => {
+      const attemptLabel = index === 0 ? "primary" : "retry-v1";
+      ["provider_run_id", "run_path", "prompt_path"].forEach((field) => {
+        assert(
+          typeof attempt[field] === "string" && attempt[field].trim(),
+          `${contextLabel} / ${attemptLabel}: в аудите нет ${field}.`,
+        );
+      });
+      ["run_sha256", "prompt_sha256", "request_sha256"].forEach((field) => {
+        assert(
+          typeof attempt[field] === "string" && /^[a-f0-9]{64}$/.test(attempt[field]),
+          `${contextLabel} / ${attemptLabel}: в аудите нет валидного ${field}.`,
+        );
+      });
+    });
+    assert(
+      output.provider_run_id === retryAttempt.provider_run_id &&
+        primary.provider_run_id !== retryAttempt.provider_run_id &&
+        primary.request_sha256 === retryAttempt.request_sha256,
+      `${contextLabel}: ambiguous primary/retry identity или immutable request не совпадает.`,
+    );
+    if (exhausted) {
+      assert(
+        output.status === PROVIDER_UNAVAILABLE_STATUS &&
+          output.recorded_status === "provider-failed" &&
+          output.selected_attempt === AMBIGUOUS_SUBMIT_RETRY_EXHAUSTED_SELECTION &&
+          typeof output.error === "string" &&
+          output.error.trim(),
+        `${contextLabel}: неверная exhausted ambiguous-submit identity.`,
+      );
+    } else {
+      assert(
+        ["succeeded", "verification-failed"].includes(output.status) &&
+          output.selected_attempt === AMBIGUOUS_SUBMIT_RETRY_SELECTION,
+        `${contextLabel}: неверная selected ambiguous-submit retry identity.`,
+      );
+    }
+    return retry;
+  };
+
+  const validateProviderUnavailableOutput = (articleNumber, output, contextLabel) => {
+    const label = `${articleNumber} / ${contextLabel}`;
+    assert(
+      output.video_path === null && output.media === null && output.contract_check === null,
+      `${label}: provider-unavailable output не должен содержать MP4 или media contract.`,
+    );
+    assert(
+      typeof output.positive_prompt === "string" && output.positive_prompt.trim(),
+      `${label}: пустой positive prompt.`,
+    );
+    validateAmbiguousSubmitRetry(output, label, { exhausted: true });
+    return {
+      ...output,
+      availableVideo: false,
+      providerFiltered: false,
+      providerUnavailable: true,
+    };
+  };
+
+  const validateNormalizedInputRetry = (
+    output,
+    image,
+    contextLabel,
+    { exhausted },
+  ) => {
+    const retry = output.retry;
+    assert(
+      retry &&
+        typeof retry === "object" &&
+        retry.retry_kind === NORMALIZED_INPUT_RETRY_KIND &&
+        retry.retry_number === 1 &&
+        retry.exhausted === exhausted &&
+        typeof retry.namespace === "string" &&
+        retry.namespace.trim() &&
+        retry.envelope_path === `${retry.namespace}/retry.json` &&
+        typeof retry.envelope_sha256 === "string" &&
+        /^[a-f0-9]{64}$/.test(retry.envelope_sha256),
+      `${contextLabel}: нет immutable normalized-input retry-v1 audit.`,
+    );
+    assert(
+      output.article_slug === "12-dream-island-7-fishek" &&
+        output.image_id === "08" &&
+        ["alibaba/wan-2.2", "alibaba/wan-2.7"].includes(output.model_id),
+      `${contextLabel}: normalized-input retry разрешён только для 12/08 Wan 2.2 или Wan 2.7.`,
+    );
+
+    const transform = retry.source_transform;
+    const original = transform?.original;
+    const normalized = transform?.normalized;
+    const delta = transform?.request_delta;
+    const expectedPointer =
+      output.model_id === "alibaba/wan-2.2"
+        ? "/input/image"
+        : "/frame_images/0/image_url/url";
+    assert(
+      transform &&
+        typeof transform === "object" &&
+        transform.strategy === "frozen-page-variant" &&
+        original &&
+        typeof original === "object" &&
+        normalized &&
+        typeof normalized === "object" &&
+        delta &&
+        typeof delta === "object",
+      `${contextLabel}: source_transform audit отсутствует.`,
+    );
+    assert(
+      typeof original.url === "string" &&
+        /^https:\/\//.test(original.url) &&
+        original.path === output.source_path &&
+        original.path === image.source_path &&
+        typeof original.sha256 === "string" &&
+        /^[a-f0-9]{64}$/.test(original.sha256) &&
+        original.sha256 === image.sha256 &&
+        Number.isInteger(original.bytes) &&
+        original.bytes > MAX_PROVIDER_SOURCE_BYTES &&
+        Number.isInteger(original.width) &&
+        original.width > 0 &&
+        original.width === image.width &&
+        Number.isInteger(original.height) &&
+        original.height > 0 &&
+        original.height === image.height &&
+        (!image.orig_url || image.orig_url === original.url),
+      `${contextLabel}: original source audit не совпадает с logical source.`,
+    );
+    assert(
+      typeof normalized.url === "string" &&
+        /^https:\/\/avatars\.mds\.yandex\.net\/.+\/scale_1200$/.test(
+          normalized.url,
+        ) &&
+        normalized.url !== original.url &&
+        typeof normalized.sha256 === "string" &&
+        /^[a-f0-9]{64}$/.test(normalized.sha256) &&
+        normalized.sha256 !== original.sha256 &&
+        Number.isInteger(normalized.bytes) &&
+        normalized.bytes > 0 &&
+        normalized.bytes <= MAX_PROVIDER_SOURCE_BYTES &&
+        normalized.bytes < original.bytes &&
+        Number.isInteger(normalized.width) &&
+        normalized.width > 0 &&
+        normalized.width <= original.width &&
+        Number.isInteger(normalized.height) &&
+        normalized.height > 0 &&
+        normalized.height <= original.height &&
+        (normalized.width < original.width || normalized.height < original.height) &&
+        typeof normalized.metadata_path === "string" &&
+        normalized.metadata_path.trim() &&
+        typeof normalized.metadata_sha256 === "string" &&
+        /^[a-f0-9]{64}$/.test(normalized.metadata_sha256),
+      `${contextLabel}: normalized source audit некорректен или превышает 20 MiB.`,
+    );
+    assert(
+      delta.json_pointer === expectedPointer &&
+        delta.from === original.url &&
+        delta.to === normalized.url &&
+        delta.changed_leaf_count === 1 &&
+        JSON.stringify(Object.keys(delta).sort()) ===
+          JSON.stringify(["changed_leaf_count", "from", "json_pointer", "to"]),
+      `${contextLabel}: request delta должен менять только model-specific image URL.`,
+    );
+
+    const primary = retry.primary_attempt;
+    const retryAttempt = retry.retry_attempt;
+    assert(
+      primary &&
+        typeof primary === "object" &&
+        primary.status === "provider-failed" &&
+        primary.provider_may_be_active === false &&
+        typeof primary.provider_job_id === "string" &&
+        primary.provider_job_id.trim() &&
+        typeof primary.error === "string" &&
+        primary.error.trim(),
+      `${contextLabel}: normalized-input primary failure audit некорректен.`,
+    );
+    if (output.model_id === "alibaba/wan-2.2") {
+      assert(
+        primary.recorded_status === "submit-unknown" &&
+          primary.recorded_provider_may_be_active === true &&
+          primary.submitted_at === null &&
+          primary.completed_at === null &&
+          ["provider_submit_time", "provider_scheduled_time", "provider_end_time"].every(
+            (field) => typeof primary[field] === "string" && primary[field].trim(),
+          ),
+        `${contextLabel}: Wan 2.2 nested provider terminal evidence отсутствует.`,
+      );
+    } else {
+      assert(
+        primary.recorded_status === "provider-failed" &&
+          primary.recorded_provider_may_be_active === false &&
+          typeof primary.submitted_at === "string" &&
+          primary.submitted_at.trim() &&
+          typeof primary.completed_at === "string" &&
+          primary.completed_at.trim(),
+        `${contextLabel}: Wan 2.7 primary terminal evidence отсутствует.`,
+      );
+    }
+    assert(
+      retryAttempt &&
+        typeof retryAttempt === "object" &&
+        retryAttempt.status === output.recorded_status &&
+        retryAttempt.provider_may_be_active === false &&
+        typeof retryAttempt.provider_job_id === "string" &&
+        retryAttempt.provider_job_id.trim() &&
+        typeof retryAttempt.submitted_at === "string" &&
+        retryAttempt.submitted_at.trim() &&
+        typeof retryAttempt.completed_at === "string" &&
+        retryAttempt.completed_at.trim() &&
+        retryAttempt.error === output.error,
+      `${contextLabel}: normalized-input retry-v1 не подтверждён как selected terminal attempt.`,
+    );
+    [primary, retryAttempt].forEach((attempt, index) => {
+      const attemptLabel = index === 0 ? "primary" : "retry-v1";
+      ["provider_run_id", "run_path", "prompt_path"].forEach((field) => {
+        assert(
+          typeof attempt[field] === "string" && attempt[field].trim(),
+          `${contextLabel} / ${attemptLabel}: в аудите нет ${field}.`,
+        );
+      });
+      ["run_sha256", "prompt_sha256", "request_sha256"].forEach((field) => {
+        assert(
+          typeof attempt[field] === "string" && /^[a-f0-9]{64}$/.test(attempt[field]),
+          `${contextLabel} / ${attemptLabel}: в аудите нет валидного ${field}.`,
+        );
+      });
+    });
+    assert(
+      output.provider_run_id === retryAttempt.provider_run_id &&
+        primary.provider_run_id !== retryAttempt.provider_run_id &&
+        primary.request_sha256 !== retryAttempt.request_sha256,
+      `${contextLabel}: normalized retry identity/request binding некорректен.`,
+    );
+    const expectedSelection = exhausted
+      ? NORMALIZED_INPUT_RETRY_EXHAUSTED_SELECTION
+      : NORMALIZED_INPUT_RETRY_SELECTION;
+    assert(
+      output.selected_attempt === expectedSelection &&
+        (exhausted
+          ? output.status === PROVIDER_UNAVAILABLE_STATUS &&
+            output.recorded_status === "provider-failed" &&
+            typeof output.error === "string" &&
+            output.error.trim()
+          : ["succeeded", "verification-failed"].includes(output.status)),
+      `${contextLabel}: normalized-input selected attempt identity некорректна.`,
+    );
+    return retry;
+  };
+
+  const validateNormalizedInputProviderUnavailable = (
+    articleNumber,
+    output,
+    image,
+    contextLabel,
+  ) => {
+    const label = `${articleNumber} / ${contextLabel}`;
+    assert(
+      output.video_path === null && output.media === null && output.contract_check === null,
+      `${label}: provider-unavailable normalized retry не должен содержать MP4.`,
+    );
+    assert(
+      typeof output.positive_prompt === "string" && output.positive_prompt.trim(),
+      `${label}: пустой positive prompt.`,
+    );
+    validateNormalizedInputRetry(output, image, label, { exhausted: true });
+    return {
+      ...output,
+      availableVideo: false,
+      providerFiltered: false,
+      providerUnavailable: true,
+      normalizedInputRetry: true,
+    };
   };
 
   const validateBaseManifest = (manifest) => {
@@ -360,8 +848,19 @@
     return manifest.articles.map((article) => {
       const outputsByModel = new Map(article.outputs.map((output) => [output.model_id, output]));
       const normalizedOutputs = MODEL_ORDER.map((modelId) => outputsByModel.get(modelId));
+      const identity = {
+        case_key: makeCaseKey(manifest.ticket, article.article_slug),
+        legacy_case_key: article.article_number,
+        sourceTicket: manifest.ticket,
+        sourceStatus: "Историческая выборка",
+      };
       if (!hasOwn(article, "comparison_outputs")) {
-        return { ...article, outputs: normalizedOutputs, displayOutputs: normalizedOutputs };
+        return {
+          ...article,
+          ...identity,
+          outputs: normalizedOutputs,
+          displayOutputs: normalizedOutputs,
+        };
       }
 
       const comparisonsByModel = new Map(
@@ -394,6 +893,7 @@
 
       return {
         ...article,
+        ...identity,
         outputs: normalizedOutputs,
         comparison_outputs: EXPERIMENT_TARGET_MODEL_ORDER.map((modelId) =>
           comparisonsByModel.get(modelId),
@@ -519,6 +1019,535 @@
       "Проверены не все 60 уникальных дополнительных MP4 и positive prompts.",
     );
     return normalizedArticles;
+  };
+
+  const validatePromopages10060Manifest = (manifest, historicalArticles) => {
+    assert(
+      manifest && typeof manifest === "object",
+      "Манифест PROMOPAGES-10060 имеет неверный формат.",
+    );
+    assert(manifest.schema_version === 1, "PROMOPAGES-10060 должен использовать schema_version 1.");
+    assert(
+      manifest.manifest_role === "promopages-10060-all-images",
+      "PROMOPAGES-10060 имеет неверный manifest_role.",
+    );
+    assert(manifest.ticket === "PROMOPAGES-10060", "PROMOPAGES-10060 имеет неверный ticket.");
+    assert(
+      manifest.agent_id === "clipmaker-lite",
+      "PROMOPAGES-10060 должен быть подготовлен clipmaker-lite.",
+    );
+    assert(
+      JSON.stringify(manifest.models) === JSON.stringify(MODEL_ORDER),
+      "PROMOPAGES-10060 должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
+    );
+    assert(
+      manifest.article_count === EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT,
+      `PROMOPAGES-10060 должен содержать ${EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT} доступных статей.`,
+    );
+    assert(
+      manifest.image_count === EXPECTED_PROMOPAGES_10060_IMAGE_COUNT,
+      `PROMOPAGES-10060 должен содержать все ${EXPECTED_PROMOPAGES_10060_IMAGE_COUNT} изображений.`,
+    );
+    assert(
+      manifest.expected_outputs === EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
+      `PROMOPAGES-10060 должен содержать ${EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT} роликов.`,
+    );
+    const providerFilteredOutputCount = manifest.provider_filtered_output_count;
+    const providerUnavailableOutputCount = manifest.provider_unavailable_output_count;
+    assert(
+      Number.isInteger(providerFilteredOutputCount) &&
+        providerFilteredOutputCount >= 0 &&
+        Number.isInteger(providerUnavailableOutputCount) &&
+        providerUnavailableOutputCount >= 0 &&
+        manifest.accepted_output_count ===
+          EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT -
+            providerFilteredOutputCount -
+            providerUnavailableOutputCount &&
+        manifest.terminal_accounted_output_count ===
+          EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
+      "PROMOPAGES-10060 имеет неверные accepted/terminal/no-media счётчики.",
+    );
+    assert(
+      manifest.status_summary &&
+        typeof manifest.status_summary === "object" &&
+        manifest.status_summary[PROVIDER_FILTERED_STATUS] ===
+          providerFilteredOutputCount &&
+        (manifest.status_summary[PROVIDER_UNAVAILABLE_STATUS] ?? 0) ===
+          providerUnavailableOutputCount &&
+        Object.values(manifest.status_summary).every(
+          (count) => Number.isInteger(count) && count >= 0,
+        ) &&
+        Object.values(manifest.status_summary).reduce((sum, count) => sum + count, 0) ===
+          EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT,
+      "PROMOPAGES-10060 status_summary не совпадает с 276 logical outputs.",
+    );
+    assert(
+      manifest.acceptance_policy?.requires_mp4_and_media === true &&
+        manifest.acceptance_policy?.provider_filtered_requires_exhausted_retry_v1 === true &&
+        manifest.acceptance_policy
+          ?.provider_unavailable_requires_ambiguous_submit_retry_v1 === true &&
+        Array.isArray(
+          manifest.acceptance_policy?.provider_unavailable_requires_retry_v1,
+        ) &&
+        manifest.acceptance_policy.provider_unavailable_requires_retry_v1.length === 2 &&
+        [AMBIGUOUS_SUBMIT_RETRY_KIND, NORMALIZED_INPUT_RETRY_KIND].every((retryKind) =>
+          manifest.acceptance_policy.provider_unavailable_requires_retry_v1.includes(
+            retryKind,
+          ),
+        ) &&
+        Array.isArray(manifest.acceptance_policy?.terminal_accounted_without_media) &&
+        manifest.acceptance_policy.terminal_accounted_without_media.length === 2 &&
+        [PROVIDER_FILTERED_STATUS, PROVIDER_UNAVAILABLE_STATUS].every((status) =>
+          manifest.acceptance_policy.terminal_accounted_without_media.includes(status),
+        ),
+      "PROMOPAGES-10060 acceptance policy не фиксирует audited no-media outputs.",
+    );
+    assert(
+      Array.isArray(manifest.articles) &&
+        manifest.articles.length === manifest.article_count,
+      "Число статей PROMOPAGES-10060 не совпадает с article_count.",
+    );
+
+    const knownSourcePaths = new Set(
+      historicalArticles.flatMap((article) =>
+        article.images.map((record) => record.image.source_path),
+      ),
+    );
+    const usedVideoPaths = new Set(
+      historicalArticles.flatMap((article) =>
+        article.images.flatMap((record) => [
+          ...(record.displayOutputs || record.outputs),
+          ...(record.loopExperiment?.outputs || []),
+          ...(record.smoothExperiment?.outputs || []),
+        ]).map((output) => output.video_path),
+      ),
+    );
+    const articleNumbers = new Set();
+    const articleSlugs = new Set();
+    const nestedOutputs = [];
+    let previousArticleNumber = 0;
+    let imageCount = 0;
+    let outputCount = 0;
+    let filteredOutputCount = 0;
+    let unavailableProviderOutputCount = 0;
+    let normalizedInputRetryOutputCount = 0;
+    let normalizedInputAssetIdentity = null;
+
+    const articles = manifest.articles.map((article) => {
+      assert(
+        typeof article.article_number === "string" && /^\d{2}$/.test(article.article_number),
+        "PROMOPAGES-10060 содержит некорректный локальный номер статьи.",
+      );
+      const numericArticleNumber = Number(article.article_number);
+      assert(
+        numericArticleNumber > previousArticleNumber,
+        `Нарушен порядок PROMOPAGES-10060 около статьи ${article.article_number}.`,
+      );
+      previousArticleNumber = numericArticleNumber;
+      assert(
+        !articleNumbers.has(article.article_number),
+        `Локальный номер PROMOPAGES-10060 повторяется: ${article.article_number}.`,
+      );
+      articleNumbers.add(article.article_number);
+      assert(
+        typeof article.article_slug === "string" && article.article_slug.trim(),
+        `У PROMOPAGES-10060/${article.article_number} нет slug.`,
+      );
+      assert(
+        !articleSlugs.has(article.article_slug),
+        `Slug PROMOPAGES-10060 повторяется: ${article.article_slug}.`,
+      );
+      articleSlugs.add(article.article_slug);
+      assert(
+        typeof article.title === "string" && article.title.trim(),
+        `У PROMOPAGES-10060/${article.article_number} нет заголовка.`,
+      );
+      assert(
+        typeof article.url === "string" && /^https:\/\//.test(article.url),
+        `У PROMOPAGES-10060/${article.article_number} нет URL статьи.`,
+      );
+      assert(
+        typeof article.context_path === "string" && article.context_path.trim(),
+        `У PROMOPAGES-10060/${article.article_number} нет пути к контексту.`,
+      );
+      assert(
+        Array.isArray(article.images) && article.images.length > 0,
+        `У PROMOPAGES-10060/${article.article_number} нет изображений.`,
+      );
+      assert(
+        article.image_count === article.images.length,
+        `У PROMOPAGES-10060/${article.article_number} image_count не совпадает с images[].`,
+      );
+
+      const imageIds = new Set();
+
+      const images = article.images.map((record) => {
+        const image = record?.image;
+        assert(
+          image && typeof image === "object" && image.image_id && image.source_path,
+          `У PROMOPAGES-10060/${article.article_number} нет данных изображения.`,
+        );
+        assert(
+          typeof image.image_id === "string" && /^\d{2}$/.test(image.image_id),
+          `У PROMOPAGES-10060/${article.article_number} некорректный image_id.`,
+        );
+        assert(
+          !imageIds.has(image.image_id),
+          `У PROMOPAGES-10060/${article.article_number} повторяется image_id ${image.image_id}.`,
+        );
+        imageIds.add(image.image_id);
+        assert(
+          !hasOwn(image, "delivery") || image.delivery === "repository-raw",
+          `Исходник PROMOPAGES-10060/${article.article_number}/${image.image_id} имеет неверный delivery.`,
+        );
+        assert(
+          typeof image.manifest_file_path === "string" && image.manifest_file_path.trim(),
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет manifest_file_path.`,
+        );
+        assert(
+          Number(image.width) > 0 && Number(image.height) > 0,
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет геометрии.`,
+        );
+        assert(
+          typeof image.sha256 === "string" && /^[a-f0-9]{64}$/.test(image.sha256),
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет SHA-256.`,
+        );
+        assert(
+          !knownSourcePaths.has(image.source_path),
+          `Путь исходника PROMOPAGES-10060 уже использован: ${image.source_path}.`,
+        );
+        knownSourcePaths.add(image.source_path);
+
+        const planning = record.lite_planning;
+        assert(
+          planning &&
+            typeof planning.run_id === "string" &&
+            planning.run_id.trim() &&
+            typeof planning.result_path === "string" &&
+            planning.result_path.trim() &&
+            planning.structured_intent &&
+            typeof planning.structured_intent === "object",
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет Lite planning.`,
+        );
+        assert(
+          planning.provenance?.verified === true &&
+            planning.provenance?.agent_id === "clipmaker-lite",
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} не подтверждён Lite provenance.`,
+        );
+        assert(
+          Array.isArray(record.outputs) && record.outputs.length === MODEL_ORDER.length,
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} должно быть три ролика.`,
+        );
+        const outputsByModel = new Map(record.outputs.map((output) => [output.model_id, output]));
+        assert(
+          outputsByModel.size === MODEL_ORDER.length,
+          `У PROMOPAGES-10060/${article.article_number}/${image.image_id} повторяются модели.`,
+        );
+        const outputs = MODEL_ORDER.map((modelId) => {
+          const output = outputsByModel.get(modelId);
+          assert(
+            output,
+            `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет ${modelId}.`,
+          );
+          assert(
+            !hasOwn(output, "delivery") || output.delivery === "repository-raw",
+            `У PROMOPAGES-10060/${article.article_number}/${image.image_id}/${modelId} неверный delivery.`,
+          );
+          assert(
+            output.article_slug === article.article_slug &&
+              output.image_id === image.image_id,
+            `У PROMOPAGES-10060/${article.article_number}/${image.image_id}/${modelId} неверный output key.`,
+          );
+          let normalizedOutput;
+          if (output.status === PROVIDER_FILTERED_STATUS) {
+            normalizedOutput = validateProviderFilteredOutput(
+              articleIdentityLabel({
+                sourceTicket: manifest.ticket,
+                article_number: article.article_number,
+              }),
+              output,
+              `${image.image_id} · ${modelId}`,
+            );
+            filteredOutputCount += 1;
+          } else if (output.status === PROVIDER_UNAVAILABLE_STATUS) {
+            if (output.retry?.retry_kind === NORMALIZED_INPUT_RETRY_KIND) {
+              normalizedOutput = validateNormalizedInputProviderUnavailable(
+                articleIdentityLabel({
+                  sourceTicket: manifest.ticket,
+                  article_number: article.article_number,
+                }),
+                output,
+                image,
+                `${image.image_id} · ${modelId}`,
+              );
+              normalizedInputRetryOutputCount += 1;
+            } else {
+              normalizedOutput = validateProviderUnavailableOutput(
+                articleIdentityLabel({
+                  sourceTicket: manifest.ticket,
+                  article_number: article.article_number,
+                }),
+                output,
+                `${image.image_id} · ${modelId}`,
+              );
+            }
+            unavailableProviderOutputCount += 1;
+          } else {
+            assert(
+              ["succeeded", "verification-failed"].includes(output.status),
+              `У PROMOPAGES-10060/${article.article_number}/${image.image_id}/${modelId} неверный статус.`,
+            );
+            validateOutput(
+              articleIdentityLabel({
+                sourceTicket: manifest.ticket,
+                article_number: article.article_number,
+              }),
+              output,
+              usedVideoPaths,
+              `${image.image_id} · ${modelId}`,
+            );
+            const hasAmbiguousRetryMarker =
+              (typeof output.selected_attempt === "string" &&
+                output.selected_attempt.startsWith(AMBIGUOUS_SUBMIT_RETRY_SELECTION)) ||
+              output.retry?.retry_kind === AMBIGUOUS_SUBMIT_RETRY_KIND;
+            if (hasAmbiguousRetryMarker) {
+              validateAmbiguousSubmitRetry(
+                output,
+                `${articleIdentityLabel({
+                  sourceTicket: manifest.ticket,
+                  article_number: article.article_number,
+                })} / ${image.image_id} · ${modelId}`,
+                { exhausted: false },
+              );
+            }
+            const hasNormalizedInputRetryMarker =
+              (typeof output.selected_attempt === "string" &&
+                output.selected_attempt.startsWith(NORMALIZED_INPUT_RETRY_SELECTION)) ||
+              output.retry?.retry_kind === NORMALIZED_INPUT_RETRY_KIND;
+            if (hasNormalizedInputRetryMarker) {
+              validateNormalizedInputRetry(
+                output,
+                image,
+                `${articleIdentityLabel({
+                  sourceTicket: manifest.ticket,
+                  article_number: article.article_number,
+                })} / ${image.image_id} · ${modelId}`,
+                { exhausted: false },
+              );
+              normalizedInputRetryOutputCount += 1;
+            }
+            normalizedOutput = {
+              ...output,
+              availableVideo: true,
+              providerFiltered: false,
+              providerUnavailable: false,
+              normalizedInputRetry: hasNormalizedInputRetryMarker,
+            };
+          }
+          if (normalizedOutput.normalizedInputRetry === true) {
+            const transform = normalizedOutput.retry.source_transform;
+            const assetIdentity = JSON.stringify({
+              strategy: transform.strategy,
+              original: transform.original,
+              normalized: transform.normalized,
+            });
+            assert(
+              normalizedInputAssetIdentity === null ||
+                normalizedInputAssetIdentity === assetIdentity,
+              "PROMOPAGES-10060 normalized-input retries должны использовать один frozen asset.",
+            );
+            normalizedInputAssetIdentity = assetIdentity;
+          }
+          nestedOutputs.push(output);
+          outputCount += 1;
+          return { ...normalizedOutput, delivery: "repository-raw" };
+        });
+
+        imageCount += 1;
+        return {
+          ...record,
+          image: { ...image, delivery: "repository-raw" },
+          outputs,
+          displayOutputs: outputs,
+        };
+      });
+
+      const hasWarnings = images.some((record) =>
+        record.outputs.some((output) => output.status === "verification-failed"),
+      );
+      const unavailableOutputCount = images.reduce(
+        (total, record) =>
+          total + record.outputs.filter((output) => output.availableVideo === false).length,
+        0,
+      );
+      return {
+        ...article,
+        case_key: makeCaseKey(manifest.ticket, article.article_slug),
+        sourceTicket: manifest.ticket,
+        sourceStatus: unavailableOutputCount
+          ? `Готово частично · ${images.length} изобр. · ${unavailableOutputCount} видео недоступно`
+          : hasWarnings
+            ? `Готово с media-предупреждениями · ${images.length} изобр.`
+            : `Готово к просмотру · ${images.length} изобр.`,
+        images,
+      };
+    });
+
+    assert(
+      JSON.stringify([...articleNumbers]) ===
+        JSON.stringify(EXPECTED_PROMOPAGES_10060_ARTICLE_NUMBERS),
+      "PROMOPAGES-10060 должен содержать доступные статьи 01 и 03–14.",
+    );
+
+    assert(
+      imageCount === manifest.image_count,
+      `PROMOPAGES-10060 содержит изображений: ${imageCount}, заявлено ${manifest.image_count}.`,
+    );
+    assert(
+      outputCount === manifest.expected_outputs &&
+        manifest.expected_outputs === manifest.image_count * MODEL_ORDER.length,
+      `PROMOPAGES-10060 содержит роликов: ${outputCount}, заявлено ${manifest.expected_outputs}.`,
+    );
+    assert(
+      filteredOutputCount === providerFilteredOutputCount,
+      `PROMOPAGES-10060 provider-filtered outputs: ${filteredOutputCount}, заявлено ${providerFilteredOutputCount}.`,
+    );
+    assert(
+      unavailableProviderOutputCount === providerUnavailableOutputCount,
+      `PROMOPAGES-10060 provider-unavailable outputs: ${unavailableProviderOutputCount}, заявлено ${providerUnavailableOutputCount}.`,
+    );
+    if (normalizedInputRetryOutputCount > 0) {
+      const retryCost = manifest.cost;
+      const retryPolicy = manifest.generation_policy?.normalized_input_retry;
+      assert(
+        retryCost?.normalized_input_retry_version === 1 &&
+          typeof retryCost.normalized_input_retry_accounting_cost_usd === "number" &&
+          Number.isFinite(retryCost.normalized_input_retry_accounting_cost_usd) &&
+          retryCost.normalized_input_retry_accounting_cost_usd > 0 &&
+          retryCost.normalized_input_retry_reservations ===
+            normalizedInputRetryOutputCount,
+        "PROMOPAGES-10060 normalized-input retry cost accounting не совпадает с outputs.",
+      );
+      assert(
+        retryPolicy?.version === 1 &&
+          typeof retryPolicy.namespace === "string" &&
+          retryPolicy.namespace.trim() &&
+          typeof retryPolicy.shared_asset_namespace === "string" &&
+          retryPolicy.shared_asset_namespace.trim() &&
+          retryPolicy.eligible_source?.article_slug ===
+            "12-dream-island-7-fishek" &&
+          retryPolicy.eligible_source?.image_id === "08" &&
+          JSON.stringify(retryPolicy.models) ===
+            JSON.stringify(["alibaba/wan-2.2", "alibaba/wan-2.7"]) &&
+          retryPolicy.explicit_operator_command_required === true &&
+          retryPolicy.maximum_new_paid_submissions_per_eligible_output === 1 &&
+          retryPolicy.retry2_forbidden === true &&
+          retryPolicy.automatic_paid_retries === false &&
+          retryPolicy.fallback === false &&
+          retryPolicy.primary_receipts_immutable === true &&
+          retryPolicy.request_delta_only_image_pointer === true,
+        "PROMOPAGES-10060 normalized-input generation policy некорректна.",
+      );
+      articles.forEach((article) => {
+        article.images.forEach((record) => {
+          record.outputs
+            .filter((output) => output.normalizedInputRetry === true)
+            .forEach((output) => {
+              assert(
+                output.retry.namespace.startsWith(`${retryPolicy.namespace}/`) &&
+                  output.retry.source_transform.normalized.metadata_path.startsWith(
+                    `${retryPolicy.shared_asset_namespace}/`,
+                  ),
+                "PROMOPAGES-10060 normalized-input retry вышел за разрешённые namespaces.",
+              );
+            });
+        });
+      });
+    }
+    assert(
+      Array.isArray(manifest.outputs) && manifest.outputs.length === outputCount,
+      "Плоский outputs PROMOPAGES-10060 не совпадает с вложенными роликами.",
+    );
+    const outputKey = (output) =>
+      `${output?.article_slug ?? ""}\u0000${output?.image_id ?? ""}\u0000${output?.model_id ?? ""}`;
+    const nestedOutputKeys = new Set(nestedOutputs.map(outputKey));
+    const flatOutputKeys = new Set(manifest.outputs.map(outputKey));
+    assert(
+      flatOutputKeys.size === outputCount &&
+        nestedOutputKeys.size === outputCount &&
+        [...flatOutputKeys].every((key) => nestedOutputKeys.has(key)),
+      "Плоский outputs PROMOPAGES-10060 ссылается не на вложенные logical outputs.",
+    );
+
+    const nestedByKey = new Map(nestedOutputs.map((output) => [outputKey(output), output]));
+    manifest.outputs.forEach((output) => {
+      const nestedOutput = nestedByKey.get(outputKey(output));
+      assert(
+        nestedOutput &&
+          output.status === nestedOutput.status &&
+          output.video_path === nestedOutput.video_path &&
+          output.provider_run_id === nestedOutput.provider_run_id &&
+          output.recorded_status === nestedOutput.recorded_status &&
+          output.selected_attempt === nestedOutput.selected_attempt &&
+          output.error === nestedOutput.error &&
+          JSON.stringify(output.media ?? null) ===
+            JSON.stringify(nestedOutput.media ?? null) &&
+          JSON.stringify(output.contract_check ?? null) ===
+            JSON.stringify(nestedOutput.contract_check ?? null) &&
+          JSON.stringify(output.retry ?? null) === JSON.stringify(nestedOutput.retry ?? null),
+        "Плоский output PROMOPAGES-10060 не совпадает с вложенным статусом или retry audit.",
+      );
+    });
+
+    const unavailableArticles = manifest.unavailable_articles ?? [];
+    assert(
+      Array.isArray(unavailableArticles) && unavailableArticles.length === 1,
+      "PROMOPAGES-10060 должен содержать одну недоступную статью.",
+    );
+    const unavailableNumbers = new Set();
+    const unavailableSlugs = new Set();
+    unavailableArticles.forEach((article) => {
+      assert(
+        typeof article.article_number === "string" && /^\d{2}$/.test(article.article_number),
+        "Недоступная статья PROMOPAGES-10060 имеет неверный номер.",
+      );
+      assert(
+        typeof article.article_slug === "string" && article.article_slug.trim(),
+        "Недоступная статья PROMOPAGES-10060 не имеет slug.",
+      );
+      assert(
+        typeof article.url === "string" && /^https:\/\//.test(article.url),
+        "Недоступная статья PROMOPAGES-10060 не имеет URL.",
+      );
+      assert(
+        article.status === "source-unavailable" &&
+          typeof article.error === "string" &&
+          article.error.trim(),
+        `Недоступная статья PROMOPAGES-10060/${article.article_number} не объясняет статус.`,
+      );
+      assert(
+        !articleNumbers.has(article.article_number) &&
+          !unavailableNumbers.has(article.article_number) &&
+          !articleSlugs.has(article.article_slug) &&
+          !unavailableSlugs.has(article.article_slug),
+        "Недоступная статья PROMOPAGES-10060 дублирует доступную или другую недоступную статью.",
+      );
+      unavailableNumbers.add(article.article_number);
+      unavailableSlugs.add(article.article_slug);
+    });
+    assert(
+      unavailableNumbers.has(EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER),
+      "Недоступной статьёй PROMOPAGES-10060 должна быть статья 02.",
+    );
+
+    return {
+      articles,
+      unavailableArticles,
+      filteredOutputCount,
+      providerUnavailableOutputCount,
+      unavailableOutputCount: filteredOutputCount + unavailableProviderOutputCount,
+      normalizedInputRetryOutputCount,
+    };
   };
 
   const validateLoopExperiment = (loopExperiment, usedVideoPaths) => {
@@ -1202,6 +2231,10 @@
     return [
       {
         ...article,
+        case_key: makeCaseKey(manifest.ticket, article.article_slug),
+        legacy_case_key: article.article_number,
+        sourceTicket: manifest.ticket,
+        sourceStatus: "Исследовательский кейс",
         images: [
           {
             ...record,
@@ -1239,19 +2272,11 @@
       };
       return {
         ...article,
+        sourceTicket: `${article.sourceTicket} + PROMOPAGES-9930`,
         images: [firstImage, ...additional.images],
       };
     });
     merged.push(...case21Articles);
-    assert(
-      merged.length === EXPECTED_TOTAL_ARTICLE_COUNT,
-      `После объединения найдено кейсов: ${merged.length}, ожидалось 21.`,
-    );
-    const totalImages = merged.reduce((sum, article) => sum + article.images.length, 0);
-    assert(
-      totalImages === EXPECTED_UNIQUE_IMAGE_COUNT,
-      `После объединения найдено уникальных изображений: ${totalImages}, ожидалось 41.`,
-    );
     const canonicalOutputCount = merged.reduce(
       (articleTotal, article) =>
         articleTotal +
@@ -1261,10 +2286,6 @@
         ),
       0,
     );
-    assert(
-      canonicalOutputCount === EXPECTED_CANONICAL_OUTPUT_COUNT,
-      `После объединения найдено canonical роликов: ${canonicalOutputCount}, ожидалось 123.`,
-    );
     const canonicalVideoPaths = new Set(
       merged.flatMap((article) =>
         article.images.flatMap((imageRecord) =>
@@ -1273,10 +2294,84 @@
       ),
     );
     assert(
-      canonicalVideoPaths.size === EXPECTED_CANONICAL_OUTPUT_COUNT,
+      canonicalVideoPaths.size === canonicalOutputCount,
       "После объединения canonical MP4 должны быть уникальны.",
     );
+    const caseKeys = new Set(merged.map((article) => article.case_key));
+    assert(caseKeys.size === merged.length, "После объединения case key должны быть уникальны.");
     return merged;
+  };
+
+  const mergeArticleCollections = (historicalArticles, reviewArticles) => {
+    const merged = [...historicalArticles, ...reviewArticles];
+    const caseKeys = new Set();
+    merged.forEach((article) => {
+      assert(
+        typeof article.case_key === "string" && article.case_key.trim(),
+        `У статьи ${article.article_slug ?? "—"} нет collision-safe case key.`,
+      );
+      assert(!caseKeys.has(article.case_key), `Case key повторяется: ${article.case_key}.`);
+      caseKeys.add(article.case_key);
+      assert(
+        Array.isArray(article.images) && article.images.length > 0,
+        `У ${article.case_key} нет изображений для демо.`,
+      );
+    });
+    return merged;
+  };
+
+  const datasetCounts = (items) => {
+    const videoPaths = new Set();
+    let imageCount = 0;
+    let outputCount = 0;
+    items.forEach((article) => {
+      imageCount += article.images.length;
+      article.images.forEach((record) => {
+        const outputs = [
+          ...record.outputs,
+          ...(record.research_outputs || []),
+          ...(record.loopExperiment?.outputs || []),
+          ...(record.smoothExperiment?.outputs || []),
+        ];
+        outputCount += outputs.length;
+        outputs.forEach((output) => {
+          if (typeof output.video_path === "string" && output.video_path) {
+            videoPaths.add(output.video_path);
+          }
+        });
+      });
+    });
+    return {
+      articleCount: items.length,
+      imageCount,
+      // Keep the existing property for the summary binding, but count logical
+      // outputs: a terminal provider-filtered result is still one of the 276
+      // requested model outputs even though it has no MP4.
+      videoCount: outputCount,
+      availableVideoCount: videoPaths.size,
+      unavailableOutputCount: outputCount - videoPaths.size,
+    };
+  };
+
+  const availableOutputCount = (outputs) =>
+    outputs.filter(
+      (output) => typeof output.video_path === "string" && output.video_path.trim(),
+    ).length;
+
+  const resolveRequestedArticleIndex = (items, requestedCase) => {
+    if (!requestedCase) return -1;
+    const exactIndex = items.findIndex((article) => article.case_key === requestedCase);
+    if (exactIndex >= 0) return exactIndex;
+    return items.findIndex(
+      (article) => article.legacy_case_key === requestedCase,
+    );
+  };
+
+  const resolveRequestedImageIndex = (article, requestedImageId) => {
+    if (!requestedImageId) return -1;
+    return article.images.findIndex(
+      (record) => record.image.image_id === requestedImageId,
+    );
   };
 
   const renderFacts = (facts) => `
@@ -1298,8 +2393,9 @@
     const image = imageRecord.image;
     const imageUrl = asAssetUrl(image.source_path, image.delivery);
     const imageFile = image.file || image.source_path.split("/").pop();
-    const panelId = `sourcePanel-${article.article_number}-${image.image_id}`;
-    const titleId = `sourceTitle-${article.article_number}-${image.image_id}`;
+    const caseId = asDomIdPart(article.case_key);
+    const panelId = `sourcePanel-${caseId}-${image.image_id}`;
+    const titleId = `sourceTitle-${caseId}-${image.image_id}`;
 
     return `
       <article
@@ -1334,9 +2430,371 @@
         </div>
         ${renderFacts([
           ["Файл", imageFile],
+          ["Источник", article.sourceTicket],
+          ["Статус", article.sourceStatus],
           ["Позиция", image.role || "изображение статьи"],
           ["Геометрия", `${image.width}×${image.height}`],
         ])}
+      </article>
+    `;
+  };
+
+  const providerAuditValue = (value, fallback = "Не зафиксировано") =>
+    typeof value === "string" && value.trim() ? value : fallback;
+
+  const renderProviderAttemptAudit = (label, attempt) => `
+    <li class="providerAttempt">
+      <div class="providerAttemptHeader">
+        <strong>${escapeHtml(label)}</strong>
+        <span>${escapeHtml(attempt.status)}</span>
+      </div>
+      <p class="providerAttemptError">${escapeHtml(
+        attempt.error || attempt.ambiguity_reason || "Provider detail не зафиксирован.",
+      )}</p>
+      <dl class="providerAttemptFacts">
+        <div>
+          <dt>Provider job</dt>
+          <dd><code>${escapeHtml(providerAuditValue(attempt.provider_job_id, "Не выдан"))}</code></dd>
+        </div>
+        <div>
+          <dt>Provider run</dt>
+          <dd><code>${escapeHtml(attempt.provider_run_id)}</code></dd>
+        </div>
+        <div>
+          <dt>Отправлено</dt>
+          <dd>${escapeHtml(providerAuditValue(attempt.submitted_at || attempt.provider_submit_time))}</dd>
+        </div>
+        <div>
+          <dt>Завершено</dt>
+          <dd>${escapeHtml(providerAuditValue(attempt.completed_at || attempt.provider_end_time))}</dd>
+        </div>
+        ${attempt.outcome_unknown === true
+          ? "<div><dt>Provider outcome</dt><dd>Unknown · provider может оставаться активным</dd></div>"
+          : ""}
+      </dl>
+      <details class="providerAttemptTechnical">
+        <summary>Техническая привязка попытки</summary>
+        <dl>
+          <div><dt>Run receipt</dt><dd><code>${escapeHtml(attempt.run_path)}</code></dd></div>
+          <div><dt>Run SHA-256</dt><dd><code>${escapeHtml(attempt.run_sha256)}</code></dd></div>
+          <div><dt>Prompt receipt</dt><dd><code>${escapeHtml(attempt.prompt_path)}</code></dd></div>
+          <div><dt>Prompt SHA-256</dt><dd><code>${escapeHtml(attempt.prompt_sha256)}</code></dd></div>
+          <div><dt>Request SHA-256</dt><dd><code>${escapeHtml(attempt.request_sha256)}</code></dd></div>
+        </dl>
+      </details>
+    </li>
+  `;
+
+  const renderNormalizedInputAudit = (retry) => {
+    const transform = retry.source_transform;
+    const original = transform.original;
+    const normalized = transform.normalized;
+    const delta = transform.request_delta;
+    return `
+      <section class="providerFilterAudit" aria-label="Аудит нормализации provider input">
+        <div class="providerFilterAuditHeader">
+          <p class="panelKicker">Input audit</p>
+          <h4>Исходник нормализован из-за размера больше 20 MiB</h4>
+          <p>
+            Prompt и модель сохранены. В provider request изменён ровно один leaf:
+            ${escapeHtml(delta.json_pointer)}.
+          </p>
+        </div>
+        ${renderFacts([
+          ["Original", `${formatMiB(original.bytes)} · ${original.width}×${original.height}`],
+          ["Normalized", `${formatMiB(normalized.bytes)} · ${normalized.width}×${normalized.height}`],
+          ["Request delta", "1 image URL leaf"],
+        ])}
+        <details class="providerAttemptTechnical">
+          <summary>Техническая привязка normalized input</summary>
+          <dl>
+            <div><dt>Original URL</dt><dd><code>${escapeHtml(original.url)}</code></dd></div>
+            <div><dt>Original SHA-256</dt><dd><code>${escapeHtml(original.sha256)}</code></dd></div>
+            <div><dt>Normalized URL</dt><dd><code>${escapeHtml(normalized.url)}</code></dd></div>
+            <div><dt>Normalized SHA-256</dt><dd><code>${escapeHtml(normalized.sha256)}</code></dd></div>
+            <div><dt>Metadata</dt><dd><code>${escapeHtml(normalized.metadata_path)}</code></dd></div>
+            <div><dt>Metadata SHA-256</dt><dd><code>${escapeHtml(normalized.metadata_sha256)}</code></dd></div>
+            <div><dt>Envelope</dt><dd><code>${escapeHtml(retry.envelope_path)}</code></dd></div>
+            <div><dt>Envelope SHA-256</dt><dd><code>${escapeHtml(retry.envelope_sha256)}</code></dd></div>
+          </dl>
+        </details>
+      </section>
+    `;
+  };
+
+  const renderProviderFilteredModel = (
+    article,
+    imageRecord,
+    output,
+    modelIndex,
+    { idPrefix, headingLevel },
+  ) => {
+    const presentation = MODEL_PRESENTATION[output.model_id];
+    const titleId = `${idPrefix}-${asDomIdPart(article.case_key)}-${imageRecord.image.image_id}-${modelIndex + 1}`;
+    const headingTag = headingLevel === 4 ? "h4" : "h3";
+    const retry = output.retry;
+    const primaryAttempt = retry.primary_attempt;
+    const retryAttempt = retry.retry_attempt;
+    const sourceAspect = `${imageRecord.image.width} / ${imageRecord.image.height}`;
+    const negativePromptDetails =
+      typeof output.negative_prompt === "string" && output.negative_prompt.trim()
+        ? `<details class="promptDetails negativePromptDetails">
+            <summary>Дословный negative prompt</summary>
+            <p class="promptText" lang="en">${escapeHtml(output.negative_prompt)}</p>
+          </details>`
+        : "";
+
+    return `
+      <article
+        class="mediaPanel modelPanel providerFilteredPanel"
+        data-output-kind="provider-filtered"
+        data-provider-filtered="true"
+        aria-labelledby="${titleId}"
+      >
+        <div
+          class="mediaStage providerFilteredStage"
+          style="--media-aspect: ${sourceAspect}"
+          role="status"
+          aria-label="${escapeHtml(presentation.name)}: видео недоступно после двух provider-попыток"
+        >
+          <div class="providerFilteredMessage">
+            <p class="providerFilteredKicker">Видео недоступно</p>
+            <strong>Две попытки завершились без MP4</strong>
+            <p>
+              Провайдер сообщил, что результат мог быть отфильтрован. Подмена моделью
+              или скрытый третий запуск не выполнялись.
+            </p>
+          </div>
+        </div>
+
+        <div class="panelIdentity">
+          <div>
+            <p class="contractWarning providerFilteredWarning">
+              Terminal provider-filtered · primary + immutable retry-v1 exhausted
+            </p>
+            <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
+            <${headingTag} id="${titleId}">${escapeHtml(presentation.name)}</${headingTag}>
+            <code class="modelId">${escapeHtml(output.model_id)}</code>
+          </div>
+          <strong class="modelCost providerFilteredCost">
+            Недоступно
+            <span>после 2 попыток</span>
+          </strong>
+        </div>
+
+        ${renderFacts([
+          ["Статус", output.status],
+          ["Recorded status", output.recorded_status],
+          ["Выбрана", "terminal retry-v1 · exhausted"],
+          ["Видео", "MP4 не получен"],
+        ])}
+
+        <section class="providerFilterAudit" aria-label="Аудит двух provider-попыток">
+          <div class="providerFilterAuditHeader">
+            <p class="panelKicker">Provider audit</p>
+            <h4>Основная попытка и retry-v1</h4>
+            <p>
+              Обе попытки terminal; immutable request SHA-256 совпадает. Ошибки
+              сохранены дословно из provider receipts.
+            </p>
+          </div>
+          <ol class="providerAttemptList">
+            ${renderProviderAttemptAudit("Основная попытка", primaryAttempt)}
+            ${renderProviderAttemptAudit("Retry-v1 · исчерпан", retryAttempt)}
+          </ol>
+          <dl class="providerFilterBinding">
+            <div><dt>Retry namespace</dt><dd><code>${escapeHtml(retry.namespace)}</code></dd></div>
+            <div><dt>Envelope</dt><dd><code>${escapeHtml(retry.envelope_path)}</code></dd></div>
+            <div><dt>Immutable request SHA-256</dt><dd><code>${escapeHtml(retryAttempt.request_sha256)}</code></dd></div>
+          </dl>
+        </section>
+
+        <details class="promptDetails">
+          <summary>Дословный positive prompt</summary>
+          <p class="promptText" lang="en">${escapeHtml(output.positive_prompt)}</p>
+        </details>
+        ${negativePromptDetails}
+      </article>
+    `;
+  };
+
+  const renderProviderUnavailableModel = (
+    article,
+    imageRecord,
+    output,
+    modelIndex,
+    { idPrefix, headingLevel },
+  ) => {
+    const presentation = MODEL_PRESENTATION[output.model_id];
+    const titleId = `${idPrefix}-${asDomIdPart(article.case_key)}-${imageRecord.image.image_id}-${modelIndex + 1}`;
+    const headingTag = headingLevel === 4 ? "h4" : "h3";
+    const retry = output.retry;
+    const primaryAttempt = retry.primary_attempt;
+    const retryAttempt = retry.retry_attempt;
+    const sourceAspect = `${imageRecord.image.width} / ${imageRecord.image.height}`;
+    const negativePromptDetails =
+      typeof output.negative_prompt === "string" && output.negative_prompt.trim()
+        ? `<details class="promptDetails negativePromptDetails">
+            <summary>Дословный negative prompt</summary>
+            <p class="promptText" lang="en">${escapeHtml(output.negative_prompt)}</p>
+          </details>`
+        : "";
+
+    return `
+      <article
+        class="mediaPanel modelPanel providerFilteredPanel"
+        data-output-kind="provider-unavailable"
+        data-provider-unavailable="true"
+        aria-labelledby="${titleId}"
+      >
+        <div
+          class="mediaStage providerFilteredStage"
+          style="--media-aspect: ${sourceAspect}"
+          role="status"
+          aria-label="${escapeHtml(presentation.name)}: основная отправка имеет неизвестный outcome, retry-v1 завершился без видео"
+        >
+          <div class="providerFilteredMessage">
+            <p class="providerFilteredKicker">Видео недоступно</p>
+            <strong>Outcome основной отправки неизвестен</strong>
+            <p>
+              Синхронный submit мог достичь провайдера, но его результат не был
+              зафиксирован. Явный retry-v1 завершился provider-failed без MP4.
+            </p>
+          </div>
+        </div>
+
+        <div class="panelIdentity">
+          <div>
+            <p class="contractWarning providerFilteredWarning">
+              Provider unavailable · primary outcome unknown + explicit retry-v1 exhausted
+            </p>
+            <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
+            <${headingTag} id="${titleId}">${escapeHtml(presentation.name)}</${headingTag}>
+            <code class="modelId">${escapeHtml(output.model_id)}</code>
+          </div>
+          <strong class="modelCost providerFilteredCost">
+            Недоступно
+            <span>retry provider-failed</span>
+          </strong>
+        </div>
+
+        ${renderFacts([
+          ["Статус", output.status],
+          ["Recorded status", output.recorded_status],
+          ["Primary outcome", "unknown · provider может быть активен"],
+          ["Выбрана", "ambiguous-submit retry-v1 · exhausted"],
+          ["Видео", "MP4 не получен"],
+        ])}
+
+        <section class="providerFilterAudit" aria-label="Аудит ambiguous submit и retry-v1">
+          <div class="providerFilterAuditHeader">
+            <p class="panelKicker">Provider audit</p>
+            <h4>Неоднозначная отправка и terminal retry-v1</h4>
+            <p>
+              Primary не объявлен terminal: его outcome остаётся unknown. Retry-v1
+              завершён provider-failed; immutable request SHA-256 совпадает.
+            </p>
+          </div>
+          <ol class="providerAttemptList">
+            ${renderProviderAttemptAudit("Основная попытка · outcome unknown", primaryAttempt)}
+            ${renderProviderAttemptAudit("Retry-v1 · provider-failed", retryAttempt)}
+          </ol>
+          <dl class="providerFilterBinding">
+            <div><dt>Retry namespace</dt><dd><code>${escapeHtml(retry.namespace)}</code></dd></div>
+            <div><dt>Envelope</dt><dd><code>${escapeHtml(retry.envelope_path)}</code></dd></div>
+            <div><dt>Envelope SHA-256</dt><dd><code>${escapeHtml(retry.envelope_sha256)}</code></dd></div>
+            <div><dt>Immutable request SHA-256</dt><dd><code>${escapeHtml(retryAttempt.request_sha256)}</code></dd></div>
+          </dl>
+        </section>
+
+        <details class="promptDetails">
+          <summary>Дословный positive prompt</summary>
+          <p class="promptText" lang="en">${escapeHtml(output.positive_prompt)}</p>
+        </details>
+        ${negativePromptDetails}
+      </article>
+    `;
+  };
+
+  const renderNormalizedInputUnavailableModel = (
+    article,
+    imageRecord,
+    output,
+    modelIndex,
+    { idPrefix, headingLevel },
+  ) => {
+    const presentation = MODEL_PRESENTATION[output.model_id];
+    const titleId = `${idPrefix}-${asDomIdPart(article.case_key)}-${imageRecord.image.image_id}-${modelIndex + 1}`;
+    const headingTag = headingLevel === 4 ? "h4" : "h3";
+    const retry = output.retry;
+    const primaryAttempt = retry.primary_attempt;
+    const retryAttempt = retry.retry_attempt;
+    const sourceAspect = `${imageRecord.image.width} / ${imageRecord.image.height}`;
+
+    return `
+      <article
+        class="mediaPanel modelPanel providerFilteredPanel"
+        data-output-kind="provider-unavailable"
+        data-provider-unavailable="true"
+        data-retry-kind="normalized-input"
+        aria-labelledby="${titleId}"
+      >
+        <div
+          class="mediaStage providerFilteredStage"
+          style="--media-aspect: ${sourceAspect}"
+          role="status"
+          aria-label="${escapeHtml(presentation.name)}: normalized-input retry завершился без видео"
+        >
+          <div class="providerFilteredMessage">
+            <p class="providerFilteredKicker">Видео недоступно</p>
+            <strong>Normalized-input retry завершился без MP4</strong>
+            <p>
+              Исходник больше 20 MiB был заменён frozen page-вариантом только в
+              provider request. Явный retry-v1 завершился provider-failed.
+            </p>
+          </div>
+        </div>
+
+        <div class="panelIdentity">
+          <div>
+            <p class="contractWarning providerFilteredWarning">
+              Source normalized · one image URL delta · retry-v1 exhausted
+            </p>
+            <p class="panelKicker">Модель ${String(modelIndex + 1).padStart(2, "0")}</p>
+            <${headingTag} id="${titleId}">${escapeHtml(presentation.name)}</${headingTag}>
+            <code class="modelId">${escapeHtml(output.model_id)}</code>
+          </div>
+          <strong class="modelCost providerFilteredCost">
+            Недоступно
+            <span>retry provider-failed</span>
+          </strong>
+        </div>
+
+        ${renderFacts([
+          ["Статус", output.status],
+          ["Recorded status", output.recorded_status],
+          ["Выбрана", "normalized-input retry-v1 · exhausted"],
+          ["Видео", "MP4 не получен"],
+        ])}
+
+        ${renderNormalizedInputAudit(retry)}
+
+        <section class="providerFilterAudit" aria-label="Аудит primary и normalized-input retry-v1">
+          <div class="providerFilterAuditHeader">
+            <p class="panelKicker">Provider attempts</p>
+            <h4>Primary failure и normalized-input retry-v1</h4>
+            <p>Обе попытки terminal; исходный logical source сохранён.</p>
+          </div>
+          <ol class="providerAttemptList">
+            ${renderProviderAttemptAudit("Primary · provider-failed", primaryAttempt)}
+            ${renderProviderAttemptAudit("Normalized-input retry-v1 · provider-failed", retryAttempt)}
+          </ol>
+        </section>
+
+        <details class="promptDetails">
+          <summary>Дословный positive prompt</summary>
+          <p class="promptText" lang="en">${escapeHtml(output.positive_prompt)}</p>
+        </details>
       </article>
     `;
   };
@@ -1355,7 +2813,28 @@
   ) => {
     const presentation = MODEL_PRESENTATION[output.model_id];
     assert(presentation, `Нет presentation для ${output.model_id}.`);
-    const titleId = `${idPrefix}-${article.article_number}-${imageRecord.image.image_id}-${modelIndex + 1}`;
+    if (output.providerFiltered === true) {
+      return renderProviderFilteredModel(article, imageRecord, output, modelIndex, {
+        idPrefix,
+        headingLevel,
+      });
+    }
+    if (output.providerUnavailable === true) {
+      if (output.retry?.retry_kind === NORMALIZED_INPUT_RETRY_KIND) {
+        return renderNormalizedInputUnavailableModel(
+          article,
+          imageRecord,
+          output,
+          modelIndex,
+          { idPrefix, headingLevel },
+        );
+      }
+      return renderProviderUnavailableModel(article, imageRecord, output, modelIndex, {
+        idPrefix,
+        headingLevel,
+      });
+    }
+    const titleId = `${idPrefix}-${asDomIdPart(article.case_key)}-${imageRecord.image.image_id}-${modelIndex + 1}`;
     const videoUrl = asAssetUrl(output.video_path, output.delivery);
     const promptLabel = output.showcaseLabel
       ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
@@ -1378,6 +2857,9 @@
       output.status === "verification-failed"
         ? '<p class="contractWarning">Raw output · media contract warning</p>'
         : "";
+    const normalizedInputWarning = output.normalizedInputRetry
+      ? '<p class="contractWarning providerFilteredWarning">Source normalized · original больше 20 MiB · prompt/model сохранены</p>'
+      : "";
     const fidelityWarning =
       !smoothExperiment && output.visual_review?.status === "fidelity-failed"
         ? `<p class="contractWarning fidelityWarning"><strong>Visual review · fidelity failed.</strong> ${escapeHtml(output.visual_review.summary)}</p>`
@@ -1465,6 +2947,7 @@
             ${winnerBadge}
             ${promptLabel}
             ${contractWarning}
+            ${normalizedInputWarning}
             ${fidelityWarning}
             ${smoothStatus}
             ${loopStatus}
@@ -1479,6 +2962,7 @@
         </div>
 
         ${renderFacts([
+          ["Статус", output.status || "готово"],
           ["Длительность", formatDuration(output.media.duration_seconds)],
           ["Геометрия", `${output.media.width}×${output.media.height}`],
           ["Размер", formatMiB(output.media.bytes)],
@@ -1503,6 +2987,8 @@
               ]
             : []),
         ])}
+
+        ${output.normalizedInputRetry ? renderNormalizedInputAudit(output.retry) : ""}
 
         <details class="promptDetails">
           <summary>Дословный positive prompt</summary>
@@ -1726,10 +3212,10 @@
     });
   };
 
-  const updateUrl = (articleNumber, imageId) => {
+  const updateUrl = (caseKey, imageId) => {
     try {
       const url = new URL(window.location.href);
-      url.searchParams.set("case", articleNumber);
+      url.searchParams.set("case", caseKey);
       url.searchParams.set("image", imageId);
       window.history.replaceState(null, "", url);
     } catch {
@@ -1820,14 +3306,14 @@
       if (videos.some((video) => !video.paused && !video.ended)) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${group.name} на паузе.`;
+          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: ${group.name} на паузе.`;
         return;
       }
 
       pauseAll();
       button.disabled = true;
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: запускаем ${videoCount} видео — ${group.name}…`;
+        `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: запускаем ${videoCount} видео — ${group.name}…`;
       videos.forEach((video) => {
         video.currentTime = 0;
       });
@@ -1841,13 +3327,13 @@
       if (results.some((result) => result.status === "rejected")) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: браузер не разрешил воспроизвести группу «${group.name}».`;
+          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: браузер не разрешил воспроизвести группу «${group.name}».`;
         return;
       }
 
       setPlaybackState();
       elements.navigatorStatus.textContent =
-        `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${videoCount} видео группы «${group.name}» запущены одновременно без звука.`;
+        `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: ${videoCount} видео группы «${group.name}» запущены одновременно без звука.`;
     };
 
     const announce = () => {
@@ -1864,13 +3350,13 @@
       });
 
       if (failed.size > 0) {
-        elements.navigatorStatus.textContent = `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружено ${ready.size} из ${allVideos.length}, ошибок — ${failed.size}.`;
+        elements.navigatorStatus.textContent = `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: загружено ${ready.size} из ${allVideos.length}, ошибок — ${failed.size}.`;
       } else if (ready.size === allVideos.length) {
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: ${allVideos.length} видео подключены. Серии запускаются отдельно.`;
+          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: ${allVideos.length} видео подключены. Серии запускаются отдельно.`;
       } else {
         elements.navigatorStatus.textContent =
-          `Кейс ${article.article_number}, изображение ${imageRecord.image.image_id}: загружаем метаданные · ${ready.size} из ${allVideos.length}.`;
+          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: загружаем метаданные · ${ready.size} из ${allVideos.length}.`;
       }
     };
 
@@ -1931,6 +3417,7 @@
     const imageRecord = article.images[activeImageIndex];
     const sequence = ++renderSequence;
     const displayOutputs = imageRecord.displayOutputs || imageRecord.outputs;
+    const availablePrimaryVideoCount = availableOutputCount(displayOutputs);
     const gridClass = displayOutputs.length > MODEL_ORDER.length ? " hasExperiment" : "";
     const multiRowClass = displayOutputs.length >= 6 ? " multiRow" : "";
     const modelCountClass = displayOutputs.length === 2 ? " twoModels" : "";
@@ -1941,10 +3428,12 @@
     const smoothSection = renderSmoothSection(article, imageRecord);
 
     detachCurrentVideos();
-    elements.currentNumber.textContent = article.article_number;
+    elements.currentNumber.textContent = String(activeIndex + 1).padStart(2, "0");
     elements.totalNumber.textContent = String(articles.length);
     elements.caseTitle.textContent = article.title;
-    elements.caseSelect.value = article.article_number;
+    elements.caseDatasetMeta.textContent =
+      `Источник · ${article.sourceTicket} · Локальный № ${article.article_number} · Статус · ${article.sourceStatus}`;
+    elements.caseSelect.value = article.case_key;
     elements.previousCase.disabled = activeIndex === 0;
     elements.nextCase.disabled = activeIndex === articles.length - 1;
     elements.currentImageNumber.textContent = String(activeImageIndex + 1);
@@ -1953,6 +3442,9 @@
     elements.previousImage.disabled = activeImageIndex === 0;
     elements.nextImage.disabled = activeImageIndex === article.images.length - 1;
     elements.caseViewport.setAttribute("aria-busy", "true");
+    elements.caseViewport.setAttribute("data-case-key", article.case_key);
+    elements.caseViewport.setAttribute("data-source-ticket", article.sourceTicket);
+    elements.caseViewport.setAttribute("data-source-status", article.sourceStatus);
     elements.caseViewport.innerHTML = `
       <div class="comparisonWorkspace">
         <div class="comparisonActions" aria-label="Управление сравнением">
@@ -1961,20 +3453,20 @@
             type="button"
             data-play-all
             data-video-group-control="primary"
-            data-play-label="Воспроизвести ${displayOutputs.length} основных"
+            data-play-label="Воспроизвести ${availablePrimaryVideoCount} доступных"
             data-pause-label="Пауза основных"
             aria-pressed="false"
             aria-describedby="navigatorStatus"
             disabled
           >
-            Воспроизвести ${displayOutputs.length} основных
+            Воспроизвести ${availablePrimaryVideoCount} доступных
           </button>
           <button
             class="controlButton"
             type="button"
             data-source-toggle
             aria-expanded="false"
-            aria-controls="sourcePanel-${article.article_number}-${imageRecord.image.image_id}"
+            aria-controls="sourcePanel-${asDomIdPart(article.case_key)}-${imageRecord.image.image_id}"
           >
             Показать оригинал
           </button>
@@ -1994,8 +3486,8 @@
       </div>
     `;
 
-    rememberedImageByArticle.set(article.article_number, activeImageIndex);
-    updateUrl(article.article_number, imageRecord.image.image_id);
+    rememberedImageByArticle.set(article.case_key, activeImageIndex);
+    updateUrl(article.case_key, imageRecord.image.image_id);
     monitorSelectedVideos(article, imageRecord, sequence);
   };
 
@@ -2019,10 +3511,8 @@
     );
     elements.imageSelect.disabled = false;
 
-    const requestedIndex = requestedImageId
-      ? article.images.findIndex((record) => record.image.image_id === requestedImageId)
-      : -1;
-    const rememberedIndex = rememberedImageByArticle.get(article.article_number) ?? 0;
+    const requestedIndex = resolveRequestedImageIndex(article, requestedImageId);
+    const rememberedIndex = rememberedImageByArticle.get(article.case_key) ?? 0;
     activeImageIndex = requestedIndex >= 0 ? requestedIndex : rememberedIndex;
     renderSelection();
   };
@@ -2039,10 +3529,11 @@
 
   const initialise = async () => {
     try {
-      const [baseResponse, additionalResponse, case21Response] = await Promise.all([
+      const [baseResponse, additionalResponse, case21Response, reviewResponse] = await Promise.all([
         fetch(BASE_MANIFEST_PATH, { cache: "no-store" }),
         fetch(ADDITIONAL_MANIFEST_PATH, { cache: "no-store" }),
         fetch(CASE_21_MANIFEST_PATH, { cache: "no-store" }),
+        fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
       ]);
       if (!baseResponse.ok) {
         throw new Error(`Базовый манифест вернул HTTP ${baseResponse.status}.`);
@@ -2055,12 +3546,18 @@
       if (!case21Response.ok) {
         throw new Error(`Манифест кейса 21 вернул HTTP ${case21Response.status}.`);
       }
+      if (!reviewResponse.ok && reviewResponse.status !== 404) {
+        throw new Error(
+          `Манифест PROMOPAGES-10060 вернул HTTP ${reviewResponse.status}.`,
+        );
+      }
 
       const [baseManifest, additionalManifest, case21Manifest] = await Promise.all([
         baseResponse.json(),
         additionalResponse.json(),
         case21Response.json(),
       ]);
+      const reviewManifest = reviewResponse.ok ? await reviewResponse.json() : null;
       const baseArticles = validateBaseManifest(baseManifest);
       const additionalArticles = validateAdditionalManifest(
         additionalManifest,
@@ -2071,27 +3568,29 @@
         baseArticles,
         additionalArticles,
       );
-      const loopOutputCount =
-        case21Articles[0]?.images[0]?.loopExperiment?.outputs.length || 0;
-      const smoothOutputCount =
-        case21Articles[0]?.images[0]?.smoothExperiment?.outputs.length || 0;
-      const uniqueVideoCount =
-        EXPECTED_CANONICAL_OUTPUT_COUNT +
-        EXPECTED_CASE_21_RESEARCH_OUTPUT_COUNT +
-        loopOutputCount +
-        smoothOutputCount;
-      if (smoothOutputCount) {
-        assert(
-          uniqueVideoCount === EXPECTED_TOTAL_VIDEO_COUNT_WITH_SMOOTH,
-          `После smooth-интеграции найдено уникальных MP4: ${uniqueVideoCount}, ожидалось 139.`,
-        );
-      }
-      elements.videoCountSummary.textContent = String(uniqueVideoCount);
-      articles = mergeArticleImages(baseArticles, additionalArticles, case21Articles);
+      const historicalArticles = mergeArticleImages(
+        baseArticles,
+        additionalArticles,
+        case21Articles,
+      );
+      const reviewDataset = reviewManifest
+        ? validatePromopages10060Manifest(reviewManifest, historicalArticles)
+        : { articles: [], unavailableArticles: [] };
+      articles = mergeArticleCollections(historicalArticles, reviewDataset.articles);
+      const counts = datasetCounts(articles);
+      elements.articleCountSummary.textContent = String(counts.articleCount);
+      elements.imageCountSummary.textContent = String(counts.imageCount);
+      elements.videoCountSummary.textContent = String(counts.videoCount);
+      elements.datasetSourceStatus.textContent = reviewManifest
+        ? `PROMOPAGES-10060 · ${reviewDataset.articles.length} статей / ${reviewManifest.image_count} изображений / ${reviewManifest.expected_outputs} результатов · MP4 ${reviewManifest.expected_outputs - reviewDataset.unavailableOutputCount} · provider-filtered ${reviewDataset.filteredOutputCount} · provider-unavailable ${reviewDataset.providerUnavailableOutputCount} · недоступно статей ${reviewDataset.unavailableArticles.length}`
+        : "PROMOPAGES-10060 · sidecar ещё не опубликован; показана историческая выборка";
       elements.caseSelect.replaceChildren(
         ...articles.map(
           (article) =>
-            new Option(`${article.article_number} · ${article.title}`, article.article_number),
+            new Option(
+              `${article.sourceTicket} · ${article.article_number} · ${article.title}`,
+              article.case_key,
+            ),
         ),
       );
       elements.caseSelect.disabled = false;
@@ -2100,9 +3599,7 @@
 
       const requestedCase = new URL(window.location.href).searchParams.get("case");
       const requestedImage = new URL(window.location.href).searchParams.get("image");
-      const requestedIndex = articles.findIndex(
-        (article) => article.article_number === requestedCase,
-      );
+      const requestedIndex = resolveRequestedArticleIndex(articles, requestedCase);
       renderCase(requestedIndex >= 0 ? requestedIndex : 0, requestedImage);
     } catch (error) {
       showError(error instanceof Error ? error : new Error("Неизвестная ошибка данных."));
@@ -2115,7 +3612,7 @@
   elements.nextImage.addEventListener("click", () => renderImage(activeImageIndex + 1));
   elements.caseSelect.addEventListener("change", () => {
     const selectedIndex = articles.findIndex(
-      (article) => article.article_number === elements.caseSelect.value,
+      (article) => article.case_key === elements.caseSelect.value,
     );
     if (selectedIndex >= 0) renderCase(selectedIndex);
   });
