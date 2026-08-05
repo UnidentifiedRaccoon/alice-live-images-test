@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The existing fracture creeps steadily through the central slab while small crumbs and dust fall into the gap. Keep the camera fixed; end with the slab edge slightly lower and the crack visibly extended.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "87bfdd240e53753cdcbe66e30f21f52ca0e04d7bc48f5bedea44736233ef2069",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "XDHN4Yrh3qlHaXZWYhQl",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:41:28Z",
+  "completed_at": "2026-08-05T16:42:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1780,
+    "height": 1164,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 8239077,
+    "sha256": "76c70c251e4e1fe509e76363372b9499042da4a473428495fb9b4fc388953141"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-08-wan-2-7",
+  "lite_result_sha256": "cc0dc7efa0963e82dabb775d2d81d9e16fa69032ba77c8c5f789ca947574f5e4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

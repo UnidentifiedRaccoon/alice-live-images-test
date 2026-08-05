@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A thin veil of loose floor dust steadily slides across the foreground, eddies around the broken patches, then settles and leaves the cracked powdery surface clearly exposed. Fixed camera.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df30531384d5219f20d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "587bbe0c5782a7fe4295151f35a269341499bf461c5ac1c290a04e8bc2abc5e4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ZrmHP3PmcKt6j0Su1494",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:40:10Z",
+  "completed_at": "2026-08-05T16:41:56Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1768,
+    "height": 1172,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4408736,
+    "sha256": "d0ca76f6b0b4d2b1f5ddcd2a19681213ae5a69aabf57d5af830f3f031d888641"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-06-wan-2-7",
+  "lite_result_sha256": "6da96f01f9897a4b1dedb0ef40db9210ba479a7975593ec188a5725b86752556",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

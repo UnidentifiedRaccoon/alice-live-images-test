@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "17-volma-nalivnoi-pol-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Trapped air gradually migrates through the wet floor and releases as a spreading sequence of tiny surface craters. Keep the macro camera fixed; end with several fresh pinholes visibly open and the surface uneven.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d269/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "6d8dab507b0945710b3c587a64d53f109f3bc4de1a4c12f90db58392880b4ba8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "PhjR3auNsnojzIZWHFvv",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-05T16:41:35Z",
+  "completed_at": "2026-08-05T16:43:12Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1174,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2085294,
+    "sha256": "0a50c6438bff5803e0e95feffa8ff05de583fb2241bcb04a2faabb83300f00e3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260805-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09",
+  "provider_run_id": "promopages-10060-campaigns-20260805-v1-17-volma-nalivnoi-pol-09-wan-2-7",
+  "lite_result_sha256": "02b0c00021fda7fbcaf794e3652b7c6900436daeed9047d4f2cb3798c35b050e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
