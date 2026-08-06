@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.2/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c5047502773ae398e883/orig",
+      "prompt": "The camera slowly pushes toward the dining table beside the window at a steady pace. Keep the table and window continuously visible, ending with the dining area framed more closely against the window.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "5aaa6b434629daa09cebce1f1e7ab12ec6480129c7a23a9e8022fcc24ea62394",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "20225497789def2096eee9603a5f7a5b",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:24:04Z",
+  "completed_at": "2026-08-06T13:24:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4809673,
+    "sha256": "57afbb95b38f229cd17cf4d0ae63d3571f5d666f2b51bbb03c8a9a058257451e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-09",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-09-wan-2-2",
+  "lite_result_sha256": "62a5c0bf5568513e871c787c6767ba63faeaf22f75c22369936bc5fd5b95bec0",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 3964737,
+    "sha256": "d34c09a20bcee1dab98c58feaf8da9fc7daac01d021b2668c382dabbc250b20b"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "20225497789def2096eee9603a5f7a5b",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

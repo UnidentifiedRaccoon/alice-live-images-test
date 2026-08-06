@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -61,7 +62,7 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.6")
+        self.assertEqual(contract["contract_version"], "2.0.7")
         self.assertEqual(contract["runner"]["runner_version"], 7)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
@@ -119,6 +120,26 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         )
         self.assertEqual(contract["models"]["alibaba/wan-2.7"]["runtime"]["duration_seconds"], 5)
         self.assertEqual(contract["models"]["google/veo-3.1-lite"]["runtime"]["duration_seconds"], 4)
+
+    def test_installed_codex_binary_matches_lock_when_present(self) -> None:
+        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        locked = contract["execution"]["binary"]
+        binary = Path(locked["path"])
+        if not binary.is_file():
+            self.skipTest("locked macOS Codex binary is not installed")
+        self.assertFalse(binary.is_symlink())
+        self.assertEqual(sha256_file(binary), locked["sha256"])
+        inspected = subprocess.run(
+            [str(binary), "--version"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=30,
+        )
+        self.assertEqual(
+            inspected.stdout.decode("utf-8", errors="replace").strip(),
+            locked["version"],
+        )
 
     def test_codex_authoring_model_is_not_fixed_by_contract(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))

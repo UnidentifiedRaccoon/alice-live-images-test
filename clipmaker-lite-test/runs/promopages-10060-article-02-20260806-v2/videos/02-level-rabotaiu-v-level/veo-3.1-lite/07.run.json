@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-07",
+  "image_id": "07",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/07.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "With a fixed camera, the wooden hangers make one gentle synchronized sway in a soft draft, then gradually settle nearly still and evenly spaced on the rail by the final frame; the clear walkway and open shelves remain visible throughout.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c4977502773ae398e464/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2aa126c7e351220321d0a359bed38cc2d1cda31358e2eb5f82922e67b852657f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "BHfRDNFKdZKsA4T2ZCRt",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:09:44Z",
+  "completed_at": "2026-08-06T13:11:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1007872,
+    "sha256": "e6c96c386e654b4ffe15bf1cdd11fbe543224bf85625d5477b0c21731fc08332"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07-veo-3-1-lite",
+  "lite_result_sha256": "7c50ceb0846c7947979c91b6a7458288c5caee31fe8fc48b97e0cef74e08c5aa",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

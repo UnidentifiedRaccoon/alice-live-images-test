@@ -34,6 +34,7 @@ DEFAULT_ARTICLES_PATH = REPO_ROOT / "PROMOPAGES-10060" / "s3-export" / "articles
 DEFAULT_MANIFEST_PATHS = (
     REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-manifest.json",
     REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-campaigns-20260805-v1-manifest.json",
+    REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-article-02-20260806-v2-manifest.json",
 )
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "PROMOPAGES-10060" / "s3-export" / "output"
 
@@ -50,10 +51,31 @@ MODEL_DIRS = {
     "google/veo-3.1-lite": "veo_3_1",
 }
 MODEL_ORDER = {model_id: index for index, model_id in enumerate(MODEL_DIRS)}
+LITE_MODELS = tuple(MODEL_DIRS)
+MERGE_CONTRACT = {
+    "article_key": ["article_slug"],
+    "image_key": ["article_slug", "image_id"],
+    "output_key": ["article_slug", "image_id", "model_id"],
+    "target_field": "articles[].images[]",
+}
 READY_STATUSES = {"succeeded", "verification-failed"}
 MISSING_STATUSES = {"provider-filtered", "provider-unavailable"}
 HEX24_RE = re.compile(r"^[0-9a-f]{24}$")
 CABINET_SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+
+# The original all-images batch froze article 02 as source-unavailable after a
+# typo in its public URL.  The immutable v2 sidecar is the sole authorised
+# replacement.  Keeping this exception exact prevents a later manifest from
+# silently overriding any other unavailable marker.
+ALLOWED_UNAVAILABLE_SUPERSESSIONS = {
+    "02-level-rabotaiu-v-level": {
+        "article_number": "02",
+        "legacy_batch_id": "promopages-10060-lite-all-images-20260805-v2",
+        "legacy_manifest_role": "promopages-10060-all-images",
+        "replacement_batch_id": "promopages-10060-article-02-20260806-v2",
+        "replacement_manifest_role": "promopages-10060-article-02",
+    }
+}
 
 
 class ExportError(RuntimeError):
@@ -213,12 +235,32 @@ def _load_source_manifests(paths: Sequence[Path]) -> Tuple[List[Dict[str, Any]],
         manifest = _load_json(path)
         if manifest.get("ticket") != "PROMOPAGES-10060":
             raise ExportError(f"Unexpected ticket in source manifest {path}")
-        if manifest.get("agent_id") not in {None, "clipmaker-lite"}:
+        if manifest.get("agent_id") != "clipmaker-lite":
             raise ExportError(f"Source manifest is not a Clipmaker Lite result: {path}")
+        if (
+            not isinstance(manifest.get("manifest_role"), str)
+            or not manifest["manifest_role"].strip()
+            or manifest.get("merge_contract") != MERGE_CONTRACT
+        ):
+            raise ExportError(f"Source manifest contract is invalid: {path}")
         outputs = manifest.get("outputs")
         articles = manifest.get("articles")
         if not isinstance(outputs, list) or not isinstance(articles, list):
             raise ExportError(f"Malformed source manifest: {path}")
+        for article in articles:
+            image_records = article.get("images") if isinstance(article, dict) else None
+            if not isinstance(image_records, list):
+                raise ExportError(f"Source manifest article images are invalid: {path}")
+            for record in image_records:
+                planning = record.get("lite_planning") if isinstance(record, dict) else None
+                provenance = planning.get("provenance") if isinstance(planning, dict) else None
+                if (
+                    not isinstance(provenance, dict)
+                    or provenance.get("verified") is not True
+                    or provenance.get("agent_id") != "clipmaker-lite"
+                    or tuple(provenance.get("models") or ()) != LITE_MODELS
+                ):
+                    raise ExportError(f"Source manifest Lite provenance is invalid: {path}")
         manifests.append(manifest)
         try:
             relative = path.resolve(strict=True).relative_to(REPO_ROOT.resolve(strict=True)).as_posix()
@@ -415,18 +457,62 @@ def build_export(
     }
 
     source_articles: Dict[str, Dict[str, Any]] = {}
+    source_article_batches: Dict[str, str] = {}
+    source_article_roles: Dict[str, str] = {}
     source_outputs: List[Dict[str, Any]] = []
     unavailable_source: Dict[str, Dict[str, Any]] = {}
+    unavailable_source_batches: Dict[str, str] = {}
+    unavailable_source_roles: Dict[str, str] = {}
     for manifest in source_manifests:
+        batch_id = str(manifest.get("batch_id"))
+        manifest_role = str(manifest.get("manifest_role"))
         for article in manifest["articles"]:
             slug = str(article.get("article_slug"))
             if slug in source_articles:
                 raise ExportError(f"Article occurs in more than one source manifest: {slug}")
             source_articles[slug] = article
+            source_article_batches[slug] = batch_id
+            source_article_roles[slug] = manifest_role
         source_outputs.extend(manifest["outputs"])
         for article in manifest.get("unavailable_articles", []):
             slug = str(article.get("article_slug"))
+            if slug in unavailable_source:
+                raise ExportError(
+                    f"Unavailable article occurs in more than one source manifest: {slug}"
+                )
             unavailable_source[slug] = article
+            unavailable_source_batches[slug] = batch_id
+            unavailable_source_roles[slug] = manifest_role
+
+    superseded_unavailable: set[str] = set()
+    for slug in sorted(set(source_articles) & set(unavailable_source)):
+        rule = ALLOWED_UNAVAILABLE_SUPERSESSIONS.get(slug)
+        mapping = mappings.get(slug)
+        source = source_articles[slug]
+        unavailable = unavailable_source[slug]
+        if (
+            rule is None
+            or mapping is None
+            or mapping["source_status"] != "available"
+            or source_article_batches[slug] != rule["replacement_batch_id"]
+            or source_article_roles[slug] != rule["replacement_manifest_role"]
+            or unavailable_source_batches[slug] != rule["legacy_batch_id"]
+            or unavailable_source_roles[slug] != rule["legacy_manifest_role"]
+            or str(source.get("article_number")) != rule["article_number"]
+            or str(unavailable.get("article_number")) != rule["article_number"]
+            or unavailable.get("status") != "source-unavailable"
+            or source.get("url") != mapping.get("url")
+        ):
+            raise ExportError(
+                f"Article has conflicting available and unavailable source records: {slug}"
+            )
+        superseded_unavailable.add(slug)
+
+    effective_unavailable_source = {
+        slug: article
+        for slug, article in unavailable_source.items()
+        if slug not in superseded_unavailable
+    }
 
     if set(source_articles) != set(available_mappings):
         raise ExportError(
@@ -434,7 +520,7 @@ def build_export(
             f"missing={sorted(set(available_mappings) - set(source_articles))}, "
             f"unexpected={sorted(set(source_articles) - set(available_mappings))}"
         )
-    if set(unavailable_source) != set(unavailable_mappings):
+    if set(effective_unavailable_source) != set(unavailable_mappings):
         raise ExportError("Source-unavailable article mapping does not match final manifests")
 
     by_article_image: Dict[Tuple[str, str], List[Dict[str, Any]]] = defaultdict(list)
@@ -584,7 +670,7 @@ def build_export(
         unavailable = [item for item in package_outputs if item["package_status"] != "ready"]
         unavailable_articles: List[Dict[str, Any]] = []
         for slug, mapping in sorted(unavailable_mappings.items(), key=lambda item: item[1]["article_number"]):
-            source = unavailable_source[slug]
+            source = effective_unavailable_source[slug]
             unavailable_articles.append(
                 {
                     "article_number": mapping["article_number"],

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/ambiguous-submit-retries-v1/68df9348cb0b52937284/videos/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/ambiguous-submit-retries-v1/68df9348cb0b52937284/videos/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_67d2c36fbc3de24f2683a8ac_67d2c4ac7502773ae398e532/orig",
+      "prompt": "The camera slowly glides forward through the clear entryway toward the compact hall cabinet at a steady pace, keeping the cabinet and open floor continuously visible. By the final frame, the cabinet, mirror, and generous unobstructed passage fill a closer stable composition.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "6db63e08dd5f8b49d56092cb5e6687f3a779150babae05b1622da3a18ccfdd77",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "764c6ab56238f4c090476fa4e96a1c84",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:22:51Z",
+  "completed_at": "2026-08-06T13:22:51Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 816,
+    "height": 1104,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6192291,
+    "sha256": "649cc2839b71e74e3e8076918cbb9f71d1462818fb9880159e8fe298fc013ca7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2-ambiguous-submit-retry-v1-68df9348cb0b52937284",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-08",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-ambiguous-submit-retry-v1-68df9348cb0b52937284-02-level-rabotaiu-v-level-08-wan-2-2",
+  "lite_result_sha256": "b6fb2891d9e0440286371b170acf168e7c6cba8feca901488d879637cd4aff23",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 2370462,
+    "sha256": "b3b32ae3bab4710ea385ba7328ed38d535a560d5ac71491db9b0d883f8326454"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "764c6ab56238f4c090476fa4e96a1c84",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

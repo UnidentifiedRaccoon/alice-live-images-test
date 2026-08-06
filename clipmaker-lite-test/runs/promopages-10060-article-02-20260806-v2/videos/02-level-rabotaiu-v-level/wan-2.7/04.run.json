@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A soft breeze travels across the landscaped courtyard, rippling the shrubs and tree canopies while their shadows glide gently over the walkways. Make a slow forward push toward the central garden; end with foliage across the full courtyard moving in a calm, even sway.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c41144eba35024255688/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "560d1b3dd277655d645fbf9131b5cefdabb262c8b4409265267d6f27895ef4a6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "gUEXpdvHLC1VYlpbEWhw",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:07:41Z",
+  "completed_at": "2026-08-06T13:09:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 47842010,
+    "sha256": "d499b4636234393269dd50d53ad3ef1a1a77f082c183b6a565bb2c7064234482"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-04",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-04-wan-2-7",
+  "lite_result_sha256": "1c92bfc90263ae5bca2fa7896c1a9fbcd640e64f41d09018c862b8a3e0d175e5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

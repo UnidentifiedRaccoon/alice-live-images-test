@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-10",
+  "image_id": "10",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/10.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A light indoor breeze slowly ripples through the potted tree’s foliage while its reflections drift subtly over the glass and glossy floor. The camera makes a very gentle push toward the comfortable seating area, ending with the leaves softly settling and all seats clearly visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c5317502773ae398ea18/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "573108a07248ad4c1ad941f1c94b8d139cb1d397211fae7a9e8051669fd56bd8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "KcxQGMf1uloSRQN52fCf",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:10:33Z",
+  "completed_at": "2026-08-06T13:12:14Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 9467921,
+    "sha256": "97efe4174e127baf8ca351f0c0021500f46d8df521b88ee61cf064f3171e699b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10-wan-2-7",
+  "lite_result_sha256": "b45c3840aaf9d7b2fd4f592afb117445371dbd93a7fbc25e3bad05e78a986c9b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.7",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd",
+    "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+    "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:848b2b6d43799ac7c3a2722a24c16abd0f95701e73ea47d64a29ab822a06916a",
+    "execution_fingerprint": "sha256:ab965a14d24f0a7c79e7bb2b2fbee6d6e467a88a4d8732c25c883890e227eb2a",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "9f6748b4ab10ffc92c28b9ccedae89e61a302bbc011df7d276ee38f55906e481",
+      "version": "codex-cli 0.147.0-alpha.1.2",
+      "requested_model": null,
+      "thread_id": "019fd72d-0044-7a51-bcda-15d4a66492e3"
+    },
+    "authored_payload_sha256": "f7dfc9dec53532b1cb597800d44e494fa09b0a16e1579b87f26c169eb64a296c",
+    "draft_file_sha256": "a4e7ba077244b90d78c0270b2db5bccb90d61d86c2e702f98dde453d36387b66"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/10.png",
+      "sha256": "49612e5cd51c6c429d049c7a3d1699c972c6b3264c174c3f0c5b1a049b811c2a",
+      "bytes": 7010430
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/content.json",
+      "sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "bytes": 20252,
+      "locator": {
+        "article_id": "02-level-rabotaiu-v-level",
+        "title": "Работаю в Level: почему купил квартиру от нашей компании",
+        "lead": "История, как я купил квартиру в Левел Групп после шести лет работы в компании",
+        "image_id": "10",
+        "block_index": 28,
+        "role": "gallery_image",
+        "caption": "В лобби очень уютно — есть мягкие диваны и кресла. Можно с комфортом встретить курьера или пообщаться с соседями",
+        "file": "10.png",
+        "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/10.png",
+        "current_heading": {
+          "block_index": 21,
+          "level": 2,
+          "text": "Что ещё я оценил в проекте"
+        },
+        "nearest_text_before": {
+          "block_index": 27,
+          "type": "list_item",
+          "text": "Метро рядом с домом. Я не всегда езжу на машине — порой не хочется стоять в пробках где-нибудь на Садовом. Тем более от Левел Причальный до ближайшей станции метро «Шелепиха» идти всего 7 минут."
+        },
+        "nearest_text_after": {
+          "block_index": 30,
+          "type": "paragraph",
+          "text": "Иногда меня спрашивают, не страшно ли было покупать квартиру в строящемся доме: вдруг сроки сдачи сдвинутся и придётся долго ждать ключей. Но у меня не было сомнений, потому что при сделке в Level деньги сначала зачисляются на эскроу-счёт, хранятся там, а застройщик получает их только в момент выдачи ключей. Да и на моей памяти за годы работы в компании ни разу не было проблем со сроками сдачи проектов."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A bright modern lobby contains a cream sofa, two rust-colored lounge chairs, small tables, a large potted tree, glass partitions, and a dark green feature wall with a round mirror.",
+      "The space is empty and orderly; the most naturally movable visible element is the tree’s foliage, while polished floor tiles and glass surfaces carry soft reflections."
+    ],
+    "article_context": "The gallery image illustrates the article’s claim that the residential lobby is cozy and comfortably furnished for meeting a courier or talking with neighbors; the animation should emphasize calm, welcoming everyday comfort rather than introduce people or a new event.",
+    "structured_intent": {
+      "editorial_meaning": "The residential lobby feels cozy, calm, and comfortable enough for brief everyday meetings with couriers or neighbors.",
+      "primary_action": "A light indoor airflow gently stirs the visible tree foliage.",
+      "terminal_state": "The foliage has eased to a faint natural flutter while the complete seating area remains clearly visible and inviting.",
+      "semantic_invariant": "The lobby remains an orderly, quiet, and welcoming shared space throughout."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For the full five-second fixed shot, a mild ventilation current moves the tree canopy with moderate, irregular sways that begin immediately and gradually soften. Reflections respond subtly on the nearby glass and glossy tiles without becoming a separate event. The final frames retain a faint residual leaf flutter while the sofa and chairs remain continuously prominent.",
+      "positive_prompt": "The potted tree’s leaves sway gently and continuously in a light indoor airflow, with soft reflections shifting across the glass and polished floor. Fixed camera. By the final frames the foliage eases into a slight natural flutter and the welcoming seating area remains calm and clearly visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:efbbdee091a1223778bd4e814d123ce1e5d6a99287aa22f7abe670e416006d8a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Across five seconds, the foliage moves in one smooth, low-amplitude airflow cycle as the camera performs a minimal forward push motivated by drawing attention to the lobby’s comfortable sofa and chairs. The leaf motion develops evenly and settles near the end, leaving the seating group unobstructed and inviting in the final frame.",
+      "positive_prompt": "A light indoor breeze slowly ripples through the potted tree’s foliage while its reflections drift subtly over the glass and glossy floor. The camera makes a very gentle push toward the comfortable seating area, ending with the leaves softly settling and all seats clearly visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:1eeb236290251d5f433e39ca4f172f258b564f13df3cdf06a22c6e5341165a0c",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Use the shorter four-second shot for a focused, low-amplitude leaf sway paired with one concise forward camera glide toward the seating group. Motion starts at once, remains smooth, and decelerates naturally so the leaves are almost settled at the endpoint, with the cozy sofa-and-chair arrangement still fully readable.",
+      "positive_prompt": "The potted tree’s leaves gently stir in a soft indoor airflow as the camera glides slightly closer to the sofa and two chairs. Subtle reflections shift on the glass and polished floor; by the last frame the foliage is nearly still and the complete seating area remains clearly visible and welcoming.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:863e2059228c699b8943e0097a1708e1bdeeada2010d93e8b8bf338ecd4bb90a",
+      "negative_prompt": null
+    }
+  ]
+}

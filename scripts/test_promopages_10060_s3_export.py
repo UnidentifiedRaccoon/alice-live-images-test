@@ -113,6 +113,7 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             "article_count": 1,
             "image_count": 1,
             "expected_outputs": 3,
+            "merge_contract": exporter.MERGE_CONTRACT,
             "unavailable_articles": [],
             "articles": [
                 {
@@ -125,6 +126,13 @@ class Promopages10060S3ExportTest(unittest.TestCase):
                     "images": [
                         {
                             "image": {"image_id": "01"},
+                            "lite_planning": {
+                                "provenance": {
+                                    "verified": True,
+                                    "agent_id": "clipmaker-lite",
+                                    "models": list(exporter.LITE_MODELS),
+                                }
+                            },
                             "outputs": outputs,
                         }
                     ],
@@ -135,6 +143,57 @@ class Promopages10060S3ExportTest(unittest.TestCase):
         manifest_path = root / "source-manifest.json"
         self.write_json(manifest_path, source_manifest)
         return root, articles_path, [manifest_path], root / "export"
+
+    def make_article02_supersession_fixture(
+        self, directory: str
+    ) -> tuple[Path, Path, list[Path], Path]:
+        root, articles_path, manifest_paths, output_dir = self.make_fixture(directory)
+        article_slug = "02-level-rabotaiu-v-level"
+
+        config = json.loads(articles_path.read_text(encoding="utf-8"))
+        mapping = config["articles"][0]
+        mapping["article_number"] = "02"
+        mapping["article_slug"] = article_slug
+        self.write_json(articles_path, config)
+
+        replacement = json.loads(manifest_paths[0].read_text(encoding="utf-8"))
+        replacement["batch_id"] = "promopages-10060-article-02-20260806-v2"
+        replacement["manifest_role"] = "promopages-10060-article-02"
+        replacement_article = replacement["articles"][0]
+        replacement_article["article_number"] = "02"
+        replacement_article["article_slug"] = article_slug
+        replacement_article["url"] = mapping["url"]
+        for output in replacement_article["images"][0]["outputs"]:
+            output["article_slug"] = article_slug
+        for output in replacement["outputs"]:
+            output["article_slug"] = article_slug
+
+        replacement_path = root / "article-02-v2-manifest.json"
+        self.write_json(replacement_path, replacement)
+        legacy = {
+            "schema_version": 1,
+            "manifest_role": "fixture-legacy-manifest",
+            "ticket": "PROMOPAGES-10060",
+            "agent_id": "clipmaker-lite",
+            "batch_id": "promopages-10060-lite-all-images-20260805-v2",
+            "merge_contract": exporter.MERGE_CONTRACT,
+            "articles": [],
+            "outputs": [],
+            "unavailable_articles": [
+                {
+                    "article_number": "02",
+                    "article_slug": article_slug,
+                    "url": "https://example.test/legacy-404",
+                    "status": "source-unavailable",
+                    "image_count": None,
+                    "error": "Fixture legacy URL returned HTTP 404",
+                }
+            ],
+        }
+        legacy_path = root / "legacy-manifest.json"
+        legacy["manifest_role"] = "promopages-10060-all-images"
+        self.write_json(legacy_path, legacy)
+        return root, articles_path, [legacy_path, replacement_path], output_dir
 
     def build_fixture(
         self,
@@ -152,6 +211,16 @@ class Promopages10060S3ExportTest(unittest.TestCase):
 
     def test_model_directory_map_is_locked(self) -> None:
         self.assertEqual(exporter.MODEL_DIRS, MODEL_DIRS)
+
+    def test_default_manifests_include_article02_v2_sidecar(self) -> None:
+        self.assertEqual(
+            [path.name for path in exporter.DEFAULT_MANIFEST_PATHS],
+            [
+                "promopages-10060-manifest.json",
+                "promopages-10060-campaigns-20260805-v1-manifest.json",
+                "promopages-10060-article-02-20260806-v2-manifest.json",
+            ],
+        )
 
     def test_build_and_verify_small_fixture_use_deterministic_paths(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -229,6 +298,93 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             self.assertEqual(first, second)
             self.assertEqual(first_links, (output_dir / "links.csv").read_bytes())
             self.assertEqual(first_sums, (output_dir / "SHA256SUMS").read_bytes())
+
+    def test_build_allows_exact_article02_v2_supersession(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, articles_path, manifest_paths, output_dir = (
+                self.make_article02_supersession_fixture(directory)
+            )
+            manifest = exporter.build_export(
+                root,
+                articles_path,
+                manifest_paths,
+                output_dir,
+                materialize_mode="copy",
+            )
+            self.assertEqual(manifest["counts"]["articles_with_video"], 1)
+            self.assertEqual(manifest["counts"]["source_unavailable_articles"], 0)
+            self.assertEqual(manifest["unavailable_articles"], [])
+            self.assertEqual(
+                {row["article_slug"] for row in manifest["outputs"]},
+                {"02-level-rabotaiu-v-level"},
+            )
+
+    def test_build_rejects_untrusted_article02_replacement(self) -> None:
+        mutations = {
+            "role": lambda manifest: manifest.update(
+                {"manifest_role": "fixture-final-manifest"}
+            ),
+            "provenance": lambda manifest: manifest["articles"][0]["images"][0][
+                "lite_planning"
+            ]["provenance"].update({"verified": False}),
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
+                root, articles_path, manifest_paths, output_dir = (
+                    self.make_article02_supersession_fixture(directory)
+                )
+                replacement = json.loads(manifest_paths[1].read_text(encoding="utf-8"))
+                mutate(replacement)
+                self.write_json(manifest_paths[1], replacement)
+                with self.assertRaises(exporter.ExportError):
+                    exporter.build_export(
+                        root,
+                        articles_path,
+                        manifest_paths,
+                        output_dir,
+                        materialize_mode="copy",
+                    )
+
+    def test_build_rejects_any_other_available_unavailable_collision(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, articles_path, manifest_paths, output_dir = (
+                self.make_article02_supersession_fixture(directory)
+            )
+            legacy = json.loads(manifest_paths[0].read_text(encoding="utf-8"))
+            legacy["batch_id"] = "unexpected-legacy-batch"
+            self.write_json(manifest_paths[0], legacy)
+            with self.assertRaisesRegex(
+                exporter.ExportError,
+                "conflicting available and unavailable source records",
+            ):
+                exporter.build_export(
+                    root,
+                    articles_path,
+                    manifest_paths,
+                    output_dir,
+                    materialize_mode="copy",
+                )
+
+    def test_build_rejects_duplicate_unavailable_records(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, articles_path, manifest_paths, output_dir = (
+                self.make_article02_supersession_fixture(directory)
+            )
+            duplicate_path = root / "duplicate-legacy-manifest.json"
+            duplicate = json.loads(manifest_paths[0].read_text(encoding="utf-8"))
+            duplicate["batch_id"] = "another-legacy-batch"
+            self.write_json(duplicate_path, duplicate)
+            with self.assertRaisesRegex(
+                exporter.ExportError,
+                "Unavailable article occurs in more than one source manifest",
+            ):
+                exporter.build_export(
+                    root,
+                    articles_path,
+                    [*manifest_paths, duplicate_path],
+                    output_dir,
+                    materialize_mode="copy",
+                )
 
     def test_build_rejects_source_path_traversal(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

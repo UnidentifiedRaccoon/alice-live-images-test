@@ -60,7 +60,7 @@ class ClipmakerLite20x3AcceptanceTest(unittest.TestCase):
         )
         frozen_contract = pipeline.require_frozen_lite_bundle(pipeline.TEST_ROOT)
 
-        self.assertEqual(root_contract["contract_version"], "2.0.6")
+        self.assertEqual(root_contract["contract_version"], "2.0.7")
         self.assertEqual(frozen_contract["contract_version"], "2.0.1")
         self.assertNotEqual(root_contract, frozen_contract)
 

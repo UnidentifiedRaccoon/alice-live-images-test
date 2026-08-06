@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-10",
+  "image_id": "10",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/10.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The potted tree’s leaves gently stir in a soft indoor airflow as the camera glides slightly closer to the sofa and two chairs. Subtle reflections shift on the glass and polished floor; by the last frame the foliage is nearly still and the complete seating area remains clearly visible and welcoming.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c5317502773ae398ea18/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "641a0152ddd638fee99cb78690440b6ee26a9124a4c8ce7bf2cb95336d0e2347",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "yogHIo7YOtDS37XXwpIN",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:11:36Z",
+  "completed_at": "2026-08-06T13:13:29Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 11693643,
+    "sha256": "883b1094eb1d5eefecc13e1ce58e185c1733527e64e9641af51d0a3795aef771"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10-veo-3-1-lite",
+  "lite_result_sha256": "b45c3840aaf9d7b2fd4f592afb117445371dbd93a7fbc25e3bad05e78a986c9b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

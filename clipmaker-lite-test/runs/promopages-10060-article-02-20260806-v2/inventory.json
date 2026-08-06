@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-article-02-frozen-generation-inventory",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "article_config": {
+    "path": "PROMOPAGES-10060/article-02-20260806-v1/articles.json",
+    "sha256": "1a44333eb9cf179bfbd9758c7b84939213677b1cc2ca77c29cba553319b3fe2e"
+  },
+  "extraction_report": {
+    "path": "PROMOPAGES-10060/article-02-20260806-v1/extraction-report.json",
+    "sha256": null
+  },
+  "source_manifest": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/manifest.csv",
+    "sha256": "c7e1373a8523e57b47f3b9589cc1c14acce5386de2fe652904ab471a3937e6fb",
+    "row_count": 11
+  },
+  "contract": {
+    "path": "docs/agents/clipmaker-lite/contract.json",
+    "sha256": "3336d03bb268cb73515256b438a02905fb2455f5875cb028f239bfafa11e0d86",
+    "contract_version": "2.0.7",
+    "runner_version": 7
+  },
+  "generation_routes": {
+    "path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "policy": {
+      "resolution": "exact-model-id",
+      "automatic_fallback": false,
+      "normal_run_discovery": false
+    },
+    "models": {
+      "alibaba/wan-2.2": {
+        "adapter": "eliza-segmind",
+        "transport": "eliza-synchronous-binary",
+        "capacity": 1
+      },
+      "alibaba/wan-2.7": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      },
+      "google/veo-3.1-lite": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      }
+    }
+  },
+  "models": [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 1,
+  "image_count": 11,
+  "expected_outputs": 33,
+  "selection_rule": "in ticket-config order, include every image block from every successfully extracted article, including the cover, in original block order; preserve original article numbers",
+  "generation_policy": {
+    "independent_route_pools": true,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "article_order": "ticket-config-order",
+    "article_barrier": true,
+    "exact_model_routes_only": true,
+    "route_discovery": false,
+    "automatic_fallback": false,
+    "automatic_paid_retries": false,
+    "maximum_paid_submissions_per_job": 1,
+    "aggregate_manifest_writer": "coordinator-only"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 100.0,
+    "hard_budget_cap_usd": 100.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 11.55,
+    "estimated_headroom_usd": 88.45,
+    "planned_paid_submissions": 33,
+    "maximum_paid_submissions": 33,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery"
+  },
+  "unavailable_articles": [],
+  "articles": [
+    {
+      "article_number": "02",
+      "article_slug": "02-level-rabotaiu-v-level",
+      "label": "Level Group — Работаю в Level: почему купил квартиру от нашей компании",
+      "url": "https://level-group.promo.page/media/rabotaiu-v-level-pochemu-kupil-kvartiru-ot-nashei-kompanii-69ef21df12346c2fdfdffecd_0_0",
+      "title": "Работаю в Level: почему купил квартиру от нашей компании",
+      "lead": "История, как я купил квартиру в Левел Групп после шести лет работы в компании",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/content.json",
+        "sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_67d2c36fbc3de24f2683a8ac_67d2c3cd069b5d181c0d1ca7/orig",
+        "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+        "width": 2400,
+        "height": 1600,
+        "duplicate_of": null
+      },
+      "image_count": 11,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_67d2c36fbc3de24f2683a8ac_67d2c3cd069b5d181c0d1ca7/orig",
+            "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+            "width": 2400,
+            "height": 1600,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Мой новый дом, Левел Причальный, находится в районе Хорошёво-Мневники",
+            "source_block_index": 3,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_67d2c36fbc3de24f2683a8ac_67d2c3cd069b5d181c0d1ca7/orig",
+            "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+            "width": 2400,
+            "height": 1600,
+            "duplicate_of": "02/01"
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "Набережная достаточно длинная — три километра, идеально для утренней пробежки или неспешной прогулки перед сном",
+            "source_block_index": 7,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_67d2c36fbc3de24f2683a8ac_67d2c3edbc3de24f2683adf4/orig",
+            "sha256": "338abce422eb1e8a2ba481dc16874dfb85b81019de091ef10a3b0d2882c20aef",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "gallery_image",
+            "caption": "Вот так выглядит внутренний двор. Тут приятно прогуляться, если идти далеко от дома не хочется",
+            "source_block_index": 11,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c41144eba35024255688/orig",
+            "sha256": "6fcba044ef3af582129d91e43d2287f2736223a2fb52d7c0e15102c08d898f84",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "gallery_image",
+            "caption": "Во дворе есть много мест, чтобы посидеть и попить кофе. Его, кстати, можно купить на первом этаже жилого комплекса",
+            "source_block_index": 11,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_67d2c36fbc3de24f2683a8ac_67d2c41de58a2d4e74f548d7/orig",
+            "sha256": "0feffa24b99b14c50db61ce04ffa712c0a1fa4113ba2ea856e052ea1e4da7a63",
+            "width": 1920,
+            "height": 1280,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "Благодаря зонированию в такой квартире можно даже жить вдвоём — у каждого останется пространство, где получится уединиться",
+            "source_block_index": 15,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+            "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+            "width": 1296,
+            "height": 972,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "gallery_image",
+            "caption": "Гардеробная получилась очень просторная. Места хватит не только для одежды: здесь можно хранить сноуборд или, например пылесос",
+            "source_block_index": 17,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/07.png",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c4977502773ae398e464/orig",
+            "sha256": "a892bfe5078665b84c12fcc04f599920d00cd4d776f56b2112740bef48419109",
+            "width": 2056,
+            "height": 1494,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.png",
+            "role": "gallery_image",
+            "caption": "В прихожей хотелось оставить больше свободного пространства, поэтому установил только небольшой шкаф с вешалкой, несколькими полками и зеркалом",
+            "source_block_index": 17,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/08.png",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/08.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_67d2c36fbc3de24f2683a8ac_67d2c4ac7502773ae398e532/orig",
+            "sha256": "b3b32ae3bab4710ea385ba7328ed38d535a560d5ac71491db9b0d883f8326454",
+            "width": 1728,
+            "height": 2304,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.png",
+            "role": "article_image",
+            "caption": "Чтобы чаще любоваться видами на город, я поставил обеденный стол у окна",
+            "source_block_index": 22,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/09.png",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/09.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c5047502773ae398e883/orig",
+            "sha256": "d34c09a20bcee1dab98c58feaf8da9fc7daac01d021b2668c382dabbc250b20b",
+            "width": 2160,
+            "height": 1540,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-09"
+        },
+        {
+          "image": {
+            "order": 10,
+            "image_id": "10",
+            "file": "10.png",
+            "role": "gallery_image",
+            "caption": "В лобби очень уютно — есть мягкие диваны и кресла. Можно с комфортом встретить курьера или пообщаться с соседями",
+            "source_block_index": 25,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/10.png",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/10.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c5317502773ae398ea18/orig",
+            "sha256": "49612e5cd51c6c429d049c7a3d1699c972c6b3264c174c3f0c5b1a049b811c2a",
+            "width": 2400,
+            "height": 1600,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10"
+        },
+        {
+          "image": {
+            "order": 11,
+            "image_id": "11",
+            "file": "11.jpeg",
+            "role": "gallery_image",
+            "caption": "В паркинг я могу спуститься прямо со своего этажа на скоростном лифте",
+            "source_block_index": 25,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/11.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/11.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_67d2c36fbc3de24f2683a8ac_67d2c550069b5d181c0d2af2/orig",
+            "sha256": "7214b849a0d5100d3886b006b40678e7d401c168a179789f5a74a6fd94a68932",
+            "width": 2400,
+            "height": 1600,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-11"
+        }
+      ]
+    }
+  ]
+}

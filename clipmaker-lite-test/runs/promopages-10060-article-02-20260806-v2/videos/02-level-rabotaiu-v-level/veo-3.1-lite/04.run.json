@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-04",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "A light breeze sweeps from the foreground greenery toward the central courtyard, gently stirring leaves and sliding dappled shadows across the paths. Hold a fixed camera; in the final frame, the breeze has reached the central trees and all visible foliage sways softly.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c41144eba35024255688/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "145271864694081e1f902b6db9c1ba4b7b4c4afb77d6648a45bc8f4bed54f228",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "r9RurcChc1J70xQjg5JT",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:08:51Z",
+  "completed_at": "2026-08-06T13:11:15Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 12156106,
+    "sha256": "ab5ad16cc566091617c75ae55017bc066a4e51fd5dfea3b8a64329f5fd64bb74"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-04",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-04-veo-3-1-lite",
+  "lite_result_sha256": "1c92bfc90263ae5bca2fa7896c1a9fbcd640e64f41d09018c862b8a3e0d175e5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

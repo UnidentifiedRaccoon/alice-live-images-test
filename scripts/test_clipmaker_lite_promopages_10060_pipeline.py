@@ -130,6 +130,161 @@ def preserved_native_state():
             setattr(pipeline.native, name, value)
 
 
+class Article02BatchTest(unittest.TestCase):
+    def setUp(self) -> None:
+        pipeline.activate_batch(pipeline.ARTICLE_02_BATCH_ID)
+
+    def tearDown(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+
+    def test_registered_article_02_has_isolated_immutable_namespaces(self) -> None:
+        spec = pipeline.ACTIVE_BATCH_SPEC
+        self.assertEqual(spec.batch_id, pipeline.ARTICLE_02_BATCH_ID)
+        self.assertEqual(
+            spec.dataset_prefix,
+            "PROMOPAGES-10060-article-02-20260806-v1",
+        )
+        self.assertEqual(spec.article_numbers, (2,))
+        self.assertEqual(
+            spec.ticket_config_rel.as_posix(),
+            "PROMOPAGES-10060/article-02-20260806-v1/articles.json",
+        )
+        self.assertEqual(
+            spec.extraction_report_rel.as_posix(),
+            "PROMOPAGES-10060/article-02-20260806-v1/extraction-report.json",
+        )
+        self.assertEqual(
+            spec.source_manifest_rel.as_posix(),
+            "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/"
+            "articles/manifest.csv",
+        )
+        self.assertEqual(
+            spec.source_image_root_rel.as_posix(),
+            "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles",
+        )
+        self.assertEqual(
+            spec.source_context_root_rel.as_posix(),
+            "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles",
+        )
+        self.assertEqual(
+            pipeline.FINAL_MANIFEST_REL.as_posix(),
+            "clipmaker-lite-test/"
+            "promopages-10060-article-02-20260806-v2-manifest.json",
+        )
+        self.assertEqual(
+            pipeline.INVENTORY_MANIFEST_ROLE,
+            "promopages-10060-article-02-frozen-generation-inventory",
+        )
+        self.assertEqual(
+            pipeline.FINAL_MANIFEST_ROLE,
+            "promopages-10060-article-02",
+        )
+        self.assertIn(
+            pipeline.ARTICLE_02_BATCH_ID,
+            pipeline.INVENTORY_MANIFEST_REL.parts,
+        )
+        self.assertIsNone(pipeline.HARD_BUDGET_CAP_USD)
+        self.assertEqual(pipeline.NORMALIZED_INPUT_RETRY_ALLOWLIST, ())
+
+    def test_article_02_cli_selects_registered_uncapped_batch(self) -> None:
+        parser = pipeline.build_parser()
+        args = parser.parse_args(
+            [
+                "--batch",
+                pipeline.ARTICLE_02_BATCH_ID,
+                "inventory",
+                "--budget-cap-usd",
+                "250",
+                "--dry-run",
+            ]
+        )
+        pipeline.activate_batch(args.batch)
+        self.assertEqual(
+            pipeline.parse_budget(args.budget_cap_usd),
+            Decimal("250.00"),
+        )
+
+    def test_ambiguous_submit_is_quarantined_before_earlier_terminal_retry(self) -> None:
+        discovery = pipeline.discover(pipeline.ROOT)
+        earlier_terminal_source = discovery.sources[4]
+        ambiguous_source = discovery.sources[7]
+        ambiguous_model_id = "alibaba/wan-2.2"
+        ambiguous_run_id = pipeline.primary_provider_run_id(
+            ambiguous_source,
+            ambiguous_model_id,
+        )
+
+        def receipt_for(entry, *, root):
+            del root
+            if entry.provider_run_id == ambiguous_run_id:
+                return (
+                    {
+                        "status": "submit-unknown",
+                        "provider_may_be_active": True,
+                        "provider_job_id": None,
+                    },
+                    Path("ambiguous.json"),
+                )
+            status = (
+                "provider-failed"
+                if entry.sample.sample_id == earlier_terminal_source.sample_id
+                and entry.model_id == "google/veo-3.1-lite"
+                else "succeeded"
+            )
+            return (
+                {
+                    "status": status,
+                    "provider_may_be_active": False,
+                    "provider_job_id": None,
+                },
+                Path("terminal.json"),
+            )
+
+        state = pipeline.GenerationArticleState(
+            article_slug=ambiguous_source.article_slug,
+            accepted_outputs=31,
+            terminal_accounted_outputs=32,
+            provider_filtered_outputs=0,
+            expected_outputs=33,
+            unresolved_run_ids=(ambiguous_run_id,),
+        )
+        with preserved_native_state():
+            pipeline.configure_native(discovery.sources, pipeline.ROOT)
+            with (
+                mock.patch.object(
+                    pipeline,
+                    "generation_article_states",
+                    return_value=(state,),
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "_native_run_receipt",
+                    side_effect=receipt_for,
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "_terminal_retry_provider_record",
+                    return_value=None,
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "_ambiguous_submit_retry_envelope",
+                    return_value=None,
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "_normalized_input_retry_envelope",
+                    return_value=None,
+                ),
+            ):
+                pipeline._enforce_ambiguous_submit_retry_order(
+                    discovery.sources,
+                    ambiguous_source,
+                    ambiguous_model_id,
+                    root=pipeline.ROOT,
+                )
+
+
 class CampaignExtensionBatchTest(unittest.TestCase):
     def setUp(self) -> None:
         pipeline.activate_batch(pipeline.CAMPAIGN_EXTENSION_BATCH_ID)

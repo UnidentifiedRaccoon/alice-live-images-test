@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/07.png",
+    "sha256": "a892bfe5078665b84c12fcc04f599920d00cd4d776f56b2112740bef48419109",
+    "width": 2056,
+    "height": 1494
+  },
+  "structured_intent": {
+    "editorial_meaning": "Оживление подчёркивает, что грамотно размещённая гардеробная остаётся просторной, удобной и пригодной для хранения разных вещей даже в компактной квартире.",
+    "primary_action": "Деревянные плечики плавно покачиваются на штанге под лёгким потоком воздуха и постепенно успокаиваются.",
+    "terminal_state": "Плечики почти неподвижны и равномерно расположены на штанге, а свободный проход и открытые места хранения отчётливо видны.",
+    "semantic_invariant": "Гардеробная сохраняет ощущение порядка, простора и свободного полезного места до последнего кадра."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, the wooden hangers make one gentle synchronized sway in a soft draft, then gradually settle nearly still and evenly spaced on the rail by the final frame; the clear walkway and open shelves remain visible throughout.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07/result.json",
+    "sha256": "7c50ceb0846c7947979c91b6a7458288c5caee31fe8fc48b97e0cef74e08c5aa",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "a892bfe5078665b84c12fcc04f599920d00cd4d776f56b2112740bef48419109",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

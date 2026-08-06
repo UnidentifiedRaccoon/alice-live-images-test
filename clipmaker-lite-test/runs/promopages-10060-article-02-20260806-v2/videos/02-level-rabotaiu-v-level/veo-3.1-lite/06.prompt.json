@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-06",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation reinforces how thoughtful zoning makes a small apartment feel open while preserving distinct personal areas.",
+    "primary_action": "A gentle indoor draft moves the layered window curtains in one continuous flow.",
+    "terminal_state": "The curtain movement subsides with the fabric resting slightly parted and both zones still clearly visible.",
+    "semantic_invariant": "The apartment remains a calm, spacious-looking home with two clearly separated functional zones."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, a brief soft draft sends one smooth ripple through the sheer curtains while the heavier drapes sway subtly. The fabric settles slightly parted by the final frame, with the timber divider and both apartment zones still clearly visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-06/result.json",
+    "sha256": "50082e4e0701fcffbf49d967921ce72513015064139727ed7a0f3a368cff08eb",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
