@@ -241,7 +241,7 @@ a {
 .viewSwitch {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: repeat(5, minmax(4.5rem, 1fr));
+  grid-template-columns: repeat(6, minmax(4.5rem, 1fr));
   order: 3;
   overflow-x: auto;
   width: 100%;
@@ -389,7 +389,7 @@ a {
 
   .viewSwitch {
     grid-column: 2;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(6, auto);
     order: initial;
     overflow: visible;
     justify-self: end;
@@ -399,7 +399,7 @@ a {
 
   .viewSwitch a {
     min-height: 3.5rem;
-    padding-inline: var(--space-lg);
+    padding-inline: clamp(var(--space-xs), 1.25vw, var(--space-lg));
   }
 
 }
