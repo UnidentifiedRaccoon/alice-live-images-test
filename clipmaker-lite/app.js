@@ -71,6 +71,10 @@
     `${PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE}/c45a8447813d1b4e4df0/${PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDE_DIRECTORY}`;
   const PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID =
     "promopages-10060-campaigns-20260805-v1-normalized-input-retry-v1-c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7";
+  const LIBRARY_MODE =
+    document.body?.dataset.libraryMode === "ab-preparation"
+      ? "ab-preparation"
+      : "historical";
   const EXPECTED_BASE_ARTICLE_COUNT = 20;
   const EXPECTED_BASE_OUTPUT_COUNT = 60;
   const EXPECTED_ADDITIONAL_ARTICLE_COUNT = 20;
@@ -198,6 +202,7 @@
     previousImage: document.querySelector("#previousImage"),
     nextImage: document.querySelector("#nextImage"),
     imageSelect: document.querySelector("#imageSelect"),
+    galleryFrameNavigator: document.querySelector("#galleryFrameNavigator"),
     navigatorStatus: document.querySelector("#navigatorStatus"),
     datasetError: document.querySelector("#datasetError"),
     datasetErrorText: document.querySelector("#datasetErrorText"),
@@ -218,6 +223,14 @@
   const prefersReducedMotion =
     typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const activeDemoStep = document.querySelector('.viewSwitch a[aria-current="page"]');
+  if (typeof activeDemoStep?.scrollIntoView === "function") {
+    activeDemoStep.scrollIntoView({ block: "nearest", inline: "end" });
+    const demoSteps = activeDemoStep.parentElement;
+    if (activeDemoStep === demoSteps?.lastElementChild) {
+      demoSteps.scrollLeft = demoSteps.scrollWidth;
+    }
+  }
 
   const escapeHtml = (value = "") =>
     String(value).replace(/[&<>"']/g, (character) => {
@@ -1807,6 +1820,16 @@
           typeof image.sha256 === "string" && /^[a-f0-9]{64}$/.test(image.sha256),
           `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет SHA-256.`,
         );
+        if (image.role === "gallery_image") {
+          assert(
+            Number.isInteger(image.source_block_index) && image.source_block_index >= 0,
+            `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет валидного source_block_index галереи.`,
+          );
+          assert(
+            Number.isInteger(image.gallery_index) && image.gallery_index >= 0,
+            `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет валидного gallery_index.`,
+          );
+        }
         assert(
           !knownMediaPaths.has(image.source_path),
           `Путь исходника PROMOPAGES-10060 уже использован: ${image.source_path}.`,
@@ -1998,6 +2021,28 @@
           outputs,
           displayOutputs: outputs,
         };
+      });
+
+      const galleryGroups = new Map();
+      images.forEach((record) => {
+        if (record.image.role !== "gallery_image") return;
+        const groupKey = record.image.source_block_index;
+        if (!galleryGroups.has(groupKey)) galleryGroups.set(groupKey, []);
+        galleryGroups.get(groupKey).push(record.image);
+      });
+      galleryGroups.forEach((galleryImages, sourceBlockIndex) => {
+        const indexes = galleryImages
+          .map((image) => image.gallery_index)
+          .sort((left, right) => left - right);
+        assert(
+          galleryImages.length >= 2,
+          `PROMOPAGES-10060/${article.article_number}: галерея ${sourceBlockIndex} должна содержать минимум два кадра.`,
+        );
+        assert(
+          new Set(indexes).size === indexes.length &&
+            indexes.every((galleryIndex, index) => galleryIndex === index),
+          `PROMOPAGES-10060/${article.article_number}: gallery_index галереи ${sourceBlockIndex} должен быть непрерывным от 0.`,
+        );
       });
 
       const hasWarnings = images.some((record) =>
@@ -3072,8 +3117,73 @@
     return merged;
   };
 
+  const imageFileName = (image) =>
+    image.file || String(image.source_path || "изображение").split("/").pop();
+
+  const frameCountLabel = (count) => {
+    const remainder100 = count % 100;
+    const remainder10 = count % 10;
+    if (remainder100 >= 11 && remainder100 <= 14) return `${count} кадров`;
+    if (remainder10 === 1) return `${count} кадр`;
+    if (remainder10 >= 2 && remainder10 <= 4) return `${count} кадра`;
+    return `${count} кадров`;
+  };
+
+  const galleryBlockLabel = (mediaBlock) =>
+    mediaBlock.galleryTotal > 1
+      ? `Галерея ${mediaBlock.galleryNumber}`
+      : "Галерея";
+
+  const buildMediaBlocks = (records) => {
+    const mediaBlocks = [];
+    const galleryBlocksBySource = new Map();
+
+    records.forEach((record) => {
+      const image = record.image;
+      if (
+        image.role === "gallery_image" &&
+        Number.isInteger(image.source_block_index) &&
+        Number.isInteger(image.gallery_index)
+      ) {
+        const galleryKey = String(image.source_block_index);
+        let mediaBlock = galleryBlocksBySource.get(galleryKey);
+        if (!mediaBlock) {
+          mediaBlock = {
+            id: `gallery:${galleryKey}`,
+            kind: "gallery",
+            sourceBlockIndex: image.source_block_index,
+            records: [],
+          };
+          galleryBlocksBySource.set(galleryKey, mediaBlock);
+          mediaBlocks.push(mediaBlock);
+        }
+        mediaBlock.records.push(record);
+        return;
+      }
+
+      mediaBlocks.push({
+        id: `image:${image.image_id}`,
+        kind: "image",
+        records: [record],
+      });
+    });
+
+    const galleryBlocks = mediaBlocks.filter((mediaBlock) => mediaBlock.kind === "gallery");
+    galleryBlocks.forEach((mediaBlock, galleryIndex) => {
+      mediaBlock.records.sort(
+        (left, right) => left.image.gallery_index - right.image.gallery_index,
+      );
+      mediaBlock.galleryNumber = galleryIndex + 1;
+      mediaBlock.galleryTotal = galleryBlocks.length;
+    });
+    return mediaBlocks;
+  };
+
   const mergeArticleCollections = (historicalArticles, reviewArticles) => {
-    const merged = [...historicalArticles, ...reviewArticles];
+    const merged = [...historicalArticles, ...reviewArticles].map((article) => ({
+      ...article,
+      mediaBlocks: buildMediaBlocks(article.images),
+    }));
     const caseKeys = new Set();
     const articleIdentities = new Set();
     merged.forEach((article) => {
@@ -3099,6 +3209,14 @@
       assert(
         Array.isArray(article.images) && article.images.length > 0,
         `У ${article.case_key} нет изображений для демо.`,
+      );
+      assert(
+        article.mediaBlocks.length > 0 &&
+          article.mediaBlocks.reduce(
+            (total, mediaBlock) => total + mediaBlock.records.length,
+            0,
+          ) === article.images.length,
+        `У ${article.case_key} нарушена группировка медиаблоков.`,
       );
     });
     return merged;
@@ -3179,11 +3297,16 @@
     );
   };
 
-  const resolveRequestedImageIndex = (article, requestedImageId) => {
-    if (!requestedImageId) return -1;
-    return article.images.findIndex(
-      (record) => record.image.image_id === requestedImageId,
-    );
+  const resolveRequestedMediaPosition = (article, requestedImageId) => {
+    if (!requestedImageId) return null;
+    for (let mediaBlockIndex = 0; mediaBlockIndex < article.mediaBlocks.length; mediaBlockIndex += 1) {
+      const mediaBlock = article.mediaBlocks[mediaBlockIndex];
+      const frameIndex = mediaBlock.records.findIndex(
+        (record) => record.image.image_id === requestedImageId,
+      );
+      if (frameIndex >= 0) return { mediaBlockIndex, frameIndex };
+    }
+    return null;
   };
 
   const renderFacts = (facts) => `
@@ -3201,10 +3324,19 @@
     </dl>
   `;
 
-  const renderSource = (article, imageRecord) => {
+  const sourcePositionLabel = (mediaBlock, frameIndex) => {
+    if (mediaBlock.kind === "gallery") {
+      return `${galleryBlockLabel(mediaBlock)} · кадр ${frameIndex + 1} из ${mediaBlock.records.length}`;
+    }
+    const role = mediaBlock.records[0].image.role;
+    if (role === "cover") return "Обложка";
+    return "Изображение в статье";
+  };
+
+  const renderSource = (article, imageRecord, mediaBlock, frameIndex) => {
     const image = imageRecord.image;
     const imageUrl = asAssetUrl(image.source_path, image.delivery);
-    const imageFile = image.file || image.source_path.split("/").pop();
+    const imageFile = imageFileName(image);
     const caseId = asDomIdPart(article.case_key);
     const panelId = `sourcePanel-${caseId}-${image.image_id}`;
     const titleId = `sourceTitle-${caseId}-${image.image_id}`;
@@ -3244,7 +3376,7 @@
           ["Файл", imageFile],
           ["Источник", article.sourceTicket],
           ["Статус", article.sourceStatus],
-          ["Позиция", image.role || "изображение статьи"],
+          ["Позиция", sourcePositionLabel(mediaBlock, frameIndex)],
           ["Геометрия", `${image.width}×${image.height}`],
         ])}
       </article>
@@ -4074,9 +4206,86 @@
 
   let articles = [];
   let activeIndex = 0;
-  let activeImageIndex = 0;
+  let activeMediaBlockIndex = 0;
+  let activeGalleryFrameIndex = 0;
   let renderSequence = 0;
-  const rememberedImageByArticle = new Map();
+  const rememberedSelectionByArticle = new Map();
+  const rememberedFrameByGallery = new Map();
+
+  const galleryMemoryKey = (article, mediaBlock) =>
+    `${article.case_key}:${mediaBlock.id}`;
+
+  const selectionStatusLabel = (mediaBlock, frameIndex) => {
+    const image = mediaBlock.records[frameIndex].image;
+    if (mediaBlock.kind === "gallery") {
+      return `${galleryBlockLabel(mediaBlock).toLocaleLowerCase("ru-RU")}, кадр ${frameIndex + 1} из ${mediaBlock.records.length} (${imageFileName(image)})`;
+    }
+    return `изображение ${image.image_id}`;
+  };
+
+  const mediaBlockOptionLabel = (mediaBlock, mediaBlockIndex) => {
+    const folio = String(mediaBlockIndex + 1).padStart(2, "0");
+    if (mediaBlock.kind === "gallery") {
+      return `${folio} · ${galleryBlockLabel(mediaBlock)} · ${frameCountLabel(mediaBlock.records.length)}`;
+    }
+    const image = mediaBlock.records[0].image;
+    const roleLabel = image.role === "cover" ? "Обложка" : "В статье";
+    return `${folio} · ${imageFileName(image)} · ${roleLabel}`;
+  };
+
+  const renderGalleryFrameNavigator = (article, mediaBlock, frameIndex) => {
+    if (mediaBlock.kind !== "gallery") {
+      elements.galleryFrameNavigator.hidden = true;
+      elements.galleryFrameNavigator.replaceChildren();
+      return null;
+    }
+
+    const galleryId = asDomIdPart(`${article.case_key}-${mediaBlock.id}`);
+    const titleId = `galleryFrameTitle-${galleryId}`;
+    const selectedImage = mediaBlock.records[frameIndex].image;
+    elements.galleryFrameNavigator.hidden = false;
+    elements.galleryFrameNavigator.innerHTML = `
+      <div class="galleryFrameHeader">
+        <strong id="${titleId}">${escapeHtml(galleryBlockLabel(mediaBlock))} · ${escapeHtml(frameCountLabel(mediaBlock.records.length))}</strong>
+        <span>Кадр ${frameIndex + 1} из ${mediaBlock.records.length} · ${escapeHtml(imageFileName(selectedImage))}</span>
+      </div>
+      <div class="galleryFrameRail" role="tablist" aria-labelledby="${titleId}">
+        ${mediaBlock.records
+          .map((record, index) => {
+            const image = record.image;
+            const selected = index === frameIndex;
+            const tabId = `galleryFrameTab-${galleryId}-${index + 1}`;
+            return `
+              <button
+                class="galleryFrameTab"
+                type="button"
+                role="tab"
+                id="${tabId}"
+                aria-selected="${selected}"
+                aria-controls="caseViewport"
+                aria-label="${escapeHtml(galleryBlockLabel(mediaBlock))}, кадр ${index + 1} из ${mediaBlock.records.length}, ${escapeHtml(imageFileName(image))}"
+                tabindex="${selected ? "0" : "-1"}"
+                data-gallery-frame-index="${index}"
+              >
+                <span class="galleryFrameThumb" aria-hidden="true">
+                  <img
+                    src="${escapeHtml(asAssetUrl(image.source_path, image.delivery))}"
+                    alt=""
+                    width="${image.width}"
+                    height="${image.height}"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+                <span class="galleryFrameTabLabel">Кадр ${String(index + 1).padStart(2, "0")}</span>
+              </button>
+            `;
+          })
+          .join("")}
+      </div>
+    `;
+    return `galleryFrameTab-${galleryId}-${frameIndex + 1}`;
+  };
 
   const detachCurrentVideos = () => {
     elements.caseViewport.querySelectorAll("video").forEach((video) => {
@@ -4097,7 +4306,7 @@
     }
   };
 
-  const monitorSelectedVideos = (article, imageRecord, sequence) => {
+  const monitorSelectedVideos = (article, imageRecord, sequence, selectedMediaLabel) => {
     const allVideos = [...elements.caseViewport.querySelectorAll("video")];
     const playbackGroups = [
       {
@@ -4180,14 +4389,14 @@
       if (videos.some((video) => !video.paused && !video.ended)) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: ${group.name} на паузе.`;
+          `${articleIdentityLabel(article)}, ${selectedMediaLabel}: ${group.name} на паузе.`;
         return;
       }
 
       pauseAll();
       button.disabled = true;
       elements.navigatorStatus.textContent =
-        `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: запускаем ${videoCount} видео — ${group.name}…`;
+        `${articleIdentityLabel(article)}, ${selectedMediaLabel}: запускаем ${videoCount} видео — ${group.name}…`;
       videos.forEach((video) => {
         video.currentTime = 0;
       });
@@ -4201,13 +4410,13 @@
       if (results.some((result) => result.status === "rejected")) {
         pauseAll();
         elements.navigatorStatus.textContent =
-          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: браузер не разрешил воспроизвести группу «${group.name}».`;
+          `${articleIdentityLabel(article)}, ${selectedMediaLabel}: браузер не разрешил воспроизвести группу «${group.name}».`;
         return;
       }
 
       setPlaybackState();
       elements.navigatorStatus.textContent =
-        `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: ${videoCount} видео группы «${group.name}» запущены одновременно без звука.`;
+        `${articleIdentityLabel(article)}, ${selectedMediaLabel}: ${videoCount} видео группы «${group.name}» запущены одновременно без звука.`;
     };
 
     const announce = () => {
@@ -4224,13 +4433,13 @@
       });
 
       if (failed.size > 0) {
-        elements.navigatorStatus.textContent = `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: загружено ${ready.size} из ${allVideos.length}, ошибок — ${failed.size}.`;
+        elements.navigatorStatus.textContent = `${articleIdentityLabel(article)}, ${selectedMediaLabel}: загружено ${ready.size} из ${allVideos.length}, ошибок — ${failed.size}.`;
       } else if (ready.size === allVideos.length) {
         elements.navigatorStatus.textContent =
-          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: ${allVideos.length} видео подключены. Серии запускаются отдельно.`;
+          `${articleIdentityLabel(article)}, ${selectedMediaLabel}: ${allVideos.length} видео подключены. Серии запускаются отдельно.`;
       } else {
         elements.navigatorStatus.textContent =
-          `${articleIdentityLabel(article)}, изображение ${imageRecord.image.image_id}: загружаем метаданные · ${ready.size} из ${allVideos.length}.`;
+          `${articleIdentityLabel(article)}, ${selectedMediaLabel}: загружаем метаданные · ${ready.size} из ${allVideos.length}.`;
       }
     };
 
@@ -4286,9 +4495,23 @@
     announce();
   };
 
-  const renderSelection = () => {
+  const renderSelection = ({ focusGalleryTab = false } = {}) => {
     const article = articles[activeIndex];
-    const imageRecord = article.images[activeImageIndex];
+    const mediaBlock = article.mediaBlocks[activeMediaBlockIndex];
+    activeGalleryFrameIndex = Math.min(
+      Math.max(activeGalleryFrameIndex, 0),
+      mediaBlock.records.length - 1,
+    );
+    const imageRecord = mediaBlock.records[activeGalleryFrameIndex];
+    const selectedMediaLabel = selectionStatusLabel(
+      mediaBlock,
+      activeGalleryFrameIndex,
+    );
+    const selectedGalleryTabId = renderGalleryFrameNavigator(
+      article,
+      mediaBlock,
+      activeGalleryFrameIndex,
+    );
     const sequence = ++renderSequence;
     const displayOutputs = imageRecord.displayOutputs || imageRecord.outputs;
     const availablePrimaryVideoCount = availableOutputCount(displayOutputs);
@@ -4310,15 +4533,25 @@
     elements.caseSelect.value = article.case_key;
     elements.previousCase.disabled = activeIndex === 0;
     elements.nextCase.disabled = activeIndex === articles.length - 1;
-    elements.currentImageNumber.textContent = String(activeImageIndex + 1);
-    elements.totalImageNumber.textContent = String(article.images.length);
-    elements.imageSelect.value = imageRecord.image.image_id;
-    elements.previousImage.disabled = activeImageIndex === 0;
-    elements.nextImage.disabled = activeImageIndex === article.images.length - 1;
+    elements.currentImageNumber.textContent = String(activeMediaBlockIndex + 1);
+    elements.totalImageNumber.textContent = String(article.mediaBlocks.length);
+    elements.imageSelect.value = mediaBlock.id;
+    elements.previousImage.disabled = activeMediaBlockIndex === 0;
+    elements.nextImage.disabled = activeMediaBlockIndex === article.mediaBlocks.length - 1;
     elements.caseViewport.setAttribute("aria-busy", "true");
     elements.caseViewport.setAttribute("data-case-key", article.case_key);
     elements.caseViewport.setAttribute("data-source-ticket", article.sourceTicket);
     elements.caseViewport.setAttribute("data-source-status", article.sourceStatus);
+    if (selectedGalleryTabId) {
+      elements.caseViewport.setAttribute("role", "tabpanel");
+      elements.caseViewport.setAttribute(
+        "aria-labelledby",
+        `caseTitle ${selectedGalleryTabId}`,
+      );
+    } else {
+      elements.caseViewport.removeAttribute("role");
+      elements.caseViewport.setAttribute("aria-labelledby", "caseTitle");
+    }
     elements.caseViewport.innerHTML = `
       <div class="comparisonWorkspace">
         <div class="comparisonActions" aria-label="Управление сравнением">
@@ -4345,7 +4578,7 @@
             Показать оригинал
           </button>
         </div>
-        ${renderSource(article, imageRecord)}
+        ${renderSource(article, imageRecord, mediaBlock, activeGalleryFrameIndex)}
         ${researchSummary}
         <div
           class="modelGrid${modelCountClass}${gridClass}${multiRowClass}"
@@ -4360,34 +4593,75 @@
       </div>
     `;
 
-    rememberedImageByArticle.set(article.case_key, activeImageIndex);
+    rememberedSelectionByArticle.set(article.case_key, imageRecord.image.image_id);
+    if (mediaBlock.kind === "gallery") {
+      rememberedFrameByGallery.set(
+        galleryMemoryKey(article, mediaBlock),
+        imageRecord.image.image_id,
+      );
+    }
     updateUrl(article.case_key, imageRecord.image.image_id);
-    monitorSelectedVideos(article, imageRecord, sequence);
+    monitorSelectedVideos(article, imageRecord, sequence, selectedMediaLabel);
+    if (focusGalleryTab && selectedGalleryTabId) {
+      document.getElementById(selectedGalleryTabId)?.focus();
+    }
   };
 
-  const renderImage = (index) => {
+  const renderMediaBlock = (index) => {
     const article = articles[activeIndex];
-    activeImageIndex = Math.min(Math.max(index, 0), article.images.length - 1);
+    activeMediaBlockIndex = Math.min(
+      Math.max(index, 0),
+      article.mediaBlocks.length - 1,
+    );
+    const mediaBlock = article.mediaBlocks[activeMediaBlockIndex];
+    if (mediaBlock.kind === "gallery") {
+      const rememberedImageId = rememberedFrameByGallery.get(
+        galleryMemoryKey(article, mediaBlock),
+      );
+      const rememberedFrameIndex = mediaBlock.records.findIndex(
+        (record) => record.image.image_id === rememberedImageId,
+      );
+      activeGalleryFrameIndex = rememberedFrameIndex >= 0 ? rememberedFrameIndex : 0;
+    } else {
+      activeGalleryFrameIndex = 0;
+    }
     renderSelection();
+  };
+
+  const renderGalleryFrame = (index, { focusGalleryTab = false } = {}) => {
+    const article = articles[activeIndex];
+    const mediaBlock = article.mediaBlocks[activeMediaBlockIndex];
+    if (mediaBlock.kind !== "gallery") return;
+    activeGalleryFrameIndex = Math.min(
+      Math.max(index, 0),
+      mediaBlock.records.length - 1,
+    );
+    renderSelection({ focusGalleryTab });
   };
 
   const renderCase = (index, requestedImageId = null) => {
     activeIndex = Math.min(Math.max(index, 0), articles.length - 1);
     const article = articles[activeIndex];
     elements.imageSelect.replaceChildren(
-      ...article.images.map((record, imageIndex) => {
-        const role = record.image.role === "cover" ? "обложка" : "в статье";
-        return new Option(
-          `${String(imageIndex + 1).padStart(2, "0")} · ${record.image.file} · ${role}`,
-          record.image.image_id,
-        );
-      }),
+      ...article.mediaBlocks.map(
+        (mediaBlock, mediaBlockIndex) =>
+          new Option(
+            mediaBlockOptionLabel(mediaBlock, mediaBlockIndex),
+            mediaBlock.id,
+          ),
+      ),
     );
     elements.imageSelect.disabled = false;
 
-    const requestedIndex = resolveRequestedImageIndex(article, requestedImageId);
-    const rememberedIndex = rememberedImageByArticle.get(article.case_key) ?? 0;
-    activeImageIndex = requestedIndex >= 0 ? requestedIndex : rememberedIndex;
+    const requestedPosition = resolveRequestedMediaPosition(article, requestedImageId);
+    const rememberedImageId = rememberedSelectionByArticle.get(article.case_key);
+    const rememberedPosition = resolveRequestedMediaPosition(article, rememberedImageId);
+    const position = requestedPosition || rememberedPosition || {
+      mediaBlockIndex: 0,
+      frameIndex: 0,
+    };
+    activeMediaBlockIndex = position.mediaBlockIndex;
+    activeGalleryFrameIndex = position.frameIndex;
     renderSelection();
   };
 
@@ -4401,126 +4675,124 @@
     elements.navigatorStatus.textContent = "Сравнение не загружено.";
   };
 
+  const loadHistoricalArticles = async () => {
+    const [baseResponse, additionalResponse, case21Response] = await Promise.all([
+      fetch(BASE_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(ADDITIONAL_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(CASE_21_MANIFEST_PATH, { cache: "no-store" }),
+    ]);
+    if (!baseResponse.ok) {
+      throw new Error(`Базовый манифест вернул HTTP ${baseResponse.status}.`);
+    }
+    if (!additionalResponse.ok) {
+      throw new Error(
+        `Манифест PROMOPAGES-9930 вернул HTTP ${additionalResponse.status}.`,
+      );
+    }
+    if (!case21Response.ok) {
+      throw new Error(`Манифест кейса 21 вернул HTTP ${case21Response.status}.`);
+    }
+
+    const [baseManifest, additionalManifest, case21Manifest] = await Promise.all([
+      baseResponse.json(),
+      additionalResponse.json(),
+      case21Response.json(),
+    ]);
+    const baseArticles = validateBaseManifest(baseManifest);
+    const additionalArticles = validateAdditionalManifest(
+      additionalManifest,
+      baseArticles,
+    );
+    const case21Articles = validateCase21Manifest(
+      case21Manifest,
+      baseArticles,
+      additionalArticles,
+    );
+    return mergeArticleImages(baseArticles, additionalArticles, case21Articles);
+  };
+
+  const loadAbPreparationDataset = async () => {
+    const [reviewResponse, reviewExtensionResponse] = await Promise.all([
+      fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH, { cache: "no-store" }),
+    ]);
+    if (!reviewResponse.ok) {
+      throw new Error(
+        `Манифест PROMOPAGES-10060 вернул HTTP ${reviewResponse.status}.`,
+      );
+    }
+    if (!reviewExtensionResponse.ok && reviewExtensionResponse.status !== 404) {
+      throw new Error(
+        `Campaign extension PROMOPAGES-10060 вернул HTTP ${reviewExtensionResponse.status}.`,
+      );
+    }
+
+    const reviewManifest = await reviewResponse.json();
+    const reviewExtensionManifest = reviewExtensionResponse.ok
+      ? await reviewExtensionResponse.json()
+      : null;
+    const reviewDataset = validatePromopages10060Manifest(reviewManifest, []);
+    const reviewExtensionDataset = reviewExtensionManifest
+      ? validatePromopages10060Manifest(
+          reviewExtensionManifest,
+          reviewDataset.articles,
+          { extension: true },
+        )
+      : {
+          articles: [],
+          unavailableArticles: [],
+          filteredOutputCount: 0,
+          providerUnavailableOutputCount: 0,
+          unavailableOutputCount: 0,
+        };
+    const reviewArticles = [
+      ...reviewDataset.articles,
+      ...reviewExtensionDataset.articles,
+    ];
+    const unavailableArticles = mergeUnavailableArticleCollections(
+      reviewArticles,
+      reviewDataset.unavailableArticles,
+      reviewExtensionDataset.unavailableArticles,
+    );
+    const imageCount =
+      reviewManifest.image_count + (reviewExtensionManifest?.image_count ?? 0);
+    const outputCount =
+      reviewManifest.expected_outputs +
+      (reviewExtensionManifest?.expected_outputs ?? 0);
+    const unavailableOutputCount =
+      reviewDataset.unavailableOutputCount +
+      reviewExtensionDataset.unavailableOutputCount;
+    const filteredOutputCount =
+      reviewDataset.filteredOutputCount +
+      reviewExtensionDataset.filteredOutputCount;
+    const providerUnavailableOutputCount =
+      reviewDataset.providerUnavailableOutputCount +
+      reviewExtensionDataset.providerUnavailableOutputCount;
+    return {
+      reviewArticles,
+      sourceStatus: `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${imageCount} изображений / ${outputCount} результатов · MP4 ${outputCount - unavailableOutputCount} · provider-filtered ${filteredOutputCount} · provider-unavailable ${providerUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`,
+    };
+  };
+
   const initialise = async () => {
     try {
-      const [
-        baseResponse,
-        additionalResponse,
-        case21Response,
-        reviewResponse,
-        reviewExtensionResponse,
-      ] = await Promise.all([
-        fetch(BASE_MANIFEST_PATH, { cache: "no-store" }),
-        fetch(ADDITIONAL_MANIFEST_PATH, { cache: "no-store" }),
-        fetch(CASE_21_MANIFEST_PATH, { cache: "no-store" }),
-        fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
-        fetch(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH, { cache: "no-store" }),
-      ]);
-      if (!baseResponse.ok) {
-        throw new Error(`Базовый манифест вернул HTTP ${baseResponse.status}.`);
-      }
-      if (!additionalResponse.ok) {
-        throw new Error(
-          `Манифест PROMOPAGES-9930 вернул HTTP ${additionalResponse.status}.`,
-        );
-      }
-      if (!case21Response.ok) {
-        throw new Error(`Манифест кейса 21 вернул HTTP ${case21Response.status}.`);
-      }
-      if (!reviewResponse.ok && reviewResponse.status !== 404) {
-        throw new Error(
-          `Манифест PROMOPAGES-10060 вернул HTTP ${reviewResponse.status}.`,
-        );
-      }
-      if (!reviewExtensionResponse.ok && reviewExtensionResponse.status !== 404) {
-        throw new Error(
-          `Campaign extension PROMOPAGES-10060 вернул HTTP ${reviewExtensionResponse.status}.`,
-        );
-      }
-      if (reviewExtensionResponse.ok && !reviewResponse.ok) {
-        throw new Error(
-          "Campaign extension PROMOPAGES-10060 опубликован без обязательного legacy sidecar.",
-        );
+      let datasetSourceStatus;
+      if (LIBRARY_MODE === "ab-preparation") {
+        const loadedReview = await loadAbPreparationDataset();
+        articles = mergeArticleCollections([], loadedReview.reviewArticles);
+        datasetSourceStatus = loadedReview.sourceStatus;
+      } else {
+        const historicalArticles = await loadHistoricalArticles();
+        articles = mergeArticleCollections(historicalArticles, []);
+        const historicalCounts = datasetCounts(articles);
+        datasetSourceStatus = `История Clipmaker Lite · ${historicalCounts.articleCount} статей / ${historicalCounts.imageCount} изображений / ${historicalCounts.videoCount} результатов`;
       }
 
-      const [baseManifest, additionalManifest, case21Manifest] = await Promise.all([
-        baseResponse.json(),
-        additionalResponse.json(),
-        case21Response.json(),
-      ]);
-      const reviewManifest = reviewResponse.ok ? await reviewResponse.json() : null;
-      const reviewExtensionManifest = reviewExtensionResponse.ok
-        ? await reviewExtensionResponse.json()
-        : null;
-      const baseArticles = validateBaseManifest(baseManifest);
-      const additionalArticles = validateAdditionalManifest(
-        additionalManifest,
-        baseArticles,
-      );
-      const case21Articles = validateCase21Manifest(
-        case21Manifest,
-        baseArticles,
-        additionalArticles,
-      );
-      const historicalArticles = mergeArticleImages(
-        baseArticles,
-        additionalArticles,
-        case21Articles,
-      );
-      const reviewDataset = reviewManifest
-        ? validatePromopages10060Manifest(reviewManifest, historicalArticles)
-        : {
-            articles: [],
-            unavailableArticles: [],
-            filteredOutputCount: 0,
-            providerUnavailableOutputCount: 0,
-            unavailableOutputCount: 0,
-          };
-      const reviewExtensionDataset = reviewExtensionManifest
-        ? validatePromopages10060Manifest(
-            reviewExtensionManifest,
-            [...historicalArticles, ...reviewDataset.articles],
-            { extension: true },
-          )
-        : {
-            articles: [],
-            unavailableArticles: [],
-            filteredOutputCount: 0,
-            providerUnavailableOutputCount: 0,
-            unavailableOutputCount: 0,
-          };
-      const reviewArticles = [
-        ...reviewDataset.articles,
-        ...reviewExtensionDataset.articles,
-      ];
-      const unavailableArticles = mergeUnavailableArticleCollections(
-        reviewArticles,
-        reviewDataset.unavailableArticles,
-        reviewExtensionDataset.unavailableArticles,
-      );
-      articles = mergeArticleCollections(historicalArticles, reviewArticles);
       const counts = datasetCounts(articles);
       elements.articleCountSummary.textContent = String(counts.articleCount);
       elements.imageCountSummary.textContent = String(counts.imageCount);
       elements.videoCountSummary.textContent = String(counts.videoCount);
-      const reviewImageCount =
-        (reviewManifest?.image_count ?? 0) +
-        (reviewExtensionManifest?.image_count ?? 0);
-      const reviewOutputCount =
-        (reviewManifest?.expected_outputs ?? 0) +
-        (reviewExtensionManifest?.expected_outputs ?? 0);
-      const reviewUnavailableOutputCount =
-        reviewDataset.unavailableOutputCount +
-        reviewExtensionDataset.unavailableOutputCount;
-      const reviewFilteredOutputCount =
-        reviewDataset.filteredOutputCount +
-        reviewExtensionDataset.filteredOutputCount;
-      const reviewProviderUnavailableOutputCount =
-        reviewDataset.providerUnavailableOutputCount +
-        reviewExtensionDataset.providerUnavailableOutputCount;
-      elements.datasetSourceStatus.textContent = reviewManifest
-        ? `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${reviewImageCount} изображений / ${reviewOutputCount} результатов · MP4 ${reviewOutputCount - reviewUnavailableOutputCount} · provider-filtered ${reviewFilteredOutputCount} · provider-unavailable ${reviewProviderUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`
-        : "PROMOPAGES-10060 · sidecar ещё не опубликован; показана историческая выборка";
+      elements.datasetSourceStatus.textContent = datasetSourceStatus;
       elements.caseSelect.replaceChildren(
         ...articles.map(
           (article) =>
@@ -4545,8 +4817,12 @@
 
   elements.previousCase.addEventListener("click", () => renderCase(activeIndex - 1));
   elements.nextCase.addEventListener("click", () => renderCase(activeIndex + 1));
-  elements.previousImage.addEventListener("click", () => renderImage(activeImageIndex - 1));
-  elements.nextImage.addEventListener("click", () => renderImage(activeImageIndex + 1));
+  elements.previousImage.addEventListener("click", () =>
+    renderMediaBlock(activeMediaBlockIndex - 1),
+  );
+  elements.nextImage.addEventListener("click", () =>
+    renderMediaBlock(activeMediaBlockIndex + 1),
+  );
   elements.caseSelect.addEventListener("change", () => {
     const selectedIndex = articles.findIndex(
       (article) => article.case_key === elements.caseSelect.value,
@@ -4555,10 +4831,35 @@
   });
   elements.imageSelect.addEventListener("change", () => {
     const article = articles[activeIndex];
-    const selectedIndex = article.images.findIndex(
-      (record) => record.image.image_id === elements.imageSelect.value,
+    const selectedIndex = article.mediaBlocks.findIndex(
+      (mediaBlock) => mediaBlock.id === elements.imageSelect.value,
     );
-    if (selectedIndex >= 0) renderImage(selectedIndex);
+    if (selectedIndex >= 0) renderMediaBlock(selectedIndex);
+  });
+  elements.galleryFrameNavigator.addEventListener("click", (event) => {
+    const tab = event.target.closest?.("[data-gallery-frame-index]");
+    if (!tab) return;
+    renderGalleryFrame(Number(tab.dataset.galleryFrameIndex), {
+      focusGalleryTab: true,
+    });
+  });
+  elements.galleryFrameNavigator.addEventListener("keydown", (event) => {
+    const tab = event.target.closest?.("[data-gallery-frame-index]");
+    if (!tab || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      return;
+    }
+    const article = articles[activeIndex];
+    const mediaBlock = article.mediaBlocks[activeMediaBlockIndex];
+    if (mediaBlock.kind !== "gallery") return;
+    const frameCount = mediaBlock.records.length;
+    const currentIndex = Number(tab.dataset.galleryFrameIndex);
+    let nextIndex = currentIndex;
+    if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + frameCount) % frameCount;
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % frameCount;
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = frameCount - 1;
+    event.preventDefault();
+    renderGalleryFrame(nextIndex, { focusGalleryTab: true });
   });
 
   initialise();
