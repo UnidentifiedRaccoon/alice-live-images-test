@@ -1429,11 +1429,12 @@ class GitHubPagesSiteTest(unittest.TestCase):
         total_bytes = pages.site_size(ROOT, paths)
 
         self.assertEqual(
-            len(paths), 251 + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
+            len(paths), 252 + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
         )
         self.assertGreater(total_bytes, 900_000_000)
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
         self.assertIn(Path("clipmaker-lite/index.html"), paths)
+        self.assertIn(Path("ab-preparation/index.html"), paths)
         self.assertIn(Path("clipmaker-lite-test/manifest.json"), paths)
         self.assertIn(
             Path("clipmaker-lite-test/promopages-9930-manifest.json"), paths

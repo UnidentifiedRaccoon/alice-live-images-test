@@ -36,7 +36,7 @@ const loadHooks = () => {
         "  globalThis.__datasetCounts = datasetCounts;\n" +
         "  globalThis.__availableOutputCount = availableOutputCount;\n" +
         "  globalThis.__resolveRequestedArticleIndex = resolveRequestedArticleIndex;\n\n" +
-        "  globalThis.__resolveRequestedImageIndex = resolveRequestedImageIndex;\n\n" +
+        "  globalThis.__resolveRequestedMediaPosition = resolveRequestedMediaPosition;\n\n" +
         "  const renderFacts",
     )
     .replace(
@@ -1119,9 +1119,15 @@ test("PROMOPAGES-10060 uses a collision-safe case key and keeps legacy links his
     ),
     1,
   );
-  assert.equal(hooks.__resolveRequestedImageIndex(review.articles[0], "04"), 3);
-  assert.equal(hooks.__resolveRequestedImageIndex(review.articles[1], "04"), 3);
-  assert.equal(hooks.__resolveRequestedImageIndex(review.articles[0], "99"), -1);
+  assert.deepEqual(
+    { ...hooks.__resolveRequestedMediaPosition(merged[1], "04") },
+    { mediaBlockIndex: 3, frameIndex: 0 },
+  );
+  assert.deepEqual(
+    { ...hooks.__resolveRequestedMediaPosition(merged[2], "04") },
+    { mediaBlockIndex: 3, frameIndex: 0 },
+  );
+  assert.equal(hooks.__resolveRequestedMediaPosition(merged[1], "99"), null);
   const counts = hooks.__datasetCounts(merged);
   assert.equal(counts.articleCount, 14);
   assert.equal(counts.imageCount, 93);
@@ -1432,7 +1438,7 @@ test("normalized-input validation fails closed on source, delta, request, policy
   );
 });
 
-test("all-image sidecar produces the final 34 / 133 / 415 demo totals", () => {
+test("historical library and A/B preparation expose separate dataset totals", () => {
   const hooks = loadHooks();
   let historicalImageNumber = 0;
   let researchVideoNumber = 0;
@@ -1465,18 +1471,30 @@ test("all-image sidecar produces the final 34 / 133 / 415 demo totals", () => {
     reviewManifest(),
     historical,
   );
-  const merged = hooks.__mergeArticleCollections(historical, review.articles);
-  const counts = hooks.__datasetCounts(merged);
+  const historicalLibrary = hooks.__mergeArticleCollections(historical, []);
+  const abPreparation = hooks.__mergeArticleCollections([], review.articles);
+  const historicalCounts = hooks.__datasetCounts(historicalLibrary);
+  const abPreparationCounts = hooks.__datasetCounts(abPreparation);
 
   assert.equal(historicalImageNumber, 41);
   assert.equal(researchVideoNumber, 16);
   assert.deepEqual(
-    { ...counts },
+    { ...historicalCounts },
     {
-      articleCount: 34,
-      imageCount: 133,
-      videoCount: 415,
-      availableVideoCount: 414,
+      articleCount: 21,
+      imageCount: 41,
+      videoCount: 139,
+      availableVideoCount: 139,
+      unavailableOutputCount: 0,
+    },
+  );
+  assert.deepEqual(
+    { ...abPreparationCounts },
+    {
+      articleCount: 13,
+      imageCount: 92,
+      videoCount: 276,
+      availableVideoCount: 275,
       unavailableOutputCount: 1,
     },
   );
