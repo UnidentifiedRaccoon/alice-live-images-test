@@ -1,3 +1,4 @@
+import hashlib
 import json
 import tempfile
 import unittest
@@ -14,6 +15,9 @@ ADDITIONAL_MANIFEST_PATH = (
 CASE_21_MANIFEST_PATH = ROOT / "clipmaker-lite-test" / "case-21-manifest.json"
 PROMOPAGES_10060_MANIFEST_PATH = (
     ROOT / "clipmaker-lite-test" / "promopages-10060-manifest.json"
+)
+PROMOPAGES_10060_ARTICLE_02_PATH = (
+    ROOT / pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH
 )
 PROMOPAGES_10060_EXTENSION_PATH = (
     ROOT
@@ -421,12 +425,64 @@ def _promopages_10060_fixture(first_source_delivery=None):
         "unavailable_articles": [
             {
                 "article_number": "02",
+                "article_slug": "02-level-rabotaiu-v-level",
                 "status": "source-unavailable",
                 "error": "Public article is unavailable.",
             }
         ],
     }
     return manifest, source_paths, video_paths
+
+
+def _promopages_10060_article_02_fixture():
+    manifest = json.loads(PROMOPAGES_10060_ARTICLE_02_PATH.read_text(encoding="utf-8"))
+    source_paths = [
+        record["image"]["source_path"]
+        for record in manifest["articles"][0]["images"]
+    ]
+    video_paths = [
+        output["video_path"]
+        for record in manifest["articles"][0]["images"]
+        for output in record["outputs"]
+    ]
+    return manifest, source_paths, video_paths
+
+
+def _materialize_article_02_raw_fixture(root, manifest):
+    flat_outputs = {
+        (output["article_slug"], output["image_id"], output["model_id"]): output
+        for output in manifest["outputs"]
+    }
+    for record in manifest["articles"][0]["images"]:
+        image = record["image"]
+        source_bytes = f"article-02-source-{image['image_id']}".encode()
+        source_path = root / image["source_path"]
+        source_path.parent.mkdir(parents=True, exist_ok=True)
+        source_path.write_bytes(source_bytes)
+        image["sha256"] = hashlib.sha256(source_bytes).hexdigest()
+        record["lite_planning"]["provenance"]["source_image_sha256"] = image[
+            "sha256"
+        ]
+        if image["image_id"] == "01":
+            manifest["articles"][0]["selected_image"] = dict(image)
+        for output in record["outputs"]:
+            video_bytes = (
+                f"article-02-video-{image['image_id']}-{output['model_id']}"
+            ).encode()
+            video_path = root / output["video_path"]
+            video_path.parent.mkdir(parents=True, exist_ok=True)
+            video_path.write_bytes(video_bytes)
+            media = dict(output["media"])
+            media.update(
+                {
+                    "bytes": len(video_bytes),
+                    "sha256": hashlib.sha256(video_bytes).hexdigest(),
+                }
+            )
+            output["media"] = media
+            flat_outputs[
+                (output["article_slug"], output["image_id"], output["model_id"])
+            ]["media"] = dict(media)
 
 
 def _promopages_10060_campaign_extension_fixture():
@@ -1085,6 +1141,183 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
 
 
 class GitHubPagesSiteTest(unittest.TestCase):
+    def test_article_02_replacement_is_published_but_media_stays_raw(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            _write_promopages_collection_fixture(
+                root, include_campaign_extension=False
+            )
+            article_02, source_paths, video_paths = (
+                _promopages_10060_article_02_fixture()
+            )
+            sidecar_path = root / pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH
+            sidecar_path.parent.mkdir(parents=True, exist_ok=True)
+            _materialize_article_02_raw_fixture(root, article_02)
+            sidecar_path.write_text(json.dumps(article_02), encoding="utf-8")
+
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+                "clipmaker-lite-test/promopages-10060-manifest.json",
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+            ):
+                paths = pages.collect_site_paths(root)
+
+            self.assertIn(pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH, paths)
+            for relative_path in [*source_paths, *video_paths]:
+                self.assertNotIn(Path(relative_path), paths)
+
+    def test_article_02_replacement_rejects_raw_media_hash_drift(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            _write_promopages_collection_fixture(
+                root, include_campaign_extension=False
+            )
+            article_02, source_paths, _ = _promopages_10060_article_02_fixture()
+            _materialize_article_02_raw_fixture(root, article_02)
+            sidecar_path = root / pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH
+            sidecar_path.parent.mkdir(parents=True, exist_ok=True)
+            sidecar_path.write_text(json.dumps(article_02), encoding="utf-8")
+            (root / source_paths[0]).write_bytes(b"corrupted")
+
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+                "clipmaker-lite-test/promopages-10060-manifest.json",
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+                self.assertRaisesRegex(ValueError, "raw source hash differs"),
+            ):
+                pages.collect_site_paths(root)
+
+    def test_article_02_replacement_requires_exact_legacy_unavailable_target(self):
+        article_02, source_paths, video_paths = (
+            _promopages_10060_article_02_fixture()
+        )
+
+        legacy, _, _ = _promopages_10060_fixture()
+        legacy["unavailable_articles"][0]["article_slug"] = "02-wrong-article"
+        with self.assertRaisesRegex(ValueError, "exact legacy unavailable target"):
+            pages._collect_promopages_10060_article_02_paths(
+                article_02, legacy, set()
+            )
+
+        legacy, _, _ = _promopages_10060_fixture()
+        legacy["articles"].append(
+            {
+                "article_number": "02",
+                "article_slug": pages.PROMOPAGES_10060_ARTICLE_02_SLUG,
+                "images": [],
+            }
+        )
+        with self.assertRaisesRegex(ValueError, "available legacy article"):
+            pages._collect_promopages_10060_article_02_paths(
+                article_02, legacy, set()
+            )
+
+        legacy, _, _ = _promopages_10060_fixture()
+        for collision_path in (source_paths[0], video_paths[0]):
+            with self.subTest(collision_path=collision_path):
+                with self.assertRaisesRegex(ValueError, "path collision"):
+                    pages._collect_promopages_10060_article_02_paths(
+                        article_02, legacy, {Path(collision_path)}
+                    )
+
+    def test_article_02_replacement_identity_and_namespaces_fail_closed(self):
+        legacy, _, _ = _promopages_10060_fixture()
+
+        def first_image(manifest):
+            return manifest["articles"][0]["images"][0]["image"]
+
+        def first_output(manifest):
+            return manifest["articles"][0]["images"][0]["outputs"][0]
+
+        mutations = {
+            "role": (
+                "identity",
+                lambda manifest: manifest.update({"manifest_role": "wrong-role"}),
+            ),
+            "batch": (
+                "identity",
+                lambda manifest: manifest.update(
+                    {"batch_id": "promopages-10060-article-02-20260806-v1"}
+                ),
+            ),
+            "article_number": (
+                "registered article 02",
+                lambda manifest: manifest["articles"][0].update(
+                    {"article_number": "03"}
+                ),
+            ),
+            "title": (
+                "registered article 02",
+                lambda manifest: manifest["articles"][0].update(
+                    {"title": "Подменённый заголовок"}
+                ),
+            ),
+            "context_dataset": (
+                "context_path is outside dataset v1",
+                lambda manifest: manifest["articles"][0].update(
+                    {
+                        "context_path": manifest["articles"][0]["context_path"].replace(
+                            "20260806-v1", "20260806-v2"
+                        )
+                    }
+                ),
+            ),
+            "source_dataset": (
+                "source paths are outside dataset v1",
+                lambda manifest: first_image(manifest).update(
+                    {
+                        "source_path": first_image(manifest)["source_path"].replace(
+                            "20260806-v1", "20260806-v2"
+                        )
+                    }
+                ),
+            ),
+            "retry_namespace": (
+                "terminal_provider_retry namespace",
+                lambda manifest: manifest["generation_policy"][
+                    "terminal_provider_retry"
+                ].update(
+                    {
+                        "namespace": (
+                            "clipmaker-lite-test/runs/"
+                            "promopages-10060-article-02-20260806-v1/"
+                            "terminal-provider-retries-v1"
+                        )
+                    }
+                ),
+            ),
+            "video_namespace": (
+                "video_path escaped its namespace",
+                lambda manifest: first_output(manifest).update(
+                    {
+                        "video_path": (
+                            "clipmaker-lite-test/runs/"
+                            "promopages-10060-article-02-20260806-v1/videos/"
+                            "02-level-rabotaiu-v-level/wan-2.2/01.mp4"
+                        )
+                    }
+                ),
+            ),
+        }
+        for name, (error, mutate) in mutations.items():
+            with self.subTest(name=name):
+                article_02, _, _ = _promopages_10060_article_02_fixture()
+                mutate(article_02)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._collect_promopages_10060_article_02_paths(
+                        article_02, legacy, set()
+                    )
+
     def test_campaign_extension_is_optional_and_missing_sidecar_is_ignored(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
@@ -1429,7 +1662,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
         total_bytes = pages.site_size(ROOT, paths)
 
         self.assertEqual(
-            len(paths), 252 + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
+            len(paths),
+            252
+            + int(PROMOPAGES_10060_ARTICLE_02_PATH.is_file())
+            + int(PROMOPAGES_10060_EXTENSION_PATH.is_file()),
         )
         self.assertGreater(total_bytes, 900_000_000)
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
@@ -1443,6 +1679,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
         self.assertIn(
             Path("clipmaker-lite-test/promopages-10060-manifest.json"), paths
         )
+        if PROMOPAGES_10060_ARTICLE_02_PATH.is_file():
+            self.assertIn(
+                pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH, paths
+            )
         if PROMOPAGES_10060_EXTENSION_PATH.is_file():
             self.assertIn(
                 pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH, paths

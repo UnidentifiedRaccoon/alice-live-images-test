@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/05.jpeg",
+    "sha256": "0feffa24b99b14c50db61ce04ffa712c0a1fa4113ba2ea856e052ea1e4da7a63",
+    "width": 1920,
+    "height": 1280
+  },
+  "structured_intent": {
+    "editorial_meaning": "Благоустроенный двор предлагает спокойное и приятное место для повседневного отдыха рядом с домом.",
+    "primary_action": "Подвесные кресла и столики мягко покачиваются на цепях.",
+    "terminal_state": "Подвесные конструкции находятся почти в центральном положении с едва заметным остаточным покачиванием.",
+    "semantic_invariant": "Двор остаётся спокойным, уютным и располагающим к отдыху до последнего кадра."
+  },
+  "prompt": {
+    "positive": "The hanging seats and tables make a small, smooth forward-and-back sway while the chains respond naturally. Fixed camera. In the last frame they are nearly centered with only a trace of motion, and the courtyard remains calm and welcoming.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05/result.json",
+    "sha256": "16cbad6c9432cff30e394dbfddabee7b9b713f9b6045c18ae5e5fd5d7d34c75c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "0feffa24b99b14c50db61ce04ffa712c0a1fa4113ba2ea856e052ea1e4da7a63",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

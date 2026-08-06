@@ -22,8 +22,10 @@ import csv
 import fcntl
 import hashlib
 import json
+import shutil
 import subprocess
 import sys
+import tempfile
 from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -46,15 +48,25 @@ from scripts import video_generation_pipeline as transport  # noqa: E402
 TICKET = "PROMOPAGES-10060"
 LEGACY_BATCH_ID = "promopages-10060-lite-all-images-20260805-v2"
 CAMPAIGN_EXTENSION_BATCH_ID = "promopages-10060-campaigns-20260805-v1"
+ARTICLE_02_BATCH_ID = "promopages-10060-article-02-20260806-v2"
 AGENT_ID = "clipmaker-lite"
 MODEL_IDS = (
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
 )
-REQUIRED_CONTRACT_VERSION = "2.0.6"
+REQUIRED_CONTRACT_VERSION = "2.0.7"
 
 CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
+FROZEN_206_CONTRACT_REL = Path(
+    "docs/agents/clipmaker-lite/contracts/contract-2.0.6.json"
+)
+FROZEN_206_CONTRACT_SHA256 = (
+    "ad0e5f3026d27a4f3c25b5c344ef678a2f10b3eb92848f24eec5e28566a2f98c"
+)
+FROZEN_206_BATCH_IDS = frozenset(
+    {LEGACY_BATCH_ID, CAMPAIGN_EXTENSION_BATCH_ID}
+)
 ROUTES_REL = Path("docs/agents/clipmaker-lite/generation-routes.json")
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
 
@@ -362,6 +374,49 @@ BATCH_SPECS = {
         normalized_input_retry_allowlist=(
             CAMPAIGN_EXTENSION_NORMALIZED_INPUT_TARGETS
         ),
+    ),
+    ARTICLE_02_BATCH_ID: BatchSpec(
+        batch_id=ARTICLE_02_BATCH_ID,
+        dataset_prefix="PROMOPAGES-10060-article-02-20260806-v1",
+        article_numbers=(2,),
+        ticket_config_rel=Path(
+            "PROMOPAGES-10060/article-02-20260806-v1/articles.json"
+        ),
+        extraction_report_rel=Path(
+            "PROMOPAGES-10060/article-02-20260806-v1/extraction-report.json"
+        ),
+        source_manifest_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/"
+            "articles/manifest.csv"
+        ),
+        source_image_root_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles"
+        ),
+        source_context_root_rel=Path(
+            "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles"
+        ),
+        final_manifest_rel=Path(
+            "clipmaker-lite-test/"
+            "promopages-10060-article-02-20260806-v2-manifest.json"
+        ),
+        inventory_manifest_role=(
+            "promopages-10060-article-02-frozen-generation-inventory"
+        ),
+        final_manifest_role="promopages-10060-article-02",
+        terminal_retry_manifest_role=(
+            "promopages-10060-article-02-terminal-provider-retry"
+        ),
+        ambiguous_retry_manifest_role=(
+            "promopages-10060-article-02-ambiguous-submit-retry"
+        ),
+        normalized_retry_manifest_role=(
+            "promopages-10060-article-02-normalized-input-retry"
+        ),
+        normalized_asset_manifest_role=(
+            "promopages-10060-article-02-normalized-input-asset"
+        ),
+        hard_budget_cap_usd=None,
+        normalized_input_retry_allowlist=(),
     ),
 }
 
@@ -881,6 +936,169 @@ def read_json(path: Path) -> Any:
         raise PipelineError(f"Missing JSON file: {path}") from exc
     except json.JSONDecodeError as exc:
         raise PipelineError(f"Invalid JSON in {path}: {exc}") from exc
+
+
+def _safe_workspace_relative(value: Any, *, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise PipelineError(f"{label} is missing")
+    pure = PurePosixPath(value)
+    if pure.is_absolute() or ".." in pure.parts:
+        raise PipelineError(f"{label} escapes the workspace: {value}")
+    return Path(*pure.parts)
+
+
+def _copy_frozen_regular(source: Path, destination: Path, *, label: str) -> None:
+    if not source.is_file() or source.is_symlink():
+        raise PipelineError(f"{label} is missing or unsafe: {source}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, destination)
+
+
+def frozen_206_provenance_summary(
+    workspace: Path,
+    run_id: str,
+) -> dict[str, Any]:
+    """Verify historical 2.0.6 jobs with their exact archived contract.
+
+    The current executable lock may advance, but completed jobs must remain
+    verifiable against the contract and execution receipt that authored them.
+    A small temporary workspace contains only the exact frozen contract,
+    digest-bound current support files (unchanged since 2.0.6), the requested
+    job directory, and its two immutable inputs.  The frozen runner then
+    performs the normal fail-closed provenance command without any bypass.
+    """
+
+    workspace = workspace.resolve()
+    if not any(run_id.startswith(f"{batch_id}-") for batch_id in FROZEN_206_BATCH_IDS):
+        raise PipelineError(f"Run does not belong to a frozen 2.0.6 batch: {run_id}")
+    archived_contract_path = workspace / FROZEN_206_CONTRACT_REL
+    contract = read_json(archived_contract_path)
+    if (
+        not isinstance(contract, dict)
+        or contract.get("agent_id") != AGENT_ID
+        or contract.get("contract_version") != "2.0.6"
+    ):
+        raise PipelineError("Archived Clipmaker Lite 2.0.6 contract is invalid")
+    if (
+        runner.sha256_bytes(runner.canonical_json_bytes(contract))
+        != FROZEN_206_CONTRACT_SHA256
+    ):
+        raise PipelineError("Archived Clipmaker Lite 2.0.6 contract digest changed")
+
+    run_rel = ARTIFACT_NAMESPACE / run_id
+    run_directory = workspace / run_rel
+    if not run_directory.is_dir() or run_directory.is_symlink():
+        raise PipelineError(f"Historical Lite run directory is missing: {run_directory}")
+    job_path = run_directory / "job.json"
+    job = read_json(job_path)
+    if not isinstance(job, dict) or job.get("job_id") != run_id:
+        raise PipelineError(f"Historical Lite job identity differs: {run_id}")
+    inputs = job.get("inputs")
+    if not isinstance(inputs, dict):
+        raise PipelineError(f"Historical Lite job inputs are missing: {run_id}")
+    source_image = inputs.get("source_image")
+    article_context = inputs.get("article_context")
+    if not isinstance(source_image, dict) or not isinstance(article_context, dict):
+        raise PipelineError(f"Historical Lite input bindings are invalid: {run_id}")
+    input_relatives = (
+        _safe_workspace_relative(source_image.get("path"), label="source image path"),
+        _safe_workspace_relative(article_context.get("path"), label="article context path"),
+    )
+
+    runner_record = contract.get("runner")
+    base_instruction = contract.get("base_instruction")
+    models = contract.get("models")
+    if (
+        not isinstance(runner_record, dict)
+        or not isinstance(base_instruction, dict)
+        or not isinstance(models, dict)
+    ):
+        raise PipelineError("Archived Clipmaker Lite support bindings are invalid")
+    support_relatives = [
+        _safe_workspace_relative(runner_record.get("path"), label="runner path"),
+        _safe_workspace_relative(
+            base_instruction.get("path"),
+            label="base instruction path",
+        ),
+    ]
+    for model_id in MODEL_IDS:
+        model = models.get(model_id)
+        if not isinstance(model, dict):
+            raise PipelineError(f"Archived model binding is missing: {model_id}")
+        support_relatives.append(
+            _safe_workspace_relative(
+                model.get("spec_path"),
+                label=f"{model_id} spec path",
+            )
+        )
+
+    with tempfile.TemporaryDirectory(prefix="clipmaker-lite-206-provenance-") as directory:
+        frozen_root = Path(directory)
+        _copy_frozen_regular(
+            archived_contract_path,
+            frozen_root / CONTRACT_REL,
+            label="archived contract",
+        )
+        for relative_path in support_relatives:
+            _copy_frozen_regular(
+                workspace / relative_path,
+                frozen_root / relative_path,
+                label="frozen contract support file",
+            )
+        for relative_path in input_relatives:
+            _copy_frozen_regular(
+                workspace / relative_path,
+                frozen_root / relative_path,
+                label="historical Lite input",
+            )
+        for source_path in sorted(run_directory.rglob("*")):
+            if source_path.is_dir() and not source_path.is_symlink():
+                continue
+            if not source_path.is_file() or source_path.is_symlink():
+                raise PipelineError(
+                    f"Historical Lite artifact is unsafe: {source_path}"
+                )
+            relative_path = source_path.relative_to(workspace)
+            _copy_frozen_regular(
+                source_path,
+                frozen_root / relative_path,
+                label="historical Lite artifact",
+            )
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(frozen_root / runner_record["path"]),
+                "provenance",
+                "--run-id",
+                run_id,
+            ],
+            cwd=frozen_root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=120,
+            check=False,
+        )
+        if completed.returncode:
+            detail = transport.safe_error(completed.stderr or completed.stdout)
+            raise PipelineError(f"Frozen Lite provenance failed for {run_id}: {detail}")
+        try:
+            summary = json.loads(completed.stdout)
+        except json.JSONDecodeError as exc:
+            raise PipelineError(
+                f"Frozen Lite provenance returned invalid JSON for {run_id}"
+            ) from exc
+    if (
+        not isinstance(summary, dict)
+        or summary.get("verified") is not True
+        or summary.get("contract_version") != "2.0.6"
+    ):
+        raise PipelineError(f"Frozen Lite provenance is not verified: {run_id}")
+    return summary
+
+
+def planning_provenance_verifier():
+    return frozen_206_provenance_summary if BATCH_ID in FROZEN_206_BATCH_IDS else None
 
 
 def relative(path: Path, root: Path) -> str:
@@ -2776,7 +2994,7 @@ def configure_native(sources: Iterable[Source], root: Path = ROOT) -> None:
     native.MANIFEST_PATH = GENERATION_MANIFEST_REL
     native.CONTRACT_PATH = root / CONTRACT_REL
     native.PLANNING_WORKSPACE = None
-    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.PLANNING_PROVENANCE_VERIFIER = planning_provenance_verifier()
     native.SAMPLES = tuple(source.sample for source in sources)
     native.WAN_SUBMIT_MODE = None
     native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
@@ -3000,7 +3218,7 @@ def configure_terminal_retry_native(
     native.MANIFEST_PATH = binding.manifest_rel
     native.CONTRACT_PATH = root / CONTRACT_REL
     native.PLANNING_WORKSPACE = None
-    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.PLANNING_PROVENANCE_VERIFIER = planning_provenance_verifier()
     native.SAMPLES = (source.sample,)
     native.WAN_SUBMIT_MODE = None
     native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
@@ -3292,7 +3510,7 @@ def configure_ambiguous_submit_retry_native(
     native.MANIFEST_PATH = binding.manifest_rel
     native.CONTRACT_PATH = root / CONTRACT_REL
     native.PLANNING_WORKSPACE = None
-    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.PLANNING_PROVENANCE_VERIFIER = planning_provenance_verifier()
     native.SAMPLES = (source.sample,)
     native.WAN_SUBMIT_MODE = None
     native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
@@ -3877,7 +4095,7 @@ def configure_normalized_input_retry_native(
     native.MANIFEST_PATH = binding.manifest_rel
     native.CONTRACT_PATH = root / CONTRACT_REL
     native.PLANNING_WORKSPACE = None
-    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.PLANNING_PROVENANCE_VERIFIER = planning_provenance_verifier()
     native.SAMPLES = (source.sample,)
     native.WAN_SUBMIT_MODE = None
     native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
@@ -3949,7 +4167,7 @@ def configure_normalized_input_supersede_native(
     native.MANIFEST_PATH = binding.manifest_rel
     native.CONTRACT_PATH = root / CONTRACT_REL
     native.PLANNING_WORKSPACE = None
-    native.PLANNING_PROVENANCE_VERIFIER = None
+    native.PLANNING_PROVENANCE_VERIFIER = planning_provenance_verifier()
     native.SAMPLES = (source.sample,)
     native.WAN_SUBMIT_MODE = None
     native.SCHEDULING_EXCLUDED_RUN_IDS = frozenset()
@@ -6433,7 +6651,15 @@ def _enforce_ambiguous_submit_retry_order(
     *,
     root: Path,
 ) -> None:
-    """Admit the first incomplete output of only the current article."""
+    """Admit the first unknown primary POST of only the current article.
+
+    A later unknown POST must be quarantined before a previously recorded
+    terminal failure can be retried: terminal retries are intentionally
+    blocked while *any* primary identity remains unresolved.  Ordering this
+    guard by the first generally incomplete logical output would therefore
+    deadlock an article when independent route pools observe an earlier
+    provider failure and a later ambiguous submit in the same run.
+    """
 
     sources = tuple(sources)
     if target_model_id not in MODEL_IDS:
@@ -6449,7 +6675,7 @@ def _enforce_ambiguous_submit_retry_order(
             f"Next incomplete article is {next_incomplete.article_slug}; refusing "
             f"ambiguous-submit retry in {target_source.article_slug}"
         )
-    first_incomplete: tuple[Source, str] | None = None
+    first_unknown_primary: tuple[Source, str] | None = None
     unsafe_outside_article: list[str] = []
     active_same_route: list[str] = []
     target_primary_id = primary_provider_run_id(target_source, target_model_id)
@@ -6490,11 +6716,14 @@ def _enforce_ambiguous_submit_retry_order(
                 if normalized_loaded is not None
                 else None
             )
-            accepted = (
-                _native_output_is_accepted(entry, receipt, root=root)
-                or terminal_record is not None
-                or ambiguous_record is not None
-                or normalized_record is not None
+            unknown_primary = (
+                receipt is not None
+                and receipt.get("status") in {"submitting", "submit-unknown"}
+                and receipt.get("provider_may_be_active") is True
+                and receipt.get("provider_job_id") is None
+                and terminal_record is None
+                and ambiguous_loaded is None
+                and normalized_loaded is None
             )
             if (
                 model_id == target_model_id
@@ -6508,10 +6737,10 @@ def _enforce_ambiguous_submit_retry_order(
                 active_same_route.append(entry.provider_run_id)
             if (
                 source.article_slug == next_incomplete.article_slug
-                and not accepted
-                and first_incomplete is None
+                and unknown_primary
+                and first_unknown_primary is None
             ):
-                first_incomplete = (source, model_id)
+                first_unknown_primary = (source, model_id)
             if (
                 source.article_slug != next_incomplete.article_slug
                 and receipt is not None
@@ -6536,15 +6765,15 @@ def _enforce_ambiguous_submit_retry_order(
             f"{target_model_id} route capacity; resume these jobs first: "
             + ", ".join(active_same_route[:5])
         )
-    if first_incomplete != (target_source, target_model_id):
+    if first_unknown_primary != (target_source, target_model_id):
         label = (
-            primary_provider_run_id(*first_incomplete)
-            if first_incomplete is not None
+            primary_provider_run_id(*first_unknown_primary)
+            if first_unknown_primary is not None
             else "unknown"
         )
         raise PipelineError(
-            "Ambiguous-submit retry must preserve logical output order; first "
-            f"incomplete output is {label}"
+            "Ambiguous-submit retry must preserve unknown primary POST order; "
+            f"first unknown primary is {label}"
         )
 
 

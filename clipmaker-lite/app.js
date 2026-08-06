@@ -9,6 +9,8 @@
     "../clipmaker-lite-test/promopages-10060-manifest.json";
   const PROMOPAGES_10060_EXTENSION_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-10060-campaigns-20260805-v1-manifest.json";
+  const PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH =
+    "../clipmaker-lite-test/promopages-10060-article-02-20260806-v2-manifest.json";
   const PROMOPAGES_10060_EXTENSION_ROLE =
     "promopages-10060-campaign-extension";
   const PROMOPAGES_10060_EXTENSION_BATCH_ID =
@@ -16,6 +18,23 @@
   const PROMOPAGES_10060_EXTENSION_DATASET_PREFIX =
     "PROMOPAGES-10060-campaigns-20260805-v1";
   const PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS = ["15", "16", "17", "18"];
+  const PROMOPAGES_10060_ARTICLE_02_ROLE = "promopages-10060-article-02";
+  const PROMOPAGES_10060_ARTICLE_02_BATCH_ID =
+    "promopages-10060-article-02-20260806-v2";
+  const PROMOPAGES_10060_ARTICLE_02_DATASET_PREFIX =
+    "PROMOPAGES-10060-article-02-20260806-v1";
+  const PROMOPAGES_10060_ARTICLE_02_NUMBER = "02";
+  const PROMOPAGES_10060_ARTICLE_02_SLUG = "02-level-rabotaiu-v-level";
+  const PROMOPAGES_10060_ARTICLE_02_TITLE =
+    "Работаю в Level: почему купил квартиру от нашей компании";
+  const PROMOPAGES_10060_ARTICLE_02_URL =
+    "https://level-group.promo.page/media/rabotaiu-v-level-pochemu-kupil-kvartiru-ot-nashei-kompanii-69ef21df12346c2fdfdffecd_0_0";
+  const PROMOPAGES_10060_ARTICLE_02_CONTEXT_ROOT =
+    `PROMOPAGES-9884/${PROMOPAGES_10060_ARTICLE_02_DATASET_PREFIX}/articles`;
+  const PROMOPAGES_10060_ARTICLE_02_SOURCE_ROOT =
+    `PROMOPAGES-9857/${PROMOPAGES_10060_ARTICLE_02_DATASET_PREFIX}/articles`;
+  const PROMOPAGES_10060_ARTICLE_02_MANIFEST_ROOT =
+    `${PROMOPAGES_10060_ARTICLE_02_DATASET_PREFIX}/articles`;
   const PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT =
     `PROMOPAGES-9884/${PROMOPAGES_10060_EXTENSION_DATASET_PREFIX}/articles`;
   const PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT =
@@ -105,6 +124,12 @@
   const EXPECTED_PROMOPAGES_10060_IMAGE_COUNT = 92;
   const EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT = 276;
   const EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER = "02";
+  const EXPECTED_PROMOPAGES_10060_ARTICLE_02_ARTICLE_COUNT = 1;
+  const EXPECTED_PROMOPAGES_10060_ARTICLE_02_IMAGE_COUNT = 11;
+  const EXPECTED_PROMOPAGES_10060_ARTICLE_02_OUTPUT_COUNT = 33;
+  const EXPECTED_PROMOPAGES_10060_COMPLETE_ARTICLE_COUNT = 18;
+  const EXPECTED_PROMOPAGES_10060_COMPLETE_IMAGE_COUNT = 137;
+  const EXPECTED_PROMOPAGES_10060_COMPLETE_OUTPUT_COUNT = 411;
   const PROVIDER_FILTERED_STATUS = "provider-filtered";
   const PROVIDER_FILTERED_RECORDED_STATUS = "provider-failed";
   const PROVIDER_FILTERED_SELECTION = "terminal-retry-v1-exhausted";
@@ -1567,26 +1592,37 @@
   const validatePromopages10060Manifest = (
     manifest,
     historicalArticles,
-    { extension = false } = {},
+    { extension = false, article02 = false } = {},
   ) => {
-    const manifestLabel = extension
-      ? "PROMOPAGES-10060 campaign extension"
-      : "PROMOPAGES-10060";
+    assert(
+      !(extension && article02),
+      "PROMOPAGES-10060 sidecar не может одновременно быть campaign extension и article 02.",
+    );
+    const manifestLabel = article02
+      ? "PROMOPAGES-10060 article 02"
+      : extension
+        ? "PROMOPAGES-10060 campaign extension"
+        : "PROMOPAGES-10060";
+    const expectedManifestRole = article02
+      ? PROMOPAGES_10060_ARTICLE_02_ROLE
+      : extension
+        ? PROMOPAGES_10060_EXTENSION_ROLE
+        : "promopages-10060-all-images";
     assert(
       manifest && typeof manifest === "object",
       "Манифест PROMOPAGES-10060 имеет неверный формат.",
     );
     assert(manifest.schema_version === 1, "PROMOPAGES-10060 должен использовать schema_version 1.");
     assert(
-      manifest.manifest_role ===
-        (extension
-          ? PROMOPAGES_10060_EXTENSION_ROLE
-          : "promopages-10060-all-images"),
+      manifest.manifest_role === expectedManifestRole,
       `${manifestLabel} имеет неверный manifest_role.`,
     );
-    if (extension) {
+    if (extension || article02) {
       assert(
-        manifest.batch_id === PROMOPAGES_10060_EXTENSION_BATCH_ID,
+        manifest.batch_id ===
+          (article02
+            ? PROMOPAGES_10060_ARTICLE_02_BATCH_ID
+            : PROMOPAGES_10060_EXTENSION_BATCH_ID),
         `${manifestLabel} имеет неверный batch_id.`,
       );
     }
@@ -1599,16 +1635,29 @@
       JSON.stringify(manifest.models) === JSON.stringify(MODEL_ORDER),
       "PROMOPAGES-10060 должен содержать Wan 2.2, Wan 2.7 и Veo 3.1 Lite.",
     );
-    const expectedArticleCount = extension
-      ? manifest.article_count
-      : EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT;
-    const expectedImageCount = extension
-      ? manifest.image_count
-      : EXPECTED_PROMOPAGES_10060_IMAGE_COUNT;
-    const expectedOutputCount = extension
-      ? manifest.expected_outputs
-      : EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT;
-    if (!extension) {
+    const expectedArticleCount = article02
+      ? EXPECTED_PROMOPAGES_10060_ARTICLE_02_ARTICLE_COUNT
+      : extension
+        ? manifest.article_count
+        : EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT;
+    const expectedImageCount = article02
+      ? EXPECTED_PROMOPAGES_10060_ARTICLE_02_IMAGE_COUNT
+      : extension
+        ? manifest.image_count
+        : EXPECTED_PROMOPAGES_10060_IMAGE_COUNT;
+    const expectedOutputCount = article02
+      ? EXPECTED_PROMOPAGES_10060_ARTICLE_02_OUTPUT_COUNT
+      : extension
+        ? manifest.expected_outputs
+        : EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT;
+    if (article02) {
+      assert(
+        manifest.article_count === EXPECTED_PROMOPAGES_10060_ARTICLE_02_ARTICLE_COUNT &&
+          manifest.image_count === EXPECTED_PROMOPAGES_10060_ARTICLE_02_IMAGE_COUNT &&
+          manifest.expected_outputs === EXPECTED_PROMOPAGES_10060_ARTICLE_02_OUTPUT_COUNT,
+        `${manifestLabel} должен оставаться 1 / 11 / 33.`,
+      );
+    } else if (!extension) {
       assert(
         manifest.article_count === EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT &&
           manifest.image_count === EXPECTED_PROMOPAGES_10060_IMAGE_COUNT &&
@@ -1728,6 +1777,15 @@
         typeof article.article_number === "string" && /^\d{2}$/.test(article.article_number),
         "PROMOPAGES-10060 содержит некорректный локальный номер статьи.",
       );
+      if (article02) {
+        assert(
+          article.article_number === PROMOPAGES_10060_ARTICLE_02_NUMBER &&
+            article.article_slug === PROMOPAGES_10060_ARTICLE_02_SLUG &&
+            article.title === PROMOPAGES_10060_ARTICLE_02_TITLE &&
+            article.url === PROMOPAGES_10060_ARTICLE_02_URL,
+          `${manifestLabel} должен содержать только exact article 02.`,
+        );
+      }
       const numericArticleNumber = Number(article.article_number);
       assert(
         numericArticleNumber > previousArticleNumber,
@@ -1761,10 +1819,13 @@
       assert(
         typeof article.context_path === "string" &&
           article.context_path.trim() &&
-          (!extension ||
+          (!(extension || article02) ||
             (isCanonicalRelativePath(article.context_path) &&
-              article.context_path ===
-                `${PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT}/${article.article_slug}/content.json`)),
+              article.context_path === `${
+                article02
+                  ? PROMOPAGES_10060_ARTICLE_02_CONTEXT_ROOT
+                  : PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT
+              }/${article.article_slug}/content.json`)),
         `У PROMOPAGES-10060/${article.article_number} неверный context_path.`,
       );
       assert(
@@ -1780,8 +1841,13 @@
 
       const images = article.images.map((record) => {
         const image = record?.image;
-        const expectedExtensionManifestPrefix =
-          `${PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT}/${article.article_slug}/`;
+        const expectedSidecarManifestPrefix = `${
+          article02
+            ? PROMOPAGES_10060_ARTICLE_02_MANIFEST_ROOT
+            : PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT
+        }/${article.article_slug}/`;
+        const expectedArticle02SourcePrefix =
+          `${PROMOPAGES_10060_ARTICLE_02_SOURCE_ROOT}/${article.article_slug}/`;
         assert(
           image && typeof image === "object" && image.image_id && image.source_path,
           `У PROMOPAGES-10060/${article.article_number} нет данных изображения.`,
@@ -1802,16 +1868,26 @@
         assert(
           typeof image.manifest_file_path === "string" &&
             image.manifest_file_path.trim() &&
-            (!extension ||
+            (!(extension || article02) ||
               (isCanonicalRelativePath(image.manifest_file_path) &&
                 image.manifest_file_path.startsWith(
-                  expectedExtensionManifestPrefix,
+                  expectedSidecarManifestPrefix,
                 ) &&
                 !image.manifest_file_path
-                  .slice(expectedExtensionManifestPrefix.length)
+                  .slice(expectedSidecarManifestPrefix.length)
                   .includes("/"))),
           `У PROMOPAGES-10060/${article.article_number}/${image.image_id} неверный manifest_file_path.`,
         );
+        if (article02) {
+          assert(
+            typeof image.file === "string" &&
+              image.file.trim() &&
+              image.manifest_file_path === `${expectedSidecarManifestPrefix}${image.file}` &&
+              isCanonicalRelativePath(image.source_path) &&
+              image.source_path === `${expectedArticle02SourcePrefix}${image.file}`,
+            `${manifestLabel}/${image.image_id} вышел за frozen source namespace v1.`,
+          );
+        }
         assert(
           Number(image.width) > 0 && Number(image.height) > 0,
           `У PROMOPAGES-10060/${article.article_number}/${image.image_id} нет геометрии.`,
@@ -2057,6 +2133,8 @@
         ...article,
         case_key: makeCaseKey(manifest.ticket, article.article_slug),
         sourceTicket: manifest.ticket,
+        sourceManifestRole: manifest.manifest_role,
+        sourceBatchId: manifest.batch_id,
         sourceStatus: unavailableOutputCount
           ? `Готово частично · ${images.length} изобр. · ${unavailableOutputCount} видео недоступно`
           : hasWarnings
@@ -2066,7 +2144,20 @@
       };
     });
 
-    if (!extension) {
+    if (article02) {
+      assert(
+        JSON.stringify([...articleNumbers]) ===
+          JSON.stringify([PROMOPAGES_10060_ARTICLE_02_NUMBER]) &&
+          JSON.stringify(articles[0].images.map((record) => record.image.image_id)) ===
+            JSON.stringify(
+              Array.from(
+                { length: EXPECTED_PROMOPAGES_10060_ARTICLE_02_IMAGE_COUNT },
+                (_, index) => String(index + 1).padStart(2, "0"),
+              ),
+            ),
+        `${manifestLabel} должен содержать article 02 и изображения 01–11 в порядке публикации.`,
+      );
+    } else if (!extension) {
       assert(
         JSON.stringify([...articleNumbers]) ===
           JSON.stringify(EXPECTED_PROMOPAGES_10060_ARTICLE_NUMBERS),
@@ -2296,8 +2387,12 @@
     const unavailableArticles = manifest.unavailable_articles ?? [];
     assert(
       Array.isArray(unavailableArticles) &&
-        (extension || unavailableArticles.length === 1),
-      extension
+        (article02
+          ? unavailableArticles.length === 0
+          : extension || unavailableArticles.length === 1),
+      article02
+        ? `${manifestLabel} не должен содержать unavailable_articles.`
+        : extension
         ? `${manifestLabel} содержит некорректный unavailable_articles.`
         : "PROMOPAGES-10060 должен содержать одну недоступную статью.",
     );
@@ -2334,7 +2429,12 @@
       unavailableNumbers.add(article.article_number);
       unavailableSlugs.add(article.article_slug);
     });
-    if (!extension) {
+    if (article02) {
+      assert(
+        unavailableArticles.length === 0,
+        `${manifestLabel} не может одновременно восстанавливать и помечать article 02 недоступной.`,
+      );
+    } else if (!extension) {
       assert(
         unavailableNumbers.has(EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER),
         "Недоступной статьёй PROMOPAGES-10060 должна быть статья 02.",
@@ -3222,6 +3322,11 @@
     return merged;
   };
 
+  const sortPromopages10060Articles = (items) =>
+    [...items].sort(
+      (left, right) => Number(left.article_number) - Number(right.article_number),
+    );
+
   const mergeUnavailableArticleCollections = (availableArticles, ...collections) => {
     const merged = collections.flat();
     const availableIdentities = new Set(
@@ -3234,9 +3339,44 @@
     );
     const identities = new Set();
     const caseKeys = new Set();
+    const availableArticle02Replacements = availableArticles.filter(
+      (article) =>
+        article.sourceTicket === "PROMOPAGES-10060" &&
+        article.article_number === PROMOPAGES_10060_ARTICLE_02_NUMBER &&
+        article.article_slug === PROMOPAGES_10060_ARTICLE_02_SLUG &&
+        article.case_key ===
+          makeCaseKey("PROMOPAGES-10060", PROMOPAGES_10060_ARTICLE_02_SLUG) &&
+        article.sourceManifestRole === PROMOPAGES_10060_ARTICLE_02_ROLE &&
+        article.sourceBatchId === PROMOPAGES_10060_ARTICLE_02_BATCH_ID,
+    );
+    assert(
+      availableArticle02Replacements.length <= 1,
+      "Доступная article 02 PROMOPAGES-10060 повторяется.",
+    );
+    const availableArticle02Replacement = availableArticle02Replacements[0] ?? null;
+    const retained = [];
+    let article02ReplacementConsumed = false;
     merged.forEach((article) => {
       const identity = `PROMOPAGES-10060\u0000${article.article_number}`;
       const caseKey = makeCaseKey("PROMOPAGES-10060", article.article_slug);
+      const collidesWithAvailable =
+        availableIdentities.has(identity) || availableCaseKeys.has(caseKey);
+      if (collidesWithAvailable) {
+        const isExactLegacyArticle02Replacement =
+          availableArticle02Replacement !== null &&
+          !article02ReplacementConsumed &&
+          identity ===
+            `PROMOPAGES-10060\u0000${PROMOPAGES_10060_ARTICLE_02_NUMBER}` &&
+          article.article_slug === PROMOPAGES_10060_ARTICLE_02_SLUG &&
+          caseKey === availableArticle02Replacement.case_key &&
+          article.status === "source-unavailable";
+        assert(
+          isExactLegacyArticle02Replacement,
+          `Недоступная статья PROMOPAGES-10060 повторяется: ${article.article_number}.`,
+        );
+        article02ReplacementConsumed = true;
+        return;
+      }
       assert(
         !identities.has(identity) &&
           !caseKeys.has(caseKey) &&
@@ -3246,8 +3386,15 @@
       );
       identities.add(identity);
       caseKeys.add(caseKey);
+      retained.push(article);
     });
-    return merged;
+    if (availableArticle02Replacement) {
+      assert(
+        article02ReplacementConsumed,
+        "Article 02 sidecar не замещает exact legacy source-unavailable запись.",
+      );
+    }
+    return retained;
   };
 
   const datasetCounts = (items) => {
@@ -4712,9 +4859,11 @@
   };
 
   const loadAbPreparationDataset = async () => {
-    const [reviewResponse, reviewExtensionResponse] = await Promise.all([
+    const [reviewResponse, reviewExtensionResponse, reviewArticle02Response] =
+      await Promise.all([
       fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH, { cache: "no-store" }),
     ]);
     if (!reviewResponse.ok) {
       throw new Error(
@@ -4726,10 +4875,18 @@
         `Campaign extension PROMOPAGES-10060 вернул HTTP ${reviewExtensionResponse.status}.`,
       );
     }
+    if (!reviewArticle02Response.ok && reviewArticle02Response.status !== 404) {
+      throw new Error(
+        `Article 02 sidecar PROMOPAGES-10060 вернул HTTP ${reviewArticle02Response.status}.`,
+      );
+    }
 
     const reviewManifest = await reviewResponse.json();
     const reviewExtensionManifest = reviewExtensionResponse.ok
       ? await reviewExtensionResponse.json()
+      : null;
+    const reviewArticle02Manifest = reviewArticle02Response.ok
+      ? await reviewArticle02Response.json()
       : null;
     const reviewDataset = validatePromopages10060Manifest(reviewManifest, []);
     const reviewExtensionDataset = reviewExtensionManifest
@@ -4745,29 +4902,59 @@
           providerUnavailableOutputCount: 0,
           unavailableOutputCount: 0,
         };
-    const reviewArticles = [
+    const reviewArticle02Dataset = reviewArticle02Manifest
+      ? validatePromopages10060Manifest(
+          reviewArticle02Manifest,
+          [...reviewDataset.articles, ...reviewExtensionDataset.articles],
+          { article02: true },
+        )
+      : {
+          articles: [],
+          unavailableArticles: [],
+          filteredOutputCount: 0,
+          providerUnavailableOutputCount: 0,
+          unavailableOutputCount: 0,
+        };
+    const reviewArticles = sortPromopages10060Articles([
       ...reviewDataset.articles,
       ...reviewExtensionDataset.articles,
-    ];
+      ...reviewArticle02Dataset.articles,
+    ]);
     const unavailableArticles = mergeUnavailableArticleCollections(
       reviewArticles,
       reviewDataset.unavailableArticles,
       reviewExtensionDataset.unavailableArticles,
+      reviewArticle02Dataset.unavailableArticles,
     );
     const imageCount =
-      reviewManifest.image_count + (reviewExtensionManifest?.image_count ?? 0);
+      reviewManifest.image_count +
+      (reviewExtensionManifest?.image_count ?? 0) +
+      (reviewArticle02Manifest?.image_count ?? 0);
     const outputCount =
       reviewManifest.expected_outputs +
-      (reviewExtensionManifest?.expected_outputs ?? 0);
+      (reviewExtensionManifest?.expected_outputs ?? 0) +
+      (reviewArticle02Manifest?.expected_outputs ?? 0);
     const unavailableOutputCount =
       reviewDataset.unavailableOutputCount +
-      reviewExtensionDataset.unavailableOutputCount;
+      reviewExtensionDataset.unavailableOutputCount +
+      reviewArticle02Dataset.unavailableOutputCount;
     const filteredOutputCount =
       reviewDataset.filteredOutputCount +
-      reviewExtensionDataset.filteredOutputCount;
+      reviewExtensionDataset.filteredOutputCount +
+      reviewArticle02Dataset.filteredOutputCount;
     const providerUnavailableOutputCount =
       reviewDataset.providerUnavailableOutputCount +
-      reviewExtensionDataset.providerUnavailableOutputCount;
+      reviewExtensionDataset.providerUnavailableOutputCount +
+      reviewArticle02Dataset.providerUnavailableOutputCount;
+    if (reviewExtensionManifest && reviewArticle02Manifest) {
+      assert(
+        reviewArticles.length === EXPECTED_PROMOPAGES_10060_COMPLETE_ARTICLE_COUNT &&
+          imageCount === EXPECTED_PROMOPAGES_10060_COMPLETE_IMAGE_COUNT &&
+          outputCount === EXPECTED_PROMOPAGES_10060_COMPLETE_OUTPUT_COUNT &&
+          unavailableArticles.length === 0,
+        "Полный PROMOPAGES-10060 должен содержать 18 статей / 137 изображений / 411 результатов без source-unavailable статей.",
+      );
+    }
     return {
       reviewArticles,
       sourceStatus: `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${imageCount} изображений / ${outputCount} результатов · MP4 ${outputCount - unavailableOutputCount} · provider-filtered ${filteredOutputCount} · provider-unavailable ${providerUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`,
@@ -4787,7 +4974,6 @@
         const historicalCounts = datasetCounts(articles);
         datasetSourceStatus = `История Clipmaker Lite · ${historicalCounts.articleCount} статей / ${historicalCounts.imageCount} изображений / ${historicalCounts.videoCount} результатов`;
       }
-
       const counts = datasetCounts(articles);
       elements.articleCountSummary.textContent = String(counts.articleCount);
       elements.imageCountSummary.textContent = String(counts.imageCount);

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-02",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+    "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+    "width": 2400,
+    "height": 1600
+  },
+  "structured_intent": {
+    "editorial_meaning": "The completed, landscaped residential complex supports Sergey's confidence that Level Prichalny is a high-quality and comfortable place to call home.",
+    "primary_action": "A gentle breeze passes continuously through the visible courtyard foliage.",
+    "terminal_state": "By the last frame, the breeze has softened to a faint residual sway in the leaves while the residential towers remain fully visible.",
+    "semantic_invariant": "The courtyard remains a calm, welcoming residential setting, with the buildings retaining their stable and imposing presence."
+  },
+  "prompt": {
+    "positive": "Keep the camera fixed as a light breeze steadily ripples through the courtyard foliage, moving across the greenery and gradually calming until only the upper leaves sway gently in the final frame; the residential towers remain continuously visible.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-02/result.json",
+    "sha256": "73e7293c9229175f0a620d77a3af7fd99058f7e8a93fcaca92e302d90566b401",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

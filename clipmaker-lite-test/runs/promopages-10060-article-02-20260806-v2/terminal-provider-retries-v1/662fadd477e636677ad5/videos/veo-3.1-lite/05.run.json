@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-05",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/terminal-provider-retries-v1/662fadd477e636677ad5/videos/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/terminal-provider-retries-v1/662fadd477e636677ad5/videos/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The hanging seats and tables make a small, smooth forward-and-back sway while the chains respond naturally. Fixed camera. In the last frame they are nearly centered with only a trace of motion, and the courtyard remains calm and welcoming.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_67d2c36fbc3de24f2683a8ac_67d2c41de58a2d4e74f548d7/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "34e10881adbf6a6489db4b9d995b0329ab91cb18c8df269f534f5ad7b247f697",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "leCFA6RyWMUYunGVcJLG",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:26:19Z",
+  "completed_at": "2026-08-06T13:28:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 16299687,
+    "sha256": "e88e98fe779436dc525d104821a2c11b23812a5f0d37730f209602d2dc12c964"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2-terminal-retry-v1-662fadd477e636677ad5",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-terminal-retry-v1-662fadd477e636677ad5-02-level-rabotaiu-v-level-05-veo-3-1-lite",
+  "lite_result_sha256": "16cbad6c9432cff30e394dbfddabee7b9b713f9b6045c18ae5e5fd5d7d34c75c",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

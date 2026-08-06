@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-article-02-terminal-provider-retry",
+  "ticket": "PROMOPAGES-10060",
+  "primary_batch_id": "promopages-10060-article-02-20260806-v2",
+  "retry_number": 1,
+  "agent_id": "clipmaker-lite",
+  "logical_output_key": {
+    "article_slug": "02-level-rabotaiu-v-level",
+    "image_id": "05",
+    "model_id": "google/veo-3.1-lite"
+  },
+  "primary_attempt": {
+    "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05-veo-3-1-lite",
+    "provider_job_id": "yaUjJ1AmzBJuJlV9PuHZ",
+    "status": "provider-failed",
+    "provider_may_be_active": false,
+    "submitted_at": "2026-08-06T13:08:57Z",
+    "completed_at": "2026-08-06T13:09:38Z",
+    "error": "Eliza/OpenRouter job yaUjJ1AmzBJuJlV9PuHZ failed with status failed: The service is currently experiencing high load and cannot process your request. Please try again later. Operation ID: 63f96a57-f85c-492f-80c0-6f86d8190f17.",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/05.run.json",
+    "run_sha256": "96a4995d52ca946f7f35ac0ec5b7c72068a6f3a03cc35279eab0905be6a633c3",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/veo-3.1-lite/05.prompt.json",
+    "prompt_sha256": "901a81ff8c65c737045900497d61ae46dc04ba2df1985260eaf0d422d2c75b4a",
+    "request": {
+      "model": "google/veo-3.1-lite",
+      "prompt": "The hanging seats and tables make a small, smooth forward-and-back sway while the chains respond naturally. Fixed camera. In the last frame they are nearly centered with only a trace of motion, and the courtyard remains calm and welcoming.",
+      "duration": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "seed": 9681,
+      "generate_audio": false,
+      "frame_images": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_67d2c36fbc3de24f2683a8ac_67d2c41de58a2d4e74f548d7/orig"
+          },
+          "frame_type": "first_frame"
+        }
+      ],
+      "provider": {
+        "options": {
+          "google-vertex": {
+            "parameters": {
+              "enhancePrompt": true
+            }
+          }
+        }
+      }
+    },
+    "request_sha256": "34e10881adbf6a6489db4b9d995b0329ab91cb18c8df269f534f5ad7b247f697",
+    "lite_result_path": "artifacts/clipmaker-lite/v1/promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05/result.json",
+    "lite_result_sha256": "16cbad6c9432cff30e394dbfddabee7b9b713f9b6045c18ae5e5fd5d7d34c75c",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/05.jpeg",
+    "source_sha256": "0feffa24b99b14c50db61ce04ffa712c0a1fa4113ba2ea856e052ea1e4da7a63",
+    "model_id": "google/veo-3.1-lite",
+    "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05"
+  },
+  "retry_attempt": {
+    "retry_key": "662fadd477e636677ad5",
+    "batch_id": "promopages-10060-article-02-20260806-v2-terminal-retry-v1-662fadd477e636677ad5",
+    "provider_run_id": "promopages-10060-article-02-20260806-v2-terminal-retry-v1-662fadd477e636677ad5-02-level-rabotaiu-v-level-05-veo-3-1-lite",
+    "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-05",
+    "model_id": "google/veo-3.1-lite",
+    "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/05.jpeg",
+    "source_sha256": "0feffa24b99b14c50db61ce04ffa712c0a1fa4113ba2ea856e052ea1e4da7a63",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/terminal-provider-retries-v1/662fadd477e636677ad5/videos/veo-3.1-lite/05.prompt.json",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/terminal-provider-retries-v1/662fadd477e636677ad5/videos/veo-3.1-lite/05.run.json",
+    "video_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/terminal-provider-retries-v1/662fadd477e636677ad5/videos/veo-3.1-lite/05.mp4",
+    "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/terminal-provider-retries-v1/662fadd477e636677ad5/generation-manifest.json"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 100.0,
+    "hard_budget_cap_usd": 100.0,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 12.25,
+    "estimated_headroom_usd": 87.75,
+    "planned_paid_submissions": 33,
+    "maximum_paid_submissions": 35,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job; provider-confirmed terminal failures may receive at most one separately namespaced, explicit retry-v1 submit; a quarantined exact-route provider submit with unknown outcome may receive at most one separately namespaced, explicit ambiguous-submit retry-v1; each exact oversize Wan primary may receive one separately namespaced normalized-input retry-v1 whose only request change is the frozen image URL; one explicitly authorized active normalized-input job may receive one separately namespaced byte-identical superseding attempt; every immutable reservation is included in the aggregate accounting maximum",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery",
+    "terminal_retry_version": 1,
+    "terminal_retry_accounting_cost_usd": 0.35,
+    "terminal_retry_reservations": 1,
+    "ambiguous_submit_retry_version": 1,
+    "ambiguous_submit_retry_accounting_cost_usd": 0.35,
+    "ambiguous_submit_retry_reservations": 1,
+    "normalized_input_retry_version": 1,
+    "normalized_input_retry_accounting_cost_usd": 0.35,
+    "normalized_input_retry_reservations": 0,
+    "total_retry_reservations": 2,
+    "maximum_new_paid_submissions_per_failed_output": 1,
+    "maximum_new_paid_submissions_per_ambiguous_output": 1,
+    "maximum_new_paid_submissions_per_normalized_input_output": 1
+  },
+  "policy": {
+    "explicit_operator_command_required": true,
+    "automatic_retry": false,
+    "maximum_new_paid_submissions": 1,
+    "same_verified_lite_result": true,
+    "same_source": true,
+    "same_prompt": true,
+    "same_model": true,
+    "fallback": false,
+    "primary_receipt_immutable": true
+  }
+}

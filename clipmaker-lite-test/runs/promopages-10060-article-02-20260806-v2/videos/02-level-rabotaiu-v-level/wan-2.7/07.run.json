@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/07.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The wooden hangers drift slowly side to side in a light indoor draft as the camera makes a subtle forward move toward the storage rail. Their motion gradually fades, ending with the hangers nearly still and evenly spaced while the spacious walkway remains visible.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c4977502773ae398e464/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "6d0f629b4aa34109f6613bfa0f689a371948f559f27738bdedb5246270dd8b33",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7e80NkdVQeo9ZqvSmxdS",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:09:08Z",
+  "completed_at": "2026-08-06T13:18:58Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1688,
+    "height": 1228,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 5412795,
+    "sha256": "d9481d3d7d95e70afc89340365d445d6d1f124ef7b5ccc8189b402a1ef38ee14"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-07-wan-2-7",
+  "lite_result_sha256": "7c50ceb0846c7947979c91b6a7458288c5caee31fe8fc48b97e0cef74e08c5aa",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

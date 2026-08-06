@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-10",
+  "image_id": "10",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.2/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.2/10.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5521748/pub_67d2c36fbc3de24f2683a8ac_67d2c5317502773ae398ea18/orig",
+      "prompt": "The potted tree’s leaves sway gently and continuously in a light indoor airflow, with soft reflections shifting across the glass and polished floor. Fixed camera. By the final frames the foliage eases into a slight natural flutter and the welcoming seating area remains calm and clearly visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "6500eee4b0112f06bf3a57c6ea8444a404263bf5e96bf97def2811b3e4138fe7",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "2f9ddbe49a53600f61a0970dcbe9156d",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:25:02Z",
+  "completed_at": "2026-08-06T13:25:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4787661,
+    "sha256": "15e66478096bfc4b245614c87128298421eacfb525b5198e8f5f0f1e5ab55da0"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-10-wan-2-2",
+  "lite_result_sha256": "b45c3840aaf9d7b2fd4f592afb117445371dbd93a7fbc25e3bad05e78a986c9b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 7010430,
+    "sha256": "49612e5cd51c6c429d049c7a3d1699c972c6b3264c174c3f0c5b1a049b811c2a"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "2f9ddbe49a53600f61a0970dcbe9156d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

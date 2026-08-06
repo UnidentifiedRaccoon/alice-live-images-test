@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "02-level-rabotaiu-v-level-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-article-02-20260806-v2/videos/02-level-rabotaiu-v-level/wan-2.7/08.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A gentle forward camera move follows the open floor toward the compact entryway cabinet, keeping the cabinet, mirror, and clear passage visible throughout. The move settles into a closer view that clearly preserves the spacious, uncluttered walkway.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "3:4",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_67d2c36fbc3de24f2683a8ac_67d2c4ac7502773ae398e532/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b73fe717e9acb3794c1631b9cf4e8901121aae3e74b7a11383f527c0a67a4b1c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6mvWK3NFejzbSeoSvNE2",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-06T13:09:15Z",
+  "completed_at": "2026-08-06T13:10:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1246,
+    "height": 1662,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4911258,
+    "sha256": "6494f1c2c495aebd89bfd524ddd94784760de025127ad98582099ff8d81226b7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "3:4",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-article-02-20260806-v2",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-08",
+  "provider_run_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-08-wan-2-7",
+  "lite_result_sha256": "b6fb2891d9e0440286371b170acf168e7c6cba8feca901488d879637cd4aff23",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

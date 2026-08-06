@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-article-02-20260806-v2-02-level-rabotaiu-v-level-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.7",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd",
+    "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+    "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:7ee8b55a1fcca700315576d69f05286be79b83ce50a70e0a5b03ad29eb1f728f",
+    "execution_fingerprint": "sha256:ad1bed221260d69385240ff3acfc87466996a9736cc8d7c0e5c8757b603e83cc",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "9f6748b4ab10ffc92c28b9ccedae89e61a302bbc011df7d276ee38f55906e481",
+      "version": "codex-cli 0.147.0-alpha.1.2",
+      "requested_model": null,
+      "thread_id": "019fd72b-98de-79e3-8b5d-85471b9a59c6"
+    },
+    "authored_payload_sha256": "cef88e65a67462b16f608c52fcd4a73a9c300a9a59cf7708160178688e0a3b95",
+    "draft_file_sha256": "35848d7ec76072444e3d3b7b0abd9762986273426995994f12bae4144575f849"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/01.jpeg",
+      "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+      "bytes": 7046431
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/content.json",
+      "sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "bytes": 20252,
+      "locator": {
+        "article_id": "02-level-rabotaiu-v-level",
+        "title": "Работаю в Level: почему купил квартиру от нашей компании",
+        "lead": "История, как я купил квартиру в Левел Групп после шести лет работы в компании",
+        "image_id": "01",
+        "block_index": 0,
+        "role": "cover",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": null,
+        "nearest_text_after": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "История о том, как я купил квартиру в Level Group после шести лет работы в компании"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Низкая точка съёмки подчёркивает две высокие стеклянно-кирпичные башни и масштаб жилого комплекса.",
+      "Внизу виден благоустроенный двор с деревьями, кустарниками, дорожкой, скамейками и игровой зоной; естественно подвижны только листья и тонкие ветви.",
+      "Яркий дневной свет, чистое синее небо и упорядоченная архитектура создают ощущение современного, обжитого и надёжного пространства."
+    ],
+    "article_context": "Обложка представляет Левел Причальный как конкретный новый дом героя и визуально поддерживает его уверенность в качестве проекта после шести лет работы в Level Group.",
+    "structured_intent": {
+      "editorial_meaning": "Оживление подчёркивает, что выбранный героем жилой комплекс — современное, благоустроенное и спокойное место для повседневной жизни.",
+      "primary_action": "Лёгкий ветер последовательно проходит через деревья и кустарники во дворе.",
+      "terminal_state": "Ветер ослабевает, и зелень остаётся в лёгком естественном покачивании, не закрывая башни.",
+      "semantic_invariant": "Жилой комплекс сохраняет ощущение устойчивости, качества и комфортной обжитой среды до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "Пятисекундный неподвижный кадр: ветер сразу начинает последовательно проходить слева направо по кустарникам и кронам, достигает умеренной силы в середине сцены и затем естественно ослабевает. Архитектура остаётся стабильной и полностью читаемой; к финалу листья продолжают лишь лёгкое остаточное покачивание около исходного положения.",
+      "positive_prompt": "A steady breeze travels through the courtyard, moving the tree crowns and shrubs in a smooth wave from left to right while the camera remains fixed. The motion gradually softens, ending with the foliage gently swaying around its original position and the towers fully visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:efbbdee091a1223778bd4e814d123ce1e5d6a99287aa22f7abe670e416006d8a",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "На протяжении пяти секунд широкая волна мягкого ветра проходит по всей видимой зелени слева направо. Покачивание плавно набирает умеренную амплитуду, охватывает центральное дерево и кусты, затем затихает без резкой остановки. Камера зафиксирована ради сохранения строгой геометрии высоток; финал — слабое движение листьев при неизменно доминирующих башнях.",
+      "positive_prompt": "A gentle breeze rolls across the landscaped courtyard from left to right, setting the shrubs and tree canopies into a broad, natural sway. Keep the camera fixed; by the final frame the wind has eased and the foliage moves only lightly beneath the clearly visible towers.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:1eeb236290251d5f433e39ca4f172f258b564f13df3cdf06a22c6e5341165a0c",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный сфокусированный момент с неподвижной камерой: лёгкий ветер без задержки пробегает слева направо по кустам и деревьям, быстро достигает умеренного покачивания и мягко ослабевает ближе к концу. Последний кадр сохраняет едва заметное остаточное движение зелени и ясный неизменный силуэт обеих башен.",
+      "positive_prompt": "With a fixed camera, a light breeze sweeps left to right through the courtyard trees and shrubs in one smooth wave. It eases near the end, leaving the foliage in a soft residual sway while both residential towers remain unobstructed.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:863e2059228c699b8943e0097a1708e1bdeeada2010d93e8b8bf338ecd4bb90a",
+      "negative_prompt": null
+    }
+  ]
+}

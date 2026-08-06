@@ -14,6 +14,21 @@ const CASE_21_MANIFEST_PATH = path.join(
   "clipmaker-lite-test",
   "case-21-manifest.json",
 );
+const PROMOPAGES_10060_MANIFEST_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "promopages-10060-manifest.json",
+);
+const PROMOPAGES_10060_EXTENSION_MANIFEST_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "promopages-10060-campaigns-20260805-v1-manifest.json",
+);
+const PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "promopages-10060-article-02-20260806-v2-manifest.json",
+);
 
 const loadHooks = () => {
   const source = fs
@@ -32,6 +47,7 @@ const loadHooks = () => {
       "  const renderFacts",
       "  globalThis.__validatePromopages10060Manifest = validatePromopages10060Manifest;\n" +
       "  globalThis.__mergeArticleCollections = mergeArticleCollections;\n" +
+        "  globalThis.__sortPromopages10060Articles = sortPromopages10060Articles;\n" +
         "  globalThis.__mergeUnavailableArticleCollections = mergeUnavailableArticleCollections;\n" +
         "  globalThis.__datasetCounts = datasetCounts;\n" +
         "  globalThis.__availableOutputCount = availableOutputCount;\n" +
@@ -79,6 +95,7 @@ const actualSmoothExperiment = () => {
 };
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
+const loadJson = (filePath) => JSON.parse(fs.readFileSync(filePath, "utf8"));
 
 const REVIEW_ARTICLE_IMAGE_COUNTS = [
   ["01", 4],
@@ -1528,6 +1545,160 @@ test("campaign extension is optional, additive, and derives aggregate counts", (
   );
   assert.equal(unavailable.length, 4);
   assert.equal(extension.articles[0].case_key, "PROMOPAGES-10060:15-campaign-6a3d17575c59bd0e6d046aa6");
+});
+
+test("article 02 sidecar exactly replaces legacy unavailable and completes 18 / 137 / 411", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_MANIFEST_PATH),
+    [],
+  );
+  const extension = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH),
+    legacy.articles,
+    { extension: true },
+  );
+  const article02 = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH),
+    [...legacy.articles, ...extension.articles],
+    { article02: true },
+  );
+  const articles = hooks.__sortPromopages10060Articles([
+    ...legacy.articles,
+    ...extension.articles,
+    ...article02.articles,
+  ]);
+  const unavailable = hooks.__mergeUnavailableArticleCollections(
+    articles,
+    legacy.unavailableArticles,
+    extension.unavailableArticles,
+    article02.unavailableArticles,
+  );
+
+  assert.deepEqual(
+    [...articles].map((article) => article.article_number),
+    Array.from({ length: 18 }, (_, index) => String(index + 1).padStart(2, "0")),
+  );
+  assert.equal(articles[1].article_slug, "02-level-rabotaiu-v-level");
+  assert.equal(
+    articles[1].sourceBatchId,
+    "promopages-10060-article-02-20260806-v2",
+  );
+  assert.deepEqual([...unavailable], []);
+  assert.deepEqual(
+    { ...hooks.__datasetCounts(articles) },
+    {
+      articleCount: 18,
+      imageCount: 137,
+      videoCount: 411,
+      availableVideoCount: 409,
+      unavailableOutputCount: 2,
+    },
+  );
+});
+
+test("article 02 sidecar rejects role, batch, article and frozen v1 namespace drift", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_MANIFEST_PATH),
+    [],
+  );
+  const extension = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH),
+    legacy.articles,
+    { extension: true },
+  );
+  const knownArticles = [...legacy.articles, ...extension.articles];
+  const cases = [
+    [
+      /manifest_role/,
+      (manifest) => {
+        manifest.manifest_role = "promopages-10060-all-images";
+      },
+    ],
+    [
+      /batch_id/,
+      (manifest) => {
+        manifest.batch_id = "promopages-10060-article-02-20260806-v1";
+      },
+    ],
+    [
+      /exact article 02/,
+      (manifest) => {
+        manifest.articles[0].article_number = "03";
+      },
+    ],
+    [
+      /context_path/,
+      (manifest) => {
+        manifest.articles[0].context_path = manifest.articles[0].context_path.replace(
+          "article-02-20260806-v1",
+          "article-02-20260806-v2",
+        );
+      },
+    ],
+    [
+      /frozen source namespace v1/,
+      (manifest) => {
+        manifest.articles[0].images[0].image.source_path =
+          manifest.articles[0].images[0].image.source_path.replace(
+            "article-02-20260806-v1",
+            "article-02-20260806-v2",
+          );
+      },
+    ],
+  ];
+
+  cases.forEach(([pattern, mutate]) => {
+    const manifest = loadJson(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH);
+    mutate(manifest);
+    assert.throws(
+      () =>
+        hooks.__validatePromopages10060Manifest(manifest, knownArticles, {
+          article02: true,
+        }),
+      pattern,
+    );
+  });
+});
+
+test("article 02 replacement keeps every non-exact unavailable collision fail-closed", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_MANIFEST_PATH),
+    [],
+  );
+  const article02 = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH),
+    legacy.articles,
+    { article02: true },
+  );
+  const available = [...legacy.articles, ...article02.articles];
+  const duplicateAvailable03 = {
+    article_number: "03",
+    article_slug: legacy.articles.find((article) => article.article_number === "03")
+      .article_slug,
+    status: "source-unavailable",
+  };
+
+  assert.throws(
+    () =>
+      hooks.__mergeUnavailableArticleCollections(
+        available,
+        legacy.unavailableArticles,
+        [duplicateAvailable03],
+      ),
+    /повторяется: 03/,
+  );
+  assert.throws(
+    () =>
+      hooks.__mergeUnavailableArticleCollections(
+        available,
+        legacy.unavailableArticles,
+        legacy.unavailableArticles,
+      ),
+    /повторяется: 02/,
+  );
 });
 
 test("campaign normalized supersede selects the terminal MP4 and renders both attempts", () => {
