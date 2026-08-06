@@ -2,7 +2,7 @@
 """Build the exact static payload published from the gh-pages branch.
 
 The repository is larger than the GitHub Pages 1 GB published-site limit.  This
-builder follows only runtime references used by the five demo screens and
+builder follows only runtime references used by the six demo screens and
 copies those files into an isolated directory while preserving their paths.
 """
 
@@ -175,6 +175,7 @@ STATIC_FILES = (
     "clipmaker-lite/index.html",
     "clipmaker-lite/styles.css",
     "clipmaker-lite/app.js",
+    "ab-preparation/index.html",
     "clipmaker-lite-test/manifest.json",
     "clipmaker-lite-test/promopages-9930-manifest.json",
     "clipmaker-lite-test/case-21-manifest.json",
