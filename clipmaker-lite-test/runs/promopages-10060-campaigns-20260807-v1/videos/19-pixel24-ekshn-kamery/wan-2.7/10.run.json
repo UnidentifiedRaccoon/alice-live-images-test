@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-10",
+  "image_id": "10",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/10.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A smooth coordinated bank carries the biplane along the canyon as the rocky terrain drifts consistently through all four synchronized angles. Keep the four-panel layout fixed. By the end, every view shows the aircraft settling into a slightly more level attitude, with each timecode unchanged at 00:12:19:23.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ebe627286f986119c8/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "1eba2fbe375445895b89e563b741749b6410ad8f7f60658a7c7736341d90ce60",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "zGFgU113VIXxshVdi5EM",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:07:14Z",
+  "completed_at": "2026-08-07T14:08:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6057467,
+    "sha256": "c7f7c450f34469e1574f7d7f6f83623b6a9359b6aae24c1fc61938cf6f9fce3a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10-wan-2-7",
+  "lite_result_sha256": "e9da446c643a7cc071b5174c208e41469276098a9a0dbc4caa05ab348aed57dd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

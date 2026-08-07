@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a1af63b337143c08b94/orig",
+      "prompt": "The herd grazes calmly, taking slow uphill steps as heads sweep through the grass; tails flick gently and the foals stay close. Fixed camera. By the final frames, several horses have advanced a few paces while the whole herd remains peacefully grazing in view.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "0a40ce41c85bbd337a832d33df1a6d653e7540d3588df1376c4e80726c34105b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1a2dfce16daafbd70fbd059d6bda1b5c",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:48:31Z",
+  "completed_at": "2026-08-07T14:48:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 27457433,
+    "sha256": "be0d8f8c636910a655ba258846835ff21dd7718404a3a82742b5c2678ce4197b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-08",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-08-wan-2-2",
+  "lite_result_sha256": "db8fd5bdc917f884fef98e718bab24e56fdf95d4039e330aac8bca12a5472c3c",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1618897,
+    "sha256": "12a0ca460f71b92a6a86bf94d0f16ece83e3e13890f6c79c6fcfe6a1db10a073"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "1a2dfce16daafbd70fbd059d6bda1b5c",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

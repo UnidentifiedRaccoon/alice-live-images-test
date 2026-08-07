@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-10",
+  "image_id": "10",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/10.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Fixed camera. The black alpaca makes one small, smooth lean toward the woman, its ears subtly attentive; she keeps her warm smile and steady pose. End with its muzzle calmly poised close to her face, preserving the relaxed connection.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a973ba10e0ae4c2262d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "edc3b8e5539fdf47dc03b5c0ddd11078b24c941277d5a37de7769c675a80e790",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "UygwHqGSVkl22aiOKUtE",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:45:04Z",
+  "completed_at": "2026-08-07T14:46:59Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 6563679,
+    "sha256": "6c67f3f56302da190014fa7bbc0f63fd3bb2470d06150b932921ec305cfa12d0"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-10",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-10-veo-3-1-lite",
+  "lite_result_sha256": "10b8a7e74d272b98481faee2acbe30796108f76e0c894a365f5463e2499d3c28",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

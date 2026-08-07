@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Water continuously surges and curls around the action camera, scattering droplets before flowing back down. Keep the camera fixed on the device; end with water still dripping from the fully visible camera while the hand holds it steady.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5eae627286f98611976/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5a5eda935a7292c09dc983f37594f5ad49103906e6c7b39c89250641cd5445f3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8eysylBVXLYALVet5zIX",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:03:17Z",
+  "completed_at": "2026-08-07T14:05:09Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1688,
+    "height": 1228,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 12613739,
+    "sha256": "5c10fc7309c56525ae481d4220f1d7fb949d8a23312bf7e75e2f25249375c506"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-03",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-03-wan-2-7",
+  "lite_result_sha256": "c8561ed7abed69fa52554e43c490c47d10ca18ebee5f02383bb94e4adb837a23",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

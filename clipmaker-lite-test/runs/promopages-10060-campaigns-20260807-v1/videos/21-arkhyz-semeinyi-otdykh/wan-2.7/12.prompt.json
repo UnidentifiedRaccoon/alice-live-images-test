@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/12.jpeg",
+    "sha256": "b3afbbe846823a1a76c960035a74c6349ffa1da8e03647398b3371f5bd98e676",
+    "width": 2554,
+    "height": 1806
+  },
+  "structured_intent": {
+    "editorial_meaning": "Детский квадроцикл на Архызе сочетает яркое ощущение скорости с организованным и посильным для ребенка развлечением.",
+    "primary_action": "Ребенок проезжает на квадроцикле вперед по размеченному повороту грунтовой трассы.",
+    "terminal_state": "Квадроцикл заметно продвинулся по повороту, а ребенок сохраняет устойчивую посадку и уверенное управление.",
+    "semantic_invariant": "Заезд до конца остается увлекательным, но контролируемым и безопасным для ребенка."
+  },
+  "prompt": {
+    "positive": "The child rides the quad bike at a smooth, moderate pace around the dirt-track curve toward the right, with spinning wheels and a soft dust wake. The camera gently tracks the rider; the final frame shows the quad farther along the marked bend, the child still upright and in control.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12/result.json",
+    "sha256": "0367aa77ff9fdd6ac6310e6cfcfbadad1899d0810b6c84e0de9911d33c869dc2",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "b3afbbe846823a1a76c960035a74c6349ffa1da8e03647398b3371f5bd98e676",
+      "article_context_sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/07.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The instructor makes one steady downward teaching gesture over the lighting unit while the camera remains fixed. His palm gradually aligns parallel with the top of the unit and settles just above it by the end; his focused demeanor and the students’ attention remain unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d58c2758d0c71d2dd3d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "405fe23311a1da13f10f2b220df949fb2ac6f3b71e184850f5be0b047b913270",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Ttr0BhAi9Fb72kMgEme0",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:35:33Z",
+  "completed_at": "2026-08-07T14:37:32Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1748,
+    "height": 1184,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2339346,
+    "sha256": "47664bc339986b44d74ad2e44c77b2e45894a5d6225ba9e9d43a88ab5ade165a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-07",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-07-wan-2-7",
+  "lite_result_sha256": "2c8b2a263c2842b480ed3269f28d1e754a55855b3aefef991541f4176e811a49",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

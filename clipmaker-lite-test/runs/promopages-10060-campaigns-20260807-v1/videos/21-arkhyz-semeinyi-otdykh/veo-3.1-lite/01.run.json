@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The small clouds drift gently to the right while the camera makes a subtle push toward the resort. Finish with the clouds visibly farther right and the resort clearly centered in the valley.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5a873232115bcdc73801c4b44e67386fd40726596cf61d40506ad9d47864a8d3",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6mtcGVUrciRGUZfxlEvc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:39:10Z",
+  "completed_at": "2026-08-07T14:41:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 7210531,
+    "sha256": "bf7f32f62ee6d8201bc373a9a904f6f3921841d69224094b74576946e9de86f3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-01",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-01-veo-3-1-lite",
+  "lite_result_sha256": "e27515deca4c449d27dc0094b59c681eaaa723cc7c6d399c725d258feafa825a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

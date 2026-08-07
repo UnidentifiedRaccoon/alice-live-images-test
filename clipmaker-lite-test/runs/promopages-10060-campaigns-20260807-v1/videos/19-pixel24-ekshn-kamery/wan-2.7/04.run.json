@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The person smoothly adjusts the action camera forward on the jointed mount, then applies steady pressure until it settles securely. Keep the view fixed; end with the mounted camera stable and aimed ahead.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ea6c2df363cc43a4ed/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c715a200074738ba5f3aac159c7170ae6222126efd30049a76e82c3d130e5f8b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "vgq5JuuEIrQyeq1ydP23",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:04:36Z",
+  "completed_at": "2026-08-07T14:06:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1712,
+    "height": 1210,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4096908,
+    "sha256": "d4dafa827e96b441d0173124250be90f8141d73cd2464e51f7503f41ff557f8d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-04",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-04-wan-2-7",
+  "lite_result_sha256": "b162fed25d7e0a6cbfe52b0bfa04818d7d29f4a23e739be6faed52f25d198d66",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

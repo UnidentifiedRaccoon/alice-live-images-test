@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "unresolved": [],
+  "source_limitations": [
+    {
+      "scope": "all image blocks",
+      "field": "alt",
+      "reason": "PromoPages editor state and image catalogue expose no author-supplied alt field; alt is left empty and no DOM-derived fallback is stored"
+    },
+    {
+      "scope": "article metadata",
+      "field": "lead",
+      "reason": "lead stores publication.content.preview.snippet exactly; it may be empty, long, or overlap body text, and is never synthesized"
+    }
+  ]
+}

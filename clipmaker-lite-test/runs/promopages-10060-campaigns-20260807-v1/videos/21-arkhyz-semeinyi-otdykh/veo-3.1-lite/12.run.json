@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-12",
+  "image_id": "12",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/12.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/12.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The child smoothly accelerates the quad bike along the marked dirt bend to the right as the wheels spin and a small dust plume trails behind. A subtle tracking camera keeps the rider centered; by the last frame the quad has cleared the near part of the curve with the child upright and firmly in control.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_69ef07630b7ce5350e5d405d_69ef0b2e3ba10e0ae4c23886/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "970e277d41f114d50357947b8751cace37a1d737b0e97968c8b0682960d27a69",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "mrJGuDjmiW0XFQoAALGe",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:46:17Z",
+  "completed_at": "2026-08-07T14:48:26Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 22410600,
+    "sha256": "b38898c1e07695ab5c1655943a972239ba8d5e59573002689941251ba7eadfaa"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12-veo-3-1-lite",
+  "lite_result_sha256": "0367aa77ff9fdd6ac6310e6cfcfbadad1899d0810b6c84e0de9911d33c869dc2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

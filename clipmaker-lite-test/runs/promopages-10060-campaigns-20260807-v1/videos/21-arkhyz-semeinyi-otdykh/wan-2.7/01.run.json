@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "White clouds glide gently rightward as the camera slowly advances toward the compact resort below. End with the clouds farther right and the resort still clearly framed within the mountain valley.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dd8d4d653139a810eba64f7a1570ce5f6840f93e8af406c3c36dba1caf4cdd84",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Vq3nqfPoyMbsxJsCGue6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:39:08Z",
+  "completed_at": "2026-08-07T14:40:25Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1712,
+    "height": 1210,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 14854029,
+    "sha256": "67a22fa3ce68235d16d6c2c089f2f4b258f01af432405291d666f20e44c38831"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-01",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-01-wan-2-7",
+  "lite_result_sha256": "e27515deca4c449d27dc0094b59c681eaaa723cc7c6d399c725d258feafa825a",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

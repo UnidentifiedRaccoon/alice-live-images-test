@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-13",
+  "image_id": "13",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/13.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/13.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69ef07630b7ce5350e5d405d_69ef0b4dca75b55ea88f175f/orig",
+      "prompt": "The two occupied swings glide together through one smooth, moderate arc, descending slightly and then rising over the mountain panorama as the long suspension cables tilt naturally. Fixed camera. By the final frame they reach the forward high point together, riders secure and visibly thrilled.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "1689f2ed876216bd40e911f3529e4519f4b719534147ebd73b245e74fc1f442c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bbd8f2448086258f7b7f306bfb41bc37",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:56:52Z",
+  "completed_at": "2026-08-07T14:56:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 11536618,
+    "sha256": "83965cd1bcc03a78f32323672d6ae288a0f5ec4a381ec5131a5e08f92d32958f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13-wan-2-2",
+  "lite_result_sha256": "6986c83582a0e08657ae60db470da7d77363a6ab7ac25ee3ca99b8ee45dd94cf",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 496618,
+    "sha256": "38c4ce91b1910b9b82bbdebbf749e8fe91b123ce8102c390a71bd6e80cde3296"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "bbd8f2448086258f7b7f306bfb41bc37",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

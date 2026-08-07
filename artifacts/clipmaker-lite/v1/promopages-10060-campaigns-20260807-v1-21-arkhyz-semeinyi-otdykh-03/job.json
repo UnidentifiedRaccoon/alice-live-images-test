@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-03",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.7",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd",
+    "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+    "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:a56ad829e3a02f82aa98954ec6da4f8f66161289c21895361c7c35d658a2721d",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/03.jpeg",
+      "sha256": "6fa01cd4a33e81984ed1bd0ab75d51dbf43926397949a7990d1bde0fe2019287",
+      "bytes": 1001768
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/content.json",
+      "sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "bytes": 26011,
+      "locator": {
+        "article_id": "21-arkhyz-semeinyi-otdykh",
+        "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+        "lead": "Подсказываем, как интересно отдохнуть всей семьей и получить максимум эмоций",
+        "image_id": "03",
+        "block_index": 9,
+        "role": "gallery_image",
+        "caption": "На фото с высоты видно, как компактно расположена вся инфраструктура курорта",
+        "file": "03.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/03.jpeg",
+        "current_heading": {
+          "block_index": 3,
+          "level": 2,
+          "text": "Почему Курорт Архыз подходит для отдыха с детьми"
+        },
+        "nearest_text_before": {
+          "block_index": 8,
+          "type": "paragraph",
+          "text": "Листайте галерею, чтобы увидеть, какая красота ждет отдыхающих →"
+        },
+        "nearest_text_after": {
+          "block_index": 12,
+          "type": "heading",
+          "text": "Как работают канатные дороги и за счет чего они безопасны для детей"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:efbbdee091a1223778bd4e814d123ce1e5d6a99287aa22f7abe670e416006d8a"
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:1eeb236290251d5f433e39ca4f172f258b564f13df3cdf06a22c6e5341165a0c"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:863e2059228c699b8943e0097a1708e1bdeeada2010d93e8b8bf338ecd4bb90a"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-03/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-03/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-03/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-03/result.json"
+  }
+}

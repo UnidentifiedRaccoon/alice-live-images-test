@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-05",
+  "image_id": "05",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera tracks smoothly backward as the dog makes a short joyful run through the tall grass, keeping its face centered and the horizon level. Ears and tongue bounce naturally; in the final frame the dog is close to the lens and clearly recognizable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ea621e7f7d1833e7f1/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "16830719f55c8bbb9f2aef03356ee9aa0dc59702857205cef8531c4ad14d52a6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "r0cNorw9HkauLV0U377T",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:05:19Z",
+  "completed_at": "2026-08-07T14:07:26Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 17407800,
+    "sha256": "ec9b923e293b4a035e0c665f549c50ccb69ae08ac8f426802752e4617f819b85"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05-veo-3-1-lite",
+  "lite_result_sha256": "6cdf413169bca344970d1c8147d04347f53b66d0a341d6dc02b3ca35c325d966",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

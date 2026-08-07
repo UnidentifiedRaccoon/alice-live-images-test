@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/11.jpeg",
+    "sha256": "93290b9b4f399cf931688d23ddda791358da8c406bce6decc6f86ba5d22e62a5",
+    "width": 850,
+    "height": 640
+  },
+  "structured_intent": {
+    "editorial_meaning": "Экшн-камера способна надёжно сохранить эффектный и быстротечный момент активного спорта.",
+    "primary_action": "Вейкбордистка продолжает одно контролируемое воздушное вращение над следом катера.",
+    "terminal_state": "Спортсменка опускается к волне с почти выровненной над водой доской, продолжая держать рукоять фала.",
+    "semantic_invariant": "До последнего кадра сохраняется ощущение уверенно снятого экстремального трюка, а видимый интерфейс записи остаётся неизменным."
+  },
+  "prompt": {
+    "positive": "The rider flows through a steady wakeboarding roll, keeping both hands on the handle as the rope stays taut and water spray trails backward. The camera remains locked to the action and every recording-display element stays unchanged. She finishes descending with the board almost parallel to the wake in the last frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11/result.json",
+    "sha256": "004c2e32f1d579bf23ab3387aa17758acf26cb239984990e7ac9237afef71e4e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "93290b9b4f399cf931688d23ddda791358da8c406bce6decc6f86ba5d22e62a5",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

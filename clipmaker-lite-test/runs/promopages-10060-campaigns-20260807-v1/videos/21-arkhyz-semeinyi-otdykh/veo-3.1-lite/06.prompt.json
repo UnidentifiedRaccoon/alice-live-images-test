@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-06",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/06.jpeg",
+    "sha256": "7a1ab1f4882c99f2ed14c00a65e003bbe3f3882c5ae3e99039f788aaa44ddd04",
+    "width": 2554,
+    "height": 1806
+  },
+  "structured_intent": {
+    "editorial_meaning": "A gondola ride at Arkhyz offers families a calm, comfortable, and scenic way to reach the mountain heights.",
+    "primary_action": "The enclosed gondola cabins glide uphill along the cable above the forest.",
+    "terminal_state": "The nearest visible cabin has progressed noticeably closer to the next support tower while continuing uphill.",
+    "semantic_invariant": "The ride remains smooth, secure, and reassuring throughout, with the enclosed cabins visibly supported by the cable system."
+  },
+  "prompt": {
+    "positive": "The gondola cabins glide gently uphill along the cable while the camera slowly tracks forward toward the nearest moving cabin. In the last frame, it is visibly nearer the support tower and continues its calm ascent above the forest.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-06/result.json",
+    "sha256": "e6ec1daf1d09127329aeb0ebb0a6a92c122541a2f7759aba88d7a3390846052f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "7a1ab1f4882c99f2ed14c00a65e003bbe3f3882c5ae3e99039f788aaa44ddd04",
+      "article_context_sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

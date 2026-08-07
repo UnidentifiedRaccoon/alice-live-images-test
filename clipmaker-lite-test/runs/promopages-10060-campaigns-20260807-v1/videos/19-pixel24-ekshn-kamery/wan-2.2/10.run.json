@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-10",
+  "image_id": "10",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/10.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ebe627286f986119c8/orig",
+      "prompt": "The red biplane makes one smooth moderate bank through the canyon, with the pilot steady at the controls and the terrain sliding consistently across all four synchronized views. Fixed four-panel composition; every panel reaches the same slightly more level flight attitude by the final frame, while all displayed timecodes remain exactly 00:12:19:23.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "7c5ead9682de278a3a91ffbfe786ba9a45e5a89247207033faaaf6e1c023f391",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3a3355783e098fc259f5f3ad6015364c",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:29:28Z",
+  "completed_at": "2026-08-07T14:29:28Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7884489,
+    "sha256": "877d2c3b30d874ada57d6234501a37dee950ec1470a7ce0786e81c0bb863902b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10-wan-2-2",
+  "lite_result_sha256": "e9da446c643a7cc071b5174c208e41469276098a9a0dbc4caa05ab348aed57dd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 114818,
+    "sha256": "14aad1b7880dc4669240f822d88352d2f6e5cf54035f65e69893a4a13f8ddee1"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "3a3355783e098fc259f5f3ad6015364c",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/07.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ea6c2df363cc43a4ec/orig",
+      "prompt": "The bicycle rides steadily forward along the narrow trail at moderate speed, with small terrain-driven vibrations while stabilization keeps the mountain horizon level. The HyperView overlay stays fixed and unchanged. By the final frame, the front wheel has advanced visibly farther along the same trail and the horizon remains stable.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "57ef67316b852964b543f4cd341f43035a55c4573f54b733af2ec0f462f319ba",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8b467f964121436b4981093450ab4e5d",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:10:15Z",
+  "completed_at": "2026-08-07T14:10:15Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 15665399,
+    "sha256": "bacb8f8cdba98c1ba1bae29b146ceca4e2243737112298657cea1eb28c1ba630"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-07",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-07-wan-2-2",
+  "lite_result_sha256": "8d81e48fcd532a6ee2148c17b4fdffcf4b2387baaec048f95e27f099891b7b28",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 99137,
+    "sha256": "fc78b406dde803e396634503e833808459aafcd5bbf7cbd3799d41e3c1463f24"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "8b467f964121436b4981093450ab4e5d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

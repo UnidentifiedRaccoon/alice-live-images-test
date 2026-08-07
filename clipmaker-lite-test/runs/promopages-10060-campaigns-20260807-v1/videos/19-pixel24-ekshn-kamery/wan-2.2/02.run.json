@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eaf299094957dd2265/orig",
+      "prompt": "Move steadily forward along the road at a moderate speed, with the nearby road surface and roadside brush flowing backward while the horizon stays level. Keep the camera centered on the vanishing point and keep every HUD element completely unchanged. By the final frame, the viewpoint is visibly farther along the road and the mountains are slightly closer.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "8545d041675c279f4b6400dfe13099d24fbe77ac0929a5bc18a971a70f25e198",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "d0fd8ee6198fd77b1ea2514b6eddefb6",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:04:51Z",
+  "completed_at": "2026-08-07T14:04:51Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 832,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7552195,
+    "sha256": "86009e4d5f5045dd747d59a579330828ebcf2ea9937bdb26bafad2a8fd0b3389"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-02",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-02-wan-2-2",
+  "lite_result_sha256": "ad780dd71ebd94e0e2c93e2d3684466e670c31bd6e3c7736efaf615d3f2a7c5b",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 59151,
+    "sha256": "18d7180b176b022a7b0ce6296a97504a121964f477be99396660b65cdc3cc97b"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "d0fd8ee6198fd77b1ea2514b6eddefb6",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

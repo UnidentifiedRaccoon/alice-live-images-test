@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-11",
+  "image_id": "11",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/11.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eb6c2df363cc43a53f/orig",
+      "prompt": "The wakeboarder continues one smooth controlled aerial roll while holding the tow handle, the taut rope pulling her forward as the wake and spray stream behind. Keep the recording overlay completely unchanged and the rider continuously visible. By the final frames, her board is nearly level above the wake as she descends toward the water.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "dac88da269f14113f53dece369901ba3aaaa1102d617ba654f45d2961d354aa0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9c6b1816fa54e31bcda7479a27014eed",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:11:21Z",
+  "completed_at": "2026-08-07T14:11:21Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 832,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6910280,
+    "sha256": "7ace1ae26e3df03877c158e65f58abebee954be29cee7ccba8fe45ae377b3dcd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11-wan-2-2",
+  "lite_result_sha256": "004c2e32f1d579bf23ab3387aa17758acf26cb239984990e7ac9237afef71e4e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 123006,
+    "sha256": "93290b9b4f399cf931688d23ddda791358da8c406bce6decc6f86ba5d22e62a5"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "9c6b1816fa54e31bcda7479a27014eed",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

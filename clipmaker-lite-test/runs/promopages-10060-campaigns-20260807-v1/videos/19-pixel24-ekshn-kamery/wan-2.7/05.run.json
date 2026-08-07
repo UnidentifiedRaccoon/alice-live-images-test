@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The dog bounds forward through the grass as the camera glides backward with its joyful face centered and the horizon perfectly level. Its ears, tongue and fur move naturally; it finishes close to the lens, still running and clearly recognizable.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ea621e7f7d1833e7f1/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "89b3514f6276378e94769cf5e34d623459e999aa481ead067643c25a104f15df",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "HMYRr1g0auMd0zB8dcwc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:04:36Z",
+  "completed_at": "2026-08-07T14:05:54Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1664,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 13618491,
+    "sha256": "283b776f3a073e84b6fa40712055aa9c276002d9fa69dea932c99444cd17aebf"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05-wan-2-7",
+  "lite_result_sha256": "6cdf413169bca344970d1c8147d04347f53b66d0a341d6dc02b3ca35c325d966",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

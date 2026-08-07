@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/02.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The photographer gently angles the camera screen toward the students while they gradually draw their attention closer to the image. The viewpoint stays fixed, ending with the camera steady and everyone studying the screen together.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d58b4df0f5197831fcc/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5c5ab793d74f53cb08f2d85c00a5b9400e9e5fe4b8fd5f781ed5b2169d3628d0",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "hOwWDKazd5FEmLbdCAwT",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:32:59Z",
+  "completed_at": "2026-08-07T14:34:22Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1766,
+    "height": 1174,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 10759202,
+    "sha256": "44a8b6af65a84ace0309794f07e75ea6c98c6e74e5cc40d73b37c7f94f8aa269"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-02",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-02-wan-2-7",
+  "lite_result_sha256": "4af2fb1ac452d8bd2b0e6e7969b7c095628f0077a50574830fc80a0bc8e5d7e9",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

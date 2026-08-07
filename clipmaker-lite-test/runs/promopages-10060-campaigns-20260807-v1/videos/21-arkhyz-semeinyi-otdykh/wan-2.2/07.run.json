@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig",
+      "prompt": "The two hikers turn forward and begin walking uphill together at an easy, steady pace, planting their trekking poles naturally as a light breeze moves the woman’s hair and the dry grass. Fixed camera; by the final frame they are clearly advancing side by side along the trail, still relaxed and cheerful.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "1357a5bd2aee1360e1bbe93c439815847076ddc324ed5d65ecd24bce5403397b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "43783afbc5ae2da41b059af6474a1fe8",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:47:06Z",
+  "completed_at": "2026-08-07T14:47:07Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 17117149,
+    "sha256": "571c8576f52560267ec3d77e63b8817ab27919e1ae6d7b722e808204f7aa1acc"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-07",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-07-wan-2-2",
+  "lite_result_sha256": "fa07163daa89dbafbb005e03c26343a390319b95ac22b86c2d4905f206f03437",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 946440,
+    "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "43783afbc5ae2da41b059af6474a1fe8",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

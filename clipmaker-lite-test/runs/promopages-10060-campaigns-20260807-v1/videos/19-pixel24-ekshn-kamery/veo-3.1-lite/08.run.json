@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-08",
+  "image_id": "08",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/08.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The subject soars forward for four seconds as the lines quiver lightly and the forested ridge slides beneath him. Hold the action-camera selfie framing on his thrilled face, ending with him clearly airborne beyond the shifted ridge and still exhilarated.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ebf299094957dd22a4/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "4b6440267649609826ad09f43697575f4991cf45215f576c499c5db95126ae80",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "0X1cSYafprCvGKyvI72r",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:07:12Z",
+  "completed_at": "2026-08-07T14:09:02Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 7149502,
+    "sha256": "7175e4367d48b74dc62823d95e63bf2158630e511efc2dccd8ce6ec8740ae6a4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-08",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-08-veo-3-1-lite",
+  "lite_result_sha256": "fdc6ba8412bc018fc61bba0595c444387757911d72bfd5be2da95322097888c1",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

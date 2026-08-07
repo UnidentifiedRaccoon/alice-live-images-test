@@ -130,6 +130,61 @@ def preserved_native_state():
             setattr(pipeline.native, name, value)
 
 
+class Campaign20260807BatchTest(unittest.TestCase):
+    def setUp(self) -> None:
+        pipeline.activate_batch(pipeline.CAMPAIGN_20260807_BATCH_ID)
+
+    def tearDown(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+
+    def test_registered_campaign_batch_has_isolated_current_contract_namespace(
+        self,
+    ) -> None:
+        spec = pipeline.ACTIVE_BATCH_SPEC
+        self.assertEqual(spec.article_numbers, (19, 20, 21))
+        self.assertEqual(
+            spec.dataset_prefix,
+            "PROMOPAGES-10060-campaigns-20260807-v1",
+        )
+        self.assertEqual(
+            spec.ticket_config_rel.as_posix(),
+            "PROMOPAGES-10060/campaigns-20260807-v1/articles.json",
+        )
+        self.assertEqual(
+            spec.source_manifest_rel.as_posix(),
+            "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/"
+            "articles/manifest.csv",
+        )
+        self.assertEqual(
+            pipeline.FINAL_MANIFEST_REL.as_posix(),
+            "clipmaker-lite-test/"
+            "promopages-10060-campaigns-20260807-v1-manifest.json",
+        )
+        self.assertIsNone(pipeline.HARD_BUDGET_CAP_USD)
+        self.assertEqual(pipeline.NORMALIZED_INPUT_RETRY_ALLOWLIST, ())
+        self.assertNotIn(
+            pipeline.CAMPAIGN_20260807_BATCH_ID,
+            pipeline.FROZEN_206_BATCH_IDS,
+        )
+
+    def test_campaign_batch_cli_accepts_exact_operator_cap(self) -> None:
+        args = pipeline.build_parser().parse_args(
+            [
+                "--batch",
+                pipeline.CAMPAIGN_20260807_BATCH_ID,
+                "inventory",
+                "--budget-cap-usd",
+                "34.65",
+                "--dry-run",
+            ]
+        )
+        pipeline.activate_batch(args.batch)
+        self.assertEqual(
+            pipeline.parse_budget(args.budget_cap_usd),
+            Decimal("34.65"),
+        )
+
+
 class Article02BatchTest(unittest.TestCase):
     def setUp(self) -> None:
         pipeline.activate_batch(pipeline.ARTICLE_02_BATCH_ID)

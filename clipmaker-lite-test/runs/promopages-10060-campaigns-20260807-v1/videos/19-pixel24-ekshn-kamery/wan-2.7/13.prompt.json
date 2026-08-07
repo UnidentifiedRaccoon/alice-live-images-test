@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/13.jpeg",
+    "sha256": "c2917d30a654b79dd694fcbc58a5180562eacd67b828fa48d35c5498a6bd74fe",
+    "width": 850,
+    "height": 567
+  },
+  "structured_intent": {
+    "editorial_meaning": "Demonstrate that an action camera can preserve clear, detailed imagery during a fast and demanding sports moment.",
+    "primary_action": "The airborne motocross rider continues through the jump while the displaced dirt spreads and falls behind the motorcycle.",
+    "terminal_state": "The motorcycle is visibly farther along its airborne path, with the trailing dirt plume beginning to descend behind it.",
+    "semantic_invariant": "The scene retains its concentrated, high-energy action and the rider remains clearly recognizable through the last frame."
+  },
+  "prompt": {
+    "positive": "The airborne rider carries the motorcycle smoothly left through the jump while the dirt plume expands and curls downward. Track left at an even pace, keeping the bike clear and recognizable; end with the rider farther along the jump and the trailing dirt beginning to settle, the action still intense and sharply defined.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13/result.json",
+    "sha256": "87a99a0581a6dfde9997d8ce8dba95f962a5c7e7a3aac0fc2995d27164844355",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "c2917d30a654b79dd694fcbc58a5180562eacd67b828fa48d35c5498a6bd74fe",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

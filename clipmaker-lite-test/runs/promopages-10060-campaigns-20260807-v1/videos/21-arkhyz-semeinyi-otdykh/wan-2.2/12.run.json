@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-12",
+  "image_id": "12",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/12.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/12.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_69ef07630b7ce5350e5d405d_69ef0b2e3ba10e0ae4c23886/orig",
+      "prompt": "The child steadily rides the quad bike forward to the right along the marked dirt curve, the wheels rotating and raising a light trail of dust. Fixed camera; by the final frames the quad has advanced around the bend with the rider upright, controlled, and clearly visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "d8fea3dcb4888d26571890fdfe6b9774cb0fc4e4e36f0dd2249b7c6080a2c687",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "319c315a63754de57e186452682c4918",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:56:03Z",
+  "completed_at": "2026-08-07T14:56:03Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 17802737,
+    "sha256": "a306e6acea647374f620a52cacf5f259a7e04a23cede9e355174d3299eb203b4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12-wan-2-2",
+  "lite_result_sha256": "0367aa77ff9fdd6ac6310e6cfcfbadad1899d0810b6c84e0de9911d33c869dc2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1048452,
+    "sha256": "b3afbbe846823a1a76c960035a74c6349ffa1da8e03647398b3371f5bd98e676"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "319c315a63754de57e186452682c4918",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

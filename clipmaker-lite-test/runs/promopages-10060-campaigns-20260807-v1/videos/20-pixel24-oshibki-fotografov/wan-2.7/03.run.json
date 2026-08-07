@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/03.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman steadily rotates the lens ring while making a slight downward adjustment to the camera, keeping her gaze fixed on it. Fixed camera. She finishes with the camera stable in her hands and remains focused on the setting she has chosen.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334eee/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "201ff181452ca5b7078cb4a4a7d0b878b7a108cc5f38ee19f6a71574cacb5f45",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "TcfwGGOjJ3wTtEaSsT41",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:32:59Z",
+  "completed_at": "2026-08-07T14:34:15Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3574264,
+    "sha256": "af639c12c712edc9204afc506812bb009db74984b533a59fd5b6622c96170d4c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-03",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-03-wan-2-7",
+  "lite_result_sha256": "693866e8fce9be3393f20041e86b6438880e26abcaf3251b7eba60e61e81ca91",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-02",
+  "image_id": "02",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig",
+      "prompt": "A gentle mountain breeze moves steadily across the valley, softly rippling the treetops and meadow grass as the small clouds drift to the right. Keep the resort and lift lines continuously clear; by the final frames the foliage settles into a light residual sway and the clouds have visibly shifted.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "0b692de53b8fa2b313f43035be2ed7037b4d77b24a796552b21aaf0461b0c858",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "6736e17263b2f1c281270162ffe85863",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:41:26Z",
+  "completed_at": "2026-08-07T14:41:26Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 11710800,
+    "sha256": "4dc6452ae019b5dcb5ec0a292b434318e5765072d88a295305464d84e05730af"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-02",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-02-wan-2-2",
+  "lite_result_sha256": "2279e68b297900cd49666028281e3850876ce414f6a1f2f454654ca804bf9b7e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 877559,
+    "sha256": "0dfc3719bb37b9330e191f1d2e62d143d784151dcf9a95b28048395af1946f1d"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "6736e17263b2f1c281270162ffe85863",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

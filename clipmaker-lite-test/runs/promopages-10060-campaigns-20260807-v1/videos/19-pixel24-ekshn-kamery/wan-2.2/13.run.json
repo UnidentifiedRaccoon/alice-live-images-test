@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-13",
+  "image_id": "13",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/13.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/13.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ec621e7f7d1833e827/orig",
+      "prompt": "The motocross rider continues the jump leftward at a steady speed as the rear wheel throws a widening arc of dirt; pan gently left to keep the rider and bike visible. By the final frames the bike has advanced through the airborne arc and the trailing dirt begins to fall, with the action remaining tense and sharply readable.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "87637fb2ddeeba7bb9532dee521a87ae4b97c32e7b0ae8dad6cf483dcfcb9d6b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7f6ce4a59c55c5b97747856022cb9de9",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:31:35Z",
+  "completed_at": "2026-08-07T14:31:35Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 17121700,
+    "sha256": "4e91612a824f99fec364da9ed9e765ee08b602460e3d5cdc5a2a7a3d051cecbd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13-wan-2-2",
+  "lite_result_sha256": "87a99a0581a6dfde9997d8ce8dba95f962a5c7e7a3aac0fc2995d27164844355",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 183681,
+    "sha256": "c2917d30a654b79dd694fcbc58a5180562eacd67b828fa48d35c5498a6bd74fe"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "7f6ce4a59c55c5b97747856022cb9de9",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

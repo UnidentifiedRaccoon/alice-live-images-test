@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Travel smoothly forward down the centered road as foreground gravel and shrubs flow backward with natural parallax. The recording overlay stays fixed and unchanged. Finish noticeably farther along the road, still aimed at the level mountain horizon.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eaf299094957dd2265/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "36c300de595affb3517526d26c84d5ed227595dd2878e5012e839c7bb4afca6a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "ggPflJOD6uHiCim7PhuK",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:03:18Z",
+  "completed_at": "2026-08-07T14:04:34Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1248,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4153547,
+    "sha256": "20fa20dcbbf3bad314d680e3854b44ac43f9471e8ef2eeebd084844f51d773a7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-01",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-01-wan-2-7",
+  "lite_result_sha256": "460ff22cf4ff1e75228eaf96833901dcec009aa5ddea7dc6bb2a02a4ebc12ec2",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

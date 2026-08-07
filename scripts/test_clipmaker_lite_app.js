@@ -29,6 +29,11 @@ const PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH = path.join(
   "clipmaker-lite-test",
   "promopages-10060-article-02-20260806-v2-manifest.json",
 );
+const PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "promopages-10060-campaigns-20260807-v1-manifest.json",
+);
 
 const loadHooks = () => {
   const source = fs
@@ -612,6 +617,44 @@ const campaignExtensionManifest = () => {
       error: "Article source is unavailable.",
     })),
   };
+};
+
+const campaign20260807Manifest = () => {
+  const manifest = campaignExtensionManifest();
+  const article = manifest.articles[0];
+  const oldSlug = article.article_slug;
+  const articleSlug = "19-pixel24-ekshn-kamery";
+  article.article_number = "19";
+  article.article_slug = articleSlug;
+  article.title = "Стоп-кадр и другие классные фишки экшн-камер в Pixel24";
+  article.url = "https://pixel24.promo.page/promo/campaign-19";
+  article.context_path =
+    `PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/${articleSlug}/content.json`;
+  article.images.forEach((record) => {
+    record.image.source_path = record.image.source_path
+      .replace(oldSlug, articleSlug)
+      .replace("campaigns-20260805-v1", "campaigns-20260807-v1");
+    record.image.manifest_file_path =
+      `PROMOPAGES-10060-campaigns-20260807-v1/articles/${articleSlug}/${record.image.file}`;
+    record.outputs.forEach((output) => {
+      output.article_slug = articleSlug;
+      output.video_path = output.video_path
+        .replace(oldSlug, articleSlug)
+        .replace("/15-", "/19-")
+        .replace("campaigns-20260805-v1", "campaigns-20260807-v1");
+    });
+  });
+  manifest.outputs = article.images.flatMap((record) => record.outputs.map(clone));
+  manifest.manifest_role = "promopages-10060-campaigns-20260807-extension";
+  manifest.batch_id = "promopages-10060-campaigns-20260807-v1";
+  manifest.unavailable_articles = ["20", "21"].map((number) => ({
+    article_number: number,
+    article_slug: `${number}-unavailable-campaign`,
+    url: `https://example.promo.page/media/campaign-${number}`,
+    status: "source-unavailable",
+    error: "Article source is unavailable.",
+  }));
+  return manifest;
 };
 
 const extensionNormalizedRetryOutput = (articleSlug, image, modelId) => {
@@ -1547,6 +1590,33 @@ test("campaign extension is optional, additive, and derives aggregate counts", (
   assert.equal(extension.articles[0].case_key, "PROMOPAGES-10060:15-campaign-6a3d17575c59bd0e6d046aa6");
 });
 
+test("campaigns 20260807 sidecar is isolated and accounts for articles 19–21", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+  const extension = hooks.__validatePromopages10060Manifest(
+    campaignExtensionManifest(),
+    legacy.articles,
+    { extension: true },
+  );
+  const campaign20260807 = hooks.__validatePromopages10060Manifest(
+    campaign20260807Manifest(),
+    [...legacy.articles, ...extension.articles],
+    { campaign20260807: true },
+  );
+
+  assert.equal(campaign20260807.articles[0].article_number, "19");
+  assert.equal(
+    campaign20260807.articles[0].sourceBatchId,
+    "promopages-10060-campaigns-20260807-v1",
+  );
+  assert.deepEqual(
+    [...campaign20260807.unavailableArticles].map(
+      (article) => article.article_number,
+    ),
+    ["20", "21"],
+  );
+});
+
 test("article 02 sidecar exactly replaces legacy unavailable and completes 18 / 137 / 411", () => {
   const hooks = loadHooks();
   const legacy = hooks.__validatePromopages10060Manifest(
@@ -1592,6 +1662,50 @@ test("article 02 sidecar exactly replaces legacy unavailable and completes 18 / 
       imageCount: 137,
       videoCount: 411,
       availableVideoCount: 409,
+      unavailableOutputCount: 2,
+    },
+  );
+});
+
+test("campaigns 20260807 sidecar completes 21 / 170 / 510", () => {
+  const hooks = loadHooks();
+  const legacy = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_MANIFEST_PATH),
+    [],
+  );
+  const extension = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH),
+    legacy.articles,
+    { extension: true },
+  );
+  const article02 = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH),
+    [...legacy.articles, ...extension.articles],
+    { article02: true },
+  );
+  const campaign20260807 = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH),
+    [...legacy.articles, ...extension.articles, ...article02.articles],
+    { campaign20260807: true },
+  );
+  const articles = hooks.__sortPromopages10060Articles([
+    ...legacy.articles,
+    ...extension.articles,
+    ...article02.articles,
+    ...campaign20260807.articles,
+  ]);
+
+  assert.deepEqual(
+    [...articles].map((article) => article.article_number),
+    Array.from({ length: 21 }, (_, index) => String(index + 1).padStart(2, "0")),
+  );
+  assert.deepEqual(
+    { ...hooks.__datasetCounts(articles) },
+    {
+      articleCount: 21,
+      imageCount: 170,
+      videoCount: 510,
+      availableVideoCount: 508,
       unavailableOutputCount: 2,
     },
   );

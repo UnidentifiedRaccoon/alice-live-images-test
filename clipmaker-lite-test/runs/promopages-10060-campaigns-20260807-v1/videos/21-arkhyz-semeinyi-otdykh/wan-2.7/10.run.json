@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-10",
+  "image_id": "10",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/10.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The black alpaca gradually leans its head closer to the woman, maintaining gentle eye contact as she stays smiling and calmly engaged. Keep the camera fixed. End with the alpaca resting attentively near her face and both sharing the same relaxed, friendly moment.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a973ba10e0ae4c2262d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5973736a7504117a80ac683daa5b2a4be78183fb44a1b81a8413cb56a7d78f8f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "h9CED7t6RdikSNfwW7z1",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:43:41Z",
+  "completed_at": "2026-08-07T14:45:43Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1712,
+    "height": 1210,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 17752622,
+    "sha256": "b139c29c773071cd99df04f428fe4653c869cdd1b445736fbe7b78af780d9802"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-10",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-10-wan-2-7",
+  "lite_result_sha256": "10b8a7e74d272b98481faee2acbe30796108f76e0c894a365f5463e2499d3c28",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

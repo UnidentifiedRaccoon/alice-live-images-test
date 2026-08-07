@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-10",
+  "image_id": "10",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/10.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The biplane completes a short smooth bank over the canyon, the terrain moving in perfect sync across all four fixed views. The pilot remains steady. In the final frame, every angle shows the aircraft slightly more level, and all timecodes still read exactly 00:12:19:23.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ebe627286f986119c8/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8d0bb3a41b639fa41d92cc2b9e05129b9194c2af1adcc5975c91a1c8b1346c1a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "KBJ6lzDeZwkxGWwgCffD",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:09:06Z",
+  "completed_at": "2026-08-07T14:27:04Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 6282449,
+    "sha256": "c6d630bb59a58aa192e4d29b492799bc1e1ce72ae7688640ac033e708c1c34c1"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10-veo-3-1-lite",
+  "lite_result_sha256": "e9da446c643a7cc071b5174c208e41469276098a9a0dbc4caa05ab348aed57dd",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

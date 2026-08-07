@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-11",
+  "image_id": "11",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/11.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The rider flows through a steady wakeboarding roll, keeping both hands on the handle as the rope stays taut and water spray trails backward. The camera remains locked to the action and every recording-display element stays unchanged. She finishes descending with the board almost parallel to the wake in the last frame.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eb6c2df363cc43a53f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "e17b3861a12302f6d78a68465bf78086b5806e577a9cffcf84160a804964b051",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "G9n11Vzl7aVL40M2NgZY",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:07:33Z",
+  "completed_at": "2026-08-07T14:08:51Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1660,
+    "height": 1250,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 12009691,
+    "sha256": "f0475dde8e48cb19c704f25f7b7f8c9c74070057c1233289c6849c80cdf17a6a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11-wan-2-7",
+  "lite_result_sha256": "004c2e32f1d579bf23ab3387aa17758acf26cb239984990e7ac9237afef71e4e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334ef0/orig",
+      "prompt": "The woman holding the print slowly angles it toward her colleague as they examine it together, their attentive smiles remaining natural. Fixed camera; by the final frame both are focused on the clearly visible print.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "cca938047e1f6378113323d3bf3fb6daf2243d6f96607905dfdf31066ee54059",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "459a72baf984b5e3171d1c5e69c602ee",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:38:11Z",
+  "completed_at": "2026-08-07T14:38:11Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6531759,
+    "sha256": "e124275195405fce63aae3e7a9441bc0e196ca65569c05cad845ac95733eae87"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-06",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-06-wan-2-2",
+  "lite_result_sha256": "a709c08c9f9407ae523a9605cb80b54fe9d61e822fa0b5ae94e2e4218c542679",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 109672,
+    "sha256": "be6c90c37eb78d1dc12ab018b6508c9156758f57fe689cb8ed12ab815d86e90f"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "459a72baf984b5e3171d1c5e69c602ee",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

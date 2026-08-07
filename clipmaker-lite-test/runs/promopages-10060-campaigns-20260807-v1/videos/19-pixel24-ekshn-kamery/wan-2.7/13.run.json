@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-13",
+  "image_id": "13",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/13.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/13.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The airborne rider carries the motorcycle smoothly left through the jump while the dirt plume expands and curls downward. Track left at an even pace, keeping the bike clear and recognizable; end with the rider farther along the jump and the trailing dirt beginning to settle, the action still intense and sharply defined.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ec621e7f7d1833e827/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "cc289c851b977154e341305e41470cfff470b775c45c05aa32d12b79beeb9e75",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "0XSk2pjU8QqAxJwVt825",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:08:33Z",
+  "completed_at": "2026-08-07T14:09:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1762,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 14016319,
+    "sha256": "d23f4f4167fa5bff8c2c022749d773b821f9f5d96690ff815c3efac4b2349ae0"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13-wan-2-7",
+  "lite_result_sha256": "87a99a0581a6dfde9997d8ce8dba95f962a5c7e7a3aac0fc2995d27164844355",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
