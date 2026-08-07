@@ -27,6 +27,12 @@ PROMOPAGES_10060_EXTENSION_PATH = (
 PROMOPAGES_10060_CAMPAIGN_20260807_PATH = (
     ROOT / pages.PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH
 )
+PROMOPAGES_10060_S3_DELIVERY_PATH = (
+    ROOT / pages.PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH
+)
+PROMOPAGES_10060_S3_ARTICLES_PATH = (
+    ROOT / pages.PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH
+)
 PROMOPAGES_10060_IMAGE_COUNTS = (
     ("01", 4),
     ("03", 9),
@@ -192,6 +198,7 @@ def _ambiguous_retry_success_output(article_slug, image_id, model_id, video_path
                 "height": 720,
                 "duration_seconds": 5,
                 "bytes": 2048,
+                "sha256": hashlib.sha256(video_path.encode()).hexdigest(),
             },
             "contract_check": {"conforms": True, "warnings": []},
             "error": None,
@@ -271,7 +278,16 @@ def _normalized_input_retry_output(
             else "normalized-input-retry-v1"
         ),
         "video_path": None if exhausted else video_path,
-        "media": None if exhausted else {"width": 1280, "height": 720},
+        "media": (
+            None
+            if exhausted
+            else {
+                "width": 1280,
+                "height": 720,
+                "bytes": 2048,
+                "sha256": hashlib.sha256(video_path.encode()).hexdigest(),
+            }
+        ),
         "contract_check": None if exhausted else {"conforms": True},
         "error": retry_error,
         "retry": {
@@ -378,6 +394,10 @@ def _promopages_10060_fixture(first_source_delivery=None):
                     "model_id": model_id,
                     "status": "succeeded",
                     "video_path": video_path,
+                    "media": {
+                        "bytes": 2048,
+                        "sha256": hashlib.sha256(video_path.encode()).hexdigest(),
+                    },
                 }
                 outputs.append(output)
                 flat_outputs.append(output.copy())
@@ -526,6 +546,7 @@ def _promopages_10060_campaign_extension_fixture():
                     "height": 720,
                     "duration_seconds": 5,
                     "bytes": 2048,
+                    "sha256": hashlib.sha256(video_path.encode()).hexdigest(),
                 },
             }
         )
@@ -707,6 +728,7 @@ def _extension_normalized_input_retry_output(
             "height": 720,
             "duration_seconds": 5,
             "bytes": 2048,
+            "sha256": hashlib.sha256(video_path.encode()).hexdigest(),
         },
         "contract_check": contract_check,
         "error": accepted_error,
@@ -940,7 +962,12 @@ def _promopages_10060_campaign_normalized_extension_fixture():
                     "recorded_status": "succeeded",
                     "selected_attempt": "primary",
                     "video_path": video_path,
-                    "media": {"width": 1280, "height": 720, "bytes": 2048},
+                    "media": {
+                        "width": 1280,
+                        "height": 720,
+                        "bytes": 2048,
+                        "sha256": hashlib.sha256(video_path.encode()).hexdigest(),
+                    },
                     "contract_check": {"conforms": True, "warnings": []},
                     "error": None,
                     "retry": None,
@@ -1096,6 +1123,116 @@ def _promopages_10060_campaign_normalized_extension_fixture():
     return manifest, source_paths, video_paths
 
 
+def _s3_delivery_fixture(*source_manifests):
+    routing_articles = []
+    delivery_articles = []
+    delivery_outputs = []
+    seen_article_slugs = set()
+
+    for manifest in source_manifests:
+        outputs_by_article = {}
+        for output in manifest["outputs"]:
+            if output.get("video_path") is None:
+                continue
+            outputs_by_article.setdefault(output["article_slug"], []).append(output)
+
+        for article in manifest["articles"]:
+            article_slug = article["article_slug"]
+            outputs = outputs_by_article.get(article_slug, [])
+            if not outputs:
+                continue
+            if article_slug in seen_article_slugs:
+                raise AssertionError(f"Duplicate fixture article: {article_slug}")
+            seen_article_slugs.add(article_slug)
+
+            article_number = article["article_number"]
+            cabinet_slug = f"fixture-cabinet-{article_number}"
+            cabinet_id = f"fixturecabinet{article_number}"
+            publication_id = f"fixturepublication{article_number}"
+            routing_articles.append(
+                {
+                    "article_number": article_number,
+                    "article_slug": article_slug,
+                    "label": article.get("title", f"Fixture article {article_number}"),
+                    "url": article.get(
+                        "url", f"https://example.test/articles/{article_number}"
+                    ),
+                    "cabinet": {
+                        "name": f"Fixture cabinet {article_number}",
+                        "slug": cabinet_slug,
+                        "id": cabinet_id,
+                    },
+                    "campaign_ids": [f"fixturecampaign{article_number}"],
+                    "publication_id": publication_id,
+                    "source_status": "available",
+                    "expected_image_count": article["image_count"],
+                    "expected_ready_output_count": len(outputs),
+                }
+            )
+            delivery_articles.append(
+                {
+                    "article_slug": article_slug,
+                    "cabinet_slug": cabinet_slug,
+                    "cabinet_id": cabinet_id,
+                    "publication_id": publication_id,
+                }
+            )
+            for output in outputs:
+                media = output["media"]
+                filename = (
+                    f"image_{int(output['image_id']):02d}--sha256-"
+                    f"{media['sha256'][:12]}.mp4"
+                )
+                object_key = (
+                    f"{pages.PROMOPAGES_10060_S3_OBJECT_PREFIX}"
+                    f"{cabinet_slug}__{cabinet_id}/{publication_id}/"
+                    f"{pages.PROMOPAGES_10060_S3_MODEL_DIRECTORIES[output['model_id']]}/"
+                    f"{filename}"
+                )
+                delivery_outputs.append(
+                    {
+                        "article_slug": article_slug,
+                        "image_id": output["image_id"],
+                        "model_id": output["model_id"],
+                        "source_video_path": output["video_path"],
+                        "sha256": media["sha256"],
+                        "bytes": media["bytes"],
+                        "object_key": object_key,
+                        "yastatic_url": (
+                            pages.PROMOPAGES_10060_S3_PUBLIC_BASE_URL + object_key
+                        ),
+                    }
+                )
+
+    routing_config = {
+        "schema_version": 1,
+        "ticket": "PROMOPAGES-10060",
+        "articles": routing_articles,
+    }
+    delivery_manifest = {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-s3-delivery",
+        "ticket": "PROMOPAGES-10060",
+        "bucket": pages.PROMOPAGES_10060_S3_BUCKET,
+        "object_prefix": pages.PROMOPAGES_10060_S3_OBJECT_PREFIX,
+        "public_base_url": pages.PROMOPAGES_10060_S3_PUBLIC_BASE_URL,
+        "verified_output_count": len(delivery_outputs),
+        "articles": delivery_articles,
+        "outputs": delivery_outputs,
+    }
+    return routing_config, delivery_manifest
+
+
+def _write_s3_delivery_fixture(root, *source_manifests):
+    routing_config, delivery_manifest = _s3_delivery_fixture(*source_manifests)
+    routing_path = root / pages.PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH
+    routing_path.parent.mkdir(parents=True, exist_ok=True)
+    routing_path.write_text(json.dumps(routing_config), encoding="utf-8")
+    delivery_path = root / pages.PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH
+    delivery_path.parent.mkdir(parents=True, exist_ok=True)
+    delivery_path.write_text(json.dumps(delivery_manifest), encoding="utf-8")
+
+
 def _write_promopages_collection_fixture(root, *, include_campaign_extension):
     def write_text(relative_path, content):
         path = root / relative_path
@@ -1127,6 +1264,7 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
         path.write_bytes(b"legacy-media")
 
     extension_paths = []
+    source_manifests = [legacy]
     if include_campaign_extension:
         extension, extension_sources, extension_videos = (
             _promopages_10060_campaign_extension_fixture()
@@ -1136,14 +1274,180 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
             json.dumps(extension),
         )
         extension_paths = [*extension_sources, *extension_videos]
+        source_manifests.append(extension)
         for relative_path in extension_paths:
             path = root / relative_path
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(b"campaign-media")
+    _write_s3_delivery_fixture(root, *source_manifests)
     return extension_paths
 
 
 class GitHubPagesSiteTest(unittest.TestCase):
+    def test_s3_delivery_overlay_matches_all_available_canonical_outputs(self):
+        source_manifests = [
+            json.loads(PROMOPAGES_10060_MANIFEST_PATH.read_text(encoding="utf-8")),
+            json.loads(PROMOPAGES_10060_ARTICLE_02_PATH.read_text(encoding="utf-8")),
+            json.loads(PROMOPAGES_10060_EXTENSION_PATH.read_text(encoding="utf-8")),
+            json.loads(
+                PROMOPAGES_10060_CAMPAIGN_20260807_PATH.read_text(
+                    encoding="utf-8"
+                )
+            ),
+        ]
+        delivery = json.loads(
+            PROMOPAGES_10060_S3_DELIVERY_PATH.read_text(encoding="utf-8")
+        )
+        routing_config = json.loads(
+            PROMOPAGES_10060_S3_ARTICLES_PATH.read_text(encoding="utf-8")
+        )
+
+        covered_paths = pages._validate_promopages_10060_s3_delivery(
+            delivery, routing_config, *source_manifests
+        )
+        canonical_paths = {
+            Path(output["video_path"])
+            for manifest in source_manifests
+            for output in manifest["outputs"]
+            if output.get("video_path") is not None
+        }
+
+        self.assertEqual(len(covered_paths), 508)
+        self.assertEqual(covered_paths, canonical_paths)
+
+    def test_s3_delivery_overlay_mismatches_fail_closed(self):
+        source_manifests = [
+            json.loads(PROMOPAGES_10060_MANIFEST_PATH.read_text(encoding="utf-8")),
+            json.loads(PROMOPAGES_10060_ARTICLE_02_PATH.read_text(encoding="utf-8")),
+            json.loads(PROMOPAGES_10060_EXTENSION_PATH.read_text(encoding="utf-8")),
+            json.loads(
+                PROMOPAGES_10060_CAMPAIGN_20260807_PATH.read_text(
+                    encoding="utf-8"
+                )
+            ),
+        ]
+        routing_config = json.loads(
+            PROMOPAGES_10060_S3_ARTICLES_PATH.read_text(encoding="utf-8")
+        )
+
+        def make_object_key_noncanonical(manifest):
+            output = manifest["outputs"][0]
+            output["object_key"] = output["object_key"].replace("/", "//", 1)
+            output["yastatic_url"] = (
+                pages.PROMOPAGES_10060_S3_PUBLIC_BASE_URL + output["object_key"]
+            )
+
+        def replace_object_key_segment(manifest, index, value):
+            output = manifest["outputs"][0]
+            parts = output["object_key"].split("/")
+            parts[index] = value
+            output["object_key"] = "/".join(parts)
+            output["yastatic_url"] = (
+                pages.PROMOPAGES_10060_S3_PUBLIC_BASE_URL + output["object_key"]
+            )
+
+        mutations = {
+            "identity": (
+                "identity",
+                lambda manifest: manifest.update({"bucket": "wrong-bucket"}),
+            ),
+            "logical_triple": (
+                "logical output triple",
+                lambda manifest: manifest["outputs"][0].update(
+                    {"model_id": "alibaba/wan-9.9"}
+                ),
+            ),
+            "source_path": (
+                "source path differs",
+                lambda manifest: manifest["outputs"][0].update(
+                    {"source_video_path": "wrong/video.mp4"}
+                ),
+            ),
+            "noncanonical_source_path": (
+                "source path differs",
+                lambda manifest: manifest["outputs"][0].update(
+                    {
+                        "source_video_path": (
+                            "./" + manifest["outputs"][0]["source_video_path"]
+                        )
+                    }
+                ),
+            ),
+            "sha256": (
+                "hash or byte size differs",
+                lambda manifest: manifest["outputs"][0].update(
+                    {"sha256": "0" * 64}
+                ),
+            ),
+            "bytes": (
+                "hash or byte size differs",
+                lambda manifest: manifest["outputs"][0].update(
+                    {"bytes": manifest["outputs"][0]["bytes"] + 1}
+                ),
+            ),
+            "object_prefix": (
+                "object key differs from authoritative route",
+                lambda manifest: manifest["outputs"][0].update(
+                    {
+                        "object_key": manifest["outputs"][0]["object_key"].replace(
+                            pages.PROMOPAGES_10060_S3_OBJECT_PREFIX,
+                            "wrong-prefix/",
+                            1,
+                        )
+                    }
+                ),
+            ),
+            "noncanonical_object_key": (
+                "object key is not canonical",
+                make_object_key_noncanonical,
+            ),
+            "article_cabinet": (
+                "article routing differs",
+                lambda manifest: manifest["articles"][0].update(
+                    {"cabinet_id": "mutated-cabinet"}
+                ),
+            ),
+            "object_cabinet": (
+                "object key differs from authoritative route",
+                lambda manifest: replace_object_key_segment(
+                    manifest, 2, "mutated-cabinet"
+                ),
+            ),
+            "object_publication": (
+                "object key differs from authoritative route",
+                lambda manifest: replace_object_key_segment(
+                    manifest, 3, "mutated-publication"
+                ),
+            ),
+            "yastatic_url": (
+                "yastatic URL",
+                lambda manifest: manifest["outputs"][0].update(
+                    {"yastatic_url": "https://example.invalid/video.mp4"}
+                ),
+            ),
+            "missing": (
+                "exactly 508 verified outputs",
+                lambda manifest: manifest["outputs"].pop(),
+            ),
+            "extra": (
+                "exactly 508 verified outputs",
+                lambda manifest: manifest["outputs"].append(
+                    dict(manifest["outputs"][0])
+                ),
+            ),
+        }
+        original_delivery = PROMOPAGES_10060_S3_DELIVERY_PATH.read_text(
+            encoding="utf-8"
+        )
+        for name, (error, mutate) in mutations.items():
+            with self.subTest(name=name):
+                delivery = json.loads(original_delivery)
+                mutate(delivery)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._validate_promopages_10060_s3_delivery(
+                        delivery, routing_config, *source_manifests
+                    )
+
     def test_article_02_replacement_is_published_but_media_stays_raw(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
@@ -1157,6 +1461,12 @@ class GitHubPagesSiteTest(unittest.TestCase):
             sidecar_path.parent.mkdir(parents=True, exist_ok=True)
             _materialize_article_02_raw_fixture(root, article_02)
             sidecar_path.write_text(json.dumps(article_02), encoding="utf-8")
+            legacy = json.loads(
+                (root / "clipmaker-lite-test/promopages-10060-manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            _write_s3_delivery_fixture(root, legacy, article_02)
 
             static_files = (
                 "clipmaker-lite-test/manifest.json",
@@ -1185,6 +1495,12 @@ class GitHubPagesSiteTest(unittest.TestCase):
             sidecar_path = root / pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH
             sidecar_path.parent.mkdir(parents=True, exist_ok=True)
             sidecar_path.write_text(json.dumps(article_02), encoding="utf-8")
+            legacy = json.loads(
+                (root / "clipmaker-lite-test/promopages-10060-manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            _write_s3_delivery_fixture(root, legacy, article_02)
             (root / source_paths[0]).write_bytes(b"corrupted")
 
             static_files = (
@@ -1342,6 +1658,26 @@ class GitHubPagesSiteTest(unittest.TestCase):
             self.assertNotIn(
                 pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH, paths
             )
+
+    def test_promopages_10060_base_dataset_requires_s3_delivery_overlay(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            _write_promopages_collection_fixture(
+                root, include_campaign_extension=False
+            )
+            (root / pages.PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH).unlink()
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+                "clipmaker-lite-test/promopages-10060-manifest.json",
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+                self.assertRaisesRegex(FileNotFoundError, "requires its S3 delivery"),
+            ):
+                pages.collect_site_paths(root)
 
     def test_campaign_extension_manifest_is_published_but_media_stays_raw(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
@@ -1658,15 +1994,35 @@ class GitHubPagesSiteTest(unittest.TestCase):
             not ADDITIONAL_MANIFEST_PATH.is_file()
             or not CASE_21_MANIFEST_PATH.is_file()
             or not PROMOPAGES_10060_MANIFEST_PATH.is_file()
+            or not PROMOPAGES_10060_S3_DELIVERY_PATH.is_file()
+            or not PROMOPAGES_10060_S3_ARTICLES_PATH.is_file()
         ):
-            self.skipTest("Final Step 5 extension manifests have not been produced yet")
+            self.skipTest(
+                "Final Step 5 manifests and S3 delivery overlay are not available"
+            )
 
-        paths = pages.collect_site_paths(ROOT)
+        delivery = json.loads(
+            PROMOPAGES_10060_S3_DELIVERY_PATH.read_text(encoding="utf-8")
+        )
+        covered_video = ROOT / next(
+            output["source_video_path"]
+            for output in delivery["outputs"]
+            if output["article_slug"] == pages.PROMOPAGES_10060_ARTICLE_02_SLUG
+        )
+        real_is_file = Path.is_file
+
+        def is_file_except_covered_video(path):
+            if path == covered_video:
+                return False
+            return real_is_file(path)
+
+        with mock.patch.object(Path, "is_file", is_file_except_covered_video):
+            paths = pages.collect_site_paths(ROOT)
         total_bytes = pages.site_size(ROOT, paths)
 
         self.assertEqual(
             len(paths),
-            252
+            253
             + int(PROMOPAGES_10060_ARTICLE_02_PATH.is_file())
             + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
             + int(PROMOPAGES_10060_CAMPAIGN_20260807_PATH.is_file()),
@@ -1683,6 +2039,8 @@ class GitHubPagesSiteTest(unittest.TestCase):
         self.assertIn(
             Path("clipmaker-lite-test/promopages-10060-manifest.json"), paths
         )
+        self.assertIn(pages.PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH, paths)
+        self.assertNotIn(pages.PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH, paths)
         if PROMOPAGES_10060_ARTICLE_02_PATH.is_file():
             self.assertIn(
                 pages.PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH, paths
@@ -1837,6 +2195,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 absolute_video_path = root / review_video_path
                 absolute_video_path.parent.mkdir(parents=True, exist_ok=True)
                 absolute_video_path.write_bytes(b"review-video")
+            _write_s3_delivery_fixture(root, review_manifest)
 
             static_files = (
                 "clipmaker-lite-test/manifest.json",
@@ -1844,7 +2203,11 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/case-21-manifest.json",
                 "clipmaker-lite-test/promopages-10060-manifest.json",
             )
-            expected_site_files = {*static_files, "raw/base.jpg"}
+            expected_site_files = {
+                *static_files,
+                "raw/base.jpg",
+                pages.PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH.as_posix(),
+            }
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -1881,6 +2244,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -1900,6 +2264,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -1948,6 +2313,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -1962,6 +2328,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -1977,6 +2344,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -2014,6 +2382,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
@@ -2121,6 +2490,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "clipmaker-lite-test/promopages-10060-manifest.json",
                 json.dumps(review_manifest),
             )
+            _write_s3_delivery_fixture(root, review_manifest)
             with (
                 mock.patch.object(pages, "STATIC_FILES", static_files),
                 mock.patch.object(pages, "STATIC_TREES", ()),
