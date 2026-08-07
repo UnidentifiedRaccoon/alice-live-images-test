@@ -13,6 +13,42 @@
     "../clipmaker-lite-test/promopages-10060-article-02-20260806-v2-manifest.json";
   const PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-10060-campaigns-20260807-v1-manifest.json";
+  const PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH =
+    "../clipmaker-lite-test/promopages-10060-s3-delivery.json";
+  const PROMOPAGES_10060_S3_DELIVERY_ROLE =
+    "promopages-10060-s3-delivery";
+  const PROMOPAGES_10060_S3_BUCKET = "promopages-front-bundles";
+  const PROMOPAGES_10060_S3_OBJECT_PREFIX = "front-images/exp_video/";
+  const PROMOPAGES_10060_S3_PUBLIC_BASE =
+    "https://yastatic.net/s3/promopages-front-bundles/";
+  const PROMOPAGES_10060_S3_MODEL_DIRECTORIES = {
+    "alibaba/wan-2.2": "wan_2_2",
+    "alibaba/wan-2.7": "wan_2_7",
+    "google/veo-3.1-lite": "veo_3_1",
+  };
+  const PROMOPAGES_10060_S3_ARTICLE_ROUTES = {
+    "01-level-ipoteka-2026": ["level-group", "69ee06293ba10e0ae4b765d1", "6a048ddca495b52c9d873940"],
+    "02-level-rabotaiu-v-level": ["level-group", "69ee06293ba10e0ae4b765d1", "69ef21df12346c2fdfdffecd"],
+    "03-level-nestandartnye-planirovki": ["level-group", "69ee06293ba10e0ae4b765d1", "69ef21df12346c2fdfdffee5"],
+    "04-level-pokupat-kvartiru-seichas": ["level-group", "69ee06293ba10e0ae4b765d1", "69ef21df12346c2fdfdffecf"],
+    "05-momatrino-zalozhennost-nosa": ["momat-rino", "6a0edbefd8f6a66f4aafa64e", "6a22ea4881cbac61b68c8b7a"],
+    "06-momatrino-privykanie-k-sredstvam": ["momat-rino", "6a0edbefd8f6a66f4aafa64e", "6a0efe272def417608f1a976"],
+    "07-femibion-gotovites-k-beremennosti": ["femibion", "6811f44bdea3aa657912ec43", "69ccbb1d79b9a0623bf6adf1"],
+    "08-femibion-grudnoe-vskarmlivanie": ["femibion", "6811f44bdea3aa657912ec43", "69cccb918a227d62148118b3"],
+    "09-m2-risk-vtorichki": ["m2", "62580bbeff234753e90b1f43", "6a1046c4295ec11571710766"],
+    "10-krasnaya-polyana-reis-zaderzhali": ["kurort-krasnaya-polyana", "69a81d1e0c80563998f9e493", "6a54bb73d6edb03d5192b7e1"],
+    "11-dream-island-pochemu-vybiraiu": ["ostrov-mechty", "6242c242c8a3184eaa3bbddc", "687a5391bcfe3d7b9a29bcb7"],
+    "12-dream-island-7-fishek": ["ostrov-mechty", "6242c242c8a3184eaa3bbddc", "6a59e32a3a302a69aec403c2"],
+    "13-dream-island-top6-attrakcionov": ["ostrov-mechty", "6242c242c8a3184eaa3bbddc", "6a5a10c7bf47d01035dc3f22"],
+    "14-promopages-govorit-s-auditoriei": ["promostranitsy-poleznye-materialy", "668d1309fe908067055f9345", "6a6afe8c1c0a3777e9c6a1fc"],
+    "15-marykay-sredstva": ["mary-kay", "6888f30e929de7307d3b2107", "6a3d0f7c5a8cab7b46b606c7"],
+    "16-marykay-trendy-krasoty": ["mary-kay", "6888f30e929de7307d3b2107", "6a3d13553046bd041c2e78a2"],
+    "17-volma-nalivnoi-pol": ["volma", "6a202e2a50587d5bb251b38d", "6a268ddbbf5214766a58cd74"],
+    "18-volma-plitochnyi-klei": ["volma", "6a202e2a50587d5bb251b38d", "6a267e54c6621a31e5630a18"],
+    "19-pixel24-ekshn-kamery": ["pixel24", "694e6044d7871038964c6bf7", "6a16e5c7621e7f7d1833e285"],
+    "20-pixel24-oshibki-fotografov": ["pixel24", "694e6044d7871038964c6bf7", "69d64d3dc2758d0c71d2d960"],
+    "21-arkhyz-semeinyi-otdykh": ["kurort-arkhyz", "69de5306e88eac157c28799c", "69ef07630b7ce5350e5d405d"],
+  };
   const PROMOPAGES_10060_EXTENSION_ROLE =
     "promopages-10060-campaign-extension";
   const PROMOPAGES_10060_EXTENSION_BATCH_ID =
@@ -146,6 +182,7 @@
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_ARTICLE_COUNT = 21;
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_IMAGE_COUNT = 170;
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_OUTPUT_COUNT = 510;
+  const EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 508;
   const PROVIDER_FILTERED_STATUS = "provider-filtered";
   const PROVIDER_FILTERED_RECORDED_STATUS = "provider-failed";
   const PROVIDER_FILTERED_SELECTION = "terminal-retry-v1-exhausted";
@@ -3436,6 +3473,156 @@
     return retained;
   };
 
+  const promopages10060DeliveryKey = (articleSlug, imageId, modelId) =>
+    `${articleSlug}\u0000${imageId}\u0000${modelId}`;
+
+  const validatePromopages10060S3Delivery = (manifest, reviewArticles) => {
+    assert(
+      manifest &&
+        typeof manifest === "object" &&
+        manifest.schema_version === 1 &&
+        manifest.manifest_role === PROMOPAGES_10060_S3_DELIVERY_ROLE &&
+        manifest.ticket === "PROMOPAGES-10060" &&
+        manifest.bucket === PROMOPAGES_10060_S3_BUCKET &&
+        manifest.object_prefix === PROMOPAGES_10060_S3_OBJECT_PREFIX &&
+        manifest.public_base_url === PROMOPAGES_10060_S3_PUBLIC_BASE,
+      "S3 delivery-манифест PROMOPAGES-10060 имеет неверную identity.",
+    );
+
+    const expectedArticleRoutes = Object.entries(
+      PROMOPAGES_10060_S3_ARTICLE_ROUTES,
+    );
+    assert(
+      Array.isArray(manifest.articles) &&
+        manifest.articles.length === expectedArticleRoutes.length,
+      "S3 delivery-манифест должен содержать маршруты ровно 21 статьи.",
+    );
+    const articleRoutes = new Map();
+    manifest.articles.forEach((entry, index) => {
+      const expected = PROMOPAGES_10060_S3_ARTICLE_ROUTES[entry?.article_slug];
+      assert(
+        entry &&
+          typeof entry === "object" &&
+          Object.keys(entry).sort().join("\u0000") ===
+            "article_slug\u0000cabinet_id\u0000cabinet_slug\u0000publication_id" &&
+          expected &&
+          entry.cabinet_slug === expected[0] &&
+          entry.cabinet_id === expected[1] &&
+          entry.publication_id === expected[2] &&
+          !articleRoutes.has(entry.article_slug),
+        `S3 delivery содержит неверный маршрут статьи ${index + 1}.`,
+      );
+      articleRoutes.set(entry.article_slug, entry);
+    });
+    assert(
+      articleRoutes.size === expectedArticleRoutes.length &&
+        reviewArticles.length === expectedArticleRoutes.length &&
+        reviewArticles.every((article) => articleRoutes.has(article.article_slug)),
+      "S3 delivery-маршруты не совпадают с canonical статьями PROMOPAGES-10060.",
+    );
+
+    const expectedByKey = new Map();
+    reviewArticles.forEach((article) => {
+      article.images.forEach((record) => {
+        record.outputs.forEach((output) => {
+          if (typeof output.video_path !== "string" || !output.video_path.trim()) {
+            return;
+          }
+          const key = promopages10060DeliveryKey(
+            article.article_slug,
+            record.image.image_id,
+            output.model_id,
+          );
+          assert(
+            !expectedByKey.has(key) &&
+              output.media &&
+              isSha256(output.media.sha256) &&
+              Number.isInteger(output.media.bytes) &&
+              output.media.bytes > 0,
+            `Canonical MP4 ${article.article_slug}/${record.image.image_id}/${output.model_id} не готов к S3 delivery.`,
+          );
+          expectedByKey.set(key, output);
+        });
+      });
+    });
+
+    assert(
+      expectedByKey.size === EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT &&
+        manifest.verified_output_count === expectedByKey.size &&
+        Array.isArray(manifest.outputs) &&
+        manifest.outputs.length === expectedByKey.size,
+      "S3 delivery-манифест должен покрывать ровно 508 проверенных MP4.",
+    );
+
+    const deliveryByKey = new Map();
+    manifest.outputs.forEach((entry, index) => {
+      assert(entry && typeof entry === "object", `S3 delivery entry ${index + 1} пуст.`);
+      const key = promopages10060DeliveryKey(
+        entry.article_slug,
+        entry.image_id,
+        entry.model_id,
+      );
+      const canonicalOutput = expectedByKey.get(key);
+      assert(
+        canonicalOutput && !deliveryByKey.has(key),
+        `S3 delivery содержит лишний или повторный logical output ${index + 1}.`,
+      );
+      assert(
+        entry.source_video_path === canonicalOutput.video_path &&
+          entry.sha256 === canonicalOutput.media.sha256 &&
+          entry.bytes === canonicalOutput.media.bytes,
+        `S3 delivery расходится с canonical media для ${entry.article_slug}/${entry.image_id}/${entry.model_id}.`,
+      );
+      const articleRoute = articleRoutes.get(entry.article_slug);
+      const modelDirectory = PROMOPAGES_10060_S3_MODEL_DIRECTORIES[entry.model_id];
+      const expectedObjectKey = articleRoute
+        ? `${PROMOPAGES_10060_S3_OBJECT_PREFIX}${articleRoute.cabinet_slug}__${articleRoute.cabinet_id}/${articleRoute.publication_id}/${modelDirectory}/image_${entry.image_id}--sha256-${entry.sha256.slice(0, 12)}.mp4`
+        : null;
+      assert(
+        typeof entry.object_key === "string" &&
+          entry.object_key === expectedObjectKey &&
+          isCanonicalRelativePath(entry.object_key) &&
+          entry.yastatic_url === `${PROMOPAGES_10060_S3_PUBLIC_BASE}${entry.object_key}`,
+        `S3 delivery содержит небезопасную публичную ссылку для ${entry.article_slug}/${entry.image_id}/${entry.model_id}.`,
+      );
+      deliveryByKey.set(key, entry);
+    });
+    assert(
+      deliveryByKey.size === expectedByKey.size &&
+        [...expectedByKey].every(([key]) => deliveryByKey.has(key)),
+      "S3 delivery не покрывает все canonical MP4 PROMOPAGES-10060.",
+    );
+
+    const attachDelivery = (articleSlug, imageId, output) => {
+      if (typeof output.video_path !== "string" || !output.video_path.trim()) {
+        return output;
+      }
+      const entry = deliveryByKey.get(
+        promopages10060DeliveryKey(articleSlug, imageId, output.model_id),
+      );
+      assert(entry, `Для ${articleSlug}/${imageId}/${output.model_id} нет S3 delivery.`);
+      return {
+        ...output,
+        delivery: "public-s3",
+        publicVideoUrl: entry.yastatic_url,
+        publicVideoObjectKey: entry.object_key,
+      };
+    };
+
+    return reviewArticles.map((article) => ({
+      ...article,
+      images: article.images.map((record) => ({
+        ...record,
+        outputs: record.outputs.map((output) =>
+          attachDelivery(article.article_slug, record.image.image_id, output),
+        ),
+        displayOutputs: (record.displayOutputs || record.outputs).map((output) =>
+          attachDelivery(article.article_slug, record.image.image_id, output),
+        ),
+      })),
+    }));
+  };
+
   const datasetCounts = (items) => {
     const videoPaths = new Set();
     let imageCount = 0;
@@ -3986,6 +4173,40 @@
     `;
   };
 
+  const renderPublicVideoLink = (publicVideoUrl, titleId, presentationName) => {
+    if (typeof publicVideoUrl !== "string" || !publicVideoUrl) return "";
+    const inputId = `${titleId}-public-url`;
+    const statusId = `${titleId}-copy-status`;
+    return `
+      <div class="publicVideoLink" data-public-video-link>
+        <label for="${inputId}">Публичная ссылка</label>
+        <div class="publicVideoLinkRow">
+          <input
+            id="${inputId}"
+            type="url"
+            value="${escapeHtml(publicVideoUrl)}"
+            readonly
+            spellcheck="false"
+            aria-describedby="${statusId}"
+          >
+          <a
+            class="publicVideoOpen"
+            href="${escapeHtml(publicVideoUrl)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Открыть публичное видео ${escapeHtml(presentationName)} в новой вкладке"
+          >Открыть ↗</a>
+          <button
+            class="controlButton publicVideoCopy"
+            type="button"
+            data-copy-public-video-url
+          >Копировать</button>
+        </div>
+        <span class="publicVideoCopyStatus" id="${statusId}" role="status" aria-live="polite"></span>
+      </div>
+    `;
+  };
+
   const renderModel = (
     article,
     imageRecord,
@@ -4022,7 +4243,9 @@
       });
     }
     const titleId = `${idPrefix}-${asDomIdPart(article.case_key)}-${imageRecord.image.image_id}-${modelIndex + 1}`;
-    const videoUrl = asAssetUrl(output.video_path, output.delivery);
+    const publicVideoUrl =
+      typeof output.publicVideoUrl === "string" ? output.publicVideoUrl : null;
+    const videoUrl = publicVideoUrl || asAssetUrl(output.video_path, output.delivery);
     const promptLabel = output.showcaseLabel
       ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
       : "";
@@ -4119,6 +4342,7 @@
         >
           <video
             src="${escapeHtml(videoUrl)}"
+            data-video-delivery="${publicVideoUrl ? "s3-yastatic" : escapeHtml(output.delivery || "site")}"
             width="${output.media.width}"
             height="${output.media.height}"
             controls
@@ -4133,6 +4357,8 @@
             Ролик не загрузился. Проверьте путь к MP4.
           </p>
         </div>
+
+        ${renderPublicVideoLink(publicVideoUrl, titleId, presentation.name)}
 
         <div class="panelIdentity">
           <div>
@@ -4851,6 +5077,43 @@
     renderSelection();
   };
 
+  const copyPublicVideoUrl = async (button) => {
+    const container = button.closest?.("[data-public-video-link]");
+    const input = container?.querySelector("input[readonly]");
+    const status = container?.querySelector(".publicVideoCopyStatus");
+    if (!input || !status) return;
+
+    const selectForManualCopy = () => {
+      input.focus();
+      input.select();
+      input.setSelectionRange?.(0, input.value.length);
+    };
+    let copied = false;
+    try {
+      if (globalThis.navigator?.clipboard?.writeText) {
+        await globalThis.navigator.clipboard.writeText(input.value);
+        copied = true;
+      }
+    } catch (_error) {
+      copied = false;
+    }
+    if (!copied) {
+      selectForManualCopy();
+      try {
+        copied = document.execCommand?.("copy") === true;
+      } catch (_error) {
+        copied = false;
+      }
+    }
+
+    if (copied) {
+      button.textContent = "Скопировано";
+      status.textContent = "Публичная ссылка скопирована.";
+    } else {
+      status.textContent = "Ссылка выделена — нажмите Cmd/Ctrl+C.";
+    }
+  };
+
   const showError = (error) => {
     detachCurrentVideos();
     elements.caseViewport.innerHTML = "";
@@ -4903,12 +5166,14 @@
       reviewExtensionResponse,
       reviewArticle02Response,
       reviewCampaign20260807Response,
+      reviewS3DeliveryResponse,
     ] =
       await Promise.all([
       fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH, { cache: "no-store" }),
     ]);
     if (!reviewResponse.ok) {
       throw new Error(
@@ -4933,6 +5198,11 @@
         `Campaigns 20260807 sidecar PROMOPAGES-10060 вернул HTTP ${reviewCampaign20260807Response.status}.`,
       );
     }
+    if (!reviewS3DeliveryResponse.ok) {
+      throw new Error(
+        `S3 delivery-манифест PROMOPAGES-10060 вернул HTTP ${reviewS3DeliveryResponse.status}.`,
+      );
+    }
 
     const reviewManifest = await reviewResponse.json();
     const reviewExtensionManifest = reviewExtensionResponse.ok
@@ -4944,6 +5214,7 @@
     const reviewCampaign20260807Manifest = reviewCampaign20260807Response.ok
       ? await reviewCampaign20260807Response.json()
       : null;
+    const reviewS3DeliveryManifest = await reviewS3DeliveryResponse.json();
     const reviewDataset = validatePromopages10060Manifest(reviewManifest, []);
     const reviewExtensionDataset = reviewExtensionManifest
       ? validatePromopages10060Manifest(
@@ -4988,12 +5259,16 @@
           providerUnavailableOutputCount: 0,
           unavailableOutputCount: 0,
         };
-    const reviewArticles = sortPromopages10060Articles([
+    const canonicalReviewArticles = sortPromopages10060Articles([
       ...reviewDataset.articles,
       ...reviewExtensionDataset.articles,
       ...reviewArticle02Dataset.articles,
       ...reviewCampaign20260807Dataset.articles,
     ]);
+    const reviewArticles = validatePromopages10060S3Delivery(
+      reviewS3DeliveryManifest,
+      canonicalReviewArticles,
+    );
     const unavailableArticles = mergeUnavailableArticleCollections(
       reviewArticles,
       reviewDataset.unavailableArticles,
@@ -5050,7 +5325,7 @@
     }
     return {
       reviewArticles,
-      sourceStatus: `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${imageCount} изображений / ${outputCount} результатов · MP4 ${outputCount - unavailableOutputCount} · provider-filtered ${filteredOutputCount} · provider-unavailable ${providerUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`,
+      sourceStatus: `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${imageCount} изображений / ${outputCount} результатов · S3/yastatic ${reviewS3DeliveryManifest.verified_output_count} MP4 · provider-filtered ${filteredOutputCount} · provider-unavailable ${providerUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`,
     };
   };
 
@@ -5139,6 +5414,10 @@
     if (event.key === "End") nextIndex = frameCount - 1;
     event.preventDefault();
     renderGalleryFrame(nextIndex, { focusGalleryTab: true });
+  });
+  elements.caseViewport.addEventListener("click", (event) => {
+    const button = event.target.closest?.("[data-copy-public-video-url]");
+    if (button) void copyPublicVideoUrl(button);
   });
 
   initialise();
