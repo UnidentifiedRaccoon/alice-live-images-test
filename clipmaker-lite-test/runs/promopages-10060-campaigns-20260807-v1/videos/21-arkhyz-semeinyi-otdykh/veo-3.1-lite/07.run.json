@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-07",
+  "image_id": "07",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The two hikers turn toward the trail and walk uphill together with calm, coordinated steps and natural trekking-pole plants. The camera makes a short gentle push toward them as a breeze lifts the woman’s hair; in the final frame both are clearly advancing side by side, smiling and unhurried.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8f51ec499a026c160c5f042653735183ed44c2299b327e7e14d1a85bcea59960",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "R38Dn2xROZZnviVeq1Fq",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:43:04Z",
+  "completed_at": "2026-08-07T14:44:59Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 9707792,
+    "sha256": "15cd7ac2b713762f015ef4871b9846cd4b8beafd931a36c1a50ccf30df9e3b0d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-07",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-07-veo-3-1-lite",
+  "lite_result_sha256": "fa07163daa89dbafbb005e03c26343a390319b95ac22b86c2d4905f206f03437",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

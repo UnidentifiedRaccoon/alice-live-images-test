@@ -24,6 +24,9 @@ PROMOPAGES_10060_EXTENSION_PATH = (
     / "clipmaker-lite-test"
     / "promopages-10060-campaigns-20260805-v1-manifest.json"
 )
+PROMOPAGES_10060_CAMPAIGN_20260807_PATH = (
+    ROOT / pages.PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH
+)
 PROMOPAGES_10060_IMAGE_COUNTS = (
     ("01", 4),
     ("03", 9),
@@ -1665,7 +1668,8 @@ class GitHubPagesSiteTest(unittest.TestCase):
             len(paths),
             252
             + int(PROMOPAGES_10060_ARTICLE_02_PATH.is_file())
-            + int(PROMOPAGES_10060_EXTENSION_PATH.is_file()),
+            + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
+            + int(PROMOPAGES_10060_CAMPAIGN_20260807_PATH.is_file()),
         )
         self.assertGreater(total_bytes, 900_000_000)
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
@@ -1686,6 +1690,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
         if PROMOPAGES_10060_EXTENSION_PATH.is_file():
             self.assertIn(
                 pages.PROMOPAGES_10060_EXTENSION_RELATIVE_PATH, paths
+            )
+        if PROMOPAGES_10060_CAMPAIGN_20260807_PATH.is_file():
+            self.assertIn(
+                pages.PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH, paths
             )
         self.assertIn(Path("manual-review/index.html"), paths)
         self.assertFalse(any("Prepared videos" in path.as_posix() for path in paths))

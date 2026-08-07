@@ -49,6 +49,7 @@ TICKET = "PROMOPAGES-10060"
 LEGACY_BATCH_ID = "promopages-10060-lite-all-images-20260805-v2"
 CAMPAIGN_EXTENSION_BATCH_ID = "promopages-10060-campaigns-20260805-v1"
 ARTICLE_02_BATCH_ID = "promopages-10060-article-02-20260806-v2"
+CAMPAIGN_20260807_BATCH_ID = "promopages-10060-campaigns-20260807-v1"
 AGENT_ID = "clipmaker-lite"
 MODEL_IDS = (
     "alibaba/wan-2.2",
@@ -415,6 +416,51 @@ BATCH_SPECS = {
         normalized_asset_manifest_role=(
             "promopages-10060-article-02-normalized-input-asset"
         ),
+        hard_budget_cap_usd=None,
+        normalized_input_retry_allowlist=(),
+    ),
+    CAMPAIGN_20260807_BATCH_ID: BatchSpec(
+        batch_id=CAMPAIGN_20260807_BATCH_ID,
+        dataset_prefix="PROMOPAGES-10060-campaigns-20260807-v1",
+        article_numbers=(19, 20, 21),
+        ticket_config_rel=Path(
+            "PROMOPAGES-10060/campaigns-20260807-v1/articles.json"
+        ),
+        extraction_report_rel=Path(
+            "PROMOPAGES-10060/campaigns-20260807-v1/extraction-report.json"
+        ),
+        source_manifest_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/"
+            "articles/manifest.csv"
+        ),
+        source_image_root_rel=Path(
+            "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles"
+        ),
+        source_context_root_rel=Path(
+            "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles"
+        ),
+        final_manifest_rel=Path(
+            "clipmaker-lite-test/"
+            "promopages-10060-campaigns-20260807-v1-manifest.json"
+        ),
+        inventory_manifest_role=(
+            "promopages-10060-campaigns-20260807-frozen-generation-inventory"
+        ),
+        final_manifest_role="promopages-10060-campaigns-20260807-extension",
+        terminal_retry_manifest_role=(
+            "promopages-10060-campaigns-20260807-terminal-provider-retry"
+        ),
+        ambiguous_retry_manifest_role=(
+            "promopages-10060-campaigns-20260807-ambiguous-submit-retry"
+        ),
+        normalized_retry_manifest_role=(
+            "promopages-10060-campaigns-20260807-normalized-input-retry"
+        ),
+        normalized_asset_manifest_role=(
+            "promopages-10060-campaigns-20260807-normalized-input-asset"
+        ),
+        # The operator supplies the exact aggregate cap for this separately
+        # authorized extension; the frozen inventory binds it on resume.
         hard_budget_cap_usd=None,
         normalized_input_retry_allowlist=(),
     ),

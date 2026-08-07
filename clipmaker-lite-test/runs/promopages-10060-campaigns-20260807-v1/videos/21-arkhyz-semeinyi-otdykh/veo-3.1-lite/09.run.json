@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-09",
+  "image_id": "09",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/09.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Both hikers take several relaxed steps to the right as a light breeze moves through the meadow. The camera remains fixed, holding the mountain panorama. In the final frame they are visibly farther along the slope, still apart and clearly recognizable.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69ef07630b7ce5350e5d405d_69ef0a51f63b337143c09101/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "15014efc8aaf3596dfca2d5fbc922e9474d46b9860bdb630f7b0cc379329c0ae",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "VHl3naHCyPDF5RFc81Fr",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:43:49Z",
+  "completed_at": "2026-08-07T14:45:38Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2999898,
+    "sha256": "d4a73a2806b78a1e5311590740e83bd6097a26fff3a3628dbd96465b10e06165"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-09",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-09-veo-3-1-lite",
+  "lite_result_sha256": "6a7b828fda72156641949ea99109fc3a84d5f6ca56442b8abd149b9563a037c1",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

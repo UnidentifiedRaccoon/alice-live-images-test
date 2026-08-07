@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-03",
+  "image_id": "03",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334eee/orig",
+      "prompt": "With focused concentration, the woman slowly tilts the camera a few degrees and adjusts the lens ring in one controlled motion. Fixed camera. By the final frame, she holds the camera steady in a newly adjusted position, still studying it attentively.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "b2265e73dc196bd4bf93e874e6f4d945961094659caf1eb7233a6565254196f8",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "a1e3d398b446b7b60aaee45313aa4ae8",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:35:41Z",
+  "completed_at": "2026-08-07T14:35:41Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5872234,
+    "sha256": "d46518dd8215aa59f083ae17753b93981d2e8ff04ae2201846e522667bb2a5ad"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-03",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-03-wan-2-2",
+  "lite_result_sha256": "693866e8fce9be3393f20041e86b6438880e26abcaf3251b7eba60e61e81ca91",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 135063,
+    "sha256": "60373c9aa189ca07c095ec1e75db58fbc541a24c4b5d3bbdf47c0a23859740f4"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "a1e3d398b446b7b60aaee45313aa4ae8",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

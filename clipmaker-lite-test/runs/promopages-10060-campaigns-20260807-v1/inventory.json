@@ -1,0 +1,820 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-campaigns-20260807-frozen-generation-inventory",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "article_config": {
+    "path": "PROMOPAGES-10060/campaigns-20260807-v1/articles.json",
+    "sha256": "d0843c6f95febb0525cbbbdb815f0967c2b7ffc2fe573087ab9496ade774504e"
+  },
+  "extraction_report": {
+    "path": "PROMOPAGES-10060/campaigns-20260807-v1/extraction-report.json",
+    "sha256": null
+  },
+  "source_manifest": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/manifest.csv",
+    "sha256": "6c558fc90ed7e49171c5acbcae4f8f7174be40c8feca8439651ea196ada9ac3b",
+    "row_count": 33
+  },
+  "contract": {
+    "path": "docs/agents/clipmaker-lite/contract.json",
+    "sha256": "3336d03bb268cb73515256b438a02905fb2455f5875cb028f239bfafa11e0d86",
+    "contract_version": "2.0.7",
+    "runner_version": 7
+  },
+  "generation_routes": {
+    "path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "policy": {
+      "resolution": "exact-model-id",
+      "automatic_fallback": false,
+      "normal_run_discovery": false
+    },
+    "models": {
+      "alibaba/wan-2.2": {
+        "adapter": "eliza-segmind",
+        "transport": "eliza-synchronous-binary",
+        "capacity": 1
+      },
+      "alibaba/wan-2.7": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      },
+      "google/veo-3.1-lite": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      }
+    }
+  },
+  "models": [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 3,
+  "image_count": 33,
+  "expected_outputs": 99,
+  "selection_rule": "in ticket-config order, include every image block from every successfully extracted article, including the cover, in original block order; preserve original article numbers",
+  "generation_policy": {
+    "independent_route_pools": true,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "article_order": "ticket-config-order",
+    "article_barrier": true,
+    "exact_model_routes_only": true,
+    "route_discovery": false,
+    "automatic_fallback": false,
+    "automatic_paid_retries": false,
+    "maximum_paid_submissions_per_job": 1,
+    "aggregate_manifest_writer": "coordinator-only"
+  },
+  "cost": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 34.65,
+    "hard_budget_cap_usd": 34.65,
+    "accounting_cost_per_output_usd": {
+      "alibaba/wan-2.2": 0.35,
+      "alibaba/wan-2.7": 0.35,
+      "google/veo-3.1-lite": 0.35
+    },
+    "accounting_cost_per_image_usd": 1.05,
+    "maximum_estimated_cost_usd": 34.65,
+    "estimated_headroom_usd": 0.0,
+    "planned_paid_submissions": 99,
+    "maximum_paid_submissions": 99,
+    "maximum_paid_submissions_per_job": 1,
+    "automatic_paid_retries": false,
+    "actual_billing_available": false,
+    "enforcement": "admit only complete articles in ticket-config order within the accounting envelope; each admitted immutable job may submit once; resume may poll/download an existing provider identity but never automatically resubmit a paid job",
+    "pricing_basis": "local frozen accounting evidence only: reserve $0.35 for every output using the existing PROMOPAGES-9930 20x2 estimate; this is conservative for Wan 2.2 versus its observed Eliza/Segmind X-Response-Cost of $0.18; no live price or model discovery"
+  },
+  "unavailable_articles": [],
+  "articles": [
+    {
+      "article_number": "19",
+      "article_slug": "19-pixel24-ekshn-kamery",
+      "label": "Pixel24 — Стоп-кадр и другие классные фишки экшн-камер в Pixel24",
+      "url": "https://pixel24.promo.page/promo/stopkadr-i-drugie-klassnye-fishki-ekshnkamer-v-pixel24-6a16e5c7621e7f7d1833e285_0_0",
+      "title": "Стоп-кадр и другие классные фишки экшн-камер в Pixel24",
+      "lead": "Кажется, что все экшн-камеры похожи и для красивых кадров достаточно ее закрепить и нажать на «запись». Но стоит углубиться в характеристики, и разница становится очевидной. Например, в магазине Pixel24 собраны модели, которые удивляют функциями. Разберем 5 незамеченных возможностей GoPro на примере техники из магазина Pixel24.\nHindsight: запись из прошлого\nФункция доступна в HERO 12 Black, HERO",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/content.json",
+        "sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eaf299094957dd2265/orig",
+        "sha256": "18d7180b176b022a7b0ce6296a97504a121964f477be99396660b65cdc3cc97b",
+        "width": 671,
+        "height": 504,
+        "duplicate_of": null
+      },
+      "image_count": 13,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eaf299094957dd2265/orig",
+            "sha256": "18d7180b176b022a7b0ce6296a97504a121964f477be99396660b65cdc3cc97b",
+            "width": 671,
+            "height": 504,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "gallery_image",
+            "caption": "Камера непрерывно снимает в буфер — остается только нажать кнопку в нужный момент",
+            "source_block_index": 4,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eaf299094957dd2265/orig",
+            "sha256": "18d7180b176b022a7b0ce6296a97504a121964f477be99396660b65cdc3cc97b",
+            "width": 671,
+            "height": 504,
+            "duplicate_of": "19/01"
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "gallery_image",
+            "caption": "Камеры GoPro HERO12 водонепроницаемы на глубине до 10 метров и выдерживают любые испытания",
+            "source_block_index": 4,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5eae627286f98611976/orig",
+            "sha256": "ca727e44315c13b2efedff38e1357b05e98fe9c9b2d11e38caddce6e30258d59",
+            "width": 850,
+            "height": 618,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "gallery_image",
+            "caption": "С камерами GoPro HERO даже обычное видео с пляжного отдыха превращается яркий контент",
+            "source_block_index": 4,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ea6c2df363cc43a4ed/orig",
+            "sha256": "bed9d12d73ba83aadccd45ad773a4482ef659fa2434f3e06a7d36080b466e248",
+            "width": 2048,
+            "height": 1448,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 9,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ea621e7f7d1833e7f1/orig",
+            "sha256": "abac7c55e5140ba997fc4da30c0f8d514a6380d763de3233287d23a771dcc829",
+            "width": 850,
+            "height": 636,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "gallery_image",
+            "caption": "Даже при резких движениях и вибрации камера снимает видео без смазывания и потери детализации. Достаточно ее надежно закрепить",
+            "source_block_index": 9,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5eae627286f98611980/orig",
+            "sha256": "404a7aaa997f8eb77cf58cb21678f6b9836a099e2b2f4287788a308edddeeebc",
+            "width": 2048,
+            "height": 1448,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "gallery_image",
+            "caption": "Стабилизация HyperSmooth удостоена премии Emmy — система сама определяет необходимый уровень стабилизации",
+            "source_block_index": 9,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ea6c2df363cc43a4ec/orig",
+            "sha256": "fc78b406dde803e396634503e833808459aafcd5bbf7cbd3799d41e3c1463f24",
+            "width": 660,
+            "height": 440,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 14,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ebf299094957dd22a4/orig",
+            "sha256": "52d57128144158c23cb0d2592dead08de066ff2275a93998510d88b908a4abec",
+            "width": 850,
+            "height": 637,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.jpeg",
+            "role": "gallery_image",
+            "caption": "Стоп-кадры из видео, снятые на экшн-камеры GoPro, можно сразу выкладывать в соцсети",
+            "source_block_index": 14,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/09.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/09.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5ebf299094957dd22a5/orig",
+            "sha256": "e0eeb5dbc86f7d48e5ad0a8a31b867a4956b76d0a1f6ff99c40263d45995ad5d",
+            "width": 660,
+            "height": 492,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09"
+        },
+        {
+          "image": {
+            "order": 10,
+            "image_id": "10",
+            "file": "10.jpeg",
+            "role": "gallery_image",
+            "caption": "",
+            "source_block_index": 19,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/10.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/10.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ebe627286f986119c8/orig",
+            "sha256": "14aad1b7880dc4669240f822d88352d2f6e5cf54035f65e69893a4a13f8ddee1",
+            "width": 675,
+            "height": 506,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10"
+        },
+        {
+          "image": {
+            "order": 11,
+            "image_id": "11",
+            "file": "11.jpeg",
+            "role": "gallery_image",
+            "caption": "У экшн-камеры GoPro HERO 12 есть два ЖК-экрана: можно снимать крутые ролики с любого ракурса и тут же переключаться на селфи-режим",
+            "source_block_index": 19,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/11.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/11.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eb6c2df363cc43a53f/orig",
+            "sha256": "93290b9b4f399cf931688d23ddda791358da8c406bce6decc6f86ba5d22e62a5",
+            "width": 850,
+            "height": 640,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11"
+        },
+        {
+          "image": {
+            "order": 12,
+            "image_id": "12",
+            "file": "12.jpeg",
+            "role": "gallery_image",
+            "caption": "Интервальная съемка позволяет поймать крутые ракурсы, не отвлекаясь от любимого занятия",
+            "source_block_index": 19,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/12.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/12.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ece629076b1df5165f/orig",
+            "sha256": "451d63a1313c8ca8c25d1e7c2e7d0919b763c48eda7cb628f50bcaabc3961de9",
+            "width": 850,
+            "height": 456,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-12"
+        },
+        {
+          "image": {
+            "order": 13,
+            "image_id": "13",
+            "file": "13.jpeg",
+            "role": "article_image",
+            "caption": "Фото на объективы GoPro HERO снято в движении, но при этом четко видно каждую деталь",
+            "source_block_index": 27,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/13.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/13.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a16e5c7621e7f7d1833e285_6a16e5ec621e7f7d1833e827/orig",
+            "sha256": "c2917d30a654b79dd694fcbc58a5180562eacd67b828fa48d35c5498a6bd74fe",
+            "width": 850,
+            "height": 567,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-13"
+        }
+      ]
+    },
+    {
+      "article_number": "20",
+      "article_slug": "20-pixel24-oshibki-fotografov",
+      "label": "Pixel24 — 5 ошибок фотографов-самоучек. Как их избежать?",
+      "url": "https://pixel24.promo.page/promo/5-oshibok-fotografovsamouchek-kak-ih-izbejat-69d64d3dc2758d0c71d2d960_0_0",
+      "title": "5 ошибок фотографов-самоучек. Как их избежать?",
+      "lead": "Самообучение — путь благородный, но полный ловушек. Многие начинающие фотографы верят, что достаточно смотреть обзоры техники и повторять за блогерами, чтобы выйти на профессиональный уровень. Однако без системы знания остаются разрозненными, а снимки не становятся лучше.\nПроблема не в отсутствии таланта и не в камере, а в подходе к обучению. Разбираем главные ошибки самоучек и показываем, как их",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/content.json",
+        "sha256": "457d2d945efd3975380689746112627a2ba0d3fe1dff69d1478e20e8619c4b3e"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d58b4df0f5197831fcc/orig",
+        "sha256": "523fb6a8b772ad3d028178fe8a8e4c7973eb59733f174d03bfabb46d2cdd0fc1",
+        "width": 1000,
+        "height": 665,
+        "duplicate_of": null
+      },
+      "image_count": 7,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d58b4df0f5197831fcc/orig",
+            "sha256": "523fb6a8b772ad3d028178fe8a8e4c7973eb59733f174d03bfabb46d2cdd0fc1",
+            "width": 1000,
+            "height": 665,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 2,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d58b4df0f5197831fcc/orig",
+            "sha256": "523fb6a8b772ad3d028178fe8a8e4c7973eb59733f174d03bfabb46d2cdd0fc1",
+            "width": 1000,
+            "height": 665,
+            "duplicate_of": "20/01"
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 12,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334eee/orig",
+            "sha256": "60373c9aa189ca07c095ec1e75db58fbc541a24c4b5d3bbdf47c0a23859740f4",
+            "width": 1000,
+            "height": 667,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 19,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334eef/orig",
+            "sha256": "19ff03555166462d5d05eadeaf31446d46463d64d59fcfadcfa0ce2ab498fd3a",
+            "width": 1000,
+            "height": 726,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 28,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_69d64d3dc2758d0c71d2d960_69d64d58c2758d0c71d2dd3c/orig",
+            "sha256": "3cc357233c4c4befe70b1fb92a82eec852dab26b28033e72edf998e80a3d024e",
+            "width": 1000,
+            "height": 665,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 37,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334ef0/orig",
+            "sha256": "be6c90c37eb78d1dc12ab018b6508c9156758f57fe689cb8ed12ab815d86e90f",
+            "width": 1000,
+            "height": 665,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.png",
+            "role": "article_image",
+            "caption": "",
+            "source_block_index": 43,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/07.png",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/07.png",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d58c2758d0c71d2dd3d/orig",
+            "sha256": "4b09da5892f363da77883637fafeef8f398856bf7d1f3ce3fd4b23360f6708b3",
+            "width": 952,
+            "height": 645,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-07"
+        }
+      ]
+    },
+    {
+      "article_number": "21",
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "label": "Курорт Архыз — Курорт Архыз: лучшие места для семейного отдыха в 2026",
+      "url": "https://resort-arkhyz.promo.page/media/kurort-arhyz-luchshie-mesta-dlia-semeinogo-otdyha-v-2026-69ef07630b7ce5350e5d405d_0_0",
+      "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+      "lead": "Подсказываем, как интересно отдохнуть всей семьей и получить максимум эмоций",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/content.json",
+        "sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269"
+      },
+      "cover_image": {
+        "order": 1,
+        "image_id": "01",
+        "file": "01.jpeg",
+        "role": "cover",
+        "caption": "",
+        "source_block_index": null,
+        "gallery_index": null,
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/01.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/01.jpeg",
+        "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig",
+        "sha256": "0dfc3719bb37b9330e191f1d2e62d143d784151dcf9a95b28048395af1946f1d",
+        "width": 2554,
+        "height": 1806,
+        "duplicate_of": null
+      },
+      "image_count": 13,
+      "images": [
+        {
+          "image": {
+            "order": 1,
+            "image_id": "01",
+            "file": "01.jpeg",
+            "role": "cover",
+            "caption": "",
+            "source_block_index": null,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/01.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/01.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig",
+            "sha256": "0dfc3719bb37b9330e191f1d2e62d143d784151dcf9a95b28048395af1946f1d",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-01"
+        },
+        {
+          "image": {
+            "order": 2,
+            "image_id": "02",
+            "file": "02.jpeg",
+            "role": "article_image",
+            "caption": "Курорт Архыз летом — это подъемники и экотропы в окружении хвойных лесов и заснеженных вершин",
+            "source_block_index": 1,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/02.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/02.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig",
+            "sha256": "0dfc3719bb37b9330e191f1d2e62d143d784151dcf9a95b28048395af1946f1d",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": "21/01"
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-02"
+        },
+        {
+          "image": {
+            "order": 3,
+            "image_id": "03",
+            "file": "03.jpeg",
+            "role": "gallery_image",
+            "caption": "На фото с высоты видно, как компактно расположена вся инфраструктура курорта",
+            "source_block_index": 8,
+            "gallery_index": 0,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/03.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/03.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0885fd6312232e978996/orig",
+            "sha256": "6fa01cd4a33e81984ed1bd0ab75d51dbf43926397949a7990d1bde0fe2019287",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-03"
+        },
+        {
+          "image": {
+            "order": 4,
+            "image_id": "04",
+            "file": "04.jpeg",
+            "role": "gallery_image",
+            "caption": "Летом горные склоны Архыза покрываются цветущими лугами — идеальный фон для семейных фото",
+            "source_block_index": 8,
+            "gallery_index": 1,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/04.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/04.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef08c0f63b337143c06470/orig",
+            "sha256": "4d078c579bc69ea95766074d92d41e0316552b0263649ef8c6860a0dbf21f4e6",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-04"
+        },
+        {
+          "image": {
+            "order": 5,
+            "image_id": "05",
+            "file": "05.jpeg",
+            "role": "gallery_image",
+            "caption": "Бирюзовые горные озера Архыза с кристально чистой водой — одна из причин, почему сюда хочется возвращаться",
+            "source_block_index": 8,
+            "gallery_index": 2,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/05.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/05.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef08dcfd6312232e97918f/orig",
+            "sha256": "daf5ee36288cde4a2a3e18a9928bb4004718b4bae7d2cb15fa2237638f1d476a",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-05"
+        },
+        {
+          "image": {
+            "order": 6,
+            "image_id": "06",
+            "file": "06.jpeg",
+            "role": "article_image",
+            "caption": "Дети до 5 лет включительно поднимаются на канатных дорогах за 1 рубль, а с 6 до 13 лет действует детский тариф",
+            "source_block_index": 21,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/06.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/06.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69ef07630b7ce5350e5d405d_69ef099a3ba10e0ae4c20819/orig",
+            "sha256": "7a1ab1f4882c99f2ed14c00a65e003bbe3f3882c5ae3e99039f788aaa44ddd04",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-06"
+        },
+        {
+          "image": {
+            "order": 7,
+            "image_id": "07",
+            "file": "07.jpeg",
+            "role": "article_image",
+            "caption": "Всего на Курорте Архыз несколько экотроп разного уровня сложности",
+            "source_block_index": 25,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig",
+            "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-07"
+        },
+        {
+          "image": {
+            "order": 8,
+            "image_id": "08",
+            "file": "08.jpeg",
+            "role": "article_image",
+            "caption": "Летом здесь можно встретить коней карачаевской породы. Увидеть их в дикой природе — значит получить незабываемые эмоции на всю жизнь",
+            "source_block_index": 27,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/08.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/08.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a1af63b337143c08b94/orig",
+            "sha256": "12a0ca460f71b92a6a86bf94d0f16ece83e3e13890f6c79c6fcfe6a1db10a073",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-08"
+        },
+        {
+          "image": {
+            "order": 9,
+            "image_id": "09",
+            "file": "09.jpeg",
+            "role": "article_image",
+            "caption": "Экотропы открыты с начала июня до середины–конца октября в зависимости от маршрута",
+            "source_block_index": 29,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/09.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/09.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69ef07630b7ce5350e5d405d_69ef0a51f63b337143c09101/orig",
+            "sha256": "83c7bc42817363daaa4a7e27f1cc27f5e69ad43fc119765a68d4b4162f7eb6d3",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-09"
+        },
+        {
+          "image": {
+            "order": 10,
+            "image_id": "10",
+            "file": "10.jpeg",
+            "role": "article_image",
+            "caption": "Рядом с милыми альпаками заряжаешься спокойствием и хорошим настроением одновременно",
+            "source_block_index": 34,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/10.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/10.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a973ba10e0ae4c2262d/orig",
+            "sha256": "2eaf021b1681a4eba899cc647513838dc774226600359d143793acca6d08d022",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-10"
+        },
+        {
+          "image": {
+            "order": 11,
+            "image_id": "11",
+            "file": "11.jpeg",
+            "role": "article_image",
+            "caption": "Каждому гостю выдают шлем и страховку, а за безопасностью следят инструкторы",
+            "source_block_index": 36,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/11.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/11.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_69ef07630b7ce5350e5d405d_69ef0ad00b7ce5350e5d9b72/orig",
+            "sha256": "afd7dd5a7405472e1beb11a284318aa1a083e52b2c0cde49f98f6f28389193a0",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11"
+        },
+        {
+          "image": {
+            "order": 12,
+            "image_id": "12",
+            "file": "12.jpeg",
+            "role": "article_image",
+            "caption": "Заезд на квадроцикле длится 10 минут — как раз чтобы накататься, но не устать",
+            "source_block_index": 38,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/12.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/12.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_69ef07630b7ce5350e5d405d_69ef0b2e3ba10e0ae4c23886/orig",
+            "sha256": "b3afbbe846823a1a76c960035a74c6349ffa1da8e03647398b3371f5bd98e676",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-12"
+        },
+        {
+          "image": {
+            "order": 13,
+            "image_id": "13",
+            "file": "13.jpeg",
+            "role": "article_image",
+            "caption": "Хотите почувствовать, как сердце замирает от восторга? Тогда вам точно стоит прокатиться на больших качелях",
+            "source_block_index": 40,
+            "gallery_index": null,
+            "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/13.jpeg",
+            "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/13.jpeg",
+            "orig_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69ef07630b7ce5350e5d405d_69ef0b4dca75b55ea88f175f/orig",
+            "sha256": "38c4ce91b1910b9b82bbdebbf749e8fe91b123ce8102c390a71bd6e80cde3296",
+            "width": 2554,
+            "height": 1806,
+            "duplicate_of": null
+          },
+          "planning_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13"
+        }
+      ]
+    }
+  ]
+}

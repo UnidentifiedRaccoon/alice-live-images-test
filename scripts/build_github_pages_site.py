@@ -101,6 +101,19 @@ PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT = (
 PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT = (
     Path(PROMOPAGES_10060_EXTENSION_DATASET_PREFIX) / "articles"
 )
+PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH = Path(
+    "clipmaker-lite-test/promopages-10060-campaigns-20260807-v1-manifest.json"
+)
+PROMOPAGES_10060_CAMPAIGN_20260807_ROLE = (
+    "promopages-10060-campaigns-20260807-extension"
+)
+PROMOPAGES_10060_CAMPAIGN_20260807_BATCH_ID = (
+    "promopages-10060-campaigns-20260807-v1"
+)
+PROMOPAGES_10060_CAMPAIGN_20260807_DATASET_PREFIX = (
+    "PROMOPAGES-10060-campaigns-20260807-v1"
+)
+PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS = ("19", "20", "21")
 PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE = (
     Path("clipmaker-lite-test/runs")
     / PROMOPAGES_10060_EXTENSION_BATCH_ID
@@ -1614,15 +1627,32 @@ def _collect_promopages_10060_extension_paths(
     manifest: dict[str, Any],
     legacy_manifest: dict[str, Any],
     remote_repository_paths: set[Path],
+    *,
+    label: str = "PROMOPAGES-10060 campaign extension",
+    manifest_role: str | None = None,
+    batch_id: str | None = None,
+    dataset_prefix: str | None = None,
+    registered_article_numbers: tuple[str, ...] | None = None,
+    additional_existing_manifests: tuple[dict[str, Any], ...] = (),
 ) -> None:
     """Validate one additive campaign sidecar and register raw media paths."""
 
-    label = "PROMOPAGES-10060 campaign extension"
+    manifest_role = manifest_role or PROMOPAGES_10060_EXTENSION_ROLE
+    batch_id = batch_id or PROMOPAGES_10060_EXTENSION_BATCH_ID
+    dataset_prefix = dataset_prefix or PROMOPAGES_10060_EXTENSION_DATASET_PREFIX
+    registered_article_numbers = tuple(
+        sorted(
+            registered_article_numbers
+            or PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS,
+            key=int,
+        )
+    )
+
     if (
         manifest.get("schema_version") != 1
-        or manifest.get("manifest_role") != PROMOPAGES_10060_EXTENSION_ROLE
+        or manifest.get("manifest_role") != manifest_role
         or manifest.get("ticket") != "PROMOPAGES-10060"
-        or manifest.get("batch_id") != PROMOPAGES_10060_EXTENSION_BATCH_ID
+        or manifest.get("batch_id") != batch_id
         or manifest.get("agent_id") != "clipmaker-lite"
         or manifest.get("models") != list(PROMOPAGES_10060_MODELS)
     ):
@@ -1692,7 +1722,13 @@ def _collect_promopages_10060_extension_paths(
     ):
         raise ValueError(f"{label} acceptance policy is invalid")
 
-    legacy_articles = legacy_manifest.get("articles", [])
+    existing_manifests = (legacy_manifest, *additional_existing_manifests)
+    legacy_articles = [
+        article
+        for existing_manifest in existing_manifests
+        for article in existing_manifest.get("articles", [])
+        if isinstance(article, dict)
+    ]
     existing_article_numbers = {
         article.get("article_number")
         for article in legacy_articles
@@ -1717,14 +1753,18 @@ def _collect_promopages_10060_extension_paths(
     }
     existing_unavailable_numbers = {
         article.get("article_number")
-        for article in legacy_manifest.get("unavailable_articles", [])
+        for existing_manifest in existing_manifests
+        for article in existing_manifest.get("unavailable_articles", [])
         if isinstance(article, dict)
     }
     existing_unavailable_slugs = {
         article.get("article_slug")
-        for article in legacy_manifest.get("unavailable_articles", [])
+        for existing_manifest in existing_manifests
+        for article in existing_manifest.get("unavailable_articles", [])
         if isinstance(article, dict)
     }
+    context_root = Path("PROMOPAGES-9884") / dataset_prefix / "articles"
+    manifest_root = Path(dataset_prefix) / "articles"
 
     articles = manifest.get("articles")
     if not isinstance(articles, list) or len(articles) != article_count:
@@ -1821,7 +1861,7 @@ def _collect_promopages_10060_extension_paths(
             label=f"{label}/{article_number} context_path",
         )
         expected_context_path = (
-            PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT
+            context_root
             / article_slug
             / "content.json"
         )
@@ -1867,7 +1907,7 @@ def _collect_promopages_10060_extension_paths(
                 ),
             )
             expected_manifest_parent = (
-                PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT / article_slug
+                manifest_root / article_slug
             )
             if manifest_file_path.parent != expected_manifest_parent:
                 raise ValueError(
@@ -2174,9 +2214,11 @@ def _collect_promopages_10060_extension_paths(
         unavailable_slugs.add(article["article_slug"])
 
     actual_article_numbers = article_numbers | unavailable_numbers
-    if actual_article_numbers != set(PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS):
+    if actual_article_numbers != set(registered_article_numbers):
         raise ValueError(
-            f"{label} must account for registered articles 15 through 18"
+            f"{label} must account for registered articles "
+            f"{registered_article_numbers[0]} through "
+            f"{registered_article_numbers[-1]}"
         )
 
 
@@ -2747,6 +2789,8 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
                     "PROMOPAGES-10060 flat output status/audit differs from nested output"
                 )
 
+    article_02_manifest: dict[str, Any] | None = None
+    extension_manifest: dict[str, Any] | None = None
     promopages_10060_article_02_path = (
         root / PROMOPAGES_10060_ARTICLE_02_RELATIVE_PATH
     )
@@ -2782,6 +2826,37 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             extension_manifest,
             promopages_10060_manifest,
             remote_repository_paths,
+        )
+
+    campaign_20260807_path = (
+        root / PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH
+    )
+    if campaign_20260807_path.is_file():
+        if not promopages_10060_path.is_file():
+            raise ValueError(
+                "PROMOPAGES-10060 campaigns 20260807 extension requires the legacy sidecar"
+            )
+        relative_paths.add(PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH)
+        campaign_20260807_manifest = json.loads(
+            campaign_20260807_path.read_text(encoding="utf-8")
+        )
+        prior_sidecars = tuple(
+            sidecar
+            for sidecar in (extension_manifest, article_02_manifest)
+            if sidecar is not None
+        )
+        _collect_promopages_10060_extension_paths(
+            campaign_20260807_manifest,
+            promopages_10060_manifest,
+            remote_repository_paths,
+            label="PROMOPAGES-10060 campaigns 20260807 extension",
+            manifest_role=PROMOPAGES_10060_CAMPAIGN_20260807_ROLE,
+            batch_id=PROMOPAGES_10060_CAMPAIGN_20260807_BATCH_ID,
+            dataset_prefix=PROMOPAGES_10060_CAMPAIGN_20260807_DATASET_PREFIX,
+            registered_article_numbers=(
+                PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS
+            ),
+            additional_existing_manifests=prior_sidecars,
         )
 
     for relative_path in remote_repository_paths:

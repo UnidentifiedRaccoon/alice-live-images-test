@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5ebf299094957dd22a5/orig",
+      "prompt": "Fixed camera. A soft narrow reflection travels steadily across the existing rear display, briefly revealing its crisp underwater image, then fades at the far edge; the displayed frame and every interface element remain unchanged and fully legible at the end.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "00154cee084e53b23ade4a1896ce02bc4a8b711329de4da0cccb4cac087244bb",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "b445b24b0f1ff35a749b7e998b3494dc",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:28:38Z",
+  "completed_at": "2026-08-07T14:28:38Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 3599810,
+    "sha256": "b140a9368f770546d24d82240473e84755c8c983a5137f32cd20605ed248bb97"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09-wan-2-2",
+  "lite_result_sha256": "4defee07af0d0b0f2be5e73224693cbe1f271d9a6c71c64771fc6ff16b7c20e4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 52676,
+    "sha256": "e0eeb5dbc86f7d48e5ad0a8a31b867a4956b76d0a1f6ff99c40263d45995ad5d"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "b445b24b0f1ff35a749b7e998b3494dc",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-12",
+  "image_id": "12",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/12.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/12.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Fixed camera. The surfer makes one smooth weight transfer while riding the wave, with foam and spray flowing continuously past the board. She finishes in a stable upright stance, still gliding forward; the triptych layout and overlays remain unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ece629076b1df5165f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9542594a3f42b17c2391e0dd5e2486d9659524820877f2a18c273410139aa862",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "LthcTkuYCNLDo0JrAuSg",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:08:01Z",
+  "completed_at": "2026-08-07T14:09:17Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1966,
+    "height": 1054,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 9945519,
+    "sha256": "4015f0c3ddfb15c2888735e8b9851c793fe7676f557f5ceaf714b3ec2bd2b922"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-12",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-12-wan-2-7",
+  "lite_result_sha256": "8aef9ae4e12c22ddb56a769a5653d1f99e11e0f65f1c0efe0c14ee193b4c4611",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

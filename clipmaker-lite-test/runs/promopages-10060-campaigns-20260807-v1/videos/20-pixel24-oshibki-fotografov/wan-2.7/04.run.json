@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The woman gradually shifts into a more confident seated pose toward the photographer, smoothly lifting her posture and turning slightly toward him while keeping her warm smile. The camera remains fixed; she ends settled, attentive, and smiling at him.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d581f3cc12a08334eef/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "03077be0a38ee783004fd3f98e25819c5f53fe833f1285db7ea111ee682167df",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "taiBqfAcIb4DW6ZTAkPz",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:34:14Z",
+  "completed_at": "2026-08-07T14:35:31Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1690,
+    "height": 1226,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6633961,
+    "sha256": "253bce97fcbf5fda2f81cfd9b790c73740d89758cc5fcd92c0edeca2e6e3762d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-04",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-04-wan-2-7",
+  "lite_result_sha256": "6057b352eded901a7d8821cfb34d814a1f9d189afa1dc11a9646c2e7c461e5ec",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

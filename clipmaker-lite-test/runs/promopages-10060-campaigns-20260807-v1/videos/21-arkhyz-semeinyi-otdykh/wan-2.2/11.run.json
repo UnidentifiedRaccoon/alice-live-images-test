@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-11",
+  "image_id": "11",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/11.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_69ef07630b7ce5350e5d405d_69ef0ad00b7ce5350e5d9b72/orig",
+      "prompt": "The child carefully advances across the suspended course, shifting her weight and taking one measured step onto the next plank while the boards and ropes sway gently. Fixed camera; by the final frame both feet are balanced on the next plank, her hands still gripping the side ropes and her safety harness clearly secured.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "05190b7d81426218d6f9d5008a0238251f71dbf0ed32ef5fea8e7105e92e8ad1",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "de5ed5f2bd708a933c2c070d25e4d9a4",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:52:49Z",
+  "completed_at": "2026-08-07T14:52:49Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 15888774,
+    "sha256": "b87bdc9e40d2957acaa78e03506ce2f1840a11d35a15ecb175f8bbe43ecdb68c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11-wan-2-2",
+  "lite_result_sha256": "753c9202cb3eb3cd101657e5a86b590c2d7614e45a7ed191e5655b688d5ab094",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1130077,
+    "sha256": "afd7dd5a7405472e1beb11a284318aa1a083e52b2c0cde49f98f6f28389193a0"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "de5ed5f2bd708a933c2c070d25e4d9a4",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

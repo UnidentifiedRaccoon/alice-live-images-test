@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/13.jpeg",
+    "sha256": "38c4ce91b1910b9b82bbdebbf749e8fe91b123ce8102c390a71bd6e80cde3296",
+    "width": 2554,
+    "height": 1806
+  },
+  "structured_intent": {
+    "editorial_meaning": "Большие качели Архыза превращают горную высоту в яркое совместное приключение и дают ощущение полета над вершинами.",
+    "primary_action": "Две занятые качели вместе проходят один плавный участок естественной дуги.",
+    "terminal_state": "Обе качели вместе достигают верхней точки дуги над горным пейзажем.",
+    "semantic_invariant": "Оба человека остаются надежно сидящими и переживают восторг от безопасного совместного полета над горами."
+  },
+  "prompt": {
+    "positive": "Both swings sweep smoothly through a broad shared arc above the peaks, their long cables leaning naturally as the riders descend and rise. Keep the camera fixed; end with the pair together at the forward apex, still secure and exhilarated.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13/result.json",
+    "sha256": "6986c83582a0e08657ae60db470da7d77363a6ab7ac25ee3ca99b8ee45dd94cf",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "38c4ce91b1910b9b82bbdebbf749e8fe91b123ce8102c390a71bd6e80cde3296",
+      "article_context_sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-09",
+  "image_id": "09",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.7/09.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With the camera fixed, a subtle reflection sweeps evenly across the rear screen and dissolves at its right edge, ending on the same sharp underwater still with all displayed symbols and values unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5ebf299094957dd22a5/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f1b9132d3eaaa72fe5eba837a52d7aa27584ba88252352b90b21ebb44bd7e545",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "TySadJ5T0AyPATz0EKYY",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:06:43Z",
+  "completed_at": "2026-08-07T14:07:58Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1668,
+    "height": 1242,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2044530,
+    "sha256": "6ec95884531f1811e906d3a3e5d1c57c045525a0320e20ba6f1446cfc8c49b9f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09-wan-2-7",
+  "lite_result_sha256": "4defee07af0d0b0f2be5e73224693cbe1f271d9a6c71c64771fc6ff16b7c20e4",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

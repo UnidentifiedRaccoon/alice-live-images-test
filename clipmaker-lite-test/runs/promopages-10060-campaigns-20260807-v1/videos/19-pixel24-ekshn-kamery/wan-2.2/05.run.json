@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-05",
+  "image_id": "05",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/05.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ea621e7f7d1833e7f1/orig",
+      "prompt": "The dog runs steadily toward the tracking camera through the tall grass, ears, fur and tongue bouncing naturally while nearby blades bend aside. Keep the horizon level and the dog's joyful face centered; by the final frames its nose is close to the lens and its face remains clearly recognizable.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "f1948728ed6df2e460485e158c2e77c1c11b26735189a72eba4d3eeff173e142",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cd79d08ec6ef7edce72fb2a1c082a58a",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:08:19Z",
+  "completed_at": "2026-08-07T14:08:19Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 15962039,
+    "sha256": "8bdb6fc0b83086e6aa2a54e4cdd9b390c905c77dbe10d8292138b2ca67117a8c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05-wan-2-2",
+  "lite_result_sha256": "6cdf413169bca344970d1c8147d04347f53b66d0a341d6dc02b3ca35c325d966",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 172676,
+    "sha256": "abac7c55e5140ba997fc4da30c0f8d514a6380d763de3233287d23a771dcc829"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "cd79d08ec6ef7edce72fb2a1c082a58a",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

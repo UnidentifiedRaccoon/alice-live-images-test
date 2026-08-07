@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-01",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-01-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/01.jpeg",
+    "sha256": "523fb6a8b772ad3d028178fe8a8e4c7973eb59733f174d03bfabb46d2cdd0fc1",
+    "width": 1000,
+    "height": 665
+  },
+  "structured_intent": {
+    "editorial_meaning": "Системное обучение фотографии строится на совместной практике и содержательной обратной связи, а не только на самостоятельном просмотре разрозненных материалов.",
+    "primary_action": "Фотограф направляет удерживаемую камеру с экраном к группе для совместного просмотра снимка.",
+    "terminal_state": "Камера устойчиво обращена экраном ко всей группе, и каждый продолжает смотреть на результат съёмки.",
+    "semantic_invariant": "Все участники до последнего кадра остаются сосредоточены на совместном разборе фотографии."
+  },
+  "prompt": {
+    "positive": "With a fixed camera, the photographer smoothly tips the camera display toward the group and the students subtly track it with their eyes. Finish with the display held clearly toward everyone as they remain quietly focused on the photo review.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-01/result.json",
+    "sha256": "22e890c3974880ceba511763677fdb967a3df77e61a57b870341f28f9566948e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "523fb6a8b772ad3d028178fe8a8e4c7973eb59733f174d03bfabb46d2cdd0fc1",
+      "article_context_sha256": "457d2d945efd3975380689746112627a2ba0d3fe1dff69d1478e20e8619c4b3e",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

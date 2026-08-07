@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-11",
+  "image_id": "11",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/11.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The child makes one careful step onto the next suspended plank while the ropes and boards gently sway. Fixed camera on her; in the last frame she is balanced on the next plank, still gripping both side ropes with the safety harness secured.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_69ef07630b7ce5350e5d405d_69ef0ad00b7ce5350e5d9b72/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "5aa187dc44f7f3a00c10d0ce4900256c59bede09a1e9580e59c6706ac2646cdf",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "NfwmCl5jU726RxO78cTn",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:45:43Z",
+  "completed_at": "2026-08-07T14:47:37Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 8856886,
+    "sha256": "6d15c00ec44c2cf1cee63c6df68e46e617356f81cd2cd547bf2282d240c0e516"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11-veo-3-1-lite",
+  "lite_result_sha256": "753c9202cb3eb3cd101657e5a86b590c2d7614e45a7ed191e5655b688d5ab094",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

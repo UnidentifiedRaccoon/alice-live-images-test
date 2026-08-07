@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-08",
+  "image_id": "08",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a16e5c7621e7f7d1833e285_6a16e5ebf299094957dd22a4/orig",
+      "prompt": "The paraglider glides steadily forward as the harness lines and jacket sleeves flutter in the airflow and the mountain terrain drifts beneath him. Keep the action-camera selfie view fixed on his face; by the final frame he remains fully airborne, visibly exhilarated, with the ridge shifted behind him.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "3d620fa61c7fa1062f49d4e34ed745ce7947709fbf65358cf95c0b811811b17d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "389e060fcade1a158da68407d403972f",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:32:46Z",
+  "completed_at": "2026-08-07T14:32:46Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 12544099,
+    "sha256": "39b0d992b3918ea830ac0cf756f0b6085e0198a2b44efe914961731601045c3f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-08",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-08-wan-2-2",
+  "lite_result_sha256": "fdc6ba8412bc018fc61bba0595c444387757911d72bfd5be2da95322097888c1",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 130391,
+    "sha256": "52d57128144158c23cb0d2592dead08de066ff2275a93998510d88b908a4abec"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "389e060fcade1a158da68407d403972f",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

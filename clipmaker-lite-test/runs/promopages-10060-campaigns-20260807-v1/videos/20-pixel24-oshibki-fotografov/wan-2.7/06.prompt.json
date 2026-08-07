@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-06",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-06-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/20-pixel24-oshibki-fotografov/06.jpeg",
+    "sha256": "be6c90c37eb78d1dc12ab018b6508c9156758f57fe689cb8ed12ab815d86e90f",
+    "width": 1000,
+    "height": 665
+  },
+  "structured_intent": {
+    "editorial_meaning": "Constructive outside feedback helps photographers notice mistakes, learn from them, and improve deliberately.",
+    "primary_action": "The two women jointly examine the photographic print as it is angled toward them.",
+    "terminal_state": "Both women are focused on the clearly visible print between them.",
+    "semantic_invariant": "The interaction remains supportive, attentive, and collaborative through the final frame."
+  },
+  "prompt": {
+    "positive": "The woman gently turns the print toward her colleague while both settle their attention on it. Fixed camera; end with the print clearly visible and both women sharing an attentive, encouraging review.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-06/result.json",
+    "sha256": "a709c08c9f9407ae523a9605cb80b54fe9d61e822fa0b5ae94e2e4218c542679",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "be6c90c37eb78d1dc12ab018b6508c9156758f57fe689cb8ed12ab815d86e90f",
+      "article_context_sha256": "457d2d945efd3975380689746112627a2ba0d3fe1dff69d1478e20e8619c4b3e",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

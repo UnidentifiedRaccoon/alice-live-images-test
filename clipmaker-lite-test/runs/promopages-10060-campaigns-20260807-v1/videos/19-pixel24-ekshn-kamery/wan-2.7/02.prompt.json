@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-02",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-02-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/02.jpeg",
+    "sha256": "18d7180b176b022a7b0ce6296a97504a121964f477be99396660b65cdc3cc97b",
+    "width": 671,
+    "height": 504
+  },
+  "structured_intent": {
+    "editorial_meaning": "Continuous action-camera capture preserves an unfolding journey so a worthwhile moment is already recorded even before the user reacts.",
+    "primary_action": "The viewpoint continuously advances along the road toward the mountains.",
+    "terminal_state": "The viewpoint is observably farther down the same road and the mountain range appears slightly closer.",
+    "semantic_invariant": "The scene remains an uninterrupted, dependable action-camera recording of the same forward journey, with the visible recording interface unchanged."
+  },
+  "prompt": {
+    "positive": "Travel smoothly forward down the center of the road as gravel and roadside vegetation stream backward with natural depth. Hold a level horizon and an unchanged recording HUD. End visibly farther along the road with the mountain range slightly nearer.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-02/result.json",
+    "sha256": "ad780dd71ebd94e0e2c93e2d3684466e670c31bd6e3c7736efaf615d3f2a7c5b",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "18d7180b176b022a7b0ce6296a97504a121964f477be99396660b65cdc3cc97b",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -11,6 +11,8 @@
     "../clipmaker-lite-test/promopages-10060-campaigns-20260805-v1-manifest.json";
   const PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-10060-article-02-20260806-v2-manifest.json";
+  const PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH =
+    "../clipmaker-lite-test/promopages-10060-campaigns-20260807-v1-manifest.json";
   const PROMOPAGES_10060_EXTENSION_ROLE =
     "promopages-10060-campaign-extension";
   const PROMOPAGES_10060_EXTENSION_BATCH_ID =
@@ -18,6 +20,13 @@
   const PROMOPAGES_10060_EXTENSION_DATASET_PREFIX =
     "PROMOPAGES-10060-campaigns-20260805-v1";
   const PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS = ["15", "16", "17", "18"];
+  const PROMOPAGES_10060_CAMPAIGN_20260807_ROLE =
+    "promopages-10060-campaigns-20260807-extension";
+  const PROMOPAGES_10060_CAMPAIGN_20260807_BATCH_ID =
+    "promopages-10060-campaigns-20260807-v1";
+  const PROMOPAGES_10060_CAMPAIGN_20260807_DATASET_PREFIX =
+    "PROMOPAGES-10060-campaigns-20260807-v1";
+  const PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS = ["19", "20", "21"];
   const PROMOPAGES_10060_ARTICLE_02_ROLE = "promopages-10060-article-02";
   const PROMOPAGES_10060_ARTICLE_02_BATCH_ID =
     "promopages-10060-article-02-20260806-v2";
@@ -39,6 +48,10 @@
     `PROMOPAGES-9884/${PROMOPAGES_10060_EXTENSION_DATASET_PREFIX}/articles`;
   const PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT =
     `${PROMOPAGES_10060_EXTENSION_DATASET_PREFIX}/articles`;
+  const PROMOPAGES_10060_CAMPAIGN_20260807_CONTEXT_ROOT =
+    `PROMOPAGES-9884/${PROMOPAGES_10060_CAMPAIGN_20260807_DATASET_PREFIX}/articles`;
+  const PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_ROOT =
+    `${PROMOPAGES_10060_CAMPAIGN_20260807_DATASET_PREFIX}/articles`;
   const PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE =
     `clipmaker-lite-test/runs/${PROMOPAGES_10060_EXTENSION_BATCH_ID}/normalized-input-retries-v1`;
   const PROMOPAGES_10060_EXTENSION_NORMALIZED_ASSET_NAMESPACE =
@@ -130,6 +143,9 @@
   const EXPECTED_PROMOPAGES_10060_COMPLETE_ARTICLE_COUNT = 18;
   const EXPECTED_PROMOPAGES_10060_COMPLETE_IMAGE_COUNT = 137;
   const EXPECTED_PROMOPAGES_10060_COMPLETE_OUTPUT_COUNT = 411;
+  const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_ARTICLE_COUNT = 21;
+  const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_IMAGE_COUNT = 170;
+  const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_OUTPUT_COUNT = 510;
   const PROVIDER_FILTERED_STATUS = "provider-filtered";
   const PROVIDER_FILTERED_RECORDED_STATUS = "provider-failed";
   const PROVIDER_FILTERED_SELECTION = "terminal-retry-v1-exhausted";
@@ -1592,21 +1608,40 @@
   const validatePromopages10060Manifest = (
     manifest,
     historicalArticles,
-    { extension = false, article02 = false } = {},
+    { extension = false, article02 = false, campaign20260807 = false } = {},
   ) => {
+    const extensionConfig = extension
+      ? {
+          role: PROMOPAGES_10060_EXTENSION_ROLE,
+          batchId: PROMOPAGES_10060_EXTENSION_BATCH_ID,
+          contextRoot: PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT,
+          manifestRoot: PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT,
+          articleNumbers: PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS,
+          label: "PROMOPAGES-10060 campaign extension",
+        }
+      : campaign20260807
+        ? {
+            role: PROMOPAGES_10060_CAMPAIGN_20260807_ROLE,
+            batchId: PROMOPAGES_10060_CAMPAIGN_20260807_BATCH_ID,
+            contextRoot: PROMOPAGES_10060_CAMPAIGN_20260807_CONTEXT_ROOT,
+            manifestRoot: PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_ROOT,
+            articleNumbers: PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS,
+            label: "PROMOPAGES-10060 campaigns 20260807 extension",
+          }
+        : null;
     assert(
-      !(extension && article02),
-      "PROMOPAGES-10060 sidecar не может одновременно быть campaign extension и article 02.",
+      [extension, article02, campaign20260807].filter(Boolean).length <= 1,
+      "PROMOPAGES-10060 sidecar не может одновременно иметь несколько extension-ролей.",
     );
     const manifestLabel = article02
       ? "PROMOPAGES-10060 article 02"
-      : extension
-        ? "PROMOPAGES-10060 campaign extension"
+      : extensionConfig
+        ? extensionConfig.label
         : "PROMOPAGES-10060";
     const expectedManifestRole = article02
       ? PROMOPAGES_10060_ARTICLE_02_ROLE
-      : extension
-        ? PROMOPAGES_10060_EXTENSION_ROLE
+      : extensionConfig
+        ? extensionConfig.role
         : "promopages-10060-all-images";
     assert(
       manifest && typeof manifest === "object",
@@ -1617,12 +1652,12 @@
       manifest.manifest_role === expectedManifestRole,
       `${manifestLabel} имеет неверный manifest_role.`,
     );
-    if (extension || article02) {
+    if (extensionConfig || article02) {
       assert(
         manifest.batch_id ===
           (article02
             ? PROMOPAGES_10060_ARTICLE_02_BATCH_ID
-            : PROMOPAGES_10060_EXTENSION_BATCH_ID),
+            : extensionConfig.batchId),
         `${manifestLabel} имеет неверный batch_id.`,
       );
     }
@@ -1637,17 +1672,17 @@
     );
     const expectedArticleCount = article02
       ? EXPECTED_PROMOPAGES_10060_ARTICLE_02_ARTICLE_COUNT
-      : extension
+      : extensionConfig
         ? manifest.article_count
         : EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT;
     const expectedImageCount = article02
       ? EXPECTED_PROMOPAGES_10060_ARTICLE_02_IMAGE_COUNT
-      : extension
+      : extensionConfig
         ? manifest.image_count
         : EXPECTED_PROMOPAGES_10060_IMAGE_COUNT;
     const expectedOutputCount = article02
       ? EXPECTED_PROMOPAGES_10060_ARTICLE_02_OUTPUT_COUNT
-      : extension
+      : extensionConfig
         ? manifest.expected_outputs
         : EXPECTED_PROMOPAGES_10060_OUTPUT_COUNT;
     if (article02) {
@@ -1657,7 +1692,7 @@
           manifest.expected_outputs === EXPECTED_PROMOPAGES_10060_ARTICLE_02_OUTPUT_COUNT,
         `${manifestLabel} должен оставаться 1 / 11 / 33.`,
       );
-    } else if (!extension) {
+    } else if (!extensionConfig) {
       assert(
         manifest.article_count === EXPECTED_PROMOPAGES_10060_ARTICLE_COUNT &&
           manifest.image_count === EXPECTED_PROMOPAGES_10060_IMAGE_COUNT &&
@@ -1819,12 +1854,12 @@
       assert(
         typeof article.context_path === "string" &&
           article.context_path.trim() &&
-          (!(extension || article02) ||
+          (!(extensionConfig || article02) ||
             (isCanonicalRelativePath(article.context_path) &&
               article.context_path === `${
                 article02
                   ? PROMOPAGES_10060_ARTICLE_02_CONTEXT_ROOT
-                  : PROMOPAGES_10060_EXTENSION_CONTEXT_ROOT
+                  : extensionConfig.contextRoot
               }/${article.article_slug}/content.json`)),
         `У PROMOPAGES-10060/${article.article_number} неверный context_path.`,
       );
@@ -1844,7 +1879,7 @@
         const expectedSidecarManifestPrefix = `${
           article02
             ? PROMOPAGES_10060_ARTICLE_02_MANIFEST_ROOT
-            : PROMOPAGES_10060_EXTENSION_MANIFEST_ROOT
+            : extensionConfig?.manifestRoot
         }/${article.article_slug}/`;
         const expectedArticle02SourcePrefix =
           `${PROMOPAGES_10060_ARTICLE_02_SOURCE_ROOT}/${article.article_slug}/`;
@@ -1868,7 +1903,7 @@
         assert(
           typeof image.manifest_file_path === "string" &&
             image.manifest_file_path.trim() &&
-            (!(extension || article02) ||
+            (!(extensionConfig || article02) ||
               (isCanonicalRelativePath(image.manifest_file_path) &&
                 image.manifest_file_path.startsWith(
                   expectedSidecarManifestPrefix,
@@ -2157,7 +2192,7 @@
             ),
         `${manifestLabel} должен содержать article 02 и изображения 01–11 в порядке публикации.`,
       );
-    } else if (!extension) {
+    } else if (!extensionConfig) {
       assert(
         JSON.stringify([...articleNumbers]) ===
           JSON.stringify(EXPECTED_PROMOPAGES_10060_ARTICLE_NUMBERS),
@@ -2181,6 +2216,10 @@
     assert(
       unavailableProviderOutputCount === providerUnavailableOutputCount,
       `PROMOPAGES-10060 provider-unavailable outputs: ${unavailableProviderOutputCount}, заявлено ${providerUnavailableOutputCount}.`,
+    );
+    assert(
+      !campaign20260807 || normalizedInputRetryOutputCount === 0,
+      `${manifestLabel} не должен содержать normalized-input retries.`,
     );
     if (normalizedInputRetryOutputCount > 0) {
       const retryCost = manifest.cost;
@@ -2334,7 +2373,7 @@
           });
         });
       }
-    } else if (extension) {
+    } else if (extensionConfig) {
       const retryCost = manifest.cost;
       const supersedePolicy = manifest.generation_policy?.normalized_input_supersede;
       assert(
@@ -2389,10 +2428,10 @@
       Array.isArray(unavailableArticles) &&
         (article02
           ? unavailableArticles.length === 0
-          : extension || unavailableArticles.length === 1),
+          : extensionConfig || unavailableArticles.length === 1),
       article02
         ? `${manifestLabel} не должен содержать unavailable_articles.`
-        : extension
+        : extensionConfig
         ? `${manifestLabel} содержит некорректный unavailable_articles.`
         : "PROMOPAGES-10060 должен содержать одну недоступную статью.",
     );
@@ -2434,7 +2473,7 @@
         unavailableArticles.length === 0,
         `${manifestLabel} не может одновременно восстанавливать и помечать article 02 недоступной.`,
       );
-    } else if (!extension) {
+    } else if (!extensionConfig) {
       assert(
         unavailableNumbers.has(EXPECTED_PROMOPAGES_10060_UNAVAILABLE_ARTICLE_NUMBER),
         "Недоступной статьёй PROMOPAGES-10060 должна быть статья 02.",
@@ -2446,11 +2485,11 @@
       ]);
       assert(
         accountedArticleNumbers.size ===
-          PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS.length &&
-          PROMOPAGES_10060_EXTENSION_ARTICLE_NUMBERS.every((number) =>
+          extensionConfig.articleNumbers.length &&
+          extensionConfig.articleNumbers.every((number) =>
             accountedArticleNumbers.has(number),
           ),
-        `${manifestLabel} должен учитывать зарегистрированные статьи 15–18.`,
+        `${manifestLabel} должен учитывать зарегистрированные статьи ${extensionConfig.articleNumbers[0]}–${extensionConfig.articleNumbers.at(-1)}.`,
       );
     }
 
@@ -4859,11 +4898,17 @@
   };
 
   const loadAbPreparationDataset = async () => {
-    const [reviewResponse, reviewExtensionResponse, reviewArticle02Response] =
+    const [
+      reviewResponse,
+      reviewExtensionResponse,
+      reviewArticle02Response,
+      reviewCampaign20260807Response,
+    ] =
       await Promise.all([
       fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH, { cache: "no-store" }),
     ]);
     if (!reviewResponse.ok) {
       throw new Error(
@@ -4880,6 +4925,14 @@
         `Article 02 sidecar PROMOPAGES-10060 вернул HTTP ${reviewArticle02Response.status}.`,
       );
     }
+    if (
+      !reviewCampaign20260807Response.ok &&
+      reviewCampaign20260807Response.status !== 404
+    ) {
+      throw new Error(
+        `Campaigns 20260807 sidecar PROMOPAGES-10060 вернул HTTP ${reviewCampaign20260807Response.status}.`,
+      );
+    }
 
     const reviewManifest = await reviewResponse.json();
     const reviewExtensionManifest = reviewExtensionResponse.ok
@@ -4887,6 +4940,9 @@
       : null;
     const reviewArticle02Manifest = reviewArticle02Response.ok
       ? await reviewArticle02Response.json()
+      : null;
+    const reviewCampaign20260807Manifest = reviewCampaign20260807Response.ok
+      ? await reviewCampaign20260807Response.json()
       : null;
     const reviewDataset = validatePromopages10060Manifest(reviewManifest, []);
     const reviewExtensionDataset = reviewExtensionManifest
@@ -4915,44 +4971,81 @@
           providerUnavailableOutputCount: 0,
           unavailableOutputCount: 0,
         };
+    const reviewCampaign20260807Dataset = reviewCampaign20260807Manifest
+      ? validatePromopages10060Manifest(
+          reviewCampaign20260807Manifest,
+          [
+            ...reviewDataset.articles,
+            ...reviewExtensionDataset.articles,
+            ...reviewArticle02Dataset.articles,
+          ],
+          { campaign20260807: true },
+        )
+      : {
+          articles: [],
+          unavailableArticles: [],
+          filteredOutputCount: 0,
+          providerUnavailableOutputCount: 0,
+          unavailableOutputCount: 0,
+        };
     const reviewArticles = sortPromopages10060Articles([
       ...reviewDataset.articles,
       ...reviewExtensionDataset.articles,
       ...reviewArticle02Dataset.articles,
+      ...reviewCampaign20260807Dataset.articles,
     ]);
     const unavailableArticles = mergeUnavailableArticleCollections(
       reviewArticles,
       reviewDataset.unavailableArticles,
       reviewExtensionDataset.unavailableArticles,
       reviewArticle02Dataset.unavailableArticles,
+      reviewCampaign20260807Dataset.unavailableArticles,
     );
     const imageCount =
       reviewManifest.image_count +
       (reviewExtensionManifest?.image_count ?? 0) +
-      (reviewArticle02Manifest?.image_count ?? 0);
+      (reviewArticle02Manifest?.image_count ?? 0) +
+      (reviewCampaign20260807Manifest?.image_count ?? 0);
     const outputCount =
       reviewManifest.expected_outputs +
       (reviewExtensionManifest?.expected_outputs ?? 0) +
-      (reviewArticle02Manifest?.expected_outputs ?? 0);
+      (reviewArticle02Manifest?.expected_outputs ?? 0) +
+      (reviewCampaign20260807Manifest?.expected_outputs ?? 0);
     const unavailableOutputCount =
       reviewDataset.unavailableOutputCount +
       reviewExtensionDataset.unavailableOutputCount +
-      reviewArticle02Dataset.unavailableOutputCount;
+      reviewArticle02Dataset.unavailableOutputCount +
+      reviewCampaign20260807Dataset.unavailableOutputCount;
     const filteredOutputCount =
       reviewDataset.filteredOutputCount +
       reviewExtensionDataset.filteredOutputCount +
-      reviewArticle02Dataset.filteredOutputCount;
+      reviewArticle02Dataset.filteredOutputCount +
+      reviewCampaign20260807Dataset.filteredOutputCount;
     const providerUnavailableOutputCount =
       reviewDataset.providerUnavailableOutputCount +
       reviewExtensionDataset.providerUnavailableOutputCount +
-      reviewArticle02Dataset.providerUnavailableOutputCount;
-    if (reviewExtensionManifest && reviewArticle02Manifest) {
+      reviewArticle02Dataset.providerUnavailableOutputCount +
+      reviewCampaign20260807Dataset.providerUnavailableOutputCount;
+    if (
+      reviewExtensionManifest &&
+      reviewArticle02Manifest &&
+      reviewCampaign20260807Manifest
+    ) {
+      assert(
+        reviewArticles.length ===
+          EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_ARTICLE_COUNT &&
+          imageCount === EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_IMAGE_COUNT &&
+          outputCount === EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_OUTPUT_COUNT &&
+          unavailableArticles.length === 0,
+        "Полный PROMOPAGES-10060 должен содержать 21 статью / 170 изображений / 510 результатов без source-unavailable статей.",
+      );
+    } else if (reviewExtensionManifest && reviewArticle02Manifest) {
       assert(
         reviewArticles.length === EXPECTED_PROMOPAGES_10060_COMPLETE_ARTICLE_COUNT &&
           imageCount === EXPECTED_PROMOPAGES_10060_COMPLETE_IMAGE_COUNT &&
           outputCount === EXPECTED_PROMOPAGES_10060_COMPLETE_OUTPUT_COUNT &&
           unavailableArticles.length === 0,
-        "Полный PROMOPAGES-10060 должен содержать 18 статей / 137 изображений / 411 результатов без source-unavailable статей.",
+        "PROMOPAGES-10060 без нового sidecar должен содержать 18 статей / 137 изображений / 411 результатов.",
       );
     }
     return {

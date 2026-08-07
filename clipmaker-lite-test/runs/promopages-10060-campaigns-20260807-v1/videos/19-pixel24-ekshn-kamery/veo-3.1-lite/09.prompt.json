@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/09.jpeg",
+    "sha256": "e0eeb5dbc86f7d48e5ad0a8a31b867a4956b76d0a1f6ff99c40263d45995ad5d",
+    "width": 660,
+    "height": 492
+  },
+  "structured_intent": {
+    "editorial_meaning": "Экшн-камера позволяет извлечь из видео четкий, выразительный стоп-кадр, пригодный для публикации.",
+    "primary_action": "Мягкий оптический блик проходит по заднему экрану камеры, подчеркивая четкость зафиксированного изображения.",
+    "terminal_state": "Блик исчезает у противоположного края, и в последнем кадре экран снова полностью чисто показывает исходный резкий подводный стоп-кадр.",
+    "semantic_invariant": "Подводная сцена остается неподвижным четким стоп-кадром, а все элементы интерфейса и сама камера сохраняются без изменений."
+  },
+  "prompt": {
+    "positive": "Fixed view as one soft highlight glides across the rear display and fades near the opposite edge, finishing with the crisp underwater still and all interface text, numbers, and icons exactly unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-09/result.json",
+    "sha256": "4defee07af0d0b0f2be5e73224693cbe1f271d9a6c71c64771fc6ff16b7c20e4",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "e0eeb5dbc86f7d48e5ad0a8a31b867a4956b76d0a1f6ff99c40263d45995ad5d",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

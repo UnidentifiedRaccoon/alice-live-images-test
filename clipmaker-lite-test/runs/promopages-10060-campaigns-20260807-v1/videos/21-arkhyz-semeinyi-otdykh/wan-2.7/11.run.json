@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-11",
+  "image_id": "11",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/11.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The child steadily crosses to the next suspended plank with one careful step and a smooth weight shift as the ropes and boards sway lightly. Keep the camera fixed on her; she finishes balanced with both feet on the next plank, hands holding the ropes and harness secure.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_69ef07630b7ce5350e5d405d_69ef0ad00b7ce5350e5d9b72/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "4808e3136e443e7783ba536e7a5db6be0e44a304dc2da7758d0e66d7782f8812",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "lElVMr8eF98l0eTtuZHk",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:43:49Z",
+  "completed_at": "2026-08-07T14:45:32Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1712,
+    "height": 1210,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 15250970,
+    "sha256": "c847436380a7bd58a8c784caf953071037dbcd751941e498f276da63f1b90b20"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11-wan-2-7",
+  "lite_result_sha256": "753c9202cb3eb3cd101657e5a86b590c2d7614e45a7ed191e5655b688d5ab094",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

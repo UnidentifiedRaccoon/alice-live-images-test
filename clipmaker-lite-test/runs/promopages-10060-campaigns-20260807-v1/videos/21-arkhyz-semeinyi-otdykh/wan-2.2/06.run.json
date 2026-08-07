@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-06",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69ef07630b7ce5350e5d405d_69ef099a3ba10e0ae4c20819/orig",
+      "prompt": "The enclosed gondola cabins glide smoothly uphill along the cables at a steady gentle speed. Keep the camera fixed and the cabins continuously visible; by the final frame, the nearest cabin has advanced clearly toward the next support tower while the calm ascent continues.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "c8371827a116c5a33ea6306dd5746b4b66a942ac19593a25b2366e80ec2a0a9f",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "59407c75e497e9029beb7fafb72bb7e5",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:45:25Z",
+  "completed_at": "2026-08-07T14:45:25Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 17337487,
+    "sha256": "51bb1155c604478d17428460bd6b04920582f5405ecb9262b9dd934093396f99"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-06",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-06-wan-2-2",
+  "lite_result_sha256": "e6ec1daf1d09127329aeb0ebb0a6a92c122541a2f7759aba88d7a3390846052f",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 998376,
+    "sha256": "7a1ab1f4882c99f2ed14c00a65e003bbe3f3882c5ae3e99039f788aaa44ddd04"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "59407c75e497e9029beb7fafb72bb7e5",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

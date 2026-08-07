@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "19-pixel24-ekshn-kamery-11",
+  "image_id": "11",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/11.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/19-pixel24-ekshn-kamery/veo-3.1-lite/11.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The woman completes a compact, controlled wakeboard rotation while gripping the tow handle, with the taut line drawing her forward and spray sweeping behind. Use a fixed action-camera viewpoint and preserve the entire recording overlay unchanged. End with her descending over the wake, board nearly level and still fully visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a16e5c7621e7f7d1833e285_6a16e5eb6c2df363cc43a53f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "2c269d5c986f7e00f6ec3907a94e54435bc1dad0f1a092ef6ae899ed7e60ac89",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "HgPKEgvGGI8rkF95cm4e",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:09:20Z",
+  "completed_at": "2026-08-07T14:32:13Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 11209707,
+    "sha256": "b4256c990be20db25bc8adb5be1a563262daafb0a5dd64dc07a1134370e47593"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-11-veo-3-1-lite",
+  "lite_result_sha256": "004c2e32f1d579bf23ab3387aa17758acf26cb239984990e7ac9237afef71e4e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

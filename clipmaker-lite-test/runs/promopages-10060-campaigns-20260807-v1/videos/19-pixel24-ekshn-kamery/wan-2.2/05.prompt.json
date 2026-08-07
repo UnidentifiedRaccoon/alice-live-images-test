@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/05.jpeg",
+    "sha256": "abac7c55e5140ba997fc4da30c0f8d514a6380d763de3233287d23a771dcc829",
+    "width": 850,
+    "height": 636
+  },
+  "structured_intent": {
+    "editorial_meaning": "Живой динамичный момент можно снять выразительно и при этом сохранить визуально устойчивый кадр благодаря стабилизации экшн-камеры.",
+    "primary_action": "Собака радостно бежит вперед сквозь высокую траву.",
+    "terminal_state": "Собака оказывается вплотную к объективу, а ее радостная морда остается отчетливо узнаваемой на фоне ровного горизонта.",
+    "semantic_invariant": "Собака до последнего кадра остается радостной, непрерывно видимой и главным объектом устойчивого динамичного сюжета."
+  },
+  "prompt": {
+    "positive": "The dog runs steadily toward the tracking camera through the tall grass, ears, fur and tongue bouncing naturally while nearby blades bend aside. Keep the horizon level and the dog's joyful face centered; by the final frames its nose is close to the lens and its face remains clearly recognizable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-05/result.json",
+    "sha256": "6cdf413169bca344970d1c8147d04347f53b66d0a341d6dc02b3ca35c325d966",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "abac7c55e5140ba997fc4da30c0f8d514a6380d763de3233287d23a771dcc829",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

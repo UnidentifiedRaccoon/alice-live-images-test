@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/11.jpeg",
+    "sha256": "afd7dd5a7405472e1beb11a284318aa1a083e52b2c0cde49f98f6f28389193a0",
+    "width": 2554,
+    "height": 1806
+  },
+  "structured_intent": {
+    "editorial_meaning": "Веревочный парк дает ребенку яркое, посильное приключение, при этом защитное снаряжение поддерживает ощущение безопасности.",
+    "primary_action": "Ребенок осторожно переходит на следующую подвесную дощечку маршрута.",
+    "terminal_state": "Ребенок устойчиво стоит обеими ногами на следующей дощечке, продолжая держаться за канаты.",
+    "semantic_invariant": "Ребенок остается сосредоточенным, держится за опорные канаты и все время надежно закреплен страховкой."
+  },
+  "prompt": {
+    "positive": "The child steadily crosses to the next suspended plank with one careful step and a smooth weight shift as the ropes and boards sway lightly. Keep the camera fixed on her; she finishes balanced with both feet on the next plank, hands holding the ropes and harness secure.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-11/result.json",
+    "sha256": "753c9202cb3eb3cd101657e5a86b590c2d7614e45a7ed191e5655b688d5ab094",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "afd7dd5a7405472e1beb11a284318aa1a083e52b2c0cde49f98f6f28389193a0",
+      "article_context_sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

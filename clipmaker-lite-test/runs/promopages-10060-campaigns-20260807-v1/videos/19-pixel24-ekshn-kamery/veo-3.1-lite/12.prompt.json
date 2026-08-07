@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-12",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-12-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/12.jpeg",
+    "sha256": "451d63a1313c8ca8c25d1e7c2e7d0919b763c48eda7cb628f50bcaabc3961de9",
+    "width": 850,
+    "height": 456
+  },
+  "structured_intent": {
+    "editorial_meaning": "Интервальная съёмка экшн-камерой помогает автоматически поймать выразительные ракурсы активного занятия, не отвлекая спортсмена.",
+    "primary_action": "Серфингистка плавно переносит вес и продолжает скользить на доске по волне.",
+    "terminal_state": "Серфингистка находится в устойчивой более вертикальной стойке, а доска продолжает двигаться вперёд по волне.",
+    "semantic_invariant": "Серфингистка сохраняет контроль, равновесие и вовлечённость в катание до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Fixed camera as the surfer smoothly rises into balance while the wave carries the board forward and spray streams past. End with her upright, steady, and still riding; preserve the three-panel layout, numbers, and battery icons exactly.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-12/result.json",
+    "sha256": "8aef9ae4e12c22ddb56a769a5653d1f99e11e0f65f1c0efe0c14ee193b4c4611",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "451d63a1313c8ca8c25d1e7c2e7d0919b763c48eda7cb628f50bcaabc3961de9",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-07",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-07-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/07.jpeg",
+    "sha256": "fc78b406dde803e396634503e833808459aafcd5bbf7cbd3799d41e3c1463f24",
+    "width": 660,
+    "height": 440
+  },
+  "structured_intent": {
+    "editorial_meaning": "Показать, что HyperSmooth с Horizon Lock сохраняет устойчивый и ровный кадр даже во время динамичной езды по неровной трассе.",
+    "primary_action": "Велосипед непрерывно едет вперёд по горной тропе.",
+    "terminal_state": "Велосипед заметно продвинулся дальше по той же тропе, а горный горизонт в последнем кадре остаётся стабильным и ровным.",
+    "semantic_invariant": "Ощущение активного движения сохраняется, при этом горизонт остаётся ровным, а интерфейс HyperView — неизменным."
+  },
+  "prompt": {
+    "positive": "Ride forward at a smooth, even pace along the mountain trail; let the wheel and nearby ground carry gentle trail vibration while the distant horizon stays level. Keep the HyperView overlay fixed and unchanged. End visibly farther down the same path with the horizon still stable.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-07/result.json",
+    "sha256": "8d81e48fcd532a6ee2148c17b4fdffcf4b2387baaec048f95e27f099891b7b28",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "fc78b406dde803e396634503e833808459aafcd5bbf7cbd3799d41e3c1463f24",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "20-pixel24-oshibki-fotografov-07",
+  "image_id": "07",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.2/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/20-pixel24-oshibki-fotografov/wan-2.2/07.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d64d3dc2758d0c71d2d960_69d64d58c2758d0c71d2dd3d/orig",
+      "prompt": "Fixed camera. The instructor slowly lowers his raised hand in one clear explanatory gesture toward the lighting unit, keeping his focused expression and the device continuously visible. By the final frame, his palm rests level just above the unit as the students remain attentive.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "afc048c15b1edc55db90f7317c634fbf4c27a90606fd94eb8a1db6b03afb2f0d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "44f96ca5f9b1901da7020ea519dc2400",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:38:55Z",
+  "completed_at": "2026-08-07T14:38:55Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1152,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4590594,
+    "sha256": "27f775633c90beef8de915769b2c04e6ce0743de3abe7a3d482e4b69ec111586"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-07",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-20-pixel24-oshibki-fotografov-07-wan-2-2",
+  "lite_result_sha256": "2c8b2a263c2842b480ed3269f28d1e754a55855b3aefef991541f4176e811a49",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 793613,
+    "sha256": "4b09da5892f363da77883637fafeef8f398856bf7d1f3ce3fd4b23360f6708b3"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "44f96ca5f9b1901da7020ea519dc2400",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

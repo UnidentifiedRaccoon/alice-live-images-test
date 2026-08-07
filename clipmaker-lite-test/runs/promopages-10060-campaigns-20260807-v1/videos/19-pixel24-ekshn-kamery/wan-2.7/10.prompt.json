@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/19-pixel24-ekshn-kamery/10.jpeg",
+    "sha256": "14aad1b7880dc4669240f822d88352d2f6e5cf54035f65e69893a4a13f8ddee1",
+    "width": 675,
+    "height": 506
+  },
+  "structured_intent": {
+    "editorial_meaning": "Один динамичный момент можно точно совместить на монтаже, когда несколько экшн-камер записывают его синхронно с разных ракурсов.",
+    "primary_action": "Биплан выполняет один плавный согласованный крен над горным каньоном, одновременно показанный в четырёх ракурсах.",
+    "terminal_state": "В последнем кадре во всех четырёх панелях самолёт одновременно находится в немного более выровненном положении над каньоном.",
+    "semantic_invariant": "Все четыре панели остаются синхронными изображениями одного и того же манёвра, а отображаемые таймкоды сохраняются неизменными."
+  },
+  "prompt": {
+    "positive": "A smooth coordinated bank carries the biplane along the canyon as the rocky terrain drifts consistently through all four synchronized angles. Keep the four-panel layout fixed. By the end, every view shows the aircraft settling into a slightly more level attitude, with each timecode unchanged at 00:12:19:23.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-campaigns-20260807-v1-19-pixel24-ekshn-kamery-10/result.json",
+    "sha256": "e9da446c643a7cc071b5174c208e41469276098a9a0dbc4caa05ab348aed57dd",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.7",
+      "contract_fingerprint": "sha256:c7f34bd04ee24e4224b6254139d818d657cffe61fa55aca1117c1e6c20e96a0c",
+      "instruction_bundle_sha256": "3f1db6f631e476635d20b392fe3cddf84171e8500b1896b7d2ea31d6f544b887",
+      "source_image_sha256": "14aad1b7880dc4669240f822d88352d2f6e5cf54035f65e69893a4a13f8ddee1",
+      "article_context_sha256": "280fc6ed6148a54d4fcb40a4d53948f6b263f55cb7b8a40eeb14e8fdd19cbc6b",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

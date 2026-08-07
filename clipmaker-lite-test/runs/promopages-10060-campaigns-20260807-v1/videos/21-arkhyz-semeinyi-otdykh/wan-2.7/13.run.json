@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-13",
+  "image_id": "13",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/13.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/13.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Both swings sweep smoothly through a broad shared arc above the peaks, their long cables leaning naturally as the riders descend and rise. Keep the camera fixed; end with the pair together at the forward apex, still secure and exhilarated.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69ef07630b7ce5350e5d405d_69ef0b4dca75b55ea88f175f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "55965a6a9bfd5ec324cc4e34e26c777ae188a4df56639d0e4d19f5e06149f253",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "z6ePJUxBTUXnuwSUsbWU",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:45:34Z",
+  "completed_at": "2026-08-07T14:47:00Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1712,
+    "height": 1210,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3793419,
+    "sha256": "db01f77f36f8dfb12a84aff3228969787f7b25b533025e76ca08187f7c998a7d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13-wan-2-7",
+  "lite_result_sha256": "6986c83582a0e08657ae60db470da7d77363a6ab7ac25ee3ca99b8ee45dd94cf",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

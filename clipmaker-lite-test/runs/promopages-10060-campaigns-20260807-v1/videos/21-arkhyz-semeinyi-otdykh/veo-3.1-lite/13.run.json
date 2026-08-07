@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "21-arkhyz-semeinyi-otdykh-13",
+  "image_id": "13",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/13.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260807-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/13.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The two swings move together in one smooth, compact arc above the mountains, dipping briefly before climbing forward as the suspension cables angle naturally. Fixed camera. End at the forward apex with both riders secure and exhilarated.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_69ef07630b7ce5350e5d405d_69ef0b4dca75b55ea88f175f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a13d82ec998d185c56c6c799a006aa9c0aadaa4b133a3704f257b007fc8834f4",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "dH50A5wxLVhSM13o5xvs",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-07T14:47:03Z",
+  "completed_at": "2026-08-07T14:48:52Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 5762808,
+    "sha256": "4d7a06bd574a9c646dc943a32c761bab253562afecca2d05a1bfa5e30bfa5b5f"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-campaigns-20260807-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13",
+  "provider_run_id": "promopages-10060-campaigns-20260807-v1-21-arkhyz-semeinyi-otdykh-13-veo-3-1-lite",
+  "lite_result_sha256": "6986c83582a0e08657ae60db470da7d77363a6ab7ac25ee3ca99b8ee45dd94cf",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
