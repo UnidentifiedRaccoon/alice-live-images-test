@@ -35,6 +35,7 @@ DEFAULT_MANIFEST_PATHS = (
     REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-manifest.json",
     REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-campaigns-20260805-v1-manifest.json",
     REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-article-02-20260806-v2-manifest.json",
+    REPO_ROOT / "clipmaker-lite-test" / "promopages-10060-campaigns-20260807-v1-manifest.json",
 )
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "PROMOPAGES-10060" / "s3-export" / "output"
 
@@ -93,10 +94,11 @@ def _load_json(path: Path) -> Dict[str, Any]:
 
 
 def _write_json(path: Path, value: Any) -> None:
-    path.write_text(
-        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=False) + "\n",
-        encoding="utf-8",
-    )
+    path.write_text(_json_text(value), encoding="utf-8")
+
+
+def _json_text(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, indent=2, sort_keys=False) + "\n"
 
 
 def _hash_file(path: Path) -> Tuple[str, str, int]:
@@ -401,6 +403,147 @@ def _sha256sums(outputs: Sequence[Mapping[str, Any]]) -> str:
         for item in outputs
         if item["package_status"] == "ready"
     )
+
+
+def _delivery_manifest(outputs: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
+    """Return the deterministic mapping for S3 objects verified by the uploader."""
+
+    ready = sorted(
+        outputs,
+        key=lambda item: (
+            int(item["article_number"]),
+            int(item["image_id"]),
+            MODEL_ORDER[item["model_id"]],
+        ),
+    )
+    if not ready:
+        raise ExportError("Delivery manifest requires at least one verified ready output")
+    if any(item.get("package_status") != "ready" for item in ready):
+        raise ExportError("Delivery manifest can contain only verified ready outputs")
+
+    article_routes: Dict[str, Tuple[str, Dict[str, str]]] = {}
+    article_number_owners: Dict[str, str] = {}
+    publication_owners: Dict[str, str] = {}
+    seen_outputs: set[Tuple[str, str, str]] = set()
+    seen_object_keys: set[str] = set()
+    for item in ready:
+        article_slug = item.get("article_slug")
+        article_number = str(item.get("article_number", ""))
+        cabinet = item.get("cabinet")
+        if (
+            not isinstance(article_slug, str)
+            or not re.fullmatch(r"\d{2}-.+", article_slug)
+            or not re.fullmatch(r"\d{2}", article_number)
+            or not article_slug.startswith(article_number + "-")
+        ):
+            raise ExportError("Delivery output has an invalid article identity")
+        if not isinstance(cabinet, Mapping):
+            raise ExportError(f"Delivery output has no cabinet mapping: {article_slug}")
+        cabinet_slug = cabinet.get("slug")
+        if not isinstance(cabinet_slug, str) or not CABINET_SLUG_RE.fullmatch(
+            cabinet_slug
+        ):
+            raise ExportError(f"Delivery output has an invalid cabinet slug: {article_slug}")
+        cabinet_id = _validate_hex24(
+            cabinet.get("id"), f"cabinet_id for delivery article {article_slug}"
+        )
+        publication_id = _validate_hex24(
+            item.get("publication_id"),
+            f"publication_id for delivery article {article_slug}",
+        )
+        route = {
+            "article_slug": article_slug,
+            "cabinet_slug": cabinet_slug,
+            "cabinet_id": cabinet_id,
+            "publication_id": publication_id,
+        }
+        previous = article_routes.get(article_slug)
+        if previous is not None and previous != (article_number, route):
+            raise ExportError(f"Inconsistent delivery route for article: {article_slug}")
+        article_routes[article_slug] = (article_number, route)
+
+        number_owner = article_number_owners.setdefault(article_number, article_slug)
+        if number_owner != article_slug:
+            raise ExportError(
+                f"Duplicate delivery article_number {article_number}: "
+                f"{number_owner}, {article_slug}"
+            )
+        publication_owner = publication_owners.setdefault(publication_id, article_slug)
+        if publication_owner != article_slug:
+            raise ExportError(
+                f"Duplicate delivery publication_id {publication_id}: "
+                f"{publication_owner}, {article_slug}"
+            )
+
+        image_id = item.get("image_id")
+        model_id = item.get("model_id")
+        media = item.get("media")
+        if not isinstance(image_id, str) or not re.fullmatch(r"\d{2}", image_id):
+            raise ExportError(f"Invalid delivery image_id for article: {article_slug}")
+        if model_id not in MODEL_DIRS or not isinstance(media, Mapping):
+            raise ExportError(f"Invalid delivery model/media for {article_slug}/{image_id}")
+        sha256 = media.get("sha256")
+        size = media.get("bytes")
+        if not isinstance(sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", sha256):
+            raise ExportError(
+                f"Invalid delivery SHA-256 for {article_slug}/{image_id}/{model_id}"
+            )
+        if not isinstance(size, int) or isinstance(size, bool) or size <= 0:
+            raise ExportError(
+                f"Invalid delivery byte size for {article_slug}/{image_id}/{model_id}"
+            )
+        output_identity = (article_slug, image_id, model_id)
+        if output_identity in seen_outputs:
+            raise ExportError(f"Duplicate delivery output: {output_identity}")
+        seen_outputs.add(output_identity)
+
+        expected_relative = PurePosixPath(
+            f"{cabinet_slug}__{cabinet_id}",
+            publication_id,
+            MODEL_DIRS[model_id],
+            f"image_{image_id}--sha256-{sha256[:12]}.mp4",
+        ).as_posix()
+        expected_object_key = OBJECT_PREFIX + expected_relative
+        if (
+            item.get("relative_path") != expected_relative
+            or item.get("object_key") != expected_object_key
+            or item.get("yastatic_url") != _public_url(expected_object_key)
+        ):
+            raise ExportError(f"Delivery object route mismatch for {output_identity}")
+        if expected_object_key in seen_object_keys:
+            raise ExportError(f"Duplicate delivery object key: {expected_object_key}")
+        seen_object_keys.add(expected_object_key)
+
+    articles = [
+        route
+        for _number, route in sorted(
+            article_routes.values(), key=lambda article: int(article[0])
+        )
+    ]
+    rows = [
+        {
+            "article_slug": item["article_slug"],
+            "image_id": item["image_id"],
+            "model_id": item["model_id"],
+            "source_video_path": item["source_video_path"],
+            "sha256": item["media"]["sha256"],
+            "bytes": item["media"]["bytes"],
+            "object_key": item["object_key"],
+            "yastatic_url": item["yastatic_url"],
+        }
+        for item in ready
+    ]
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-s3-delivery",
+        "ticket": "PROMOPAGES-10060",
+        "bucket": BUCKET,
+        "object_prefix": OBJECT_PREFIX,
+        "public_base_url": PUBLIC_BASE_URL,
+        "articles": articles,
+        "verified_output_count": len(rows),
+        "outputs": rows,
+    }
 
 
 def _command_text() -> str:
@@ -994,35 +1137,52 @@ def _put_object(
 
 def _verify_yastatic(item: Mapping[str, Any], attempts: int = 6) -> Dict[str, Any]:
     url = item["yastatic_url"]
+    expected_size = item["media"]["bytes"]
     last_error = "unknown error"
     for attempt in range(attempts):
         try:
             head_request = urllib.request.Request(url, method="HEAD")
             with urllib.request.urlopen(head_request, timeout=30) as response:
                 status = response.status
-                content_type = response.headers.get_content_type()
+                content_type = response.headers.get("Content-Type")
                 content_length = response.headers.get("Content-Length")
+            if status != 200:
+                raise ExportError(f"unexpected HEAD status {status}")
+            if content_type != CONTENT_TYPE:
+                raise ExportError(f"unexpected Content-Type {content_type!r}")
+            if content_length is None:
+                raise ExportError("missing HEAD Content-Length")
+            if int(content_length) != expected_size:
+                raise ExportError(f"unexpected HEAD Content-Length {content_length}")
+
             range_request = urllib.request.Request(url, headers={"Range": "bytes=0-0"})
             with urllib.request.urlopen(range_request, timeout=30) as response:
                 range_status = response.status
                 content_range = response.headers.get("Content-Range")
-                response.read(1)
-            if status != 200 or content_type != CONTENT_TYPE:
-                raise ExportError(f"unexpected HEAD status/type {status}/{content_type}")
-            if content_length is not None and int(content_length) != item["media"]["bytes"]:
-                raise ExportError(f"unexpected Content-Length {content_length}")
-            if range_status not in {200, 206}:
-                raise ExportError(f"unexpected Range status {range_status}")
-            if range_status == 206 and content_range and not content_range.endswith(
-                f"/{item['media']['bytes']}"
-            ):
-                raise ExportError(f"unexpected Content-Range {content_range}")
+                range_content_length = response.headers.get("Content-Length")
+                if range_status != 206:
+                    raise ExportError(f"unexpected Range status {range_status}")
+                expected_content_range = f"bytes 0-0/{expected_size}"
+                if content_range != expected_content_range:
+                    raise ExportError(f"unexpected Content-Range {content_range!r}")
+                if range_content_length is None:
+                    raise ExportError("missing Range Content-Length")
+                if int(range_content_length) != 1:
+                    raise ExportError(
+                        f"unexpected Range Content-Length {range_content_length}"
+                    )
+                range_body = response.read(2)
+            if len(range_body) != 1:
+                raise ExportError(f"unexpected Range body length {len(range_body)}")
             return {
                 "verified": True,
                 "head_status": status,
                 "range_status": range_status,
                 "content_type": content_type,
-                "content_length": int(content_length) if content_length else None,
+                "content_length": int(content_length),
+                "content_range": content_range,
+                "range_content_length": int(range_content_length),
+                "range_body_length": len(range_body),
             }
         except (OSError, ValueError, urllib.error.URLError, ExportError) as error:
             last_error = str(error)
@@ -1031,9 +1191,9 @@ def _verify_yastatic(item: Mapping[str, Any], attempts: int = 6) -> Dict[str, An
     raise ExportError(f"yastatic verification failed for {url}: {last_error}")
 
 
-def _atomic_upload_report(path: Path, report: Mapping[str, Any]) -> None:
+def _atomic_write_json(path: Path, value: Mapping[str, Any]) -> None:
     temporary = path.with_suffix(".tmp")
-    _write_json(temporary, report)
+    _write_json(temporary, value)
     os.replace(temporary, path)
 
 
@@ -1094,6 +1254,10 @@ def upload_export(
     ]
     _json_from_process(_run_yc(preflight_command, runner), "S3 access preflight")
 
+    delivery_manifest_path = output_dir / "delivery-manifest.json"
+    if delivery_manifest_path.exists():
+        delivery_manifest_path.unlink()
+
     report: Dict[str, Any] = {
         "schema_version": "promopages-exp-video-upload-report/v1",
         "package_id": manifest["package_id"],
@@ -1106,7 +1270,7 @@ def upload_export(
         "objects": [],
     }
     report_path = output_dir / "upload-report.json"
-    _atomic_upload_report(report_path, report)
+    _atomic_write_json(report_path, report)
 
     for item in ready:
         entry: Dict[str, Any] = {
@@ -1120,7 +1284,7 @@ def upload_export(
             "error": None,
         }
         report["objects"].append(entry)
-        _atomic_upload_report(report_path, report)
+        _atomic_write_json(report_path, report)
         stage = "s3-head"
         try:
             head = _head_object(item, yc_profile, runner)
@@ -1137,7 +1301,7 @@ def upload_export(
                 entry["action"] = "uploaded"
                 entry["status"] = "uploaded-awaiting-verification"
                 report["counts"]["uploaded"] += 1
-                _atomic_upload_report(report_path, report)
+                _atomic_write_json(report_path, report)
                 stage = "s3-verification"
                 head = _head_object(item, yc_profile, runner)
                 entry["s3_head"] = head
@@ -1148,26 +1312,29 @@ def upload_export(
                 entry["action"] = "skipped"
                 entry["status"] = "s3-verified"
                 report["counts"]["skipped"] += 1
-                _atomic_upload_report(report_path, report)
+                _atomic_write_json(report_path, report)
 
             entry["status"] = "s3-verified"
             stage = "yastatic-verification"
             entry["yastatic"] = _verify_yastatic(item)
             entry["status"] = "verified"
             report["counts"]["verified"] += 1
-            _atomic_upload_report(report_path, report)
+            _atomic_write_json(report_path, report)
         except (ExportError, OSError, ValueError) as error:
             if entry["status"] != "conflict":
                 entry["status"] = stage + "-failed"
             entry["error"] = str(error)
-            _atomic_upload_report(report_path, report)
+            _atomic_write_json(report_path, report)
             raise
 
     report["completed_at"] = datetime.now(timezone.utc).isoformat()
-    _atomic_upload_report(report_path, report)
+    _atomic_write_json(report_path, report)
     verified_keys = {row["object_key"] for row in report["objects"] if row["status"] == "verified"}
     verified_links = [item for item in ready if item["object_key"] in verified_keys]
+    if report["counts"]["verified"] != len(ready) or len(verified_links) != len(ready):
+        raise ExportError("Refusing to publish a partial S3 delivery manifest")
     (output_dir / "verified-links.csv").write_text(_links_csv(verified_links), encoding="utf-8")
+    _atomic_write_json(delivery_manifest_path, _delivery_manifest(verified_links))
     return report
 
 

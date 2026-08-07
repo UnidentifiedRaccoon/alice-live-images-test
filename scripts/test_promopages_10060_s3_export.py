@@ -22,6 +22,24 @@ MODEL_DIRS = {
 }
 
 
+class FakeHTTPResponse:
+    """Small context-managed urllib response used by the CDN verifier tests."""
+
+    def __init__(self, status: int, headers: dict[str, str], body: bytes = b"") -> None:
+        self.status = status
+        self.headers = headers
+        self.body = body
+
+    def __enter__(self) -> "FakeHTTPResponse":
+        return self
+
+    def __exit__(self, *_args: object) -> None:
+        return None
+
+    def read(self, size: int = -1) -> bytes:
+        return self.body if size < 0 else self.body[:size]
+
+
 class Promopages10060S3ExportTest(unittest.TestCase):
     """Exercise package construction without touching S3 or the real videos."""
 
@@ -212,14 +230,55 @@ class Promopages10060S3ExportTest(unittest.TestCase):
     def test_model_directory_map_is_locked(self) -> None:
         self.assertEqual(exporter.MODEL_DIRS, MODEL_DIRS)
 
-    def test_default_manifests_include_article02_v2_sidecar(self) -> None:
+    def test_default_manifests_include_all_final_sidecars(self) -> None:
         self.assertEqual(
             [path.name for path in exporter.DEFAULT_MANIFEST_PATHS],
             [
                 "promopages-10060-manifest.json",
                 "promopages-10060-campaigns-20260805-v1-manifest.json",
                 "promopages-10060-article-02-20260806-v2-manifest.json",
+                "promopages-10060-campaigns-20260807-v1-manifest.json",
             ],
+        )
+
+    def test_articles_config_includes_campaigns_19_through_21(self) -> None:
+        articles = exporter._load_articles(exporter.DEFAULT_ARTICLES_PATH)
+        self.assertEqual(len(articles), 21)
+        self.assertEqual(len({article["cabinet"]["id"] for article in articles}), 11)
+        self.assertEqual(
+            {
+                article["article_number"]: (
+                    article["publication_id"],
+                    article["cabinet"]["id"],
+                    article["campaign_ids"],
+                    article["expected_image_count"],
+                    article["expected_ready_output_count"],
+                )
+                for article in articles[-3:]
+            },
+            {
+                "19": (
+                    "6a16e5c7621e7f7d1833e285",
+                    "694e6044d7871038964c6bf7",
+                    ["6a16e834e629076b1df574d1"],
+                    13,
+                    39,
+                ),
+                "20": (
+                    "69d64d3dc2758d0c71d2d960",
+                    "694e6044d7871038964c6bf7",
+                    ["69d650bb0b31d967eeb5bb4b"],
+                    7,
+                    21,
+                ),
+                "21": (
+                    "69ef07630b7ce5350e5d405d",
+                    "69de5306e88eac157c28799c",
+                    ["69e203d27d9b125eda7c1024"],
+                    13,
+                    39,
+                ),
+            },
         )
 
     def test_build_and_verify_small_fixture_use_deterministic_paths(self) -> None:
@@ -276,6 +335,8 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             )
             self.assertTrue((output_dir / "SHA256SUMS").is_file())
 
+            self.assertFalse((output_dir / "delivery-manifest.json").exists())
+
     def test_build_is_reproducible(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root, articles_path, manifest_paths, output_dir = self.make_fixture(directory)
@@ -298,6 +359,155 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             self.assertEqual(first, second)
             self.assertEqual(first_links, (output_dir / "links.csv").read_bytes())
             self.assertEqual(first_sums, (output_dir / "SHA256SUMS").read_bytes())
+
+    def test_delivery_manifest_rejects_unavailable_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            _root, _articles_path, _manifest_paths, _output_dir, manifest = (
+                self.build_fixture(directory)
+            )
+            unavailable = dict(manifest["outputs"][0])
+            unavailable["package_status"] = "unavailable"
+            with self.assertRaisesRegex(exporter.ExportError, "only verified ready"):
+                exporter._delivery_manifest([unavailable, *manifest["outputs"][1:]])
+
+    def test_delivery_manifest_binds_each_article_to_one_s3_route(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            _root, _articles_path, _manifest_paths, _output_dir, manifest = (
+                self.build_fixture(directory)
+            )
+            delivery = exporter._delivery_manifest(manifest["outputs"])
+            self.assertEqual(
+                delivery["articles"],
+                [
+                    {
+                        "article_slug": "01-fixture-article",
+                        "cabinet_slug": "fixture-cabinet",
+                        "cabinet_id": "a" * 24,
+                        "publication_id": "b" * 24,
+                    }
+                ],
+            )
+
+            inconsistent = json.loads(json.dumps(manifest["outputs"]))
+            inconsistent[1]["cabinet"]["slug"] = "different-cabinet"
+            with self.assertRaisesRegex(exporter.ExportError, "Inconsistent delivery route"):
+                exporter._delivery_manifest(inconsistent)
+
+    def test_yastatic_verification_requires_exact_head_and_one_byte_range(self) -> None:
+        size = 12345
+        item = {
+            "yastatic_url": "https://yastatic.net/s3/example/video.mp4",
+            "media": {"bytes": size},
+        }
+        responses = [
+            FakeHTTPResponse(
+                200,
+                {"Content-Type": "video/mp4", "Content-Length": str(size)},
+            ),
+            FakeHTTPResponse(
+                206,
+                {
+                    "Content-Range": f"bytes 0-0/{size}",
+                    "Content-Length": "1",
+                },
+                b"x",
+            ),
+        ]
+        requests = []
+
+        def fake_urlopen(request: object, **_kwargs: object) -> FakeHTTPResponse:
+            requests.append(request)
+            return responses.pop(0)
+
+        with mock.patch.object(exporter.urllib.request, "urlopen", side_effect=fake_urlopen):
+            result = exporter._verify_yastatic(item, attempts=1)
+
+        self.assertEqual(result["content_length"], size)
+        self.assertEqual(result["content_range"], f"bytes 0-0/{size}")
+        self.assertEqual(result["range_content_length"], 1)
+        self.assertEqual(result["range_body_length"], 1)
+        self.assertEqual(requests[0].get_method(), "HEAD")
+        self.assertEqual(requests[1].get_header("Range"), "bytes=0-0")
+
+    def test_yastatic_verification_rejects_weak_or_ambiguous_responses(self) -> None:
+        size = 12345
+        item = {
+            "yastatic_url": "https://yastatic.net/s3/example/video.mp4",
+            "media": {"bytes": size},
+        }
+        valid_head = {"Content-Type": "video/mp4", "Content-Length": str(size)}
+        valid_range = {
+            "Content-Range": f"bytes 0-0/{size}",
+            "Content-Length": "1",
+        }
+        cases = {
+            "missing HEAD length": (
+                FakeHTTPResponse(200, {"Content-Type": "video/mp4"}),
+                FakeHTTPResponse(206, valid_range, b"x"),
+                "missing HEAD Content-Length",
+            ),
+            "non-exact content type": (
+                FakeHTTPResponse(
+                    200,
+                    {
+                        "Content-Type": "video/mp4; charset=binary",
+                        "Content-Length": str(size),
+                    },
+                ),
+                FakeHTTPResponse(206, valid_range, b"x"),
+                "unexpected Content-Type",
+            ),
+            "full response to range": (
+                FakeHTTPResponse(200, valid_head),
+                FakeHTTPResponse(200, {"Content-Length": str(size)}, b"xx"),
+                "unexpected Range status 200",
+            ),
+            "suffix-only content range": (
+                FakeHTTPResponse(200, valid_head),
+                FakeHTTPResponse(
+                    206,
+                    {
+                        "Content-Range": f"not-a-byte-range/{size}",
+                        "Content-Length": "1",
+                    },
+                    b"x",
+                ),
+                "unexpected Content-Range",
+            ),
+            "missing range length": (
+                FakeHTTPResponse(200, valid_head),
+                FakeHTTPResponse(
+                    206,
+                    {"Content-Range": f"bytes 0-0/{size}"},
+                    b"x",
+                ),
+                "missing Range Content-Length",
+            ),
+            "wrong range length": (
+                FakeHTTPResponse(200, valid_head),
+                FakeHTTPResponse(
+                    206,
+                    {
+                        "Content-Range": f"bytes 0-0/{size}",
+                        "Content-Length": "2",
+                    },
+                    b"xx",
+                ),
+                "unexpected Range Content-Length 2",
+            ),
+            "oversized range body": (
+                FakeHTTPResponse(200, valid_head),
+                FakeHTTPResponse(206, valid_range, b"xx"),
+                "unexpected Range body length 2",
+            ),
+        }
+        for name, (head, range_response, message) in cases.items():
+            with self.subTest(name=name), mock.patch.object(
+                exporter.urllib.request,
+                "urlopen",
+                side_effect=[head, range_response],
+            ), self.assertRaisesRegex(exporter.ExportError, message):
+                exporter._verify_yastatic(item, attempts=1)
 
     def test_build_allows_exact_article02_v2_supersession(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -584,7 +794,10 @@ class Promopages10060S3ExportTest(unittest.TestCase):
                 "head_status": 200,
                 "range_status": 206,
                 "content_type": "video/mp4",
-                "content_length": None,
+                "content_length": 123,
+                "content_range": "bytes 0-0/123",
+                "range_content_length": 1,
+                "range_body_length": 1,
             }
             with mock.patch.object(
                 exporter,
@@ -621,6 +834,64 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             self.assertEqual(
                 (output_dir / "verified-links.csv").read_text(encoding="utf-8"),
                 (output_dir / "links.csv").read_text(encoding="utf-8"),
+            )
+            delivery = json.loads(
+                (output_dir / "delivery-manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                list(delivery),
+                [
+                    "schema_version",
+                    "manifest_role",
+                    "ticket",
+                    "bucket",
+                    "object_prefix",
+                    "public_base_url",
+                    "articles",
+                    "verified_output_count",
+                    "outputs",
+                ],
+            )
+            self.assertEqual(delivery["schema_version"], 1)
+            self.assertEqual(
+                delivery["manifest_role"],
+                "promopages-10060-s3-delivery",
+            )
+            self.assertEqual(delivery["ticket"], "PROMOPAGES-10060")
+            self.assertEqual(delivery["bucket"], exporter.BUCKET)
+            self.assertEqual(delivery["object_prefix"], exporter.OBJECT_PREFIX)
+            self.assertEqual(delivery["public_base_url"], exporter.PUBLIC_BASE_URL)
+            self.assertEqual(
+                delivery["articles"],
+                [
+                    {
+                        "article_slug": "01-fixture-article",
+                        "cabinet_slug": "fixture-cabinet",
+                        "cabinet_id": "a" * 24,
+                        "publication_id": "b" * 24,
+                    }
+                ],
+            )
+            self.assertEqual(delivery["verified_output_count"], 3)
+            self.assertEqual(
+                [row["model_id"] for row in delivery["outputs"]],
+                list(exporter.LITE_MODELS),
+            )
+            self.assertTrue(
+                all(
+                    set(row)
+                    == {
+                        "article_slug",
+                        "image_id",
+                        "model_id",
+                        "source_video_path",
+                        "sha256",
+                        "bytes",
+                        "object_key",
+                        "yastatic_url",
+                    }
+                    for row in delivery["outputs"]
+                )
             )
 
     def test_execute_refuses_existing_object_with_wrong_content(self) -> None:
@@ -685,6 +956,7 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             self.assertIn("Immutable object key conflict", conflict_entry["error"])
             self.assertIsNone(partial_report["completed_at"])
             self.assertFalse((output_dir / "verified-links.csv").exists())
+            self.assertFalse((output_dir / "delivery-manifest.json").exists())
 
     def test_execute_persists_uploaded_action_when_yastatic_verification_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -696,6 +968,10 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             )
             head_count = 0
             put_count = 0
+            (output_dir / "delivery-manifest.json").write_text(
+                "stale delivery manifest\n",
+                encoding="utf-8",
+            )
 
             def fake_runner(command: list[str], **_kwargs: object) -> subprocess.CompletedProcess:
                 nonlocal head_count, put_count
@@ -777,6 +1053,7 @@ class Promopages10060S3ExportTest(unittest.TestCase):
             self.assertIsNone(entry["yastatic"])
             self.assertIsNone(partial_report["completed_at"])
             self.assertFalse((output_dir / "verified-links.csv").exists())
+            self.assertFalse((output_dir / "delivery-manifest.json").exists())
 
 
 if __name__ == "__main__":

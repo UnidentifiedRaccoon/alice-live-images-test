@@ -114,6 +114,23 @@ PROMOPAGES_10060_CAMPAIGN_20260807_DATASET_PREFIX = (
     "PROMOPAGES-10060-campaigns-20260807-v1"
 )
 PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS = ("19", "20", "21")
+PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH = Path(
+    "clipmaker-lite-test/promopages-10060-s3-delivery.json"
+)
+PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH = Path(
+    "PROMOPAGES-10060/s3-export/articles.json"
+)
+PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 508
+PROMOPAGES_10060_S3_BUCKET = "promopages-front-bundles"
+PROMOPAGES_10060_S3_OBJECT_PREFIX = "front-images/exp_video/"
+PROMOPAGES_10060_S3_PUBLIC_BASE_URL = (
+    "https://yastatic.net/s3/promopages-front-bundles/"
+)
+PROMOPAGES_10060_S3_MODEL_DIRECTORIES = {
+    "alibaba/wan-2.2": "wan_2_2",
+    "alibaba/wan-2.7": "wan_2_7",
+    "google/veo-3.1-lite": "veo_3_1",
+}
 PROMOPAGES_10060_EXTENSION_NORMALIZED_RETRY_NAMESPACE = (
     Path("clipmaker-lite-test/runs")
     / PROMOPAGES_10060_EXTENSION_BATCH_ID
@@ -286,7 +303,13 @@ def _sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _verify_article_02_raw_media(root: Path, manifest: dict[str, Any]) -> None:
+def _verify_article_02_raw_media(
+    root: Path,
+    manifest: dict[str, Any],
+    *,
+    skip_video_paths: set[Path] | None = None,
+) -> None:
+    skip_video_paths = skip_video_paths or set()
     article = manifest["articles"][0]
     for record in article["images"]:
         image = record["image"]
@@ -302,9 +325,12 @@ def _verify_article_02_raw_media(root: Path, manifest: dict[str, Any]) -> None:
                 f"Article 02 raw source hash differs: {image['source_path']}"
             )
         for output in record["outputs"]:
-            video_path = root / _safe_extension_audit_path(
+            relative_video_path = _safe_extension_audit_path(
                 output["video_path"], label="Article 02 video_path"
             )
+            if relative_video_path in skip_video_paths:
+                continue
+            video_path = root / relative_video_path
             media = output["media"]
             if (
                 not video_path.is_file()
@@ -315,6 +341,307 @@ def _verify_article_02_raw_media(root: Path, manifest: dict[str, Any]) -> None:
                 raise ValueError(
                     f"Article 02 raw video hash differs: {output['video_path']}"
                 )
+
+
+def _validate_promopages_10060_s3_delivery(
+    delivery_manifest: dict[str, Any],
+    routing_config: dict[str, Any],
+    *source_manifests: dict[str, Any],
+) -> set[Path]:
+    """Bind the verified S3 overlay to every canonical available MP4."""
+
+    label = "PROMOPAGES-10060 S3 delivery overlay"
+    if (
+        not isinstance(routing_config, dict)
+        or set(routing_config) != {"schema_version", "ticket", "articles"}
+        or routing_config.get("schema_version") != 1
+        or routing_config.get("ticket") != "PROMOPAGES-10060"
+        or not isinstance(routing_config.get("articles"), list)
+        or not routing_config["articles"]
+    ):
+        raise ValueError(f"{label} routing config identity is invalid")
+
+    routing_fields = {
+        "article_number",
+        "article_slug",
+        "label",
+        "url",
+        "cabinet",
+        "campaign_ids",
+        "publication_id",
+        "source_status",
+        "expected_image_count",
+        "expected_ready_output_count",
+    }
+    delivery_article_fields = {
+        "article_slug",
+        "cabinet_slug",
+        "cabinet_id",
+        "publication_id",
+    }
+    expected_delivery_articles: list[dict[str, str]] = []
+    routes_by_slug: dict[str, dict[str, Any]] = {}
+    expected_output_count = 0
+    for article in routing_config["articles"]:
+        if (
+            not isinstance(article, dict)
+            or set(article) != routing_fields
+            or not isinstance(article.get("article_number"), str)
+            or len(article["article_number"]) != 2
+            or not article["article_number"].isdigit()
+            or not isinstance(article.get("article_slug"), str)
+            or not article["article_slug"].strip()
+            or not isinstance(article.get("label"), str)
+            or not article["label"].strip()
+            or not isinstance(article.get("url"), str)
+            or not article["url"].startswith("https://")
+            or not isinstance(article.get("cabinet"), dict)
+            or set(article["cabinet"]) != {"name", "slug", "id"}
+            or not all(
+                isinstance(article["cabinet"].get(field), str)
+                and article["cabinet"][field].strip()
+                for field in ("name", "slug", "id")
+            )
+            or not isinstance(article.get("campaign_ids"), list)
+            or not article["campaign_ids"]
+            or not all(
+                isinstance(campaign_id, str) and campaign_id.strip()
+                for campaign_id in article["campaign_ids"]
+            )
+            or not isinstance(article.get("publication_id"), str)
+            or not article["publication_id"].strip()
+            or article.get("source_status") != "available"
+            or not isinstance(article.get("expected_image_count"), int)
+            or isinstance(article["expected_image_count"], bool)
+            or article["expected_image_count"] <= 0
+            or not isinstance(article.get("expected_ready_output_count"), int)
+            or isinstance(article["expected_ready_output_count"], bool)
+            or article["expected_ready_output_count"] <= 0
+            or article["article_slug"] in routes_by_slug
+        ):
+            raise ValueError(f"{label} routing config article is invalid")
+        routes_by_slug[article["article_slug"]] = article
+        expected_output_count += article["expected_ready_output_count"]
+        expected_delivery_articles.append(
+            {
+                "article_slug": article["article_slug"],
+                "cabinet_slug": article["cabinet"]["slug"],
+                "cabinet_id": article["cabinet"]["id"],
+                "publication_id": article["publication_id"],
+            }
+        )
+
+    if any(set(article) != delivery_article_fields for article in expected_delivery_articles):
+        raise AssertionError("Internal delivery article projection is invalid")
+
+    expected_identity = {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-s3-delivery",
+        "ticket": "PROMOPAGES-10060",
+        "bucket": PROMOPAGES_10060_S3_BUCKET,
+        "object_prefix": PROMOPAGES_10060_S3_OBJECT_PREFIX,
+        "public_base_url": PROMOPAGES_10060_S3_PUBLIC_BASE_URL,
+        "verified_output_count": expected_output_count,
+    }
+    if (
+        not isinstance(delivery_manifest, dict)
+        or set(delivery_manifest) != {*expected_identity, "articles", "outputs"}
+        or any(
+            delivery_manifest.get(field) != value
+            for field, value in expected_identity.items()
+        )
+    ):
+        raise ValueError(f"{label} identity is invalid")
+    if delivery_manifest.get("articles") != expected_delivery_articles:
+        raise ValueError(f"{label} article routing differs from authoritative config")
+
+    allowed_source_roles = (
+        "promopages-10060-all-images",
+        PROMOPAGES_10060_ARTICLE_02_ROLE,
+        PROMOPAGES_10060_EXTENSION_ROLE,
+        PROMOPAGES_10060_CAMPAIGN_20260807_ROLE,
+    )
+    source_roles = tuple(
+        manifest.get("manifest_role")
+        for manifest in source_manifests
+        if isinstance(manifest, dict)
+    )
+    if (
+        not source_manifests
+        or len(source_roles) != len(source_manifests)
+        or source_roles[0] != allowed_source_roles[0]
+        or len(set(source_roles)) != len(source_roles)
+        or any(role not in allowed_source_roles for role in source_roles)
+        or tuple(sorted(source_roles, key=allowed_source_roles.index)) != source_roles
+    ):
+        raise ValueError(f"{label} canonical source manifest set is invalid")
+
+    canonical_outputs: dict[
+        tuple[str, str, str], tuple[Path, str, int]
+    ] = {}
+    canonical_video_paths: set[Path] = set()
+    for source_manifest in source_manifests:
+        outputs = source_manifest.get("outputs")
+        if not isinstance(outputs, list):
+            raise ValueError(f"{label} canonical source outputs are invalid")
+        for output in outputs:
+            if not isinstance(output, dict):
+                raise ValueError(f"{label} canonical source output is invalid")
+            video_value = output.get("video_path")
+            if video_value is None:
+                continue
+            media = output.get("media")
+            key = (
+                output.get("article_slug"),
+                output.get("image_id"),
+                output.get("model_id"),
+            )
+            if (
+                not all(isinstance(value, str) and value for value in key)
+                or key[2] not in PROMOPAGES_10060_MODELS
+                or output.get("status") not in PROMOPAGES_10060_MEDIA_STATUSES
+                or not isinstance(media, dict)
+                or not _is_sha256(media.get("sha256"))
+                or not isinstance(media.get("bytes"), int)
+                or isinstance(media["bytes"], bool)
+                or media["bytes"] <= 0
+            ):
+                raise ValueError(f"{label} canonical available output is invalid")
+            video_path = _safe_extension_audit_path(
+                video_value,
+                label=f"{label} canonical source_video_path",
+            )
+            if (
+                video_value != video_path.as_posix()
+                or video_path.suffix.lower() != ".mp4"
+            ):
+                raise ValueError(f"{label} canonical output is not an MP4")
+            if key in canonical_outputs:
+                raise ValueError(f"{label} canonical logical output is duplicated")
+            if video_path in canonical_video_paths:
+                raise ValueError(f"{label} canonical source path is duplicated")
+            canonical_outputs[key] = (
+                video_path,
+                media["sha256"],
+                media["bytes"],
+            )
+            canonical_video_paths.add(video_path)
+
+    canonical_counts_by_article = {
+        article_slug: sum(1 for key in canonical_outputs if key[0] == article_slug)
+        for article_slug in routes_by_slug
+    }
+    if (
+        set(key[0] for key in canonical_outputs) != set(routes_by_slug)
+        or any(
+            canonical_counts_by_article[article_slug]
+            != route["expected_ready_output_count"]
+            for article_slug, route in routes_by_slug.items()
+        )
+        or len(canonical_outputs) != expected_output_count
+    ):
+        raise ValueError(
+            f"{label} canonical outputs differ from authoritative routing config"
+        )
+
+    outputs = delivery_manifest.get("outputs")
+    if not isinstance(outputs, list) or len(outputs) != expected_output_count:
+        raise ValueError(
+            f"{label} must contain exactly "
+            f"{expected_output_count} verified outputs"
+        )
+
+    row_fields = {
+        "article_slug",
+        "image_id",
+        "model_id",
+        "source_video_path",
+        "sha256",
+        "bytes",
+        "object_key",
+        "yastatic_url",
+    }
+    seen_keys: set[tuple[str, str, str]] = set()
+    seen_video_paths: set[Path] = set()
+    seen_object_keys: set[Path] = set()
+    for row in outputs:
+        if not isinstance(row, dict) or set(row) != row_fields:
+            raise ValueError(f"{label} output shape is invalid")
+        key = (row["article_slug"], row["image_id"], row["model_id"])
+        if (
+            not all(isinstance(value, str) and value for value in key)
+            or key[2] not in PROMOPAGES_10060_MODELS
+        ):
+            raise ValueError(f"{label} logical output triple is invalid")
+        if key in seen_keys:
+            raise ValueError(f"{label} logical output triple is duplicated")
+        canonical = canonical_outputs.get(key)
+        if canonical is None:
+            raise ValueError(f"{label} contains an unexpected logical output")
+
+        source_video_path = _safe_extension_audit_path(
+            row["source_video_path"], label=f"{label} source_video_path"
+        )
+        if (
+            row["source_video_path"] != source_video_path.as_posix()
+            or source_video_path != canonical[0]
+        ):
+            raise ValueError(f"{label} source path differs from canonical output")
+        if source_video_path in seen_video_paths:
+            raise ValueError(f"{label} source path is duplicated")
+        if (
+            row["sha256"] != canonical[1]
+            or row["bytes"] != canonical[2]
+            or not _is_sha256(row["sha256"])
+            or not isinstance(row["bytes"], int)
+            or isinstance(row["bytes"], bool)
+            or row["bytes"] <= 0
+        ):
+            raise ValueError(f"{label} hash or byte size differs from canonical output")
+
+        object_key = _safe_extension_audit_path(
+            row["object_key"], label=f"{label} object_key"
+        )
+        if row["object_key"] != object_key.as_posix():
+            raise ValueError(f"{label} object key is not canonical")
+        route = routes_by_slug[key[0]]
+        expected_filename = (
+            f"image_{int(key[1]):02d}--sha256-{row['sha256'][:12]}.mp4"
+            if key[1].isdigit()
+            else None
+        )
+        expected_object_key = (
+            f"{PROMOPAGES_10060_S3_OBJECT_PREFIX}"
+            f"{route['cabinet']['slug']}__{route['cabinet']['id']}/"
+            f"{route['publication_id']}/"
+            f"{PROMOPAGES_10060_S3_MODEL_DIRECTORIES[key[2]]}/"
+            f"{expected_filename}"
+            if expected_filename is not None
+            else None
+        )
+        if (
+            row["object_key"] != expected_object_key
+            or any(
+                not character.isascii()
+                or not (character.isalnum() or character in "/-._")
+                for character in row["object_key"]
+            )
+        ):
+            raise ValueError(f"{label} object key differs from authoritative route")
+        if object_key in seen_object_keys:
+            raise ValueError(f"{label} object key is duplicated")
+        if row["yastatic_url"] != (
+            PROMOPAGES_10060_S3_PUBLIC_BASE_URL + row["object_key"]
+        ):
+            raise ValueError(f"{label} yastatic URL does not match its object key")
+
+        seen_keys.add(key)
+        seen_video_paths.add(source_video_path)
+        seen_object_keys.add(object_key)
+
+    if seen_keys != set(canonical_outputs):
+        raise ValueError(f"{label} has missing or extra canonical outputs")
+    return seen_video_paths
 
 
 def _validate_provider_filtered_attempt(
@@ -2350,6 +2677,7 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
     promopages_10060_path = (
         root / "clipmaker-lite-test" / "promopages-10060-manifest.json"
     )
+    promopages_10060_manifest: dict[str, Any] | None = None
     if promopages_10060_path.is_file():
         promopages_10060_manifest = json.loads(
             promopages_10060_path.read_text(encoding="utf-8")
@@ -2808,7 +3136,6 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             promopages_10060_manifest,
             remote_repository_paths,
         )
-        _verify_article_02_raw_media(root, article_02_manifest)
 
     promopages_10060_extension_path = (
         root / PROMOPAGES_10060_EXTENSION_RELATIVE_PATH
@@ -2828,6 +3155,7 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             remote_repository_paths,
         )
 
+    campaign_20260807_manifest: dict[str, Any] | None = None
     campaign_20260807_path = (
         root / PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH
     )
@@ -2857,6 +3185,56 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
                 PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS
             ),
             additional_existing_manifests=prior_sidecars,
+        )
+
+    s3_delivery_video_paths: set[Path] = set()
+    s3_delivery_path = root / PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH
+    s3_articles_path = root / PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH
+    if promopages_10060_manifest is not None:
+        if not s3_delivery_path.is_file():
+            raise FileNotFoundError(
+                "PROMOPAGES-10060 base dataset requires its S3 delivery overlay"
+            )
+        if not s3_articles_path.is_file():
+            raise FileNotFoundError(
+                "PROMOPAGES-10060 base dataset requires its S3 routing config"
+            )
+        relative_paths.add(PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH)
+        s3_delivery_manifest = json.loads(
+            s3_delivery_path.read_text(encoding="utf-8")
+        )
+        s3_routing_config = json.loads(s3_articles_path.read_text(encoding="utf-8"))
+        source_manifests = tuple(
+            manifest
+            for manifest in (
+                promopages_10060_manifest,
+                article_02_manifest,
+                extension_manifest,
+                campaign_20260807_manifest,
+            )
+            if manifest is not None
+        )
+        s3_delivery_video_paths = _validate_promopages_10060_s3_delivery(
+            s3_delivery_manifest,
+            s3_routing_config,
+            *source_manifests,
+        )
+        if not s3_delivery_video_paths <= remote_repository_paths:
+            raise ValueError(
+                "PROMOPAGES-10060 S3 delivery overlay contains a non-canonical "
+                "repository path"
+            )
+        remote_repository_paths.difference_update(s3_delivery_video_paths)
+    elif s3_delivery_path.is_file():
+        raise ValueError(
+            "PROMOPAGES-10060 S3 delivery overlay requires the base dataset"
+        )
+
+    if article_02_manifest is not None:
+        _verify_article_02_raw_media(
+            root,
+            article_02_manifest,
+            skip_video_paths=s3_delivery_video_paths,
         )
 
     for relative_path in remote_repository_paths:

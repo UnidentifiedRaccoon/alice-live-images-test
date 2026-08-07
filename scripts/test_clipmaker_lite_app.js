@@ -34,6 +34,11 @@ const PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH = path.join(
   "clipmaker-lite-test",
   "promopages-10060-campaigns-20260807-v1-manifest.json",
 );
+const PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "promopages-10060-s3-delivery.json",
+);
 
 const loadHooks = () => {
   const source = fs
@@ -53,7 +58,8 @@ const loadHooks = () => {
       "  globalThis.__validatePromopages10060Manifest = validatePromopages10060Manifest;\n" +
       "  globalThis.__mergeArticleCollections = mergeArticleCollections;\n" +
         "  globalThis.__sortPromopages10060Articles = sortPromopages10060Articles;\n" +
-        "  globalThis.__mergeUnavailableArticleCollections = mergeUnavailableArticleCollections;\n" +
+      "  globalThis.__mergeUnavailableArticleCollections = mergeUnavailableArticleCollections;\n" +
+        "  globalThis.__validatePromopages10060S3Delivery = validatePromopages10060S3Delivery;\n" +
         "  globalThis.__datasetCounts = datasetCounts;\n" +
         "  globalThis.__availableOutputCount = availableOutputCount;\n" +
         "  globalThis.__resolveRequestedArticleIndex = resolveRequestedArticleIndex;\n\n" +
@@ -101,6 +107,34 @@ const actualSmoothExperiment = () => {
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const loadJson = (filePath) => JSON.parse(fs.readFileSync(filePath, "utf8"));
+
+const actualPromopages10060Articles = (hooks) => {
+  const legacy = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_MANIFEST_PATH),
+    [],
+  );
+  const extension = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_EXTENSION_MANIFEST_PATH),
+    legacy.articles,
+    { extension: true },
+  );
+  const article02 = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH),
+    [...legacy.articles, ...extension.articles],
+    { article02: true },
+  );
+  const campaign20260807 = hooks.__validatePromopages10060Manifest(
+    loadJson(PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH),
+    [...legacy.articles, ...extension.articles, ...article02.articles],
+    { campaign20260807: true },
+  );
+  return hooks.__sortPromopages10060Articles([
+    ...legacy.articles,
+    ...extension.articles,
+    ...article02.articles,
+    ...campaign20260807.articles,
+  ]);
+};
 
 const REVIEW_ARTICLE_IMAGE_COUNTS = [
   ["01", 4],
@@ -1709,6 +1743,105 @@ test("campaigns 20260807 sidecar completes 21 / 170 / 510", () => {
       unavailableOutputCount: 2,
     },
   );
+});
+
+test("verified S3 delivery covers all 508 MP4 and renders a copyable public URL", () => {
+  const hooks = loadHooks();
+  const canonicalArticles = actualPromopages10060Articles(hooks);
+  const deliveryManifest = loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH);
+  const deliveredArticles = hooks.__validatePromopages10060S3Delivery(
+    deliveryManifest,
+    canonicalArticles,
+  );
+  const deliveredOutputs = deliveredArticles.flatMap((article) =>
+    article.images.flatMap((record) => record.outputs),
+  );
+  const publicOutputs = deliveredOutputs.filter((output) => output.publicVideoUrl);
+  const unavailableOutputs = deliveredOutputs.filter(
+    (output) => !output.availableVideo,
+  );
+
+  assert.equal(publicOutputs.length, 508);
+  assert.equal(unavailableOutputs.length, 2);
+  assert.ok(
+    publicOutputs.every(
+      (output) =>
+        output.delivery === "public-s3" &&
+        output.publicVideoUrl.startsWith(
+          "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/",
+        ),
+    ),
+  );
+  assert.ok(unavailableOutputs.every((output) => !output.publicVideoUrl));
+
+  const article = deliveredArticles.find(
+    (item) => item.article_slug === "19-pixel24-ekshn-kamery",
+  );
+  const imageRecord = article.images.find((record) => record.image.image_id === "01");
+  const output = imageRecord.outputs.find(
+    (item) => item.model_id === "alibaba/wan-2.2",
+  );
+  const markup = hooks.__renderModel(article, imageRecord, output, 0);
+  const escapedUrl = output.publicVideoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  assert.match(markup, new RegExp(`src="${escapedUrl}"`));
+  assert.match(markup, /data-video-delivery="s3-yastatic"/);
+  assert.match(markup, new RegExp(`value="${escapedUrl}"`));
+  assert.match(markup, new RegExp(`href="${escapedUrl}"`));
+  assert.match(markup, /Публичная ссылка/);
+  assert.match(markup, /data-copy-public-video-url/);
+});
+
+test("S3 delivery fails closed on missing, media-drifted, or foreign-host entries", () => {
+  const hooks = loadHooks();
+  const canonicalArticles = actualPromopages10060Articles(hooks);
+  const deliveryManifest = loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH);
+  const mutations = [
+    [
+      /ровно 508/,
+      (manifest) => {
+        manifest.outputs.pop();
+        manifest.verified_output_count -= 1;
+      },
+    ],
+    [
+      /расходится с canonical media/,
+      (manifest) => {
+        manifest.outputs[0].sha256 = "0".repeat(64);
+      },
+    ],
+    [
+      /небезопасную публичную ссылку/,
+      (manifest) => {
+        manifest.outputs[0].yastatic_url = "https://example.test/video.mp4";
+      },
+    ],
+    [
+      /неверный маршрут статьи/,
+      (manifest) => {
+        manifest.articles[0].cabinet_id = "0".repeat(24);
+      },
+    ],
+    [
+      /небезопасную публичную ссылку/,
+      (manifest) => {
+        manifest.outputs[0].object_key = manifest.outputs[0].object_key.replace(
+          "level-group__69ee06293ba10e0ae4b765d1/6a048ddca495b52c9d873940",
+          `other-cabinet__${"0".repeat(24)}/${"1".repeat(24)}`,
+        );
+        manifest.outputs[0].yastatic_url =
+          `https://yastatic.net/s3/promopages-front-bundles/${manifest.outputs[0].object_key}`;
+      },
+    ],
+  ];
+
+  mutations.forEach(([pattern, mutate]) => {
+    const changed = clone(deliveryManifest);
+    mutate(changed);
+    assert.throws(
+      () => hooks.__validatePromopages10060S3Delivery(changed, canonicalArticles),
+      pattern,
+    );
+  });
 });
 
 test("article 02 sidecar rejects role, batch, article and frozen v1 namespace drift", () => {
