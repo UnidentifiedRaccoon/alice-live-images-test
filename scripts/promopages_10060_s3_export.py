@@ -908,7 +908,16 @@ def _head_object(
     result = _run_yc(command, runner)
     if result.returncode != 0:
         detail = (result.stderr or result.stdout or "").lower()
-        if any(marker in detail for marker in ("nosuchkey", "not found", "status code: 404", "statuscode=404")):
+        if any(
+            marker in detail
+            for marker in (
+                "nosuchkey",
+                "not found",
+                "status code: 404",
+                "statuscode: 404",
+                "statuscode=404",
+            )
+        ):
             return None
         raise ExportError(f"S3 HEAD failed for {item['object_key']}: {(result.stderr or result.stdout).strip()}")
     return _json_from_process(result, f"S3 HEAD {item['object_key']}")
