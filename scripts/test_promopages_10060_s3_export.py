@@ -525,7 +525,10 @@ class Promopages10060S3ExportTest(unittest.TestCase):
                             tokens,
                             1,
                             stdout="",
-                            stderr="NoSuchKey: fixture object is absent",
+                            stderr=(
+                                "operation error S3: HeadObject, https response error "
+                                "StatusCode: 404, NotFound"
+                            ),
                         )
                     head = {
                         "ContentLength": row["media"]["bytes"],
