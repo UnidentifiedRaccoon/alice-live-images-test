@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v4-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v4-07-femibion-gotovites-k-beremennosti-06",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v4-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/recovery-v4/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "sha256": "f3eac13ca2c71c7cec3a1a860c701caea68728a3f9dc9e77c1d05b2455143ce9",
+    "width": 1920,
+    "height": 1080
+  },
+  "structured_intent": {
+    "editorial_meaning": "A calm moment of gathering information supports thoughtful preparation before a professional consultation.",
+    "primary_action": "The woman breathes naturally and blinks subtly while remaining seated and attentive.",
+    "terminal_state": "In the last frame, she remains in the same relaxed seated posture with the same gentle smile and downward attention.",
+    "semantic_invariant": "Her calm, positive, attentive state remains unchanged through the final frame."
+  },
+  "prompt": {
+    "positive": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v4-07-femibion-gotovites-k-beremennosti-06/result.json",
+    "sha256": "bead524d13e018c0905be09440226c5367d6ae0c40122a19dc270d3b13b49d35",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.8",
+      "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+      "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+      "source_image_sha256": "f3eac13ca2c71c7cec3a1a860c701caea68728a3f9dc9e77c1d05b2455143ce9",
+      "article_context_sha256": "d1c65a16f8d24e2bde20704f82376b4167211fa8d62fccd19ed75f2def0105ca",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v4",
+    "iteration": 2,
+    "logical_key": {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "prior_provider_filtered_attempts": 3,
+    "prompt_factor_isolation": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

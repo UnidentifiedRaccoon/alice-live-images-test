@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-femibion-veo-content-filter-recovery-v2",
+  "ticket": "PROMOPAGES-10060",
+  "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v2",
+  "iteration": 2,
+  "provider_batch_id": "promopages-10060-femibion-veo-recovery-20260810-v2-provider",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-10T09:23:51Z",
+  "expected_outputs": 1,
+  "accepted_output_count": 0,
+  "ready_for_combined_selection": false,
+  "ready_for_merge": false,
+  "merge_requires_combined_selection_manifest": true,
+  "summary": {
+    "provider-failed": 1
+  },
+  "route": {
+    "registry_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "model_id": "google/veo-3.1-lite",
+    "adapter": "eliza-openrouter",
+    "transport": "eliza-video-jobs",
+    "provider_key": "google-vertex",
+    "capacity": 3,
+    "paths": {
+      "submit": "/videos",
+      "status_template": "/videos/{job_id}",
+      "content_template": "/videos/{job_id}/content?index=0"
+    },
+    "automatic_fallback": false,
+    "normal_run_discovery": false
+  },
+  "contract": {
+    "path": "docs/agents/clipmaker-lite/contract.json",
+    "sha256": "500731400dc59b191ab73bf9a890efae7c84a44115c40b9f3b0bb1a646bc095f",
+    "contract_version": "2.0.8",
+    "runtime": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratios": [
+        "16:9",
+        "9:16"
+      ],
+      "generate_audio": false,
+      "frame_inputs": [
+        "first_frame"
+      ],
+      "provider": "google-vertex",
+      "prompt_expansion": {
+        "parameter": "enhancePrompt",
+        "value": true
+      }
+    }
+  },
+  "accounting": {
+    "currency": "USD",
+    "baseline_paid_submissions": 283,
+    "baseline_reserved_usd": 99.05,
+    "recovery_paid_submissions": 1,
+    "accounting_cost_per_output_usd": 0.35,
+    "recovery_reserved_usd": 0.35,
+    "aggregate_paid_submissions": 284,
+    "aggregate_reserved_usd": 99.4,
+    "operator_budget_cap_usd": 99.4,
+    "hard_budget_cap_usd": 100.0,
+    "hard_cap_headroom_usd": 0.6,
+    "maximum_new_paid_submissions": 1,
+    "automatic_paid_retries": false,
+    "pricing_basis": "frozen local PROMOPAGES-10060 accounting evidence"
+  },
+  "prompt_factor_isolation": {
+    "expected_positive_prompt": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+    "forbidden_terms": [
+      "medical",
+      "pregnancy",
+      "phone",
+      "smartphone",
+      "screen",
+      "device",
+      "hand",
+      "finger",
+      "touch",
+      "swipe",
+      "tap",
+      "gesture"
+    ],
+    "prior_request_sha256": "d80e38498bd48c2318efda51a5335e2a5fd51f0bbf6f2d418a2c594f873fb6e1",
+    "new_request_sha256": "3e82fe9aa019bea8225c28f0e8fbaef1a621d2e80fd4d60ed88eae9e268115fc"
+  },
+  "generation_policy": {
+    "exact_model_id": "google/veo-3.1-lite",
+    "exact_route_only": true,
+    "automatic_fallback": false,
+    "normal_run_discovery": false,
+    "automatic_paid_retries": false,
+    "maximum_new_paid_submissions": 1,
+    "maximum_submissions_per_new_provider_identity": 1,
+    "resume_may_submit_only_never_submitted_pending_receipts": true,
+    "resume_repeats_ambiguous_or_terminal_submit": false
+  },
+  "v1_evidence": {
+    "generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/generation-manifest.json",
+      "sha256": "096d1f16ee8bb0f550c356ed32f6edc6e7f779edfabb54e236042d9635b44dd1"
+    },
+    "recovery_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/recovery-manifest.json",
+      "sha256": "3f0578942d8253d6c627f5a30c215121503aef1ef72df3057090d62a00043478",
+      "accepted_output_count": 1,
+      "ready_for_merge": false
+    },
+    "failed_attempt_chain": [
+      {
+        "attempt": "primary",
+        "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "provider_job_id": "Hfvx2OaGO9vsyrcs6AMf",
+        "status": "provider-filtered",
+        "recorded_status": "provider-failed",
+        "request_sha256": "f7f0c0c20f702b1deb1b5ee3a8e28d2487c8c3988653792518b03a223afa7a01",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "2f28a4279c77fc93df39914fdb995441b370d210767a3a17276fda20a909a9a1",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "9a4527b55d846de60f52d4a4cbf54f600c748919c7d75babcc2d2059d6861c3f",
+        "error": "Eliza/OpenRouter job Hfvx2OaGO9vsyrcs6AMf failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false
+      },
+      {
+        "attempt": "terminal-retry-v1",
+        "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "provider_job_id": "dqjE7PrI5frFAFW7Y2Aa",
+        "status": "provider-filtered",
+        "recorded_status": "provider-failed",
+        "request_sha256": "f7f0c0c20f702b1deb1b5ee3a8e28d2487c8c3988653792518b03a223afa7a01",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/6243bd1bbb1a1e3fe253/videos/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "5d4438188907c6f45bcd4925709962b0f2a6e49ef5007a769145aa4c6035583d",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/6243bd1bbb1a1e3fe253/videos/veo-3.1-lite/06.run.json",
+        "run_sha256": "b4f6561f1bc0084c81ecd3c47c3c6158a1bc08f0049fa286875da091daa3bc8d",
+        "error": "Eliza/OpenRouter job dqjE7PrI5frFAFW7Y2Aa failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false
+      },
+      {
+        "attempt": "content-filter-recovery-v1",
+        "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "provider_job_id": "SwdH1eVdnIzgLHeXaTIg",
+        "status": "provider-filtered",
+        "recorded_status": "provider-failed",
+        "request_sha256": "d80e38498bd48c2318efda51a5335e2a5fd51f0bbf6f2d418a2c594f873fb6e1",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "e46bad806f4d9811967702e23862bd8dbfc033ec3171b3b56ab65348a6d1e7dc",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "2946444b1ca4cbd603e728c9de4df4349c1254cea4243e896fdc20e884346da7",
+        "error": "Eliza/OpenRouter job SwdH1eVdnIzgLHeXaTIg failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false
+      }
+    ]
+  },
+  "planning": [
+    {
+      "planning_run_id": "promopages-10060-femibion-veo-recovery-20260810-v2-07-femibion-gotovites-k-beremennosti-06",
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v2-07-femibion-gotovites-k-beremennosti-06/result.json",
+      "result_sha256": "47a3579def0b40bf845609604e342fee3f5bf49d6cf8b223ed4e72590a3ff944",
+      "provenance": {
+        "verified": true,
+        "verification_scope": "trusted-workspace-route",
+        "cryptographically_signed": false,
+        "agent_id": "clipmaker-lite",
+        "contract_version": "2.0.8",
+        "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+        "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+        "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+        "models": [
+          "google/veo-3.1-lite"
+        ]
+      }
+    }
+  ],
+  "generation_manifest_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v2/generation-manifest.json",
+  "combined_selection_manifest_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v2/combined-selection-manifest.json",
+  "outputs": [
+    {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "sample_id": "07-femibion-gotovites-k-beremennosti-06",
+      "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v2-07-femibion-gotovites-k-beremennosti-06",
+      "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v2-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+      "provider_job_id": "axgyuIecP85mwRLo7d13",
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Один непрерывный четырёхсекундный статичный кадр. Женщина едва заметно и естественно дышит и один раз мягко моргает; иных действий нет. К финалу она сохраняет исходную расслабленную позу, улыбку и направление взгляда, а композиция и все видимые предметы остаются без изменений.",
+      "positive_prompt": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+      "negative_prompt": null,
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v2/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v2/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "video_path": null,
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job axgyuIecP85mwRLo7d13 failed with status failed: Video generation completed with no output (content may have been filtered)",
+      "request_sha256": "3e82fe9aa019bea8225c28f0e8fbaef1a621d2e80fd4d60ed88eae9e268115fc",
+      "selected_attempt": "content-filter-recovery-v2",
+      "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+      "recovery": {
+        "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v2",
+        "iteration": 2,
+        "logical_key": {
+          "article_slug": "07-femibion-gotovites-k-beremennosti",
+          "image_id": "06",
+          "model_id": "google/veo-3.1-lite"
+        },
+        "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "prior_provider_filtered_attempts": 3,
+        "prompt_factor_isolation": true,
+        "automatic_retry": false,
+        "fallback": false,
+        "prior_attempt_manifest": {
+          "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/recovery-manifest.json",
+          "sha256": "3f0578942d8253d6c627f5a30c215121503aef1ef72df3057090d62a00043478",
+          "accepted_output_count": 1,
+          "ready_for_merge": false
+        },
+        "failed_attempt_chain": [
+          {
+            "attempt": "primary",
+            "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+            "provider_job_id": "Hfvx2OaGO9vsyrcs6AMf",
+            "status": "provider-filtered",
+            "recorded_status": "provider-failed",
+            "request_sha256": "f7f0c0c20f702b1deb1b5ee3a8e28d2487c8c3988653792518b03a223afa7a01",
+            "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+            "prompt_sha256": "2f28a4279c77fc93df39914fdb995441b370d210767a3a17276fda20a909a9a1",
+            "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+            "run_sha256": "9a4527b55d846de60f52d4a4cbf54f600c748919c7d75babcc2d2059d6861c3f",
+            "error": "Eliza/OpenRouter job Hfvx2OaGO9vsyrcs6AMf failed with status failed: Video generation completed with no output (content may have been filtered)",
+            "provider_may_be_active": false
+          },
+          {
+            "attempt": "terminal-retry-v1",
+            "provider_run_id": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+            "provider_job_id": "dqjE7PrI5frFAFW7Y2Aa",
+            "status": "provider-filtered",
+            "recorded_status": "provider-failed",
+            "request_sha256": "f7f0c0c20f702b1deb1b5ee3a8e28d2487c8c3988653792518b03a223afa7a01",
+            "prompt_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/6243bd1bbb1a1e3fe253/videos/veo-3.1-lite/06.prompt.json",
+            "prompt_sha256": "5d4438188907c6f45bcd4925709962b0f2a6e49ef5007a769145aa4c6035583d",
+            "run_path": "clipmaker-lite-test/runs/promopages-10060-lite-all-images-20260805-v2/terminal-provider-retries-v1/6243bd1bbb1a1e3fe253/videos/veo-3.1-lite/06.run.json",
+            "run_sha256": "b4f6561f1bc0084c81ecd3c47c3c6158a1bc08f0049fa286875da091daa3bc8d",
+            "error": "Eliza/OpenRouter job dqjE7PrI5frFAFW7Y2Aa failed with status failed: Video generation completed with no output (content may have been filtered)",
+            "provider_may_be_active": false
+          },
+          {
+            "attempt": "content-filter-recovery-v1",
+            "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+            "provider_job_id": "SwdH1eVdnIzgLHeXaTIg",
+            "status": "provider-filtered",
+            "recorded_status": "provider-failed",
+            "request_sha256": "d80e38498bd48c2318efda51a5335e2a5fd51f0bbf6f2d418a2c594f873fb6e1",
+            "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+            "prompt_sha256": "e46bad806f4d9811967702e23862bd8dbfc033ec3171b3b56ab65348a6d1e7dc",
+            "run_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+            "run_sha256": "2946444b1ca4cbd603e728c9de4df4349c1254cea4243e896fdc20e884346da7",
+            "error": "Eliza/OpenRouter job SwdH1eVdnIzgLHeXaTIg failed with status failed: Video generation completed with no output (content may have been filtered)",
+            "provider_may_be_active": false
+          }
+        ],
+        "new_request_sha256": "3e82fe9aa019bea8225c28f0e8fbaef1a621d2e80fd4d60ed88eae9e268115fc",
+        "request_changed_from_all_failed_attempts": true,
+        "prompt_factor": {
+          "isolated": true,
+          "expected_positive_prompt": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+          "forbidden_terms": [
+            "medical",
+            "pregnancy",
+            "phone",
+            "smartphone",
+            "screen",
+            "device",
+            "hand",
+            "finger",
+            "touch",
+            "swipe",
+            "tap",
+            "gesture"
+          ]
+        }
+      }
+    }
+  ]
+}

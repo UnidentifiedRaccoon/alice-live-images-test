@@ -56,7 +56,7 @@ MODEL_IDS = (
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
 )
-REQUIRED_CONTRACT_VERSION = "2.0.7"
+REQUIRED_CONTRACT_VERSION = "2.0.8"
 
 CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
 FROZEN_206_CONTRACT_REL = Path(
@@ -68,8 +68,90 @@ FROZEN_206_CONTRACT_SHA256 = (
 FROZEN_206_BATCH_IDS = frozenset(
     {LEGACY_BATCH_ID, CAMPAIGN_EXTENSION_BATCH_ID}
 )
+FROZEN_207_CONTRACT_REL = Path(
+    "docs/agents/clipmaker-lite/contracts/contract-2.0.7.json"
+)
+FROZEN_207_CONTRACT_SHA256 = (
+    "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd"
+)
+FROZEN_207_BATCH_IDS = frozenset(
+    {ARTICLE_02_BATCH_ID, CAMPAIGN_20260807_BATCH_ID}
+)
+FROZEN_CONTRACTS = {
+    "2.0.6": {
+        "path": FROZEN_206_CONTRACT_REL,
+        "canonical_sha256": FROZEN_206_CONTRACT_SHA256,
+        "batch_ids": FROZEN_206_BATCH_IDS,
+    },
+    "2.0.7": {
+        "path": FROZEN_207_CONTRACT_REL,
+        "canonical_sha256": FROZEN_207_CONTRACT_SHA256,
+        "batch_ids": FROZEN_207_BATCH_IDS,
+    },
+}
+FROZEN_BATCH_CONTRACT_VERSIONS = {
+    batch_id: contract_version
+    for contract_version, frozen in FROZEN_CONTRACTS.items()
+    for batch_id in frozen["batch_ids"]
+}
 ROUTES_REL = Path("docs/agents/clipmaker-lite/generation-routes.json")
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
+
+FEMIBION_VEO_RECOVERY_VERSION = 1
+FEMIBION_VEO_RECOVERY_ID = (
+    "promopages-10060-femibion-veo-recovery-20260810-v1"
+)
+FEMIBION_VEO_RECOVERY_PROVIDER_BATCH_ID = (
+    f"{FEMIBION_VEO_RECOVERY_ID}-provider"
+)
+FEMIBION_VEO_RECOVERY_MODEL_ID = "google/veo-3.1-lite"
+FEMIBION_VEO_RECOVERY_ROOT_REL = (
+    Path("clipmaker-lite-test/runs") / FEMIBION_VEO_RECOVERY_ID
+)
+FEMIBION_VEO_RECOVERY_MANIFEST_REL = (
+    FEMIBION_VEO_RECOVERY_ROOT_REL / "recovery-manifest.json"
+)
+FEMIBION_VEO_RECOVERY_GENERATION_MANIFEST_REL = (
+    FEMIBION_VEO_RECOVERY_ROOT_REL / "generation-manifest.json"
+)
+FEMIBION_VEO_RECOVERY_ACCOUNTING_COST_USD = Decimal("0.35")
+FEMIBION_VEO_FINAL_SELECTION_VERSION = 7
+FEMIBION_VEO_FINAL_SELECTION_ID = (
+    "promopages-10060-femibion-veo-recovery-20260810-v7-"
+    "all-attempts-selection"
+)
+FEMIBION_VEO_FINAL_SELECTION_ROOT_REL = Path(
+    "clipmaker-lite-test/runs/"
+    "promopages-10060-femibion-veo-recovery-20260810-v7"
+)
+FEMIBION_VEO_FINAL_SELECTION_MANIFEST_REL = (
+    FEMIBION_VEO_FINAL_SELECTION_ROOT_REL
+    / "all-attempts-selection-manifest.json"
+)
+FEMIBION_VEO_RECOVERY_KEYS = (
+    (
+        "07-femibion-gotovites-k-beremennosti",
+        "06",
+        FEMIBION_VEO_RECOVERY_MODEL_ID,
+    ),
+    (
+        "08-femibion-grudnoe-vskarmlivanie",
+        "05",
+        FEMIBION_VEO_RECOVERY_MODEL_ID,
+    ),
+)
+FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS = {
+    FEMIBION_VEO_RECOVERY_KEYS[0]: (
+        "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-"
+        "6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-"
+        "veo-3-1-lite"
+    ),
+    FEMIBION_VEO_RECOVERY_KEYS[1]: (
+        "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-"
+        "0cc5261325a58f1785ee-08-femibion-grudnoe-vskarmlivanie-05-"
+        "veo-3-1-lite"
+    ),
+}
 
 # A provider-confirmed terminal failure may be retried only by an explicit
 # operator command in a new, deterministic namespace.  The primary batch
@@ -1000,11 +1082,11 @@ def _copy_frozen_regular(source: Path, destination: Path, *, label: str) -> None
     shutil.copyfile(source, destination)
 
 
-def frozen_206_provenance_summary(
+def frozen_provenance_summary(
     workspace: Path,
     run_id: str,
 ) -> dict[str, Any]:
-    """Verify historical 2.0.6 jobs with their exact archived contract.
+    """Verify a historical job with its exact registered archived contract.
 
     The current executable lock may advance, but completed jobs must remain
     verifiable against the contract and execution receipt that authored them.
@@ -1015,21 +1097,36 @@ def frozen_206_provenance_summary(
     """
 
     workspace = workspace.resolve()
-    if not any(run_id.startswith(f"{batch_id}-") for batch_id in FROZEN_206_BATCH_IDS):
-        raise PipelineError(f"Run does not belong to a frozen 2.0.6 batch: {run_id}")
-    archived_contract_path = workspace / FROZEN_206_CONTRACT_REL
+    matching_batches = [
+        batch_id
+        for batch_id in FROZEN_BATCH_CONTRACT_VERSIONS
+        if run_id.startswith(f"{batch_id}-")
+    ]
+    if len(matching_batches) != 1:
+        raise PipelineError(
+            f"Run does not belong to exactly one frozen contract batch: {run_id}"
+        )
+    contract_version = FROZEN_BATCH_CONTRACT_VERSIONS[matching_batches[0]]
+    frozen = FROZEN_CONTRACTS[contract_version]
+    contract_rel = frozen["path"]
+    contract_digest = frozen["canonical_sha256"]
+    archived_contract_path = workspace / contract_rel
     contract = read_json(archived_contract_path)
     if (
         not isinstance(contract, dict)
         or contract.get("agent_id") != AGENT_ID
-        or contract.get("contract_version") != "2.0.6"
+        or contract.get("contract_version") != contract_version
     ):
-        raise PipelineError("Archived Clipmaker Lite 2.0.6 contract is invalid")
+        raise PipelineError(
+            f"Archived Clipmaker Lite {contract_version} contract is invalid"
+        )
     if (
         runner.sha256_bytes(runner.canonical_json_bytes(contract))
-        != FROZEN_206_CONTRACT_SHA256
+        != contract_digest
     ):
-        raise PipelineError("Archived Clipmaker Lite 2.0.6 contract digest changed")
+        raise PipelineError(
+            f"Archived Clipmaker Lite {contract_version} contract digest changed"
+        )
 
     run_rel = ARTIFACT_NAMESPACE / run_id
     run_directory = workspace / run_rel
@@ -1078,7 +1175,10 @@ def frozen_206_provenance_summary(
             )
         )
 
-    with tempfile.TemporaryDirectory(prefix="clipmaker-lite-206-provenance-") as directory:
+    version_label = contract_version.replace(".", "")
+    with tempfile.TemporaryDirectory(
+        prefix=f"clipmaker-lite-{version_label}-provenance-"
+    ) as directory:
         frozen_root = Path(directory)
         _copy_frozen_regular(
             archived_contract_path,
@@ -1137,14 +1237,48 @@ def frozen_206_provenance_summary(
     if (
         not isinstance(summary, dict)
         or summary.get("verified") is not True
-        or summary.get("contract_version") != "2.0.6"
+        or summary.get("contract_version") != contract_version
     ):
         raise PipelineError(f"Frozen Lite provenance is not verified: {run_id}")
     return summary
 
 
+def frozen_206_provenance_summary(
+    workspace: Path,
+    run_id: str,
+) -> dict[str, Any]:
+    """Compatibility wrapper restricted to the frozen 2.0.6 batches."""
+
+    if not any(run_id.startswith(f"{batch_id}-") for batch_id in FROZEN_206_BATCH_IDS):
+        raise PipelineError(f"Run does not belong to a frozen 2.0.6 batch: {run_id}")
+    return frozen_provenance_summary(workspace, run_id)
+
+
 def planning_provenance_verifier():
-    return frozen_206_provenance_summary if BATCH_ID in FROZEN_206_BATCH_IDS else None
+    return (
+        frozen_provenance_summary
+        if BATCH_ID in FROZEN_BATCH_CONTRACT_VERSIONS
+        else None
+    )
+
+
+def planning_contract_version() -> str:
+    return FROZEN_BATCH_CONTRACT_VERSIONS.get(
+        BATCH_ID,
+        REQUIRED_CONTRACT_VERSION,
+    )
+
+
+def planning_provenance_summary(
+    workspace: Path,
+    run_id: str,
+) -> dict[str, Any]:
+    if any(
+        run_id.startswith(f"{batch_id}-")
+        for batch_id in FROZEN_BATCH_CONTRACT_VERSIONS
+    ):
+        return frozen_provenance_summary(workspace, run_id)
+    return runner.provenance_summary(workspace, run_id)
 
 
 def relative(path: Path, root: Path) -> str:
@@ -1621,6 +1755,40 @@ def _contract_snapshot(root: Path) -> dict[str, Any]:
         "path": CONTRACT_REL.as_posix(),
         "sha256": sha256_file(path),
         "contract_version": contract["contract_version"],
+        "runner_version": contract.get("runner", {}).get("runner_version"),
+    }
+
+
+def _inventory_contract_snapshot(root: Path) -> dict[str, Any]:
+    """Keep an immutable batch inventory bound to its archived contract.
+
+    Advancing the executable Lite contract must not make a completed frozen
+    batch inventory unverifiable.  The inventory retains its original logical
+    path while the digest and metadata are read from the exact registered
+    archive used by historical provenance verification.
+    """
+
+    contract_version = FROZEN_BATCH_CONTRACT_VERSIONS.get(BATCH_ID)
+    if contract_version is None:
+        return _contract_snapshot(root)
+    frozen = FROZEN_CONTRACTS[contract_version]
+    archived_path = root / frozen["path"]
+    contract = read_json(archived_path)
+    if (
+        not isinstance(contract, dict)
+        or contract.get("agent_id") != AGENT_ID
+        or contract.get("contract_version") != contract_version
+        or list(contract.get("models", {})) != list(MODEL_IDS)
+        or runner.sha256_bytes(runner.canonical_json_bytes(contract))
+        != frozen["canonical_sha256"]
+    ):
+        raise PipelineError(
+            f"Archived Clipmaker Lite {contract_version} inventory contract changed"
+        )
+    return {
+        "path": CONTRACT_REL.as_posix(),
+        "sha256": sha256_file(archived_path),
+        "contract_version": contract_version,
         "runner_version": contract.get("runner", {}).get("runner_version"),
     }
 
@@ -2916,7 +3084,7 @@ def inventory_document(
             "sha256": sha256_file(root / SOURCE_MANIFEST_REL),
             "row_count": discovery.source_manifest_row_count,
         },
-        "contract": _contract_snapshot(root),
+        "contract": _inventory_contract_snapshot(root),
         "generation_routes": _route_snapshot(root),
         "models": list(MODEL_IDS),
         "article_count": len(discovery.articles),
@@ -4269,11 +4437,11 @@ def _planning_state(source: Source, root: Path) -> str | None:
     result_path = directory / "result.json"
     job_path = directory / "job.json"
     if result_path.is_file():
-        summary = runner.provenance_summary(root, source.planning_run_id)
+        summary = planning_provenance_summary(root, source.planning_run_id)
         if (
             summary.get("verified") is not True
             or summary.get("agent_id") != AGENT_ID
-            or summary.get("contract_version") != REQUIRED_CONTRACT_VERSION
+            or summary.get("contract_version") != planning_contract_version()
             or summary.get("models") != list(MODEL_IDS)
             or summary.get("source_image_sha256") != source.image["sha256"]
             or summary.get("article_context_sha256") != source.context_sha256
@@ -7608,7 +7776,7 @@ def _planning_record(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if _planning_state(source, root) != "verified":
         raise PipelineError(f"Planning run is not verified: {source.planning_run_id}")
-    summary = runner.provenance_summary(root, source.planning_run_id)
+    summary = planning_provenance_summary(root, source.planning_run_id)
     result_path = ARTIFACT_NAMESPACE / source.planning_run_id / "result.json"
     if summary.get("result_path") != result_path.as_posix():
         raise PipelineError(f"Unexpected planning result path: {source.planning_run_id}")
@@ -8207,6 +8375,1043 @@ def _acceptance_audit(
     }
 
 
+def _final_output_key(output: Any) -> tuple[str, str, str]:
+    if not isinstance(output, dict):
+        raise PipelineError("Final output is not an object")
+    key = (
+        output.get("article_slug"),
+        output.get("image_id"),
+        output.get("model_id"),
+    )
+    if not all(isinstance(value, str) and value for value in key):
+        raise PipelineError(f"Final output key is invalid: {key}")
+    return key
+
+
+def _femibion_recovery_route_snapshot(root: Path) -> dict[str, Any]:
+    path = root / ROUTES_REL
+    routes = read_json(path)
+    policy = routes.get("policy") if isinstance(routes, dict) else None
+    models = routes.get("models") if isinstance(routes, dict) else None
+    route = (
+        models.get(FEMIBION_VEO_RECOVERY_MODEL_ID)
+        if isinstance(models, dict)
+        else None
+    )
+    if (
+        not isinstance(policy, dict)
+        or policy.get("resolution") != "exact-model-id"
+        or policy.get("automatic_fallback") is not False
+        or policy.get("normal_run_discovery") is not False
+        or not isinstance(route, dict)
+        or route.get("adapter") != "eliza-openrouter"
+        or route.get("transport") != "eliza-video-jobs"
+        or route.get("provider_key") != "google-vertex"
+        or route.get("capacity") != 3
+        or transport.route_for_model(FEMIBION_VEO_RECOVERY_MODEL_ID) != route
+    ):
+        raise PipelineError("Exact Femibion Veo recovery route changed")
+    paths = route.get("paths")
+    if not isinstance(paths, dict) or paths != {
+        "submit": "/videos",
+        "status_template": "/videos/{job_id}",
+        "content_template": "/videos/{job_id}/content?index=0",
+    }:
+        raise PipelineError("Exact Femibion Veo recovery route paths changed")
+    return {
+        "registry_path": ROUTES_REL.as_posix(),
+        "registry_sha256": sha256_file(path),
+        "model_id": FEMIBION_VEO_RECOVERY_MODEL_ID,
+        "adapter": route["adapter"],
+        "transport": route["transport"],
+        "provider_key": route["provider_key"],
+        "capacity": route["capacity"],
+        "paths": dict(paths),
+        "automatic_fallback": False,
+        "normal_run_discovery": False,
+    }
+
+
+def _femibion_recovery_contract_snapshot(root: Path) -> dict[str, Any]:
+    snapshot = _contract_snapshot(root)
+    path = root / CONTRACT_REL
+    contract = read_json(path)
+    models = contract.get("models") if isinstance(contract, dict) else None
+    model = (
+        models.get(FEMIBION_VEO_RECOVERY_MODEL_ID)
+        if isinstance(models, dict)
+        else None
+    )
+    runtime = model.get("runtime") if isinstance(model, dict) else None
+    if (
+        snapshot.get("contract_version") != REQUIRED_CONTRACT_VERSION
+        or REQUIRED_CONTRACT_VERSION != "2.0.8"
+        or not isinstance(runtime, dict)
+        or runtime.get("duration_seconds") != 4
+        or runtime.get("resolution") != "1080p"
+        or runtime.get("aspect_ratios") != ["16:9", "9:16"]
+        or runtime.get("generate_audio") is not False
+        or runtime.get("frame_inputs") != ["first_frame"]
+        or runtime.get("provider") != "google-vertex"
+        or runtime.get("prompt_expansion")
+        != {"parameter": "enhancePrompt", "value": True}
+    ):
+        raise PipelineError("Current Clipmaker Lite recovery contract changed")
+    return {
+        "path": CONTRACT_REL.as_posix(),
+        "sha256": sha256_file(path),
+        "contract_version": REQUIRED_CONTRACT_VERSION,
+        "runtime": runtime,
+    }
+
+
+def _femibion_recovery_regular_path(
+    root: Path,
+    value: Any,
+    *,
+    label: str,
+) -> tuple[Path, Path]:
+    relative_path = _safe_workspace_relative(value, label=label)
+    absolute_path = root / relative_path
+    if not absolute_path.is_file() or absolute_path.is_symlink():
+        raise PipelineError(f"{label} is missing or unsafe: {relative_path}")
+    return relative_path, absolute_path
+
+
+def _femibion_old_filtered_evidence(
+    output: dict[str, Any],
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> dict[str, Any]:
+    key = _final_output_key(output)
+    expected_provider_run_id = FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+    terminal_error = final_output_terminal_error(
+        output,
+        root=root,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    retry = output.get("retry")
+    retry_attempt = retry.get("retry_attempt") if isinstance(retry, dict) else None
+    if (
+        terminal_error is not None
+        or output.get("status") != "provider-filtered"
+        or output.get("recorded_status") != "provider-failed"
+        or output.get("provider_run_id") != expected_provider_run_id
+        or output.get("selected_attempt") != "terminal-retry-v1-exhausted"
+        or not isinstance(retry, dict)
+        or retry.get("retry_number") != TERMINAL_RETRY_VERSION
+        or retry.get("exhausted") is not True
+        or not isinstance(retry_attempt, dict)
+        or retry_attempt.get("provider_run_id") != expected_provider_run_id
+        or retry_attempt.get("status") != "provider-failed"
+        or retry_attempt.get("provider_may_be_active") is not False
+    ):
+        raise PipelineError(
+            f"Femibion recovery base is not exhausted provider-filtered: {key}"
+        )
+    run_rel, run_path = _femibion_recovery_regular_path(
+        root,
+        retry_attempt.get("run_path"),
+        label="old filtered run receipt",
+    )
+    envelope_rel, envelope_path = _femibion_recovery_regular_path(
+        root,
+        retry.get("envelope_path"),
+        label="old terminal retry envelope",
+    )
+    if sha256_file(run_path) != retry_attempt.get("run_sha256"):
+        raise PipelineError(f"Old filtered run receipt digest differs: {key}")
+    request_sha256 = retry_attempt.get("request_sha256")
+    if (
+        not isinstance(request_sha256, str)
+        or len(request_sha256) != 64
+        or any(character not in "0123456789abcdef" for character in request_sha256)
+    ):
+        raise PipelineError(f"Old filtered request digest is invalid: {key}")
+    return {
+        "provider_run_id": expected_provider_run_id,
+        "provider_job_id": retry_attempt.get("provider_job_id"),
+        "status": "provider-filtered",
+        "request_sha256": request_sha256,
+        "run_path": run_rel.as_posix(),
+        "run_sha256": retry_attempt["run_sha256"],
+        "retry_envelope_path": envelope_rel.as_posix(),
+        "retry_envelope_sha256": sha256_file(envelope_path),
+        "retry_v1_exhausted": True,
+    }
+
+
+def _femibion_recovery_planning_record(
+    document: dict[str, Any],
+    output: dict[str, Any],
+    source: Source,
+    *,
+    root: Path,
+) -> dict[str, Any]:
+    run_id = output.get("lite_run_id")
+    expected_run_id = f"{FEMIBION_VEO_RECOVERY_ID}-{source.sample_id}"
+    planning = document.get("planning")
+    matches = [
+        record
+        for record in planning
+        if isinstance(record, dict) and record.get("planning_run_id") == run_id
+    ] if isinstance(planning, list) else []
+    if run_id != expected_run_id or len(matches) != 1:
+        raise PipelineError(f"Femibion recovery planning identity differs: {run_id}")
+    summary = planning_provenance_summary(root, expected_run_id)
+    expected_result_rel = ARTIFACT_NAMESPACE / expected_run_id / "result.json"
+    result_rel, result_path = _femibion_recovery_regular_path(
+        root,
+        expected_result_rel.as_posix(),
+        label="Femibion recovery Lite result",
+    )
+    record = matches[0]
+    expected_record = {
+        "planning_run_id": expected_run_id,
+        "result_path": result_rel.as_posix(),
+        "result_sha256": sha256_file(result_path),
+        "provenance": summary,
+    }
+    if record != expected_record:
+        raise PipelineError(f"Femibion recovery planning record differs: {run_id}")
+    if (
+        summary.get("verified") is not True
+        or summary.get("agent_id") != AGENT_ID
+        or summary.get("contract_version") != REQUIRED_CONTRACT_VERSION
+        or summary.get("models") != [FEMIBION_VEO_RECOVERY_MODEL_ID]
+        or summary.get("result_path") != result_rel.as_posix()
+        or summary.get("source_image_sha256") != source.image["sha256"]
+        or summary.get("article_context_sha256") != source.context_sha256
+    ):
+        raise PipelineError(f"Femibion recovery Lite provenance differs: {run_id}")
+    context_path = root / source.context_path
+    source_path = root / source.image["source_path"]
+    if (
+        not source_path.is_file()
+        or source_path.is_symlink()
+        or sha256_file(source_path) != source.image["sha256"]
+        or not context_path.is_file()
+        or context_path.is_symlink()
+        or sha256_file(context_path) != source.context_sha256
+    ):
+        raise PipelineError(f"Femibion recovery source/context changed: {run_id}")
+    result = read_json(result_path)
+    models = result.get("models") if isinstance(result, dict) else None
+    model = models[0] if isinstance(models, list) and len(models) == 1 else None
+    if (
+        result.get("job_id") != expected_run_id
+        or not isinstance(model, dict)
+        or model.get("model_id") != FEMIBION_VEO_RECOVERY_MODEL_ID
+        or output.get("scene_plan") != model.get("scene_plan")
+        or output.get("positive_prompt") != model.get("positive_prompt")
+        or output.get("negative_prompt") != model.get("negative_prompt")
+    ):
+        raise PipelineError(f"Femibion recovery Lite result differs: {run_id}")
+    return expected_record
+
+
+def _femibion_recovery_cost(
+    base_cost: dict[str, Any],
+    *,
+    recovery_applied: bool,
+    recovery_provenance: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    if not recovery_applied:
+        return base_cost
+    result = copy.deepcopy(base_cost)
+    if (
+        isinstance(recovery_provenance, dict)
+        and recovery_provenance.get("selection_id")
+        == FEMIBION_VEO_FINAL_SELECTION_ID
+    ):
+        accounting = recovery_provenance.get("accounting")
+        expected_accounting = {
+            "currency": "USD",
+            "baseline_paid_submissions": 281,
+            "baseline_reserved_usd": 98.35,
+            "recovery_paid_submissions": 8,
+            "recovery_submissions_by_iteration": {
+                "v1": 2,
+                "v2": 1,
+                "v3": 1,
+                "v4": 1,
+                "v5": 1,
+                "v6": 1,
+                "v7": 1,
+            },
+            "accounting_cost_per_output_usd": 0.35,
+            "recovery_reserved_usd": 2.8,
+            "aggregate_paid_submissions": 289,
+            "aggregate_reserved_usd": 101.15,
+            "operator_budget_cap_usd": 101.15,
+            "hard_budget_cap_usd": 104.75,
+            "hard_cap_headroom_usd": 3.6,
+            "authorized_additional_budget_usd": 5.0,
+            "automatic_paid_retries": False,
+            "pricing_basis": "explicit user-authorized experiment budget",
+        }
+        if accounting != expected_accounting:
+            raise PipelineError("Final Femibion recovery accounting changed")
+        if (
+            result.get("maximum_paid_submissions") != 281
+            or Decimal(str(result.get("maximum_estimated_cost_usd")))
+            != Decimal("98.35")
+            or int(result.get("total_retry_reservations", -1)) != 5
+        ):
+            raise PipelineError("Legacy cost baseline changed before final recovery")
+        reservations = 8
+        maximum_cost = Decimal("101.15")
+        hard_cap = Decimal("104.75")
+        headroom = (hard_cap - maximum_cost).quantize(Decimal("0.01"))
+        result.update(
+            {
+                "operator_budget_cap_usd": float(hard_cap),
+                "hard_budget_cap_usd": float(hard_cap),
+                "maximum_estimated_cost_usd": float(maximum_cost),
+                "estimated_headroom_usd": float(headroom),
+                "maximum_paid_submissions": 289,
+                "content_filter_recovery_version": (
+                    FEMIBION_VEO_FINAL_SELECTION_VERSION
+                ),
+                "content_filter_recovery_id": FEMIBION_VEO_FINAL_SELECTION_ID,
+                "content_filter_recovery_accounting_cost_usd": float(
+                    FEMIBION_VEO_RECOVERY_ACCOUNTING_COST_USD
+                ),
+                "content_filter_recovery_reservations": reservations,
+                "content_filter_recovery_reserved_usd": 2.8,
+                "authorized_additional_budget_usd": 5.0,
+                "additional_budget_spent_usd": 1.4,
+                "additional_budget_remaining_usd": float(headroom),
+                "total_additional_reservations": (
+                    int(result.get("total_retry_reservations", 0))
+                    + reservations
+                ),
+            }
+        )
+        return result
+    reservations = len(FEMIBION_VEO_RECOVERY_KEYS)
+    additional_cost = (
+        FEMIBION_VEO_RECOVERY_ACCOUNTING_COST_USD * reservations
+    ).quantize(Decimal("0.01"))
+    operator_cap = Decimal(str(result.get("operator_budget_cap_usd")))
+    maximum_cost = (
+        Decimal(str(result.get("maximum_estimated_cost_usd"))) + additional_cost
+    ).quantize(Decimal("0.01"))
+    maximum_submissions = result.get("maximum_paid_submissions")
+    if not isinstance(maximum_submissions, int):
+        raise PipelineError("Legacy cost maximum_paid_submissions is invalid")
+    maximum_submissions += reservations
+    headroom = (operator_cap - maximum_cost).quantize(Decimal("0.01"))
+    if (
+        maximum_submissions != 283
+        or maximum_cost != Decimal("99.05")
+        or headroom != Decimal("0.95")
+        or headroom < 0
+    ):
+        raise PipelineError("Femibion recovery exceeds the exact legacy budget envelope")
+    result.update(
+        {
+            "maximum_estimated_cost_usd": float(maximum_cost),
+            "estimated_headroom_usd": float(headroom),
+            "maximum_paid_submissions": maximum_submissions,
+            "content_filter_recovery_version": FEMIBION_VEO_RECOVERY_VERSION,
+            "content_filter_recovery_id": FEMIBION_VEO_RECOVERY_ID,
+            "content_filter_recovery_accounting_cost_usd": float(
+                FEMIBION_VEO_RECOVERY_ACCOUNTING_COST_USD
+            ),
+            "content_filter_recovery_reservations": reservations,
+            "total_additional_reservations": (
+                int(result.get("total_retry_reservations", 0)) + reservations
+            ),
+        }
+    )
+    return result
+
+
+def _femibion_final_selection_overlay(
+    base_outputs: Sequence[dict[str, Any]],
+    discovery: Discovery,
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> tuple[dict[tuple[str, str, str], dict[str, Any]], dict[str, Any]]:
+    manifest_path = root / FEMIBION_VEO_FINAL_SELECTION_MANIFEST_REL
+    if not manifest_path.is_file() or manifest_path.is_symlink():
+        raise PipelineError(
+            f"Final Femibion selection manifest is missing or unsafe: {manifest_path}"
+        )
+    try:
+        from scripts import (  # noqa: PLC0415
+            clipmaker_lite_promopages_10060_femibion_all_attempts_selection
+            as final_selection,
+        )
+
+        document = final_selection.validate_selection(root)
+    except Exception as exc:
+        raise PipelineError(
+            f"Final Femibion selection evidence is invalid: {exc}"
+        ) from exc
+    expected_route = _femibion_recovery_route_snapshot(root)
+    expected_contract = _femibion_recovery_contract_snapshot(root)
+    expected_accounting = {
+        "currency": "USD",
+        "baseline_paid_submissions": 281,
+        "baseline_reserved_usd": 98.35,
+        "recovery_paid_submissions": 8,
+        "recovery_submissions_by_iteration": {
+            "v1": 2,
+            "v2": 1,
+            "v3": 1,
+            "v4": 1,
+            "v5": 1,
+            "v6": 1,
+            "v7": 1,
+        },
+        "accounting_cost_per_output_usd": 0.35,
+        "recovery_reserved_usd": 2.8,
+        "aggregate_paid_submissions": 289,
+        "aggregate_reserved_usd": 101.15,
+        "operator_budget_cap_usd": 101.15,
+        "hard_budget_cap_usd": 104.75,
+        "hard_cap_headroom_usd": 3.6,
+        "authorized_additional_budget_usd": 5.0,
+        "automatic_paid_retries": False,
+        "pricing_basis": "explicit user-authorized experiment budget",
+    }
+    expected_merge_contract = {
+        "target_manifest": FINAL_MANIFEST_REL.as_posix(),
+        "logical_key": ["article_slug", "image_id", "model_id"],
+        "replace_only_status": "provider-filtered",
+        "replace_exactly": 2,
+        "requires_ready_for_merge": True,
+        "preserve_all_other_outputs": True,
+        "all_or_nothing": True,
+        "demo_selection_field": "supersedes_for_demo",
+    }
+    attempt_evidence = document.get("attempt_evidence")
+    failed_attempt_chain = document.get("failed_attempt_chain")
+    recovery_outputs = document.get("outputs")
+    if (
+        document.get("schema_version") != 1
+        or document.get("manifest_role")
+        != "promopages-10060-femibion-veo-all-attempts-selection"
+        or document.get("ticket") != TICKET
+        or document.get("selection_id") != FEMIBION_VEO_FINAL_SELECTION_ID
+        or document.get("agent_id") != AGENT_ID
+        or not isinstance(document.get("updated_at"), str)
+        or not document["updated_at"]
+        or document.get("expected_outputs") != 2
+        or document.get("accepted_output_count") != 2
+        or document.get("ready_for_merge") is not True
+        or document.get("summary") != {"succeeded": 2, "provider-filtered": 0}
+        or document.get("route") != expected_route
+        or document.get("contract") != expected_contract
+        or document.get("accounting") != expected_accounting
+        or document.get("merge_contract") != expected_merge_contract
+        or not isinstance(attempt_evidence, list)
+        or len(attempt_evidence) != 8
+        or not isinstance(failed_attempt_chain, list)
+        or len(failed_attempt_chain) != 10
+        or not isinstance(recovery_outputs, list)
+        or len(recovery_outputs) != 2
+    ):
+        raise PipelineError("Final Femibion selection identity/accounting changed")
+
+    base_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for output in base_outputs:
+        key = _final_output_key(output)
+        if key in base_by_key:
+            raise PipelineError(f"Duplicate base output key before recovery: {key}")
+        base_by_key[key] = output
+    expected_keys = set(FEMIBION_VEO_RECOVERY_KEYS)
+    filtered_keys = {
+        key
+        for key, output in base_by_key.items()
+        if output.get("status") == "provider-filtered"
+    }
+    if filtered_keys != expected_keys:
+        raise PipelineError(
+            "Final Femibion selection requires exactly the two audited filtered outputs"
+        )
+    sources_by_key = {
+        (
+            source.article_slug,
+            source.image["image_id"],
+            FEMIBION_VEO_RECOVERY_MODEL_ID,
+        ): source
+        for source in discovery.sources
+        if (
+            source.article_slug,
+            source.image["image_id"],
+            FEMIBION_VEO_RECOVERY_MODEL_ID,
+        )
+        in expected_keys
+    }
+    if set(sources_by_key) != expected_keys:
+        raise PipelineError("Final Femibion selection source bindings changed")
+
+    recovery_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for output in recovery_outputs:
+        key = _final_output_key(output)
+        if key in recovery_by_key:
+            raise PipelineError(f"Duplicate final Femibion output key: {key}")
+        recovery_by_key[key] = output
+    if set(recovery_by_key) != expected_keys:
+        raise PipelineError("Final Femibion selection output keys changed")
+
+    selected_expectations = {
+        FEMIBION_VEO_RECOVERY_KEYS[0]: {
+            "iteration": 7,
+            "provider_job_id": "c4pO6Fw8YaEz0vPon3wH",
+            "provider_run_id": (
+                "promopages-10060-femibion-veo-recovery-20260810-v7-provider-"
+                "07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite"
+            ),
+            "selected_attempt": "content-filter-recovery-v7-composite",
+            "video_path": (
+                "clipmaker-lite-test/runs/promopages-10060-femibion-veo-"
+                "recovery-20260810-v7/composite/videos/"
+                "07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4"
+            ),
+            "sha256": (
+                "d058fe8556e2f3badaa436745b1aa6e30ff0e726ef1648134225508e5917e13c"
+            ),
+            "bytes": 552_368,
+            "failed_attempts": 8,
+            "composite": True,
+        },
+        FEMIBION_VEO_RECOVERY_KEYS[1]: {
+            "iteration": 1,
+            "provider_job_id": "8FDZycf6v5wTtzPmNYwF",
+            "provider_run_id": (
+                "promopages-10060-femibion-veo-recovery-20260810-v1-provider-"
+                "08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite"
+            ),
+            "selected_attempt": "content-filter-recovery-v1",
+            "video_path": (
+                "clipmaker-lite-test/runs/promopages-10060-femibion-veo-"
+                "recovery-20260810-v1/videos/"
+                "08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.mp4"
+            ),
+            "sha256": (
+                "be2a072ffe4fe3934563e148956c3d05bcb6123e8a878829b18d9adead5af153"
+            ),
+            "bytes": 2_979_506,
+            "failed_attempts": 2,
+            "composite": False,
+        },
+    }
+    replacements: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for key in FEMIBION_VEO_RECOVERY_KEYS:
+        old = base_by_key[key]
+        source = sources_by_key[key]
+        output = recovery_by_key[key]
+        expected = selected_expectations[key]
+        old_evidence = _femibion_old_filtered_evidence(
+            old,
+            root=root,
+            allow_contract_warnings=allow_contract_warnings,
+        )
+        recovery = output.get("recovery")
+        selected_attempt = (
+            recovery.get("selected_provider_attempt")
+            if isinstance(recovery, dict)
+            else None
+        )
+        selected_failed_chain = (
+            recovery.get("failed_attempt_chain")
+            if isinstance(recovery, dict)
+            else None
+        )
+        composite_receipt = (
+            recovery.get("composite_receipt")
+            if isinstance(recovery, dict)
+            else None
+        )
+        media = output.get("media")
+        if (
+            output.get("article_slug") != source.article_slug
+            or output.get("image_id") != source.image["image_id"]
+            or output.get("source_path") != source.image["source_path"]
+            or output.get("sample_id") != source.sample_id
+            or output.get("model_id") != FEMIBION_VEO_RECOVERY_MODEL_ID
+            or output.get("status") != "succeeded"
+            or output.get("recorded_status") != "succeeded"
+            or output.get("provider_may_be_active") is not False
+            or output.get("provider_job_id") != expected["provider_job_id"]
+            or output.get("provider_run_id") != expected["provider_run_id"]
+            or output.get("selected_attempt") != expected["selected_attempt"]
+            or output.get("video_path") != expected["video_path"]
+            or output.get("supersedes_for_demo")
+            != FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            or not isinstance(media, dict)
+            or media.get("sha256") != expected["sha256"]
+            or media.get("bytes") != expected["bytes"]
+            or not isinstance(recovery, dict)
+            or recovery.get("selection_id") != FEMIBION_VEO_FINAL_SELECTION_ID
+            or recovery.get("source_iteration") != expected["iteration"]
+            or recovery.get("supersedes_for_demo")
+            != FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            or not isinstance(selected_attempt, dict)
+            or selected_attempt.get("provider_job_id") != expected["provider_job_id"]
+            or selected_attempt.get("provider_run_id") != expected["provider_run_id"]
+            or not isinstance(selected_failed_chain, list)
+            or len(selected_failed_chain) != expected["failed_attempts"]
+            or (composite_receipt is not None) is not expected["composite"]
+            or recovery.get("automatic_retry") is not False
+            or recovery.get("fallback") is not False
+        ):
+            raise PipelineError(f"Final Femibion selected output changed: {key}")
+        _video_rel, video_path = _femibion_recovery_regular_path(
+            root,
+            output.get("video_path"),
+            label="Final Femibion selected MP4",
+        )
+        if (
+            sha256_file(video_path) != expected["sha256"]
+            or video_path.stat().st_size != expected["bytes"]
+            or final_output_acceptance_error(
+                output,
+                root=root,
+                allow_contract_warnings=allow_contract_warnings,
+            )
+            is not None
+        ):
+            raise PipelineError(f"Final Femibion selected MP4 is not accepted: {key}")
+        selected = copy.deepcopy(output)
+        selected["retry"] = copy.deepcopy(old["retry"])
+        selected_recovery = copy.deepcopy(recovery)
+        selected_recovery["old_provider_filtered"] = old_evidence
+        selected_recovery["superseded_selected_attempt"] = {
+            "provider_run_id": old["provider_run_id"],
+            "status": old["status"],
+            "recorded_status": old["recorded_status"],
+            "selected_attempt": old["selected_attempt"],
+            "error": old["error"],
+        }
+        selected["recovery"] = selected_recovery
+        replacements[key] = selected
+
+    supersedes = document.get("supersedes_for_demo")
+    planning = document.get("planning")
+    composite = document.get("composite_receipt")
+    if (
+        not isinstance(supersedes, list)
+        or len(supersedes) != 2
+        or not isinstance(planning, list)
+        or len(planning) != 2
+        or not isinstance(composite, dict)
+        or composite.get("path")
+        != (
+            "clipmaker-lite-test/runs/promopages-10060-femibion-veo-"
+            "recovery-20260810-v7/composite/videos/"
+            "07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.receipt.json"
+        )
+        or composite.get("sha256")
+        != "80e90a4cf753be47d5ddb5e36874e321991ffa50f4e041b9807725614a2e09e4"
+    ):
+        raise PipelineError("Final Femibion selection provenance changed")
+    provenance = {
+        "version": FEMIBION_VEO_FINAL_SELECTION_VERSION,
+        "recovery_id": FEMIBION_VEO_FINAL_SELECTION_ID,
+        "selection_id": FEMIBION_VEO_FINAL_SELECTION_ID,
+        "manifest_path": FEMIBION_VEO_FINAL_SELECTION_MANIFEST_REL.as_posix(),
+        "manifest_sha256": sha256_file(manifest_path),
+        "ready_for_merge": True,
+        "overlay_keys": [
+            {
+                "article_slug": key[0],
+                "image_id": key[1],
+                "model_id": key[2],
+            }
+            for key in FEMIBION_VEO_RECOVERY_KEYS
+        ],
+        "route": expected_route,
+        "contract": expected_contract,
+        "accounting": copy.deepcopy(expected_accounting),
+        "attempt_evidence_count": len(attempt_evidence),
+        "failed_attempt_count": len(failed_attempt_chain),
+        "planning": copy.deepcopy(planning),
+        "supersedes_for_demo": copy.deepcopy(supersedes),
+        "composite_receipt": {
+            "path": composite["path"],
+            "sha256": composite["sha256"],
+        },
+    }
+    return replacements, provenance
+
+
+def _femibion_recovery_overlay(
+    base_outputs: Sequence[dict[str, Any]],
+    discovery: Discovery,
+    *,
+    root: Path,
+    allow_contract_warnings: bool,
+) -> tuple[dict[tuple[str, str, str], dict[str, Any]], dict[str, Any] | None]:
+    if BATCH_ID != LEGACY_BATCH_ID:
+        return {}, None
+    final_manifest_path = root / FEMIBION_VEO_FINAL_SELECTION_MANIFEST_REL
+    if final_manifest_path.exists():
+        return _femibion_final_selection_overlay(
+            base_outputs,
+            discovery,
+            root=root,
+            allow_contract_warnings=allow_contract_warnings,
+        )
+    manifest_path = root / FEMIBION_VEO_RECOVERY_MANIFEST_REL
+    if not manifest_path.exists():
+        return {}, None
+    if not manifest_path.is_file() or manifest_path.is_symlink():
+        raise PipelineError(f"Femibion recovery manifest is unsafe: {manifest_path}")
+    document = read_json(manifest_path)
+    if not isinstance(document, dict):
+        raise PipelineError("Femibion recovery manifest is not an object")
+    expected_route = _femibion_recovery_route_snapshot(root)
+    expected_contract = _femibion_recovery_contract_snapshot(root)
+    expected_merge_contract = {
+        "target_manifest": FINAL_MANIFEST_REL.as_posix(),
+        "logical_key": ["article_slug", "image_id", "model_id"],
+        "replace_only_status": "provider-filtered",
+        "replace_exactly": 2,
+        "requires_ready_for_merge": True,
+        "preserve_all_other_outputs": True,
+        "demo_selection_field": "supersedes_for_demo",
+    }
+    expected_accounting = {
+        "currency": "USD",
+        "baseline_paid_submissions": 281,
+        "baseline_reserved_usd": 98.35,
+        "recovery_paid_submissions": 2,
+        "accounting_cost_per_output_usd": 0.35,
+        "recovery_reserved_usd": 0.7,
+        "aggregate_paid_submissions": 283,
+        "aggregate_reserved_usd": 99.05,
+        "operator_budget_cap_usd": 99.05,
+        "hard_budget_cap_usd": 100.0,
+        "hard_cap_headroom_usd": 0.95,
+        "maximum_new_paid_submissions": 2,
+        "automatic_paid_retries": False,
+        "pricing_basis": "frozen local PROMOPAGES-10060 accounting evidence",
+    }
+    if (
+        document.get("schema_version") != 1
+        or document.get("manifest_role")
+        != "promopages-10060-femibion-veo-content-filter-recovery"
+        or document.get("ticket") != TICKET
+        or document.get("recovery_id") != FEMIBION_VEO_RECOVERY_ID
+        or document.get("provider_batch_id")
+        != FEMIBION_VEO_RECOVERY_PROVIDER_BATCH_ID
+        or document.get("agent_id") != AGENT_ID
+        or document.get("expected_outputs") != 2
+        or not isinstance(document.get("updated_at"), str)
+        or not document["updated_at"]
+        or document.get("route") != expected_route
+        or document.get("contract") != expected_contract
+        or document.get("accounting") != expected_accounting
+        or document.get("merge_contract") != expected_merge_contract
+        or document.get("generation_manifest_path")
+        != FEMIBION_VEO_RECOVERY_GENERATION_MANIFEST_REL.as_posix()
+    ):
+        raise PipelineError("Femibion recovery manifest identity/route changed")
+    accepted_output_count = document.get("accepted_output_count")
+    ready_for_merge = document.get("ready_for_merge")
+    recovery_outputs = document.get("outputs")
+    if (
+        isinstance(accepted_output_count, bool)
+        or not isinstance(accepted_output_count, int)
+        or accepted_output_count not in {0, 1, 2}
+        or not isinstance(ready_for_merge, bool)
+        or ready_for_merge != (accepted_output_count == 2)
+        or not isinstance(recovery_outputs, list)
+        or len(recovery_outputs) != 2
+    ):
+        raise PipelineError("Femibion recovery readiness accounting changed")
+    policy = document.get("generation_policy")
+    if (
+        not isinstance(policy, dict)
+        or policy.get("exact_model_id") != FEMIBION_VEO_RECOVERY_MODEL_ID
+        or policy.get("exact_route_only") is not True
+        or policy.get("automatic_fallback") is not False
+        or policy.get("normal_run_discovery") is not False
+        or policy.get("automatic_paid_retries") is not False
+        or policy.get("maximum_submissions_per_new_provider_identity") != 1
+    ):
+        raise PipelineError("Femibion recovery generation policy changed")
+    if not ready_for_merge:
+        # A partial v1 result remains immutable evidence in its own namespace,
+        # but canonical selection is deliberately all-or-nothing.  In
+        # particular, never publish only one of the two registered keys.
+        return {}, None
+
+    base_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for output in base_outputs:
+        key = _final_output_key(output)
+        if key in base_by_key:
+            raise PipelineError(f"Duplicate base output key before recovery: {key}")
+        base_by_key[key] = output
+    expected_keys = set(FEMIBION_VEO_RECOVERY_KEYS)
+    filtered_keys = {
+        key
+        for key, output in base_by_key.items()
+        if output.get("status") == "provider-filtered"
+    }
+    if filtered_keys != expected_keys:
+        raise PipelineError(
+            "Femibion recovery requires exactly the two registered filtered outputs"
+        )
+    sources_by_key = {
+        (
+            source.article_slug,
+            source.image["image_id"],
+            FEMIBION_VEO_RECOVERY_MODEL_ID,
+        ): source
+        for source in discovery.sources
+        if (
+            source.article_slug,
+            source.image["image_id"],
+            FEMIBION_VEO_RECOVERY_MODEL_ID,
+        )
+        in expected_keys
+    }
+    if set(sources_by_key) != expected_keys:
+        raise PipelineError("Femibion recovery source bindings changed")
+
+    recovery_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for output in recovery_outputs:
+        key = _final_output_key(output)
+        if key in recovery_by_key:
+            raise PipelineError(f"Duplicate Femibion recovery output key: {key}")
+        recovery_by_key[key] = output
+    if set(recovery_by_key) != expected_keys:
+        raise PipelineError("Femibion recovery output keys changed")
+    computed_summary: dict[str, int] = {}
+    replacements: dict[tuple[str, str, str], dict[str, Any]] = {}
+    planning_records: list[dict[str, Any]] = []
+    supersedes_records: list[dict[str, Any]] = []
+    for key in FEMIBION_VEO_RECOVERY_KEYS:
+        old = base_by_key[key]
+        source = sources_by_key[key]
+        output = recovery_by_key[key]
+        old_evidence = _femibion_old_filtered_evidence(
+            old,
+            root=root,
+            allow_contract_warnings=allow_contract_warnings,
+        )
+        recovery = output.get("recovery")
+        expected_provider_run_id = (
+            f"{FEMIBION_VEO_RECOVERY_PROVIDER_BATCH_ID}-{source.sample_id}-"
+            "veo-3-1-lite"
+        )
+        status = output.get("status")
+        computed_summary[str(status)] = computed_summary.get(str(status), 0) + 1
+        expected_directory = (
+            FEMIBION_VEO_RECOVERY_ROOT_REL
+            / "videos"
+            / source.article_slug
+            / "veo-3.1-lite"
+        )
+        expected_prompt = expected_directory / f"{source.image['image_id']}.prompt.json"
+        expected_run = expected_directory / f"{source.image['image_id']}.run.json"
+        expected_video = expected_directory / f"{source.image['image_id']}.mp4"
+        if (
+            output.get("article_slug") != source.article_slug
+            or output.get("image_id") != source.image["image_id"]
+            or output.get("source_path") != source.image["source_path"]
+            or output.get("sample_id") != source.sample_id
+            or output.get("provider_run_id") != expected_provider_run_id
+            or output.get("model_id") != FEMIBION_VEO_RECOVERY_MODEL_ID
+            or output.get("recorded_status") != status
+            or output.get("provider_may_be_active") is not False
+            or output.get("prompt_path") != expected_prompt.as_posix()
+            or output.get("run_path") != expected_run.as_posix()
+            or output.get("video_path") != expected_video.as_posix()
+            or output.get("selected_attempt") != "content-filter-recovery-v1"
+            or output.get("supersedes_for_demo")
+            != FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            or not isinstance(recovery, dict)
+            or recovery.get("recovery_id") != FEMIBION_VEO_RECOVERY_ID
+            or recovery.get("supersedes_for_demo")
+            != FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            or recovery.get("old_provider_filtered") != old_evidence
+            or recovery.get("request_changed") is not True
+            or recovery.get("automatic_retry") is not False
+            or recovery.get("fallback") is not False
+        ):
+            raise PipelineError(f"Femibion recovery output identity changed: {key}")
+        request_sha256 = recovery.get("new_request_sha256")
+        if (
+            not isinstance(request_sha256, str)
+            or len(request_sha256) != 64
+            or request_sha256 == old_evidence["request_sha256"]
+            or any(
+                character not in "0123456789abcdef"
+                for character in request_sha256
+            )
+        ):
+            raise PipelineError(f"Femibion recovery request audit differs: {key}")
+        prompt_rel, prompt_path = _femibion_recovery_regular_path(
+            root,
+            output.get("prompt_path"),
+            label="Femibion recovery prompt receipt",
+        )
+        run_rel, run_path = _femibion_recovery_regular_path(
+            root,
+            output.get("run_path"),
+            label="Femibion recovery run receipt",
+        )
+        video_rel, video_path = _femibion_recovery_regular_path(
+            root,
+            output.get("video_path"),
+            label="Femibion recovery MP4",
+        )
+        media = output.get("media")
+        if (
+            prompt_rel != expected_prompt
+            or run_rel != expected_run
+            or video_rel != expected_video
+            or not isinstance(media, dict)
+            or media.get("sha256") != sha256_file(video_path)
+            or media.get("bytes") != video_path.stat().st_size
+            or final_output_acceptance_error(
+                output,
+                root=root,
+                allow_contract_warnings=allow_contract_warnings,
+            )
+            is not None
+        ):
+            raise PipelineError(f"Femibion recovery MP4 is not accepted: {key}")
+        prompt_receipt = read_json(prompt_path)
+        run_receipt = read_json(run_path)
+        receipt_binding = {
+            "recovery_id": FEMIBION_VEO_RECOVERY_ID,
+            "logical_key": {
+                "article_slug": key[0],
+                "image_id": key[1],
+                "model_id": key[2],
+            },
+            "supersedes_for_demo": FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key],
+            "old_status": "provider-filtered",
+            "old_retry_v1_exhausted": True,
+            "automatic_retry": False,
+            "fallback": False,
+        }
+        if (
+            not isinstance(prompt_receipt, dict)
+            or prompt_receipt.get("provider_run_id") != expected_provider_run_id
+            or prompt_receipt.get("lite_run_id") != output.get("lite_run_id")
+            or prompt_receipt.get("model_id") != FEMIBION_VEO_RECOVERY_MODEL_ID
+            or prompt_receipt.get("supersedes_for_demo")
+            != FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            or prompt_receipt.get("recovery") != receipt_binding
+            or not isinstance(run_receipt, dict)
+            or run_receipt.get("provider_run_id") != expected_provider_run_id
+            or run_receipt.get("sample_id") != source.sample_id
+            or run_receipt.get("image_id") != source.image["image_id"]
+            or run_receipt.get("lite_run_id") != output.get("lite_run_id")
+            or run_receipt.get("model_id") != FEMIBION_VEO_RECOVERY_MODEL_ID
+            or run_receipt.get("status") != output.get("recorded_status")
+            or run_receipt.get("media") != media
+            or run_receipt.get("contract_check") != output.get("contract_check")
+            or run_receipt.get("error") != output.get("error")
+            or run_receipt.get("output_path") != output.get("video_path")
+            or run_receipt.get("request_sha256") != request_sha256
+            or run_receipt.get("supersedes_for_demo")
+            != FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            or run_receipt.get("recovery") != receipt_binding
+        ):
+            raise PipelineError(f"Femibion recovery provider receipts differ: {key}")
+        planning_record = _femibion_recovery_planning_record(
+            document,
+            output,
+            source,
+            root=root,
+        )
+        planning_records.append(planning_record)
+        supersedes_record = {
+            "logical_key": {
+                "article_slug": key[0],
+                "image_id": key[1],
+                "model_id": key[2],
+            },
+            "old_provider_run_id": FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key],
+            "new_provider_run_id": expected_provider_run_id,
+        }
+        supersedes_records.append(supersedes_record)
+        selected = copy.deepcopy(output)
+        selected["retry"] = copy.deepcopy(old["retry"])
+        selected_recovery = copy.deepcopy(recovery)
+        selected_recovery["planning"] = planning_record
+        selected_recovery["superseded_selected_attempt"] = {
+            "provider_run_id": old["provider_run_id"],
+            "status": old["status"],
+            "recorded_status": old["recorded_status"],
+            "selected_attempt": old["selected_attempt"],
+            "error": old["error"],
+        }
+        selected["recovery"] = selected_recovery
+        replacements[key] = selected
+
+    if document.get("summary") != computed_summary:
+        raise PipelineError("Femibion recovery status summary differs")
+    if document.get("supersedes_for_demo") != supersedes_records:
+        raise PipelineError("Femibion recovery supersedes links changed")
+    if document.get("planning") != planning_records:
+        raise PipelineError("Femibion recovery planning set changed")
+    provenance = {
+        "version": FEMIBION_VEO_RECOVERY_VERSION,
+        "recovery_id": FEMIBION_VEO_RECOVERY_ID,
+        "manifest_path": FEMIBION_VEO_RECOVERY_MANIFEST_REL.as_posix(),
+        "manifest_sha256": sha256_file(manifest_path),
+        "ready_for_merge": True,
+        "overlay_keys": [
+            {
+                "article_slug": key[0],
+                "image_id": key[1],
+                "model_id": key[2],
+            }
+            for key in FEMIBION_VEO_RECOVERY_KEYS
+        ],
+        "route": expected_route,
+        "contract": expected_contract,
+        "planning": planning_records,
+        "supersedes_for_demo": supersedes_records,
+    }
+    return replacements, provenance
+
+
+def _apply_final_output_replacements(
+    outputs: Sequence[dict[str, Any]],
+    articles: list[dict[str, Any]],
+    replacements: dict[tuple[str, str, str], dict[str, Any]],
+) -> list[dict[str, Any]]:
+    if not replacements:
+        return list(outputs)
+    flat_seen: set[tuple[str, str, str]] = set()
+    selected_outputs: list[dict[str, Any]] = []
+    for output in outputs:
+        key = _final_output_key(output)
+        selected = replacements.get(key, output)
+        if key in replacements:
+            flat_seen.add(key)
+        selected_outputs.append(selected)
+    nested_seen: set[tuple[str, str, str]] = set()
+    for article_record in articles:
+        for image_record in article_record["images"]:
+            selected_image_outputs: list[dict[str, Any]] = []
+            for output in image_record["outputs"]:
+                key = _final_output_key(output)
+                selected = replacements.get(key, output)
+                if key in replacements:
+                    nested_seen.add(key)
+                selected_image_outputs.append(selected)
+            image_record["outputs"] = selected_image_outputs
+    expected = set(replacements)
+    if flat_seen != expected or nested_seen != expected:
+        raise PipelineError("Recovery replacements did not cover flat and nested outputs")
+    return selected_outputs
+
+
 def build_final_manifest(
     discovery: Discovery,
     inventory: dict[str, Any],
@@ -8380,10 +9585,28 @@ def build_final_manifest(
     }
     if len(output_keys) != expected_outputs:
         raise PipelineError("Final output keys are not unique")
+    recovery_replacements, recovery_provenance = _femibion_recovery_overlay(
+        outputs,
+        discovery,
+        root=root,
+        allow_contract_warnings=allow_contract_warnings,
+    )
+    if recovery_replacements:
+        outputs = _apply_final_output_replacements(
+            outputs,
+            articles,
+            recovery_replacements,
+        )
     status_summary: dict[str, int] = {}
     for output in outputs:
         status = str(output.get("status") or "missing")
         status_summary[status] = status_summary.get(status, 0) + 1
+    status_summary.setdefault("provider-filtered", 0)
+    cost = _femibion_recovery_cost(
+        _aggregate_retry_cost(inventory, root=root),
+        recovery_applied=recovery_provenance is not None,
+        recovery_provenance=recovery_provenance,
+    )
     return {
         "schema_version": 1,
         "manifest_role": FINAL_MANIFEST_ROLE,
@@ -8402,7 +9625,7 @@ def build_final_manifest(
         "image_count": len(discovery.sources),
         "expected_outputs": expected_outputs,
         "unavailable_articles": list(discovery.unavailable_articles),
-        "cost": _aggregate_retry_cost(inventory, root=root),
+        "cost": cost,
         "generation_policy": {
             **inventory["generation_policy"],
             "terminal_provider_retry": {
@@ -8434,6 +9657,36 @@ def build_final_manifest(
                 "primary_outcome_remains_unknown": True,
             },
             "normalized_input_retry": _normalized_input_generation_policy(),
+            **(
+                {
+                    "content_filter_recovery": {
+                        "version": recovery_provenance["version"],
+                        "recovery_id": recovery_provenance["recovery_id"],
+                        "namespace": Path(
+                            recovery_provenance["manifest_path"]
+                        ).parent.as_posix(),
+                        "model_id": FEMIBION_VEO_RECOVERY_MODEL_ID,
+                        "replace_exactly": len(FEMIBION_VEO_RECOVERY_KEYS),
+                        "automatic_paid_retries": False,
+                        "fallback": False,
+                        "old_retry_receipts_immutable": True,
+                        **(
+                            {
+                                "all_attempts_preserved": True,
+                                "deterministic_composite_is_derived_demo_media": True,
+                                "selected_output_count": 2,
+                                "selected_raw_provider_output_count": 1,
+                                "selected_derived_output_count": 1,
+                            }
+                            if recovery_provenance.get("selection_id")
+                            == FEMIBION_VEO_FINAL_SELECTION_ID
+                            else {}
+                        ),
+                    }
+                }
+                if recovery_provenance is not None
+                else {}
+            ),
             **(
                 {
                     "normalized_input_supersede": {
@@ -8468,6 +9721,14 @@ def build_final_manifest(
             ],
             "provider_unavailable_requires_ambiguous_submit_retry_v1": True,
             "preserve_recorded_status": True,
+            **(
+                {
+                    "content_filter_recovery_requires_verified_current_lite_provenance": True,
+                    "content_filter_recovery_preserves_old_retry_audit": True,
+                }
+                if recovery_provenance is not None
+                else {}
+            ),
         },
         **_acceptance_audit(
             outputs,
@@ -8476,6 +9737,11 @@ def build_final_manifest(
         ),
         "inventory_manifest": INVENTORY_MANIFEST_REL.as_posix(),
         "generation_manifest": GENERATION_MANIFEST_REL.as_posix(),
+        **(
+            {"recovery_provenance": recovery_provenance}
+            if recovery_provenance is not None
+            else {}
+        ),
         "articles": articles,
         "outputs": outputs,
     }
@@ -8505,6 +9771,7 @@ def final_manifest_errors(
         errors.append("Final flat output list has the wrong size")
         return errors
     seen: set[tuple[Any, Any, Any]] = set()
+    flat_by_key: dict[tuple[Any, Any, Any], Any] = {}
     for output in outputs:
         if isinstance(output, dict):
             key = (
@@ -8515,6 +9782,7 @@ def final_manifest_errors(
             if key in seen:
                 errors.append(f"Duplicate final output key: {key}")
             seen.add(key)
+            flat_by_key[key] = output
         error = final_output_terminal_error(
             output,
             root=root,
@@ -8522,6 +9790,46 @@ def final_manifest_errors(
         )
         if error:
             errors.append(error)
+    nested_by_key: dict[tuple[Any, Any, Any], Any] = {}
+    articles = document.get("articles")
+    if not isinstance(articles, list) or len(articles) != len(discovery.articles):
+        errors.append("Final nested article list has the wrong size")
+    else:
+        for article in articles:
+            images = article.get("images") if isinstance(article, dict) else None
+            if not isinstance(images, list):
+                errors.append("Final nested article images are invalid")
+                continue
+            for image in images:
+                image_outputs = image.get("outputs") if isinstance(image, dict) else None
+                if not isinstance(image_outputs, list):
+                    errors.append("Final nested image outputs are invalid")
+                    continue
+                for output in image_outputs:
+                    if not isinstance(output, dict):
+                        errors.append("Final nested output is not an object")
+                        continue
+                    key = (
+                        output.get("article_slug"),
+                        output.get("image_id"),
+                        output.get("model_id"),
+                    )
+                    if key in nested_by_key:
+                        errors.append(f"Duplicate nested final output key: {key}")
+                    nested_by_key[key] = output
+    if set(nested_by_key) != set(flat_by_key):
+        errors.append("Final nested/flat output key sets differ")
+    else:
+        for key, output in flat_by_key.items():
+            if nested_by_key[key] != output:
+                errors.append(f"Final nested/flat selected output differs: {key}")
+    expected_status_summary: dict[str, int] = {}
+    for output in outputs:
+        status = str(output.get("status") or "missing") if isinstance(output, dict) else "missing"
+        expected_status_summary[status] = expected_status_summary.get(status, 0) + 1
+    expected_status_summary.setdefault("provider-filtered", 0)
+    if document.get("status_summary") != expected_status_summary:
+        errors.append("Final status_summary does not match selected outputs")
     expected_audit = _acceptance_audit(
         outputs,
         root=root,
@@ -8530,6 +9838,37 @@ def final_manifest_errors(
     for key, expected in expected_audit.items():
         if document.get(key) != expected:
             errors.append(f"Final {key} does not match artifacts")
+    recovery_provenance = document.get("recovery_provenance")
+    if recovery_provenance is not None:
+        cost = document.get("cost")
+        if (
+            isinstance(recovery_provenance, dict)
+            and recovery_provenance.get("selection_id")
+            == FEMIBION_VEO_FINAL_SELECTION_ID
+        ):
+            cost_differs = (
+                not isinstance(cost, dict)
+                or cost.get("operator_budget_cap_usd") != 104.75
+                or cost.get("hard_budget_cap_usd") != 104.75
+                or cost.get("maximum_paid_submissions") != 289
+                or cost.get("maximum_estimated_cost_usd") != 101.15
+                or cost.get("estimated_headroom_usd") != 3.6
+                or cost.get("content_filter_recovery_reservations") != 8
+                or cost.get("content_filter_recovery_reserved_usd") != 2.8
+                or cost.get("authorized_additional_budget_usd") != 5.0
+                or cost.get("additional_budget_spent_usd") != 1.4
+                or cost.get("additional_budget_remaining_usd") != 3.6
+            )
+        else:
+            cost_differs = (
+                not isinstance(cost, dict)
+                or cost.get("maximum_paid_submissions") != 283
+                or cost.get("maximum_estimated_cost_usd") != 99.05
+                or cost.get("estimated_headroom_usd") != 0.95
+                or cost.get("content_filter_recovery_reservations") != 2
+            )
+        if cost_differs:
+            errors.append("Final Femibion recovery cost accounting differs")
     return errors
 
 

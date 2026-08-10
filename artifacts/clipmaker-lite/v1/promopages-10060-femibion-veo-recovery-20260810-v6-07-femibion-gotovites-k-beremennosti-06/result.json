@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-femibion-veo-recovery-20260810-v6-07-femibion-gotovites-k-beremennosti-06",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.8",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0",
+    "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+    "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:9f42bd5f53cb390baf12207c9756b9d3d2c562ad9839f33e2f43fde0f01775cc",
+    "execution_fingerprint": "sha256:39bb89833f41cd4c3a3b627f7a86bf97baca3b2fdc484879bf2bd534c0d3a20c",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019feb25-de5a-72f1-9602-7a4f973d3c38"
+    },
+    "authored_payload_sha256": "29070deae161119511a7994469bb9a989179e6678286a23a21cd7b9b83b09a2c",
+    "draft_file_sha256": "6b04acc43f89522c4c752ff24d67796624b9a08f6d1b080b4d39e86438632d41"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/recovery-v6/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "sha256": "74764f50e6a2b6c307817c2862df40c8ed50367aa9f5e191106f22772397bb88",
+      "bytes": 266340
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/recovery-v6/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "sha256": "998f1567400275e9115b979e13550fb68901d06df030313ebf29c818e2e6a3a9",
+      "bytes": 24405,
+      "locator": {
+        "article_id": "07-femibion-gotovites-k-beremennosti",
+        "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+        "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+        "image_id": "06",
+        "block_index": 26,
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "file": "06.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/recovery-v6/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "current_heading": {
+          "block_index": 20,
+          "level": 2,
+          "text": "Пройдите необходимые консультации и обследования"
+        },
+        "nearest_text_before": {
+          "block_index": 25,
+          "type": "paragraph",
+          "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+        },
+        "nearest_text_after": {
+          "block_index": 27,
+          "type": "heading",
+          "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+        }
+      }
+    },
+    "user_direction": "Reversible framed-source experiment. The provider positive prompt must contain exactly the following quoted text and no other words: 'Locked camera. A slight, gradual shift in natural daylight is the only motion. Preserve the complete composition and all visible details.' Keep the negative prompt null."
+  },
+  "analysis": {
+    "image_reading": [
+      "Женщина сидит на диване, улыбается и смотрит на оранжевый смартфон, касаясь экрана пальцем.",
+      "Кадр широкий и светлый; женщина и телефон остаются главными смысловыми объектами, а естественный дневной свет допускает ненавязчивое изменение без перестройки сцены."
+    ],
+    "article_context": "Иллюстрация к совету перед медицинской консультацией: женщина использует смартфон, поддерживая идею заранее составить список вопросов и спокойно подготовиться к приёму.",
+    "structured_intent": {
+      "editorial_meaning": "Спокойная и организованная подготовка помогает ничего не упустить перед консультацией при планировании беременности.",
+      "primary_action": "Естественный дневной свет меняется в пределах исходной сцены.",
+      "terminal_state": "В последнем кадре сцена освещена заметно изменившимся естественным дневным светом при сохранённой исходной композиции.",
+      "semantic_invariant": "Женщина сохраняет спокойную сосредоточенность на смартфоне, а полная композиция и все видимые детали остаются неизменными."
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Четырёхсекундный единый план с неподвижной камерой. Единственное движение — небольшое постепенное изменение естественного дневного освещения на протяжении всего кадра; к финалу сдвиг света становится различимым, при этом поза женщины, смартфон, выражение лица, композиция и все видимые детали остаются неизменными.",
+      "positive_prompt": "Locked camera. A slight, gradual shift in natural daylight is the only motion. Preserve the complete composition and all visible details.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:097075a8d4dec843110457bd7e82d84fc5d269e0eb1b08f021c044260846826a",
+      "negative_prompt": null
+    }
+  ]
+}

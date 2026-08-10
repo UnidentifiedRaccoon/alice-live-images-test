@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "07-femibion-gotovites-k-beremennosti-06",
+  "image_id": "06",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v3/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v3/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 27183,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "0fc4588d29046e5a6d40a7c74e0711dea4f8ce1e8b801f7e64575eedb3cc4b2a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5UTHzBnYIH5XkaGt7kJj",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-10T09:39:39Z",
+  "completed_at": "2026-08-10T09:41:33Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/OpenRouter job 5UTHzBnYIH5XkaGt7kJj failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v3-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v2-07-femibion-gotovites-k-beremennosti-06",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v3-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "lite_result_sha256": "47a3579def0b40bf845609604e342fee3f5bf49d6cf8b223ed4e72590a3ff944",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v3",
+    "iteration": 2,
+    "logical_key": {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "prior_provider_filtered_attempts": 3,
+    "prompt_factor_isolation": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

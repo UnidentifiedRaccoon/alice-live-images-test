@@ -484,7 +484,7 @@ const normalizedInputRetryOutput = (
   };
 };
 
-const reviewManifest = () => {
+const reviewManifest = ({ includeProviderFiltered = false } = {}) => {
   const models = [
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
@@ -499,6 +499,7 @@ const reviewManifest = () => {
     const images = Array.from({ length: imageCount }, (_, imageIndex) => {
       const imageId = String(imageIndex + 1).padStart(2, "0");
       const imageOutputs = models.map((modelId, modelIndex) =>
+        includeProviderFiltered &&
         articleNumber === "07" &&
         imageId === "06" &&
         modelId === "google/veo-3.1-lite"
@@ -551,6 +552,7 @@ const reviewManifest = () => {
       images,
     };
   });
+  const providerFilteredCount = includeProviderFiltered ? 1 : 0;
   return {
     schema_version: 1,
     manifest_role: "promopages-10060-all-images",
@@ -561,13 +563,13 @@ const reviewManifest = () => {
     article_count: 13,
     image_count: 92,
     expected_outputs: 276,
-    accepted_output_count: 275,
+    accepted_output_count: 276 - providerFilteredCount,
     terminal_accounted_output_count: 276,
-    provider_filtered_output_count: 1,
+    provider_filtered_output_count: providerFilteredCount,
     provider_unavailable_output_count: 0,
     status_summary: {
-      succeeded: 275,
-      "provider-filtered": 1,
+      succeeded: 276 - providerFilteredCount,
+      "provider-filtered": providerFilteredCount,
       "provider-unavailable": 0,
     },
     acceptance_policy: {
@@ -596,6 +598,9 @@ const reviewManifest = () => {
     ],
   };
 };
+
+const reviewManifestWithProviderFiltered = () =>
+  reviewManifest({ includeProviderFiltered: true });
 
 const campaignExtensionManifest = () => {
   const source = reviewManifest();
@@ -1080,9 +1085,9 @@ const reviewManifestWithProviderUnavailable = () => {
   );
   Object.assign(nested, replacement);
   Object.assign(flat, replacement);
-  manifest.accepted_output_count = 274;
+  manifest.accepted_output_count = 275;
   manifest.provider_unavailable_output_count = 1;
-  manifest.status_summary.succeeded = 274;
+  manifest.status_summary.succeeded = 275;
   manifest.status_summary["provider-unavailable"] = 1;
   return manifest;
 };
@@ -1226,11 +1231,11 @@ test("PROMOPAGES-10060 uses a collision-safe case key and keeps legacy links his
   assert.equal(counts.articleCount, 14);
   assert.equal(counts.imageCount, 93);
   assert.equal(counts.videoCount, 277);
-  assert.equal(counts.availableVideoCount, 276);
-  assert.equal(counts.unavailableOutputCount, 1);
+  assert.equal(counts.availableVideoCount, 277);
+  assert.equal(counts.unavailableOutputCount, 0);
   assert.equal(
     review.articles.find((article) => article.article_number === "07").sourceStatus,
-    "Готово частично · 9 изобр. · 1 видео недоступно",
+    "Готово к просмотру · 9 изобр.",
   );
 });
 
@@ -1256,7 +1261,10 @@ test("legacy PROMOPAGES-10060 keeps the frozen 13 / 92 / 276 audit", () => {
 
 test("terminal provider-filtered output keeps its logical slot and renders full two-attempt audit", () => {
   const hooks = loadHooks();
-  const review = hooks.__validatePromopages10060Manifest(reviewManifest(), []);
+  const review = hooks.__validatePromopages10060Manifest(
+    reviewManifestWithProviderFiltered(),
+    [],
+  );
   assert.equal(review.filteredOutputCount, 1);
   const article = review.articles.find((item) => item.article_number === "07");
   const imageRecord = article.images.find((record) => record.image.image_id === "06");
@@ -1283,7 +1291,7 @@ test("terminal provider-filtered output keeps its logical slot and renders full 
 
 test("terminal provider-filtered validation fails closed on missing audit or changed request", () => {
   const hooks = loadHooks();
-  const missingAudit = reviewManifest();
+  const missingAudit = reviewManifestWithProviderFiltered();
   const missingOutput = missingAudit.articles[5].images[5].outputs[2];
   delete missingOutput.retry.retry_attempt.request_sha256;
   assert.throws(
@@ -1291,7 +1299,7 @@ test("terminal provider-filtered validation fails closed on missing audit or cha
     /request_sha256/,
   );
 
-  const changedRequest = reviewManifest();
+  const changedRequest = reviewManifestWithProviderFiltered();
   changedRequest.articles[5].images[5].outputs[2].retry.retry_attempt.request_sha256 =
     "9".repeat(64);
   assert.throws(
@@ -1299,7 +1307,7 @@ test("terminal provider-filtered validation fails closed on missing audit or cha
     /immutable provider request/,
   );
 
-  const genericFailure = reviewManifest();
+  const genericFailure = reviewManifestWithProviderFiltered();
   genericFailure.articles[5].images[5].outputs[2].status = "provider-failed";
   const flatFailure = genericFailure.outputs.find(
     (output) =>
@@ -1349,9 +1357,9 @@ test("provider-unavailable keeps the logical slot and shows primary unknown plus
     reviewManifestWithProviderUnavailable(),
     [],
   );
-  assert.equal(review.filteredOutputCount, 1);
+  assert.equal(review.filteredOutputCount, 0);
   assert.equal(review.providerUnavailableOutputCount, 1);
-  assert.equal(review.unavailableOutputCount, 2);
+  assert.equal(review.unavailableOutputCount, 1);
 
   const article = review.articles.find((item) => item.article_number === "10");
   assert.equal(article.sourceStatus, "Готово частично · 8 изобр. · 1 видео недоступно");
@@ -1381,8 +1389,8 @@ test("provider-unavailable keeps the logical slot and shows primary unknown plus
       articleCount: 13,
       imageCount: 92,
       videoCount: 276,
-      availableVideoCount: 274,
-      unavailableOutputCount: 2,
+      availableVideoCount: 275,
+      unavailableOutputCount: 1,
     },
   );
 });
@@ -1588,8 +1596,8 @@ test("historical library and A/B preparation expose separate dataset totals", ()
       articleCount: 13,
       imageCount: 92,
       videoCount: 276,
-      availableVideoCount: 275,
-      unavailableOutputCount: 1,
+      availableVideoCount: 276,
+      unavailableOutputCount: 0,
     },
   );
 });
@@ -1616,8 +1624,8 @@ test("campaign extension is optional, additive, and derives aggregate counts", (
       articleCount: 14,
       imageCount: 96,
       videoCount: 288,
-      availableVideoCount: 287,
-      unavailableOutputCount: 1,
+      availableVideoCount: 288,
+      unavailableOutputCount: 0,
     },
   );
   assert.equal(unavailable.length, 4);
@@ -1695,8 +1703,8 @@ test("article 02 sidecar exactly replaces legacy unavailable and completes 18 / 
       articleCount: 18,
       imageCount: 137,
       videoCount: 411,
-      availableVideoCount: 409,
-      unavailableOutputCount: 2,
+      availableVideoCount: 411,
+      unavailableOutputCount: 0,
     },
   );
 });
@@ -1739,13 +1747,13 @@ test("campaigns 20260807 sidecar completes 21 / 170 / 510", () => {
       articleCount: 21,
       imageCount: 170,
       videoCount: 510,
-      availableVideoCount: 508,
-      unavailableOutputCount: 2,
+      availableVideoCount: 510,
+      unavailableOutputCount: 0,
     },
   );
 });
 
-test("verified S3 delivery covers all 508 MP4 and renders a copyable public URL", () => {
+test("verified S3 delivery covers all 510 MP4 and renders a copyable public URL", () => {
   const hooks = loadHooks();
   const canonicalArticles = actualPromopages10060Articles(hooks);
   const deliveryManifest = loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH);
@@ -1761,8 +1769,8 @@ test("verified S3 delivery covers all 508 MP4 and renders a copyable public URL"
     (output) => !output.availableVideo,
   );
 
-  assert.equal(publicOutputs.length, 508);
-  assert.equal(unavailableOutputs.length, 2);
+  assert.equal(publicOutputs.length, 510);
+  assert.equal(unavailableOutputs.length, 0);
   assert.ok(
     publicOutputs.every(
       (output) =>
@@ -1797,7 +1805,7 @@ test("S3 delivery fails closed on missing, media-drifted, or foreign-host entrie
   const deliveryManifest = loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH);
   const mutations = [
     [
-      /ровно 508/,
+      /ровно 510/,
       (manifest) => {
         manifest.outputs.pop();
         manifest.verified_output_count -= 1;

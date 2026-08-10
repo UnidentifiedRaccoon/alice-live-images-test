@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-08-femibion-grudnoe-vskarmlivanie-05",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+    "sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+    "width": 1920,
+    "height": 1280
+  },
+  "structured_intent": {
+    "editorial_meaning": "A calm, nuanced approach to choosing among a varied selection of foods without framing any single item in absolute terms.",
+    "primary_action": "The woman’s raised hand settles slightly while her gaze shifts toward the colorful food in front of her.",
+    "terminal_state": "Her hand is slightly lower and relaxed, and her gaze rests on the colorful food in front of her.",
+    "semantic_invariant": "She remains composed and attentive, with the colorful selection and the pizza at the frame edge continuing to share the scene."
+  },
+  "prompt": {
+    "positive": "Fixed camera. The woman’s already raised hand makes one small, smooth settling motion as her gaze shifts toward the colorful food in front of her. By the final frame, her hand rests slightly lower, her eyes remain on the food, her composed expression is unchanged, and the pizza stays visible at the frame edge.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v1-08-femibion-grudnoe-vskarmlivanie-05/result.json",
+    "sha256": "0c7013982e35d54a66343545afd16b52ad8a41e5980851063b0639e2ac6f666f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.8",
+      "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+      "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+      "source_image_sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+      "article_context_sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-0cc5261325a58f1785ee-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v1",
+    "logical_key": {
+      "article_slug": "08-femibion-grudnoe-vskarmlivanie",
+      "image_id": "05",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-0cc5261325a58f1785ee-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+    "old_status": "provider-filtered",
+    "old_retry_v1_exhausted": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

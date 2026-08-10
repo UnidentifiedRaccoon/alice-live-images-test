@@ -348,7 +348,9 @@ def _normalized_input_retry_output(
     }
 
 
-def _promopages_10060_fixture(first_source_delivery=None):
+def _promopages_10060_fixture(
+    first_source_delivery=None, *, include_provider_filtered=False
+):
     articles = []
     flat_outputs = []
     source_paths = []
@@ -374,7 +376,8 @@ def _promopages_10060_fixture(first_source_delivery=None):
                 pages.PROMOPAGES_10060_MODELS, start=1
             ):
                 if (
-                    article_number == "07"
+                    include_provider_filtered
+                    and article_number == "07"
                     and image_id == "06"
                     and model_id == "google/veo-3.1-lite"
                 ):
@@ -412,6 +415,7 @@ def _promopages_10060_fixture(first_source_delivery=None):
                 "images": image_records,
             }
         )
+    provider_filtered_count = int(include_provider_filtered)
     manifest = {
         "schema_version": 1,
         "manifest_role": "promopages-10060-all-images",
@@ -421,13 +425,13 @@ def _promopages_10060_fixture(first_source_delivery=None):
         "article_count": 13,
         "image_count": 92,
         "expected_outputs": 276,
-        "accepted_output_count": 275,
+        "accepted_output_count": 276 - provider_filtered_count,
         "terminal_accounted_output_count": 276,
-        "provider_filtered_output_count": 1,
+        "provider_filtered_output_count": provider_filtered_count,
         "provider_unavailable_output_count": 0,
         "status_summary": {
-            "succeeded": 275,
-            "provider-filtered": 1,
+            "succeeded": 276 - provider_filtered_count,
+            "provider-filtered": provider_filtered_count,
             "provider-unavailable": 0,
         },
         "acceptance_policy": {
@@ -1312,7 +1316,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
             if output.get("video_path") is not None
         }
 
-        self.assertEqual(len(covered_paths), 508)
+        self.assertEqual(len(covered_paths), 510)
         self.assertEqual(covered_paths, canonical_paths)
 
     def test_s3_delivery_overlay_mismatches_fail_closed(self):
@@ -1426,11 +1430,11 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 ),
             ),
             "missing": (
-                "exactly 508 verified outputs",
+                "exactly 510 verified outputs",
                 lambda manifest: manifest["outputs"].pop(),
             ),
             "extra": (
-                "exactly 508 verified outputs",
+                "exactly 510 verified outputs",
                 lambda manifest: manifest["outputs"].append(
                     dict(manifest["outputs"][0])
                 ),
@@ -2153,7 +2157,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 }\n""",
             )
             review_manifest, review_source_paths, review_video_paths = (
-                _promopages_10060_fixture()
+                _promopages_10060_fixture(include_provider_filtered=True)
             )
             self.assertEqual(len(review_manifest["outputs"]), 276)
             self.assertEqual(len(review_video_paths), 275)

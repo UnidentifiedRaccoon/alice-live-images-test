@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "07-femibion-gotovites-k-beremennosti-06",
+  "image_id": "06",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Locked camera. A slight, gradual shift in natural daylight is the only motion. Preserve the complete composition and all visible details.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "f7c89bf386a5d160d4731fb4a1372c2817797f24ea708dd7988bd2dbfe889031",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "c2wwhmzoBtXaxBRuDKl3",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-10T10:01:39Z",
+  "completed_at": "2026-08-10T10:03:44Z",
+  "media": null,
+  "contract_check": null,
+  "error": "Eliza/OpenRouter job c2wwhmzoBtXaxBRuDKl3 failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v5-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v5b-07-femibion-gotovites-k-beremennosti-06",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v5-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "lite_result_sha256": "95022eb555ae4d6474471c682b36b1c50f6cc44664f49a142ef673497d6697eb",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v5",
+    "iteration": 2,
+    "logical_key": {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "prior_provider_filtered_attempts": 3,
+    "prompt_factor_isolation": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

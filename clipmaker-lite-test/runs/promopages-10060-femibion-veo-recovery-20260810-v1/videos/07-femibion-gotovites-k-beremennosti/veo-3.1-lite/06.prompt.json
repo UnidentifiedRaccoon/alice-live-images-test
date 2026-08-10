@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-07-femibion-gotovites-k-beremennosti-06",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "width": 2400,
+    "height": 1600
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойная организация информации помогает подготовиться к важной консультации и не упустить нужные вопросы.",
+    "primary_action": "Женщина выполняет один свайп по экрану смартфона и естественно завершает движение рукой.",
+    "terminal_state": "Рука спокойно остановилась рядом с экраном после завершённого свайпа, телефон по-прежнему виден, улыбка сохранена.",
+    "semantic_invariant": "Женщина остаётся расслабленной и доброжелательной, а смартфон — видимым и узнаваемым до последнего кадра."
+  },
+  "prompt": {
+    "positive": "Fixed camera. The woman makes one slow, short swipe on the visible smartphone, then her hand settles naturally beside the screen. By the final frame, the phone remains clearly visible and she keeps her relaxed smile.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v1-07-femibion-gotovites-k-beremennosti-06/result.json",
+    "sha256": "191d1c07e35b8421e862d807402d0da6b17e17e2cba3d9bc6c2f750640525a1e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.8",
+      "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+      "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+      "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v1",
+    "logical_key": {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "old_status": "provider-filtered",
+    "old_retry_v1_exhausted": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

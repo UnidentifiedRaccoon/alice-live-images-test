@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "agent_id": "clipmaker-lite",
+  "contract_version": "2.0.7",
+  "loader_version": 1,
+  "runner": {
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "path": "scripts/clipmaker_lite_runner.py",
+    "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+  },
+  "execution": {
+    "executor_id": "codex-exec",
+    "binary": {
+      "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "sha256": "9f6748b4ab10ffc92c28b9ccedae89e61a302bbc011df7d276ee38f55906e481",
+      "version": "codex-cli 0.147.0-alpha.1.2"
+    },
+    "sandbox": "read-only",
+    "ephemeral": true,
+    "ignore_user_config": true,
+    "ignore_project_rules": true,
+    "tool_event_policy": "reject-run",
+    "requires_thread_id": true,
+    "requires_explicit_external_processing": true
+  },
+  "input_binding": {
+    "image_root": "PROMOPAGES-9857",
+    "context_root": "PROMOPAGES-9884",
+    "context_filename": "content.json"
+  },
+  "base_instruction": {
+    "path": "docs/agents/clipmaker-lite/README.md",
+    "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+  },
+  "models": {
+    "alibaba/wan-2.2": {
+      "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+      "spec_sha256": "bf6d6439f86a4ed6f343b8c3b12abb452a93b4974308ebf040f65f72b22a1ef3",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      }
+    },
+    "alibaba/wan-2.7": {
+      "spec_path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+      "spec_sha256": "fef26853bc7718d66b2d8039069abcb98f98261da636c5cbcce0b9bb6b01a920",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      }
+    },
+    "google/veo-3.1-lite": {
+      "spec_path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+      "spec_sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      }
+    }
+  },
+  "output_namespace": "artifacts/clipmaker-lite/v1"
+}
