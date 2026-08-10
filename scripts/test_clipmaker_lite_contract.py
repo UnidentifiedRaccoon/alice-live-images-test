@@ -18,6 +18,7 @@ LITE = ROOT / "docs/agents/clipmaker-lite"
 README = LITE / "README.md"
 MODELS = LITE / "models"
 CONTRACT = LITE / "contract.json"
+ARCHIVED_207_CONTRACT = LITE / "contracts/contract-2.0.7.json"
 RUNNER = ROOT / "scripts/clipmaker_lite_runner.py"
 
 
@@ -62,7 +63,7 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.7")
+        self.assertEqual(contract["contract_version"], "2.0.8")
         self.assertEqual(contract["runner"]["runner_version"], 7)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
@@ -72,6 +73,14 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertEqual(
             contract["execution"]["binary"]["path"],
             "/Applications/ChatGPT.app/Contents/Resources/codex",
+        )
+        self.assertEqual(
+            contract["execution"]["binary"]["sha256"],
+            "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
+        )
+        self.assertEqual(
+            contract["execution"]["binary"]["version"],
+            "codex-cli 0.147.0-alpha.6.5",
         )
         self.assertEqual(contract["input_binding"]["image_root"], "PROMOPAGES-9857")
         self.assertEqual(contract["input_binding"]["context_root"], "PROMOPAGES-9884")
@@ -139,6 +148,29 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertEqual(
             inspected.stdout.decode("utf-8", errors="replace").strip(),
             locked["version"],
+        )
+
+    def test_207_contract_is_archived_with_exact_historical_lock(self) -> None:
+        contract = json.loads(ARCHIVED_207_CONTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(contract["agent_id"], "clipmaker-lite")
+        self.assertEqual(contract["contract_version"], "2.0.7")
+        self.assertEqual(
+            contract["execution"]["binary"],
+            {
+                "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "sha256": (
+                    "9f6748b4ab10ffc92c28b9ccedae89e61a302bbc011df7d276ee38f55906e481"
+                ),
+                "version": "codex-cli 0.147.0-alpha.1.2",
+            },
+        )
+        self.assertEqual(
+            sha256_file(ARCHIVED_207_CONTRACT),
+            "3336d03bb268cb73515256b438a02905fb2455f5875cb028f239bfafa11e0d86",
+        )
+        self.assertEqual(
+            runner.sha256_bytes(runner.canonical_json_bytes(contract)),
+            "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd",
         )
 
     def test_codex_authoring_model_is_not_fixed_by_contract(self) -> None:

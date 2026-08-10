@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-femibion-veo-recovery-20260810-v4-07-femibion-gotovites-k-beremennosti-06",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.8",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0",
+    "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+    "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:5d166d1e9fc603213464337715ac627f25d32ea4e86f705aac2230612fa2d3ea",
+    "execution_fingerprint": "sha256:eb2d022f72e44fbafa2384aad1081ddc910c9b9add4490151892a02be95a3fd3",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019feb12-fa93-7991-81d8-0d377c7b54b2"
+    },
+    "authored_payload_sha256": "7398e94156246b79d62ca4cff03829696844b49c35c0272c25d85e30ecc2af98",
+    "draft_file_sha256": "04763eb44c4f1ca49ed86a7583ce8c9e32372fd433054d4b1a7c49cbe0bc19cc"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/recovery-v4/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "sha256": "f3eac13ca2c71c7cec3a1a860c701caea68728a3f9dc9e77c1d05b2455143ce9",
+      "bytes": 449309
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/recovery-v4/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "sha256": "d1c65a16f8d24e2bde20704f82376b4167211fa8d62fccd19ed75f2def0105ca",
+      "bytes": 24405,
+      "locator": {
+        "article_id": "07-femibion-gotovites-k-beremennosti",
+        "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+        "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+        "image_id": "06",
+        "block_index": 26,
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "file": "06.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/recovery-v4/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "current_heading": {
+          "block_index": 20,
+          "level": 2,
+          "text": "Пройдите необходимые консультации и обследования"
+        },
+        "nearest_text_before": {
+          "block_index": 25,
+          "type": "paragraph",
+          "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+        },
+        "nearest_text_after": {
+          "block_index": 27,
+          "type": "heading",
+          "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+        }
+      }
+    },
+    "user_direction": "Source-factor experiment on a deterministic 1920x1080 crop. Use exactly this final positive prompt: Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged. Do not mention article semantics, phone, hands, medicine, pregnancy, or health."
+  },
+  "analysis": {
+    "image_reading": [
+      "A smiling woman sits on a sofa and looks downward while holding an orange smartphone.",
+      "Her posture is relaxed; her face and upper body are clearly visible in a bright, stable interior composition."
+    ],
+    "article_context": "The body image illustrates preparation for a professional consultation: the nearby caption encourages making a list of questions so nothing important is missed during the appointment.",
+    "structured_intent": {
+      "editorial_meaning": "A calm moment of gathering information supports thoughtful preparation before a professional consultation.",
+      "primary_action": "The woman breathes naturally and blinks subtly while remaining seated and attentive.",
+      "terminal_state": "In the last frame, she remains in the same relaxed seated posture with the same gentle smile and downward attention.",
+      "semantic_invariant": "Her calm, positive, attentive state remains unchanged through the final frame."
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over four seconds, the woman remains seated and relaxed while very subtle breathing and occasional natural blinking provide the only motion. The framing stays locked, and by the final frame she retains the same gentle smile, downward gaze, posture, and unchanged surroundings.",
+      "positive_prompt": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:097075a8d4dec843110457bd7e82d84fc5d269e0eb1b08f021c044260846826a",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-femibion-veo-recovery-20260810-v2-07-femibion-gotovites-k-beremennosti-06",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.8",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0",
+    "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+    "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:560bd037d35351993f7734f2b8839a6eb7439f561e6a3eec96d6d75663d1272a",
+    "execution_fingerprint": "sha256:da35baf0a99ac4baff7be80518647905f459785d2115e6cf8efd1bca69113f75",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019feaf0-43d0-7de3-881b-4b8875c94a5c"
+    },
+    "authored_payload_sha256": "94bc947088bffc1c4b81cea143f6f41684a15bcb4673d650cf1f32b5d5918738",
+    "draft_file_sha256": "ad84fdd2e104a7a9da5170baae954de29158757eac803c02aeaba98cbabc77dd"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "bytes": 3190235
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "bytes": 24393,
+      "locator": {
+        "article_id": "07-femibion-gotovites-k-beremennosti",
+        "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+        "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+        "image_id": "06",
+        "block_index": 26,
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "file": "06.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "current_heading": {
+          "block_index": 20,
+          "level": 2,
+          "text": "Пройдите необходимые консультации и обследования"
+        },
+        "nearest_text_before": {
+          "block_index": 25,
+          "type": "paragraph",
+          "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+        },
+        "nearest_text_after": {
+          "block_index": 27,
+          "type": "heading",
+          "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+        }
+      }
+    },
+    "user_direction": "Content-filter recovery V2 prompt-factor isolation. Use this exact final positive prompt for google/veo-3.1-lite: 'Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.' Do not use medical, pregnancy, phone, smartphone, screen, device, hand, finger, touch, swipe, tap, or gesture terms in the final positive prompt. One continuous shot; no other action."
+  },
+  "analysis": {
+    "image_reading": [
+      "Улыбающаяся женщина сидит на светлом диване и сосредоточенно смотрит на оранжевый смартфон.",
+      "Кадр широкий и статичный; поза расслабленная, выражение лица спокойное и доброжелательное.",
+      "Для минимального естественного оживления подходят дыхание и редкое моргание без изменения композиции."
+    ],
+    "article_context": "Изображение сопровождает совет заранее составить список вопросов перед консультацией, чтобы ничего не упустить. Редакционный акцент — спокойная, вдумчивая подготовка и уверенность благодаря заранее собранной информации.",
+    "structured_intent": {
+      "editorial_meaning": "Спокойная сосредоточенность поддерживает идею вдумчивой подготовки к консультации и помогает ничего не упустить.",
+      "primary_action": "Женщина сохраняет спокойную сосредоточенность, проявляющуюся только в естественном дыхании и моргании.",
+      "terminal_state": "В последнем кадре женщина остаётся в исходной расслабленной позе, с той же мягкой улыбкой и направлением взгляда.",
+      "semantic_invariant": "Расслабленное, доброжелательное и сосредоточенное состояние женщины сохраняется до последнего кадра."
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Один непрерывный четырёхсекундный статичный кадр. Женщина едва заметно и естественно дышит и один раз мягко моргает; иных действий нет. К финалу она сохраняет исходную расслабленную позу, улыбку и направление взгляда, а композиция и все видимые предметы остаются без изменений.",
+      "positive_prompt": "Locked camera. Very subtle natural blinking and breathing only. The composition and every visible object stay unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:097075a8d4dec843110457bd7e82d84fc5d269e0eb1b08f021c044260846826a",
+      "negative_prompt": null
+    }
+  ]
+}

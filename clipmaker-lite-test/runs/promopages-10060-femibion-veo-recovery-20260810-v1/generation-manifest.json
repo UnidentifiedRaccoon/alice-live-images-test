@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-10T09:03:42Z",
+  "expected_outputs": 2,
+  "summary": {
+    "provider-failed": 1,
+    "succeeded": 1
+  },
+  "conforming_outputs": 1,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-07-femibion-gotovites-k-beremennosti-06",
+      "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+      "sample_id": "07-femibion-gotovites-k-beremennosti-06",
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "provider-failed",
+      "recorded_status": "provider-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "Eliza/OpenRouter job SwdH1eVdnIzgLHeXaTIg failed with status failed: Video generation completed with no output (content may have been filtered)"
+    },
+    {
+      "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-08-femibion-grudnoe-vskarmlivanie-05",
+      "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-08-femibion-grudnoe-vskarmlivanie-05-veo-3-1-lite",
+      "sample_id": "08-femibion-grudnoe-vskarmlivanie-05",
+      "article_slug": "08-femibion-grudnoe-vskarmlivanie",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v1/videos/08-femibion-grudnoe-vskarmlivanie/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2979506,
+        "sha256": "be2a072ffe4fe3934563e148956c3d05bcb6123e8a878829b18d9adead5af153"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

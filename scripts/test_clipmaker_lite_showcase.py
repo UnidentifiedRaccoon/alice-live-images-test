@@ -309,10 +309,10 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertEqual(manifest["article_count"], 13)
         self.assertEqual(manifest["image_count"], 92)
         self.assertEqual(manifest["expected_outputs"], 276)
-        self.assertEqual(manifest["accepted_output_count"], 274)
+        self.assertEqual(manifest["accepted_output_count"], 276)
         self.assertEqual(manifest["terminal_accounted_output_count"], 276)
-        self.assertEqual(manifest["provider_filtered_output_count"], 2)
-        self.assertEqual(manifest["status_summary"]["provider-filtered"], 2)
+        self.assertEqual(manifest["provider_filtered_output_count"], 0)
+        self.assertEqual(manifest["status_summary"]["provider-filtered"], 0)
         self.assertEqual(
             manifest["acceptance_policy"]["terminal_accounted_without_media"],
             ["provider-filtered", "provider-unavailable"],
@@ -423,8 +423,8 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertEqual(image_count, manifest["image_count"])
         self.assertEqual(output_count, manifest["expected_outputs"])
         self.assertEqual(output_count, image_count * len(MODEL_IDS))
-        self.assertEqual(filtered_output_count, 2)
-        self.assertEqual(len(video_paths), 274)
+        self.assertEqual(filtered_output_count, 0)
+        self.assertEqual(len(video_paths), 276)
         self.assertEqual(len(manifest["outputs"]), 276)
         self.assertEqual(
             {
@@ -534,22 +534,27 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         )
         self.assertEqual(20 + self.additional_manifest["image_count"] + 1, 41)
 
-    def test_all_demo_pages_keep_step_four_and_add_step_five(self):
+    def test_all_demo_pages_include_ab_preparation_step_six(self):
         step_pattern = re.compile(r'<span class="viewSwitchStep" lang="en">Step №(\d+)</span>')
 
         for page in NAVIGATION_PAGES:
             with self.subTest(page=page.relative_to(ROOT)):
                 html = page.read_text(encoding="utf-8")
-                self.assertEqual(step_pattern.findall(html), ["1", "2", "3", "4", "5"])
+                self.assertEqual(
+                    step_pattern.findall(html), ["1", "2", "3", "4", "5", "6"]
+                )
                 self.assertIn('<strong class="viewSwitchTitle">Разметка</strong>', html)
                 self.assertIn('<strong class="viewSwitchTitle">Clipmaker Lite</strong>', html)
-                self.assertIn("Выборка · 3 модели", html)
+                self.assertIn(
+                    '<strong class="viewSwitchTitle">Подготовка к A/B</strong>', html
+                )
+                self.assertIn("История · 3 модели", html)
                 self.assertNotIn("41 изображение · 3 модели", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
                 self.assertEqual(
                     len(
                         re.findall(
-                            r'href="(?:\./\?v=6|(?:\.\./)?clipmaker-lite/\?v=6)"',
+                            r'href="(?:\./\?v=7|(?:\.\./)?clipmaker-lite/\?v=7)"',
                             html,
                         )
                     ),
@@ -685,7 +690,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn("makeCaseKey", app)
         self.assertIn("legacy_case_key", app)
         self.assertIn("resolveRequestedArticleIndex", app)
-        self.assertIn("resolveRequestedImageIndex", app)
+        self.assertIn("resolveRequestedMediaPosition", app)
         self.assertIn("article.case_key === elements.caseSelect.value", app)
         self.assertIn("data-source-ticket", app)
         self.assertIn("Статус · ${article.sourceStatus}", app)
@@ -746,11 +751,14 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         self.assertIn('id="articleCountSummary">—', html)
         self.assertIn('id="imageCountSummary">—', html)
         self.assertIn('id="videoCountSummary">—', html)
-        self.assertIn("Историческая выборка сохранена без изменений", html)
+        self.assertIn(
+            "Исторические результаты Clipmaker Lite остаются отдельной контрольной",
+            html,
+        )
         self.assertIn("PROMOPAGES-10060", html)
-        self.assertIn("со всеми 92 изображениями из 13 доступных статей", html)
-        self.assertIn('src="app.js?v=15"', html)
-        self.assertIn('href="styles.css?v=11"', html)
+        self.assertIn("эксперименты кейса 21", html)
+        self.assertIn('src="app.js?v=23"', html)
+        self.assertIn('href="styles.css?v=13"', html)
         self.assertIn("<dt>Результаты</dt>", html)
         self.assertIn('id="videoCountSummary"', html)
         self.assertIn('id="imageSelect"', html)
@@ -789,7 +797,7 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
     def test_smooth_section_follows_loop_and_has_no_loop_playback_contract(self):
         app = (ROOT / "clipmaker-lite" / "app.js").read_text(encoding="utf-8")
         render_template = app[
-            app.index("const renderSelection") : app.index("const renderImage")
+            app.index("const renderSelection") : app.index("const renderMediaBlock")
         ]
         self.assertLess(
             render_template.index("${loopSection}"),

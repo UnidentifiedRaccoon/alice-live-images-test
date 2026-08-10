@@ -1,0 +1,121 @@
+{
+  "schema_version": 2,
+  "job_id": "promopages-10060-femibion-veo-recovery-20260810-v1-08-femibion-grudnoe-vskarmlivanie-05",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.0.8",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 7,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0",
+    "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+    "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b791e90e4de1c0c8997c267d54cc8e65c0efc6ef4f57414cde8662b8df63cdc9"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d1d5fb1285b16ba7115f6ccb4e984c5931a7496ec3778be8b3efc2164bb64d94"
+      }
+    ],
+    "inputs_sha256": "sha256:f87e9406600b8b0f8d6602040b16428b4a6efcfa34480738a1cc4ee16ad67abf",
+    "execution_fingerprint": "sha256:01f935402169c133cf494d3023713a53d2b51595fd985f2c03b12a4c252a14af",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019feae0-06e9-7370-9d48-5cbf528abddc"
+    },
+    "authored_payload_sha256": "c79230a128dccaccc2118fe32199650cc797f65b2203e035d20ceccd4ed0de8b",
+    "draft_file_sha256": "82d82ddf2bcf64fc034b020fde5bb1817f1d64f0eab0714457540da904abf176"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+      "sha256": "e29ddb18cc961dff4595222d7a18f030a457e910a0b477cdc897adf7426af06a",
+      "bytes": 248159
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/content.json",
+      "sha256": "33548f66e701ed12073d2cd1b3471ac7ae8fe34a3ae5b1587ba9092d27fef6ce",
+      "bytes": 21634,
+      "locator": {
+        "article_id": "08-femibion-grudnoe-vskarmlivanie",
+        "title": "Грудное вскармливание без стресса: что нужно знать маме",
+        "lead": "Развеиваем мифы о грудном вскармливании и знакомим с комплексом Фемибион®",
+        "image_id": "05",
+        "block_index": 23,
+        "role": "article_image",
+        "caption": "На самом деле «вредной еды» не существует. Есть продукты, в которых много соли, сахара или насыщенных жиров, например в чипсах. Их не обязательно полностью исключать из рациона, просто лучше есть реже и понемногу [9]",
+        "file": "05.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/08-femibion-grudnoe-vskarmlivanie/05.jpeg",
+        "current_heading": {
+          "block_index": 16,
+          "level": 2,
+          "text": "Миф 4. Грудное молоко — идеально, даже если мама питается фастфудом"
+        },
+        "nearest_text_before": {
+          "block_index": 22,
+          "type": "list_item",
+          "text": "Обогащенные сухие завтраки с пониженным содержанием сахара, мюсли или другие цельнозерновые хлопья с обезжиренным молоком."
+        },
+        "nearest_text_after": {
+          "block_index": 24,
+          "type": "heading",
+          "text": "Миф 5. Витамины при ГВ — это маркетинг, достаточно просто хорошо питаться"
+        }
+      }
+    },
+    "user_direction": "Recovery iteration: use neutral visual wording without diet, health, rejection, or judgment terms in the final positive prompt. Fixed camera; the already raised hand makes one small smooth settling motion while her gaze shifts toward the colorful food in front; keep her composed expression and the pizza at the frame edge."
+  },
+  "analysis": {
+    "image_reading": [
+      "A seated woman holds both palms raised between the colorful foods in front of her and a pizza entering from the right edge, with her gaze angled toward the pizza and a composed, slightly questioning expression.",
+      "The already raised hands and her gaze can move simply without changing the fixed composition; the fruit, vegetables, green drink, bowls, and pizza remain visible reference points."
+    ],
+    "article_context": "The body image illustrates the section’s nuanced message about enjoying a broad range of foods with moderation rather than treating individual foods in absolute terms; the animation emphasizes calm consideration of the colorful selection while preserving the pizza at the edge of the composition.",
+    "structured_intent": {
+      "editorial_meaning": "A calm, nuanced approach to choosing among a varied selection of foods without framing any single item in absolute terms.",
+      "primary_action": "The woman’s raised hand settles slightly while her gaze shifts toward the colorful food in front of her.",
+      "terminal_state": "Her hand is slightly lower and relaxed, and her gaze rests on the colorful food in front of her.",
+      "semantic_invariant": "She remains composed and attentive, with the colorful selection and the pizza at the frame edge continuing to share the scene."
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Over the four-second fixed shot, the already raised hand eases downward a short distance in one smooth motion while her eyes gradually redirect from the right side toward the colorful food in front. The movement stays restrained and continuous, ending near the close with the hand slightly lower and relaxed, her gaze settled on the foreground selection, her composed expression intact, and the pizza still visible at the right edge.",
+      "positive_prompt": "Fixed camera. The woman’s already raised hand makes one small, smooth settling motion as her gaze shifts toward the colorful food in front of her. By the final frame, her hand rests slightly lower, her eyes remain on the food, her composed expression is unchanged, and the pizza stays visible at the frame edge.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:097075a8d4dec843110457bd7e82d84fc5d269e0eb1b08f021c044260846826a",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import json
 import io
 import csv
 import hashlib
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -130,6 +131,489 @@ def preserved_native_state():
             setattr(pipeline.native, name, value)
 
 
+class FrozenContractRoutingTest(unittest.TestCase):
+    def tearDown(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+
+    def test_every_historical_batch_routes_to_its_exact_archived_contract(
+        self,
+    ) -> None:
+        expected = {
+            pipeline.LEGACY_BATCH_ID: "2.0.6",
+            pipeline.CAMPAIGN_EXTENSION_BATCH_ID: "2.0.6",
+            pipeline.ARTICLE_02_BATCH_ID: "2.0.7",
+            pipeline.CAMPAIGN_20260807_BATCH_ID: "2.0.7",
+        }
+        self.assertEqual(pipeline.FROZEN_BATCH_CONTRACT_VERSIONS, expected)
+        for batch_id, contract_version in expected.items():
+            with self.subTest(batch_id=batch_id):
+                pipeline.activate_batch(batch_id)
+                self.assertEqual(
+                    pipeline.planning_contract_version(),
+                    contract_version,
+                )
+                self.assertIs(
+                    pipeline.planning_provenance_verifier(),
+                    pipeline.frozen_provenance_summary,
+                )
+
+    def test_recovery_run_id_uses_current_contract_even_while_legacy_is_active(
+        self,
+    ) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+        run_id = f"{pipeline.FEMIBION_VEO_RECOVERY_ID}-sample"
+        expected = {"verified": True, "contract_version": "2.0.8"}
+        with (
+            mock.patch.object(
+                pipeline.runner,
+                "provenance_summary",
+                return_value=expected,
+            ) as current,
+            mock.patch.object(
+                pipeline,
+                "frozen_provenance_summary",
+                side_effect=AssertionError("recovery routed to a frozen contract"),
+            ),
+        ):
+            self.assertEqual(
+                pipeline.planning_provenance_summary(pipeline.ROOT, run_id),
+                expected,
+            )
+        current.assert_called_once_with(pipeline.ROOT, run_id)
+
+
+class FemibionRecoveryOverlayTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.discovery = pipeline.discover(pipeline.ROOT)
+        canonical = json.loads(
+            (pipeline.ROOT / pipeline.FINAL_MANIFEST_REL).read_text(encoding="utf-8")
+        )
+        keys = set(pipeline.FEMIBION_VEO_RECOVERY_KEYS)
+        cls.base_outputs = [
+            cls._legacy_filtered_fixture(output)
+            for output in canonical["outputs"]
+            if (
+                output["article_slug"],
+                output["image_id"],
+                output["model_id"],
+            )
+            in keys
+        ]
+
+    @staticmethod
+    def _legacy_filtered_fixture(output: dict[str, object]) -> dict[str, object]:
+        legacy = json.loads(json.dumps(output))
+        if legacy.get("status") == "provider-filtered":
+            return legacy
+        retry = legacy.get("retry")
+        retry_attempt = retry.get("retry_attempt") if isinstance(retry, dict) else None
+        recovery = legacy.get("recovery")
+        old = (
+            recovery.get("superseded_selected_attempt")
+            if isinstance(recovery, dict)
+            else None
+        )
+        if not isinstance(retry_attempt, dict) or not isinstance(old, dict):
+            raise AssertionError("Final recovery output lacks preserved filtered evidence")
+        legacy.update(
+            {
+                "provider_run_id": retry_attempt["provider_run_id"],
+                "provider_job_id": retry_attempt["provider_job_id"],
+                "status": "provider-filtered",
+                "recorded_status": "provider-failed",
+                "provider_may_be_active": False,
+                "prompt_path": retry_attempt["prompt_path"],
+                "run_path": retry_attempt["run_path"],
+                "video_path": None,
+                "media": None,
+                "contract_check": None,
+                "error": retry_attempt["error"],
+                "selected_attempt": "terminal-retry-v1-exhausted",
+            }
+        )
+        legacy.pop("recovery", None)
+        legacy.pop("supersedes_for_demo", None)
+        return legacy
+
+    def setUp(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+
+    def tearDown(self) -> None:
+        pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
+
+    @staticmethod
+    def _write_json(path: Path, value: object) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(value, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    @staticmethod
+    def _copy(root: Path, relative_path: str) -> None:
+        source = pipeline.ROOT / relative_path
+        destination = root / relative_path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+
+    def _fixture(
+        self,
+        root: Path,
+    ) -> tuple[
+        list[dict[str, object]],
+        dict[str, dict[str, object]],
+        dict[str, object],
+    ]:
+        self._copy(root, pipeline.CONTRACT_REL.as_posix())
+        self._copy(root, pipeline.ROUTES_REL.as_posix())
+        sources = {
+            (
+                source.article_slug,
+                source.image["image_id"],
+                pipeline.FEMIBION_VEO_RECOVERY_MODEL_ID,
+            ): source
+            for source in self.discovery.sources
+            if (
+                source.article_slug,
+                source.image["image_id"],
+                pipeline.FEMIBION_VEO_RECOVERY_MODEL_ID,
+            )
+            in set(pipeline.FEMIBION_VEO_RECOVERY_KEYS)
+        }
+        base_by_key = {
+            (
+                output["article_slug"],
+                output["image_id"],
+                output["model_id"],
+            ): json.loads(json.dumps(output))
+            for output in self.base_outputs
+        }
+        for key, old in base_by_key.items():
+            source = sources[key]
+            self._copy(root, source.image["source_path"])
+            self._copy(root, source.context_path)
+            retry = old["retry"]
+            for attempt in (retry["primary_attempt"], retry["retry_attempt"]):
+                self._copy(root, attempt["run_path"])
+                self._copy(root, attempt["prompt_path"])
+            self._copy(root, retry["envelope_path"])
+
+        summaries: dict[str, dict[str, object]] = {}
+        planning: list[dict[str, object]] = []
+        outputs: list[dict[str, object]] = []
+        supersedes: list[dict[str, object]] = []
+        for index, key in enumerate(pipeline.FEMIBION_VEO_RECOVERY_KEYS, 1):
+            source = sources[key]
+            old = base_by_key[key]
+            old_evidence = pipeline._femibion_old_filtered_evidence(
+                old,
+                root=root,
+                allow_contract_warnings=True,
+            )
+            run_id = f"{pipeline.FEMIBION_VEO_RECOVERY_ID}-{source.sample_id}"
+            result_rel = pipeline.ARTIFACT_NAMESPACE / run_id / "result.json"
+            model = {
+                "model_id": pipeline.FEMIBION_VEO_RECOVERY_MODEL_ID,
+                "scene_plan": f"Recovery scene {index}",
+                "positive_prompt": f"Recovery prompt {index}",
+                "negative_prompt": None,
+            }
+            self._write_json(
+                root / result_rel,
+                {"job_id": run_id, "models": [model]},
+            )
+            summary = {
+                "verified": True,
+                "agent_id": pipeline.AGENT_ID,
+                "contract_version": pipeline.REQUIRED_CONTRACT_VERSION,
+                "models": [pipeline.FEMIBION_VEO_RECOVERY_MODEL_ID],
+                "result_path": result_rel.as_posix(),
+                "source_image_sha256": source.image["sha256"],
+                "article_context_sha256": source.context_sha256,
+            }
+            summaries[run_id] = summary
+            planning_record = {
+                "planning_run_id": run_id,
+                "result_path": result_rel.as_posix(),
+                "result_sha256": pipeline.sha256_file(root / result_rel),
+                "provenance": summary,
+            }
+            planning.append(planning_record)
+            provider_run_id = (
+                f"{pipeline.FEMIBION_VEO_RECOVERY_PROVIDER_BATCH_ID}-"
+                f"{source.sample_id}-veo-3-1-lite"
+            )
+            superseded = pipeline.FEMIBION_VEO_RECOVERY_SUPERSEDED_PROVIDER_IDS[key]
+            directory = (
+                pipeline.FEMIBION_VEO_RECOVERY_ROOT_REL
+                / "videos"
+                / source.article_slug
+                / "veo-3.1-lite"
+            )
+            prompt_rel = directory / f"{source.image['image_id']}.prompt.json"
+            run_rel = directory / f"{source.image['image_id']}.run.json"
+            video_rel = directory / f"{source.image['image_id']}.mp4"
+            video_path = root / video_rel
+            video_path.parent.mkdir(parents=True, exist_ok=True)
+            video_path.write_bytes(f"fixture-mp4-{index}".encode("utf-8"))
+            media = {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 4.0,
+                "width": 1920,
+                "height": 1080,
+                "fps": 24.0,
+                "frames": 96,
+                "has_audio": False,
+                "bytes": video_path.stat().st_size,
+                "sha256": pipeline.sha256_file(video_path),
+            }
+            contract_check = {
+                "requested": {
+                    "duration_seconds": 4,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": False,
+                    "frames": None,
+                    "fps": None,
+                },
+                "checks": {
+                    "duration": True,
+                    "audio": True,
+                    "resolution": True,
+                    "aspect_ratio": True,
+                },
+                "conforms": True,
+                "warnings": [],
+            }
+            logical_key = {
+                "article_slug": key[0],
+                "image_id": key[1],
+                "model_id": key[2],
+            }
+            receipt_binding = {
+                "recovery_id": pipeline.FEMIBION_VEO_RECOVERY_ID,
+                "logical_key": logical_key,
+                "supersedes_for_demo": superseded,
+                "old_status": "provider-filtered",
+                "old_retry_v1_exhausted": True,
+                "automatic_retry": False,
+                "fallback": False,
+            }
+            request_sha256 = f"{index}" * 64
+            self._write_json(
+                root / prompt_rel,
+                {
+                    "provider_run_id": provider_run_id,
+                    "lite_run_id": run_id,
+                    "model_id": key[2],
+                    "supersedes_for_demo": superseded,
+                    "recovery": receipt_binding,
+                },
+            )
+            self._write_json(
+                root / run_rel,
+                {
+                    "provider_run_id": provider_run_id,
+                    "sample_id": source.sample_id,
+                    "image_id": source.image["image_id"],
+                    "lite_run_id": run_id,
+                    "model_id": key[2],
+                    "status": "succeeded",
+                    "media": media,
+                    "contract_check": contract_check,
+                    "error": None,
+                    "output_path": video_rel.as_posix(),
+                    "request_sha256": request_sha256,
+                    "supersedes_for_demo": superseded,
+                    "recovery": receipt_binding,
+                },
+            )
+            outputs.append(
+                {
+                    "article_slug": key[0],
+                    "image_id": key[1],
+                    "source_path": source.image["source_path"],
+                    "sample_id": source.sample_id,
+                    "lite_run_id": run_id,
+                    "provider_run_id": provider_run_id,
+                    "model_id": key[2],
+                    **model,
+                    "status": "succeeded",
+                    "recorded_status": "succeeded",
+                    "provider_may_be_active": False,
+                    "prompt_path": prompt_rel.as_posix(),
+                    "run_path": run_rel.as_posix(),
+                    "video_path": video_rel.as_posix(),
+                    "media": media,
+                    "contract_check": contract_check,
+                    "error": None,
+                    "selected_attempt": "content-filter-recovery-v1",
+                    "supersedes_for_demo": superseded,
+                    "recovery": {
+                        "recovery_id": pipeline.FEMIBION_VEO_RECOVERY_ID,
+                        "supersedes_for_demo": superseded,
+                        "old_provider_filtered": old_evidence,
+                        "new_request_sha256": request_sha256,
+                        "request_changed": True,
+                        "automatic_retry": False,
+                        "fallback": False,
+                    },
+                }
+            )
+            supersedes.append(
+                {
+                    "logical_key": logical_key,
+                    "old_provider_run_id": superseded,
+                    "new_provider_run_id": provider_run_id,
+                }
+            )
+
+        document: dict[str, object] = {
+            "schema_version": 1,
+            "manifest_role": "promopages-10060-femibion-veo-content-filter-recovery",
+            "ticket": pipeline.TICKET,
+            "recovery_id": pipeline.FEMIBION_VEO_RECOVERY_ID,
+            "provider_batch_id": pipeline.FEMIBION_VEO_RECOVERY_PROVIDER_BATCH_ID,
+            "agent_id": pipeline.AGENT_ID,
+            "updated_at": "2026-08-10T12:00:00Z",
+            "expected_outputs": 2,
+            "accepted_output_count": 2,
+            "ready_for_merge": True,
+            "summary": {"succeeded": 2},
+            "route": pipeline._femibion_recovery_route_snapshot(root),
+            "contract": pipeline._femibion_recovery_contract_snapshot(root),
+            "accounting": {
+                "currency": "USD",
+                "baseline_paid_submissions": 281,
+                "baseline_reserved_usd": 98.35,
+                "recovery_paid_submissions": 2,
+                "accounting_cost_per_output_usd": 0.35,
+                "recovery_reserved_usd": 0.7,
+                "aggregate_paid_submissions": 283,
+                "aggregate_reserved_usd": 99.05,
+                "operator_budget_cap_usd": 99.05,
+                "hard_budget_cap_usd": 100.0,
+                "hard_cap_headroom_usd": 0.95,
+                "maximum_new_paid_submissions": 2,
+                "automatic_paid_retries": False,
+                "pricing_basis": "frozen local PROMOPAGES-10060 accounting evidence",
+            },
+            "generation_policy": {
+                "exact_model_id": pipeline.FEMIBION_VEO_RECOVERY_MODEL_ID,
+                "exact_route_only": True,
+                "automatic_fallback": False,
+                "normal_run_discovery": False,
+                "automatic_paid_retries": False,
+                "maximum_submissions_per_new_provider_identity": 1,
+                "resume_may_submit_only_never_submitted_pending_receipts": True,
+                "resume_repeats_ambiguous_or_terminal_submit": False,
+            },
+            "merge_contract": {
+                "target_manifest": pipeline.FINAL_MANIFEST_REL.as_posix(),
+                "logical_key": ["article_slug", "image_id", "model_id"],
+                "replace_only_status": "provider-filtered",
+                "replace_exactly": 2,
+                "requires_ready_for_merge": True,
+                "preserve_all_other_outputs": True,
+                "demo_selection_field": "supersedes_for_demo",
+            },
+            "supersedes_for_demo": supersedes,
+            "planning": planning,
+            "generation_manifest_path": (
+                pipeline.FEMIBION_VEO_RECOVERY_GENERATION_MANIFEST_REL.as_posix()
+            ),
+            "outputs": outputs,
+        }
+        self._write_json(
+            root / pipeline.FEMIBION_VEO_RECOVERY_MANIFEST_REL,
+            document,
+        )
+        return list(base_by_key.values()), summaries, document
+
+    def test_exact_overlay_preserves_retry_and_replaces_flat_and_nested(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            base, summaries, _document = self._fixture(root)
+            with mock.patch.object(
+                pipeline,
+                "planning_provenance_summary",
+                side_effect=lambda _root, run_id: summaries[run_id],
+            ):
+                replacements, provenance = pipeline._femibion_recovery_overlay(
+                    base,
+                    self.discovery,
+                    root=root,
+                    allow_contract_warnings=True,
+                )
+            articles = [
+                {
+                    "images": [
+                        {"outputs": [base[0]]},
+                        {"outputs": [base[1]]},
+                    ]
+                }
+            ]
+            selected = pipeline._apply_final_output_replacements(
+                base,
+                articles,
+                replacements,
+            )
+        self.assertEqual(set(replacements), set(pipeline.FEMIBION_VEO_RECOVERY_KEYS))
+        self.assertIsNotNone(provenance)
+        self.assertEqual([output["status"] for output in selected], ["succeeded"] * 2)
+        self.assertEqual(
+            [output["retry"] for output in selected],
+            [output["retry"] for output in base],
+        )
+        self.assertTrue(
+            all(output["recovery"]["planning"]["provenance"]["verified"] for output in selected)
+        )
+        self.assertEqual(
+            [image["outputs"][0] for image in articles[0]["images"]],
+            selected,
+        )
+        cost = pipeline._femibion_recovery_cost(
+            {
+                "operator_budget_cap_usd": 100.0,
+                "maximum_estimated_cost_usd": 98.35,
+                "estimated_headroom_usd": 1.65,
+                "maximum_paid_submissions": 281,
+                "total_retry_reservations": 5,
+            },
+            recovery_applied=True,
+        )
+        self.assertEqual(
+            (
+                cost["maximum_paid_submissions"],
+                cost["maximum_estimated_cost_usd"],
+                cost["estimated_headroom_usd"],
+            ),
+            (283, 99.05, 0.95),
+        )
+
+    def test_partial_manifest_is_preserved_without_any_canonical_replacement(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            base, _summaries, document = self._fixture(root)
+            document["ready_for_merge"] = False
+            document["accepted_output_count"] = 1
+            self._write_json(
+                root / pipeline.FEMIBION_VEO_RECOVERY_MANIFEST_REL,
+                document,
+            )
+            replacements, provenance = pipeline._femibion_recovery_overlay(
+                base,
+                self.discovery,
+                root=root,
+                allow_contract_warnings=True,
+            )
+        self.assertEqual(replacements, {})
+        self.assertIsNone(provenance)
+        self.assertTrue(all(output["status"] == "provider-filtered" for output in base))
+
+
 class Campaign20260807BatchTest(unittest.TestCase):
     def setUp(self) -> None:
         pipeline.activate_batch(pipeline.CAMPAIGN_20260807_BATCH_ID)
@@ -165,6 +649,10 @@ class Campaign20260807BatchTest(unittest.TestCase):
         self.assertNotIn(
             pipeline.CAMPAIGN_20260807_BATCH_ID,
             pipeline.FROZEN_206_BATCH_IDS,
+        )
+        self.assertIn(
+            pipeline.CAMPAIGN_20260807_BATCH_ID,
+            pipeline.FROZEN_207_BATCH_IDS,
         )
 
     def test_campaign_batch_cli_accepts_exact_operator_cap(self) -> None:
@@ -426,7 +914,7 @@ class CampaignExtensionBatchTest(unittest.TestCase):
             with (
                 mock.patch.object(
                     pipeline,
-                    "_contract_snapshot",
+                    "_inventory_contract_snapshot",
                     return_value={"contract_version": "fixture"},
                 ),
                 mock.patch.object(
@@ -3023,11 +3511,16 @@ class Promopages10060PipelineTest(unittest.TestCase):
                     )
         provider_main.assert_not_called()
 
-    def test_contract_and_routes_are_current_exact_and_discovery_free(self) -> None:
+    def test_inventory_contract_is_frozen_and_routes_are_current_exact(self) -> None:
         contract = self.inventory["contract"]
         routes = self.inventory["generation_routes"]
         self.assertEqual(
-            contract["contract_version"], pipeline.REQUIRED_CONTRACT_VERSION
+            contract["contract_version"], pipeline.planning_contract_version()
+        )
+        self.assertEqual(contract["contract_version"], "2.0.6")
+        self.assertEqual(
+            pipeline._contract_snapshot(pipeline.ROOT)["contract_version"],
+            pipeline.REQUIRED_CONTRACT_VERSION,
         )
         self.assertEqual(
             routes["policy"],
@@ -3648,6 +4141,11 @@ class Promopages10060PipelineTest(unittest.TestCase):
                     pipeline,
                     "_known_normalized_input_retry_envelopes",
                     return_value=(),
+                ),
+                mock.patch.object(
+                    pipeline,
+                    "_femibion_recovery_overlay",
+                    return_value=({}, None),
                 ),
             ):
                 document = pipeline.build_final_manifest(

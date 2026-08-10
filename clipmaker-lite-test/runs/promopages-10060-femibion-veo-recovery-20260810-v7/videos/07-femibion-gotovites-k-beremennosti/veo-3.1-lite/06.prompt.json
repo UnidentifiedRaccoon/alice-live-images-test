@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v7-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v7-07-femibion-gotovites-k-beremennosti-06",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v7-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/recovery-v7/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "sha256": "31672c5832458e9698f2a5710a159b10cbb99febf55c7f1b0906393f977cb88e",
+    "width": 1920,
+    "height": 1080
+  },
+  "structured_intent": {
+    "editorial_meaning": "Support the article’s calm, organized approach to preparing for a medical consultation before pregnancy.",
+    "primary_action": "Natural daylight gradually shifts across the existing scene.",
+    "terminal_state": "The scene ends with a subtle, natural change in illumination across the same intact composition.",
+    "semantic_invariant": "The quiet consultation-related setting, complete composition, and all visible details remain unchanged."
+  },
+  "prompt": {
+    "positive": "Locked camera. A slight, gradual shift in natural daylight is the only motion. Preserve the complete composition and all visible details.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v7-07-femibion-gotovites-k-beremennosti-06/result.json",
+    "sha256": "73f878a18d9f063a4ed674efd6601c140ff5e406700f619bbc4acb065f75d1b0",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.8",
+      "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+      "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+      "source_image_sha256": "31672c5832458e9698f2a5710a159b10cbb99febf55c7f1b0906393f977cb88e",
+      "article_context_sha256": "3db3fbc0a8ad5d263fd445df6add5ad5343e9eaf67529aba787ebc6e096452f8",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v7",
+    "iteration": 2,
+    "logical_key": {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "prior_provider_filtered_attempts": 3,
+    "prompt_factor_isolation": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

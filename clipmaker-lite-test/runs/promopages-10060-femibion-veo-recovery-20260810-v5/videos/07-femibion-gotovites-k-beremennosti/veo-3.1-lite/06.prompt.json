@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-femibion-veo-recovery-20260810-v5-provider",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-femibion-veo-recovery-20260810-v5b-07-femibion-gotovites-k-beremennosti-06",
+  "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v5-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "width": 1920,
+    "height": 1080
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойная и внимательная подготовка помогает женщине организовать вопросы перед медицинской консультацией и ничего не упустить.",
+    "primary_action": "Естественный дневной свет постепенно и едва заметно меняется в пределах исходной сцены.",
+    "terminal_state": "В последнем кадре естественное освещение слегка изменено, а вся композиция и видимые детали сохранены.",
+    "semantic_invariant": "Женщина сохраняет спокойную доброжелательность и сосредоточенность на смартфоне, а смысл вдумчивой подготовки остается неизменным."
+  },
+  "prompt": {
+    "positive": "Locked camera. A slight, gradual shift in natural daylight is the only motion. Preserve the complete composition and all visible details.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v5b-07-femibion-gotovites-k-beremennosti-06/result.json",
+    "sha256": "95022eb555ae4d6474471c682b36b1c50f6cc44664f49a142ef673497d6697eb",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.8",
+      "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+      "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+      "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "recovery": {
+    "recovery_id": "promopages-10060-femibion-veo-recovery-20260810-v5",
+    "iteration": 2,
+    "logical_key": {
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite"
+    },
+    "supersedes_for_demo": "promopages-10060-lite-all-images-20260805-v2-terminal-retry-v1-6243bd1bbb1a1e3fe253-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "supersedes_attempt": "promopages-10060-femibion-veo-recovery-20260810-v1-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "prior_provider_filtered_attempts": 3,
+    "prompt_factor_isolation": true,
+    "automatic_retry": false,
+    "fallback": false
+  }
+}

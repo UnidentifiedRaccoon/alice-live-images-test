@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "receipt_role": "clipmaker-lite-deterministic-video-composite",
+  "ticket": "PROMOPAGES-10060",
+  "composite_id": "promopages-10060-femibion-veo-recovery-20260810-v7-base-v4-patch-v1",
+  "logical_key": {
+    "article_slug": "07-femibion-gotovites-k-beremennosti",
+    "image_id": "06",
+    "model_id": "google/veo-3.1-lite"
+  },
+  "classification": {
+    "artifact_kind": "deterministic-composite",
+    "provider_output": false,
+    "derived_from_provider_output": true,
+    "new_provider_submission": false,
+    "provider_model_lineage": "google/veo-3.1-lite",
+    "eligible_as_derived_demo_media": true
+  },
+  "inputs": {
+    "base_v4_jpeg": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/recovery-v4/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "sha256": "f3eac13ca2c71c7cec3a1a860c701caea68728a3f9dc9e77c1d05b2455143ce9",
+      "bytes": 449309,
+      "width": 1920,
+      "height": 1080,
+      "pixel_format": "yuvj444p"
+    },
+    "raw_v7_provider_video": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+      "sha256": "b07cb490b963d0e8b0718a08e1e579039cf0dcb9e75a241f3090c117658f6f45",
+      "bytes": 2146714,
+      "provider_run_id": "promopages-10060-femibion-veo-recovery-20260810-v7-provider-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+      "provider_job_id": "c4pO6Fw8YaEz0vPon3wH",
+      "request_sha256": "e6c5a3b9586df1f116846afcae103e9475de69883add0330e7a4804922daf522",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "profile": "High",
+        "level": 40,
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "pixel_format": "yuv420p",
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2146714,
+        "sha256": "b07cb490b963d0e8b0718a08e1e579039cf0dcb9e75a241f3090c117658f6f45"
+      }
+    },
+    "raw_v7_receipts": {
+      "generation_manifest": {
+        "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/generation-manifest.json",
+        "sha256": "1c449be1e1438d181909db15ed571b51ccf0edc35cd0b942da68efeb04c779b6"
+      },
+      "prompt": {
+        "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "sha256": "3bcac53a27768f16fd640ae79b6f6229ad8baea6e3a6170a234ec95cba70a208"
+      },
+      "run": {
+        "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "sha256": "dff03db2df123899a9990f915b4eb993de47865a6e93e1d8a01eeeea94f636d7"
+      }
+    },
+    "verified_lite_planning": {
+      "planning_run_id": "promopages-10060-femibion-veo-recovery-20260810-v7-07-femibion-gotovites-k-beremennosti-06",
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v7-07-femibion-gotovites-k-beremennosti-06/result.json",
+      "result_sha256": "73f878a18d9f063a4ed674efd6601c140ff5e406700f619bbc4acb065f75d1b0",
+      "provenance": {
+        "verified": true,
+        "verification_scope": "trusted-workspace-route",
+        "cryptographically_signed": false,
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-femibion-veo-recovery-20260810-v7-07-femibion-gotovites-k-beremennosti-06/result.json",
+        "agent_id": "clipmaker-lite",
+        "contract_version": "2.0.8",
+        "contract_fingerprint": "sha256:68bb2b26b16b65814182b883e425955559a8fd034e1835ceb0a68a22a50ca50a",
+        "instruction_bundle_sha256": "7a2d6d51289b14580cf93abbbb8d03ccec5853a3256137f68a15a150f489b531",
+        "runner": {
+          "path": "scripts/clipmaker_lite_runner.py",
+          "sha256": "c12e836ee5f3105397aa9e9430ff0850880e12d884a14752786a4b870b3d1d1d"
+        },
+        "execution": {
+          "executor_id": "codex-exec",
+          "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+          "binary_sha256": "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
+          "version": "codex-cli 0.147.0-alpha.6.5",
+          "requested_model": null,
+          "thread_id": "019feb2c-0378-7790-aee3-a211f76a371e"
+        },
+        "models": [
+          "google/veo-3.1-lite"
+        ],
+        "source_image_sha256": "31672c5832458e9698f2a5710a159b10cbb99febf55c7f1b0906393f977cb88e",
+        "article_context_sha256": "3db3fbc0a8ad5d263fd445df6add5ad5343e9eaf67529aba787ebc6e096452f8"
+      }
+    }
+  },
+  "derivation": {
+    "kind": "deterministic-composite",
+    "provider_output": false,
+    "helper_path": "scripts/clipmaker_lite_promopages_10060_femibion_veo_v7_composite.py",
+    "patch": {
+      "source": "raw_v7_provider_video",
+      "scale": {
+        "width": 800,
+        "height": 450,
+        "flags": "lanczos"
+      }
+    },
+    "alpha_mask": {
+      "canvas": {
+        "width": 800,
+        "height": 450,
+        "color": "black"
+      },
+      "drawbox": {
+        "x": 55,
+        "y": 150,
+        "width": 300,
+        "height": 230,
+        "color": "0xD0D0D0",
+        "mode": "fill"
+      },
+      "gaussian_blur_sigma": 32
+    },
+    "overlay": {
+      "x": 1120,
+      "y": 250,
+      "format": "auto"
+    },
+    "color_range_conversion": {
+      "filter": "scale=in_range=pc:out_range=tv",
+      "pixel_format": "yuv420p",
+      "setparams_range": "tv"
+    },
+    "filtergraph": "[1:v]scale=800:450:flags=lanczos,format=rgba[patch];color=c=black:s=800x450:r=24:d=4,format=gray,drawbox=x=55:y=150:w=300:h=230:color=0xD0D0D0:t=fill,gblur=sigma=32[mask];[patch][mask]alphamerge[patcha];[0:v]format=rgba[base];[base][patcha]overlay=x=1120:y=250:format=auto,scale=in_range=pc:out_range=tv,format=yuv420p,setparams=range=tv[out]",
+    "encoder": {
+      "codec": "libx264",
+      "preset": "slow",
+      "crf": 18,
+      "fps": 24,
+      "duration_seconds": 4,
+      "audio": false,
+      "movflags": "+faststart"
+    },
+    "toolchain": {
+      "ffmpeg": {
+        "path": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffmpeg",
+        "sha256": "dad4b30b36a1a999bfa4b6ffbde138bd17ee496c69e12eef638227dff2c6415c",
+        "version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "ffprobe": {
+        "path": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffprobe",
+        "sha256": "cfeefcc9207eb3fa424679228fe3848db2921b15537d26c1ccc4a7a61de95d00",
+        "version": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers"
+      }
+    },
+    "ffmpeg_arguments": [
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-loop",
+      "1",
+      "-framerate",
+      "24",
+      "-i",
+      "PROMOPAGES-9857/PROMOPAGES-10060/recovery-v4/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "-i",
+      "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+      "-filter_complex",
+      "[1:v]scale=800:450:flags=lanczos,format=rgba[patch];color=c=black:s=800x450:r=24:d=4,format=gray,drawbox=x=55:y=150:w=300:h=230:color=0xD0D0D0:t=fill,gblur=sigma=32[mask];[patch][mask]alphamerge[patcha];[0:v]format=rgba[base];[base][patcha]overlay=x=1120:y=250:format=auto,scale=in_range=pc:out_range=tv,format=yuv420p,setparams=range=tv[out]",
+      "-map",
+      "[out]",
+      "-t",
+      "4",
+      "-r",
+      "24",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-crf",
+      "18",
+      "-movflags",
+      "+faststart",
+      "-an",
+      "<output>"
+    ]
+  },
+  "output": {
+    "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/composite/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+    "sha256": "d058fe8556e2f3badaa436745b1aa6e30ff0e726ef1648134225508e5917e13c",
+    "bytes": 552368,
+    "media": {
+      "container": "mov,mp4,m4a,3gp,3g2,mj2",
+      "codec": "h264",
+      "profile": "High",
+      "level": 50,
+      "duration_seconds": 4.0,
+      "width": 1920,
+      "height": 1080,
+      "pixel_format": "yuv420p",
+      "fps": 24.0,
+      "frames": 96,
+      "has_audio": false,
+      "bytes": 552368,
+      "sha256": "d058fe8556e2f3badaa436745b1aa6e30ff0e726ef1648134225508e5917e13c"
+    },
+    "mp4_atoms": {
+      "top_level": [
+        {
+          "type": "ftyp",
+          "offset": 0,
+          "bytes": 32
+        },
+        {
+          "type": "moov",
+          "offset": 32,
+          "bytes": 2441
+        },
+        {
+          "type": "free",
+          "offset": 2473,
+          "bytes": 8
+        },
+        {
+          "type": "mdat",
+          "offset": 2481,
+          "bytes": 549887
+        }
+      ],
+      "faststart": true,
+      "moov_offset": 32,
+      "mdat_offset": 2481
+    },
+    "decoded_frame_checksums": {
+      "algorithm": "md5-decoded-yuv420p",
+      "decoded_frame_bytes": 3110400,
+      "unique_frame_checksums": 96,
+      "samples": {
+        "0": "845e82049b5973588d963dcd0ea528ac",
+        "48": "507f6a95cb510929bf77669c189b84bf",
+        "95": "9d2e8c895c66aed1567e8a4e1b01ef71"
+      }
+    }
+  },
+  "verification": {
+    "byte_identical_reproduction": true,
+    "technical_invariants_verified": true,
+    "visual_samples_inspected": [
+      0,
+      48,
+      95
+    ],
+    "visual_result": "base composition and person remain intact; only the softly masked right-side illumination patch changes"
+  }
+}
