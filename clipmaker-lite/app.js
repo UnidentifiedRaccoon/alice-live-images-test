@@ -182,7 +182,7 @@
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_ARTICLE_COUNT = 21;
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_IMAGE_COUNT = 170;
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_OUTPUT_COUNT = 510;
-  const EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 508;
+  const EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 510;
   const PROVIDER_FILTERED_STATUS = "provider-filtered";
   const PROVIDER_FILTERED_RECORDED_STATUS = "provider-failed";
   const PROVIDER_FILTERED_SELECTION = "terminal-retry-v1-exhausted";
@@ -3551,7 +3551,7 @@
         manifest.verified_output_count === expectedByKey.size &&
         Array.isArray(manifest.outputs) &&
         manifest.outputs.length === expectedByKey.size,
-      "S3 delivery-манифест должен покрывать ровно 508 проверенных MP4.",
+      "S3 delivery-манифест должен покрывать ровно 510 проверенных MP4.",
     );
 
     const deliveryByKey = new Map();
