@@ -1,0 +1,1283 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f0f4" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <meta
+      name="description"
+      content="Локальная проверка вариантов анимации штор и движения камеры для PROMOPAGES-10060."
+    />
+    <title>Alice Live · Проверка штор · PROMOPAGES-10060</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../../../shared.css" />
+    <style>
+      :root {
+        --review-max: 112rem;
+        --review-gutter: clamp(1rem, 2.6vw, 3rem);
+      }
+
+      body {
+        background: var(--canvas);
+      }
+
+      .reviewHeader .siteHeaderInner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        min-height: 4.5rem;
+        padding-inline: var(--review-gutter);
+      }
+
+      .headerActions,
+      .toolbarActions,
+      .rowActions,
+      .exportActions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        align-items: center;
+      }
+
+      .headerLink,
+      .reviewButton,
+      .rowButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.75rem;
+        border: 0.0625rem solid var(--line-strong);
+        border-radius: var(--radius-sm);
+        padding: 0.625rem 0.875rem;
+        color: var(--ink);
+        background: var(--surface);
+        font-size: var(--text-sm);
+        font-weight: 650;
+        line-height: 1;
+        text-decoration: none;
+      }
+
+      .reviewButton.primary {
+        border-color: var(--ink);
+        color: var(--surface);
+        background: var(--ink);
+      }
+
+      .reviewButton:hover,
+      .rowButton:hover,
+      .headerLink:hover {
+        border-color: var(--accent);
+      }
+
+      .reviewMain {
+        width: min(var(--review-max), 100%);
+        margin: 0 auto;
+        padding: var(--space-2xl) var(--review-gutter) var(--space-4xl);
+      }
+
+      .reviewIntro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(20rem, 0.55fr);
+        gap: clamp(2rem, 5vw, 6rem);
+        align-items: end;
+        padding-block: var(--space-xl) var(--space-3xl);
+      }
+
+      .reviewIntro h1 {
+        max-width: 16ch;
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(2.75rem, 6vw, 6.8rem);
+        font-weight: 400;
+        letter-spacing: -0.045em;
+        line-height: 0.96;
+      }
+
+      .reviewLead {
+        max-width: 42rem;
+        margin: var(--space-xl) 0 0;
+        color: var(--ink-soft);
+        font-size: clamp(1rem, 1.25vw, 1.25rem);
+        line-height: 1.55;
+      }
+
+      .experimentFacts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 0;
+        border-top: 0.0625rem solid var(--line-strong);
+      }
+
+      .experimentFacts div {
+        padding: var(--space-md) 0;
+        border-bottom: 0.0625rem solid var(--line);
+      }
+
+      .experimentFacts div:nth-child(even) {
+        padding-left: var(--space-lg);
+        border-left: 0.0625rem solid var(--line);
+      }
+
+      .experimentFacts dt {
+        color: var(--ink-muted);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .experimentFacts dd {
+        margin: var(--space-xs) 0 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 2vw, 2.25rem);
+        line-height: 1;
+      }
+
+      .sourceBand {
+        display: grid;
+        grid-template-columns: minmax(20rem, 0.72fr) minmax(0, 1.28fr);
+        gap: clamp(1.5rem, 4vw, 4rem);
+        align-items: center;
+        padding-block: var(--space-xl) var(--space-2xl);
+        border-top: 0.0625rem solid var(--line-strong);
+      }
+
+      .sourceFrame {
+        margin: 0;
+      }
+
+      .sourceFrame img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: var(--radius-xs);
+        object-fit: cover;
+        background: var(--media);
+      }
+
+      .sourceFrame figcaption {
+        margin-top: var(--space-sm);
+        color: var(--ink-muted);
+        font-size: var(--text-sm);
+      }
+
+      .sourceCopy h2,
+      .feedbackPanel h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 3.5vw, 3.75rem);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+      }
+
+      .sourceCopy p {
+        max-width: 46rem;
+        margin: var(--space-lg) 0 0;
+        color: var(--ink-soft);
+        font-size: var(--text-lg);
+      }
+
+      .sourceCopy strong {
+        color: var(--ink);
+      }
+
+      .reviewToolbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: grid;
+        grid-template-columns: auto minmax(12rem, 1fr) auto;
+        gap: var(--space-lg);
+        align-items: center;
+        margin-inline: calc(var(--review-gutter) * -1);
+        padding: var(--space-sm) var(--review-gutter);
+        border-block: 0.0625rem solid var(--line);
+        background: color-mix(in oklch, var(--canvas) 94%, transparent);
+        backdrop-filter: blur(0.75rem);
+      }
+
+      .timelineControl {
+        display: grid;
+        grid-template-columns: auto minmax(6rem, 1fr) 3.5rem;
+        gap: var(--space-sm);
+        align-items: center;
+        min-width: 0;
+        color: var(--ink-muted);
+        font-size: var(--text-sm);
+      }
+
+      .timelineControl input {
+        width: 100%;
+        accent-color: var(--accent);
+      }
+
+      .toolbarOptions {
+        display: flex;
+        gap: var(--space-md);
+        align-items: center;
+      }
+
+      .toolbarOptions label {
+        display: inline-flex;
+        gap: var(--space-xs);
+        align-items: center;
+        color: var(--ink-soft);
+        font-size: var(--text-sm);
+        white-space: nowrap;
+      }
+
+      .toolbarOptions select {
+        min-height: 2.5rem;
+        border: 0.0625rem solid var(--line-strong);
+        border-radius: var(--radius-sm);
+        padding: 0 var(--space-sm);
+        color: var(--ink);
+        background: var(--surface);
+      }
+
+      .matrix {
+        padding-top: var(--space-3xl);
+      }
+
+      .variantRow {
+        scroll-margin-top: 6rem;
+        padding-block: var(--space-2xl) var(--space-3xl);
+        border-top: 0.0625rem solid var(--line-strong);
+      }
+
+      .variantHeading {
+        display: grid;
+        grid-template-columns: 5rem minmax(0, 1fr) auto;
+        gap: var(--space-lg);
+        align-items: start;
+        margin-bottom: var(--space-xl);
+      }
+
+      .variantLetter {
+        font-family: var(--font-display);
+        font-size: 4.5rem;
+        line-height: 0.9;
+      }
+
+      .variantHeading h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.75rem, 3vw, 3rem);
+        font-weight: 400;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+      }
+
+      .variantHeading p {
+        max-width: 48rem;
+        margin: var(--space-sm) 0 0;
+        color: var(--ink-muted);
+      }
+
+      .clipGrid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .clipGrid.repairGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .clip {
+        min-width: 0;
+        padding-inline: var(--space-lg);
+      }
+
+      .clip:first-child {
+        padding-left: 0;
+      }
+
+      .clip:last-child {
+        padding-right: 0;
+      }
+
+      .clip + .clip {
+        border-left: 0.0625rem solid var(--line);
+      }
+
+      .clipHeader {
+        display: flex;
+        gap: var(--space-sm);
+        align-items: baseline;
+        justify-content: space-between;
+        min-height: 3.5rem;
+      }
+
+      .clipHeader h3 {
+        margin: 0;
+        font-size: var(--text-lg);
+        letter-spacing: -0.02em;
+      }
+
+      .status {
+        display: inline-flex;
+        gap: var(--space-xs);
+        align-items: center;
+        color: var(--ink-muted);
+        font-size: var(--text-xs);
+        font-weight: 700;
+      }
+
+      .status::before {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: var(--success);
+        content: "";
+      }
+
+      .status.warning::before {
+        background: var(--warning);
+      }
+
+      .clip video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: var(--radius-xs);
+        background: var(--media);
+        object-fit: contain;
+      }
+
+      .clipMeta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs) var(--space-md);
+        margin: var(--space-sm) 0 0;
+        color: var(--ink-muted);
+        font-size: var(--text-xs);
+      }
+
+      .clipMeta code {
+        color: var(--ink-soft);
+        font: inherit;
+      }
+
+      .feedbackForm {
+        display: grid;
+        gap: var(--space-md);
+        margin-top: var(--space-lg);
+        padding-top: var(--space-lg);
+        border-top: 0.0625rem solid var(--line);
+      }
+
+      .scoreField {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        align-items: center;
+        margin: 0;
+        border: 0;
+        padding: 0;
+      }
+
+      .scoreField legend {
+        float: left;
+        margin-right: var(--space-sm);
+        color: var(--ink-muted);
+        font-size: var(--text-sm);
+      }
+
+      .scoreField input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      .scoreField label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border: 0.0625rem solid var(--line-strong);
+        border-radius: var(--radius-sm);
+        color: var(--ink-soft);
+        background: var(--surface);
+        font-size: var(--text-sm);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .scoreField input:checked + label {
+        border-color: var(--accent-dark);
+        color: var(--surface);
+        background: var(--accent-dark);
+      }
+
+      .scoreField input:focus-visible + label {
+        outline: 0.1875rem solid var(--accent);
+        outline-offset: 0.1875rem;
+      }
+
+      .feedbackForm select,
+      .feedbackForm textarea {
+        width: 100%;
+        border: 0.0625rem solid var(--line-strong);
+        border-radius: var(--radius-sm);
+        color: var(--ink);
+        background: var(--surface);
+      }
+
+      .feedbackForm select {
+        min-height: 2.75rem;
+        padding: 0 var(--space-sm);
+      }
+
+      .feedbackForm textarea {
+        min-height: 6rem;
+        resize: vertical;
+        padding: var(--space-sm);
+        line-height: 1.45;
+      }
+
+      .feedbackLabel {
+        display: grid;
+        gap: var(--space-xs);
+        color: var(--ink-muted);
+        font-size: var(--text-sm);
+      }
+
+      .analysis {
+        margin-top: var(--space-md);
+        border-top: 0.0625rem solid var(--line);
+        padding-top: var(--space-md);
+        color: var(--ink-soft);
+        font-size: var(--text-sm);
+      }
+
+      .analysis summary {
+        width: fit-content;
+        color: var(--accent-dark);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      body[data-blind="true"] .analysis {
+        display: none;
+      }
+
+      .promptLink {
+        display: inline-block;
+        margin-top: var(--space-sm);
+        color: var(--ink-muted);
+        font-size: var(--text-xs);
+      }
+
+      .feedbackPanel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--space-xl);
+        align-items: end;
+        padding-top: var(--space-2xl);
+        border-top: 0.0625rem solid var(--line-strong);
+      }
+
+      .feedbackPanel p {
+        max-width: 46rem;
+        margin: var(--space-md) 0 0;
+        color: var(--ink-muted);
+      }
+
+      .feedbackProgress {
+        margin-top: var(--space-sm);
+        color: var(--accent-dark);
+        font-weight: 700;
+      }
+
+      .toast {
+        position: fixed;
+        right: var(--space-lg);
+        bottom: var(--space-lg);
+        z-index: 100;
+        max-width: min(24rem, calc(100vw - 2rem));
+        border-radius: var(--radius-sm);
+        padding: var(--space-sm) var(--space-md);
+        color: var(--surface);
+        background: var(--ink);
+        box-shadow: 0 0.75rem 2rem color-mix(in oklch, var(--ink) 18%, transparent);
+      }
+
+      .visuallyHidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      @media (max-width: 78rem) {
+        .reviewToolbar {
+          grid-template-columns: 1fr;
+        }
+
+        .clipGrid {
+          grid-template-columns: 1fr;
+          gap: var(--space-2xl);
+        }
+
+        .clipGrid.repairGrid {
+          grid-template-columns: 1fr;
+        }
+
+        .clip {
+          padding-inline: 0;
+        }
+
+        .clip + .clip {
+          border-top: 0.0625rem solid var(--line);
+          border-left: 0;
+          padding-top: var(--space-xl);
+        }
+
+        .clip video {
+          max-height: 78vh;
+        }
+      }
+
+      @media (max-width: 54rem) {
+        .reviewHeader .siteHeaderInner,
+        .reviewIntro,
+        .sourceBand,
+        .feedbackPanel {
+          grid-template-columns: 1fr;
+        }
+
+        .headerActions {
+          justify-content: flex-start;
+        }
+
+        .reviewIntro {
+          padding-top: var(--space-lg);
+        }
+
+        .variantHeading {
+          grid-template-columns: 3.5rem minmax(0, 1fr);
+        }
+
+        .variantLetter {
+          font-size: 3.25rem;
+        }
+
+        .rowActions {
+          grid-column: 2;
+        }
+      }
+
+      @media (max-width: 34rem) {
+        .reviewMain {
+          padding-top: var(--space-lg);
+        }
+
+        .reviewIntro h1 {
+          font-size: 2.6rem;
+        }
+
+        .reviewToolbar {
+          margin-inline: calc(var(--review-gutter) * -1);
+        }
+
+        .toolbarActions,
+        .toolbarOptions,
+        .exportActions {
+          align-items: stretch;
+        }
+
+        .reviewButton,
+        .rowButton {
+          flex: 1 1 auto;
+        }
+
+        .timelineControl {
+          grid-template-columns: 1fr 3rem;
+        }
+
+        .timelineControl span:first-child {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body data-blind="true">
+    <a class="skipLink" href="#matrix">К сравнению</a>
+
+    <header class="siteHeader reviewHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../../../../index.html" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+        <div class="headerActions">
+          <a class="headerLink" href="./report.md">Технический отчёт</a>
+          <a class="headerLink" href="../../../../ab-preparation/?case=PROMOPAGES-10060%3A02-level-rabotaiu-v-level&amp;image=06">Исходный кейс</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="reviewMain">
+      <section class="reviewIntro" aria-labelledby="pageTitle">
+        <div>
+          <h1 id="pageTitle">Камера или мягкая штора?</h1>
+          <p class="reviewLead">
+            Четырнадцать локальных генераций для одного интерьерного кадра. Сначала
+            сформируйте собственное мнение: мой разбор скрыт. Оценки и заметки
+            сохраняются только в этом браузере.
+          </p>
+        </div>
+        <dl class="experimentFacts" aria-label="Параметры эксперимента">
+          <div><dt>Постановки</dt><dd>6</dd></div>
+          <div><dt>Модели</dt><dd>3</dd></div>
+          <div><dt>MP4</dt><dd>14</dd></div>
+          <div><dt>Accounting max</dt><dd>$4.90</dd></div>
+        </dl>
+      </section>
+
+      <section class="sourceBand" aria-labelledby="sourceTitle">
+        <figure class="sourceFrame">
+          <img
+            src="../../../../PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg"
+            alt="Исходная фотография квартиры с кроватью, обеденной зоной, деревянной перегородкой и шторами"
+          />
+          <figcaption>Исходник · 1296 × 972 · body image №06</figcaption>
+        </figure>
+        <div class="sourceCopy">
+          <h2 id="sourceTitle">Что проверяем</h2>
+          <p>
+            <strong>Смысл кадра — зонирование.</strong> Сравните естественность
+            ткани, амплитуду камеры, стабильность перегородки и мебели, а также
+            читаемость спальни и обеденной зоны в финальном кадре.
+          </p>
+        </div>
+      </section>
+
+      <section class="reviewToolbar" aria-label="Управление воспроизведением">
+        <div class="toolbarActions">
+          <button class="reviewButton primary" id="playAll" type="button">Воспроизвести все</button>
+          <button class="reviewButton" id="pauseAll" type="button">Пауза</button>
+          <button class="reviewButton" id="restartAll" type="button">В начало</button>
+        </div>
+        <label class="timelineControl" for="masterTimeline">
+          <span>Общий таймлайн</span>
+          <input id="masterTimeline" type="range" min="0" max="1000" value="0" />
+          <output id="timelineOutput" for="masterTimeline">0%</output>
+        </label>
+        <div class="toolbarOptions">
+          <label for="speedSelect">
+            Скорость
+            <select id="speedSelect">
+              <option value="0.5">0.5×</option>
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option>
+            </select>
+          </label>
+          <label for="blindMode">
+            <input id="blindMode" type="checkbox" checked />
+            Скрыть разбор
+          </label>
+        </div>
+      </section>
+
+      <div class="matrix" id="matrix">
+        <section class="variantRow" id="variantA" data-variant="a-camera-only">
+          <header class="variantHeading">
+            <span class="variantLetter" aria-hidden="true">A</span>
+            <div>
+              <h2>Только камера</h2>
+              <p>Медленный сдвиг вправо с небольшим приближением. Шторы полностью неподвижны.</p>
+            </div>
+            <div class="rowActions">
+              <button class="rowButton" type="button" data-play-row>Воспроизвести ряд</button>
+              <button class="rowButton" type="button" data-pause-row>Пауза</button>
+            </div>
+          </header>
+          <div class="clipGrid">
+            <article class="clip" data-clip="a-wan22">
+              <header class="clipHeader"><h3>Wan 2.2</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a-camera-only/wan-2.2/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1104 × 816</span><code>alibaba/wan-2.2</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a-wan22-1" name="a-wan22-score" type="radio" value="1" /><label for="a-wan22-1">1</label>
+                  <input id="a-wan22-2" name="a-wan22-score" type="radio" value="2" /><label for="a-wan22-2">2</label>
+                  <input id="a-wan22-3" name="a-wan22-score" type="radio" value="3" /><label for="a-wan22-3">3</label>
+                  <input id="a-wan22-4" name="a-wan22-score" type="radio" value="4" /><label for="a-wan22-4">4</label>
+                  <input id="a-wan22-5" name="a-wan22-score" type="radio" value="5" /><label for="a-wan22-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Ткань стабильна, но camera travel заметно больше заявленного micro-move; перегородка становится слишком крупной.</p></details>
+              <a class="promptLink" href="../videos/a-camera-only/wan-2.2/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="a-wan27">
+              <header class="clipHeader"><h3>Wan 2.7</h3><span class="status warning">media warning</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a-camera-only/wan-2.7/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1662 × 1246</span><span>audio</span><code>alibaba/wan-2.7</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a-wan27-1" name="a-wan27-score" type="radio" value="1" /><label for="a-wan27-1">1</label>
+                  <input id="a-wan27-2" name="a-wan27-score" type="radio" value="2" /><label for="a-wan27-2">2</label>
+                  <input id="a-wan27-3" name="a-wan27-score" type="radio" value="3" /><label for="a-wan27-3">3</label>
+                  <input id="a-wan27-4" name="a-wan27-score" type="radio" value="4" /><label for="a-wan27-4">4</label>
+                  <input id="a-wan27-5" name="a-wan27-score" type="radio" value="5" /><label for="a-wan27-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Микро-dolly превращается в сильный проезд; перегородка частично перекрывает сравнение зон. Контракт не пройден по аудио и разрешению.</p></details>
+              <a class="promptLink" href="../videos/a-camera-only/wan-2.7/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="a-veo">
+              <header class="clipHeader"><h3>Veo 3.1 Lite</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a-camera-only/veo-3.1-lite/06.mp4"></video>
+              <p class="clipMeta"><span>4.0 с</span><span>1920 × 1080</span><code>google/veo-3.1-lite</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a-veo-1" name="a-veo-score" type="radio" value="1" /><label for="a-veo-1">1</label>
+                  <input id="a-veo-2" name="a-veo-score" type="radio" value="2" /><label for="a-veo-2">2</label>
+                  <input id="a-veo-3" name="a-veo-score" type="radio" value="3" /><label for="a-veo-3">3</label>
+                  <input id="a-veo-4" name="a-veo-score" type="radio" value="4" /><label for="a-veo-4">4</label>
+                  <input id="a-veo-5" name="a-veo-score" type="radio" value="5" /><label for="a-veo-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Небольшой чистый параллакс, обе зоны читаются, штора и архитектура стабильны.</p></details>
+              <a class="promptLink" href="../videos/a-camera-only/veo-3.1-lite/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="variantRow" id="variantA2" data-variant="a2-softer-camera">
+          <header class="variantHeading">
+            <span class="variantLetter" aria-hidden="true">A₂</span>
+            <div>
+              <h2>Только камера · мягче</h2>
+              <p>Очень небольшой dolly вправо без приближения: мягкий старт, ровное скольжение и плавная остановка. Шторы неподвижны.</p>
+            </div>
+            <div class="rowActions">
+              <button class="rowButton" type="button" data-play-row>Воспроизвести ряд</button>
+              <button class="rowButton" type="button" data-pause-row>Пауза</button>
+            </div>
+          </header>
+          <div class="clipGrid">
+            <article class="clip" data-clip="a2-wan22">
+              <header class="clipHeader"><h3>Wan 2.2</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a2-softer-camera/wan-2.2/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1104 × 816</span><code>alibaba/wan-2.2</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a2-wan22-1" name="a2-wan22-score" type="radio" value="1" /><label for="a2-wan22-1">1</label>
+                  <input id="a2-wan22-2" name="a2-wan22-score" type="radio" value="2" /><label for="a2-wan22-2">2</label>
+                  <input id="a2-wan22-3" name="a2-wan22-score" type="radio" value="3" /><label for="a2-wan22-3">3</label>
+                  <input id="a2-wan22-4" name="a2-wan22-score" type="radio" value="4" /><label for="a2-wan22-4">4</label>
+                  <input id="a2-wan22-5" name="a2-wan22-score" type="radio" value="5" /><label for="a2-wan22-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Амплитуда стала значительно меньше исходного A; движение спокойное, перегородка и ткань стабильны.</p></details>
+              <a class="promptLink" href="../videos/a2-softer-camera/wan-2.2/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="a2-wan27">
+              <header class="clipHeader"><h3>Wan 2.7</h3><span class="status warning">media warning</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a2-softer-camera/wan-2.7/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1662 × 1246</span><span>audio</span><code>alibaba/wan-2.7</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a2-wan27-1" name="a2-wan27-score" type="radio" value="1" /><label for="a2-wan27-1">1</label>
+                  <input id="a2-wan27-2" name="a2-wan27-score" type="radio" value="2" /><label for="a2-wan27-2">2</label>
+                  <input id="a2-wan27-3" name="a2-wan27-score" type="radio" value="3" /><label for="a2-wan27-3">3</label>
+                  <input id="a2-wan27-4" name="a2-wan27-score" type="radio" value="4" /><label for="a2-wan27-4">4</label>
+                  <input id="a2-wan27-5" name="a2-wan27-score" type="radio" value="5" /><label for="a2-wan27-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Сдвиг мягче исходного A, но модель всё ещё усиливает camera travel. Transport снова вернул audio и нестандартное разрешение.</p></details>
+              <a class="promptLink" href="../videos/a2-softer-camera/wan-2.7/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="a2-veo">
+              <header class="clipHeader"><h3>Veo 3.1 Lite</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a2-softer-camera/veo-3.1-lite/06.mp4"></video>
+              <p class="clipMeta"><span>4.0 с</span><span>1920 × 1080</span><code>google/veo-3.1-lite</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a2-veo-1" name="a2-veo-score" type="radio" value="1" /><label for="a2-veo-1">1</label>
+                  <input id="a2-veo-2" name="a2-veo-score" type="radio" value="2" /><label for="a2-veo-2">2</label>
+                  <input id="a2-veo-3" name="a2-veo-score" type="radio" value="3" /><label for="a2-veo-3">3</label>
+                  <input id="a2-veo-4" name="a2-veo-score" type="radio" value="4" /><label for="a2-veo-4">4</label>
+                  <input id="a2-veo-5" name="a2-veo-score" type="radio" value="5" /><label for="a2-veo-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Veo фактически заморозил кадр: средняя межкадровая разница всего 0.13 против 1.74 у исходного A. Причина — одновременные ограничения starts still, tiny distance и полная неподвижность сцены.</p></details>
+              <a class="promptLink" href="../videos/a2-softer-camera/veo-3.1-lite/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="variantRow" id="variantA3" data-variant="veo-camera-repair">
+          <header class="variantHeading">
+            <span class="variantLetter" aria-hidden="true">A₃</span>
+            <div>
+              <h2>Veo · калибровка мягкой камеры</h2>
+              <p>A₃ — выбранный эталон: заметный непрерывный проезд с ровным темпом. A₄ оставлен как более сдержанная композиционная альтернатива.</p>
+            </div>
+            <div class="rowActions">
+              <button class="rowButton" type="button" data-play-row>Воспроизвести ряд</button>
+              <button class="rowButton" type="button" data-pause-row>Пауза</button>
+            </div>
+          </header>
+          <div class="clipGrid repairGrid">
+            <article class="clip" data-clip="a3-veo">
+              <header class="clipHeader"><h3>A₃ · Continuous soft camera</h3><span class="status">recommended</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a3-veo-visible-soft-camera/veo-3.1-lite/06.mp4"></video>
+              <p class="clipMeta"><span>4.0 с</span><span>1920 × 1080</span><span>motion 6.20</span><code>google/veo-3.1-lite</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a3-veo-1" name="a3-veo-score" type="radio" value="1" /><label for="a3-veo-1">1</label>
+                  <input id="a3-veo-2" name="a3-veo-score" type="radio" value="2" /><label for="a3-veo-2">2</label>
+                  <input id="a3-veo-3" name="a3-veo-score" type="radio" value="3" /><label for="a3-veo-3">3</label>
+                  <input id="a3-veo-4" name="a3-veo-score" type="radio" value="4" /><label for="a3-veo-4">4</label>
+                  <input id="a3-veo-5" name="a3-veo-score" type="radio" value="5" /><label for="a3-veo-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Выбранный человеком эталон. Камера начинает движение сразу и идёт непрерывно с ровной скоростью: высокая амплитуда не воспринимается резкой, потому что в траектории нет пауз и рывков.</p></details>
+              <a class="promptLink" href="../videos/a3-veo-visible-soft-camera/veo-3.1-lite/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" id="variantA4" data-clip="a4-veo">
+              <header class="clipHeader"><h3>A₄ · Bounded soft camera</h3><span class="status">restrained alternative</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/a4-bounded-soft-camera/veo-3.1-lite/06.mp4"></video>
+              <p class="clipMeta"><span>4.0 с</span><span>1920 × 1080</span><span>motion 1.08</span><code>google/veo-3.1-lite</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="a4-veo-1" name="a4-veo-score" type="radio" value="1" /><label for="a4-veo-1">1</label>
+                  <input id="a4-veo-2" name="a4-veo-score" type="radio" value="2" /><label for="a4-veo-2">2</label>
+                  <input id="a4-veo-3" name="a4-veo-score" type="radio" value="3" /><label for="a4-veo-3">3</label>
+                  <input id="a4-veo-4" name="a4-veo-score" type="radio" value="4" /><label for="a4-veo-4">4</label>
+                  <input id="a4-veo-5" name="a4-veo-score" type="radio" value="5" /><label for="a4-veo-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Более сдержанная альтернатива A₃: меньше travel, обе зоны дольше сохраняют исходные доли кадра. Использовать, только если важнее удержать композицию, чем получить выразительный проезд.</p></details>
+              <a class="promptLink" href="../videos/a4-bounded-soft-camera/veo-3.1-lite/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="variantRow" id="variantB" data-variant="b-camera-soft-sheer">
+          <header class="variantHeading">
+            <span class="variantLetter" aria-hidden="true">B</span>
+            <div>
+              <h2>Камера и мягкий тюль</h2>
+              <p>Минимальный параллакс; вторично двигается только нижний край полупрозрачной шторы.</p>
+            </div>
+            <div class="rowActions">
+              <button class="rowButton" type="button" data-play-row>Воспроизвести ряд</button>
+              <button class="rowButton" type="button" data-pause-row>Пауза</button>
+            </div>
+          </header>
+          <div class="clipGrid">
+            <article class="clip" data-clip="b-wan22">
+              <header class="clipHeader"><h3>Wan 2.2</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/b-camera-soft-sheer/wan-2.2/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1104 × 816</span><code>alibaba/wan-2.2</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="b-wan22-1" name="b-wan22-score" type="radio" value="1" /><label for="b-wan22-1">1</label>
+                  <input id="b-wan22-2" name="b-wan22-score" type="radio" value="2" /><label for="b-wan22-2">2</label>
+                  <input id="b-wan22-3" name="b-wan22-score" type="radio" value="3" /><label for="b-wan22-3">3</label>
+                  <input id="b-wan22-4" name="b-wan22-score" type="radio" value="4" /><label for="b-wan22-4">4</label>
+                  <input id="b-wan22-5" name="b-wan22-score" type="radio" value="5" /><label for="b-wan22-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Самый сбалансированный Wan 2.2: обе зоны читаются, а штора не становится главным объектом.</p></details>
+              <a class="promptLink" href="../videos/b-camera-soft-sheer/wan-2.2/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="b-wan27">
+              <header class="clipHeader"><h3>Wan 2.7</h3><span class="status warning">media warning</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/b-camera-soft-sheer/wan-2.7/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1662 × 1246</span><span>audio</span><code>alibaba/wan-2.7</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="b-wan27-1" name="b-wan27-score" type="radio" value="1" /><label for="b-wan27-1">1</label>
+                  <input id="b-wan27-2" name="b-wan27-score" type="radio" value="2" /><label for="b-wan27-2">2</label>
+                  <input id="b-wan27-3" name="b-wan27-score" type="radio" value="3" /><label for="b-wan27-3">3</label>
+                  <input id="b-wan27-4" name="b-wan27-score" type="radio" value="4" /><label for="b-wan27-4">4</label>
+                  <input id="b-wan27-5" name="b-wan27-score" type="radio" value="5" /><label for="b-wan27-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Формулировки tiny и very small не удерживают амплитуду камеры; media contract снова не пройден.</p></details>
+              <a class="promptLink" href="../videos/b-camera-soft-sheer/wan-2.7/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="b-veo">
+              <header class="clipHeader"><h3>Veo 3.1 Lite</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/b-camera-soft-sheer/veo-3.1-lite/06.mp4"></video>
+              <p class="clipMeta"><span>4.0 с</span><span>1920 × 1080</span><code>google/veo-3.1-lite</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="b-veo-1" name="b-veo-score" type="radio" value="1" /><label for="b-veo-1">1</label>
+                  <input id="b-veo-2" name="b-veo-score" type="radio" value="2" /><label for="b-veo-2">2</label>
+                  <input id="b-veo-3" name="b-veo-score" type="radio" value="3" /><label for="b-veo-3">3</label>
+                  <input id="b-veo-4" name="b-veo-score" type="radio" value="4" /><label for="b-veo-4">4</label>
+                  <input id="b-veo-5" name="b-veo-score" type="radio" value="5" /><label for="b-veo-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Модель создаёт новую крупную штору на переднем плане, которая закрывает кровать.</p></details>
+              <a class="promptLink" href="../videos/b-camera-soft-sheer/veo-3.1-lite/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="variantRow" id="variantC" data-variant="c-static-soft-sheer">
+          <header class="variantHeading">
+            <span class="variantLetter" aria-hidden="true">C</span>
+            <div>
+              <h2>Только мягкий тюль</h2>
+              <p>Камера фиксирована; нижняя треть шторы делает одно низкоамплитудное движение.</p>
+            </div>
+            <div class="rowActions">
+              <button class="rowButton" type="button" data-play-row>Воспроизвести ряд</button>
+              <button class="rowButton" type="button" data-pause-row>Пауза</button>
+            </div>
+          </header>
+          <div class="clipGrid">
+            <article class="clip" data-clip="c-wan22">
+              <header class="clipHeader"><h3>Wan 2.2</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/c-static-soft-sheer/wan-2.2/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1104 × 816</span><code>alibaba/wan-2.2</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="c-wan22-1" name="c-wan22-score" type="radio" value="1" /><label for="c-wan22-1">1</label>
+                  <input id="c-wan22-2" name="c-wan22-score" type="radio" value="2" /><label for="c-wan22-2">2</label>
+                  <input id="c-wan22-3" name="c-wan22-score" type="radio" value="3" /><label for="c-wan22-3">3</label>
+                  <input id="c-wan22-4" name="c-wan22-score" type="radio" value="4" /><label for="c-wan22-4">4</label>
+                  <input id="c-wan22-5" name="c-wan22-score" type="radio" value="5" /><label for="c-wan22-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Самый безопасный, но почти статичный результат: микродвижение в основном проигнорировано.</p></details>
+              <a class="promptLink" href="../videos/c-static-soft-sheer/wan-2.2/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="c-wan27">
+              <header class="clipHeader"><h3>Wan 2.7</h3><span class="status warning">media warning</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/c-static-soft-sheer/wan-2.7/06.mp4"></video>
+              <p class="clipMeta"><span>5.0 с</span><span>1662 × 1246</span><span>audio</span><code>alibaba/wan-2.7</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="c-wan27-1" name="c-wan27-score" type="radio" value="1" /><label for="c-wan27-1">1</label>
+                  <input id="c-wan27-2" name="c-wan27-score" type="radio" value="2" /><label for="c-wan27-2">2</label>
+                  <input id="c-wan27-3" name="c-wan27-score" type="radio" value="3" /><label for="c-wan27-3">3</label>
+                  <input id="c-wan27-4" name="c-wan27-score" type="radio" value="4" /><label for="c-wan27-4">4</label>
+                  <input id="c-wan27-5" name="c-wan27-score" type="radio" value="5" /><label for="c-wan27-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Центральная часть тюля снова образует парус; дополнительно меняется свет за правым окном.</p></details>
+              <a class="promptLink" href="../videos/c-static-soft-sheer/wan-2.7/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+            <article class="clip" data-clip="c-veo">
+              <header class="clipHeader"><h3>Veo 3.1 Lite</h3><span class="status">succeeded</span></header>
+              <video controls muted playsinline preload="metadata" src="../videos/c-static-soft-sheer/veo-3.1-lite/06.mp4"></video>
+              <p class="clipMeta"><span>4.0 с</span><span>1920 × 1080</span><code>google/veo-3.1-lite</code></p>
+              <form class="feedbackForm" data-feedback-form>
+                <fieldset class="scoreField"><legend>Оценка</legend>
+                  <input id="c-veo-1" name="c-veo-score" type="radio" value="1" /><label for="c-veo-1">1</label>
+                  <input id="c-veo-2" name="c-veo-score" type="radio" value="2" /><label for="c-veo-2">2</label>
+                  <input id="c-veo-3" name="c-veo-score" type="radio" value="3" /><label for="c-veo-3">3</label>
+                  <input id="c-veo-4" name="c-veo-score" type="radio" value="4" /><label for="c-veo-4">4</label>
+                  <input id="c-veo-5" name="c-veo-score" type="radio" value="5" /><label for="c-veo-5">5</label>
+                </fieldset>
+                <label class="feedbackLabel">Вердикт<select name="verdict"><option value="">Не выбран</option><option value="shortlist">В шортлист</option><option value="maybe">Нужно поправить</option><option value="reject">Отклонить</option></select></label>
+                <label class="feedbackLabel">Заметка<textarea name="note" placeholder="Что хорошо или что мешает?"></textarea></label>
+              </form>
+              <details class="analysis"><summary>Мой разбор</summary><p>Движется всё полотно, а не нижняя треть; тюль снова открывается и меняет силуэт.</p></details>
+              <a class="promptLink" href="../videos/c-static-soft-sheer/veo-3.1-lite/06.prompt.json">Открыть prompt JSON</a>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <section class="feedbackPanel" aria-labelledby="feedbackTitle">
+        <div>
+          <h2 id="feedbackTitle">Ваше мнение</h2>
+          <p>Оценки сохраняются в localStorage. Можно скачать JSON или скопировать короткое текстовое резюме и прислать его в чат.</p>
+          <p class="feedbackProgress" id="feedbackProgress" aria-live="polite">Оценено 0 из 14</p>
+        </div>
+        <div class="exportActions">
+          <button class="reviewButton" id="clearFeedback" type="button">Очистить оценки</button>
+          <button class="reviewButton" id="copyFeedback" type="button">Скопировать резюме</button>
+          <button class="reviewButton primary" id="downloadFeedback" type="button">Скачать JSON</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+    <script>
+      (() => {
+        const STORAGE_KEY = "alice-curtain-review-20260811-v1";
+        const videos = Array.from(document.querySelectorAll("video"));
+        const timeline = document.querySelector("#masterTimeline");
+        const timelineOutput = document.querySelector("#timelineOutput");
+        const speedSelect = document.querySelector("#speedSelect");
+        const blindMode = document.querySelector("#blindMode");
+        const progress = document.querySelector("#feedbackProgress");
+        const toast = document.querySelector("#toast");
+        let feedback = loadFeedback();
+        let animationFrame = null;
+
+        function loadFeedback() {
+          try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {};
+          } catch {
+            return {};
+          }
+        }
+
+        function saveFeedback() {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(feedback));
+          updateProgress();
+        }
+
+        function showToast(message) {
+          toast.textContent = message;
+          toast.hidden = false;
+          window.clearTimeout(showToast.timer);
+          showToast.timer = window.setTimeout(() => {
+            toast.hidden = true;
+          }, 2400);
+        }
+
+        function readyVideos(scope = document) {
+          return Array.from(scope.querySelectorAll("video")).filter(
+            (video) => Number.isFinite(video.duration) && video.duration > 0,
+          );
+        }
+
+        function setRate() {
+          const rate = Number(speedSelect.value);
+          videos.forEach((video) => {
+            video.playbackRate = rate;
+          });
+        }
+
+        function playVideos(items) {
+          setRate();
+          items.forEach((video) => {
+            const promise = video.play();
+            if (promise) promise.catch(() => {});
+          });
+          startTimelineLoop();
+        }
+
+        function pauseVideos(items) {
+          items.forEach((video) => video.pause());
+        }
+
+        function seekVideos(items, ratio) {
+          items.forEach((video) => {
+            if (Number.isFinite(video.duration) && video.duration > 0) {
+              video.currentTime = video.duration * ratio;
+            }
+          });
+        }
+
+        function startTimelineLoop() {
+          window.cancelAnimationFrame(animationFrame);
+          const tick = () => {
+            const leader = videos.find((video) => !video.paused && !video.ended);
+            if (!leader) return;
+            const ratio = leader.duration ? leader.currentTime / leader.duration : 0;
+            timeline.value = String(Math.round(ratio * 1000));
+            timelineOutput.value = `${Math.round(ratio * 100)}%`;
+            animationFrame = window.requestAnimationFrame(tick);
+          };
+          animationFrame = window.requestAnimationFrame(tick);
+        }
+
+        document.querySelector("#playAll").addEventListener("click", () => playVideos(videos));
+        document.querySelector("#pauseAll").addEventListener("click", () => pauseVideos(videos));
+        document.querySelector("#restartAll").addEventListener("click", () => {
+          pauseVideos(videos);
+          seekVideos(readyVideos(), 0);
+          timeline.value = "0";
+          timelineOutput.value = "0%";
+        });
+
+        timeline.addEventListener("input", () => {
+          const ratio = Number(timeline.value) / 1000;
+          seekVideos(readyVideos(), ratio);
+          timelineOutput.value = `${Math.round(ratio * 100)}%`;
+        });
+
+        speedSelect.addEventListener("change", setRate);
+
+        blindMode.addEventListener("change", () => {
+          document.body.dataset.blind = String(blindMode.checked);
+        });
+
+        document.querySelectorAll("[data-play-row]").forEach((button) => {
+          button.addEventListener("click", () => playVideos(readyVideos(button.closest(".variantRow"))));
+        });
+
+        document.querySelectorAll("[data-pause-row]").forEach((button) => {
+          button.addEventListener("click", () => pauseVideos(button.closest(".variantRow").querySelectorAll("video")));
+        });
+
+        document.querySelectorAll("[data-clip]").forEach((clip) => {
+          const key = clip.dataset.clip;
+          const form = clip.querySelector("[data-feedback-form]");
+          const stored = feedback[key] || {};
+          if (stored.score) {
+            const score = form.querySelector(`input[type="radio"][value="${stored.score}"]`);
+            if (score) score.checked = true;
+          }
+          form.elements.verdict.value = stored.verdict || "";
+          form.elements.note.value = stored.note || "";
+
+          form.addEventListener("input", () => {
+            const checked = form.querySelector('input[type="radio"]:checked');
+            feedback[key] = {
+              score: checked ? Number(checked.value) : null,
+              verdict: form.elements.verdict.value,
+              note: form.elements.note.value.trim(),
+            };
+            saveFeedback();
+          });
+        });
+
+        function updateProgress() {
+          const rated = Object.values(feedback).filter((item) => item && item.score).length;
+          progress.textContent = `Оценено ${rated} из ${document.querySelectorAll("[data-clip]").length}`;
+        }
+
+        function exportDocument() {
+          return {
+            schema_version: 1,
+            experiment: "promopages-10060-curtain-repair-20260811-v1",
+            saved_at: new Date().toISOString(),
+            feedback,
+          };
+        }
+
+        document.querySelector("#downloadFeedback").addEventListener("click", () => {
+          const blob = new Blob([JSON.stringify(exportDocument(), null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "curtain-review-feedback.json";
+          link.click();
+          URL.revokeObjectURL(url);
+          showToast("JSON с оценками скачан");
+        });
+
+        document.querySelector("#copyFeedback").addEventListener("click", async () => {
+          const labels = {
+            "a-wan22": "A · Wan 2.2",
+            "a-wan27": "A · Wan 2.7",
+            "a-veo": "A · Veo 3.1 Lite",
+            "a2-wan22": "A₂ · Wan 2.2",
+            "a2-wan27": "A₂ · Wan 2.7",
+            "a2-veo": "A₂ · Veo 3.1 Lite",
+            "a3-veo": "A₃ · Veo 3.1 Lite · recommended",
+            "a4-veo": "A₄ · Veo 3.1 Lite · restrained alternative",
+            "b-wan22": "B · Wan 2.2",
+            "b-wan27": "B · Wan 2.7",
+            "b-veo": "B · Veo 3.1 Lite",
+            "c-wan22": "C · Wan 2.2",
+            "c-wan27": "C · Wan 2.7",
+            "c-veo": "C · Veo 3.1 Lite",
+          };
+          const lines = ["PROMOPAGES-10060 · image 06 · мой review"];
+          Object.entries(labels).forEach(([key, label]) => {
+            const item = feedback[key] || {};
+            lines.push(`${label}: ${item.score || "—"}/5 · ${item.verdict || "без вердикта"}${item.note ? ` · ${item.note}` : ""}`);
+          });
+          try {
+            await navigator.clipboard.writeText(lines.join("\n"));
+            showToast("Резюме скопировано");
+          } catch {
+            showToast("Не удалось скопировать — скачайте JSON");
+          }
+        });
+
+        const clearFeedbackButton = document.querySelector("#clearFeedback");
+        let clearFeedbackArmed = false;
+        clearFeedbackButton.addEventListener("click", () => {
+          if (!clearFeedbackArmed) {
+            clearFeedbackArmed = true;
+            clearFeedbackButton.textContent = "Нажмите ещё раз";
+            window.clearTimeout(clearFeedbackButton.resetTimer);
+            clearFeedbackButton.resetTimer = window.setTimeout(() => {
+              clearFeedbackArmed = false;
+              clearFeedbackButton.textContent = "Очистить оценки";
+            }, 4000);
+            return;
+          }
+          feedback = {};
+          localStorage.removeItem(STORAGE_KEY);
+          document.querySelectorAll("[data-feedback-form]").forEach((form) => {
+            form.reset();
+          });
+          clearFeedbackArmed = false;
+          clearFeedbackButton.textContent = "Очистить оценки";
+          updateProgress();
+          showToast("Оценки очищены");
+        });
+
+        videos.forEach((video) => {
+          video.addEventListener("play", startTimelineLoop);
+          video.addEventListener("error", () => {
+            video.closest(".clip").querySelector(".status").textContent = "video error";
+          });
+        });
+
+        setRate();
+        updateProgress();
+      })();
+    </script>
+  </body>
+</html>

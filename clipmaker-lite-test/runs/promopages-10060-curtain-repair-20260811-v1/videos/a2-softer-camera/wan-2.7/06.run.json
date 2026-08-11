@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "a2-softer-camera",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The stabilized camera begins at rest and makes a very slight, even dolly to the right around the central timber divider, easing gently to rest near the end. Curtains, fabrics, furniture, and architecture stay completely motionless and unchanged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "38cffdd4fbaa6a471fdb02405f03e1374228a9244fe2187717b38baac57a6bea",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "VsQmdOJYVrkLbyckcC4g",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T11:46:49Z",
+  "completed_at": "2026-08-11T11:48:06Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4388424,
+    "sha256": "5df91120f65e0a384b186a382b75930250136bdfc22666a18e18cee80678c2aa"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-wan-2-7",
+  "lite_result_sha256": "ed72c524e8ee5356506bc138e67bdbfe2397b9b8de5819dbd07f36558d796533",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

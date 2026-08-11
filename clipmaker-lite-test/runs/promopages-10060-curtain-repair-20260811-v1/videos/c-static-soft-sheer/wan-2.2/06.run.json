@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "c-static-soft-sheer",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/c-static-soft-sheer/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/c-static-soft-sheer/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+      "prompt": "Fixed camera. Only the lower third of the sheer curtain makes one barely perceptible, low-amplitude sideways sway of a few centimeters, then gently settles near its original closed position by the final frame. The upper folds, heavy side drapes, curtain silhouette, and rigid room geometry remain still.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "e9cb04c53ccf2aa99288792ba0c76540aef2ea948ca278093548e0df68730eb5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "b20228701638552dd3916f35c314bf72",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T09:16:50Z",
+  "completed_at": "2026-08-11T09:16:50Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5767275,
+    "sha256": "b68f1affa42f26903af206bcdc2f5291d8780462052904e85bd70e0cfbda7c0e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v1-c-static-soft-sheer",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-c-static-soft-sheer-wan-2-2",
+  "lite_result_sha256": "129bc423e405e35aa7590c1c08faa7d2782dd03ddac9fd2182417cd30770b9dc",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 95010,
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "b20228701638552dd3916f35c314bf72",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

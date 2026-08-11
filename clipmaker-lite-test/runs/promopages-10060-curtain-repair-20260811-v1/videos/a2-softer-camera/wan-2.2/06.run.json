@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "a2-softer-camera",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+      "prompt": "From rest, the stabilized camera glides very slowly a few centimeters to the right past the central timber divider, then decelerates softly to a complete stop near the end. Every curtain, fabric, architectural line, and piece of furniture remains perfectly still and unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "44e64bab8f355b669432283c7f4a2d7e3f2bcef732bb9651896273e25f55cacf",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "9b66974e5012634bd8bd96fa45e15fc8",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T11:48:25Z",
+  "completed_at": "2026-08-11T11:48:25Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6752024,
+    "sha256": "3d1013e8902c2d2b189c1ac1e149a15e5f5fa25c3b54d6a1efc31bb0df095fe5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-wan-2-2",
+  "lite_result_sha256": "ed72c524e8ee5356506bc138e67bdbfe2397b9b8de5819dbd07f36558d796533",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 95010,
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "9b66974e5012634bd8bd96fa45e15fc8",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

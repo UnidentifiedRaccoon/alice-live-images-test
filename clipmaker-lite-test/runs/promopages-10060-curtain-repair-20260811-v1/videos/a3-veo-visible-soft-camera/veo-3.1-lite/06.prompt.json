@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v4-a3-veo-visible-soft-camera",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a3-veo-visible-soft-camera-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation emphasizes how a compact apartment can feel open, bright, and comfortably zoned for separate activities.",
+    "initial_state": "The sleeping area is visible on the left and the dining zone on the right, separated by a foreground floor-to-ceiling timber divider.",
+    "primary_action": "The viewpoint translates rightward across the open-plan room.",
+    "terminal_state": "The timber divider appears farther left in the frame and slightly more of the already visible dining zone is revealed.",
+    "geometry_invariant": "The timber divider remains rigidly connected between the floor and ceiling while separating the sleeping and dining zones.",
+    "semantic_invariant": "The apartment remains a spacious, practical, and light-preserving example of personalized zoning."
+  },
+  "prompt": {
+    "positive": "Track the stabilized camera laterally to the right at normal real-time speed, beginning immediately and moving calmly through most of the shot, then gently decelerating near the end. The foreground timber divider visibly shifts left in frame, revealing slightly more of the already visible dining zone, with no push-in or zoom.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-curtain-repair-20260811-v4-a3-veo-visible-soft-camera/result.json",
+    "sha256": "c8ecd6a82507e41d8d37ac353f040318eacd41918617a04711e4f3137f2dce54",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.2",
+      "contract_fingerprint": "sha256:825a3b621cdcfe60e4285536f30699271c7999da7fd0e3ea5bc7e987a2d06ac6",
+      "instruction_bundle_sha256": "2852316cc60e9bf4f03633e0558142452de4a71572ee231dff31405bb7a3a822",
+      "source_image_sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

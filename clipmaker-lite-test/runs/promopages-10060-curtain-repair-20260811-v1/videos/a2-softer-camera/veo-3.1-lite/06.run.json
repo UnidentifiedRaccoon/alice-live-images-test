@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "a2-softer-camera",
+  "image_id": "06",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/veo-3.1-lite/06.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The stabilized camera starts still, glides a tiny distance laterally right around the central timber divider, and softly settles to rest by the final frame. All curtains, fabrics, furniture, and rigid architecture remain perfectly still and unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "71ac771cf6b0ba82fda2f22df2fa3a75edd2c913c607236ebb09e17693cd0adc",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "xWBnfSQTm2cjbX8YTFwd",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T11:46:51Z",
+  "completed_at": "2026-08-11T11:48:39Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1716750,
+    "sha256": "867453f7040b214d1c19153955271beb515ea231b3e8c2aff5029e4e83efd8c2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-veo-3-1-lite",
+  "lite_result_sha256": "ed72c524e8ee5356506bc138e67bdbfe2397b9b8de5819dbd07f36558d796533",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
