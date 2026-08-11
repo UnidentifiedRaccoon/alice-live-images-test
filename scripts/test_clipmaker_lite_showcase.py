@@ -568,11 +568,11 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
                     1,
                 )
                 tune_href = (
-                    "./?v=1"
+                    "./?v=2"
                     if page.parent == ROOT / "tune"
-                    else "tune/?v=1"
+                    else "tune/?v=2"
                     if page.parent == ROOT
-                    else "../tune/?v=1"
+                    else "../tune/?v=2"
                 )
                 self.assertEqual(html.count(f'href="{tune_href}"'), 1)
 
