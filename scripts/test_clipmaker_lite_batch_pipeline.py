@@ -47,8 +47,10 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             entry=entry,
             structured_intent={
                 "editorial_meaning": "Test editorial meaning.",
+                "initial_state": "The subject starts in one observable state.",
                 "primary_action": "One test action.",
                 "terminal_state": "The action reaches its test endpoint.",
+                "geometry_invariant": "The subject keeps one physical relationship.",
                 "semantic_invariant": "The test meaning remains stable.",
             },
             positive_prompt=f"exact Lite prompt for {entry.model_id}",
@@ -243,7 +245,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             )
             result_path.parent.mkdir(parents=True)
             result = {
-                "schema_version": 2,
+                "schema_version": batch.clipmaker_lite_runner.RESULT_SCHEMA_VERSION,
                 "job_id": entry.planning_run_id,
                 "producer": {"agent_id": batch.AGENT_ID},
                 "inputs": {
@@ -325,7 +327,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             )
             result_path.parent.mkdir(parents=True)
             result = {
-                "schema_version": 2,
+                "schema_version": batch.clipmaker_lite_runner.RESULT_SCHEMA_VERSION,
                 "job_id": entry.planning_run_id,
                 "producer": {"agent_id": batch.AGENT_ID},
                 "inputs": {
@@ -417,32 +419,22 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             {"enhancePrompt": True},
         )
 
-    def test_present_negative_prompt_is_transported_verbatim(self) -> None:
+    def test_non_null_negative_prompt_is_rejected_before_transport(self) -> None:
         entries = {entry.model_id: entry for entry in batch.matrix()[:3]}
-        negative = "exact Lite negative; keep punctuation: unchanged"
-        for model_id, provider_key in (
-            ("alibaba/wan-2.7", "negative_prompt"),
-            ("google/veo-3.1-lite", "negativePrompt"),
-        ):
+        for model_id in ("alibaba/wan-2.7", "google/veo-3.1-lite"):
             base = self.lite_job(entries[model_id])
             job = batch.LiteJob(
                 entry=base.entry,
                 structured_intent=base.structured_intent,
                 positive_prompt=base.positive_prompt,
-                negative_prompt=negative,
+                negative_prompt="legacy repair",
                 result_path=base.result_path,
                 result_sha256=base.result_sha256,
                 provenance=base.provenance,
                 runtime=base.runtime,
             )
-            preview = transport.build_request_preview(
-                batch.provider_sample(job.entry),
-                batch.provider_prompt(job),
-            )
-            provider = "atlas-cloud" if model_id == "alibaba/wan-2.7" else "google-vertex"
-            parameters = preview["provider"]["options"][provider]["parameters"]
-            self.assertEqual(preview["prompt"], base.positive_prompt)
-            self.assertEqual(parameters[provider_key], negative)
+            with self.assertRaisesRegex(batch.BatchPipelineError, "must be null"):
+                batch.provider_prompt(job)
 
     def test_global_eliza_scheduler_caps_active_jobs_at_three_and_finishes_ten(self) -> None:
         rows = [{"id": index} for index in range(10)]

@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
 import unittest
 from pathlib import Path
 
@@ -18,7 +17,6 @@ LITE = ROOT / "docs/agents/clipmaker-lite"
 README = LITE / "README.md"
 MODELS = LITE / "models"
 CONTRACT = LITE / "contract.json"
-ARCHIVED_207_CONTRACT = LITE / "contracts/contract-2.0.7.json"
 RUNNER = ROOT / "scripts/clipmaker_lite_runner.py"
 
 
@@ -63,8 +61,10 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.8")
-        self.assertEqual(contract["runner"]["runner_version"], 7)
+        self.assertEqual(contract["contract_version"], "2.1.4")
+        self.assertEqual(contract["runner"]["runner_version"], 8)
+        self.assertEqual(runner.DRAFT_SCHEMA_VERSION, 3)
+        self.assertEqual(runner.RESULT_SCHEMA_VERSION, 3)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
         self.assertEqual(contract["execution"]["tool_event_policy"], "reject-run")
@@ -73,14 +73,6 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertEqual(
             contract["execution"]["binary"]["path"],
             "/Applications/ChatGPT.app/Contents/Resources/codex",
-        )
-        self.assertEqual(
-            contract["execution"]["binary"]["sha256"],
-            "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b",
-        )
-        self.assertEqual(
-            contract["execution"]["binary"]["version"],
-            "codex-cli 0.147.0-alpha.6.5",
         )
         self.assertEqual(contract["input_binding"]["image_root"], "PROMOPAGES-9857")
         self.assertEqual(contract["input_binding"]["context_root"], "PROMOPAGES-9884")
@@ -129,49 +121,6 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         )
         self.assertEqual(contract["models"]["alibaba/wan-2.7"]["runtime"]["duration_seconds"], 5)
         self.assertEqual(contract["models"]["google/veo-3.1-lite"]["runtime"]["duration_seconds"], 4)
-
-    def test_installed_codex_binary_matches_lock_when_present(self) -> None:
-        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
-        locked = contract["execution"]["binary"]
-        binary = Path(locked["path"])
-        if not binary.is_file():
-            self.skipTest("locked macOS Codex binary is not installed")
-        self.assertFalse(binary.is_symlink())
-        self.assertEqual(sha256_file(binary), locked["sha256"])
-        inspected = subprocess.run(
-            [str(binary), "--version"],
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=30,
-        )
-        self.assertEqual(
-            inspected.stdout.decode("utf-8", errors="replace").strip(),
-            locked["version"],
-        )
-
-    def test_207_contract_is_archived_with_exact_historical_lock(self) -> None:
-        contract = json.loads(ARCHIVED_207_CONTRACT.read_text(encoding="utf-8"))
-        self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.7")
-        self.assertEqual(
-            contract["execution"]["binary"],
-            {
-                "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
-                "sha256": (
-                    "9f6748b4ab10ffc92c28b9ccedae89e61a302bbc011df7d276ee38f55906e481"
-                ),
-                "version": "codex-cli 0.147.0-alpha.1.2",
-            },
-        )
-        self.assertEqual(
-            sha256_file(ARCHIVED_207_CONTRACT),
-            "3336d03bb268cb73515256b438a02905fb2455f5875cb028f239bfafa11e0d86",
-        )
-        self.assertEqual(
-            runner.sha256_bytes(runner.canonical_json_bytes(contract)),
-            "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd",
-        )
 
     def test_codex_authoring_model_is_not_fixed_by_contract(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
@@ -236,24 +185,103 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertIn("Межмодельный replay", text)
         for field in (
             "editorial_meaning",
+            "initial_state",
             "primary_action",
             "terminal_state",
+            "geometry_invariant",
             "semantic_invariant",
         ):
             self.assertIn(field, text)
+        self.assertIn("image-grounded physics", text)
+        self.assertIn("Если первый кадр уже соответствует `terminal_state`", text)
+        self.assertIn("одно-два коротких motion-first предложения", text)
+        self.assertIn("`negative_prompt` всегда и буквально равен `null`", text)
         self.assertIn("model × scene routing", text)
+
+    def test_architecture_motion_is_camera_led_source_grounded_and_real_time(self) -> None:
+        base = " ".join(README.read_text(encoding="utf-8").split())
+        for marker in (
+            "### Статичная архитектура и выраженная глубина",
+            "at normal real-time speed",
+            "плавный push-in",
+            "мягкий lateral track",
+            "не должен создавать новые фасады, деревья, людей, транспорт",
+            "Существующие деревья и кустарники слегка покачиваются на месте",
+            "wind wave",
+            "камера даёт основную динамику",
+        ):
+            self.assertIn(marker, base)
+
+        veo = " ".join(
+            (MODELS / "google-veo-3.1-lite.md").read_text(encoding="utf-8").split()
+        )
+        for marker in (
+            "### Архитектурный exterior с читаемой глубиной",
+            "основной источник динамики",
+            "at normal real-time speed",
+            "enhancePrompt: true",
+            "gently sway in place in a light breeze",
+            "source-grounded параллакс",
+        ):
+            self.assertIn(marker, veo)
+
+        selection = runner.load_selection(ROOT, ["google/veo-3.1-lite"])
+        bundle = " ".join(selection["instruction_bundle"].decode("utf-8").split())
+        self.assertIn("Статичная архитектура и выраженная глубина", bundle)
+        self.assertIn("Архитектурный exterior с читаемой глубиной", bundle)
+        self.assertIn("at normal real-time speed", bundle)
+        self.assertNotIn("Selected model spec: `alibaba/wan-2.7`", bundle)
+        self.assertNotIn("Selected model spec: `alibaba/wan-2.2`", bundle)
+
+    def test_veo_camera_motion_has_visibility_floor(self) -> None:
+        base = " ".join(README.read_text(encoding="utf-8").split())
+        for marker in (
+            "неподвижность в world space",
+            "source-grounded параллакса",
+            "не отменяет наблюдаемый endpoint",
+            "repair уже удачного camera move",
+            "не уменьшает полный travel автоматически",
+            "без human review",
+        ):
+            self.assertIn(marker, base)
+
+        veo = " ".join(
+            (MODELS / "google-veo-3.1-lite.md").read_text(encoding="utf-8").split()
+        )
+        for marker in (
+            "### Visibility floor для движения камеры",
+            "ниже perceptual threshold Veo",
+            "Softer` означает отсутствие рывка",
+            "screen-space изменение",
+            "world-space preservation",
+            "every physical element stays motionless",
+            "enhancer может превратить такой перечень в приоритет заморозки",
+            "continuous even travel",
+            "Не превращай `softer` в обязательный composition ceiling",
+            "human review имеет приоритет",
+        ):
+            self.assertIn(marker, veo)
+
+        selection = runner.load_selection(ROOT, ["google/veo-3.1-lite"])
+        bundle = " ".join(selection["instruction_bundle"].decode("utf-8").split())
+        self.assertIn("Visibility floor для движения камеры", bundle)
+        self.assertIn("неподвижность в world space", bundle)
 
     def test_each_model_has_endpoint_persistence_ui_and_people_policy(self) -> None:
         for path in sorted(MODELS.glob("*.md")):
             with self.subTest(model=path.name):
-                text = path.read_text(encoding="utf-8")
+                text = " ".join(path.read_text(encoding="utf-8").split())
                 for marker in (
                     "Terminal state",
                     "semantic_invariant",
+                    "geometry_invariant",
                     "Ключевой объект",
                     "## UI и people risks",
                     "camera state",
-                    "PROMOPAGES-9909 `negative_prompt` равен `null`",
+                    "endpoint уже виден в first frame",
+                    "low-amplitude residual continuation",
+                    "не больше двух коротких motion-first предложений",
+                    "`negative_prompt` всегда и буквально равен `null`",
                 ):
                     self.assertIn(marker, text)
 

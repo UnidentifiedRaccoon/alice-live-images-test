@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v1-a-camera-only",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a-camera-only-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972
+  },
+  "structured_intent": {
+    "editorial_meaning": "The animation reinforces how a compact apartment can be personalized into distinct yet open, light-filled bedroom and dining zones.",
+    "primary_action": "The spatial relationship between the bedroom and dining zones is progressively revealed around the timber divider.",
+    "terminal_state": "Both the bedroom and dining zones are clearly readable together, with the timber divider intact and all room elements unchanged.",
+    "semantic_invariant": "The apartment remains a rigid, orderly two-zone interior with an intact timber divider, unchanged furniture, and completely still curtains."
+  },
+  "prompt": {
+    "positive": "A slow stabilized micro-dolly right with a subtle push-in around the timber divider creates gentle parallax, revealing the bedroom and dining zones together. Curtains stay completely still; rigid room geometry, straight lines, and furniture remain unchanged. Finish with both zones clearly readable around the intact divider.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-curtain-repair-20260811-v1-a-camera-only/result.json",
+    "sha256": "1abfe24cab366c54cb710f64d81d8ae4258e37ecccfb7da36be7f0853237f644",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.0.8",
+      "contract_fingerprint": "sha256:28d75563e1267641966dc6b7171d2e48e63f68083a5c7d3df17f050fc5628013",
+      "instruction_bundle_sha256": "3d813e25172189aff768258ed9eaa51ed4726fc97a96a3b290a4609cdea950d9",
+      "source_image_sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

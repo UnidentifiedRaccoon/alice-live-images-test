@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-11T11:48:39Z",
+  "expected_outputs": 3,
+  "summary": {
+    "succeeded": 2,
+    "verification-failed": 1
+  },
+  "conforming_outputs": 2,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+      "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-wan-2-2",
+      "sample_id": "a2-softer-camera",
+      "article_slug": "02-level-rabotaiu-v-level",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1104,
+        "height": 816,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 6752024,
+        "sha256": "3d1013e8902c2d2b189c1ac1e149a15e5f5fa25c3b54d6a1efc31bb0df095fe5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+      "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-wan-2-7",
+      "sample_id": "a2-softer-camera",
+      "article_slug": "02-level-rabotaiu-v-level",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+      "model_id": "alibaba/wan-2.7",
+      "status": "verification-failed",
+      "recorded_status": "verification-failed",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1662,
+        "height": 1246,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4388424,
+        "sha256": "5df91120f65e0a384b186a382b75930250136bdfc22666a18e18cee80678c2aa"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "4:3",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": true
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution"
+        ]
+      },
+      "error": "Media contract verification failed: audio, resolution"
+    },
+    {
+      "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+      "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-veo-3-1-lite",
+      "sample_id": "a2-softer-camera",
+      "article_slug": "02-level-rabotaiu-v-level",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a2-softer-camera/veo-3.1-lite/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 1716750,
+        "sha256": "867453f7040b214d1c19153955271beb515ea231b3e8c2aff5029e4e83efd8c2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    }
+  ]
+}

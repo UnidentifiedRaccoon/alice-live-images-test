@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v3-a2-softer-camera",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a2-softer-camera-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972
+  },
+  "structured_intent": {
+    "editorial_meaning": "The subtle change of viewpoint emphasizes how the timber divider creates distinct private and shared zones while keeping the small apartment visually open and spacious.",
+    "initial_state": "The apartment is completely still, viewed across a central floor-to-ceiling timber divider with the bed on its left and the dining area on its right.",
+    "primary_action": "The viewpoint shifts slightly to the right relative to the central timber divider while the entire interior remains motionless.",
+    "terminal_state": "The viewpoint rests slightly farther to the right, revealing a small parallax change around the divider while the room and all its contents remain unchanged.",
+    "geometry_invariant": "The central timber divider remains rigidly connected from floor to ceiling between the sleeping area and the dining area.",
+    "semantic_invariant": "The apartment continues to read as a calm, open home with clearly separated functional zones."
+  },
+  "prompt": {
+    "positive": "The stabilized camera begins at rest and makes a very slight, even dolly to the right around the central timber divider, easing gently to rest near the end. Curtains, fabrics, furniture, and architecture stay completely motionless and unchanged.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-curtain-repair-20260811-v3-a2-softer-camera/result.json",
+    "sha256": "ed72c524e8ee5356506bc138e67bdbfe2397b9b8de5819dbd07f36558d796533",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.0",
+      "contract_fingerprint": "sha256:b08f610db9d57bb1a9e92a803738fc44954635387701d50f9633d5a47605534a",
+      "instruction_bundle_sha256": "1cab8c900d64da8d62d74434689242d41870b7ebfd27fa69ce1ee5b505cfd55a",
+      "source_image_sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

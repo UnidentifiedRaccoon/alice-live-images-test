@@ -41,6 +41,10 @@ cross-model comparison.
   стиль, уже заданные изображением.
 - Пиши коротко и конкретно: provider получает `prompt_extend: true` и может
   расширить формулировку.
+- Сохраняй image-grounded действие и один `geometry_invariant` из анализа
+  изображения. Если endpoint уже виден в first frame, используй только
+  low-amplitude residual continuation или естественное затухание, без нового
+  цикла и выхода из endpoint.
 
 ## Terminal state и смысловая целостность
 
@@ -49,6 +53,8 @@ cross-model comparison.
   независимый beat.
 - `semantic_invariant` не меняется при естественном затухании движения. Эмоция,
   напряжение или редакционный смысл не переходят в противоположное состояние.
+- `geometry_invariant` сохраняется до последнего кадра: ключевые части остаются
+  в той же видимой физической связи.
 - Ключевой объект остаётся непрерывно видимым, геометрически узнаваемым и связан
   с тем же действием от первого до последнего кадра.
 
@@ -63,12 +69,11 @@ cross-model comparison.
 
 ## Negative prompt
 
-В baseline и в матрице PROMOPAGES-9909 `negative_prompt` равен `null` и не
-отправляется. После отдельно наблюдаемого failure в будущей итерации можно
-добавить несколько конкретных нежелательных результатов, направленных именно на
-этот дефект. Не используй стандартный technical tail.
-
-Для текущего AtlasCloud route body должен быть не длиннее 500 символов.
+Authored `negative_prompt` всегда и буквально равен `null`; параметр
+`negative_prompt` провайдеру не отправляется. Repair и generic tail не
+используются для negative prompt. `positive_prompt` занимает не больше двух
+коротких motion-first предложений; дальнейшее расширение выполняет
+`prompt_extend: true`.
 
 ## Runtime fragment
 
@@ -91,8 +96,7 @@ cross-model comparison.
 }
 ```
 
-Добавляй `negative_prompt` в provider parameters только когда он реально
-сформирован.
+`negative_prompt` в provider parameters не отправляется.
 
 ## Sources
 

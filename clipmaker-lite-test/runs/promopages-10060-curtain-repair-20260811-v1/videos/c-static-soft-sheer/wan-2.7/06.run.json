@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "c-static-soft-sheer",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/c-static-soft-sheer/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/c-static-soft-sheer/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "With the camera fixed, animate one extremely subtle sway confined to the lower third of the sheer curtain, moving sideways only a few centimeters and gradually settling near its original closed position at the end. Keep the upper folds, heavy drapes, curtain silhouette, and room geometry motionless.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "7dbe20b6c0b087bfb235bdcbef6bd50b50df693217908409ddbaf3ea1517038d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Lo1Et0Lf7rNeIpk8Flkj",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T09:14:15Z",
+  "completed_at": "2026-08-11T09:15:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2067566,
+    "sha256": "d7e3f0f386cea33aaa7bbff935ffec0c1e97029848b78b5f6fafbc5daebc42f4"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v1-c-static-soft-sheer",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-c-static-soft-sheer-wan-2-7",
+  "lite_result_sha256": "129bc423e405e35aa7590c1c08faa7d2782dd03ddac9fd2182417cd30770b9dc",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "a-camera-only",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a-camera-only/wan-2.7/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a-camera-only/wan-2.7/06.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "A slow stabilized micro-dolly right with a subtle push-in around the timber divider creates gentle parallax, revealing the bedroom and dining zones together. Curtains stay completely still; rigid room geometry, straight lines, and furniture remain unchanged. Finish with both zones clearly readable around the intact divider.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "d39a30194974de7597ba9b6ce3f710fbe8962407bad0a843d3d8931dff238ba6",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1hLpaYgJfPsRaiIJKUCs",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T09:14:14Z",
+  "completed_at": "2026-08-11T09:15:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1662,
+    "height": 1246,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4846683,
+    "sha256": "a07028ce6d09ddcb008b55e7a93dba4d15a725dec89711a342e13689275a416b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "4:3",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v1-a-camera-only",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a-camera-only-wan-2-7",
+  "lite_result_sha256": "1abfe24cab366c54cb710f64d81d8ae4258e37ecccfb7da36be7f0853237f644",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

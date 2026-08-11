@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-10060",
+  "sample_id": "a-camera-only",
+  "image_id": "06",
+  "model_id": "alibaba/wan-2.2",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a-camera-only/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-curtain-repair-20260811-v1/videos/a-camera-only/wan-2.2/06.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+      "prompt": "Move slowly and smoothly to the right with a subtle push-in around the central timber divider, creating gentle parallax between the bedroom and dining zones. Keep every curtain completely still and preserve rigid straight architecture and unchanged furniture. End with both zones clearly visible and the divider intact.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "2a0be0421a7f2f7f3140c1cb04610425d34a262e9458280d1faccebef6dcb4cd",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "16457418e9b412419f395fe8aba9c007",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-11T09:15:05Z",
+  "completed_at": "2026-08-11T09:15:05Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1104,
+    "height": 816,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 6203880,
+    "sha256": "342f4ef0ca3d872fc9827b5bec1b65398b8bd03e7bd5b62cfe612d0c0096f7ec"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "source",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v1-a-camera-only",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a-camera-only-wan-2-2",
+  "lite_result_sha256": "1abfe24cab366c54cb710f64d81d8ae4258e37ecccfb7da36be7f0853237f644",
+  "provider_may_be_active": false,
+  "last_worker_failure": null,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 95010,
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "16457418e9b412419f395fe8aba9c007",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  }
+}

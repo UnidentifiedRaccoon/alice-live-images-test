@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-curtain-repair-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-10060-curtain-repair-20260811-v5-a4-bounded-soft-camera",
+  "provider_run_id": "promopages-10060-curtain-repair-20260811-v1-a4-bounded-soft-camera-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972
+  },
+  "structured_intent": {
+    "editorial_meaning": "The movement emphasizes how thoughtful zoning keeps a compact apartment open, bright, and comfortably divided into distinct personal areas.",
+    "initial_state": "A static open-plan interior presents the full bed zone on the left and dining zone on the right, separated by a narrow foreground timber divider.",
+    "primary_action": "The viewpoint shifts laterally to the right across the visible depth of the zoned interior.",
+    "terminal_state": "The divider appears modestly farther left in the frame while the full bed and dining zones remain visible in nearly their initial proportions.",
+    "geometry_invariant": "The floor-to-ceiling timber divider remains vertically anchored between the bed zone and dining zone.",
+    "semantic_invariant": "Both zones remain equally legible as complementary parts of one spacious, practical apartment."
+  },
+  "prompt": {
+    "positive": "The stabilized camera drifts laterally to the right from the first frames, moving evenly and decelerating only during the final half-second, with no pan, push-in, zoom, or orbit. By the final frame, the foreground timber divider has shifted left by about 6% of the frame width while the full bed and dining zones remain readable in nearly their original proportions; curtains have no independent motion and rigid geometry does not deform.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-10060-curtain-repair-20260811-v5-a4-bounded-soft-camera/result.json",
+    "sha256": "c726d2139eb3c1b756baa996e49dcf17034d23a88e4fc6980f39828dbc391d63",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.3",
+      "contract_fingerprint": "sha256:f95c0431e59da82b28a01ceecf6b38007a564cffb425e500a2f477f45e1b80d9",
+      "instruction_bundle_sha256": "e6587ccf4e6befd9ba048041f2f1d2cf863f65c77235e502c7ed0ba4b22c0936",
+      "source_image_sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
