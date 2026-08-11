@@ -513,6 +513,11 @@ def provider_sample(entry: Entry) -> dict[str, Any]:
 
 
 def provider_prompt(job: LiteJob) -> dict[str, Any]:
+    if job.negative_prompt is not None:
+        raise BatchPipelineError(
+            "Clipmaker Lite negative_prompt must be null before provider submit: "
+            f"{job.entry.provider_run_id}"
+        )
     prompt: dict[str, Any] = {
         "sample_id": job.entry.sample.sample_id,
         "model_id": job.entry.model_id,

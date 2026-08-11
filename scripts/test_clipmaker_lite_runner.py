@@ -32,6 +32,10 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             schema["properties"]["structured_intent"]["required"],
             list(runner.STRUCTURED_INTENT_KEYS),
         )
+        self.assertEqual(
+            schema["properties"]["models"]["items"]["properties"]["negative_prompt"],
+            {"type": "null"},
+        )
 
     def make_workspace(self, directory: str) -> tuple[Path, Path, Path]:
         root = Path(directory)
@@ -192,8 +196,10 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             "article_context": "The image supports the nearby editorial point.",
             "structured_intent": {
                 "editorial_meaning": "Support the nearby editorial point.",
+                "initial_state": "The subject starts in one observable physical state.",
                 "primary_action": "One visible change develops from the source frame.",
                 "terminal_state": "The change reaches an observable endpoint.",
+                "geometry_invariant": "The subject keeps the same connected geometry.",
                 "semantic_invariant": "The editorial state remains unchanged through the end.",
             },
             "models": [
@@ -297,6 +303,10 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             self.assertEqual(
                 result["analysis"]["structured_intent"]["terminal_state"],
                 "The change reaches an observable endpoint.",
+            )
+            self.assertEqual(
+                result["analysis"]["structured_intent"]["geometry_invariant"],
+                "The subject keeps the same connected geometry.",
             )
             summary = runner.provenance_summary(root, "sample-run")
             self.assertTrue(summary["verified"])
@@ -462,7 +472,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 (root / runner.OUTPUT_NAMESPACE / "wan22-replay/result.json").exists()
             )
 
-    def test_structured_intent_is_required_and_has_only_four_fields(self) -> None:
+    def test_structured_intent_is_required_and_has_only_six_fields(self) -> None:
         draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
         draft["base_scene"] = "Legacy unstructured scene."
         del draft["structured_intent"]
@@ -477,6 +487,16 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
         draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
         draft["structured_intent"]["terminal_state"] = "   "
         with self.assertRaisesRegex(runner.LiteRunnerError, "terminal_state"):
+            runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
+
+        draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
+        del draft["structured_intent"]["initial_state"]
+        with self.assertRaisesRegex(runner.LiteRunnerError, "initial_state"):
+            runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
+
+        draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
+        draft["structured_intent"]["geometry_invariant"] = "   "
+        with self.assertRaisesRegex(runner.LiteRunnerError, "geometry_invariant"):
             runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
 
     def test_changed_instruction_fails_closed(self) -> None:
@@ -590,6 +610,9 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             prompt = request["prompt"].decode("utf-8")
             self.assertIn("write structured_intent before any model plan", prompt)
             self.assertIn("Keep camera, timing, amplitude, scene type", prompt)
+            self.assertIn("never image-grounded physics", prompt)
+            self.assertIn("one or two short motion-first sentences", prompt)
+            self.assertIn("always use null for negative_prompt", prompt)
             self.assertLess(
                 prompt.index("write structured_intent before any model plan"),
                 prompt.index("return only the JSON object"),
@@ -623,21 +646,21 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 runner.prepare_run(root, "escaped-run", image, context, image_id="02")
             self.assertFalse((Path(external) / "clipmaker-lite/v1/escaped-run").exists())
 
-    def test_wan_negative_repair_limit_is_enforced(self) -> None:
+    def test_non_null_negative_prompt_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root, image, context = self.make_workspace(directory)
             runner.prepare_run(
                 root,
-                "long-negative",
+                "non-null-negative",
                 image,
                 context,
                 model_ids=["alibaba/wan-2.7"],
             )
 
             def invalid_executor(request, execution_policy, author_model, timeout):
-                draft = json.loads(self.draft_bytes("long-negative", ["alibaba/wan-2.7"]))
-                draft["models"][0]["negative_prompt"] = "x" * 501
-                execution = self.fake_executor("long-negative", ["alibaba/wan-2.7"])(
+                draft = json.loads(self.draft_bytes("non-null-negative", ["alibaba/wan-2.7"]))
+                draft["models"][0]["negative_prompt"] = "legacy repair"
+                execution = self.fake_executor("non-null-negative", ["alibaba/wan-2.7"])(
                     request,
                     execution_policy,
                     author_model,
@@ -646,7 +669,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 execution["draft_bytes"] = json.dumps(draft).encode("utf-8")
                 return execution
 
-            with self.assertRaisesRegex(runner.LiteRunnerError, "must not exceed 500"):
+            with self.assertRaisesRegex(runner.LiteRunnerError, "must be null"):
                 with mock.patch.object(
                     runner,
                     "execute_codex_agent",
@@ -654,7 +677,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 ):
                     runner.run_agent(
                         root,
-                        "long-negative",
+                        "non-null-negative",
                         external_processing_approved=True,
                     )
 

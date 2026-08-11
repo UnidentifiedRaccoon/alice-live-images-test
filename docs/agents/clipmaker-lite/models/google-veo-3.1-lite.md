@@ -39,6 +39,10 @@ exact-text cross-model comparison.
   названным focal target; выбери один camera state, вся сцена остаётся одним
   shot.
 - Дай enhancer короткий, конкретный и непротиворечивый motion plan.
+- Сохраняй image-grounded действие и один `geometry_invariant` из анализа
+  изображения. Если endpoint уже виден в first frame, используй только
+  low-amplitude residual continuation или естественное затухание, без нового
+  цикла и выхода из endpoint.
 
 ## Terminal state и смысловая целостность
 
@@ -46,6 +50,8 @@ exact-text cross-model comparison.
   только развитие движения. После endpoint не начинается второй сюжетный beat.
 - `semantic_invariant` удерживается до последнего кадра: естественная динамика
   мимики или позы не разворачивает заданную эмоцию и редакционный смысл.
+- `geometry_invariant` сохраняется до последнего кадра: ключевые части остаются
+  в той же видимой физической связи.
 - Ключевой объект остаётся непрерывно видимым и узнаваемым; камера и действие не
   должны заслонять, уводить из кадра или подменять его.
 
@@ -60,14 +66,10 @@ exact-text cross-model comparison.
 
 ## Negative prompt
 
-В baseline и в матрице PROMOPAGES-9909 `negative_prompt` равен `null`, поэтому
-`negativePrompt` не отправляется. После отдельно наблюдаемого failure в будущей
-итерации перечисляй только связанные с ним нежелательные объекты, артефакты или
-motion outcomes короткими noun phrases. Не используй инструкции, построенные
-вокруг `no`, `don't` или `do not`, и не добавляй generic technical tail.
-
-Подтверждённого числового лимита для текущего route нет; это не повод писать
-длинный negative prompt.
+Authored `negative_prompt` всегда и буквально равен `null`; `negativePrompt`
+провайдеру не отправляется. Repair и generic tail не используются для negative
+prompt. `positive_prompt` занимает не больше двух коротких motion-first
+предложений; дальнейшее расширение выполняет `enhancePrompt: true`.
 
 ## Runtime fragment
 
@@ -90,8 +92,7 @@ motion outcomes короткими noun phrases. Не используй инс�
 }
 ```
 
-Добавляй `negativePrompt` в provider parameters только когда он реально
-сформирован.
+`negativePrompt` в provider parameters не отправляется.
 
 ## Sources
 
