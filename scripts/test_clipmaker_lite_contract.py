@@ -63,8 +63,10 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.0.8")
-        self.assertEqual(contract["runner"]["runner_version"], 7)
+        self.assertEqual(contract["contract_version"], "2.1.0")
+        self.assertEqual(contract["runner"]["runner_version"], 8)
+        self.assertEqual(runner.DRAFT_SCHEMA_VERSION, 3)
+        self.assertEqual(runner.RESULT_SCHEMA_VERSION, 3)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
         self.assertEqual(contract["execution"]["tool_event_policy"], "reject-run")
@@ -236,24 +238,34 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertIn("Межмодельный replay", text)
         for field in (
             "editorial_meaning",
+            "initial_state",
             "primary_action",
             "terminal_state",
+            "geometry_invariant",
             "semantic_invariant",
         ):
             self.assertIn(field, text)
+        self.assertIn("image-grounded physics", text)
+        self.assertIn("Если первый кадр уже соответствует `terminal_state`", text)
+        self.assertIn("одно-два коротких motion-first предложения", text)
+        self.assertIn("`negative_prompt` всегда и буквально равен `null`", text)
         self.assertIn("model × scene routing", text)
 
     def test_each_model_has_endpoint_persistence_ui_and_people_policy(self) -> None:
         for path in sorted(MODELS.glob("*.md")):
             with self.subTest(model=path.name):
-                text = path.read_text(encoding="utf-8")
+                text = " ".join(path.read_text(encoding="utf-8").split())
                 for marker in (
                     "Terminal state",
                     "semantic_invariant",
+                    "geometry_invariant",
                     "Ключевой объект",
                     "## UI и people risks",
                     "camera state",
-                    "PROMOPAGES-9909 `negative_prompt` равен `null`",
+                    "endpoint уже виден в first frame",
+                    "low-amplitude residual continuation",
+                    "не больше двух коротких motion-first предложений",
+                    "`negative_prompt` всегда и буквально равен `null`",
                 ):
                     self.assertIn(marker, text)
 

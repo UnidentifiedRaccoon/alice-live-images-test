@@ -54,13 +54,13 @@ class ClipmakerLite20x3AcceptanceTest(unittest.TestCase):
             article["external_outputs"][0],
         )
 
-    def test_frozen_201_bundle_remains_authoritative_after_root_202(self) -> None:
+    def test_frozen_201_bundle_remains_authoritative_after_root_210(self) -> None:
         root_contract = pipeline.read_json(
             pipeline.ROOT / "docs/agents/clipmaker-lite/contract.json"
         )
         frozen_contract = pipeline.require_frozen_lite_bundle(pipeline.TEST_ROOT)
 
-        self.assertEqual(root_contract["contract_version"], "2.0.7")
+        self.assertEqual(root_contract["contract_version"], "2.1.0")
         self.assertEqual(frozen_contract["contract_version"], "2.0.1")
         self.assertNotEqual(root_contract, frozen_contract)
 
