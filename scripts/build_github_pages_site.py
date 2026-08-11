@@ -15,8 +15,10 @@ import hashlib
 import json
 import os
 import shutil
+import stat
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -228,6 +230,10 @@ MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024
 TUNE_MANIFEST_RELATIVE_PATH = Path("clipmaker-lite-test/tune-manifest.json")
 TUNE_CASE_COUNT = 36
 TUNE_TARGET_COUNT = 65
+TUNE_I2V_TARGET_COUNT = 43
+TUNE_COMPOSITOR_TARGET_COUNT = 22
+TUNE_ELIZA_I2V_VIDEO_COUNT = 41
+TUNE_COMPOSITOR_FALLBACK_VIDEO_COUNT = 2
 TUNE_STATIC_FILES = (
     "tune/index.html",
     "tune/styles.css",
@@ -307,12 +313,276 @@ def _is_sha256(value: Any) -> bool:
     )
 
 
-def _validate_tune_manifest_for_pages(manifest: Any) -> None:
-    """Validate Step 8's compact, remote-media review payload.
+def _canonical_tune_repository_path(value: Any, *, label: str) -> Path:
+    if not isinstance(value, str) or "\\" in value:
+        raise ValueError(f"{label} must be a canonical repository path")
+    try:
+        path = _safe_relative_path(value)
+    except ValueError as exc:
+        raise ValueError(f"{label} must be a canonical repository path") from exc
+    if path.as_posix() != value or path.suffix.lower() != ".mp4":
+        raise ValueError(f"{label} must be a canonical repository MP4 path")
+    return path
 
-    Tune publishes prompts and review metadata only. Source images and baseline
-    videos must have HTTPS delivery URLs; repository paths remain audit fields
-    and are deliberately not added to the Pages payload.
+
+def _validate_tune_raw_url(value: Any, repository_path: Path, *, label: str) -> None:
+    if not isinstance(value, str) or "%" in value or "\\" in value:
+        raise ValueError(f"{label} must be an immutable raw.githubusercontent.com URL")
+    parsed = urlsplit(value)
+    url_parts = parsed.path.removeprefix("/").split("/")
+    if (
+        parsed.scheme != "https"
+        or parsed.netloc != "raw.githubusercontent.com"
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.port is not None
+        or parsed.query
+        or parsed.fragment
+        or len(url_parts) < 5
+        or not url_parts[0]
+        or not url_parts[1]
+        or len(url_parts[2]) != 40
+        or any(character not in "0123456789abcdef" for character in url_parts[2])
+        or "/".join(url_parts[3:]) != repository_path.as_posix()
+    ):
+        raise ValueError(f"{label} must be an immutable raw.githubusercontent.com URL")
+
+
+def _validate_tune_failed_provider_attempt(
+    root: Path,
+    attempt: Any,
+    *,
+    label: str,
+) -> None:
+    if not isinstance(attempt, dict):
+        raise ValueError(f"{label} provider_attempt must be an object")
+    run_path_value = attempt.get("run_path")
+    if not isinstance(run_path_value, str) or "\\" in run_path_value:
+        raise ValueError(f"{label} provider_attempt run_path is invalid")
+    try:
+        run_path = _safe_relative_path(run_path_value)
+    except ValueError as exc:
+        raise ValueError(f"{label} provider_attempt run_path is invalid") from exc
+    run_sha256 = attempt.get("run_sha256")
+    provider_job_id = attempt.get("provider_job_id")
+    error = attempt.get("error")
+    if (
+        run_path.as_posix() != run_path_value
+        or not run_path_value.endswith(".run.json")
+        or attempt.get("status") != "provider-failed"
+        or attempt.get("prompt_evaluated") is not False
+        or not _is_sha256(run_sha256)
+        or not isinstance(provider_job_id, str)
+        or not provider_job_id.strip()
+        or not isinstance(error, str)
+        or not error.strip()
+    ):
+        raise ValueError(f"{label} provider_attempt audit is invalid")
+
+    root = root.resolve()
+    file_path = root / run_path
+    try:
+        file_stat = file_path.lstat()
+        resolved_path = file_path.resolve(strict=True)
+        resolved_path.relative_to(root)
+    except (FileNotFoundError, OSError, ValueError) as exc:
+        raise ValueError(f"{label} provider_attempt run file is missing or unsafe") from exc
+    if not stat.S_ISREG(file_stat.st_mode):
+        raise ValueError(f"{label} provider_attempt run file must be regular")
+    if _sha256_file(file_path) != run_sha256:
+        raise ValueError(f"{label} provider_attempt run SHA mismatch")
+    try:
+        run = json.loads(file_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{label} provider_attempt run file is invalid") from exc
+    if (
+        not isinstance(run, dict)
+        or run.get("status") != "provider-failed"
+        or run.get("provider_may_be_active") is not False
+        or run.get("provider_job_id") != provider_job_id
+        or run.get("error") != error
+    ):
+        raise ValueError(f"{label} provider_attempt does not bind terminal failure")
+
+
+def _validate_tune_repository_video(
+    root: Path,
+    video: Any,
+    *,
+    label: str,
+    expected_method: str,
+) -> tuple[Path, str]:
+    if (
+        not isinstance(video, dict)
+        or video.get("delivery") != "repository-raw"
+        or video.get("method") != expected_method
+    ):
+        raise ValueError(f"{label} must be a reviewable repository-raw object")
+
+    repository_path = _canonical_tune_repository_path(
+        video.get("repository_video_path"),
+        label=f"{label} repository_video_path",
+    )
+    _validate_tune_raw_url(video.get("url"), repository_path, label=f"{label} URL")
+
+    expected_sha256 = video.get("sha256")
+    expected_bytes = video.get("bytes")
+    media = video.get("media")
+    contract_check = video.get("contract_check")
+    video_status = video.get("status")
+    warnings = (
+        contract_check.get("warnings") if isinstance(contract_check, dict) else None
+    )
+    if (
+        not _is_sha256(expected_sha256)
+        or not isinstance(expected_bytes, int)
+        or isinstance(expected_bytes, bool)
+        or expected_bytes <= 0
+        or expected_bytes >= MAX_FILE_BYTES
+        or not isinstance(media, dict)
+        or media.get("sha256") != expected_sha256
+        or media.get("bytes") != expected_bytes
+        or not isinstance(media.get("duration_seconds"), (int, float))
+        or isinstance(media.get("duration_seconds"), bool)
+        or media["duration_seconds"] <= 0
+        or not isinstance(media.get("width"), int)
+        or isinstance(media.get("width"), bool)
+        or media["width"] <= 0
+        or not isinstance(media.get("height"), int)
+        or isinstance(media.get("height"), bool)
+        or media["height"] <= 0
+        or not isinstance(media.get("fps"), (int, float))
+        or isinstance(media.get("fps"), bool)
+        or media["fps"] <= 0
+        or not isinstance(media.get("frames"), int)
+        or isinstance(media.get("frames"), bool)
+        or media["frames"] <= 0
+    ):
+        raise ValueError(f"{label} common media contract is invalid")
+
+    if expected_method == "eliza-i2v":
+        has_audio = media.get("has_audio")
+        requested = (
+            contract_check.get("requested")
+            if isinstance(contract_check, dict)
+            else None
+        )
+        checks = (
+            contract_check.get("checks")
+            if isinstance(contract_check, dict)
+            else None
+        )
+        if (
+            video_status not in {"succeeded", "verification-failed"}
+            or not isinstance(media.get("container"), str)
+            or not media["container"].strip()
+            or not isinstance(media.get("codec"), str)
+            or not media["codec"].strip()
+            or not isinstance(has_audio, bool)
+            or video.get("provider_attempt") is not None
+            or not isinstance(contract_check, dict)
+            or (
+                video_status == "succeeded"
+                and (
+                    has_audio is not False
+                    or contract_check.get("conforms") is not True
+                )
+            )
+            or (
+                video_status == "verification-failed"
+                and contract_check.get("conforms") is not False
+            )
+            or not isinstance(warnings, list)
+            or any(
+                not isinstance(warning, str) or not warning.strip()
+                for warning in warnings
+            )
+            or (video_status == "verification-failed" and not warnings)
+            or (
+                video_status == "verification-failed"
+                and has_audio is True
+                and (
+                    not isinstance(requested, dict)
+                    or requested.get("generate_audio") is not False
+                    or not isinstance(checks, dict)
+                    or checks.get("audio") is not False
+                    or not any("has_audio=True" in warning for warning in warnings)
+                )
+            )
+        ):
+            raise ValueError(f"{label} I2V media or contract warnings are invalid")
+    elif expected_method in {
+        "deterministic-compositor",
+        "deterministic-compositor-fallback",
+    }:
+        required_checks = {
+            "codec_h264",
+            "pixel_format_yuv420p",
+            "dimensions_exact",
+            "fps_exact",
+            "frames_exact",
+            "duration_exact",
+            "no_audio",
+            "source_sha256_bound",
+            "source_dimensions_bound",
+        }
+        if (
+            video_status != "succeeded"
+            or media.get("video_codec") != "h264"
+            or media.get("pixel_format") != "yuv420p"
+            or media.get("audio_streams") != 0
+            or not isinstance(contract_check, dict)
+            or set(contract_check) != required_checks
+            or any(contract_check.get(check) is not True for check in required_checks)
+        ):
+            raise ValueError(f"{label} compositor no-audio contract is invalid")
+        if expected_method == "deterministic-compositor-fallback":
+            if video.get("prompt_evaluated") is not False:
+                raise ValueError(
+                    f"{label} fallback must declare prompt_evaluated=false"
+                )
+            _validate_tune_failed_provider_attempt(
+                root,
+                video.get("provider_attempt"),
+                label=label,
+            )
+        elif video.get("provider_attempt") is not None:
+            raise ValueError(
+                f"{label} canonical compositor must not have provider_attempt"
+            )
+    else:  # Guard callers as strictly as manifest data.
+        raise ValueError(f"{label} generated video method is unsupported")
+
+    root = root.resolve()
+    file_path = root / repository_path
+    try:
+        file_stat = file_path.lstat()
+        resolved_path = file_path.resolve(strict=True)
+        resolved_path.relative_to(root)
+    except (FileNotFoundError, OSError, ValueError) as exc:
+        raise ValueError(f"{label} repository file is missing or unsafe") from exc
+    if not stat.S_ISREG(file_stat.st_mode):
+        raise ValueError(f"{label} repository file must be regular")
+    actual_bytes = file_stat.st_size
+    if actual_bytes >= MAX_FILE_BYTES:
+        raise ValueError(f"{label} repository file exceeds the GitHub file limit")
+    if actual_bytes != expected_bytes or _sha256_file(file_path) != expected_sha256:
+        raise ValueError(f"{label} repository file SHA/bytes mismatch")
+    return repository_path, video["url"]
+
+
+def _validate_tune_manifest_for_pages(
+    manifest: Any,
+    *,
+    root: Path = ROOT,
+) -> None:
+    """Validate Step 8 without ever adding Tune MP4 files to Pages.
+
+    The legacy scope publishes prompt metadata only. The generated-video scope
+    additionally binds every I2V and deterministic-compositor target to an
+    immutable GitHub raw URL and verifies the referenced repository file
+    locally. In both modes the media repository paths remain audit-only and
+    never enter the Pages payload.
     """
 
     if not isinstance(manifest, dict):
@@ -327,16 +597,25 @@ def _validate_tune_manifest_for_pages(manifest: Any) -> None:
         or not isinstance(scope, dict)
         or scope.get("case_count") != TUNE_CASE_COUNT
         or scope.get("target_count") != TUNE_TARGET_COUNT
-        or scope.get("new_video_generation") is not False
+        or not isinstance(scope.get("new_video_generation"), bool)
         or scope.get("new_s3_upload") is not False
         or scope.get("baseline_video_delivery") != "existing-yastatic"
         or not isinstance(cases, list)
         or len(cases) != TUNE_CASE_COUNT
     ):
-        raise ValueError("Tune manifest identity or prompt-only scope is invalid")
+        raise ValueError("Tune manifest identity or generation scope is invalid")
 
+    generated_video_scope = scope["new_video_generation"]
     seen_case_ids: set[str] = set()
     seen_sheet_rows: set[int] = set()
+    seen_video_paths: set[Path] = set()
+    seen_video_urls: set[str] = set()
+    execution_mode_counts = {"i2v": 0, "deterministic-compositor": 0}
+    video_method_counts = {
+        "eliza-i2v": 0,
+        "deterministic-compositor": 0,
+        "deterministic-compositor-fallback": 0,
+    }
     target_count = 0
     for case in cases:
         if not isinstance(case, dict):
@@ -354,13 +633,16 @@ def _validate_tune_manifest_for_pages(manifest: Any) -> None:
             or not isinstance(targets, list)
             or not targets
         ):
-            raise ValueError("Tune manifest case identity or source delivery is invalid")
+            raise ValueError(
+                "Tune manifest case identity or source delivery is invalid"
+            )
         seen_case_ids.add(case_id)
         for target in targets:
             if not isinstance(target, dict):
                 raise ValueError("Tune manifest targets must contain objects")
             sheet_row = target.get("sheet_row")
             baseline = target.get("baseline")
+            tuned = target.get("tuned")
             video_url = (
                 baseline.get("video_url") if isinstance(baseline, dict) else None
             )
@@ -376,8 +658,68 @@ def _validate_tune_manifest_for_pages(manifest: Any) -> None:
                 )
             seen_sheet_rows.add(sheet_row)
             target_count += 1
+            tuned_video = tuned.get("video") if isinstance(tuned, dict) else None
+            if not generated_video_scope:
+                if tuned_video is not None:
+                    raise ValueError(
+                        "Tune prompt-only scope must not contain generated videos"
+                    )
+                continue
+
+            execution_mode = (
+                tuned.get("execution_mode") if isinstance(tuned, dict) else None
+            )
+            if execution_mode not in execution_mode_counts:
+                raise ValueError("Tune generated target execution mode is invalid")
+            execution_mode_counts[execution_mode] += 1
+            video_method = (
+                tuned_video.get("method")
+                if isinstance(tuned_video, dict)
+                else None
+            )
+            if (
+                execution_mode == "i2v"
+                and video_method
+                not in {"eliza-i2v", "deterministic-compositor-fallback"}
+            ) or (
+                execution_mode == "deterministic-compositor"
+                and video_method != "deterministic-compositor"
+            ):
+                raise ValueError(
+                    "Tune generated video method does not match execution mode"
+                )
+            video_method_counts[video_method] += 1
+            repository_path, immutable_url = _validate_tune_repository_video(
+                root,
+                tuned_video,
+                label=f"Tune generated target row {sheet_row} video",
+                expected_method=video_method,
+            )
+            if repository_path in seen_video_paths or immutable_url in seen_video_urls:
+                raise ValueError("Tune generated video bindings must be unique")
+            seen_video_paths.add(repository_path)
+            seen_video_urls.add(immutable_url)
     if target_count != TUNE_TARGET_COUNT:
         raise ValueError(f"Tune manifest must contain {TUNE_TARGET_COUNT} targets")
+    if generated_video_scope and execution_mode_counts != {
+        "i2v": TUNE_I2V_TARGET_COUNT,
+        "deterministic-compositor": TUNE_COMPOSITOR_TARGET_COUNT,
+    }:
+        raise ValueError(
+            "Tune generated scope must contain exactly 43 I2V and "
+            "22 deterministic-compositor targets"
+        )
+    if generated_video_scope and video_method_counts != {
+        "eliza-i2v": TUNE_ELIZA_I2V_VIDEO_COUNT,
+        "deterministic-compositor": TUNE_COMPOSITOR_TARGET_COUNT,
+        "deterministic-compositor-fallback": (
+            TUNE_COMPOSITOR_FALLBACK_VIDEO_COUNT
+        ),
+    }:
+        raise ValueError(
+            "Tune generated scope must contain exactly 41 eliza-i2v, "
+            "22 deterministic-compositor and 2 compositor fallback videos"
+        )
 
 
 def _sha256_file(path: Path) -> str:
@@ -2645,7 +2987,7 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
         tune_manifest = json.loads(
             (root / TUNE_MANIFEST_RELATIVE_PATH).read_text(encoding="utf-8")
         )
-        _validate_tune_manifest_for_pages(tune_manifest)
+        _validate_tune_manifest_for_pages(tune_manifest, root=root)
 
     gallery = _load_js_assignment(
         root / "generated-gallery-data.js", "generatedGalleryData"

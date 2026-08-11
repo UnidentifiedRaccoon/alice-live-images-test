@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-18-volma-plitochnyi-klei-06-wan-2-7",
+  "case_id": "18#06",
+  "sheet_row": 262,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/06.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf2723e/orig",
+    "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a",
+    "width": 752,
+    "height": 502
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf2723e/orig",
+    "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a",
+    "width": 752,
+    "height": 502,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Careful, controlled adhesive application supports correct preparation of an even floor for reliable tile installation.",
+    "initial_state": "A single kneeling worker holds a notched trowel against exposed adhesive beside an already tiled section, with combed ridges visible around the contact area.",
+    "motion_owner": "the kneeling worker",
+    "primary_action": "draws the notched trowel through the exposed adhesive to extend the parallel combed ridges",
+    "terminal_state": "A narrow additional strip of adhesive has visible parallel grooves, and the trowel remains at its far edge in floor contact.",
+    "geometry_invariant": "The trowel blade remains in contact with the exposed floor adhesive; installed tiles, grout geometry, and red alignment guides remain rigid and aligned.",
+    "identity_invariant": "Exactly one worker, one held notched trowel, the existing installed tiles, adhesive field, and alignment guides remain present and recognizable.",
+    "semantic_invariant": "The scene remains a careful floor-preparation and tile-installation process, with the prepared tiled layout preserved through the final frame.",
+    "feasibility_assessment": "The image clearly shows one worker gripping a notched trowel, its blade contacting exposed adhesive, and existing parallel ridges that establish the surface and mechanism. A continued combing stroke is supported, although the precise intended travel direction is not definitive; it should therefore remain a short bounded pass along the visible open adhesive rather than a larger inferred workflow.",
+    "rendering_strategy": "image-to-video"
+  },
+  "scene_plan": "Use a tripod-locked five-second shot. Let the worker perform one even pull that develops through most of the clip, progressively lengthening a narrow area of uniform adhesive grooves; allow only a restrained weight shift and arm motion tied to that pull. Decelerate naturally in the final moments until the blade reaches the far boundary of the new strip without lifting or beginning another pass.",
+  "prompt": {
+    "positive": "The worker pulls the notched trowel smoothly over the open adhesive, maintaining continuous floor contact while evenly spaced grooves extend by one narrow strip. Keep the tile grid and projected red guides fixed; by the final frame the tool rests at the far boundary of the newly textured strip.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-06",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-06/result.json",
+    "result_sha256": "d7eb3421f69c2205b66111187e71c23d78e70bdb3be3cd1c3665be1ca2c0df22",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:05c0bcf5c3b47d6d1d698279ab093cbf5518363af3aeb4dcd0a049656fb93ccd",
+      "instruction_bundle_sha256": "edec3c224087ae68b66e87276ed6960524dcedcfd173073d52846c8f44c4284e",
+      "source_image_sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

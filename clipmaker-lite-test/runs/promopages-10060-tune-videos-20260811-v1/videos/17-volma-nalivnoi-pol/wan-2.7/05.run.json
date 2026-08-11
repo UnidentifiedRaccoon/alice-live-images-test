@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-05-wan-2-7",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-05",
+  "lite_result_sha256": "c251e499e9a078c307776aeb01dd8dbe64bba172b9b5da41bb210ccf7cece761",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "17#05",
+  "sheet_row": 229,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The camera makes a smooth, bounded push toward the vacuum head, keeping its rigid floor contact and the connected hose intact; the head, vacuum, and person remain stationary. By the end, the dusty floor texture and vacuum head are slightly larger and clearer, with all original subjects still visible and the framing shifted by no more than about 8%.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "16a04b79c6df5713df97e8b370c380859b2a9e616df9b43f672a4a90747ce93e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8Js1WCy4E1OqUeqgIIOg",
+  "submitted_at": "2026-08-11T14:59:50Z",
+  "completed_at": "2026-08-11T15:01:05Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1936,
+    "height": 1070,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 3829219,
+    "sha256": "4187ae6b3a6c9d6a4090705b9351e6419ee37fd9e5f7bc973ce036a2456ef686"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "16:9",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "pixels": true,
+      "requested_aspect": true
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False",
+      "provider aspect quantization: actual 1936x1070 differs from requested 16:9 by 1.776% within the 3% tolerance"
+    ]
+  },
+  "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; provider aspect quantization: actual 1936x1070 differs from requested 16:9 by 1.776% within the 3% tolerance",
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "4187ae6b3a6c9d6a4090705b9351e6419ee37fd9e5f7bc973ce036a2456ef686",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

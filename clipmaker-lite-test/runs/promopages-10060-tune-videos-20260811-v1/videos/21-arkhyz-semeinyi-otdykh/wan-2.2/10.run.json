@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-10-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-10",
+  "lite_result_sha256": "d4e3042881d991dd0515e232aa7c6f06929fde6b69b7297dfac83ed4d69f66dc",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "21#10",
+  "sheet_row": 306,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a973ba10e0ae4c2262d/orig",
+      "prompt": "The central black alpaca gently extends its neck and turns its muzzle a little closer toward the woman, with one soft ear flick, while keeping all four hooves planted and never touching her face. The movement settles with its nose visibly closer to her; the woman and the two light alpacas remain calm in their existing poses, with the exact animal and human count unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "24a21a226808a0be34c69df098ac76dbda377196770f2d8257c51670362b062d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "acb67dab53e1533026a817f3d3bfc1bc",
+  "submitted_at": "2026-08-11T15:43:01Z",
+  "completed_at": "2026-08-11T15:43:01Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 967273,
+    "sha256": "2eaf021b1681a4eba899cc647513838dc774226600359d143793acca6d08d022"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "acb67dab53e1533026a817f3d3bfc1bc",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 8307949,
+    "sha256": "154a0b1772ba4cfab9aba76997a9211e9a9d48cf25a68c6f7c2a651bd3fedad5"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 2554,
+      "source_height": 1806,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1136x800 differs from source 2554x1806 by 0.412% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "154a0b1772ba4cfab9aba76997a9211e9a9d48cf25a68c6f7c2a651bd3fedad5",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

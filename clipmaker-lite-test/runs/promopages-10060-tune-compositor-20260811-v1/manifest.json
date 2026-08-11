@@ -1,0 +1,1436 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-compositor-generation",
+  "batch_id": "promopages-10060-tune-compositor-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "producer": {
+    "script_path": "scripts/clipmaker_lite_tune_compositor.py",
+    "script_sha256": "a22feb5f12190c13ed105407c7b5c2a19807e6b647817172a643941eb71559be"
+  },
+  "generated_at": "2026-08-11T15:20:07Z",
+  "input_plan": {
+    "path": "clipmaker-lite-test/tune-compositor-plans.json",
+    "sha256": "481f9c773217e38a17fb668bfbdf18a0ed78f363ade5ebe79a99a248c83665e4"
+  },
+  "render_contract": {
+    "fps": 30,
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio": false,
+    "network": false,
+    "source_mutation": false,
+    "allowlisted_primitives": [
+      "camera_push",
+      "glint",
+      "highlight",
+      "pan",
+      "pulse"
+    ],
+    "maximum_output": {
+      "width": 1920,
+      "height": 1080,
+      "upscale": false
+    }
+  },
+  "scope": {
+    "targets": 22,
+    "provider_calls": 0,
+    "network": false,
+    "s3_upload": false,
+    "tune_manifest_mutation": false
+  },
+  "summary": {
+    "succeeded": 22
+  },
+  "model_summary": {
+    "alibaba/wan-2.2": 10,
+    "alibaba/wan-2.7": 4,
+    "google/veo-3.1-lite": 8
+  },
+  "bytes_total": 15457211,
+  "outputs": [
+    {
+      "case_id": "01#02",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+        "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a",
+        "width": 1280,
+        "height": 753,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02/result.json",
+        "scene_plan_sha256": "18c95583607e9c4ec18ff6e6a2cbef4569d1b910d0c56c5c7e0af47b0bac63df"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.04,
+        "focal_point": {
+          "x": 0.82,
+          "y": 0.47
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "chart title",
+          "all axes and labels",
+          "legend",
+          "footnote",
+          "January–February 2026 cluster"
+        ],
+        "rationale": "A visually checked 4% whole-bitmap push makes the far-right decline clearer while retaining the chart's essential context."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/01-02/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "2c7a1a4702a5ca855b0f22a0639e9caf6909c4c6b12d4d73a2024880c61e01e2",
+        "bytes": 1116773,
+        "width": 1280,
+        "height": 754,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "01#02",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+        "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a",
+        "width": 1280,
+        "height": 753,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02/result.json",
+        "scene_plan_sha256": "21c720c168031be563d5a8dbd643b1ce88dae5de8afb7a97805235f5136401ec"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.03,
+        "focal_point": {
+          "x": 0.82,
+          "y": 0.47
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "chart title",
+          "all axes and labels",
+          "legend",
+          "footnote",
+          "January–February 2026 cluster"
+        ],
+        "rationale": "The four-second variant uses the authored 3% whole-bitmap push and keeps the evidence legible."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/01-02/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "d2619a484a377b439b86369843bac85cc2ecd9aa4372a108d447eda36a2e3002",
+        "bytes": 864183,
+        "width": 1280,
+        "height": 754,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "01#03",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+        "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+        "width": 1460,
+        "height": 954,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-03",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-03/result.json",
+        "scene_plan_sha256": "e3592c32c731861d51ed2b0176fc42b1203e79a403b77dee014e650587d28ee9"
+      },
+      "plan": {
+        "primitive": "pulse",
+        "region": {
+          "x": 0.286,
+          "y": 0.154,
+          "width": 0.365,
+          "height": 0.695
+        },
+        "region_confidence": "visual-verified",
+        "direction": "top-to-bottom",
+        "band_fraction": 0.08,
+        "opacity": 0.04,
+        "color": "chart-blue",
+        "timing": {
+          "start": 0.1,
+          "end": 4.7,
+          "fade_in": 0.4,
+          "fade_out": 0.7
+        },
+        "protected_content": [
+          "region labels",
+          "bar values",
+          "all three series",
+          "legend"
+        ],
+        "rationale": "A very low-opacity band traverses the visually verified blue-series plot region once without scaling or cropping the chart."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/01-03/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "d4f24359d4f972ca3fb50ae8b2572fb07676f7ff53b48f87913ce7c2c816d073",
+        "bytes": 85103,
+        "width": 1460,
+        "height": 954,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "01#03",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+        "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+        "width": 1460,
+        "height": 954,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-03",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-03/result.json",
+        "scene_plan_sha256": "1477b31c1b13a40b6f3a608dfaa367068826f4066fa0d4a2fb69e77280bb0d0c"
+      },
+      "plan": {
+        "primitive": "glint",
+        "region": {
+          "x": 0.286,
+          "y": 0.154,
+          "width": 0.365,
+          "height": 0.695
+        },
+        "region_confidence": "visual-verified",
+        "direction": "top-to-bottom",
+        "band_fraction": 0.05,
+        "opacity": 0.035,
+        "color": "soft-white",
+        "timing": {
+          "start": 0.1,
+          "end": 4.7,
+          "fade_in": 0.4,
+          "fade_out": 0.7
+        },
+        "protected_content": [
+          "region labels",
+          "bar values",
+          "all three series",
+          "legend"
+        ],
+        "rationale": "The visually verified plot bbox supports one subdued vertical glint while the complete chart remains static."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/01-03/alibaba-wan-2.7.mp4",
+      "media": {
+        "sha256": "3cc1c1c8c480e6d204b29f9079ccd635bad8fa275457d2181c6689bfd09c3760",
+        "bytes": 72198,
+        "width": 1460,
+        "height": 954,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "03#09",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+        "sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f",
+        "width": 1192,
+        "height": 798,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-03-level-nestandartnye-planirovki-09",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-03-level-nestandartnye-planirovki-09/result.json",
+        "scene_plan_sha256": "9e6068eec23c9135914af0c02f867755176caab4eb325c7b43832fd25dad59ae"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.07,
+        "focal_point": {
+          "x": 0.505,
+          "y": 0.48
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "3,9 wardrobe boundary",
+          "arrow endpoint",
+          "adjacent room connections",
+          "all floorplan labels"
+        ],
+        "rationale": "Large white margins make a 7% central whole-bitmap push safe for the annotated wardrobe."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/03-09/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "2758dbab334c3fdf88c3e9e17602c5d4a74ca2977d7025627b6dfd05cd241f33",
+        "bytes": 783619,
+        "width": 1192,
+        "height": 798,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "03#09",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+        "sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f",
+        "width": 1192,
+        "height": 798,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-03-level-nestandartnye-planirovki-09",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-03-level-nestandartnye-planirovki-09/result.json",
+        "scene_plan_sha256": "9967612b54882ffb412e290beaa07fa8ad245ec650eff838274568b8ff6c2fd8"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.06,
+        "focal_point": {
+          "x": 0.505,
+          "y": 0.48
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "3,9 wardrobe boundary",
+          "arrow endpoint",
+          "adjacent room connections",
+          "all floorplan labels"
+        ],
+        "rationale": "The shorter variant keeps the same safe central focus with a restrained 6% push."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/03-09/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "61a6dc8b1eb227b78677266767be95de276584fc814ae5c1696264066b2a7978",
+        "bytes": 618533,
+        "width": 1192,
+        "height": 798,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "04#04",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/04.png",
+        "sha256": "dca4ed577e007680bbc8740dea96556b4f3674d88f53621d0ae974160f431ddb",
+        "width": 1385,
+        "height": 615,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-04",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-04/result.json",
+        "scene_plan_sha256": "592622132195d2d3def3dd7409f5cff049b7ba1d3e0c7c615e7fc2657a498692"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.035,
+        "focal_point": {
+          "x": 0.5,
+          "y": 0.52
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "four apartment cards",
+          "prices",
+          "floorplans",
+          "controls"
+        ],
+        "rationale": "The authored 4% push is capped at 3.5% after edge review so all four cards stay identifiable."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/04-04/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "6862ff2b5c3071457568d327257c910059366ec629be7b458d82f90394722438",
+        "bytes": 1039378,
+        "width": 1386,
+        "height": 616,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "04#04",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/04.png",
+        "sha256": "dca4ed577e007680bbc8740dea96556b4f3674d88f53621d0ae974160f431ddb",
+        "width": 1385,
+        "height": 615,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-04",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-04/result.json",
+        "scene_plan_sha256": "2da8c29344dc887fc99b84d58c21781e0a3390c298d7e7593a0d3af2c75c2424"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.025,
+        "focal_point": {
+          "x": 0.5,
+          "y": 0.52
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "four apartment cards",
+          "prices",
+          "floorplans",
+          "controls"
+        ],
+        "rationale": "A 2.5% push preserves the narrow outer margins and the four-card comparison."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/04-04/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "2283503498940042e2aa7e99f6ffdf1701cf323465489129e565ca5ff7189f2e",
+        "bytes": 798892,
+        "width": 1386,
+        "height": 616,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "13#05",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+        "sha256": "7ec5104f2456949b7fc32e4fb9d8e60a62a088bd0d78cc20ca82694bb3b5eb5c",
+        "width": 5039,
+        "height": 3359,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-13-dream-island-top6-attrakcionov-05",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-13-dream-island-top6-attrakcionov-05/result.json",
+        "scene_plan_sha256": "8e7cfdb4107b1f70610f0f4540e14112cb88b9d855418d97dba869e13496686d"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.05,
+        "focal_point": {
+          "x": 0.59,
+          "y": 0.47
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "МЕЛЬНИЦА lettering",
+          "ride hub",
+          "visible arms",
+          "cabins and riders"
+        ],
+        "rationale": "The 5% whole-bitmap push stays below the authored 6% ceiling to protect both the sign and ride extremities."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/13-05/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "348d4ada6227a09f3335b77e56107b4bba2b49f8551273de5dbdbaf1cc778610",
+        "bytes": 4372223,
+        "width": 1620,
+        "height": 1080,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "14#04",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+        "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632",
+        "width": 867,
+        "height": 554,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04/result.json",
+        "scene_plan_sha256": "2a0402fe58c97218f969e9bbcaadc949f9d527b103866bbaeb77a983e919643d"
+      },
+      "plan": {
+        "primitive": "glint",
+        "region": {
+          "x": 0.052,
+          "y": 0.792,
+          "width": 0.892,
+          "height": 0.16
+        },
+        "region_confidence": "visual-verified",
+        "direction": "left-to-right",
+        "band_fraction": 0.055,
+        "opacity": 0.055,
+        "color": "alice-blue",
+        "timing": {
+          "start": 0.1,
+          "end": 4.7,
+          "fade_in": 0.4,
+          "fade_out": 0.7
+        },
+        "protected_content": [
+          "last bold paragraph",
+          "all glyphs",
+          "line wrapping",
+          "other paragraphs"
+        ],
+        "rationale": "The final bold paragraph bbox was checked against the bitmap; one narrow low-opacity accent leaves layout static."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/14-04/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "428968eac5f24956a6cce835346fff8bc9e80ccd780ab265697dbde0ba7bee34",
+        "bytes": 128955,
+        "width": 868,
+        "height": 554,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "14#04",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+        "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632",
+        "width": 867,
+        "height": 554,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04/result.json",
+        "scene_plan_sha256": "0e8fc45a45bfe1fc89b24bb33b54861dbc825946af23940ccbfbec1eb98bc220"
+      },
+      "plan": {
+        "primitive": "glint",
+        "region": {
+          "x": 0.052,
+          "y": 0.792,
+          "width": 0.892,
+          "height": 0.16
+        },
+        "region_confidence": "visual-verified",
+        "direction": "left-to-right",
+        "band_fraction": 0.04,
+        "opacity": 0.045,
+        "color": "alice-blue",
+        "timing": {
+          "start": 0.1,
+          "end": 4.7,
+          "fade_in": 0.4,
+          "fade_out": 0.7
+        },
+        "protected_content": [
+          "last bold paragraph",
+          "all glyphs",
+          "line wrapping",
+          "other paragraphs"
+        ],
+        "rationale": "A thinner accent differentiates the Wan 2.7 target while retaining the same verified paragraph boundary."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/14-04/alibaba-wan-2.7.mp4",
+      "media": {
+        "sha256": "f0ebf0d8536f7f616b039c7b62dadb57d3dfbd8746b21165ea92a5441567fac5",
+        "bytes": 123997,
+        "width": 868,
+        "height": 554,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "14#04",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+        "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632",
+        "width": 867,
+        "height": 554,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04/result.json",
+        "scene_plan_sha256": "e66b32567bcb8a4037b7e30ff82c791dfc51394306afff8f78e07c64bef078fc"
+      },
+      "plan": {
+        "primitive": "glint",
+        "region": {
+          "x": 0.052,
+          "y": 0.792,
+          "width": 0.892,
+          "height": 0.16
+        },
+        "region_confidence": "visual-verified",
+        "direction": "left-to-right",
+        "band_fraction": 0.05,
+        "opacity": 0.05,
+        "color": "alice-blue",
+        "timing": {
+          "start": 0.1,
+          "end": 3.8,
+          "fade_in": 0.35,
+          "fade_out": 0.55
+        },
+        "protected_content": [
+          "last bold paragraph",
+          "all glyphs",
+          "line wrapping",
+          "other paragraphs"
+        ],
+        "rationale": "The four-second pass uses the exact visually verified final-paragraph bbox and fades completely before the last frame."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/14-04/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "a42dc4d19e39895b90233b982e05e0a651a25639fe1579aae8da40486595c54e",
+        "bytes": 123633,
+        "width": 868,
+        "height": 554,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "14#05",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+        "sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+        "width": 2048,
+        "height": 895,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-05",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-05/result.json",
+        "scene_plan_sha256": "b2f1baa86b85a8c6c4fd95655b2960c85b88fa7ceb8658315966eb467b8c4428"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.035,
+        "focal_point": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "audience cards",
+          "article-format cards",
+          "both column headings",
+          "controls"
+        ],
+        "rationale": "The central 3.5% whole-screen push keeps both columns and all UI content visible."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/14-05/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "51d0d554853de99082b13c0738256afe88546d7613d4cecca1efc3ff5c0863fd",
+        "bytes": 2023029,
+        "width": 1920,
+        "height": 840,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "14#05",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+        "sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+        "width": 2048,
+        "height": 895,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-05",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-05/result.json",
+        "scene_plan_sha256": "d6f73690be74152b1e656bc9df1fff31a2c05f052f2590ff51b30e8bf910cea7"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.025,
+        "focal_point": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "audience cards",
+          "article-format cards",
+          "both column headings",
+          "controls"
+        ],
+        "rationale": "The four-second variant is capped at 2.5% to preserve the screenshot's narrow outer frame."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/14-05/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "73871ef67004ee017bbd23e6b6e9b90abd1802cebeeb2f1db9a722c2f3543844",
+        "bytes": 1502569,
+        "width": 1920,
+        "height": 840,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "16#06",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+        "sha256": "036300677b23cb195036f3b5c72aa14549de5d1cc4ad9fe257385c5e35b0d40b",
+        "width": 768,
+        "height": 768,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06/result.json",
+        "scene_plan_sha256": "77a5dee9016eac41cb790340cff8d7d5dfe253a8877ec4c258a9a5c4e8f9f52d"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.05,
+        "focal_point": {
+          "x": 0.47,
+          "y": 0.52
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "five bottles",
+          "product box",
+          "packaging labels"
+        ],
+        "rationale": "The white margin supports a 5% group-centered push while all six packshot elements stay complete."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/16-06/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "aa24869cbda81f422cfd9f48244dcbeeee98cee6f6a44b917a1a8973478bf7c3",
+        "bytes": 176358,
+        "width": 768,
+        "height": 768,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "17#11",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+        "sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+        "width": 1940,
+        "height": 500,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-11",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-11/result.json",
+        "scene_plan_sha256": "cc56583fd8d3fce0215f6d88ff30f404e446f3d3895a15aa496b55d37f4d5219"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.035,
+        "focal_point": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "Volma logo",
+          "product bags",
+          "testimonial",
+          "portrait",
+          "outer copy"
+        ],
+        "rationale": "The extremely wide banner receives only a 3.5% centered push so logo, quote, portrait, and products remain present."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/17-11/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "fc0e084f2dc658a4efd870edae0533700cb144eac17f43671e500bcadf671fc5",
+        "bytes": 1315978,
+        "width": 1920,
+        "height": 494,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "18#05",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+        "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+        "width": 758,
+        "height": 220,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05/result.json",
+        "scene_plan_sha256": "33237b419f37fd9fca1b77d36ce5b1f39fcea047933e243d9840cae31c4fedf1"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.012,
+        "focal_point": {
+          "x": 0.62,
+          "y": 0.36
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "both material rows",
+          "three table columns",
+          "green check",
+          "warning icon",
+          "all text"
+        ],
+        "rationale": "Edge-to-edge table copy makes the authored 6% crop unsafe; a 1.2% push is the maximum reviewed transform that retains every label."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/18-05/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "64383647b86f902a3a90c79b0a0190e77f769f6c76c903f20c8a80ade7703134",
+        "bytes": 70774,
+        "width": 758,
+        "height": 220,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "18#05",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+        "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+        "width": 758,
+        "height": 220,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05/result.json",
+        "scene_plan_sha256": "e18b7d4fe295da56d5ab0da8107c057f893831eef605fb0889669febdc686c27"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.015,
+        "focal_point": {
+          "x": 0.62,
+          "y": 0.36
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "both material rows",
+          "three table columns",
+          "green check",
+          "warning icon",
+          "all text"
+        ],
+        "rationale": "A 1.5% model-specific push remains perceptible without applying the unsafe authored 7% crop to edge text."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/18-05/alibaba-wan-2.7.mp4",
+      "media": {
+        "sha256": "42e94f67ca807d38fde46650f22bacc4e77c50f69354c09619dcf428ec8f03cb",
+        "bytes": 86289,
+        "width": 758,
+        "height": 220,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "18#05",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+        "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+        "width": 758,
+        "height": 220,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05/result.json",
+        "scene_plan_sha256": "cf33c9973ab5b3e014d62a084a7147c8164fe985a3be6d1f97e6caeabd93bec7"
+      },
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.01,
+        "focal_point": {
+          "x": 0.62,
+          "y": 0.36
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "both material rows",
+          "three table columns",
+          "green check",
+          "warning icon",
+          "all text"
+        ],
+        "rationale": "The shortest variant uses a 1% safety-capped push because the table text begins and ends at the image edges."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/18-05/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "2102c1cf136a2c9f991453af881c0c6ddd8ed76a89b0ac00852a6c8a69b3f552",
+        "bytes": 63000,
+        "width": 758,
+        "height": 220,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "18#07",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+        "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+        "width": 773,
+        "height": 239,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07/result.json",
+        "scene_plan_sha256": "c83cb0f145490837d040471d6c00dfe2c5cc191edf63c99c696703a5dc878a77"
+      },
+      "plan": {
+        "primitive": "highlight",
+        "region": {
+          "x": 0.447,
+          "y": 0.268,
+          "width": 0.547,
+          "height": 0.56
+        },
+        "region_confidence": "visual-verified",
+        "direction": "top-to-bottom",
+        "band_fraction": 0.34,
+        "opacity": 0.035,
+        "color": "signal-green",
+        "timing": {
+          "start": 0.1,
+          "end": 4.7,
+          "fade_in": 0.4,
+          "fade_out": 0.7
+        },
+        "protected_content": [
+          "recommendation column text",
+          "two row dividers",
+          "warning line",
+          "left format column"
+        ],
+        "rationale": "The recommendation cells form a visually verified rectangular column; a faint band visits both cells without scaling the table."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/18-07/alibaba-wan-2.2.mp4",
+      "media": {
+        "sha256": "4d6b54a41c9efdc5de81ed0b35935d80e18863cff277e555e9973c352c14b79c",
+        "bytes": 31664,
+        "width": 774,
+        "height": 240,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "18#07",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+        "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+        "width": 773,
+        "height": 239,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07/result.json",
+        "scene_plan_sha256": "34f7ee873b3c989b0e05dad72d2e83aa4127c5df8143d526eb630947986233da"
+      },
+      "plan": {
+        "primitive": "highlight",
+        "region": {
+          "x": 0.447,
+          "y": 0.268,
+          "width": 0.547,
+          "height": 0.56
+        },
+        "region_confidence": "visual-verified",
+        "direction": "top-to-bottom",
+        "band_fraction": 0.24,
+        "opacity": 0.03,
+        "color": "signal-green",
+        "timing": {
+          "start": 0.1,
+          "end": 4.7,
+          "fade_in": 0.4,
+          "fade_out": 0.7
+        },
+        "protected_content": [
+          "recommendation column text",
+          "two row dividers",
+          "warning line",
+          "left format column"
+        ],
+        "rationale": "A narrower low-opacity pass preserves the full table and differentiates the Wan 2.7 timing."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/18-07/alibaba-wan-2.7.mp4",
+      "media": {
+        "sha256": "61d22659416ba4afa36b41d3ccce1d374c784ab734c5a30c9ee9fc086ef5732d",
+        "bytes": 30516,
+        "width": 774,
+        "height": 240,
+        "duration_seconds": 5.0,
+        "fps": 30,
+        "frames": 150,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    },
+    {
+      "case_id": "18#07",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "status": "succeeded",
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+        "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+        "width": 773,
+        "height": 239,
+        "mutated": false
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07/result.json",
+        "scene_plan_sha256": "f8c72f1a206da1d9fa8ca45d1a4109fd22d49ce704d29fd50687183eb0a101a7"
+      },
+      "plan": {
+        "primitive": "highlight",
+        "region": {
+          "x": 0.447,
+          "y": 0.268,
+          "width": 0.547,
+          "height": 0.56
+        },
+        "region_confidence": "visual-verified",
+        "direction": "top-to-bottom",
+        "band_fraction": 0.34,
+        "opacity": 0.035,
+        "color": "signal-green",
+        "timing": {
+          "start": 0.1,
+          "end": 3.8,
+          "fade_in": 0.35,
+          "fade_out": 0.55
+        },
+        "protected_content": [
+          "recommendation column text",
+          "two row dividers",
+          "warning line",
+          "left format column"
+        ],
+        "rationale": "The four-second highlight remains within the checked recommendation-column bbox and vanishes before the final frame."
+      },
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-20260811-v1/videos/18-07/google-veo-3.1-lite.mp4",
+      "media": {
+        "sha256": "37c13b1a13dcc7c9c9d05023b4390130dee41ada5609a3d11d72c8de0e51e817",
+        "bytes": 29547,
+        "width": 774,
+        "height": 240,
+        "duration_seconds": 4.0,
+        "fps": 30,
+        "frames": 120,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_streams": 0
+      },
+      "contract_check": {
+        "codec_h264": true,
+        "pixel_format_yuv420p": true,
+        "dimensions_exact": true,
+        "fps_exact": true,
+        "frames_exact": true,
+        "duration_exact": true,
+        "no_audio": true,
+        "source_sha256_bound": true,
+        "source_dimensions_bound": true
+      }
+    }
+  ]
+}

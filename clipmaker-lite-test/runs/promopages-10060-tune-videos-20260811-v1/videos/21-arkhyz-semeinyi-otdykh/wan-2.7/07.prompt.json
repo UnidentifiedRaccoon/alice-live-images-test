@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-07-wan-2-7",
+  "case_id": "21#07",
+  "sheet_row": 298,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig",
+    "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212",
+    "width": 2554,
+    "height": 1806
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig",
+    "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212",
+    "width": 2554,
+    "height": 1806,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Support the article’s message that Arkhyz offers approachable, enjoyable hiking routes for families amid an inviting mountain landscape.",
+    "initial_state": "Two hikers stand posed on a mountain trail with their trekking poles planted, beside a large rigid «АРХЫЗ» sign on the slope; foreground rocks lead into wooded distant terrain.",
+    "motion_owner": "camera",
+    "primary_action": "A bounded forward camera move creates source-grounded parallax toward the hikers and resort sign.",
+    "terminal_state": "The hikers and sign are observably closer and slightly larger while foreground rocks have shifted in screen space; all original subjects, props, lettering, and meaningful zones remain visible.",
+    "geometry_invariant": "The sign and terrain remain rigid; each trekking pole stays attached to its visible hiker and planted at the same ground contact.",
+    "identity_invariant": "Exactly two hikers, four trekking poles, and the single «АРХЫЗ» sign with its original Cyrillic glyph count, shapes, and order remain present and recognizable.",
+    "semantic_invariant": "The scene continues to communicate a cheerful, accessible hiking experience at Arkhyz, and the resort sign remains legible as the location identifier.",
+    "feasibility_assessment": "The image clearly proves layered depth, a stable trail, two stationary hikers, planted trekking poles, and a rigid resort sign. It does not prove a safe next gesture, walking direction, or intended interaction for either person; a source-grounded camera move is therefore safer than animating their bodies.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Use the full five seconds for one restrained push-in centered between the hikers and the sign. Keep travel continuous and level, with foreground terrain providing clear parallax and a composition ceiling of about 8% screen-space displacement; decelerate only in the final moments, ending closer without cropping either person or reconstructing the sign.",
+  "prompt": {
+    "positive": "The camera advances smoothly toward the hikers and the «АРХЫЗ» sign, keeping both people, every planted trekking pole, and the exact rigid lettering continuously intact. End with the focal group visibly closer and foreground rocks shifted no more than about 8% of the frame through natural parallax.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07/result.json",
+    "result_sha256": "09adffd5f8d2796c7b87701e19e9f1d8b2e27996282393e44c7512dc038ab8a0",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+      "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+      "source_image_sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212",
+      "article_context_sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

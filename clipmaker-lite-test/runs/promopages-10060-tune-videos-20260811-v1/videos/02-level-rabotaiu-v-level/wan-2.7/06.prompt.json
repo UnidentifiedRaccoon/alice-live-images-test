@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-02-level-rabotaiu-v-level-06-wan-2-7",
+  "case_id": "02#06",
+  "sheet_row": 19,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+    "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+    "width": 1296,
+    "height": 972,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize how a partial partition creates two private functional zones while retaining light and openness in a compact apartment.",
+    "initial_state": "A still, furnished apartment shows the bedroom on the left and kitchen/dining zone on the right, divided by a central timber-slat partition, with both areas visible from the entrance.",
+    "motion_owner": "camera",
+    "primary_action": "Advance through the visible room depth toward the timber partition to strengthen the readable separation between the two zones.",
+    "terminal_state": "Both the bed and dining area remain visible, while parallax makes the timber partition and the depth separation between the two zones more pronounced.",
+    "geometry_invariant": "The timber partition, walls, windows, floor, bed, table, chairs, cabinetry, and their rigid spatial relationships remain fixed and undeformed.",
+    "identity_invariant": "No people are present; the same single bed, timber partition, dining table, chairs, windows, curtains, cabinetry, and fixtures remain present without additions or removals.",
+    "semantic_invariant": "The apartment remains one bright, open interior organized into two distinct, usable zones that allow separation and privacy.",
+    "feasibility_assessment": "The image clearly proves a static rigid interior, a central partition, two visible zones, and usable scene depth. It does not prove any person-driven action or safe curtain mechanics, so subject animation is unsupported; the visible depth supports a source-grounded camera-only treatment.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Use the full five seconds for one restrained forward track centered on the timber partition. Keep a level, uniform pace through most of the shot and taper only at the finish; cap screen-space travel around 8% to protect the original framing and retain clear views of both the sleeping and dining zones.",
+  "prompt": {
+    "positive": "The camera makes a smooth bounded push toward the fixed timber partition, with natural parallax shifting it no more than about 8% of the frame while the bed and dining area stay visible. End with the partition’s separation of the two zones clearer, preserving the rigid layout and source-locked curtains.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-06",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-06/result.json",
+    "result_sha256": "6e561511603a406eb961ff2c4b295f3f048751e0a28e4658fd98eb856553e649",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+      "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+      "source_image_sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

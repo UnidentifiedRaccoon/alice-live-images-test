@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-07",
+  "lite_result_sha256": "0dc315ff199caed6355f55b11ad9d9e23024c49763332bba581f60144e9b7703",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "10#07",
+  "sheet_row": 122,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera makes a smooth, bounded push-in toward the family at a steady real-time pace, with source-grounded parallax across the breakfast table, sofa, and wall. Keep all four people, their poses and held props intact; by the final frame the family is modestly larger while the near table edge has shifted outward by about 5–8% of the frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "afe53000aa4887135f316eec2ac04cb9b9a89d3ecac39488d5b4a77c5dd078b2",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "vix3OSm0iISSLk0ZtLoR",
+  "submitted_at": "2026-08-11T15:43:29Z",
+  "completed_at": "2026-08-11T15:45:10Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": null,
+  "contract_check": null,
+  "error": "provider poll/download: Eliza/OpenRouter job vix3OSm0iISSLk0ZtLoR failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "automatic_paid_retry": false
+}

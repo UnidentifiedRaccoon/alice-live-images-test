@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-06",
+  "lite_result_sha256": "37db4ec3e86366f52cea010f1283ca125eb7723ee9e89b61e36dd6ed326df98e",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "provider-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The woman makes one slow, deliberate upward swipe across the phone screen with her right index finger while keeping the phone steady in her left hand and maintaining her calm smile and downward gaze. The fixed camera holds the framing as her fingertip comes to rest slightly higher on the screen near the end.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "e4ae2a5c9427b2d5c928dd124e139f515c65dec8aaac02c09e29fa4dd7db8308",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "lkVqOh5FmFC2nj931yFH",
+  "submitted_at": "2026-08-11T15:43:29Z",
+  "completed_at": "2026-08-11T15:45:05Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": null,
+  "contract_check": null,
+  "error": "provider poll/download: Eliza/OpenRouter job lkVqOh5FmFC2nj931yFH failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "automatic_paid_retry": false
+}

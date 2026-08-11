@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-08-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-08",
+  "lite_result_sha256": "387c3add366594f9bbd27e3ba8c80c76e487a499b8894ecb3ced97126639514c",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "17#08",
+  "sheet_row": 237,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+      "prompt": "The camera makes a steady bounded push-in toward the central cracked slab, with the nearest hand tools shifting about 7% of the frame through source-grounded parallax. The broken floor, rubble and unattended power tool retain their rigid shapes and fixed positions, ending with the deep central fracture more prominent.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "f9d13609c5121826a1bd322c5f47b9aff402a60d7c4b23775a6bf7532a792c02",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "8f7e4923bb2b3c2b946b8b3eb75cd492",
+  "submitted_at": "2026-08-11T15:09:36Z",
+  "completed_at": "2026-08-11T15:09:36Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 1304336,
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "8f7e4923bb2b3c2b946b8b3eb75cd492",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1184,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 16678070,
+    "sha256": "b2af4d9699335956ea91b6880265efa1c4b3d2ac8c9d830d9ea8baded6e9e141"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 1068,
+      "source_height": 699,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1184x768 differs from source 1068x699 by 0.901% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "b2af4d9699335956ea91b6880265efa1c4b3d2ac8c9d830d9ea8baded6e9e141",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

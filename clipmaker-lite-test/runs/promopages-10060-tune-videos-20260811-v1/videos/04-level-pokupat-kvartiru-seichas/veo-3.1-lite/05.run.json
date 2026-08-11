@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-04-level-pokupat-kvartiru-seichas-05-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05",
+  "lite_result_sha256": "9aebe3628e5ef63e9c39ca51c9e361c266bbccccf0b81339a210a9e32d0213a2",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "04#05",
+  "sheet_row": 47,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera tracks smoothly to the right at an even real-time pace, keeping the central residential complex as the focal target while source-grounded parallax carries the nearest buildings and treetops about 5–7% left across the frame. By the final frame, slightly more of the already visible green corridors between the buildings is readable, with every façade, road, courtyard and tree retaining its rigid layout and identity.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c484a27d223d14941370/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "e939b44d34ab552801aaeb090d18843bebfda678d11ee7be2937a77057eb8e40",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "7RbC8hPgBP6DofYiwD6R",
+  "submitted_at": "2026-08-11T14:59:15Z",
+  "completed_at": "2026-08-11T15:01:55Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 20135544,
+    "sha256": "37d38f8c89b5801aed860ba97e51dd4167cf67fcc6493931a95227abf288695c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "16:9",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "pixels": true,
+      "requested_aspect": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "37d38f8c89b5801aed860ba97e51dd4167cf67fcc6493931a95227abf288695c",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

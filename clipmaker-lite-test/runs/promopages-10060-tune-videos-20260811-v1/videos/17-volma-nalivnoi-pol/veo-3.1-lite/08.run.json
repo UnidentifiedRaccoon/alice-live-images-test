@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-08-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-08",
+  "lite_result_sha256": "387c3add366594f9bbd27e3ba8c80c76e487a499b8894ecb3ced97126639514c",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "17#08",
+  "sheet_row": 236,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera rises slightly toward the central broken slab at normal real-time speed, shifting the nearest foreground references roughly 5–7% of the frame through source-grounded parallax. The cracked floor, rubble and tools stay rigid and fixed, ending with a clearer view into the existing fracture around the raised slab.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "bca245b72c2d84062afc026bca8248e957795252aa457c15f9e3c4a31aaf5736",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "McAJzetBeuD8UaLabjfq",
+  "submitted_at": "2026-08-11T15:47:21Z",
+  "completed_at": "2026-08-11T15:49:14Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4637884,
+    "sha256": "bad094817be64edb0027c555e431e19ec2232a52614be027e81a1605eaec8395"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "16:9",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "pixels": true,
+      "requested_aspect": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "bad094817be64edb0027c555e431e19ec2232a52614be027e81a1605eaec8395",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

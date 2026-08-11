@@ -1288,29 +1288,145 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
     return extension_paths
 
 
-def _tune_manifest_fixture():
+def _tune_manifest_fixture(*, root=None, generated=False):
+    if generated and root is None:
+        raise ValueError("generated Tune fixture requires a root")
     cases = []
     next_sheet_row = 2
+    immutable_commit = "a" * 40
     for case_index in range(pages.TUNE_CASE_COUNT):
         targets = []
         target_count = 2 if case_index < 29 else 1
         for target_index in range(target_count):
-            targets.append(
-                {
-                    "sheet_row": next_sheet_row,
-                    "model_id": f"model-{target_index}",
-                    "baseline": {
-                        "video_url": (
-                            "https://cdn.example.test/tune/"
-                            f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
-                        ),
-                        "repository_video_path": (
-                            "private-tune-videos/"
-                            f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
-                        ),
-                    },
-                }
+            target_number = next_sheet_row - 1
+            execution_mode = (
+                "i2v"
+                if target_number <= pages.TUNE_I2V_TARGET_COUNT
+                else "deterministic-compositor"
             )
+            target = {
+                "sheet_row": next_sheet_row,
+                "model_id": pages.PROMOPAGES_10060_MODELS[
+                    target_number % len(pages.PROMOPAGES_10060_MODELS)
+                ],
+                "baseline": {
+                    "video_url": (
+                        "https://cdn.example.test/tune/"
+                        f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
+                    ),
+                    "repository_video_path": (
+                        "private-tune-videos/"
+                        f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
+                    ),
+                },
+                "tuned": {"execution_mode": execution_mode},
+            }
+            if generated:
+                video_bytes = f"tune-video-row-{next_sheet_row}".encode()
+                repository_video_path = (
+                    "clipmaker-lite-test/runs/tune-generated/videos/"
+                    f"case-{case_index + 1:02d}/row-{next_sheet_row}.mp4"
+                )
+                video_path = root / repository_video_path
+                video_path.parent.mkdir(parents=True, exist_ok=True)
+                video_path.write_bytes(video_bytes)
+                sha256 = hashlib.sha256(video_bytes).hexdigest()
+                common_media = {
+                    "duration_seconds": 5.0,
+                    "width": 1280,
+                    "height": 720,
+                    "fps": 24.0,
+                    "frames": 120,
+                    "bytes": len(video_bytes),
+                    "sha256": sha256,
+                }
+                if (
+                    execution_mode == "i2v"
+                    and target_number <= pages.TUNE_ELIZA_I2V_VIDEO_COUNT
+                ):
+                    method = "eliza-i2v"
+                    media = {
+                        **common_media,
+                        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                        "codec": "h264",
+                        "has_audio": False,
+                    }
+                    contract_check = {"conforms": True, "warnings": []}
+                else:
+                    method = (
+                        "deterministic-compositor"
+                        if execution_mode == "deterministic-compositor"
+                        else "deterministic-compositor-fallback"
+                    )
+                    media = {
+                        **common_media,
+                        "video_codec": "h264",
+                        "pixel_format": "yuv420p",
+                        "audio_streams": 0,
+                    }
+                    contract_check = {
+                        "codec_h264": True,
+                        "pixel_format_yuv420p": True,
+                        "dimensions_exact": True,
+                        "fps_exact": True,
+                        "frames_exact": True,
+                        "duration_exact": True,
+                        "no_audio": True,
+                        "source_sha256_bound": True,
+                        "source_dimensions_bound": True,
+                    }
+                tuned_video = {
+                    "status": "succeeded",
+                    "method": method,
+                    "delivery": "repository-raw",
+                    "url": (
+                        "https://raw.githubusercontent.com/example/demo/"
+                        f"{immutable_commit}/{repository_video_path}"
+                    ),
+                    "repository_video_path": repository_video_path,
+                    "sha256": sha256,
+                    "bytes": len(video_bytes),
+                    "media": media,
+                    "contract_check": contract_check,
+                }
+                if method == "deterministic-compositor-fallback":
+                    provider_job_id = f"failed-provider-job-{next_sheet_row}"
+                    provider_error = (
+                        "Provider terminal failure produced no reviewable output"
+                    )
+                    provider_run_path = (
+                        "clipmaker-lite-test/runs/tune-generated/provider-attempts/"
+                        f"row-{next_sheet_row}.run.json"
+                    )
+                    provider_run = {
+                        "status": "provider-failed",
+                        "provider_may_be_active": False,
+                        "provider_job_id": provider_job_id,
+                        "error": provider_error,
+                    }
+                    provider_run_file = root / provider_run_path
+                    provider_run_file.parent.mkdir(parents=True, exist_ok=True)
+                    provider_run_file.write_text(
+                        json.dumps(provider_run, indent=2) + "\n",
+                        encoding="utf-8",
+                    )
+                    tuned_video.update(
+                        {
+                            "prompt_evaluated": False,
+                            "provider_attempt": {
+                                "status": "provider-failed",
+                                "prompt_evaluated": False,
+                                "run_path": provider_run_path,
+                                "run_sha256": hashlib.sha256(
+                                    provider_run_file.read_bytes()
+                                ).hexdigest(),
+                                "provider_job_id": provider_job_id,
+                                "error": provider_error,
+                            },
+                        }
+                    )
+                target["tuned"]["video"] = tuned_video
+            targets.append(target)
             next_sheet_row += 1
         cases.append(
             {
@@ -1333,7 +1449,7 @@ def _tune_manifest_fixture():
         "scope": {
             "case_count": pages.TUNE_CASE_COUNT,
             "target_count": pages.TUNE_TARGET_COUNT,
-            "new_video_generation": False,
+            "new_video_generation": generated,
             "new_s3_upload": False,
             "baseline_video_delivery": "existing-yastatic",
         },
@@ -1368,8 +1484,8 @@ class GitHubPagesSiteTest(unittest.TestCase):
 
     def test_tune_manifest_delivery_mismatches_fail_closed(self):
         mutations = {
-            "prompt-only scope": lambda manifest: manifest["scope"].update(
-                {"new_video_generation": True}
+            "generation scope": lambda manifest: manifest["scope"].update(
+                {"new_video_generation": "true"}
             ),
             "source delivery": lambda manifest: manifest["cases"][0][
                 "source"
@@ -1395,6 +1511,289 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 mutate(manifest)
                 with self.assertRaisesRegex(ValueError, error):
                     pages._validate_tune_manifest_for_pages(manifest)
+
+    def test_tune_generated_scope_validates_repo_media_without_publishing_it(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root, generated=True)
+
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+            repository_paths = {
+                Path(target["tuned"]["video"]["repository_video_path"])
+                for case in manifest["cases"]
+                for target in case["targets"]
+            }
+            self.assertEqual(len(repository_paths), pages.TUNE_TARGET_COUNT)
+            methods = [
+                target["tuned"]["video"]["method"]
+                for case in manifest["cases"]
+                for target in case["targets"]
+            ]
+            self.assertEqual(methods.count("eliza-i2v"), 41)
+            self.assertEqual(methods.count("deterministic-compositor"), 22)
+            self.assertEqual(
+                methods.count("deterministic-compositor-fallback"), 2
+            )
+            self.assertEqual(
+                sum(
+                    target["tuned"]["execution_mode"]
+                    == "deterministic-compositor"
+                    for case in manifest["cases"]
+                    for target in case["targets"]
+                ),
+                pages.TUNE_COMPOSITOR_TARGET_COUNT,
+            )
+            self.assertTrue(
+                repository_paths.isdisjoint(
+                    {Path(path) for path in pages.STATIC_FILES}
+                )
+            )
+
+            reviewable_failure = manifest["cases"][0]["targets"][0]["tuned"][
+                "video"
+            ]
+            reviewable_failure["status"] = "verification-failed"
+            reviewable_failure["media"]["has_audio"] = True
+            reviewable_failure["contract_check"] = {
+                "conforms": False,
+                "requested": {"generate_audio": False},
+                "checks": {"audio": False},
+                "warnings": [
+                    "provider returned has_audio=True despite generate_audio=False"
+                ],
+            }
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_i2v_audio_warning_must_preserve_exact_provider_violation(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            fixture = _tune_manifest_fixture(root=root, generated=True)
+
+            def audio_failure_manifest():
+                manifest = json.loads(json.dumps(fixture))
+                video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+                video["status"] = "verification-failed"
+                video["media"]["has_audio"] = True
+                video["contract_check"] = {
+                    "conforms": False,
+                    "requested": {"generate_audio": False},
+                    "checks": {"audio": False},
+                    "warnings": [
+                        "provider returned has_audio=True despite "
+                        "generate_audio=False"
+                    ],
+                }
+                return manifest, video
+
+            mutations = {
+                "succeeded output cannot contain audio": lambda video: video.update(
+                    {
+                        "status": "succeeded",
+                        "contract_check": {"conforms": True, "warnings": []},
+                    }
+                ),
+                "requested audio must remain false": lambda video: video[
+                    "contract_check"
+                ]["requested"].update({"generate_audio": True}),
+                "audio check must remain false": lambda video: video[
+                    "contract_check"
+                ]["checks"].update({"audio": True}),
+                "warning must name actual audio": lambda video: video[
+                    "contract_check"
+                ].update({"warnings": ["provider contract mismatch"]}),
+            }
+            for name, mutate in mutations.items():
+                with self.subTest(name=name):
+                    manifest, video = audio_failure_manifest()
+                    mutate(video)
+                    with self.assertRaisesRegex(
+                        ValueError, "I2V media or contract warnings"
+                    ):
+                        pages._validate_tune_manifest_for_pages(
+                            manifest, root=root
+                        )
+
+    def test_tune_compositor_fallback_binds_terminal_provider_failure(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            fixture = _tune_manifest_fixture(root=root, generated=True)
+
+            def fallback_video(manifest):
+                return next(
+                    target["tuned"]["video"]
+                    for case in manifest["cases"]
+                    for target in case["targets"]
+                    if target["tuned"]["video"]["method"]
+                    == "deterministic-compositor-fallback"
+                )
+
+            mutations = {
+                "fallback must declare prompt_evaluated=false": lambda video: video.pop(
+                    "prompt_evaluated"
+                ),
+                "provider_attempt audit": lambda video: video[
+                    "provider_attempt"
+                ].update({"provider_job_id": ""}),
+                "provider_attempt run SHA mismatch": lambda video: video[
+                    "provider_attempt"
+                ].update({"run_sha256": "f" * 64}),
+                "terminal failure": lambda video: video["provider_attempt"].update(
+                    {"error": "different terminal error"}
+                ),
+                "compositor no-audio": lambda video: video["media"].update(
+                    {"audio_streams": 1}
+                ),
+            }
+            for error, mutate in mutations.items():
+                with self.subTest(error=error):
+                    manifest = json.loads(json.dumps(fixture))
+                    mutate(fallback_video(manifest))
+                    with self.assertRaisesRegex(ValueError, error):
+                        pages._validate_tune_manifest_for_pages(
+                            manifest, root=root
+                        )
+
+            manifest = json.loads(json.dumps(fixture))
+            fallback = fallback_video(manifest)
+            fallback["method"] = "eliza-i2v"
+            fallback.pop("prompt_evaluated")
+            fallback.pop("provider_attempt")
+            fallback["media"].pop("video_codec")
+            fallback["media"].pop("pixel_format")
+            fallback["media"].pop("audio_streams")
+            fallback["media"].update(
+                {
+                    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                    "codec": "h264",
+                    "has_audio": False,
+                }
+            )
+            fallback["contract_check"] = {"conforms": True, "warnings": []}
+            with self.assertRaisesRegex(ValueError, "exactly 41 eliza-i2v"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_generated_scope_mismatches_fail_closed(self):
+        mutations = {
+            "method does not match": lambda manifest, video: video.update(
+                {"method": "deterministic-compositor"}
+            ),
+            "repository-raw": lambda manifest, video: video.update(
+                {"delivery": "pages-copy"}
+            ),
+            "immutable raw.githubusercontent.com": lambda manifest, video: video.update(
+                {
+                    "url": (
+                        "https://raw.githubusercontent.com/example/demo/main/"
+                        f"{video['repository_video_path']}"
+                    )
+                }
+            ),
+            "canonical repository MP4 path": lambda manifest, video: video.update(
+                {
+                    "repository_video_path": video[
+                        "repository_video_path"
+                    ].replace("/videos/", "/videos//")
+                }
+            ),
+            "media or contract warnings": lambda manifest, video: video[
+                "contract_check"
+            ].update({"warnings": [None]}),
+            "repository file SHA/bytes mismatch": lambda manifest, video: (
+                video.update({"sha256": "f" * 64}),
+                video["media"].update({"sha256": "f" * 64}),
+            ),
+        }
+        for error, mutate in mutations.items():
+            with self.subTest(error=error), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                manifest = _tune_manifest_fixture(root=root, generated=True)
+                first_video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+                mutate(manifest, first_video)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_generated_scope_requires_exact_modes_and_compositor_video(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root, generated=True)
+            flat_targets = [
+                target for case in manifest["cases"] for target in case["targets"]
+            ]
+            last_i2v = next(
+                target
+                for target in reversed(flat_targets)
+                if target["tuned"]["execution_mode"] == "i2v"
+                and target["tuned"]["video"]["method"] == "eliza-i2v"
+            )
+            last_i2v["tuned"]["execution_mode"] = "deterministic-compositor"
+            converted_video = last_i2v["tuned"]["video"]
+            converted_video["method"] = "deterministic-compositor"
+            converted_video["media"].pop("container")
+            converted_video["media"].pop("codec")
+            converted_video["media"].pop("has_audio")
+            converted_video["media"].update(
+                {
+                    "video_codec": "h264",
+                    "pixel_format": "yuv420p",
+                    "audio_streams": 0,
+                }
+            )
+            converted_video["contract_check"] = {
+                "codec_h264": True,
+                "pixel_format_yuv420p": True,
+                "dimensions_exact": True,
+                "fps_exact": True,
+                "frames_exact": True,
+                "duration_exact": True,
+                "no_audio": True,
+                "source_sha256_bound": True,
+                "source_dimensions_bound": True,
+            }
+            with self.assertRaisesRegex(ValueError, "exactly 43 I2V"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+            manifest = _tune_manifest_fixture(root=root, generated=True)
+            flat_targets = [
+                target for case in manifest["cases"] for target in case["targets"]
+            ]
+            compositor = next(
+                target
+                for target in flat_targets
+                if target["tuned"]["execution_mode"]
+                == "deterministic-compositor"
+            )
+            compositor["tuned"]["video"] = None
+            with self.assertRaisesRegex(ValueError, "method does not match"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+            manifest = _tune_manifest_fixture(root=root, generated=True)
+            compositor = next(
+                target
+                for case in manifest["cases"]
+                for target in case["targets"]
+                if target["tuned"]["execution_mode"]
+                == "deterministic-compositor"
+            )
+            compositor_video = compositor["tuned"]["video"]
+            compositor_video["media"]["audio_streams"] = 1
+            compositor_video["contract_check"]["no_audio"] = False
+            with self.assertRaisesRegex(ValueError, "compositor no-audio"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_generated_scope_rejects_missing_or_non_regular_repo_media(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root, generated=True)
+            video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+            video_path = root / video["repository_video_path"]
+            video_path.unlink()
+            with self.assertRaisesRegex(ValueError, "repository file is missing"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+            video_path.mkdir()
+            with self.assertRaisesRegex(ValueError, "repository file must be regular"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
 
     def test_s3_delivery_overlay_matches_all_available_canonical_outputs(self):
         source_manifests = [
@@ -2179,6 +2578,13 @@ class GitHubPagesSiteTest(unittest.TestCase):
             for case in tune_manifest["cases"]
             for target in case["targets"]
         }
+        tune_repository_videos.update(
+            Path(video["repository_video_path"])
+            for case in tune_manifest["cases"]
+            for target in case["targets"]
+            if isinstance(target.get("tuned"), dict)
+            if isinstance(video := target["tuned"].get("video"), dict)
+        )
         self.assertTrue(tune_repository_videos.isdisjoint(paths))
         self.assertFalse(any(path.parts[0] == "faststart-lab" for path in paths))
         self.assertFalse(any("Prepared videos" in path.as_posix() for path in paths))

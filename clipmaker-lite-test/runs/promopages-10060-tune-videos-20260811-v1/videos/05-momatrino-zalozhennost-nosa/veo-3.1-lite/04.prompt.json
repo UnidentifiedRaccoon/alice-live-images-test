@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-05-momatrino-zalozhennost-nosa-04-veo-3-1-lite",
+  "case_id": "05#04",
+  "sheet_row": 59,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/04.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c416745fd1ab1193003/orig",
+    "sha256": "9fb38f97af30b51107d6fbdf842148f07fc7021ea6500d7234acc22b59157d65",
+    "width": 1024,
+    "height": 1024
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c416745fd1ab1193003/orig",
+    "sha256": "9fb38f97af30b51107d6fbdf842148f07fc7021ea6500d7234acc22b59157d65",
+    "width": 1024,
+    "height": 1024,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть разнообразие бытовой химии как возможных источников запахов, использование которых стоит сопоставлять с появлением дискомфорта в носу.",
+    "initial_state": "Две полки открытого шкафа заполнены неподвижными флаконами бытовой химии, сложенными салфетками, щёткой и совком; все предметы находятся на видимых опорах.",
+    "motion_owner": "камера",
+    "primary_action": "Одно плавное ограниченное движение камеры по уже видимой глубине шкафа акцентирует ряд бытовой химии.",
+    "terminal_state": "В последнем кадре перспектива полок заметно, но умеренно смещена относительно первого кадра, а весь исходный набор предметов остаётся видимым, неподвижным и узнаваемым.",
+    "geometry_invariant": "Все флаконы стоят на своих полках; стопки салфеток, щётка и совок сохраняют опору, взаимное расположение и жёсткую форму.",
+    "identity_invariant": "Сохраняются четыре ёмкости и три салфетки на верхней полке, а также все видимые ёмкости, щётка, совок и текстильные принадлежности на нижней; ничего не появляется, не исчезает и не подменяется.",
+    "semantic_invariant": "Кадр до конца остаётся нейтральной демонстрацией набора бытовой химии как потенциальных источников раздражающих запахов, без показа использования или оценки конкретного продукта.",
+    "feasibility_assessment": "Неподвижные предметы, их опоры и глубина двухполочного шкафа видны ясно, но в кадре нет человека, начатого распыления, открывания или иной доказанной механики действия. Поэтому безопасно только движение камеры по уже видимой глубине без анимации средств и инструментов.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Четырёхсекундный непрерывный camera-only кадр: спокойный bounded push-in начинается сразу и направлен на центральный ряд флаконов верхней полки, идёт с ровной читаемой скоростью и слегка замедляется только у конца. Увеличение умеренное, без перестройки кадра и достраивания шкафа; жёсткие предметы меняют лишь экранный масштаб из-за движения камеры. В финале флаконы выглядят немного ближе, но обе полки и все исходные принадлежности остаются в кадре, неподвижными и неизменными.",
+  "prompt": {
+    "positive": "The camera makes a smooth, immediate push-in toward the row of cleaning bottles at normal real-time speed; all containers, cloth stacks, and tools remain rigid, supported, and unchanged. In the final frame the upper-shelf products appear modestly closer while every original item remains visible within the cabinet.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-05-momatrino-zalozhennost-nosa-04",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-05-momatrino-zalozhennost-nosa-04/result.json",
+    "result_sha256": "36dd398806a45340471ade4044e648947df9757576c6ba5e7c54e0ebf4423f56",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:94141eb0ada5eead364e2935e29e8eeca5ada6c324fad4e7720ddc1ce6494aef",
+      "instruction_bundle_sha256": "655e772fff5d60c14395c2b6bdb38684e35d9a22621d686c059db20e270e2960",
+      "source_image_sha256": "9fb38f97af30b51107d6fbdf842148f07fc7021ea6500d7234acc22b59157d65",
+      "article_context_sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-02-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-02",
+  "lite_result_sha256": "96b63cd9fca0d1a98a14f609823ceaa3eb7e87adc2bf200dc50c6bbf183dd631",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "21#02",
+  "sheet_row": 290,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera makes a smooth rising push toward the central resort, revealing slightly more of the already visible valley floor through source-grounded parallax while the architecture, lift structures, roads, and mountains remain rigid. At the end, the foreground has shifted about 6% of the frame and the resort sits more prominently below the still-visible snowy peaks.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "93879cc30d0e305cc4af00608877329d2f5b90dd7d20145ae0c3cbf438307aa5",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "iWv6PJ6dmydwrwlLjyBs",
+  "submitted_at": "2026-08-11T15:49:20Z",
+  "completed_at": "2026-08-11T15:51:17Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 8851888,
+    "sha256": "15ff6b86f646345158175030184b172660b23c81ef813fd3757dab2a019b203b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "16:9",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "pixels": true,
+      "requested_aspect": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "15ff6b86f646345158175030184b172660b23c81ef813fd3757dab2a019b203b",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

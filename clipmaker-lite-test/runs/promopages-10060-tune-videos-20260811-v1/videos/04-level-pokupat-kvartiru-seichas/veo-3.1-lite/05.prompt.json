@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-04-level-pokupat-kvartiru-seichas-05-veo-3-1-lite",
+  "case_id": "04#05",
+  "sheet_row": 47,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c484a27d223d14941370/orig",
+    "sha256": "7143a61000917545d3363bf593b8233d1920a399614149fae09d22d03de0c1e0",
+    "width": 1600,
+    "height": 1066
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c484a27d223d14941370/orig",
+    "sha256": "7143a61000917545d3363bf593b8233d1920a399614149fae09d22d03de0c1e0",
+    "width": 1600,
+    "height": 1066,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть, что умеренная этажность жилого комплекса сохраняет ощущение близости к лесу и зелёным зонам.",
+    "initial_state": "Неподвижный жилой комплекс виден сверху под углом среди плотного леса, с корпусами, дворами, дорогами и парковками на нескольких планах глубины.",
+    "motion_owner": "камера",
+    "primary_action": "Непрерывное боковое перемещение камеры раскрывает существующую глубину комплекса через параллакс.",
+    "terminal_state": "В финале ближайшие корпуса и кроны заметно смещены в кадре относительно центральной застройки, и уже видимые зелёные промежутки между домами читаются немного яснее.",
+    "geometry_invariant": "Все корпуса, фасады, окна, крыши, дороги, дворы и деревья сохраняют жёсткую форму, взаимное расположение и привязку к земле.",
+    "identity_invariant": "Сохраняются исходные количество и идентичность зданий, деревьев, дорог, автомобилей и малых объектов; ничего не появляется и не исчезает.",
+    "semantic_invariant": "Комплекс остаётся визуально окружённым зеленью, а лесные зоны сохраняют заметное присутствие до последнего кадра.",
+    "feasibility_assessment": "Неподвижная архитектура, окружающий лес и несколько планов глубины видны однозначно; направление движения транспорта, людей или среды не доказано, поэтому безопасна только source-grounded динамика камеры.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Четырёхсекундный единый план: камера сразу начинает плавный боковой трекинг вправо с центральной группой корпусов в качестве постоянной точки внимания. Равномерное движение создаёт читаемый параллакс между ближайшими деревьями и корпусами, центральной застройкой и дальним лесом; жёсткая архитектура не деформируется. К концу камера мягко замедляется после смещения ближайших ориентиров влево примерно на 5–7% ширины кадра, благодаря чему немного яснее читаются уже видимые зелёные промежутки между домами без выхода за исходную композицию.",
+  "prompt": {
+    "positive": "The camera tracks smoothly to the right at an even real-time pace, keeping the central residential complex as the focal target while source-grounded parallax carries the nearest buildings and treetops about 5–7% left across the frame. By the final frame, slightly more of the already visible green corridors between the buildings is readable, with every façade, road, courtyard and tree retaining its rigid layout and identity.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05/result.json",
+    "result_sha256": "9aebe3628e5ef63e9c39ca51c9e361c266bbccccf0b81339a210a9e32d0213a2",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+      "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+      "source_image_sha256": "7143a61000917545d3363bf593b8233d1920a399614149fae09d22d03de0c1e0",
+      "article_context_sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

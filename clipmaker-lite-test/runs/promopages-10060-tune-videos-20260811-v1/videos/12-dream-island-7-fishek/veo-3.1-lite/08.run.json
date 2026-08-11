@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-08-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-12-dream-island-7-fishek-08",
+  "lite_result_sha256": "e8c0b64177c527db2cb0e36019f0f6f21d9426423f44ae07fdb5750f3027d6f3",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "12#08",
+  "sheet_row": 149,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera rises slightly toward the suspended gondola and golden temple relief at a smooth real-time pace, producing natural parallax while the rigid ride assembly and every restrained rider remain in the same visible state. By the last frame, the lower foreground barrier has shifted downward about 6% of the frame height and the gondola remains fully visible against the relief.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dcbfe4e754100323e74a62492cc0c59724b61d4541015dc2de911c4c67a44e21",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cGJkvc4mRxDSbPbofpzr",
+  "submitted_at": "2026-08-11T15:45:18Z",
+  "completed_at": "2026-08-11T15:47:16Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 10596379,
+    "sha256": "7210654e5e84a83448597a8d573dbacf5e11d557b6efb2845bb7fa5e2cf93f63"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "16:9",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "pixels": true,
+      "requested_aspect": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "7210654e5e84a83448597a8d573dbacf5e11d557b6efb2845bb7fa5e2cf93f63",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

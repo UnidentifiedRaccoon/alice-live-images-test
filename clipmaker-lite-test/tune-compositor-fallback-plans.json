@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-compositor-fallback-plans",
+  "batch_id": "promopages-10060-tune-compositor-fallback-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "method": "deterministic-compositor-fallback",
+  "source_manifest": {
+    "path": "clipmaker-lite-test/tune-manifest.json",
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "selection_sha256": "dbc085db3f4744de3dd77206749dfab67898733143651341d00cb7b1455fc733"
+  },
+  "provider_generation": {
+    "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/generation-manifest.json",
+    "batch_id": "promopages-10060-tune-videos-20260811-v1",
+    "sha256": "1a2951dfd72aba155c9342b369bddac05bd16854bc83b95264473a9c3bd68c56"
+  },
+  "render_contract": {
+    "fps": 30,
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "duration_seconds": 4,
+    "frames": 120,
+    "audio": false,
+    "network": false,
+    "source_mutation": false,
+    "allowlisted_primitives": [
+      "camera_push",
+      "pan"
+    ],
+    "maximum_output": {
+      "width": 1920,
+      "height": 1080,
+      "upscale": false
+    }
+  },
+  "targets": [
+    {
+      "case_id": "07#06",
+      "model_id": "google/veo-3.1-lite",
+      "original_execution_mode": "i2v",
+      "method": "deterministic-compositor-fallback",
+      "duration_seconds": 4,
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "width": 2400,
+        "height": 1600
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-06",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-06/result.json"
+      },
+      "scene_plan_sha256": "fc599b9929543e79444316e1fc69fe14a26feef14a98afd7a8957edaabbac773",
+      "provider_failure": {
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "bf9bafc04cb2eae3467355696026706582c38f1b6f0cd67536e43dd172b8ca82",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "b17fbba1b61438687fe319dbb0c90cfb449c9c5819d0bc174e128d765f8e60d6",
+        "status": "provider-failed",
+        "provider_job_id": "lkVqOh5FmFC2nj931yFH",
+        "terminal_error": "provider poll/download: Eliza/OpenRouter job lkVqOh5FmFC2nj931yFH failed with status failed: Video generation completed with no output (content may have been filtered)"
+      },
+      "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-fallback-20260811-v1/videos/07-06/google-veo-3.1-lite.mp4",
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.035,
+        "focal_point": {
+          "x": 0.5,
+          "y": 0.57
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "one woman",
+          "both hands and fingers",
+          "red smartphone",
+          "seated posture",
+          "facial expression"
+        ],
+        "rationale": "The provider returned no video, so the safe fallback avoids the authored finger gesture and applies one 3.5% whole-bitmap push toward the woman and phone."
+      }
+    },
+    {
+      "case_id": "10#07",
+      "model_id": "google/veo-3.1-lite",
+      "original_execution_mode": "i2v",
+      "method": "deterministic-compositor-fallback",
+      "duration_seconds": 4,
+      "source": {
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+        "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+        "width": 2048,
+        "height": 1365
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-07/result.json"
+      },
+      "scene_plan_sha256": "8a2722a8a27289f2b5ce1d4199f33328df8b3330eb1864becb38e0d872672094",
+      "provider_failure": {
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v1-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.run.json",
+        "run_sha256": "2a57935b309f49e3b8e8d28853c5fba6a9db145633f0b989d09393763f57e3db",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+        "prompt_sha256": "f51f655120931d0c0d9bd868fa69f6b2ff24289f912600c6034f6dfecde3ce58",
+        "status": "provider-failed",
+        "provider_job_id": "vix3OSm0iISSLk0ZtLoR",
+        "terminal_error": "provider poll/download: Eliza/OpenRouter job vix3OSm0iISSLk0ZtLoR failed with status failed: Video generation completed with no output (content may have been filtered)"
+      },
+      "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-compositor-fallback-20260811-v1/videos/10-07/google-veo-3.1-lite.mp4",
+      "plan": {
+        "primitive": "camera_push",
+        "zoom_start": 1.0,
+        "zoom_end": 1.05,
+        "focal_point": {
+          "x": 0.53,
+          "y": 0.55
+        },
+        "ease": "smoothstep",
+        "protected_content": [
+          "exactly two adults and two children",
+          "all hands and held props",
+          "breakfast table and dishes",
+          "sofa",
+          "family poses"
+        ],
+        "rationale": "The terminal no-output provider run is replaced by the same safe camera-only intent: one bounded 5% whole-bitmap push toward the complete family group."
+      }
+    }
+  ]
+}

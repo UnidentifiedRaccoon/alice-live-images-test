@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-03-wan-2-7",
+  "case_id": "07#03",
+  "sheet_row": 73,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/03.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4740453107264122b27b/orig",
+    "sha256": "2fb53d52473b30ff4adb33058c89bb0294a33ce32c4892d661d3c3947b3e14b1",
+    "width": 1920,
+    "height": 1080
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4740453107264122b27b/orig",
+    "sha256": "2fb53d52473b30ff4adb33058c89bb0294a33ce32c4892d661d3c3947b3e14b1",
+    "width": 1920,
+    "height": 1080,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Умеренная домашняя активность может быть доступным и поддерживающим шагом при подготовке к беременности.",
+    "initial_state": "Женщина лежит на полу с согнутыми коленями и приподнятым корпусом, мужчина стоит перед ней на коленях с поднятыми руками; между ними нет видимого контакта.",
+    "motion_owner": "камера",
+    "primary_action": "Плавно приблизиться к паре по читаемой глубине комнаты.",
+    "terminal_state": "Пара остаётся полностью видимой и становится умеренно крупнее в кадре за счёт ограниченного приближения камеры.",
+    "geometry_invariant": "Согнутые ноги и стопы женщины сохраняют опору на полу; позы, пропорции и пространственное разделение людей не меняются.",
+    "identity_invariant": "Ровно два человека с теми же конечностями, одеждой и без новых предметов.",
+    "semantic_invariant": "Сцена остаётся спокойным моментом умеренной домашней тренировки с поддержкой, без превращения в интенсивное упражнение или новый контакт.",
+    "feasibility_assessment": "Два человека и их позы видны ясно, но кадр не доказывает, поднимается или опускается женщина и намерены ли их руки соприкоснуться; поэтому продолжение упражнения или жеста небезопасно. Выраженная глубина комнаты позволяет source-grounded движение камеры.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "На протяжении пяти секунд камера выполняет один плавный push-in к женщине и мужчине с равномерным темпом и без смены ракурса. Положение тел остаётся source-locked; к последним кадрам пара занимает немного больше кадра, при этом смещение переднего плана ограничено 5–10% ширины изображения.",
+  "prompt": {
+    "positive": "The camera gently pushes in toward the exercising pair as they maintain the same supported workout moment, with exactly two people and stable limb geometry. End with the pair slightly larger in frame, limiting the foreground shift to 5–10% of the image width.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-03",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-03/result.json",
+    "result_sha256": "44921c78458394964defafefe5d1e72d996528eddbaf8fb49e7208feb8cb2c20",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:05c0bcf5c3b47d6d1d698279ab093cbf5518363af3aeb4dcd0a049656fb93ccd",
+      "instruction_bundle_sha256": "edec3c224087ae68b66e87276ed6960524dcedcfd173073d52846c8f44c4284e",
+      "source_image_sha256": "2fb53d52473b30ff4adb33058c89bb0294a33ce32c4892d661d3c3947b3e14b1",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}
