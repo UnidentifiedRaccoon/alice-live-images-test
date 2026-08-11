@@ -56,9 +56,16 @@ MODEL_IDS = (
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
 )
-REQUIRED_CONTRACT_VERSION = "2.0.8"
+REQUIRED_CONTRACT_VERSION = "2.2.0"
+FEMIBION_VEO_RECOVERY_CONTRACT_VERSION = "2.0.8"
+FEMIBION_VEO_RECOVERY_ID = (
+    "promopages-10060-femibion-veo-recovery-20260810-v1"
+)
 
 CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
+FROZEN_SUPPORT_208_ROOT_REL = Path(
+    "docs/agents/clipmaker-lite/contracts/support-2.0.8"
+)
 FROZEN_206_CONTRACT_REL = Path(
     "docs/agents/clipmaker-lite/contracts/contract-2.0.6.json"
 )
@@ -77,16 +84,34 @@ FROZEN_207_CONTRACT_SHA256 = (
 FROZEN_207_BATCH_IDS = frozenset(
     {ARTICLE_02_BATCH_ID, CAMPAIGN_20260807_BATCH_ID}
 )
+FROZEN_208_CONTRACT_REL = Path(
+    "docs/agents/clipmaker-lite/contracts/contract-2.0.8.json"
+)
+FROZEN_208_CONTRACT_FILE_SHA256 = (
+    "500731400dc59b191ab73bf9a890efae7c84a44115c40b9f3b0bb1a646bc095f"
+)
+FROZEN_208_CONTRACT_SHA256 = (
+    "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0"
+)
+FROZEN_208_BATCH_IDS = frozenset({FEMIBION_VEO_RECOVERY_ID})
 FROZEN_CONTRACTS = {
     "2.0.6": {
         "path": FROZEN_206_CONTRACT_REL,
         "canonical_sha256": FROZEN_206_CONTRACT_SHA256,
         "batch_ids": FROZEN_206_BATCH_IDS,
+        "support_root": FROZEN_SUPPORT_208_ROOT_REL,
     },
     "2.0.7": {
         "path": FROZEN_207_CONTRACT_REL,
         "canonical_sha256": FROZEN_207_CONTRACT_SHA256,
         "batch_ids": FROZEN_207_BATCH_IDS,
+        "support_root": FROZEN_SUPPORT_208_ROOT_REL,
+    },
+    "2.0.8": {
+        "path": FROZEN_208_CONTRACT_REL,
+        "canonical_sha256": FROZEN_208_CONTRACT_SHA256,
+        "batch_ids": FROZEN_208_BATCH_IDS,
+        "support_root": FROZEN_SUPPORT_208_ROOT_REL,
     },
 }
 FROZEN_BATCH_CONTRACT_VERSIONS = {
@@ -98,9 +123,6 @@ ROUTES_REL = Path("docs/agents/clipmaker-lite/generation-routes.json")
 ARTIFACT_NAMESPACE = Path("artifacts/clipmaker-lite/v1")
 
 FEMIBION_VEO_RECOVERY_VERSION = 1
-FEMIBION_VEO_RECOVERY_ID = (
-    "promopages-10060-femibion-veo-recovery-20260810-v1"
-)
 FEMIBION_VEO_RECOVERY_PROVIDER_BATCH_ID = (
     f"{FEMIBION_VEO_RECOVERY_ID}-provider"
 )
@@ -1091,8 +1113,8 @@ def frozen_provenance_summary(
     The current executable lock may advance, but completed jobs must remain
     verifiable against the contract and execution receipt that authored them.
     A small temporary workspace contains only the exact frozen contract,
-    digest-bound current support files (unchanged since 2.0.6), the requested
-    job directory, and its two immutable inputs.  The frozen runner then
+    its digest-bound support snapshot, the requested job directory, and its
+    two immutable inputs.  The frozen runner then
     performs the normal fail-closed provenance command without any bypass.
     """
 
@@ -1110,6 +1132,7 @@ def frozen_provenance_summary(
     frozen = FROZEN_CONTRACTS[contract_version]
     contract_rel = frozen["path"]
     contract_digest = frozen["canonical_sha256"]
+    support_root = frozen["support_root"]
     archived_contract_path = workspace / contract_rel
     contract = read_json(archived_contract_path)
     if (
@@ -1187,7 +1210,7 @@ def frozen_provenance_summary(
         )
         for relative_path in support_relatives:
             _copy_frozen_regular(
-                workspace / relative_path,
+                workspace / support_root / relative_path,
                 frozen_root / relative_path,
                 label="frozen contract support file",
             )
@@ -8433,8 +8456,8 @@ def _femibion_recovery_route_snapshot(root: Path) -> dict[str, Any]:
 
 
 def _femibion_recovery_contract_snapshot(root: Path) -> dict[str, Any]:
-    snapshot = _contract_snapshot(root)
-    path = root / CONTRACT_REL
+    frozen = FROZEN_CONTRACTS[FEMIBION_VEO_RECOVERY_CONTRACT_VERSION]
+    path = root / frozen["path"]
     contract = read_json(path)
     models = contract.get("models") if isinstance(contract, dict) else None
     model = (
@@ -8444,8 +8467,13 @@ def _femibion_recovery_contract_snapshot(root: Path) -> dict[str, Any]:
     )
     runtime = model.get("runtime") if isinstance(model, dict) else None
     if (
-        snapshot.get("contract_version") != REQUIRED_CONTRACT_VERSION
-        or REQUIRED_CONTRACT_VERSION != "2.0.8"
+        not isinstance(contract, dict)
+        or contract.get("agent_id") != AGENT_ID
+        or contract.get("contract_version")
+        != FEMIBION_VEO_RECOVERY_CONTRACT_VERSION
+        or runner.sha256_bytes(runner.canonical_json_bytes(contract))
+        != frozen["canonical_sha256"]
+        or sha256_file(path) != FROZEN_208_CONTRACT_FILE_SHA256
         or not isinstance(runtime, dict)
         or runtime.get("duration_seconds") != 4
         or runtime.get("resolution") != "1080p"
@@ -8456,11 +8484,13 @@ def _femibion_recovery_contract_snapshot(root: Path) -> dict[str, Any]:
         or runtime.get("prompt_expansion")
         != {"parameter": "enhancePrompt", "value": True}
     ):
-        raise PipelineError("Current Clipmaker Lite recovery contract changed")
+        raise PipelineError("Frozen Clipmaker Lite recovery contract changed")
     return {
+        # Preserve the logical path written into the immutable v1 recovery
+        # manifest even though verification now reads the archived bytes.
         "path": CONTRACT_REL.as_posix(),
         "sha256": sha256_file(path),
-        "contract_version": REQUIRED_CONTRACT_VERSION,
+        "contract_version": FEMIBION_VEO_RECOVERY_CONTRACT_VERSION,
         "runtime": runtime,
     }
 
@@ -8578,7 +8608,8 @@ def _femibion_recovery_planning_record(
     if (
         summary.get("verified") is not True
         or summary.get("agent_id") != AGENT_ID
-        or summary.get("contract_version") != REQUIRED_CONTRACT_VERSION
+        or summary.get("contract_version")
+        != FEMIBION_VEO_RECOVERY_CONTRACT_VERSION
         or summary.get("models") != [FEMIBION_VEO_RECOVERY_MODEL_ID]
         or summary.get("result_path") != result_rel.as_posix()
         or summary.get("source_image_sha256") != source.image["sha256"]

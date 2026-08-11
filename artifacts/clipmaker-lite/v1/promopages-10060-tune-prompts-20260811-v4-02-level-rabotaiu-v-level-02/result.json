@@ -1,0 +1,125 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:97c23cacd7d59deb82bf2673778151eb77c244ba973e51c3b61f41738e5b5559",
+    "execution_fingerprint": "sha256:28a2359f95d702b950af1fa44156c26fc23e0ee90befe15363d2bca3e90b4844",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff109-5464-7e20-bf29-8726c10211d2"
+    },
+    "authored_payload_sha256": "8b59cc9a7652e2254ad79d8267397d59acac93d7910faea700a88e8c12406e73",
+    "draft_file_sha256": "ffba7b39e1c1ab9e36cbef09d4bec1159c6657af6790b2215a5d8c4b2c728020"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+      "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+      "bytes": 7046431
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/content.json",
+      "sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "bytes": 20252,
+      "locator": {
+        "article_id": "02-level-rabotaiu-v-level",
+        "title": "Работаю в Level: почему купил квартиру от нашей компании",
+        "lead": "История, как я купил квартиру в Левел Групп после шести лет работы в компании",
+        "image_id": "02",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "Мой новый дом, Левел Причальный, находится в районе Хорошёво-Мневники",
+        "file": "02.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "Я выбрал этот дом не просто потому, что работаю в компании. Дело в том, что я сам проверяю наши объекты и на 100% уверен в их качестве. Но это далеко не единственная причина. В статье расскажу, что ещё мне понравилось в Левел Причальный."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "Захотел жить у реки"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Low-angle wide view of a completed residential courtyard framed by several rigid brick-and-glass towers, with strong depth from foreground benches, paths, landscaping, playground structures, and receding façades.",
+      "No people or vehicles are visible; the architecture is static, while the rooted trees and shrubs are the only elements capable of slight natural secondary motion.",
+      "The courtyard furniture, paths, façades, windows, playground, fencing, and vegetation have clear spatial relationships, but the single frame provides no evidence for an object-led action."
+    ],
+    "article_context": "Body image introduces Level Причальный as the author’s chosen new home and visually supports his confidence in the development before the article turns to the riverside location and quality-of-life benefits.",
+    "structured_intent": {
+      "editorial_meaning": "Present the completed residential complex as a tangible, high-quality home the author confidently chose for himself.",
+      "initial_state": "A still, unoccupied landscaped courtyard is seen from a low wide viewpoint, with benches and paths in the foreground and multiple brick-and-glass residential towers receding upward across several depth planes.",
+      "motion_owner": "camera",
+      "primary_action": "A continuous source-grounded forward move through the visible courtyard depth toward the central pair of towers.",
+      "terminal_state": "The two central towers appear modestly closer while foreground courtyard references have shifted outward enough to make the forward parallax clearly visible, with the original architectural composition still recognizable.",
+      "geometry_invariant": "All façades, windows, paths, benches, playground structures, fencing, and rooted vegetation retain rigid shapes, attachments, and spatial relationships.",
+      "identity_invariant": "The same visible buildings, courtyard fixtures, playground elements, benches, trees, and shrubs remain present; no people, vehicles, windows, structures, or plants are added or removed.",
+      "semantic_invariant": "The scene remains an orderly, completed, welcoming residential complex and the author’s chosen home through the final frame.",
+      "feasibility_assessment": "The image clearly proves a static architectural scene with foreground, middle-ground, and tall background façades, providing reliable depth for source-grounded camera parallax. It does not prove any subject-led action, direction, or mechanical interaction, so camera motion is safer than inventing activity.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Over four seconds, begin the forward camera move immediately and maintain a calm, even push-in toward the two central towers. Use the visible foreground path, benches, planting, and playground as source-grounded parallax references; rigid structures retain their world-space geometry, while existing foliage has only weak in-place motion. Ease gently near the end, reaching a clearly readable 5–8% outward screen-space displacement of foreground references and a modestly closer view of the central towers without revealing space beyond the source frame.",
+      "positive_prompt": "The camera makes a smooth bounded push-in toward the two central towers at a steady real-time pace, preserving every rigid façade and courtyard structure while the rooted foliage sways only slightly in place. By the final frame, the foreground path and benches have expanded outward by about 5–8% in screen space and the central towers appear modestly closer, with all original areas still visible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

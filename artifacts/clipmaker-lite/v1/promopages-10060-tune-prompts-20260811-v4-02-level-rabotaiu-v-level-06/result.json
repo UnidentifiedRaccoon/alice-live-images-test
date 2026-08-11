@@ -1,0 +1,208 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-06",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+    "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:1cda0cc24123f7d1d0c8a9e72a5b9e29340a185c5a0f0d638d806b6a8f23b688",
+    "execution_fingerprint": "sha256:611e23f9915b9c2508e43f735aa7778590505827ae238c4e9962b55029b8c7b4",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff109-5469-7e33-9753-8d4649655321"
+    },
+    "authored_payload_sha256": "c72ac22964956d0f0144d62a6aea2dfb53356149f0b9b0b9b9710ea467ef3100",
+    "draft_file_sha256": "421ac72dd7540ac9e140d4ca5a6fa93a834357e3864552f23bccb014c33f7e2b"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+      "sha256": "6dff114510bc3f61b159431269239343690fcd2f95adc0df9d730138b57a94f8",
+      "bytes": 95010
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/content.json",
+      "sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "bytes": 20252,
+      "locator": {
+        "article_id": "02-level-rabotaiu-v-level",
+        "title": "Работаю в Level: почему купил квартиру от нашей компании",
+        "lead": "История, как я купил квартиру в Левел Групп после шести лет работы в компании",
+        "image_id": "06",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "Благодаря зонированию в такой квартире можно даже жить вдвоём — у каждого останется пространство, где получится уединиться",
+        "file": "06.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/06.jpeg",
+        "current_heading": {
+          "block_index": 14,
+          "level": 2,
+          "text": "Поменял планировку на свой вкус"
+        },
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "Мне хотелось, чтобы в квартире было много света, поэтому я отказался от полноценной стены между кухней и спальней. Вместо неё установил небольшую перегородку из бруса. Да, вышло что-то вроде студии, но достаточно просторной."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Ещё я не стал ставить гардеробную в прихожей. Считаю, что ей самое место в спальне. Так удобнее — например, когда собираешься утром на работу, не нужно бегать туда-сюда по квартире, чтобы надеть футболку и джинсы."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A static apartment interior is viewed from the entrance, with a bedroom on the left and a kitchen/dining area on the right.",
+      "A tall timber-slat partition forms the central foreground reference while leaving both zones visible.",
+      "The room has clear foreground, midground, and background depth; no people or unambiguous subject-driven action are visible.",
+      "The curtains are layered fabric and their attachment and safe direction of motion are not evidenced."
+    ],
+    "article_context": "The body image demonstrates the article’s point that a compact, light-filled apartment can be divided into distinct bedroom and kitchen/dining zones with a partial timber partition, preserving a sense of privacy without a full wall.",
+    "structured_intent": {
+      "editorial_meaning": "Emphasize how a partial partition creates two private functional zones while retaining light and openness in a compact apartment.",
+      "initial_state": "A still, furnished apartment shows the bedroom on the left and kitchen/dining zone on the right, divided by a central timber-slat partition, with both areas visible from the entrance.",
+      "motion_owner": "camera",
+      "primary_action": "Advance through the visible room depth toward the timber partition to strengthen the readable separation between the two zones.",
+      "terminal_state": "Both the bed and dining area remain visible, while parallax makes the timber partition and the depth separation between the two zones more pronounced.",
+      "geometry_invariant": "The timber partition, walls, windows, floor, bed, table, chairs, cabinetry, and their rigid spatial relationships remain fixed and undeformed.",
+      "identity_invariant": "No people are present; the same single bed, timber partition, dining table, chairs, windows, curtains, cabinetry, and fixtures remain present without additions or removals.",
+      "semantic_invariant": "The apartment remains one bright, open interior organized into two distinct, usable zones that allow separation and privacy.",
+      "feasibility_assessment": "The image clearly proves a static rigid interior, a central partition, two visible zones, and usable scene depth. It does not prove any person-driven action or safe curtain mechanics, so subject animation is unsupported; the visible depth supports a source-grounded camera-only treatment.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Over five seconds, begin a moderate forward push immediately toward the timber partition as the focal target. Maintain a smooth, even pace, with source-grounded parallax moving the central partition by roughly 7% of frame width while both functional zones remain visible; ease gently near the end when their depth separation reads more clearly.",
+      "positive_prompt": "The camera steadily pushes forward toward the fixed timber partition, keeping both the bed and dining table continuously visible as the partition shifts about 7% of the frame through natural parallax. The rigid room geometry and source-locked curtains remain unchanged, ending with the two living zones more clearly separated in depth.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "scene_plan": "Use the full five seconds for one restrained forward track centered on the timber partition. Keep a level, uniform pace through most of the shot and taper only at the finish; cap screen-space travel around 8% to protect the original framing and retain clear views of both the sleeping and dining zones.",
+      "positive_prompt": "The camera makes a smooth bounded push toward the fixed timber partition, with natural parallax shifting it no more than about 8% of the frame while the bed and dining area stay visible. End with the partition’s separation of the two zones clearer, preserving the rigid layout and source-locked curtains.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "For four seconds, start an immediate, continuous push-in toward the timber partition and hold an even velocity until a gentle final deceleration. Limit the partition’s screen-space displacement to about 6%, reveal only already visible depth, keep layered curtains source-locked, and finish with both zones intact but their spatial separation more legible.",
+      "positive_prompt": "The camera moves forward at a calm, even real-time speed toward the fixed timber partition, producing source-grounded parallax of about 6% of the frame while the bed and dining table remain continuously visible. It slows only at the end, with the two zones reading more distinctly and all rigid geometry unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

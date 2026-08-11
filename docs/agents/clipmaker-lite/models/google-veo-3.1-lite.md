@@ -39,63 +39,40 @@ exact-text cross-model comparison.
   названным focal target; выбери один camera state, вся сцена остаётся одним
   shot.
 - Дай enhancer короткий, конкретный и непротиворечивый motion plan.
-- Сохраняй image-grounded действие и один `geometry_invariant` из анализа
-  изображения. Если endpoint уже виден в first frame, используй только
-  low-amplitude residual continuation или естественное затухание, без нового
-  цикла и выхода из endpoint.
+- Сохраняй image-grounded `geometry_invariant` и `identity_invariant`. Если
+  endpoint уже виден в first frame, используй residual continuation, затухание
+  или camera-only — без полного цикла, реверса и новых props.
 
-### Visibility floor для движения камеры
+### Visibility floor и source-grounded camera
 
-- Когда camera move является `primary_action`, он должен давать сдержанный, но
-  ясно наблюдаемый параллакс уже при обычной скорости воспроизведения. Не
-  складывай в одном четырёхсекундном плане `starts still`, `tiny distance`,
-  `extremely slow` и раннее `settles to rest`: такая комбинация опускает
-  движение ниже perceptual threshold Veo.
-- Камера начинает двигаться сразу, сохраняет спокойную равномерную скорость
-  большую часть четырёх секунд и замедляется только в короткой финальной фазе.
-  `Softer` означает отсутствие рывка и speed ramp, а не near-static output.
-- Endpoint называет видимое screen-space изменение относительно focal target:
-  foreground reference смещается в кадре и открывает немного больше уже видимого
-  соседнего плана. Не ограничивай финал словами `slightly farther` или `small
-  parallax change` без наблюдаемого композиционного результата.
-- Для `softer`-repair от удачного reference move предпочитай continuous even
-  travel без стартовой паузы и рывков. `At normal real-time speed` допустим и
-  полезен, если пользователь просит более плавное движение, но не просит
-  уменьшить амплитуду. Не превращай `softer` в обязательный composition ceiling:
-  верхнюю границу travel добавляй только при явном запросе сохранить framing,
-  доли смысловых зон или меньший сдвиг. Pixel-difference и first-to-last SSIM —
-  диагностические сигналы, а не художественный вердикт; human review имеет
-  приоритет при выборе эталона.
-- Разделяй world-space preservation и image-space motion. Шторы или другие
-  вторичные элементы могут не анимироваться самостоятельно, но жёсткая мебель и
-  архитектура меняют экранное положение вследствие параллакса. Не пиши, что
-  `every physical element stays motionless` или `everything remains perfectly
-  still` одновременно с camera move; вместо этого сохраняй rigid geometry и
-  запрещай только независимую деформацию.
-- При `enhancePrompt: true` используй одну положительную camera instruction и
-  короткий source-grounded endpoint. Не дублируй preservation полным перечнем
-  объектов: enhancer может превратить такой перечень в приоритет заморозки.
-
-### Архитектурный exterior с читаемой глубиной
-
-- Когда source image надёжно показывает крупную статичную архитектуру,
-  foreground и несколько планов глубины, используй один небольшой camera move
-  как основной источник динамики вместо fixed camera или сильного движения
-  окружения. Выбери только одну траекторию: slow push-in, gentle lateral track
-  или subtle rising reveal к названному фасаду, башням либо оси двора.
-- Растяни траекторию ровно и непрерывно на четыре секунды и дословно укажи
-  `at normal real-time speed`. Не используй speed ramp, time-lapse pacing или
-  резкое ускорение к endpoint.
-- `enhancePrompt: true` может усиливать расплывчатую динамику, поэтому не
-  используй `wind wave`, `sweeps across`, `gust`, `rapid` или немотивированное
-  `cinematic movement`. Называй малую амплитуду, одну геометрическую траекторию
-  и конкретный focal target.
-- Если в кадре уже видны деревья или кустарники, они только gently sway in place
-  in a light breeze; стволы и точки роста остаются закреплены. Не поручай ветру
-  создавать основное действие и не описывай движение через весь кадр.
-- Camera move раскрывает только source-grounded параллакс между уже видимыми
-  планами. Обе башни, фасады, двор и существующая растительность сохраняют
-  идентичность и взаимное расположение до последнего кадра.
+- Когда камера — `motion_owner`, она начинает двигаться сразу, сохраняет
+  спокойную равномерную скорость большую часть четырёх секунд и замедляется
+  только у финала. Не складывай `starts still`, `tiny distance`, `extremely
+  slow` и ранний stop: Veo опустит движение ниже perceptual threshold. `At
+  normal real-time speed` допустим, когда помогает удержать непрерывное
+  движение без паузы и speed ramp.
+- Endpoint называет screen-space результат относительно уже видимого focal
+  target: без референсного travel foreground reference смещается примерно от
+  5% ширины кадра и открывает немного больше уже видимого соседнего плана.
+  Ceiling около 10% добавляй только когда image risk или явная direction требуют
+  сохранить framing; не выводи его из слова `softer`.
+- Для `softer`-repair от удачного camera move сохрани trajectory, focal target,
+  полный travel и непрерывный ровный темп, если direction явно не просит меньшую
+  амплитуду. `Softer` означает отсутствие jerk и резкого speed ramp, а не
+  near-static output. Pixel-difference и first-to-last SSIM остаются
+  диагностикой; художественный выбор подтверждает human review.
+- Разделяй world-space preservation и image-space motion. Архитектура, мебель,
+  продукты и другие жёсткие объекты не деформируются, но меняют экранное
+  положение из-за source-grounded parallax. Не пиши `everything remains
+  perfectly still` вместе с camera move.
+- `enhancePrompt: true` может расширять сцену. Не используй `wind wave`,
+  `sweeps across`, `cinematic movement`, полное перечисление preservation или
+  новый reveal за границами исходника. Камера показывает только уже видимую
+  глубину; существующая растительность слегка sway in place, roots и count
+  остаются фиксированными.
+- У camera-primary вторичные fabric, hair, foliage и water остаются явно слабее
+  camera motion. Layered curtains source-locked; enhancer не получает billowing
+  или opening action.
 
 ## Terminal state и смысловая целостность
 
@@ -103,26 +80,29 @@ exact-text cross-model comparison.
   только развитие движения. После endpoint не начинается второй сюжетный beat.
 - `semantic_invariant` удерживается до последнего кадра: естественная динамика
   мимики или позы не разворачивает заданную эмоцию и редакционный смысл.
-- `geometry_invariant` сохраняется до последнего кадра: ключевые части остаются
-  в той же видимой физической связи.
+- `geometry_invariant` сохраняет контакт, крепление и жёсткую форму;
+  `identity_invariant` удерживает точное число сущностей, конечностей, props,
+  labels и деталей.
 - Ключевой объект остаётся непрерывно видимым и узнаваемым; камера и действие не
   должны заслонять, уводить из кадра или подменять его.
 
 ## UI и people risks
 
-- Для UI используй fixed camera и максимум один мягкий блик, pulse или optical
-  accent существующего элемента. Текст, числа, даты, glyphs, layout, chart
-  state, значения, checkbox и controls остаются исходными.
-- Для людей исключи контакт рук с лицом, сложное взаимодействие частей тела и
-  быстрые повторные жесты вместе с речью или lip-sync. Используй одно простое
-  движение умеренной амплитуды и явно удерживай эмоцию до финала.
+- Для точного текста, UI, chart, table, diagram и screenshot выбери
+  `deterministic-compositor`: `execution_mode` равен
+  `deterministic-compositor`, а `positive_prompt` равен `null`.
+- Для людей сохраняй точное число, конечности и props. Не добавляй контакт с
+  лицом, новый предмет, сложное взаимодействие или gait, направление которого
+  не доказано source image. При неоднозначности выбери camera-only.
+- Articulated ride не выполняет полный arc/rotation; tool не действует без
+  видимой руки/контакта. `enhancePrompt` не получает expansive action.
 
 ## Negative prompt
 
-Authored `negative_prompt` всегда и буквально равен `null`; `negativePrompt`
-провайдеру не отправляется. Repair и generic tail не используются для negative
-prompt. `positive_prompt` занимает не больше двух коротких motion-first
-предложений; дальнейшее расширение выполняет `enhancePrompt: true`.
+Authored `negative_prompt` всегда и буквально равен `null`;
+`negativePrompt` не отправляется. Repair и generic tail не используются:
+failure преобразуется в positive anchor, visibility floor/composition ceiling
+или более безопасную rendering strategy.
 
 ## Runtime fragment
 

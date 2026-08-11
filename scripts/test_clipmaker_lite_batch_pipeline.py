@@ -53,6 +53,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
                 "geometry_invariant": "The subject keeps one physical relationship.",
                 "semantic_invariant": "The test meaning remains stable.",
             },
+            execution_mode="i2v",
             positive_prompt=f"exact Lite prompt for {entry.model_id}",
             negative_prompt=None,
             result_path=(
@@ -426,6 +427,7 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             job = batch.LiteJob(
                 entry=base.entry,
                 structured_intent=base.structured_intent,
+                execution_mode=base.execution_mode,
                 positive_prompt=base.positive_prompt,
                 negative_prompt="legacy repair",
                 result_path=base.result_path,

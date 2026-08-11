@@ -1,0 +1,207 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+    "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:dc121b3a30d92265df4d29c3648dd02e4d0a00d38f08b1780628225c22e26823",
+    "execution_fingerprint": "sha256:99db6938d5fd6cd3b5b042a8bfb0be23334ed01570534849ba8bffe3928ab11b",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10c-f878-7120-8687-d8a30df60c70"
+    },
+    "authored_payload_sha256": "2de8ba572d0cd2984b4e4f78a1207b921cc9bbbde8012a1f239945b0f4ab9074",
+    "draft_file_sha256": "3efa8a02bc05e512e74a54a6111c9388cd90f612d3982318fa35d4d61c39ce79"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      "bytes": 27754
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/content.json",
+      "sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "bytes": 19996,
+      "locator": {
+        "article_id": "18-volma-plitochnyi-klei",
+        "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+        "lead": "В статье — ответы экспертов на главные вопросы по плитке во время ремонта",
+        "image_id": "07",
+        "block_index": 36,
+        "role": "article_image",
+        "caption": "",
+        "file": "07.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+        "current_heading": {
+          "block_index": 34,
+          "level": 2,
+          "text": "Вопрос 5. На какой клей укладывать керамогранит?"
+        },
+        "nearest_text_before": {
+          "block_index": 35,
+          "type": "paragraph",
+          "text": "Проблема: керамогранит — тяжелый материал, требует особого подхода. Выбор клея зависит от формата плитки."
+        },
+        "nearest_text_after": {
+          "block_index": 37,
+          "type": "heading",
+          "text": "Чек-лист перед укладкой плитки"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A static two-column Russian-language table maps two porcelain-stoneware format categories to named VOLMA adhesives.",
+      "The table contains exact headings, product names, row divisions, and a bold warning beneath it; there are no people, tools, physical actions, or visible depth cues.",
+      "The complete graphic is shown front-facing on a white background, so its text and layout are the semantically important content."
+    ],
+    "article_context": "The body image is an exact-reference table answering which VOLMA adhesive corresponds to small/medium versus large-format porcelain stoneware; its editorial purpose is accurate product selection based on tile format, with the strength warning retained.",
+    "structured_intent": {
+      "editorial_meaning": "Emphasize that the correct adhesive is selected according to porcelain-stoneware format while preserving the exact product recommendations and strength warning.",
+      "initial_state": "The complete two-column recommendation table and the warning beneath it are fully visible and static.",
+      "motion_owner": "the recommendation column",
+      "primary_action": "receives one contained emphasis pass across its two existing cells",
+      "terminal_state": "Both recommendation cells have been emphasized once, with the complete original table and warning still fully visible and unchanged.",
+      "geometry_invariant": "The two-column layout, two row boundaries, column divider, headings, and warning position remain fixed.",
+      "identity_invariant": "Both format labels, all four adhesive names, both headings, and the complete warning remain present and unchanged.",
+      "semantic_invariant": "Each tile-format row remains associated with exactly its original adhesive recommendations, and the strong-base warning retains its meaning.",
+      "feasibility_assessment": "The image unambiguously shows a flat, exact-text table with no physical motion, contact mechanics, or usable scene depth. Because wording, product names, row associations, and layout carry the meaning, generative image-to-video and generative camera motion are unsafe; only a contained deterministic overlay is feasible.",
+      "rendering_strategy": "deterministic-compositor"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Over 5 seconds, keep the source graphic fixed and fully visible. Apply one restrained, translucent emphasis pulse confined to the two recommendation cells: it progresses once from the upper cell to the lower cell, then gently settles, while the original text pixels, rules, spacing, and warning remain unchanged.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Across the 5-second composition, preserve the complete table without scaling or cropping. A single narrow, low-opacity highlight overlay moves smoothly down within the bounds of the right-hand recommendation column, briefly emphasizing both product mappings in sequence and fading near the end; all source typography and geometry stay untouched.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "For 4 seconds, hold the full graphic static and add one contained highlight pass inside the recommendation column. The subtle overlay travels from the first recommendation cell to the second at an even pace and fades at the endpoint, without covering, redrawing, or altering any text, divider, or warning.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

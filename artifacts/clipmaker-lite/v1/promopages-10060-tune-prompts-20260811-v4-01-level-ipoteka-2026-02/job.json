@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:a6b0cbbe07573db938c1e16f9996ed9a588453e448a638468605c91742f1b3dd",
+    "instruction_bundle_sha256": "50b12625461fe6574c20649778d8f0085a9182f1ca168655feb3d197c1e48d80",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:1ae0b153bffa19f694264f29505c789dae2d6979a10d720edcb7ce5efbe26f0b",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+      "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a",
+      "bytes": 103223
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/01-level-ipoteka-2026/content.json",
+      "sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "bytes": 17879,
+      "locator": {
+        "article_id": "01-level-ipoteka-2026",
+        "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+        "lead": "Кому лучше купить недвижимость сейчас, а кому есть смысл подождать",
+        "image_id": "02",
+        "block_index": 8,
+        "role": "article_image",
+        "caption": "С января 2026 года объём ипотечного жилищного кредитования начал уменьшаться. Источник: Банк России",
+        "file": "02.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "Количество займов снижается"
+        },
+        "nearest_text_before": {
+          "block_index": 7,
+          "type": "paragraph",
+          "text": "Тем не менее, выдача ипотеки без господдержки в феврале выросла в 1,5 раза, что говорит о том, что рыночные условия становятся привлекательнее."
+        },
+        "nearest_text_after": {
+          "block_index": 9,
+          "type": "heading",
+          "text": "Ставки по ипотеке снижаются"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02/result.json"
+  }
+}

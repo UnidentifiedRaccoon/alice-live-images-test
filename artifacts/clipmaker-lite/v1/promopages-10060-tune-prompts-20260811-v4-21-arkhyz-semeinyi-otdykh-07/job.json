@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+    "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:c1ab2e55a5ea585b5000a2d7164697305a52ca5dc35bb2cd20fadc22820658da",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+      "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212",
+      "bytes": 946440
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/content.json",
+      "sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "bytes": 26011,
+      "locator": {
+        "article_id": "21-arkhyz-semeinyi-otdykh",
+        "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+        "lead": "Подсказываем, как интересно отдохнуть всей семьей и получить максимум эмоций",
+        "image_id": "07",
+        "block_index": 28,
+        "role": "article_image",
+        "caption": "Всего на Курорте Архыз несколько экотроп разного уровня сложности",
+        "file": "07.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Легкие пешие маршруты для незабываемых впечатлений"
+        },
+        "nearest_text_before": {
+          "block_index": 27,
+          "type": "paragraph",
+          "text": "Для семей с детьми от 6 лет рекомендуем две самые легкие тропы — «Аланский путь» и «Пик Смирнова». Обе промаркированы зеленым уровнем, оборудованы лавочками и не требуют специальной подготовки."
+        },
+        "nearest_text_after": {
+          "block_index": 29,
+          "type": "paragraph",
+          "text": "«Аланский путь» расположен на южном склоне. Маршрут кольцевой: начинается от верхней станции канатной дороги «Млечный путь» и возвращается в ту же точку, 6 километров, перепад высоты всего 120 метров. На прогулку уйдет 2–3 часа в спокойном темпе. Вокруг — субальпийские луга с пряным запахом чабреца и прогретой солнцем землей."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589"
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07/result.json"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:ed19e479359b78d378b9dedde8cf943f7f38f8704e3edebe33448966090400df",
+    "instruction_bundle_sha256": "60fe9706d0a6ba23e2ac047d89a693104705943312a454557c987b859e9c25ba",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:6ba60560b7d7502229182e6a386879ac885108598edeaad6db4e4c5e929bdd50",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+      "sha256": "036300677b23cb195036f3b5c72aa14549de5d1cc4ad9fe257385c5e35b0d40b",
+      "bytes": 177327
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/content.json",
+      "sha256": "4bf94fa3164c9ebfc004b8eba85466152105bbdbd9e398ecb33a85db885262e2",
+      "bytes": 21059,
+      "locator": {
+        "article_id": "16-marykay-trendy-krasoty",
+        "title": "Тренды красоты: что нового в косметике и уходе за кожей",
+        "lead": "Бьюти-индустрия последних лет совершает заметный поворот в сторону осознанности. Многоступенчатые рутины с десятком средств уступают место минимализму, а агрессивные процедуры — поддержке естественных процессов кожи.\nMary Kay® предлагает решения, которые соответствуют современным запросам. Разберем четыре актуальных направления и продукты, которые их закрывают.\nЕстественность и здоровье кожи",
+        "image_id": "06",
+        "block_index": 23,
+        "role": "article_image",
+        "caption": "Подходит для профилактики старения кожи женщинам в любом возрасте, но особенно от 35 лет",
+        "file": "06.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/16-marykay-trendy-krasoty/06.png",
+        "current_heading": {
+          "block_index": 15,
+          "level": 2,
+          "text": "Тренд 3. Научный антивозрастной уход"
+        },
+        "nearest_text_before": {
+          "block_index": 22,
+          "type": "list_item",
+          "text": "Улучшенная регенерирующая сыворотка +С — запатентованная формула с тремя формами витамина С и витамином Е. Обеспечивает мощную антиоксидантную защиту, стимулирует выработку коллагена, уменьшает морщины и повышает упругость."
+        },
+        "nearest_text_after": {
+          "block_index": 24,
+          "type": "heading",
+          "text": "Тренд 4. Уход во сне (ночные ритуалы)"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06/result.json"
+  }
+}

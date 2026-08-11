@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:05af7aea676095a358ca25a832ebfa82d67a8e1074f99da6ae5145c39ff1f80c",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+      "sha256": "7143a61000917545d3363bf593b8233d1920a399614149fae09d22d03de0c1e0",
+      "bytes": 4594315
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/content.json",
+      "sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "bytes": 29939,
+      "locator": {
+        "article_id": "04-level-pokupat-kvartiru-seichas",
+        "title": "Стоит ли покупать квартиру сейчас: мнение экспертов",
+        "lead": "Почему россияне активно покупают недвижимость в Москве и откуда берут средства",
+        "image_id": "05",
+        "block_index": 29,
+        "role": "article_image",
+        "caption": "Максимальная высота домов в Левел Лесной — 15 этажей, поэтому здания не будут сильно загораживать вид на зелёные зоны",
+        "file": "05.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+        "current_heading": {
+          "block_index": 16,
+          "level": 2,
+          "text": "Кто планирует переезд в 2026 году и какие квартиры покупают россияне"
+        },
+        "nearest_text_before": {
+          "block_index": 28,
+          "type": "paragraph",
+          "text": "Некоторые проекты Level особенно нравятся возрастным покупателям. Например, Левел Лесной, который находится в зелёной зоне недалеко от Москвы, но в шаговой доступности от метро и больших столичных магистралей."
+        },
+        "nearest_text_after": {
+          "block_index": 30,
+          "type": "heading",
+          "text": "Что говорят эксперты: купить можно — и с умом"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05/result.json"
+  }
+}

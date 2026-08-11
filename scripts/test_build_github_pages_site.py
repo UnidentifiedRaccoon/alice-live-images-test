@@ -33,6 +33,7 @@ PROMOPAGES_10060_S3_DELIVERY_PATH = (
 PROMOPAGES_10060_S3_ARTICLES_PATH = (
     ROOT / pages.PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH
 )
+TUNE_MANIFEST_PATH = ROOT / pages.TUNE_MANIFEST_RELATIVE_PATH
 PROMOPAGES_10060_IMAGE_COUNTS = (
     ("01", 4),
     ("03", 9),
@@ -1287,7 +1288,114 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
     return extension_paths
 
 
+def _tune_manifest_fixture():
+    cases = []
+    next_sheet_row = 2
+    for case_index in range(pages.TUNE_CASE_COUNT):
+        targets = []
+        target_count = 2 if case_index < 29 else 1
+        for target_index in range(target_count):
+            targets.append(
+                {
+                    "sheet_row": next_sheet_row,
+                    "model_id": f"model-{target_index}",
+                    "baseline": {
+                        "video_url": (
+                            "https://cdn.example.test/tune/"
+                            f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
+                        ),
+                        "repository_video_path": (
+                            "private-tune-videos/"
+                            f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
+                        ),
+                    },
+                }
+            )
+            next_sheet_row += 1
+        cases.append(
+            {
+                "case_id": f"case-{case_index + 1:02d}",
+                "source": {
+                    "url": (
+                        "https://images.example.test/tune/"
+                        f"case-{case_index + 1:02d}.jpg"
+                    ),
+                    "path": f"private-tune-images/case-{case_index + 1:02d}.jpg",
+                },
+                "targets": targets,
+            }
+        )
+    return {
+        "schema_version": 1,
+        "manifest_role": "clipmaker-lite-tune-review",
+        "ticket": "PROMOPAGES-10060",
+        "agent_id": "clipmaker-lite",
+        "scope": {
+            "case_count": pages.TUNE_CASE_COUNT,
+            "target_count": pages.TUNE_TARGET_COUNT,
+            "new_video_generation": False,
+            "new_s3_upload": False,
+            "baseline_video_delivery": "existing-yastatic",
+        },
+        "cases": cases,
+    }
+
+
 class GitHubPagesSiteTest(unittest.TestCase):
+    def test_tune_payload_is_static_prompt_review_without_local_media(self):
+        manifest = _tune_manifest_fixture()
+        pages._validate_tune_manifest_for_pages(manifest)
+
+        self.assertEqual(
+            pages.TUNE_STATIC_FILES,
+            ("tune/index.html", "tune/styles.css", "tune/app.js"),
+        )
+        self.assertIn(
+            pages.TUNE_MANIFEST_RELATIVE_PATH.as_posix(), pages.STATIC_FILES
+        )
+        for relative_path in pages.TUNE_STATIC_FILES:
+            self.assertIn(relative_path, pages.STATIC_FILES)
+        self.assertFalse(
+            any(path.startswith("faststart-lab/") for path in pages.STATIC_FILES)
+        )
+
+        private_media = {
+            target["baseline"]["repository_video_path"]
+            for case in manifest["cases"]
+            for target in case["targets"]
+        } | {case["source"]["path"] for case in manifest["cases"]}
+        self.assertTrue(all(path not in pages.STATIC_FILES for path in private_media))
+
+    def test_tune_manifest_delivery_mismatches_fail_closed(self):
+        mutations = {
+            "prompt-only scope": lambda manifest: manifest["scope"].update(
+                {"new_video_generation": True}
+            ),
+            "source delivery": lambda manifest: manifest["cases"][0][
+                "source"
+            ].update({"url": "private-tune-images/case-01.jpg"}),
+            "baseline delivery": lambda manifest: manifest["cases"][0][
+                "targets"
+            ][0]["baseline"].update(
+                {"video_url": "private-tune-videos/case-01-01.mp4"}
+            ),
+            "target identity": lambda manifest: manifest["cases"][0][
+                "targets"
+            ][0].update(
+                {
+                    "sheet_row": manifest["cases"][0]["targets"][1][
+                        "sheet_row"
+                    ]
+                }
+            ),
+        }
+        for error, mutate in mutations.items():
+            with self.subTest(error=error):
+                manifest = json.loads(json.dumps(_tune_manifest_fixture()))
+                mutate(manifest)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._validate_tune_manifest_for_pages(manifest)
+
     def test_s3_delivery_overlay_matches_all_available_canonical_outputs(self):
         source_manifests = [
             json.loads(PROMOPAGES_10060_MANIFEST_PATH.read_text(encoding="utf-8")),
@@ -2000,9 +2108,11 @@ class GitHubPagesSiteTest(unittest.TestCase):
             or not PROMOPAGES_10060_MANIFEST_PATH.is_file()
             or not PROMOPAGES_10060_S3_DELIVERY_PATH.is_file()
             or not PROMOPAGES_10060_S3_ARTICLES_PATH.is_file()
+            or not TUNE_MANIFEST_PATH.is_file()
+            or any(not (ROOT / path).is_file() for path in pages.TUNE_STATIC_FILES)
         ):
             self.skipTest(
-                "Final Step 5 manifests and S3 delivery overlay are not available"
+                "Final Step 5 delivery and Step 8 Tune files are not available"
             )
 
         delivery = json.loads(
@@ -2027,6 +2137,8 @@ class GitHubPagesSiteTest(unittest.TestCase):
         self.assertEqual(
             len(paths),
             253
+            + len(pages.TUNE_STATIC_FILES)
+            + 1
             + int(PROMOPAGES_10060_ARTICLE_02_PATH.is_file())
             + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
             + int(PROMOPAGES_10060_CAMPAIGN_20260807_PATH.is_file()),
@@ -2035,6 +2147,9 @@ class GitHubPagesSiteTest(unittest.TestCase):
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
         self.assertIn(Path("clipmaker-lite/index.html"), paths)
         self.assertIn(Path("ab-preparation/index.html"), paths)
+        for relative_path in pages.TUNE_STATIC_FILES:
+            self.assertIn(Path(relative_path), paths)
+        self.assertIn(pages.TUNE_MANIFEST_RELATIVE_PATH, paths)
         self.assertIn(Path("clipmaker-lite-test/manifest.json"), paths)
         self.assertIn(
             Path("clipmaker-lite-test/promopages-9930-manifest.json"), paths
@@ -2058,6 +2173,14 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 pages.PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH, paths
             )
         self.assertIn(Path("manual-review/index.html"), paths)
+        tune_manifest = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
+        tune_repository_videos = {
+            Path(target["baseline"]["repository_video_path"])
+            for case in tune_manifest["cases"]
+            for target in case["targets"]
+        }
+        self.assertTrue(tune_repository_videos.isdisjoint(paths))
+        self.assertFalse(any(path.parts[0] == "faststart-lab" for path in paths))
         self.assertFalse(any("Prepared videos" in path.as_posix() for path in paths))
         self.assertEqual(
             [path for path in paths if path.suffix == ".md"],

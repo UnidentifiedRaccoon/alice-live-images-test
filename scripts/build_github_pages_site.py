@@ -2,8 +2,10 @@
 """Build the exact static payload published from the gh-pages branch.
 
 The repository is larger than the GitHub Pages 1 GB published-site limit.  This
-builder follows only runtime references used by the six demo screens and
-copies those files into an isolated directory while preserving their paths.
+builder follows only runtime references used by the seven published demo
+screens (Steps 1–6 and 8) and copies those files into an isolated directory
+while preserving their paths. Step 7 is intentionally absent until it has a
+tracked source; untracked worktree files must never become an implicit payload.
 """
 
 from __future__ import annotations
@@ -223,6 +225,14 @@ PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID = (
     "c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7"
 )
 MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024
+TUNE_MANIFEST_RELATIVE_PATH = Path("clipmaker-lite-test/tune-manifest.json")
+TUNE_CASE_COUNT = 36
+TUNE_TARGET_COUNT = 65
+TUNE_STATIC_FILES = (
+    "tune/index.html",
+    "tune/styles.css",
+    "tune/app.js",
+)
 
 STATIC_FILES = (
     ".nojekyll",
@@ -248,10 +258,12 @@ STATIC_FILES = (
     "clipmaker-lite/styles.css",
     "clipmaker-lite/app.js",
     "ab-preparation/index.html",
+    *TUNE_STATIC_FILES,
     "clipmaker-lite-test/manifest.json",
     "clipmaker-lite-test/promopages-9930-manifest.json",
     "clipmaker-lite-test/case-21-manifest.json",
     "clipmaker-lite-test/promopages-10060-manifest.json",
+    TUNE_MANIFEST_RELATIVE_PATH.as_posix(),
 )
 
 STATIC_TREES = (
@@ -293,6 +305,79 @@ def _is_sha256(value: Any) -> bool:
         and len(value) == 64
         and all(character in "0123456789abcdef" for character in value)
     )
+
+
+def _validate_tune_manifest_for_pages(manifest: Any) -> None:
+    """Validate Step 8's compact, remote-media review payload.
+
+    Tune publishes prompts and review metadata only. Source images and baseline
+    videos must have HTTPS delivery URLs; repository paths remain audit fields
+    and are deliberately not added to the Pages payload.
+    """
+
+    if not isinstance(manifest, dict):
+        raise ValueError("Tune manifest must be an object")
+    scope = manifest.get("scope")
+    cases = manifest.get("cases")
+    if (
+        manifest.get("schema_version") != 1
+        or manifest.get("manifest_role") != "clipmaker-lite-tune-review"
+        or manifest.get("ticket") != "PROMOPAGES-10060"
+        or manifest.get("agent_id") != "clipmaker-lite"
+        or not isinstance(scope, dict)
+        or scope.get("case_count") != TUNE_CASE_COUNT
+        or scope.get("target_count") != TUNE_TARGET_COUNT
+        or scope.get("new_video_generation") is not False
+        or scope.get("new_s3_upload") is not False
+        or scope.get("baseline_video_delivery") != "existing-yastatic"
+        or not isinstance(cases, list)
+        or len(cases) != TUNE_CASE_COUNT
+    ):
+        raise ValueError("Tune manifest identity or prompt-only scope is invalid")
+
+    seen_case_ids: set[str] = set()
+    seen_sheet_rows: set[int] = set()
+    target_count = 0
+    for case in cases:
+        if not isinstance(case, dict):
+            raise ValueError("Tune manifest cases must contain objects")
+        case_id = case.get("case_id")
+        source = case.get("source")
+        targets = case.get("targets")
+        source_url = source.get("url") if isinstance(source, dict) else None
+        if (
+            not isinstance(case_id, str)
+            or not case_id.strip()
+            or case_id in seen_case_ids
+            or not isinstance(source_url, str)
+            or not source_url.startswith("https://")
+            or not isinstance(targets, list)
+            or not targets
+        ):
+            raise ValueError("Tune manifest case identity or source delivery is invalid")
+        seen_case_ids.add(case_id)
+        for target in targets:
+            if not isinstance(target, dict):
+                raise ValueError("Tune manifest targets must contain objects")
+            sheet_row = target.get("sheet_row")
+            baseline = target.get("baseline")
+            video_url = (
+                baseline.get("video_url") if isinstance(baseline, dict) else None
+            )
+            if (
+                not isinstance(sheet_row, int)
+                or isinstance(sheet_row, bool)
+                or sheet_row in seen_sheet_rows
+                or not isinstance(video_url, str)
+                or not video_url.startswith("https://")
+            ):
+                raise ValueError(
+                    "Tune manifest target identity or baseline delivery is invalid"
+                )
+            seen_sheet_rows.add(sheet_row)
+            target_count += 1
+    if target_count != TUNE_TARGET_COUNT:
+        raise ValueError(f"Tune manifest must contain {TUNE_TARGET_COUNT} targets")
 
 
 def _sha256_file(path: Path) -> str:
@@ -2555,6 +2640,12 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
 
     for tree in STATIC_TREES:
         relative_paths.update(_tree_files(root, tree))
+
+    if TUNE_MANIFEST_RELATIVE_PATH in relative_paths:
+        tune_manifest = json.loads(
+            (root / TUNE_MANIFEST_RELATIVE_PATH).read_text(encoding="utf-8")
+        )
+        _validate_tune_manifest_for_pages(tune_manifest)
 
     gallery = _load_js_assignment(
         root / "generated-gallery-data.js", "generatedGalleryData"

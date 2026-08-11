@@ -45,12 +45,16 @@ SHA-256 исходника. Сразу после успешного preflight �
   весь shot; не складывай pan, zoom, orbit и handheld motion.
 - Prompt должен быть коротким и самодостаточным: `prompt_extend` принудительно
   выключен. Используй одно-два коротких motion-first предложения. Ясно укажи
-  действие, скорость, направление и конечное состояние, когда без них движение
-  двусмысленно.
-- Сохраняй image-grounded действие и один `geometry_invariant` из анализа
-  изображения. Если endpoint уже виден в first frame, используй только
-  low-amplitude residual continuation или естественное затухание, без нового
-  цикла и выхода из endpoint.
+  владельца движения, действие, направление, один typed anchor и конечное
+  состояние.
+- Сохраняй image-grounded `geometry_invariant` и `identity_invariant`. Если
+  endpoint уже виден в first frame, используй только low-amplitude residual
+  continuation, затухание или camera-only — без нового цикла и реверса.
+- Wan 2.2 теряет слишком слабое micro-motion. Не соединяй `tiny`, `barely`,
+  `extremely slow` и длинный hold. Основное движение начинается сразу и к
+  финалу даёт наблюдаемое изменение: для camera move foreground reference
+  смещается примерно на 5–10% ширины кадра; для ripple, mist или другого
+  локального процесса видимая граница проходит хотя бы одну собственную ширину.
 - Не включай в prompt `150 frames`, `30 fps`, resolution, codec, watermark или
   seed. Это machine-owned runtime.
 
@@ -61,26 +65,30 @@ SHA-256 исходника. Сразу после успешного preflight �
   endpoint второй beat.
 - Сохраняй `semantic_invariant` до последнего кадра. Например, заданная тревога
   остаётся тревогой даже когда движение рук затихает.
-- Сохраняй `geometry_invariant` до последнего кадра: видимая связь ключевых
-  частей не разрывается и не перестраивается в физически другую сцену.
+- Сохраняй `geometry_invariant`: контакт, крепление и жёсткая форма не
+  перестраиваются. `identity_invariant` удерживает точное число людей, животных,
+  props, деталей и controls.
 - Ключевой объект, которым выполняется или подтверждается действие, остаётся
   непрерывно видимым и узнаваемым. Не планируй выход пипетки, капли, водопада или
   другого смыслового объекта из кадра.
 
 ## UI и people risks
 
-- Для UI используй fixed camera и максимум один мягкий блик, pulse или optical
-  accent уже существующего элемента. Текст, числа, даты, glyphs, layout, chart
-  state, значения, checkbox и другие controls не меняются.
-- Для people исключи контакт рук с лицом, сложное взаимодействие частей тела,
-  речь и lip-sync вместе с быстрыми повторными жестами. Используй одно простое
-  движение умеренной амплитуды и удерживай заданную эмоцию до финала.
+- Для точного текста, UI, chart, table, diagram и screenshot выбери
+  `deterministic-compositor`: `execution_mode` равен
+  `deterministic-compositor`, а `positive_prompt` равен `null`.
+- Для people удерживай точное число сущностей, конечности и props. Исключи
+  контакт рук с лицом, сложное взаимодействие частей тела, речь и lip-sync.
+  Если gait, контакт или направление неоднозначны, выбери camera-only.
+- Articulated ride не выполняет полный arc/rotation; tool не действует без
+  видимой руки и точки контакта; layered fabric не billow и не перестраивает
+  слои. При неоднозначной механике выбери camera-only.
 
 ## Negative prompt
 
 Authored `negative_prompt` всегда и буквально равен `null`; model-specific
-negative-prompt repair не используется. `positive_prompt` остаётся
-самодостаточным и занимает не больше двух коротких motion-first предложений.
+negative-prompt repair не используется. Наблюдавшийся failure преобразуется в
+positive anchor или более безопасную rendering strategy.
 
 На generation transport positive и negative остаются раздельными полями.
 Segmind получает строковый параметр `negative_prompt`; authored `null`

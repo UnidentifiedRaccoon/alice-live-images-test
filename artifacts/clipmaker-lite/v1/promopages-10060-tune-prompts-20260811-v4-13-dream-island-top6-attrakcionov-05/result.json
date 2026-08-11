@@ -1,0 +1,129 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-13-dream-island-top6-attrakcionov-05",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:bbe92585b3ae7b61bb9dbc7ffd9b2eecad66b3fea958321a180bec6d98c681c4",
+    "execution_fingerprint": "sha256:558b29f2f2914e0217465232b015115412e2f2f05fd4e39542d6b73d58a6f95f",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10b-52f2-7091-9f81-74b0ab4fe49d"
+    },
+    "authored_payload_sha256": "8dff18ad7da9a50e96cc5dcbf5790eb76abda32eeaf85569c9015f413a574c6e",
+    "draft_file_sha256": "96ccab6e00f05c676c9a83dff044e4e9461bcdf9b4d7e6076208830530cd131a"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+      "sha256": "7ec5104f2456949b7fc32e4fb9d8e60a62a088bd0d78cc20ca82694bb3b5eb5c",
+      "bytes": 3092282
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/content.json",
+      "sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee",
+      "bytes": 19526,
+      "locator": {
+        "article_id": "13-dream-island-top6-attrakcionov",
+        "title": "Топ-6 аттракционов в «Острове Мечты» для фаната экстрима",
+        "lead": "6 экстремальных аттракционов «Острова Мечты» — ловите адреналин!",
+        "image_id": "05",
+        "block_index": 19,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+        "current_heading": {
+          "block_index": 17,
+          "level": 2,
+          "text": "3️⃣ место. «Мельница»"
+        },
+        "nearest_text_before": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Еще один способ забыть о гравитации. Аттракцион напоминает огромную ветряную мельницу с лопастями, к которым подвешены сиденья. Шесть крыльев вращаются по часовой стрелке на высоте 16 метров, а сиденья на них крутятся хаотично под углом 70°. Вы не знаете, куда вас развернет через секунду, и от этого адреналин зашкаливает."
+        },
+        "nearest_text_after": {
+          "block_index": 20,
+          "type": "paragraph",
+          "text": "Положение кабинок меняется при каждом запуске, так что, даже если вы катаетесь во второй раз, ощущения будут совсем другими"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A low-angle view shows a six-armed blue-and-orange articulated amusement ride beneath a glass roof, with multiple occupied seat assemblies suspended at different orientations.",
+      "The ride’s central hub, arms, seat attachments, and riders are visible, but a single frame does not prove the rotation direction or the independent motion path of the seats.",
+      "A large illuminated sign reading “МЕЛЬНИЦА” dominates the left foreground, while the ride occupies the center and right, creating clear foreground-to-background depth."
+    ],
+    "article_context": "The body image identifies the third-ranked “Мельница” ride and supports the article’s emphasis on disorientation, changing seat positions, and adrenaline; the prominent attraction name is editorially important.",
+    "structured_intent": {
+      "editorial_meaning": "Emphasize the imposing scale and unpredictable cabin arrangement of the adrenaline ride while preserving its identification as “Мельница”.",
+      "initial_state": "The ride is seen from below with its six arms and occupied cabins held at varied orientations; the illuminated “МЕЛЬНИЦА” sign fills the left foreground.",
+      "motion_owner": "camera",
+      "primary_action": "A bounded 2D push-in toward the visible central hub.",
+      "terminal_state": "The hub and cabins appear modestly larger while the complete attraction name and all original semantic zones remain legible and within frame.",
+      "geometry_invariant": "The rigid hub-and-arm topology, cabin attachments, rider restraints, and all source-image geometry remain unchanged.",
+      "identity_invariant": "Preserve all visible arms, cabins, riders, limbs, lights, signs, and every glyph of “МЕЛЬНИЦА”; nothing appears, disappears, or changes identity.",
+      "semantic_invariant": "The scene remains an identifiable, imposing view of the “Мельница” attraction and retains its sense of height and adrenaline through the final frame.",
+      "feasibility_assessment": "The central hub, six-arm structure, suspended cabins, riders, and attachment topology are visible, but neither rotational direction nor the cabins’ independent motion mechanics can be verified from the still image. Exact Cyrillic lettering is prominent and semantically important, so generative motion is unsafe.",
+      "rendering_strategy": "deterministic-compositor"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Over four seconds, apply one smooth bounded 2D push-in toward the ride’s central hub, beginning immediately and easing gently near the end. Enlarge the source uniformly by about 6%, keeping the illuminated “МЕЛЬНИЦА” lettering, hub, visible arms, cabins, and riders inside the frame while leaving every source pixel unchanged beneath the transform.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

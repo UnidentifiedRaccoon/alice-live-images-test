@@ -1,0 +1,129 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-11-dream-island-pochemu-vybiraiu-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:2f50afd19facdd85ee65a271ebd41870436c92854f34254220a3aebc7ab39fb0",
+    "execution_fingerprint": "sha256:4ad1af5a3f44da4c995a34a5d0ee5ff9e5d8f583326a3ad2b3f86061dd9106a0",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10b-04e1-7d52-b0ce-c1d0787274be"
+    },
+    "authored_payload_sha256": "4cd07dbf608a5ca93ade94f8147d21a171ac005f1d5f8fc33a6afb5800985cd4",
+    "draft_file_sha256": "a2ed6fd7c4ca281ec12e55aa12e47cba1de779711aa8904886d00483f8c3dff7"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+      "sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+      "bytes": 290961
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/content.json",
+      "sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "bytes": 15975,
+      "locator": {
+        "article_id": "11-dream-island-pochemu-vybiraiu",
+        "title": "Почему я выбираю парк развлечений «Остров Мечты»?",
+        "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+        "image_id": "03",
+        "block_index": 18,
+        "role": "article_image",
+        "caption": "Фантастическое путешествие по миру юрского периода «На крыльях ветра»!",
+        "file": "03.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+        "current_heading": {
+          "block_index": 10,
+          "level": 3,
+          "text": "1 входной билет на все развлечения"
+        },
+        "nearest_text_before": {
+          "block_index": 17,
+          "type": "paragraph",
+          "text": "*При покупке тарифа «Семейный 4» 10 000₽/4=2500₽. Стоимость билетов актуальна на июнь-август 2026 года."
+        },
+        "nearest_text_after": {
+          "block_index": 19,
+          "type": "heading",
+          "text": "Когда приезжать и что обязательно стоит посетить: 2 маршрута на выбор"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Слева и сверху видна неподвижная тёмная конструкция аттракциона с рядами подвесных кресел и силуэтами ног; справа — яркая экранная сцена с одним летящим птерозавром над лесной долиной и вулканом.",
+      "Конструкция аттракциона образует близкий передний план, экранный пейзаж имеет выраженные средний и дальний планы; физическое направление и механика движения кресел по одному кадру не доказаны.",
+      "Птерозавр уже изображён в полёте, но направление его дальнейшего движения и характер анимации экранной сцены неоднозначны."
+    ],
+    "article_context": "Кадр иллюстрирует иммерсивный аттракцион «На крыльях ветра» как захватывающее путешествие над миром юрского периода и поддерживает переход статьи к рекомендациям по маршруту в парке.",
+    "structured_intent": {
+      "editorial_meaning": "Передать ощущение полного погружения и захватывающего полёта в юрском мире на аттракционе «На крыльях ветра».",
+      "initial_state": "Тёмная подвесная конструкция с креслами и силуэтами занимает левый передний план; на ярком экране справа один птерозавр находится над лесной долиной перед вулканом.",
+      "motion_owner": "камера",
+      "primary_action": "Непрерывно приблизиться к уже видимому птерозавру, используя глубину между конструкцией аттракциона и экранным пейзажем.",
+      "terminal_state": "Птерозавр наблюдаемо немного крупнее, а ближайший край конструкции смещён в кадре, при сохранении всех исходных смысловых зон.",
+      "geometry_invariant": "Жёсткая форма и взаимное расположение подвесной конструкции, кресел и опор сохраняются.",
+      "identity_invariant": "Сохраняются один птерозавр и точное число всех видимых кресел, деталей конструкции и силуэтов людей или конечностей.",
+      "semantic_invariant": "Кадр до конца остаётся изображением иммерсивного полёта на аттракционе в юрском мире.",
+      "feasibility_assessment": "Надёжно видны жёсткая конструкция аттракциона, многоплановая экранная сцена и один птерозавр; направление, ось и механика движения кресел, а также дальнейшая траектория птерозавра неоднозначны. Выраженная глубина позволяет безопасное движение камеры без выдумывания действия объектов.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "В течение четырёх секунд камера сразу начинает плавный равномерный push-in к видимому птерозавру. Жёсткая конструкция аттракциона не деформируется и лишь смещается в экранном пространстве за счёт параллакса; экранные персонажи не получают самостоятельной анимации. Ближе к финалу камера мягко замедляется: край кресел смещён примерно на 5% кадра, птерозавр немного крупнее, но вся исходная композиция и число силуэтов сохранены.",
+      "positive_prompt": "The camera makes one smooth, steady push toward the visible flying reptile, preserving the rigid ride structure, every existing seat and rider silhouette, and the single reptile continuously. By the final frame the foreground seat edge has shifted about 5% of the frame and the reptile appears modestly larger, with all original scene regions still visible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

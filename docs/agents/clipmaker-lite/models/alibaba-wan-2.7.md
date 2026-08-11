@@ -41,10 +41,16 @@ cross-model comparison.
   стиль, уже заданные изображением.
 - Пиши коротко и конкретно: provider получает `prompt_extend: true` и может
   расширить формулировку.
-- Сохраняй image-grounded действие и один `geometry_invariant` из анализа
-  изображения. Если endpoint уже виден в first frame, используй только
-  low-amplitude residual continuation или естественное затухание, без нового
-  цикла и выхода из endpoint.
+- Используй одно-два motion-first предложения и сохраняй image-grounded
+  `geometry_invariant` и `identity_invariant`. Если endpoint уже виден в first
+  frame, используй residual continuation, затухание или camera-only — без
+  нового цикла и реверса.
+- `prompt_extend: true` может усиливать travel, plume, glare и вторичное
+  движение. Задавай source-relative composition ceiling: camera reference
+  смещается не больше собственной ширины или примерно 5–10% кадра; mist
+  остаётся одним коротким узким cone у видимого nozzle; optical effect остаётся
+  внутри target-boundary. Избегай expansive verbs `sweeps across the scene`,
+  `billows`, `fills`, `full rotation` и `wide arc`.
 
 ## Terminal state и смысловая целостность
 
@@ -53,27 +59,28 @@ cross-model comparison.
   независимый beat.
 - `semantic_invariant` не меняется при естественном затухании движения. Эмоция,
   напряжение или редакционный смысл не переходят в противоположное состояние.
-- `geometry_invariant` сохраняется до последнего кадра: ключевые части остаются
-  в той же видимой физической связи.
+- `geometry_invariant` сохраняет контакт, крепление и жёсткую форму;
+  `identity_invariant` удерживает точное число сущностей, конечностей, props и
+  деталей.
 - Ключевой объект остаётся непрерывно видимым, геометрически узнаваемым и связан
   с тем же действием от первого до последнего кадра.
 
 ## UI и people risks
 
-- Для UI камера fixed; допустим максимум один мягкий блик, pulse или optical
-  accent существующего элемента. Не меняй текст, числа, даты, glyphs, layout,
-  chart state, значения, checkbox и controls.
-- Для людей используй одно простое движение умеренной амплитуды. Исключи контакт
-  рук с лицом, сложное взаимодействие частей тела и быстрые повторные жесты
-  вместе с речью или lip-sync; заданная эмоция сохраняется до финала.
+- Для точного текста, UI, chart, table, diagram и screenshot выбери
+  `deterministic-compositor`: `execution_mode` равен
+  `deterministic-compositor`, а `positive_prompt` равен `null`.
+- Для людей сохраняй точное число, конечности и props. Не добавляй контакт с
+  лицом, новый предмет, сложное взаимодействие или неоднозначный gait.
+- Articulated ride не выполняет полный arc/rotation; tool не действует без
+  видимой руки/контакта; layered fabric не billow. При неоднозначной механике
+  выбери camera-only.
 
 ## Negative prompt
 
-Authored `negative_prompt` всегда и буквально равен `null`; параметр
-`negative_prompt` провайдеру не отправляется. Repair и generic tail не
-используются для negative prompt. `positive_prompt` занимает не больше двух
-коротких motion-first предложений; дальнейшее расширение выполняет
-`prompt_extend: true`.
+Authored `negative_prompt` всегда и буквально равен `null` и не отправляется.
+Repair и generic tail не используются: failure преобразуется в positive anchor,
+composition ceiling или более безопасную rendering strategy.
 
 ## Runtime fragment
 

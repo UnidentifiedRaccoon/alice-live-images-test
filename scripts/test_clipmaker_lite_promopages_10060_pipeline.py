@@ -138,14 +138,18 @@ class FrozenContractRoutingTest(unittest.TestCase):
     def test_every_historical_batch_routes_to_its_exact_archived_contract(
         self,
     ) -> None:
-        expected = {
+        registered_batches = {
             pipeline.LEGACY_BATCH_ID: "2.0.6",
             pipeline.CAMPAIGN_EXTENSION_BATCH_ID: "2.0.6",
             pipeline.ARTICLE_02_BATCH_ID: "2.0.7",
             pipeline.CAMPAIGN_20260807_BATCH_ID: "2.0.7",
         }
+        expected = {
+            **registered_batches,
+            pipeline.FEMIBION_VEO_RECOVERY_ID: "2.0.8",
+        }
         self.assertEqual(pipeline.FROZEN_BATCH_CONTRACT_VERSIONS, expected)
-        for batch_id, contract_version in expected.items():
+        for batch_id, contract_version in registered_batches.items():
             with self.subTest(batch_id=batch_id):
                 pipeline.activate_batch(batch_id)
                 self.assertEqual(
@@ -157,7 +161,7 @@ class FrozenContractRoutingTest(unittest.TestCase):
                     pipeline.frozen_provenance_summary,
                 )
 
-    def test_recovery_run_id_uses_current_contract_even_while_legacy_is_active(
+    def test_recovery_run_id_uses_frozen_208_even_while_legacy_is_active(
         self,
     ) -> None:
         pipeline.activate_batch(pipeline.LEGACY_BATCH_ID)
@@ -167,19 +171,35 @@ class FrozenContractRoutingTest(unittest.TestCase):
             mock.patch.object(
                 pipeline.runner,
                 "provenance_summary",
-                return_value=expected,
+                side_effect=AssertionError("recovery routed to current contract"),
             ) as current,
             mock.patch.object(
                 pipeline,
                 "frozen_provenance_summary",
-                side_effect=AssertionError("recovery routed to a frozen contract"),
-            ),
+                return_value=expected,
+            ) as frozen,
         ):
             self.assertEqual(
                 pipeline.planning_provenance_summary(pipeline.ROOT, run_id),
                 expected,
             )
-        current.assert_called_once_with(pipeline.ROOT, run_id)
+        current.assert_not_called()
+        frozen.assert_called_once_with(pipeline.ROOT, run_id)
+
+    def test_all_historical_contracts_use_the_208_support_snapshot(self) -> None:
+        for version, frozen in pipeline.FROZEN_CONTRACTS.items():
+            with self.subTest(version=version):
+                self.assertEqual(
+                    frozen["support_root"],
+                    pipeline.FROZEN_SUPPORT_208_ROOT_REL,
+                )
+        snapshot = pipeline._femibion_recovery_contract_snapshot(pipeline.ROOT)
+        self.assertEqual(snapshot["path"], pipeline.CONTRACT_REL.as_posix())
+        self.assertEqual(snapshot["contract_version"], "2.0.8")
+        self.assertEqual(
+            snapshot["sha256"],
+            pipeline.FROZEN_208_CONTRACT_FILE_SHA256,
+        )
 
 
 class FemibionRecoveryOverlayTest(unittest.TestCase):
@@ -266,6 +286,7 @@ class FemibionRecoveryOverlayTest(unittest.TestCase):
         dict[str, object],
     ]:
         self._copy(root, pipeline.CONTRACT_REL.as_posix())
+        self._copy(root, pipeline.FROZEN_208_CONTRACT_REL.as_posix())
         self._copy(root, pipeline.ROUTES_REL.as_posix())
         sources = {
             (
@@ -326,7 +347,7 @@ class FemibionRecoveryOverlayTest(unittest.TestCase):
             summary = {
                 "verified": True,
                 "agent_id": pipeline.AGENT_ID,
-                "contract_version": pipeline.REQUIRED_CONTRACT_VERSION,
+                "contract_version": pipeline.FEMIBION_VEO_RECOVERY_CONTRACT_VERSION,
                 "models": [pipeline.FEMIBION_VEO_RECOVERY_MODEL_ID],
                 "result_path": result_rel.as_posix(),
                 "source_image_sha256": source.image["sha256"],

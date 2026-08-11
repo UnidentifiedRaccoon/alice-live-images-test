@@ -1,0 +1,129 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-05",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:05af7aea676095a358ca25a832ebfa82d67a8e1074f99da6ae5145c39ff1f80c",
+    "execution_fingerprint": "sha256:5b85466e1a1cb166bed1e90de0e52bd5c26b5f79254d39292c06fb05d4b3a9f1",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff109-e1c1-7a71-a6c6-2ef139c0ab0a"
+    },
+    "authored_payload_sha256": "d5cc6eaa6aebbfb0209575363f70bbfbea8fd8860566c11b4146e2ae02b83431",
+    "draft_file_sha256": "e84b017e3896c696ae55a1dee2722a6f4e6c05898bca30be63eb9075d88f0e5d"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+      "sha256": "7143a61000917545d3363bf593b8233d1920a399614149fae09d22d03de0c1e0",
+      "bytes": 4594315
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/content.json",
+      "sha256": "53b555e822ceef86a9330602c9b750398e6b3098e3d2c4e1b0c47380d3385bdd",
+      "bytes": 29939,
+      "locator": {
+        "article_id": "04-level-pokupat-kvartiru-seichas",
+        "title": "Стоит ли покупать квартиру сейчас: мнение экспертов",
+        "lead": "Почему россияне активно покупают недвижимость в Москве и откуда берут средства",
+        "image_id": "05",
+        "block_index": 29,
+        "role": "article_image",
+        "caption": "Максимальная высота домов в Левел Лесной — 15 этажей, поэтому здания не будут сильно загораживать вид на зелёные зоны",
+        "file": "05.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/04-level-pokupat-kvartiru-seichas/05.png",
+        "current_heading": {
+          "block_index": 16,
+          "level": 2,
+          "text": "Кто планирует переезд в 2026 году и какие квартиры покупают россияне"
+        },
+        "nearest_text_before": {
+          "block_index": 28,
+          "type": "paragraph",
+          "text": "Некоторые проекты Level особенно нравятся возрастным покупателям. Например, Левел Лесной, который находится в зелёной зоне недалеко от Москвы, но в шаговой доступности от метро и больших столичных магистралей."
+        },
+        "nearest_text_after": {
+          "block_index": 30,
+          "type": "heading",
+          "text": "Что говорят эксперты: купить можно — и с умом"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Высокая наклонная аэросъёмка показывает единый жилой комплекс из нескольких неподвижных корпусов разной высоты, внутренних дворов, дорог и парковок, со всех сторон окружённый густым лесом.",
+      "В кадре выражены передний, средний и дальний планы: ближайшие корпуса и деревья частично перекрывают центральную застройку, а лес продолжается до верхней границы изображения.",
+      "Самостоятельное действие зданий физически невозможно; движение машин или людей нельзя надёжно вывести из одного кадра, зато глубина сцены поддерживает безопасное движение камеры."
+    ],
+    "article_context": "Изображение иллюстрирует Левел Лесной как жилой комплекс умеренной этажности, окружённый обширными зелёными зонами; локальный акцент — сохранение визуальной связи домов с лесным окружением и комфорт локации для покупателей, ценящих экологию и прогулки.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть, что умеренная этажность жилого комплекса сохраняет ощущение близости к лесу и зелёным зонам.",
+      "initial_state": "Неподвижный жилой комплекс виден сверху под углом среди плотного леса, с корпусами, дворами, дорогами и парковками на нескольких планах глубины.",
+      "motion_owner": "камера",
+      "primary_action": "Непрерывное боковое перемещение камеры раскрывает существующую глубину комплекса через параллакс.",
+      "terminal_state": "В финале ближайшие корпуса и кроны заметно смещены в кадре относительно центральной застройки, и уже видимые зелёные промежутки между домами читаются немного яснее.",
+      "geometry_invariant": "Все корпуса, фасады, окна, крыши, дороги, дворы и деревья сохраняют жёсткую форму, взаимное расположение и привязку к земле.",
+      "identity_invariant": "Сохраняются исходные количество и идентичность зданий, деревьев, дорог, автомобилей и малых объектов; ничего не появляется и не исчезает.",
+      "semantic_invariant": "Комплекс остаётся визуально окружённым зеленью, а лесные зоны сохраняют заметное присутствие до последнего кадра.",
+      "feasibility_assessment": "Неподвижная архитектура, окружающий лес и несколько планов глубины видны однозначно; направление движения транспорта, людей или среды не доказано, поэтому безопасна только source-grounded динамика камеры.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Четырёхсекундный единый план: камера сразу начинает плавный боковой трекинг вправо с центральной группой корпусов в качестве постоянной точки внимания. Равномерное движение создаёт читаемый параллакс между ближайшими деревьями и корпусами, центральной застройкой и дальним лесом; жёсткая архитектура не деформируется. К концу камера мягко замедляется после смещения ближайших ориентиров влево примерно на 5–7% ширины кадра, благодаря чему немного яснее читаются уже видимые зелёные промежутки между домами без выхода за исходную композицию.",
+      "positive_prompt": "The camera tracks smoothly to the right at an even real-time pace, keeping the central residential complex as the focal target while source-grounded parallax carries the nearest buildings and treetops about 5–7% left across the frame. By the final frame, slightly more of the already visible green corridors between the buildings is readable, with every façade, road, courtyard and tree retaining its rigid layout and identity.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

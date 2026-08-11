@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f8f2f5" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <meta
+      name="description"
+      content="Step 8 Tune — сравнение baseline и обновлённых планов Clipmaker Lite."
+    />
+    <title>Alice Live · Step №8 · Tune</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../shared.css?v=13" />
+    <link rel="stylesheet" href="styles.css?v=1" />
+  </head>
+  <body>
+    <a class="skipLink" href="#caseTitle">К выбранной цели</a>
+
+    <header class="siteHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../index.html?v=12" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+
+        <nav class="viewSwitch" aria-label="Шаги демо">
+          <a href="../index.html?v=12" aria-label="Шаг 1. Форматы — MP4 и анимированный WebP">
+            <span class="viewSwitchStep" lang="en">Step №1</span>
+            <strong class="viewSwitchTitle">Форматы</strong>
+            <span class="viewSwitchDescription">MP4 vs animated WebP</span>
+          </a>
+          <a href="../generated-gallery.html?v=12" aria-label="Шаг 2. Демо — Wan 2.2">
+            <span class="viewSwitchStep" lang="en">Step №2</span>
+            <strong class="viewSwitchTitle">Демо</strong>
+            <span class="viewSwitchDescription">Wan 2.2 на публикациях</span>
+          </a>
+          <a href="../model-comparison-5s/?v=12" aria-label="Шаг 3. Модели">
+            <span class="viewSwitchStep" lang="en">Step №3</span>
+            <strong class="viewSwitchTitle">Модели</strong>
+            <span class="viewSwitchDescription">Wan 2.7 и Veo 3.1 Lite</span>
+          </a>
+          <a href="../manual-review/?v=4" aria-label="Шаг 4. Разметка">
+            <span class="viewSwitchStep" lang="en">Step №4</span>
+            <strong class="viewSwitchTitle">Разметка</strong>
+            <span class="viewSwitchDescription">Промпт и результат</span>
+          </a>
+          <a href="../clipmaker-lite/?v=8" aria-label="Шаг 5. Clipmaker Lite">
+            <span class="viewSwitchStep" lang="en">Step №5</span>
+            <strong class="viewSwitchTitle">Clipmaker Lite</strong>
+            <span class="viewSwitchDescription">История · 3 модели</span>
+          </a>
+          <a href="../ab-preparation/?v=2" aria-label="Шаг 6. Подготовка к A/B">
+            <span class="viewSwitchStep" lang="en">Step №6</span>
+            <strong class="viewSwitchTitle">Подготовка к A/B</strong>
+            <span class="viewSwitchDescription">PROMOPAGES-10060</span>
+          </a>
+          <a aria-current="page" href="./?v=1" aria-label="Шаг 8. Tune — 36 кейсов, 65 целей">
+            <span class="viewSwitchStep" lang="en">Step №8</span>
+            <strong class="viewSwitchTitle">Tune</strong>
+            <span class="viewSwitchDescription">36 кейсов · 65 целей</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="tuneApp" id="mainContent">
+      <header class="tuneHero">
+        <div class="tuneHeroCopy">
+          <p class="eyebrow">Step №8 · Prompt-only tune</p>
+          <h1>Tune.</h1>
+          <p class="tuneIntro">
+            Сопоставление исходника и существующего baseline MP4 с обратной связью,
+            новым планом Clipmaker Lite и точным prompt. Новые видео не генерировались:
+            compositor означает осознанное воздержание от generative I2V.
+          </p>
+          <p class="datasetStatus" id="datasetStatus" aria-live="polite">
+            Загружаем tune manifest…
+          </p>
+        </div>
+
+        <dl class="datasetSummary" aria-label="Состав tune-выборки">
+          <div>
+            <dt>Кейсы</dt>
+            <dd id="caseCountSummary">—</dd>
+          </div>
+          <div>
+            <dt>Цели</dt>
+            <dd id="targetCountSummary">—</dd>
+          </div>
+          <div>
+            <dt>Перегенерация</dt>
+            <dd id="regenerateCountSummary">—</dd>
+          </div>
+          <div>
+            <dt>Пустая оценка</dt>
+            <dd id="blankCountSummary">—</dd>
+          </div>
+          <div>
+            <dt>Compositor</dt>
+            <dd id="compositorCountSummary">—</dd>
+          </div>
+        </dl>
+      </header>
+
+      <form class="filterRail" id="filterForm" aria-label="Фильтры tune-целей">
+        <label class="filterControl" for="categoryFilter">
+          <span>Категория</span>
+          <select id="categoryFilter" name="category" disabled>
+            <option value="all">Все проблемы</option>
+          </select>
+        </label>
+        <label class="filterControl" for="modelFilter">
+          <span>Модель</span>
+          <select id="modelFilter" name="model" disabled>
+            <option value="all">Все модели</option>
+          </select>
+        </label>
+        <label class="filterControl" for="modeFilter">
+          <span>Режим</span>
+          <select id="modeFilter" name="mode" disabled>
+            <option value="all">Все режимы</option>
+          </select>
+        </label>
+        <label class="filterControl" for="ratingFilter">
+          <span>Оценка</span>
+          <select id="ratingFilter" name="rating" disabled>
+            <option value="all">Все оценки</option>
+          </select>
+        </label>
+        <button class="resetFilters" id="resetFilters" type="button" disabled>
+          Сбросить
+        </button>
+        <p class="filterResult" id="filterResult" aria-live="polite">—</p>
+      </form>
+
+      <section class="targetNavigator" aria-label="Выбор tune-цели">
+        <div class="targetNavigatorCopy">
+          <p class="targetFolio">
+            Цель <span id="currentNumber">—</span><span aria-hidden="true"> / </span
+            ><span class="visuallyHidden">из</span><span id="totalNumber">—</span>
+          </p>
+          <h2 id="caseTitle" tabindex="-1">Подготавливаем выборку…</h2>
+          <p class="caseMeta" id="caseMeta">Case ID и модель появятся после загрузки.</p>
+        </div>
+
+        <div class="navigatorControls">
+          <button class="controlButton" id="previousTarget" type="button" disabled>
+            ← Назад
+          </button>
+          <label class="targetSelectLabel" for="targetSelect">
+            <span class="visuallyHidden">Выберите tune-цель</span>
+            <select id="targetSelect" disabled>
+              <option>Загрузка…</option>
+            </select>
+          </label>
+          <button class="controlButton strong" id="nextTarget" type="button" disabled>
+            Дальше →
+          </button>
+        </div>
+      </section>
+
+      <section class="loadState" id="loadState" aria-live="polite">
+        <p class="loadStateTitle">Tune manifest загружается</p>
+        <p>Ожидаем <code>clipmaker-lite-test/tune-manifest.json</code>.</p>
+      </section>
+
+      <article class="targetView" id="targetView" aria-labelledby="caseTitle" hidden></article>
+    </main>
+
+    <noscript>
+      <p class="noscriptMessage">Для просмотра tune manifest нужен JavaScript.</p>
+    </noscript>
+
+    <script src="app.js?v=1" defer></script>
+  </body>
+</html>

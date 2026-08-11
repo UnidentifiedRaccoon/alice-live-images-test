@@ -171,6 +171,7 @@ class Entry:
 class LiteJob:
     entry: Entry
     structured_intent: dict[str, str]
+    execution_mode: str
     positive_prompt: str
     negative_prompt: str | None
     result_path: str
@@ -459,6 +460,12 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
     expected_runtime = contract()["models"][entry.model_id]["runtime"]
     if runtime != expected_runtime:
         raise BatchPipelineError(f"Lite runtime mismatch: {entry.provider_run_id}")
+    execution_mode = model.get("execution_mode", "i2v")
+    if execution_mode != "i2v":
+        raise BatchPipelineError(
+            "Deterministic-compositor Lite results must not be sent to a video provider: "
+            f"{entry.provider_run_id}"
+        )
     positive = model.get("positive_prompt")
     if not isinstance(positive, str) or not positive.strip():
         raise BatchPipelineError(f"Lite positive prompt is empty: {entry.provider_run_id}")
@@ -466,14 +473,46 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
     structured_intent = (
         analysis.get("structured_intent") if isinstance(analysis, dict) else None
     )
-    if not isinstance(structured_intent, dict) or set(structured_intent) != set(
-        clipmaker_lite_runner.STRUCTURED_INTENT_KEYS
+    current_intent_keys = tuple(clipmaker_lite_runner.STRUCTURED_INTENT_KEYS)
+    legacy_intent_key_sets = (
+        (
+            "editorial_meaning",
+            "primary_action",
+            "terminal_state",
+            "semantic_invariant",
+        ),
+        (
+            "editorial_meaning",
+            "initial_state",
+            "primary_action",
+            "terminal_state",
+            "geometry_invariant",
+            "semantic_invariant",
+        ),
+    )
+    structured_keys = set(structured_intent) if isinstance(structured_intent, dict) else set()
+    if (
+        not isinstance(structured_intent, dict)
+        or (
+            structured_keys != set(current_intent_keys)
+            and all(
+                structured_keys != set(legacy_keys)
+                for legacy_keys in legacy_intent_key_sets
+            )
+        )
     ):
         raise BatchPipelineError(f"Lite structured intent is invalid: {planning_run_id}")
+    intent_keys = current_intent_keys
+    if structured_keys != set(current_intent_keys):
+        intent_keys = next(
+            legacy_keys
+            for legacy_keys in legacy_intent_key_sets
+            if structured_keys == set(legacy_keys)
+        )
     if any(
         not isinstance(structured_intent[key], str)
         or not structured_intent[key].strip()
-        for key in clipmaker_lite_runner.STRUCTURED_INTENT_KEYS
+        for key in intent_keys
     ):
         raise BatchPipelineError(f"Lite structured intent is empty: {planning_run_id}")
     negative = model.get("negative_prompt")
@@ -486,8 +525,9 @@ def load_lite_job(entry: Entry, root: Path = ROOT) -> LiteJob:
         entry=entry,
         structured_intent={
             key: structured_intent[key].strip()
-            for key in clipmaker_lite_runner.STRUCTURED_INTENT_KEYS
+            for key in intent_keys
         },
+        execution_mode=execution_mode,
         positive_prompt=positive,
         negative_prompt=negative,
         result_path=expected_result,
@@ -513,6 +553,11 @@ def provider_sample(entry: Entry) -> dict[str, Any]:
 
 
 def provider_prompt(job: LiteJob) -> dict[str, Any]:
+    if job.execution_mode != "i2v":
+        raise BatchPipelineError(
+            "Deterministic-compositor Lite results must not be materialized as provider prompts: "
+            f"{job.entry.provider_run_id}"
+        )
     if job.negative_prompt is not None:
         raise BatchPipelineError(
             "Clipmaker Lite negative_prompt must be null before provider submit: "

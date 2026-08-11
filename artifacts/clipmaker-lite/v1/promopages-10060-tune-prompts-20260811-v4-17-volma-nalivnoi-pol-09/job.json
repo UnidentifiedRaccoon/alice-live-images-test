@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+    "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:18eb0549de750399002d30207132dc0da9a39d5304057971f96dabcf8654ab3c",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+      "sha256": "a2a7fb67485d3b1ba9c79cb0d379a575883c73a2926909b94cbe7023ce36d0e7",
+      "bytes": 274107
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/content.json",
+      "sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "bytes": 23912,
+      "locator": {
+        "article_id": "17-volma-nalivnoi-pol",
+        "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+        "lead": "Разбираем ошибки при заливке наливного пола, которые часто приводят к проблемам",
+        "image_id": "09",
+        "block_index": 32,
+        "role": "article_image",
+        "caption": "",
+        "file": "09.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/09.png",
+        "current_heading": {
+          "block_index": 30,
+          "level": 2,
+          "text": "Ошибка №6. Пренебрежение «разгоном» и деаэрацией"
+        },
+        "nearest_text_before": {
+          "block_index": 31,
+          "type": "paragraph",
+          "text": "Проблема: пропуск этапа работы с инструментом после заливки. Последствие — образование бугров, ям и кратеров на поверхности."
+        },
+        "nearest_text_after": {
+          "block_index": 33,
+          "type": "paragraph",
+          "text": "Решение:"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589"
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09/result.json"
+  }
+}
