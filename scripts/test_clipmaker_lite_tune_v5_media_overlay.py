@@ -16,7 +16,7 @@ from scripts.test_clipmaker_lite_tune_v5_pipeline import evaluation_fixture
 
 
 ROOT = Path(__file__).resolve().parents[1]
-V4_PATH = ROOT / "clipmaker-lite-test" / "tune-manifest.json"
+V4_PATH = ROOT / planning.V4_SNAPSHOT_REL
 MEDIA_COMMIT = "1" * 40
 CONTRACT = json.loads((ROOT / generation.CONTRACT_REL).read_text(encoding="utf-8"))
 

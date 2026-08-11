@@ -13,7 +13,7 @@ from scripts import clipmaker_lite_tune_v5_pipeline as v5
 
 
 ROOT = Path(__file__).resolve().parents[1]
-V4_PATH = ROOT / "clipmaker-lite-test" / "tune-manifest.json"
+V4_PATH = ROOT / v5.V4_SNAPSHOT_REL
 
 
 def _sha(path: Path) -> str:
