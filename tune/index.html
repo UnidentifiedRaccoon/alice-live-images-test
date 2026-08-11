@@ -13,7 +13,7 @@
     <title>Alice Live · Step №8 · Tune</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../shared.css?v=13" />
-    <link rel="stylesheet" href="styles.css?v=1" />
+    <link rel="stylesheet" href="styles.css?v=2" />
   </head>
   <body>
     <a class="skipLink" href="#caseTitle">К выбранной цели</a>
@@ -59,7 +59,7 @@
             <strong class="viewSwitchTitle">Подготовка к A/B</strong>
             <span class="viewSwitchDescription">PROMOPAGES-10060</span>
           </a>
-          <a aria-current="page" href="./?v=1" aria-label="Шаг 8. Tune — 36 кейсов, 65 целей">
+          <a aria-current="page" href="./?v=2" aria-label="Шаг 8. Tune — 36 кейсов, 65 целей">
             <span class="viewSwitchStep" lang="en">Step №8</span>
             <strong class="viewSwitchTitle">Tune</strong>
             <span class="viewSwitchDescription">36 кейсов · 65 целей</span>
@@ -75,8 +75,11 @@
           <h1>Tune.</h1>
           <p class="tuneIntro">
             Сопоставление исходника и существующего baseline MP4 с обратной связью,
-            новым планом Clipmaker Lite и точным prompt. Новые видео не генерировались:
-            compositor означает осознанное воздержание от generative I2V.
+            новым планом Clipmaker Lite, точным prompt и tuned MP4. Фактический
+            renderer берётся из <code>tuned.video.method</code>: Eliza I2V,
+            deterministic compositor или deterministic fallback. Fallback не меняет
+            planned I2V и явно отмечает, что provider не оценил prompt. MP4 подключены
+            через remote delivery и не входят в Pages payload.
           </p>
           <p class="datasetStatus" id="datasetStatus" aria-live="polite">
             Загружаем tune manifest…
@@ -138,6 +141,23 @@
         <p class="filterResult" id="filterResult" aria-live="polite">—</p>
       </form>
 
+      <section class="reviewOverview" aria-label="Прогресс оценки tune">
+        <div>
+          <p class="reviewProgress" id="reviewProgress" aria-live="polite">
+            Оценено 0 из 0 целей
+          </p>
+          <p class="reviewBreakdown" id="reviewBreakdown">
+            Helped 0 · Same / unclear 0 · Worse 0
+          </p>
+          <p class="storageStatus" id="storageStatus" aria-live="polite">
+            Оценки сохраняются только в этом браузере.
+          </p>
+        </div>
+        <button class="controlButton" id="exportReviews" type="button" disabled>
+          Экспорт JSON
+        </button>
+      </section>
+
       <section class="targetNavigator" aria-label="Выбор tune-цели">
         <div class="targetNavigatorCopy">
           <p class="targetFolio">
@@ -176,6 +196,6 @@
       <p class="noscriptMessage">Для просмотра tune manifest нужен JavaScript.</p>
     </noscript>
 
-    <script src="app.js?v=1" defer></script>
+    <script src="app.js?v=2" defer></script>
   </body>
 </html>
