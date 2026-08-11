@@ -39,9 +39,10 @@ exact-text cross-model comparison.
   названным focal target; выбери один camera state, вся сцена остаётся одним
   shot.
 - Дай enhancer короткий, конкретный и непротиворечивый motion plan.
-- Сохраняй image-grounded `geometry_invariant` и `identity_invariant`. Если
-  endpoint уже виден в first frame, используй residual continuation, затухание
-  или camera-only — без полного цикла, реверса и новых props.
+- Сохраняй image-grounded `attention_anchor`, `motion_boundary`,
+  `geometry_invariant` и `identity_invariant`. Если endpoint уже виден в first
+  frame, используй residual continuation, затухание или camera-only — без
+  полного цикла, реверса и новых props.
 
 ### Visibility floor и source-grounded camera
 
@@ -67,9 +68,11 @@ exact-text cross-model comparison.
   perfectly still` вместе с camera move.
 - `enhancePrompt: true` может расширять сцену. Не используй `wind wave`,
   `sweeps across`, `cinematic movement`, полное перечисление preservation или
-  новый reveal за границами исходника. Камера показывает только уже видимую
+  новый reveal за границами исходника. Не используй `reveal`, `complete` или
+  `extend` для невидимой геометрии. Камера показывает только уже видимую
   глубину; существующая растительность слегка sway in place, roots и count
-  остаются фиксированными.
+  остаются фиксированными. Новые фасады, ряды механизма, части пола и предметы
+  не появляются.
 - У camera-primary вторичные fabric, hair, foliage и water остаются явно слабее
   camera motion. Layered curtains source-locked; enhancer не получает billowing
   или opening action.
@@ -88,14 +91,25 @@ exact-text cross-model comparison.
 
 ## UI и people risks
 
-- Для точного текста, UI, chart, table, diagram и screenshot выбери
-  `deterministic-compositor`: `execution_mode` равен
-  `deterministic-compositor`, а `positive_prompt` равен `null`.
+- Каждый result имеет `execution_mode: i2v` и непустой `positive_prompt`. Для
+  точного текста, UI, chart, table, diagram и screenshot выбери `camera-only`:
+  экран или печатная графика остаётся одной жёсткой плоскостью, labels, числа,
+  glyphs и controls входят в `motion_boundary`, camera move удерживает
+  `attention_anchor` и не открывает unseen space.
 - Для людей сохраняй точное число, конечности и props. Не добавляй контакт с
   лицом, новый предмет, сложное взаимодействие или gait, направление которого
-  не доказано source image. При неоднозначности выбери camera-only.
-- Articulated ride не выполняет полный arc/rotation; tool не действует без
-  видимой руки/контакта. `enhancePrompt` не получает expansive action.
+  не доказано source image. Вместо сложного жеста используй дыхание, моргание,
+  малый поворот головы, взгляда или корпуса либо camera-only.
+- Articulated ride не выполняет полный arc/rotation. Видимая ось и крепления
+  допускают одно малое bounded продолжение в выбранном правдоподобном
+  направлении; topology, riders и число seats фиксированы, а `enhancePrompt`
+  не достраивает новые секции.
+- Tool не действует без видимой руки/контакта. Статичный product packshot
+  получает центрированный studio push или restrained свет/камеру; продукты и
+  labels не двигаются автономно.
+- На стройплощадке без доказанного действия используй плавный
+  observer/phone-inspection camera move. Пол, плиты, трещины, инструменты и
+  обломки остаются жёсткими и не поднимаются сами.
 
 ## Negative prompt
 

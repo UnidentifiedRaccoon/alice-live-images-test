@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+    "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "width": 2400,
+    "height": 1600,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Over four seconds with a fixed camera, the woman begins the grounded touchscreen gesture immediately and moves her right index finger upward at a calm, readable pace while continuing to look at the phone. Her left hand keeps the phone stable, her relaxed smile persists, and the finger settles near the upper part of the screen close to the end without starting another gesture.",
+  "prompt": {
+    "positive": "The woman makes one calm, deliberate upward swipe on the phone with her right index finger while her left hand steadily supports it, her gaze following the screen and her gentle smile remaining. Fixed camera; by the final frame her finger settles near the upper part of the visible screen, with the woman and phone continuously visible.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06/result.json",
+    "result_sha256": "fbd9f9ba187fea3443f622bef5733a3a8bae23edadd9fbc3fe1dc5728a6f777f",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/07-06.json",
+    "repair_feedback_sha256": "9060ed0360f14b196ad9a8fa6f153df6b814ab15fdd1b942c3596cf41224a442",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+      "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff239-8b22-7710-988f-44511e074e1f"
+      },
+      "models": [
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

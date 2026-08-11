@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-13-dream-island-top6-attrakcionov-05-veo-3-1-lite",
+  "case_id": "13#05",
+  "sheet_row": 161,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a5a10c7bf47d01035dc3f22_6a5a1a23fccb527e7235c2af/orig",
+    "sha256": "7ec5104f2456949b7fc32e4fb9d8e60a62a088bd0d78cc20ca82694bb3b5eb5c",
+    "width": 5039,
+    "height": 3359,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Over four seconds, use a fixed camera and begin the ride motion immediately. Advance the hub-and-arm assembly smoothly through a noticeable but limited angular displacement, well short of a full arc, while the already visible cabins respond with weaker, small joint-bound pivots; ease gently near the end without reversing. Finish with the six arms at a clearly different angle and the cabins at slightly changed orientations, preserving all attachments, riders, supports, lights, signs, and framing.",
+  "prompt": {
+    "positive": "The existing six-arm attraction makes one clearly visible, moderate bounded turn in a single direction while the attached cabins pivot slightly on their visible joints and every restrained rider remains secure; keep the camera fixed and the attraction continuously visible. By the final frame, the hub and arms have advanced to a noticeably new angle and the cabins have settled into slightly changed orientations, with the complete topology and every glyph of “МЕЛЬНИЦА” unchanged.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-13-dream-island-top6-attrakcionov-05",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-13-dream-island-top6-attrakcionov-05/result.json",
+    "result_sha256": "27b1d3306a4b7219e4e5c9434975339a6e196f497afd5f4d7f57d157cc44848a",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/13-05.json",
+    "repair_feedback_sha256": "d02c15cbe71eff4a4141f2e9dd6527e6de9a893c5e38b902efead042e7bd9b83",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-13-dream-island-top6-attrakcionov-05/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+      "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff239-fe91-7dd3-8f50-fa72442dd8b7"
+      },
+      "models": [
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "7ec5104f2456949b7fc32e4fb9d8e60a62a088bd0d78cc20ca82694bb3b5eb5c",
+      "article_context_sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

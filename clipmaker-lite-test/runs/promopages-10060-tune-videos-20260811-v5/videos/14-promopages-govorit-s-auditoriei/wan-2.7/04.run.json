@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-14-promopages-govorit-s-auditoriei-04-wan-2-7",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-14-promopages-govorit-s-auditoriei-04",
+  "case_id": "14#04",
+  "sheet_row": 181,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.7/04.mp4",
+  "status": "verification-failed",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The camera gradually pushes straight toward the exact page layout while the complete text screenshot stays continuously visible, with total travel capped at 4%. The screenshot remains one rigid plane with all four paragraphs, glyphs, line spacing, wraps, and bold emphasis intact, ending subtly enlarged.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe910f014557219e1b58/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "84b7f2675f351827cdebf2c5385ce5664d3538d7dc412893e413d40af4524a6a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "CdnXNzH00ggi3FgFei6X",
+  "submitted_at": "2026-08-11T19:31:39Z",
+  "completed_at": "2026-08-11T19:33:25Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1800,
+    "height": 1150,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 4392567,
+    "sha256": "749fae032130f842a31faf31121519da970225f648057876583955746a00accb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False",
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-07-wan-2-2",
+  "case_id": "18#07",
+  "sheet_row": 264,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+    "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+    "width": 773,
+    "height": 239,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Over five seconds, begin the restrained centered push-in immediately and maintain an even, gentle rate toward the full table and warning. Decelerate only near the end, reaching a clearly settled but tightly capped 1.5% screen-space change while the entire graphic remains within frame and no surrounding space is introduced.",
+  "prompt": {
+    "positive": "The camera performs a smooth centered push-in toward the complete two-row adhesive recommendation table, with screen travel capped at 1.5%. Keep the entire table and warning continuously visible and rigid, with both headings, both format labels, all four adhesive names, every glyph, divider, and row boundary unchanged; end slightly closer while preserving the full layout.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-07",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-07/result.json",
+    "result_sha256": "ab327658b81b1efaba99b49324619ee02b97e69d0bfb1cc83a0fdaa272bd5183",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/18-07.json",
+    "repair_feedback_sha256": "d56807ab2abd285a8ab00f9fa79ff53c3a6483e44dd087d4ba0fa622ac6967b5",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-07/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:5e430a74dcff401ba21ca013abc3f68fe6116eb54d4f2e6410a9a72dc0a2a65e",
+      "instruction_bundle_sha256": "bda6885bd9ffe91e385e432ac704e46501c9a7fd011bec7443adddd387c50691",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff245-39c2-7770-b3ba-3ac13ae753a8"
+      },
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

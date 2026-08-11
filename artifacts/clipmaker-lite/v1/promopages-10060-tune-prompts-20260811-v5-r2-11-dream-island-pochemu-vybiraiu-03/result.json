@@ -1,0 +1,177 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:230bfb6e0f4860b4bba65020112afe0bc2b5aa4b40b1e09c96d7f5353dc635e2",
+    "execution_fingerprint": "sha256:3237edfd59ba127798effc64ff2829be4fbe8910dbf0919e988e66919e259227",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff244-a151-7062-9178-540f0064bf6c"
+    },
+    "authored_payload_sha256": "bad502e0afef1e83a76b7cc5f5e349731bcec442ad10ade90f3e0a9bdde93495",
+    "draft_file_sha256": "44d16a41f008cd11be9b5a3dd126a6e07c050f4b585abf16e84459e17d479229"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+      "sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+      "bytes": 290961
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/content.json",
+      "sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "bytes": 15975,
+      "locator": {
+        "article_id": "11-dream-island-pochemu-vybiraiu",
+        "title": "Почему я выбираю парк развлечений «Остров Мечты»?",
+        "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+        "image_id": "03",
+        "block_index": 18,
+        "role": "article_image",
+        "caption": "Фантастическое путешествие по миру юрского периода «На крыльях ветра»!",
+        "file": "03.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+        "current_heading": {
+          "block_index": 10,
+          "level": 3,
+          "text": "1 входной билет на все развлечения"
+        },
+        "nearest_text_before": {
+          "block_index": 17,
+          "type": "paragraph",
+          "text": "*При покупке тарифа «Семейный 4» 10 000₽/4=2500₽. Стоимость билетов актуальна на июнь-август 2026 года."
+        },
+        "nearest_text_after": {
+          "block_index": 19,
+          "type": "heading",
+          "text": "Когда приезжать и что обязательно стоит посетить: 2 маршрута на выбор"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/11-03.json",
+      "sha256": "354cee853af09e318de93b36011226a36b27915fa4340e64192b2bb85277b0eb",
+      "bytes": 1864,
+      "canonical_sha256": "53cf26959c1b3b41b108a92144bc4d5c295cc9246ce41dee2e86b44a8896c9f2",
+      "models": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "11#03::google/veo-3.1-lite",
+          "outcome": "same-or-unclear",
+          "review_note": "Появляются новые объекты в кадре (новые части конструкции горки), которые выдумала модель",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "topology_hallucination",
+            "out_of_source_reveal"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "fixed",
+            "focal_target": "the projected pterosaur, kept fully inside the existing screen and away from the upper-right crop",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Сохраняются один птерозавр и точное число всех видимых кресел, деталей конструкции и силуэтов людей или конечностей."
+            ],
+            "topology_anchors": [
+              "Жёсткая форма и взаимное расположение подвесной конструкции, кресел и опор сохраняются.",
+              "foreground seats and rails stay fixed; add no ride rows",
+              "the projected pterosaur may only flap in place or drift slightly inward; it never approaches the upper-right crop"
+            ],
+            "rigid_regions": [
+              "the foreground seats, rails, ride supports, and projected-screen boundary"
+            ],
+            "contacts": [
+              "seats, rails, and supports retain their existing attachment points"
+            ],
+            "must_remain_visible": [
+              "the projected pterosaur, kept fully inside the existing screen and away from the upper-right crop"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "A dark, rigid foreground ride structure contains multiple suspended seats and visible rider silhouettes facing a large projected prehistoric landscape.",
+      "One projected pterosaur is already airborne near the upper-right area of the screen, with wings extended and a rider-like figure visible on its back.",
+      "The projected pterosaur’s wing articulation supports limited airborne motion, but its exact flight direction is ambiguous; the seats, rails, supports, silhouettes, and screen boundary provide no evidence of safe mechanical movement."
+    ],
+    "article_context": "Body image illustrating the immersive Jurassic-world flight attraction “На крыльях ветра,” supporting the article’s promise of one-ticket access to vivid, adventurous experiences and introducing the recommended park routes.",
+    "structured_intent": {
+      "editorial_meaning": "Convey the attraction’s immersive sensation of a fantastic flight through a Jurassic world.",
+      "initial_state": "One projected pterosaur is airborne near the upper-right portion of the visible screen with wings extended, while the foreground seats, rails, supports, and rider silhouettes are stationary.",
+      "motion_owner": "The single projected pterosaur.",
+      "primary_action": "The projected pterosaur performs one restrained wingbeat while drifting slightly inward within the existing screen.",
+      "attention_anchor": "The single projected pterosaur, continuously visible within the existing screen and clear of the upper-right crop.",
+      "motion_boundary": "Only the projected pterosaur’s existing wings and its position within the current screen may change slightly; the foreground seats, riders, rails, supports, attachments, screen boundary, and all other visible scenery remain source-locked, with no added ride rows, objects, or off-screen space.",
+      "terminal_state": "The pterosaur remains fully visible farther inward from the upper-right crop, airborne with its wings extended after the restrained wingbeat.",
+      "geometry_invariant": "The foreground seats, rails, supports, and their existing attachment points retain their rigid shape and mutual arrangement; the projected-screen boundary stays fixed.",
+      "identity_invariant": "Exactly one projected pterosaur and the exact existing count of visible seats, structural details, rider silhouettes, people, and limbs are preserved.",
+      "semantic_invariant": "The scene remains an immersive Jurassic flight-attraction experience, with the pterosaur airborne and the foreground ride assembly intact through the final frame.",
+      "feasibility_assessment": "The pterosaur is visibly airborne with articulated wings, supporting a restrained wingbeat or slight inward drift; its exact travel direction is ambiguous. No movement is safely evidenced for the foreground ride structure, seats, or riders.",
+      "rendering_strategy": "image-to-video"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Across four seconds, the projected pterosaur begins from its existing wings-extended airborne pose, performs one restrained down-and-up wingbeat at an even pace, and shifts only slightly inward from the upper-right edge. The camera remains fixed with zero screen travel. Near the end, the wings settle into an extended glide pose while the pterosaur stays continuously visible; every foreground seat, rider silhouette, rail, support, attachment point, and the existing projected-screen boundary remains rigid and unchanged, and no new structure or scenery is introduced.",
+      "positive_prompt": "The projected pterosaur makes one slow, shallow wingbeat in place, then drifts slightly inward while remaining fully inside the existing screen and clear of the upper-right crop. Keep the camera fixed and all foreground seats, riders, rails, supports, attachment points, and the screen boundary rigid; it ends airborne with wings extended, with no added ride rows or objects.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

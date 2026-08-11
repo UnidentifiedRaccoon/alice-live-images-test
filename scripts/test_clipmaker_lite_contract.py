@@ -22,6 +22,8 @@ CONTRACT = LITE / "contract.json"
 ARCHIVED_207_CONTRACT = LITE / "contracts/contract-2.0.7.json"
 ARCHIVED_208_CONTRACT = LITE / "contracts/contract-2.0.8.json"
 ARCHIVED_208_SUPPORT = LITE / "contracts/support-2.0.8"
+ARCHIVED_220_CONTRACT = LITE / "contracts/contract-2.2.0.json"
+ARCHIVED_220_SUPPORT = LITE / "contracts/support-2.2.0"
 RUNNER = ROOT / "scripts/clipmaker_lite_runner.py"
 
 
@@ -66,10 +68,10 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.2.0")
-        self.assertEqual(contract["runner"]["runner_version"], 9)
-        self.assertEqual(runner.DRAFT_SCHEMA_VERSION, 4)
-        self.assertEqual(runner.RESULT_SCHEMA_VERSION, 4)
+        self.assertEqual(contract["contract_version"], "2.3.0")
+        self.assertEqual(contract["runner"]["runner_version"], 10)
+        self.assertEqual(runner.DRAFT_SCHEMA_VERSION, 5)
+        self.assertEqual(runner.RESULT_SCHEMA_VERSION, 5)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
         self.assertEqual(contract["execution"]["tool_event_policy"], "reject-run")
@@ -223,6 +225,40 @@ class ClipmakerLiteContractTest(unittest.TestCase):
                 self.assertFalse(path.is_symlink())
                 self.assertEqual(sha256_file(path), expected_sha256)
 
+    def test_220_contract_and_support_are_archived_with_exact_historical_lock(
+        self,
+    ) -> None:
+        contract = json.loads(ARCHIVED_220_CONTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(contract["agent_id"], "clipmaker-lite")
+        self.assertEqual(contract["contract_version"], "2.2.0")
+        self.assertEqual(contract["runner"]["runner_version"], 9)
+        self.assertEqual(
+            sha256_file(ARCHIVED_220_CONTRACT),
+            "3428f60536e09e254150d7b3de880477dcadff357ccead6562c1e2757836cf4f",
+        )
+        self.assertEqual(
+            runner.sha256_bytes(runner.canonical_json_bytes(contract)),
+            "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+        )
+        support_bindings = [
+            (contract["runner"]["path"], contract["runner"]["sha256"]),
+            (
+                contract["base_instruction"]["path"],
+                contract["base_instruction"]["sha256"],
+            ),
+            *[
+                (model["spec_path"], model["spec_sha256"])
+                for model in contract["models"].values()
+            ],
+        ]
+        self.assertEqual(len(support_bindings), 5)
+        for relative, expected_sha256 in support_bindings:
+            with self.subTest(relative=relative):
+                path = ARCHIVED_220_SUPPORT / relative
+                self.assertTrue(path.is_file())
+                self.assertFalse(path.is_symlink())
+                self.assertEqual(sha256_file(path), expected_sha256)
+
     def test_codex_authoring_model_is_not_fixed_by_contract(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         execution = contract["execution"]
@@ -294,13 +330,15 @@ class ClipmakerLiteContractTest(unittest.TestCase):
             "identity_invariant",
             "semantic_invariant",
             "feasibility_assessment",
+            "attention_anchor",
+            "motion_boundary",
             "rendering_strategy",
         ):
             self.assertIn(field, text)
         for marker in (
             "#### Feasibility gate",
-            "deterministic-compositor",
-            "positive_prompt: null",
+            "execution_mode: i2v",
+            "непустой `positive_prompt`",
             "Если первый кадр уже соответствует `terminal_state`",
             "### Risk-aware action policy",
             "Статичная архитектура и выраженная глубина",
@@ -322,29 +360,35 @@ class ClipmakerLiteContractTest(unittest.TestCase):
                     "Ключевой объект",
                     "## UI и people risks",
                     "camera state",
-                    "`deterministic-compositor`",
-                    "`positive_prompt` равен `null`",
+                    "`execution_mode: i2v`",
+                    "непустой `positive_prompt`",
                     "Authored `negative_prompt` всегда и буквально равен `null`",
                 ):
                     self.assertIn(marker, text)
 
-    def test_runner_schema_projects_scene_strategy_to_provider_or_compositor(self) -> None:
+    def test_runner_schema_projects_every_scene_strategy_to_i2v(self) -> None:
         schema = runner.draft_output_schema(
             "contract-schema",
             ["alibaba/wan-2.2"],
         )
         model_schema = schema["properties"]["models"]["items"]
         self.assertEqual(
-            model_schema["properties"]["execution_mode"]["enum"],
-            ["i2v", "deterministic-compositor"],
+            model_schema["properties"]["execution_mode"],
+            {"type": "string", "const": "i2v"},
         )
         self.assertEqual(
-            model_schema["properties"]["positive_prompt"]["anyOf"][1],
-            {"type": "null"},
+            model_schema["properties"]["positive_prompt"],
+            {"type": "string", "minLength": 1, "maxLength": 500},
         )
         source = inspect.getsource(runner.validate_draft)
-        self.assertIn("execution_mode != expected_execution_mode", source)
-        self.assertIn("positive is not None", source)
+        self.assertIn('execution_mode != "i2v"', source)
+        self.assertIn("require_short_positive_prompt", source)
+
+    def test_active_contract_has_no_compositor_route(self) -> None:
+        documents = [README, CONTRACT, *sorted(MODELS.glob("*.md")), RUNNER]
+        text = "\n".join(path.read_text(encoding="utf-8") for path in documents)
+        self.assertNotIn("deterministic-compositor", text)
+        self.assertNotIn("compositor", text.lower())
 
     def test_heavy_clipmaker_contract_is_not_imported(self) -> None:
         documents = [README, CONTRACT, *sorted(MODELS.glob("*.md"))]

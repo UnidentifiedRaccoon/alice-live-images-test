@@ -1,0 +1,38 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "13#05::google/veo-3.1-lite",
+    "outcome": "worse",
+    "review_note": "на фото горка, но анимации вообще нет. Это не текст и не интерфейс, тут должна быть анимация",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "route_rejected",
+      "insufficient_motion"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "fixed",
+      "focal_target": "the existing visible attraction",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 8,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Preserve all visible arms, cabins, riders, limbs, lights, signs, and every glyph of “МЕЛЬНИЦА”; nothing appears, disappears, or changes identity."
+      ],
+      "topology_anchors": [
+        "The rigid hub-and-arm topology, cabin attachments, rider restraints, and all source-image geometry remain unchanged."
+      ],
+      "rigid_regions": [
+        "the visible attraction structure and its existing supports"
+      ],
+      "contacts": [
+        "the attraction structure retains all visible support contacts"
+      ],
+      "must_remain_visible": [
+        "the existing visible attraction"
+      ]
+    }
+  }
+}

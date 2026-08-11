@@ -1,0 +1,38 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "07#06::google/veo-3.1-lite",
+    "outcome": "worse",
+    "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship. The positive_prompt must include the exact phrase \"within a 5% screen-travel cap\".",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "provider_no_output"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "push-in",
+      "focal_target": "the complete existing sofa scene with the visible person and phone",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 5,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Preserve exactly one visible adult, the existing hands, red phone, clothing, sofa, and room; nothing appears, disappears, or changes identity."
+      ],
+      "topology_anchors": [
+        "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked.",
+        "The positive_prompt must include the exact phrase \"within a 5% screen-travel cap\"."
+      ],
+      "rigid_regions": [
+        "the complete existing sofa scene with the visible person and phone"
+      ],
+      "contacts": [
+        "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked."
+      ],
+      "must_remain_visible": [
+        "the complete existing sofa scene with the visible person and phone"
+      ]
+    }
+  }
+}

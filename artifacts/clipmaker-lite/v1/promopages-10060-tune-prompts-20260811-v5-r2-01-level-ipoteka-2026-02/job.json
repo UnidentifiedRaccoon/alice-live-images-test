@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-02",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:3fde33b4ce84974cc4b03303f66ee481aca69a855a817878db7eda87d2746a16",
+    "instruction_bundle_sha256": "a5ca4de3a148c606e8731d1ffad9cfe2f21df95741fe919fbda71ddef3d3ec62",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "ea8a541b2ea886ded2105f16c6b4ab0a03c9cce9a39b76d9130538681556cf8d"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:2fc23efffaa6935073894ece42aaf3d5b5e62e246be7f8fd714469fd78208fa0",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+      "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a",
+      "bytes": 103223
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/01-level-ipoteka-2026/content.json",
+      "sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "bytes": 17879,
+      "locator": {
+        "article_id": "01-level-ipoteka-2026",
+        "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+        "lead": "Кому лучше купить недвижимость сейчас, а кому есть смысл подождать",
+        "image_id": "02",
+        "block_index": 8,
+        "role": "article_image",
+        "caption": "С января 2026 года объём ипотечного жилищного кредитования начал уменьшаться. Источник: Банк России",
+        "file": "02.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "Количество займов снижается"
+        },
+        "nearest_text_before": {
+          "block_index": 7,
+          "type": "paragraph",
+          "text": "Тем не менее, выдача ипотеки без господдержки в феврале выросла в 1,5 раза, что говорит о том, что рыночные условия становятся привлекательнее."
+        },
+        "nearest_text_after": {
+          "block_index": 9,
+          "type": "heading",
+          "text": "Ставки по ипотеке снижаются"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/01-02.json",
+      "sha256": "11c550ac6c5c932bbfa0280b46a57e792c75fcb3c16eafeba4994845aa0aa67f",
+      "bytes": 2445,
+      "canonical_sha256": "a408c768f89175b18f9d85a797f3712a68fe7b415cf0546d0ba807e4089cd056",
+      "models": {
+        "alibaba/wan-2.2": {
+          "evaluation_id": "01#02::alibaba/wan-2.2",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the existing January-February 2026 chart region",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 5.0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Exactly three data series remain present with the same colors, dates, values, title, legend entries, figure label, and footnote."
+            ],
+            "topology_anchors": [
+              "All bars, filled-line geometry, axes, gridlines, labels, legend markers, and their spatial relationships remain exactly fixed."
+            ],
+            "rigid_regions": [
+              "the chart plane, labels, plotted marks, axes, and legend layout"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the existing January-February 2026 chart region",
+              "the complete chart and all labels remain fully visible throughout"
+            ]
+          }
+        },
+        "google/veo-3.1-lite": {
+          "evaluation_id": "01#02::google/veo-3.1-lite",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the existing January-February 2026 chart region",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 5.0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Exactly three data series remain present with the same colors, dates, values, title, legend entries, figure label, and footnote."
+            ],
+            "topology_anchors": [
+              "All bars, filled-line geometry, axes, gridlines, labels, legend markers, and their spatial relationships remain exactly fixed."
+            ],
+            "rigid_regions": [
+              "the chart plane, labels, plotted marks, axes, and legend layout"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the existing January-February 2026 chart region",
+              "the complete chart and all labels remain fully visible throughout"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "selected_models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:d38bae21d4be8ece845825a95c55b4bfe8cb03aa8819f412895214be5aa52a4d"
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-02/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-02/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-02/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-02/result.json"
+  }
+}

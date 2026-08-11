@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-11-dream-island-pochemu-vybiraiu-03-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03",
+  "case_id": "11#03",
+  "sheet_row": 131,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.mp4",
+  "status": "succeeded",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The projected pterosaur makes one slow, shallow wingbeat in place, then drifts slightly inward while remaining fully inside the existing screen and clear of the upper-right crop. Keep the camera fixed and all foreground seats, riders, rails, supports, attachment points, and the screen boundary rigid; it ends airborne with wings extended, with no added ride rows or objects.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a5404ca2ddc03fc550956/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a25c93d23c8011cb615c563f7cf464dcd53486be44fb1ab7a52f1a481ec83550",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "yhZHOcqbHlgOrG1gc6H4",
+  "submitted_at": "2026-08-11T19:35:10Z",
+  "completed_at": "2026-08-11T19:36:59Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 5258563,
+    "sha256": "4bf2175fb6974c7cf7aa59eb4b0500ceded54c7ca67090dbc73ebca8c80d0c0e"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

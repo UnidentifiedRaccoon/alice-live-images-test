@@ -1288,9 +1288,8 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
     return extension_paths
 
 
-def _tune_manifest_fixture(*, root=None, generated=False):
-    if generated and root is None:
-        raise ValueError("generated Tune fixture requires a root")
+def _tune_manifest_fixture(*, root, terminal_failure_indices=()):
+    terminal_failure_indices = set(terminal_failure_indices)
     cases = []
     next_sheet_row = 2
     immutable_commit = "a" * 40
@@ -1299,16 +1298,27 @@ def _tune_manifest_fixture(*, root=None, generated=False):
         target_count = 2 if case_index < 29 else 1
         for target_index in range(target_count):
             target_number = next_sheet_row - 1
-            execution_mode = (
-                "i2v"
-                if target_number <= pages.TUNE_I2V_TARGET_COUNT
-                else "deterministic-compositor"
+            regenerated = target_number <= pages.TUNE_REGENERATED_TARGET_COUNT
+            action = (
+                pages.TUNE_REGENERATED_ACTION
+                if regenerated
+                else pages.TUNE_REUSED_ACTION
             )
+            model_id = pages.PROMOPAGES_10060_MODELS[
+                target_number % len(pages.PROMOPAGES_10060_MODELS)
+            ]
+            evaluation_id = f"case-{case_index + 1:02d}::{model_id}"
+            if not regenerated:
+                source_outcome = "helped"
+            elif target_number <= 19:
+                source_outcome = "unrated"
+            elif target_number <= 24:
+                source_outcome = "worse"
+            else:
+                source_outcome = "same-or-unclear"
             target = {
                 "sheet_row": next_sheet_row,
-                "model_id": pages.PROMOPAGES_10060_MODELS[
-                    target_number % len(pages.PROMOPAGES_10060_MODELS)
-                ],
+                "model_id": model_id,
                 "baseline": {
                     "video_url": (
                         "https://cdn.example.test/tune/"
@@ -1319,52 +1329,164 @@ def _tune_manifest_fixture(*, root=None, generated=False):
                         f"case-{case_index + 1:02d}-{target_index + 1}.mp4"
                     ),
                 },
-                "tuned": {"execution_mode": execution_mode},
+                "iteration": {
+                    "action": action,
+                    "review_scope": regenerated,
+                    "source_evaluation": {
+                        "evaluation_id": evaluation_id,
+                        "outcome": source_outcome,
+                        "note": None if source_outcome == "unrated" else "Imported review",
+                        "updated_at": None if source_outcome == "unrated" else "2026-08-11T16:41:34Z",
+                    },
+                },
+                "tuned": {"execution_mode": "i2v"},
             }
-            if generated:
-                video_bytes = f"tune-video-row-{next_sheet_row}".encode()
-                repository_video_path = (
-                    "clipmaker-lite-test/runs/tune-generated/videos/"
-                    f"case-{case_index + 1:02d}/row-{next_sheet_row}.mp4"
-                )
+            video_bytes = f"tune-v5-video-row-{next_sheet_row}".encode()
+            repository_video_path = (
+                "clipmaker-lite-test/runs/tune-v5/videos/"
+                f"case-{case_index + 1:02d}/row-{next_sheet_row}.mp4"
+            )
+            sha256 = hashlib.sha256(video_bytes).hexdigest()
+            media = {
+                "duration_seconds": 5.0,
+                "width": 1280,
+                "height": 720,
+                "fps": 24.0,
+                "frames": 120,
+                "bytes": len(video_bytes),
+                "sha256": sha256,
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "has_audio": False,
+            }
+            origin = "regenerated-v5" if regenerated else "reused-helped-v4"
+            generation = {
+                "origin": origin,
+                "batch_id": "tune-v5-fixture",
+                "provider_run_id": f"provider-run-{next_sheet_row}",
+                "prompt_path": (
+                    "clipmaker-lite-test/runs/tune-v5/videos/"
+                    f"case-{case_index + 1:02d}/row-{next_sheet_row}.prompt.json"
+                ),
+                "run_path": (
+                    "clipmaker-lite-test/runs/tune-v5/videos/"
+                    f"case-{case_index + 1:02d}/row-{next_sheet_row}.run.json"
+                ),
+            }
+            if target_number - 1 in terminal_failure_indices:
+                prompt_file = root / generation["prompt_path"]
+                run_file = root / generation["run_path"]
+                output_path = repository_video_path
+                provider_error = "Provider terminal failure produced no output"
+                prompt_file.parent.mkdir(parents=True, exist_ok=True)
+                prompt_file.write_text("{}\n", encoding="utf-8")
+                run = {
+                    "status": "provider-failed",
+                    "execution_mode": "i2v",
+                    "provider_run_id": generation["provider_run_id"],
+                    "provider_may_be_active": False,
+                    "provider_job_id": None,
+                    "prompt_path": generation["prompt_path"],
+                    "output_path": output_path,
+                    "media": None,
+                    "contract_check": None,
+                    "error": provider_error,
+                    "automatic_paid_retry": False,
+                    "fallback": None,
+                    "s3_upload": False,
+                }
+                run_file.write_text(json.dumps(run) + "\n", encoding="utf-8")
+                target["tuned"]["video"] = {
+                    "state": "unavailable",
+                    "status": "provider-failed",
+                    "method": "eliza-i2v",
+                    "prompt_evaluated": False,
+                    "delivery": "unavailable",
+                    "url": None,
+                    "repository_video_path": None,
+                    "sha256": None,
+                    "bytes": None,
+                    "media": None,
+                    "contract_check": None,
+                    "generation": generation,
+                    "provider_attempt": {
+                        "status": "provider-failed",
+                        "run_path": generation["run_path"],
+                        "run_sha256": hashlib.sha256(run_file.read_bytes()).hexdigest(),
+                        "prompt_path": generation["prompt_path"],
+                        "prompt_sha256": hashlib.sha256(prompt_file.read_bytes()).hexdigest(),
+                        "provider_job_id": None,
+                        "error": provider_error,
+                        "automatic_paid_retry": False,
+                        "fallback": None,
+                    },
+                }
+            else:
                 video_path = root / repository_video_path
                 video_path.parent.mkdir(parents=True, exist_ok=True)
                 video_path.write_bytes(video_bytes)
-                sha256 = hashlib.sha256(video_bytes).hexdigest()
-                common_media = {
-                    "duration_seconds": 5.0,
+                target["tuned"]["video"] = {
+                    "state": "available",
+                    "status": "succeeded",
+                    "method": "eliza-i2v",
+                    "prompt_evaluated": True,
+                    "delivery": "repository-raw",
+                    "url": (
+                        "https://raw.githubusercontent.com/example/demo/"
+                        f"{immutable_commit}/{repository_video_path}"
+                    ),
+                    "repository_video_path": repository_video_path,
+                    "sha256": sha256,
+                    "bytes": len(video_bytes),
+                    "media": media,
+                    "contract_check": {"conforms": True, "warnings": []},
+                    "generation": generation,
+                    "provider_attempt": None,
+                }
+
+            if regenerated:
+                historical_method = (
+                    "deterministic-compositor"
+                    if target_number <= 22
+                    else (
+                        "deterministic-compositor-fallback"
+                        if target_number <= 24
+                        else "eliza-i2v"
+                    )
+                )
+                historical_bytes = f"historical-row-{next_sheet_row}".encode()
+                historical_sha = hashlib.sha256(historical_bytes).hexdigest()
+                historical_path = (
+                    "clipmaker-lite-test/runs/tune-v4/history/"
+                    f"case-{case_index + 1:02d}/row-{next_sheet_row}.mp4"
+                )
+                historical_media = {
+                    "duration_seconds": 4.0,
                     "width": 1280,
                     "height": 720,
-                    "fps": 24.0,
+                    "fps": 30.0,
                     "frames": 120,
-                    "bytes": len(video_bytes),
-                    "sha256": sha256,
+                    "bytes": len(historical_bytes),
+                    "sha256": historical_sha,
                 }
-                if (
-                    execution_mode == "i2v"
-                    and target_number <= pages.TUNE_ELIZA_I2V_VIDEO_COUNT
-                ):
-                    method = "eliza-i2v"
-                    media = {
-                        **common_media,
-                        "container": "mov,mp4,m4a,3gp,3g2,mj2",
-                        "codec": "h264",
-                        "has_audio": False,
-                    }
-                    contract_check = {"conforms": True, "warnings": []}
-                else:
-                    method = (
-                        "deterministic-compositor"
-                        if execution_mode == "deterministic-compositor"
-                        else "deterministic-compositor-fallback"
+                if historical_method == "eliza-i2v":
+                    historical_media.update(
+                        {
+                            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                            "codec": "h264",
+                            "has_audio": False,
+                        }
                     )
-                    media = {
-                        **common_media,
-                        "video_codec": "h264",
-                        "pixel_format": "yuv420p",
-                        "audio_streams": 0,
-                    }
-                    contract_check = {
+                    historical_contract = {"conforms": True, "warnings": []}
+                else:
+                    historical_media.update(
+                        {
+                            "video_codec": "h264",
+                            "pixel_format": "yuv420p",
+                            "audio_streams": 0,
+                        }
+                    )
+                    historical_contract = {
                         "codec_h264": True,
                         "pixel_format_yuv420p": True,
                         "dimensions_exact": True,
@@ -1375,57 +1497,46 @@ def _tune_manifest_fixture(*, root=None, generated=False):
                         "source_sha256_bound": True,
                         "source_dimensions_bound": True,
                     }
-                tuned_video = {
+                historical_video = {
                     "status": "succeeded",
-                    "method": method,
+                    "method": historical_method,
                     "delivery": "repository-raw",
                     "url": (
                         "https://raw.githubusercontent.com/example/demo/"
-                        f"{immutable_commit}/{repository_video_path}"
+                        f"{'b' * 40}/{historical_path}"
                     ),
-                    "repository_video_path": repository_video_path,
-                    "sha256": sha256,
-                    "bytes": len(video_bytes),
-                    "media": media,
-                    "contract_check": contract_check,
+                    "repository_video_path": historical_path,
+                    "sha256": historical_sha,
+                    "bytes": len(historical_bytes),
+                    "media": historical_media,
+                    "contract_check": historical_contract,
                 }
-                if method == "deterministic-compositor-fallback":
-                    provider_job_id = f"failed-provider-job-{next_sheet_row}"
-                    provider_error = (
-                        "Provider terminal failure produced no reviewable output"
-                    )
-                    provider_run_path = (
-                        "clipmaker-lite-test/runs/tune-generated/provider-attempts/"
-                        f"row-{next_sheet_row}.run.json"
-                    )
-                    provider_run = {
-                        "status": "provider-failed",
-                        "provider_may_be_active": False,
-                        "provider_job_id": provider_job_id,
-                        "error": provider_error,
-                    }
-                    provider_run_file = root / provider_run_path
-                    provider_run_file.parent.mkdir(parents=True, exist_ok=True)
-                    provider_run_file.write_text(
-                        json.dumps(provider_run, indent=2) + "\n",
-                        encoding="utf-8",
-                    )
-                    tuned_video.update(
+                if historical_method == "deterministic-compositor-fallback":
+                    historical_video.update(
                         {
                             "prompt_evaluated": False,
                             "provider_attempt": {
                                 "status": "provider-failed",
                                 "prompt_evaluated": False,
-                                "run_path": provider_run_path,
-                                "run_sha256": hashlib.sha256(
-                                    provider_run_file.read_bytes()
-                                ).hexdigest(),
-                                "provider_job_id": provider_job_id,
-                                "error": provider_error,
+                                "run_path": (
+                                    "clipmaker-lite-test/runs/tune-v4/history/"
+                                    f"row-{next_sheet_row}.run.json"
+                                ),
+                                "run_sha256": "c" * 64,
+                                "provider_job_id": "historical-job",
+                                "error": "Historical provider failure",
                             },
                         }
                     )
-                target["tuned"]["video"] = tuned_video
+                target["previous_tuned"] = {
+                    "execution_mode": (
+                        "deterministic-compositor"
+                        if historical_method == "deterministic-compositor"
+                        else "i2v"
+                    ),
+                    "scene_plan": "Historical v4 plan",
+                    "video": historical_video,
+                }
             targets.append(target)
             next_sheet_row += 1
         cases.append(
@@ -1442,25 +1553,43 @@ def _tune_manifest_fixture(*, root=None, generated=False):
             }
         )
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "manifest_role": "clipmaker-lite-tune-review",
         "ticket": "PROMOPAGES-10060",
         "agent_id": "clipmaker-lite",
         "scope": {
             "case_count": pages.TUNE_CASE_COUNT,
             "target_count": pages.TUNE_TARGET_COUNT,
-            "new_video_generation": generated,
+            "review_target_count": pages.TUNE_REVIEW_TARGET_COUNT,
+            "regenerated_target_count": pages.TUNE_REGENERATED_TARGET_COUNT,
+            "reused_helped_target_count": pages.TUNE_REUSED_HELPED_TARGET_COUNT,
+            "execution_mode_counts": {"i2v": pages.TUNE_TARGET_COUNT},
+            "video_method_counts": {"eliza-i2v": pages.TUNE_TARGET_COUNT},
+            "available_video_count": (
+                pages.TUNE_TARGET_COUNT - len(terminal_failure_indices)
+            ),
+            "unavailable_video_count": len(terminal_failure_indices),
+            "new_video_generation": True,
             "new_s3_upload": False,
-            "baseline_video_delivery": "existing-yastatic",
+        },
+        "summary": {
+            "iteration_action_counts": {
+                "regenerated-v5": pages.TUNE_REGENERATED_TARGET_COUNT,
+                "reused-helped": pages.TUNE_REUSED_HELPED_TARGET_COUNT,
+            },
+            "video_method_counts": {"eliza-i2v": pages.TUNE_TARGET_COUNT},
+            "unavailable_video_count": len(terminal_failure_indices),
         },
         "cases": cases,
     }
 
 
 class GitHubPagesSiteTest(unittest.TestCase):
-    def test_tune_payload_is_static_prompt_review_without_local_media(self):
-        manifest = _tune_manifest_fixture()
-        pages._validate_tune_manifest_for_pages(manifest)
+    def test_tune_v5_payload_keeps_all_tune_media_outside_pages(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root)
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
 
         self.assertEqual(
             pages.TUNE_STATIC_FILES,
@@ -1471,91 +1600,145 @@ class GitHubPagesSiteTest(unittest.TestCase):
         )
         for relative_path in pages.TUNE_STATIC_FILES:
             self.assertIn(relative_path, pages.STATIC_FILES)
-        self.assertFalse(
-            any(path.startswith("faststart-lab/") for path in pages.STATIC_FILES)
-        )
-
-        private_media = {
+        tune_media = {
             target["baseline"]["repository_video_path"]
             for case in manifest["cases"]
             for target in case["targets"]
-        } | {case["source"]["path"] for case in manifest["cases"]}
-        self.assertTrue(all(path not in pages.STATIC_FILES for path in private_media))
+        }
+        tune_media.update(
+            target["tuned"]["video"]["repository_video_path"]
+            for case in manifest["cases"]
+            for target in case["targets"]
+            if target["tuned"]["video"]["repository_video_path"]
+        )
+        tune_media.update(
+            target["previous_tuned"]["video"]["repository_video_path"]
+            for case in manifest["cases"]
+            for target in case["targets"]
+            if "previous_tuned" in target
+        )
+        self.assertTrue(all(path not in pages.STATIC_FILES for path in tune_media))
 
-    def test_tune_manifest_delivery_mismatches_fail_closed(self):
+    def test_tune_v5_manifest_is_published_but_no_tune_mp4_is_collected(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            _write_promopages_collection_fixture(
+                root, include_campaign_extension=False
+            )
+            manifest = _tune_manifest_fixture(root=root)
+            manifest_path = root / pages.TUNE_MANIFEST_RELATIVE_PATH
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            static_files = (
+                "clipmaker-lite-test/manifest.json",
+                "clipmaker-lite-test/promopages-9930-manifest.json",
+                "clipmaker-lite-test/case-21-manifest.json",
+                "clipmaker-lite-test/promopages-10060-manifest.json",
+                pages.TUNE_MANIFEST_RELATIVE_PATH.as_posix(),
+            )
+            with (
+                mock.patch.object(pages, "STATIC_FILES", static_files),
+                mock.patch.object(pages, "STATIC_TREES", ()),
+            ):
+                paths = pages.collect_site_paths(root)
+
+            tune_mp4s = {
+                Path(video["repository_video_path"])
+                for case in manifest["cases"]
+                for target in case["targets"]
+                for video in (
+                    target["tuned"]["video"],
+                    target.get("previous_tuned", {}).get("video"),
+                )
+                if isinstance(video, dict)
+                and isinstance(video.get("repository_video_path"), str)
+            }
+            self.assertIn(pages.TUNE_MANIFEST_RELATIVE_PATH, paths)
+            self.assertTrue(tune_mp4s.isdisjoint(paths))
+
+    def test_tune_v5_identity_and_delivery_mismatches_fail_closed(self):
         mutations = {
-            "generation scope": lambda manifest: manifest["scope"].update(
-                {"new_video_generation": "true"}
+            "identity": lambda manifest: manifest.update({"schema_version": 1}),
+            "iteration scope": lambda manifest: manifest["scope"].update(
+                {"new_video_generation": False}
             ),
             "source delivery": lambda manifest: manifest["cases"][0][
                 "source"
             ].update({"url": "private-tune-images/case-01.jpg"}),
-            "baseline delivery": lambda manifest: manifest["cases"][0][
-                "targets"
-            ][0]["baseline"].update(
-                {"video_url": "private-tune-videos/case-01-01.mp4"}
+            "baseline": lambda manifest: manifest["cases"][0]["targets"][0][
+                "baseline"
+            ].update({"video_url": "private-tune-videos/case-01-01.mp4"}),
+            "target identity": lambda manifest: manifest["cases"][0]["targets"][0].update(
+                {"sheet_row": manifest["cases"][0]["targets"][1]["sheet_row"]}
             ),
-            "target identity": lambda manifest: manifest["cases"][0][
+            "target identity is duplicated": lambda manifest: manifest["cases"][0][
                 "targets"
-            ][0].update(
+            ][1].update(
+                {"model_id": manifest["cases"][0]["targets"][0]["model_id"]}
+            ),
+            "forbidden active metadata": lambda manifest: manifest["scope"].update(
+                {"fallback_method": "deterministic-compositor"}
+            ),
+            "summary counts": lambda manifest: manifest["summary"].update(
                 {
-                    "sheet_row": manifest["cases"][0]["targets"][1][
-                        "sheet_row"
-                    ]
+                    "video_method_counts": {
+                        "eliza-i2v": 64,
+                        "deterministic-compositor": 1,
+                    }
                 }
             ),
         }
         for error, mutate in mutations.items():
-            with self.subTest(error=error):
-                manifest = json.loads(json.dumps(_tune_manifest_fixture()))
+            with self.subTest(error=error), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                manifest = _tune_manifest_fixture(root=root)
                 mutate(manifest)
                 with self.assertRaisesRegex(ValueError, error):
-                    pages._validate_tune_manifest_for_pages(manifest)
+                    pages._validate_tune_manifest_for_pages(manifest, root=root)
 
-    def test_tune_generated_scope_validates_repo_media_without_publishing_it(self):
+    def test_tune_v5_is_exactly_65_active_i2v_with_28_review_targets(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
-            manifest = _tune_manifest_fixture(root=root, generated=True)
-
+            manifest = _tune_manifest_fixture(root=root)
             pages._validate_tune_manifest_for_pages(manifest, root=root)
-
-            repository_paths = {
-                Path(target["tuned"]["video"]["repository_video_path"])
-                for case in manifest["cases"]
-                for target in case["targets"]
-            }
-            self.assertEqual(len(repository_paths), pages.TUNE_TARGET_COUNT)
-            methods = [
-                target["tuned"]["video"]["method"]
-                for case in manifest["cases"]
-                for target in case["targets"]
+            targets = [
+                target for case in manifest["cases"] for target in case["targets"]
             ]
-            self.assertEqual(methods.count("eliza-i2v"), 41)
-            self.assertEqual(methods.count("deterministic-compositor"), 22)
-            self.assertEqual(
-                methods.count("deterministic-compositor-fallback"), 2
-            )
-            self.assertEqual(
-                sum(
-                    target["tuned"]["execution_mode"]
-                    == "deterministic-compositor"
-                    for case in manifest["cases"]
-                    for target in case["targets"]
-                ),
-                pages.TUNE_COMPOSITOR_TARGET_COUNT,
+            self.assertEqual(len(targets), 65)
+            self.assertTrue(
+                all(target["tuned"]["execution_mode"] == "i2v" for target in targets)
             )
             self.assertTrue(
-                repository_paths.isdisjoint(
-                    {Path(path) for path in pages.STATIC_FILES}
+                all(target["tuned"]["video"]["method"] == "eliza-i2v" for target in targets)
+            )
+            self.assertEqual(
+                sum(target["iteration"]["review_scope"] for target in targets), 28
+            )
+            self.assertEqual(
+                sum(target["iteration"]["action"] == "reused-helped" for target in targets),
+                37,
+            )
+            self.assertEqual(sum("previous_tuned" in target for target in targets), 28)
+            self.assertTrue(
+                all(
+                    not (root / target["previous_tuned"]["video"]["repository_video_path"]).exists()
+                    for target in targets
+                    if "previous_tuned" in target
                 )
             )
+            active_paths = {
+                Path(target["tuned"]["video"]["repository_video_path"])
+                for target in targets
+            }
+            self.assertEqual(len(active_paths), 65)
+            self.assertTrue(
+                active_paths.isdisjoint({Path(path) for path in pages.STATIC_FILES})
+            )
 
-            reviewable_failure = manifest["cases"][0]["targets"][0]["tuned"][
-                "video"
-            ]
-            reviewable_failure["status"] = "verification-failed"
-            reviewable_failure["media"]["has_audio"] = True
-            reviewable_failure["contract_check"] = {
+            warning_video = targets[0]["tuned"]["video"]
+            warning_video["status"] = "verification-failed"
+            warning_video["media"]["has_audio"] = True
+            warning_video["contract_check"] = {
                 "conforms": False,
                 "requested": {"generate_audio": False},
                 "checks": {"audio": False},
@@ -1565,10 +1748,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
             }
             pages._validate_tune_manifest_for_pages(manifest, root=root)
 
-    def test_tune_i2v_audio_warning_must_preserve_exact_provider_violation(self):
+    def test_tune_v5_i2v_audio_warning_preserves_exact_provider_violation(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
-            fixture = _tune_manifest_fixture(root=root, generated=True)
+            fixture = _tune_manifest_fixture(root=root)
 
             def audio_failure_manifest():
                 manifest = json.loads(json.dumps(fixture))
@@ -1580,18 +1763,14 @@ class GitHubPagesSiteTest(unittest.TestCase):
                     "requested": {"generate_audio": False},
                     "checks": {"audio": False},
                     "warnings": [
-                        "provider returned has_audio=True despite "
-                        "generate_audio=False"
+                        "provider returned has_audio=True despite generate_audio=False"
                     ],
                 }
                 return manifest, video
 
             mutations = {
                 "succeeded output cannot contain audio": lambda video: video.update(
-                    {
-                        "status": "succeeded",
-                        "contract_check": {"conforms": True, "warnings": []},
-                    }
+                    {"status": "succeeded", "contract_check": {"conforms": True, "warnings": []}}
                 ),
                 "requested audio must remain false": lambda video: video[
                     "contract_check"
@@ -1610,181 +1789,159 @@ class GitHubPagesSiteTest(unittest.TestCase):
                     with self.assertRaisesRegex(
                         ValueError, "I2V media or contract warnings"
                     ):
-                        pages._validate_tune_manifest_for_pages(
-                            manifest, root=root
-                        )
+                        pages._validate_tune_manifest_for_pages(manifest, root=root)
 
-    def test_tune_compositor_fallback_binds_terminal_provider_failure(self):
+    def test_tune_v5_terminal_provider_failure_is_unavailable_without_fallback(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
-            fixture = _tune_manifest_fixture(root=root, generated=True)
+            manifest = _tune_manifest_fixture(root=root, terminal_failure_indices={0})
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+            video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+            self.assertEqual(video["state"], "unavailable")
+            self.assertEqual(video["method"], "eliza-i2v")
+            self.assertIsNone(video["url"])
+            self.assertIsNone(video["provider_attempt"]["fallback"])
+            run = json.loads((root / video["provider_attempt"]["run_path"]).read_text())
+            self.assertFalse((root / run["output_path"]).exists())
 
-            def fallback_video(manifest):
-                return next(
-                    target["tuned"]["video"]
-                    for case in manifest["cases"]
-                    for target in case["targets"]
-                    if target["tuned"]["video"]["method"]
-                    == "deterministic-compositor-fallback"
-                )
+        def rewrite_run(root, video, **updates):
+            run_path = root / video["provider_attempt"]["run_path"]
+            run = json.loads(run_path.read_text())
+            run.update(updates)
+            run_path.write_text(json.dumps(run) + "\n", encoding="utf-8")
+            video["provider_attempt"]["run_sha256"] = hashlib.sha256(
+                run_path.read_bytes()
+            ).hexdigest()
 
-            mutations = {
-                "fallback must declare prompt_evaluated=false": lambda video: video.pop(
-                    "prompt_evaluated"
-                ),
-                "provider_attempt audit": lambda video: video[
-                    "provider_attempt"
-                ].update({"provider_job_id": ""}),
-                "provider_attempt run SHA mismatch": lambda video: video[
-                    "provider_attempt"
-                ].update({"run_sha256": "f" * 64}),
-                "terminal failure": lambda video: video["provider_attempt"].update(
-                    {"error": "different terminal error"}
-                ),
-                "compositor no-audio": lambda video: video["media"].update(
-                    {"audio_streams": 1}
-                ),
-            }
-            for error, mutate in mutations.items():
-                with self.subTest(error=error):
-                    manifest = json.loads(json.dumps(fixture))
-                    mutate(fallback_video(manifest))
-                    with self.assertRaisesRegex(ValueError, error):
-                        pages._validate_tune_manifest_for_pages(
-                            manifest, root=root
-                        )
-
-            manifest = json.loads(json.dumps(fixture))
-            fallback = fallback_video(manifest)
-            fallback["method"] = "eliza-i2v"
-            fallback.pop("prompt_evaluated")
-            fallback.pop("provider_attempt")
-            fallback["media"].pop("video_codec")
-            fallback["media"].pop("pixel_format")
-            fallback["media"].pop("audio_streams")
-            fallback["media"].update(
-                {
-                    "container": "mov,mp4,m4a,3gp,3g2,mj2",
-                    "codec": "h264",
-                    "has_audio": False,
-                }
-            )
-            fallback["contract_check"] = {"conforms": True, "warnings": []}
-            with self.assertRaisesRegex(ValueError, "exactly 41 eliza-i2v"):
-                pages._validate_tune_manifest_for_pages(manifest, root=root)
-
-    def test_tune_generated_scope_mismatches_fail_closed(self):
         mutations = {
-            "method does not match": lambda manifest, video: video.update(
-                {"method": "deterministic-compositor"}
+            "unavailable video receipt": lambda root, video: video.update(
+                {"url": "https://example.test/not-an-output.mp4"}
             ),
-            "repository-raw": lambda manifest, video: video.update(
-                {"delivery": "pages-copy"}
+            "forbidden active metadata": lambda root, video: video[
+                "provider_attempt"
+            ].update({"fallback": {"method": "camera"}}),
+            "terminal provider audit": lambda root, video: video[
+                "provider_attempt"
+            ].update({"automatic_paid_retry": True}),
+            "run SHA mismatch": lambda root, video: video["provider_attempt"].update(
+                {"run_sha256": "f" * 64}
             ),
-            "immutable raw.githubusercontent.com": lambda manifest, video: video.update(
-                {
-                    "url": (
-                        "https://raw.githubusercontent.com/example/demo/main/"
-                        f"{video['repository_video_path']}"
-                    )
-                }
+            "prompt SHA mismatch": lambda root, video: video["provider_attempt"].update(
+                {"prompt_sha256": "f" * 64}
             ),
-            "canonical repository MP4 path": lambda manifest, video: video.update(
-                {
-                    "repository_video_path": video[
-                        "repository_video_path"
-                    ].replace("/videos/", "/videos//")
-                }
+            "does not bind terminal failure": lambda root, video: rewrite_run(
+                root, video, provider_may_be_active=True
             ),
-            "media or contract warnings": lambda manifest, video: video[
-                "contract_check"
-            ].update({"warnings": [None]}),
-            "repository file SHA/bytes mismatch": lambda manifest, video: (
-                video.update({"sha256": "f" * 64}),
-                video["media"].update({"sha256": "f" * 64}),
+            "must not have an MP4": lambda root, video: (
+                lambda output: (
+                    output.parent.mkdir(parents=True, exist_ok=True),
+                    output.write_bytes(b"unexpected"),
+                )
+            )(
+                root
+                / json.loads(
+                    (root / video["provider_attempt"]["run_path"]).read_text()
+                )["output_path"]
             ),
         }
         for error, mutate in mutations.items():
             with self.subTest(error=error), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
-                manifest = _tune_manifest_fixture(root=root, generated=True)
-                first_video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
-                mutate(manifest, first_video)
+                manifest = _tune_manifest_fixture(root=root, terminal_failure_indices={0})
+                video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+                mutate(root, video)
                 with self.assertRaisesRegex(ValueError, error):
                     pages._validate_tune_manifest_for_pages(manifest, root=root)
 
-    def test_tune_generated_scope_requires_exact_modes_and_compositor_video(self):
+    def test_tune_v5_iteration_scope_and_previous_history_are_exact(self):
+        def first_two(manifest):
+            targets = [target for case in manifest["cases"] for target in case["targets"]]
+            return targets[0], targets[28]
+
+        mutations = (
+            ("regenerated-v5 review scope", lambda manifest: first_two(manifest)[0][
+                "iteration"
+            ].update({"review_scope": False})),
+            ("regenerated-v5 review scope", lambda manifest: first_two(manifest)[0][
+                "iteration"
+            ]["source_evaluation"].update({"outcome": "helped"})),
+            ("regenerated-v5 review scope", lambda manifest: first_two(manifest)[0].pop(
+                "previous_tuned"
+            )),
+            ("reused-helped review scope", lambda manifest: first_two(manifest)[1].update(
+                {"previous_tuned": first_two(manifest)[0]["previous_tuned"]}
+            )),
+            ("iteration audit", lambda manifest: first_two(manifest)[0]["iteration"][
+                "source_evaluation"
+            ].update({"evaluation_id": "wrong"})),
+            ("iteration scope", lambda manifest: manifest["scope"].update(
+                {"review_target_count": 27}
+            )),
+        )
+        for error, mutate in mutations:
+            with self.subTest(error=error), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                manifest = _tune_manifest_fixture(root=root)
+                mutate(manifest)
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_v5_rejects_active_compositor_and_fallback_metadata(self):
+        mutations = (
+            ("active I2V mode", lambda tuned, video: tuned.update(
+                {"execution_mode": "deterministic-compositor"}
+            )),
+            ("forbidden active metadata", lambda tuned, video: video.update(
+                {"method": "deterministic-compositor"}
+            )),
+            ("forbidden active metadata", lambda tuned, video: video[
+                "generation"
+            ].update({"run_path": "runs/compositor/row.run.json"})),
+            ("forbidden active metadata", lambda tuned, video: video.update(
+                {"compositor": {"primitive": "camera_push"}}
+            )),
+            ("forbidden active metadata", lambda tuned, video: video.update(
+                {"fallback": {"method": "still-frame"}}
+            )),
+        )
+        for error, mutate in mutations:
+            with self.subTest(error=error), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                manifest = _tune_manifest_fixture(root=root)
+                tuned = manifest["cases"][0]["targets"][0]["tuned"]
+                mutate(tuned, tuned["video"])
+                with self.assertRaisesRegex(ValueError, error):
+                    pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_v5_previous_tuned_is_validated_as_remote_history(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
-            manifest = _tune_manifest_fixture(root=root, generated=True)
-            flat_targets = [
-                target for case in manifest["cases"] for target in case["targets"]
-            ]
-            last_i2v = next(
-                target
-                for target in reversed(flat_targets)
-                if target["tuned"]["execution_mode"] == "i2v"
-                and target["tuned"]["video"]["method"] == "eliza-i2v"
-            )
-            last_i2v["tuned"]["execution_mode"] = "deterministic-compositor"
-            converted_video = last_i2v["tuned"]["video"]
-            converted_video["method"] = "deterministic-compositor"
-            converted_video["media"].pop("container")
-            converted_video["media"].pop("codec")
-            converted_video["media"].pop("has_audio")
-            converted_video["media"].update(
-                {
-                    "video_codec": "h264",
-                    "pixel_format": "yuv420p",
-                    "audio_streams": 0,
-                }
-            )
-            converted_video["contract_check"] = {
-                "codec_h264": True,
-                "pixel_format_yuv420p": True,
-                "dimensions_exact": True,
-                "fps_exact": True,
-                "frames_exact": True,
-                "duration_exact": True,
-                "no_audio": True,
-                "source_sha256_bound": True,
-                "source_dimensions_bound": True,
-            }
-            with self.assertRaisesRegex(ValueError, "exactly 43 I2V"):
+            manifest = _tune_manifest_fixture(root=root)
+            previous = manifest["cases"][0]["targets"][0]["previous_tuned"]["video"]
+            self.assertFalse((root / previous["repository_video_path"]).exists())
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+            previous_path = root / previous["repository_video_path"]
+            previous_path.parent.mkdir(parents=True, exist_ok=True)
+            previous_path.write_bytes(b"wrong historical bytes")
+            with self.assertRaisesRegex(ValueError, "repository file SHA/bytes mismatch"):
                 pages._validate_tune_manifest_for_pages(manifest, root=root)
 
-            manifest = _tune_manifest_fixture(root=root, generated=True)
-            flat_targets = [
-                target for case in manifest["cases"] for target in case["targets"]
-            ]
-            compositor = next(
-                target
-                for target in flat_targets
-                if target["tuned"]["execution_mode"]
-                == "deterministic-compositor"
-            )
-            compositor["tuned"]["video"] = None
-            with self.assertRaisesRegex(ValueError, "method does not match"):
-                pages._validate_tune_manifest_for_pages(manifest, root=root)
-
-            manifest = _tune_manifest_fixture(root=root, generated=True)
-            compositor = next(
-                target
-                for case in manifest["cases"]
-                for target in case["targets"]
-                if target["tuned"]["execution_mode"]
-                == "deterministic-compositor"
-            )
-            compositor_video = compositor["tuned"]["video"]
-            compositor_video["media"]["audio_streams"] = 1
-            compositor_video["contract_check"]["no_audio"] = False
-            with self.assertRaisesRegex(ValueError, "compositor no-audio"):
-                pages._validate_tune_manifest_for_pages(manifest, root=root)
-
-    def test_tune_generated_scope_rejects_missing_or_non_regular_repo_media(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
-            manifest = _tune_manifest_fixture(root=root, generated=True)
+            manifest = _tune_manifest_fixture(root=root)
+            previous = manifest["cases"][0]["targets"][0]["previous_tuned"]["video"]
+            previous["url"] = (
+                "https://raw.githubusercontent.com/example/demo/main/"
+                f"{previous['repository_video_path']}"
+            )
+            with self.assertRaisesRegex(ValueError, "immutable raw.githubusercontent.com"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_v5_rejects_missing_or_non_regular_active_repo_media(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root)
             video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
             video_path = root / video["repository_video_path"]
             video_path.unlink()
@@ -1958,6 +2115,88 @@ class GitHubPagesSiteTest(unittest.TestCase):
                     pages._validate_promopages_10060_s3_delivery(
                         delivery, routing_config, *source_manifests
                     )
+
+    def test_tune_v6_route_safety_withholding_is_audited_unavailable(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root, terminal_failure_indices={0})
+            video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+            run_path = root / video["provider_attempt"]["run_path"]
+            prompt_path = root / video["provider_attempt"]["prompt_path"]
+            run = json.loads(run_path.read_text())
+            run.update(
+                {
+                    "status": "dry-run",
+                    "submission_count": 0,
+                    "provider_may_be_active": False,
+                    "provider_job_id": None,
+                    "error": None,
+                }
+            )
+            run_path.write_text(json.dumps(run) + "\n", encoding="utf-8")
+
+            barrier_run_path = root / "clipmaker-lite-test/runs/tune-v5/barrier/17.run.json"
+            barrier_prompt_path = root / "clipmaker-lite-test/runs/tune-v5/barrier/17.prompt.json"
+            barrier_run_path.parent.mkdir(parents=True, exist_ok=True)
+            barrier_prompt_path.write_text("{}\n", encoding="utf-8")
+            barrier_run = {
+                "status": "submit-unknown",
+                "provider_may_be_active": True,
+                "provider_job_id": None,
+                "automatic_paid_retry": False,
+                "fallback": None,
+            }
+            barrier_run_path.write_text(json.dumps(barrier_run) + "\n", encoding="utf-8")
+            source_attempt = {
+                "status": "submit-unknown",
+                "provider_may_be_active": True,
+                "run_path": barrier_run_path.relative_to(root).as_posix(),
+                "run_sha256": hashlib.sha256(barrier_run_path.read_bytes()).hexdigest(),
+                "prompt_path": barrier_prompt_path.relative_to(root).as_posix(),
+                "prompt_sha256": hashlib.sha256(barrier_prompt_path.read_bytes()).hexdigest(),
+                "automatic_paid_retry": False,
+                "fallback": None,
+            }
+            barrier = {
+                "model_id": "alibaba/wan-2.2",
+                "route_capacity": 1,
+                "reason": "Prior submit-unknown may still hold the only route slot.",
+                "source_provider_attempt": source_attempt,
+            }
+            video.update(
+                {
+                    "status": "provider-unavailable",
+                    "recorded_status": "dry-run",
+                    "prompt_evaluated": False,
+                    "unavailable_reason": "Not attempted because the route slot may still be active.",
+                    "safety_barrier": barrier,
+                    "generation": {
+                        **video["generation"],
+                        "origin": pages.TUNE_ROUTE_SAFETY_ORIGIN,
+                        "run_status": "dry-run",
+                    },
+                    "provider_attempt": {
+                        "status": "not-attempted-route-safety",
+                        "run_path": run_path.relative_to(root).as_posix(),
+                        "run_sha256": hashlib.sha256(run_path.read_bytes()).hexdigest(),
+                        "prompt_path": prompt_path.relative_to(root).as_posix(),
+                        "prompt_sha256": hashlib.sha256(prompt_path.read_bytes()).hexdigest(),
+                        "provider_job_id": None,
+                        "provider_may_be_active": False,
+                        "submission_count": 0,
+                        "error": "Not attempted because the route slot may still be active.",
+                        "automatic_paid_retry": False,
+                        "fallback": None,
+                        "safety_barrier": barrier,
+                    },
+                }
+            )
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+            video["safety_barrier"]["source_provider_attempt"][
+                "provider_may_be_active"
+            ] = False
+            with self.assertRaisesRegex(ValueError, "safety barrier"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
 
     def test_article_02_replacement_is_published_but_media_stays_raw(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
@@ -2513,6 +2752,9 @@ class GitHubPagesSiteTest(unittest.TestCase):
             self.skipTest(
                 "Final Step 5 delivery and Step 8 Tune files are not available"
             )
+        tune_manifest = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
+        if tune_manifest.get("schema_version") != 2:
+            self.skipTest("Final Step 8 Tune v5 manifest is not available")
 
         delivery = json.loads(
             PROMOPAGES_10060_S3_DELIVERY_PATH.read_text(encoding="utf-8")
@@ -2572,7 +2814,6 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 pages.PROMOPAGES_10060_CAMPAIGN_20260807_RELATIVE_PATH, paths
             )
         self.assertIn(Path("manual-review/index.html"), paths)
-        tune_manifest = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
         tune_repository_videos = {
             Path(target["baseline"]["repository_video_path"])
             for case in tune_manifest["cases"]
@@ -2584,6 +2825,15 @@ class GitHubPagesSiteTest(unittest.TestCase):
             for target in case["targets"]
             if isinstance(target.get("tuned"), dict)
             if isinstance(video := target["tuned"].get("video"), dict)
+            if isinstance(video.get("repository_video_path"), str)
+        )
+        tune_repository_videos.update(
+            Path(video["repository_video_path"])
+            for case in tune_manifest["cases"]
+            for target in case["targets"]
+            if isinstance(target.get("previous_tuned"), dict)
+            if isinstance(video := target["previous_tuned"].get("video"), dict)
+            if isinstance(video.get("repository_video_path"), str)
         )
         self.assertTrue(tune_repository_videos.isdisjoint(paths))
         self.assertFalse(any(path.parts[0] == "faststart-lab" for path in paths))

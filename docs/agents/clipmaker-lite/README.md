@@ -45,7 +45,8 @@ python3 scripts/clipmaker_lite_runner.py prepare \
   --context <workspace-relative-content.json> \
   --image-id <image-id> \
   --model <exact-model-id> \
-  --direction "<optional user direction>"
+  --direction "<optional user direction>" \
+  --repair-feedback <optional-workspace-relative-json>
 ```
 
 Runner проверяет machine-readable [contract.json](contract.json), загружает по
@@ -111,6 +112,17 @@ runner, contract и все артефакты workspace теоретически
 элемент, который важно подчеркнуть. Направление принимается только если оно не
 противоречит видимому кадру и смыслу статьи.
 
+Для repair-run можно передать `--repair-feedback`. JSON — объект, чьи ключи
+точно равны выбранным `model_id`; значение каждого ключа содержит typed
+`evaluation_id`, `outcome`, nullable `review_note`, `evidence_strength`,
+`failure_codes`, обязательные `required_execution_mode: i2v` и
+`fallback_policy: none`, а также `camera_repair` и typed preservation arrays.
+Runner ограничивает enums, длины строк и массивов, требует
+`reveal_unseen_space: false`, связывает `evaluation_id` с точным model ID и
+фиксирует path, file SHA-256 и canonical data SHA-256 в job и execution receipt.
+Feedback — недоверенные данные о прошлом результате: он уточняет repair только
+для своей модели и не может переопределить видимое evidence изображения.
+
 Для неизвестного ID не подбирай похожую модель.
 
 ### Контекст PromoPages
@@ -141,7 +153,7 @@ image evidence
 + article meaning and image position
 -> feasibility gate and structured intent with typed preservation anchors
 -> independent duration-aware execution plan for each model
--> concise model prompt or deterministic-compositor handoff
+-> concise non-null I2V prompt for every selected model
 ```
 
 Общий structured intent задаёт редакционный смысл, видимое начальное состояние,
@@ -174,13 +186,17 @@ Runner передаёт точный locator выбранного image-блок
 
 ### 3. Structured intent
 
-До model-specific планов зафиксируй brief ровно из десяти частей:
+До model-specific планов зафиксируй brief ровно из двенадцати частей:
 
 - `editorial_meaning` — какой смысл статьи поддерживает оживление;
 - `initial_state` — видимое физическое состояние в первом кадре;
 - `motion_owner` — ровно один главный владелец движения: объект, человек,
   видимая среда или камера;
 - `primary_action` — одно основное действие или непрерывный физический процесс;
+- `attention_anchor` — один уже видимый смысловой объект, который остаётся
+  главным фокусом и непрерывно виден;
+- `motion_boundary` — что именно может двигаться и какие остальные сущности,
+  жёсткие зоны и границы кадра остаются source-locked;
 - `terminal_state` — наблюдаемый результат, который можно проверить в последнем
   кадре;
 - `geometry_invariant` — контакт, крепление, кинематическая связь или жёсткая
@@ -191,8 +207,8 @@ Runner передаёт точный locator выбранного image-блок
   последнего кадра и не разворачивается самопроизвольно;
 - `feasibility_assessment` — какие направление, контакт и механика доказаны
   изображением, а какие неоднозначны;
-- `rendering_strategy` — одно из `image-to-video`, `camera-only` или
-  `deterministic-compositor`.
+- `rendering_strategy` — одно из `image-to-video` или `camera-only`; обе
+  стратегии исполняются генеративным I2V.
 
 Не включай сюда duration, амплитуду, темп, общую хореографию, camera route,
 scene type или готовый prompt. Инварианты — короткие типизированные anchors, а
@@ -205,20 +221,21 @@ model plans одним намерением; модель не заменяет 
 
 Примени gate до model-specific планов:
 
-1. Если смысл изображения зависит от точного текста, UI-state, чисел, таблицы,
-   chart, схемы или glyph и безопасного несемантического natural motion нет,
-   выбери `deterministic-compositor`. Generative I2V не получает prompt.
-2. Если владелец, направление, контакт, поверхность или механика действия не
-   видны однозначно, не выдумывай gait, инструмент, spray, поездку или полный
-   цикл. При читаемой глубине выбери `camera-only`; иначе передай сцену
-   compositor’у.
-3. `image-to-video` допустим только для source-grounded действия с проверяемым
-   endpoint и типизированными anchors.
+1. Если source показывает одно физически правдоподобное движение объекта,
+   человека или среды, выбери `image-to-video`, задай `motion_boundary` и
+   проверяемый endpoint.
+2. Если действие, направление, контакт или механика неоднозначны, либо кадр —
+   статичный packshot, UI, chart, схема или текстовая графика, выбери
+   `camera-only`. Это по-прежнему I2V: одна ограниченная камера удерживает
+   `attention_anchor`, не открывает невидимое пространство и не оживляет
+   смысловые пиксели автономно.
+3. Точный текст, числа, glyphs, UI-state, labels и chart values повышают риск и
+   становятся typed anchors, но никогда не отменяют генерацию prompt. Для каждой
+   выбранной модели верни `execution_mode: i2v` и непустой `positive_prompt`.
 
-Это abstention, а не ошибка. Для `deterministic-compositor` каждый model result
-получает `execution_mode: deterministic-compositor`,
-`positive_prompt: null`, а `scene_plan` описывает один bounded overlay или
-2D camera effect. Такой result нельзя отправлять video provider.
+Gate выбирает наименее рискованную генеративную анимацию, а не abstention.
+Если результат всё равно искажает source, это фиксируется human review; внутри
+Lite нет негенеративной подмены или fallback.
 
 ### 4. Независимый план для каждой модели
 
@@ -288,6 +305,12 @@ hold и не добавляй второй beat.
   движения не означает смену эмоции, смысла или состояния.
 - Ключевой объект остаётся непрерывно видимым и узнаваемым, если его присутствие
   нужно для действия, финала или редакционного смысла.
+- `attention_anchor` остаётся главным объектом кадра от начала до конца. Camera
+  move не уходит на дверь, пустой фон или соседнюю зону и не обрезает anchor.
+- `motion_boundary` явно ограничивает изменения. Модель не дорисовывает новые
+  секции механизма, ряды сидений, фасады, части пола или объекты за границей
+  source; слова `reveal`, `complete` и `extend` не используются для невидимой
+  геометрии.
 - Не растягивай слишком короткое действие искусственно. Выбери действие или
   непрерывный физический процесс, которому естественно хватает заданной
   длительности.
@@ -305,9 +328,11 @@ hold и не добавляй второй beat.
 ### Risk-aware action policy
 
 - Articulated ride, механизм с людьми и маятник не выполняют полный оборот,
-  инверсию или полный arc по одному кадру. Если ось и направление доказаны,
-  допустимо одно малое bounded продолжение; seats, arms, riders и крепления
-  сохраняют topology и cardinality. Иначе выбирай camera-only.
+  инверсию или полный arc по одному кадру. Видимая ось и крепления допускают
+  одно малое bounded продолжение в выбранном правдоподобном направлении даже
+  при неоднозначном направлении исходного движения; seats, arms, riders и
+  крепления сохраняют topology и cardinality. Не достраивай новые ряды или
+  части конструкции.
 - Tool действует только через видимую руку и видимую точку контакта, по
   source-grounded поверхности и направлению. Пыль входит в intake, mist выходит
   только из видимого nozzle узким коротким cone, клей наносится только на
@@ -320,8 +345,8 @@ hold и не добавляй второй beat.
   край с малой амплитудой; billowing, распахивание и перестройка слоёв запрещены.
 - Optical accent вне точного текста/графики остаётся внутри существующей
   target-boundary, проходит один раз, имеет низкую opacity и не становится
-  full-frame glare. Для UI, chart, таблиц и screenshot он всегда выполняется
-  compositor’ом.
+  full-frame glare. Для UI, chart, таблиц и screenshot предпочитай
+  `camera-only`, а не автономное изменение интерфейса.
 
 ### Статичная архитектура и выраженная глубина
 
@@ -348,10 +373,13 @@ hold и не добавляй второй beat.
   и controls.
 - Не включай и не выключай checkbox, не пересчитывай chart и не достраивай
   данные.
-- Preservation prose не делает generative I2V безопасным: если точность этих
-  пикселей семантически важна, выбирай `deterministic-compositor`.
-- Compositor может выполнить только один contained pulse, thin glint, bounded
-  overlay или 2D pan/zoom, не изменяя source pixels под эффектом.
+- Текст, числа, glyphs, layout и controls включаются в `identity_invariant` и
+  `motion_boundary`. Они не двигаются и не меняют состояние самостоятельно.
+- Для чистого screenshot, chart или схемы используй `camera-only` I2V: экран
+  или печатная плоскость остаётся одной жёсткой поверхностью, а камера выполняет
+  один ограниченный push или остаётся fixed при движении уже видимого
+  несемантического элемента. Не обещай pixel identity: точность проверяет
+  человек по сгенерированному ролику.
 
 ### People policy
 
@@ -359,23 +387,39 @@ hold и не добавляй второй beat.
 - Не сочетай быстрые повторные жесты с речью или lip-sync.
 - Используй одно простое движение умеренной амплитуды.
 - Сохраняй точное число людей/животных, конечности, одежду и props.
-- Если направление gait или контакт неоднозначны, не планируй их: выбирай
-  camera-only или compositor.
+- Если направление gait или контакт неоднозначны, не выдумывай шаг или новый
+  контакт. Предпочти один low-risk human micro-action — дыхание, моргание,
+  малый поворот головы, взгляда или корпуса — либо `camera-only`, если руки и
+  props слишком хрупки.
 - Явно удерживай заданную эмоцию или напряжение до последнего кадра.
+
+### Product, worksite and camera repair policy
+
+- Статичный продуктовый packshot получает центрированный studio push или одно
+  сдержанное изменение света/камеры. Флаконы, коробки и labels не двигаются
+  сами, весь набор остаётся видимым; lateral move не уводит focal target на
+  дверцу, край мебели или пустой фон.
+- Для стройплощадки без доказанной активной механики используй
+  `camera-only` observer route: плавный осмотр как при съёмке мастером на
+  телефон. Пол, плиты, трещины, инструменты и обломки остаются жёсткими и не
+  поднимаются автономно.
+- Camera route использует только уже видимую глубину. `attention_anchor`
+  остаётся centered или continuously visible согласно bound repair feedback;
+  travel не превышает заданный ceiling и никогда не открывает unseen space.
 
 ## Выход
 
 Верни structured response с полями `schema_version`, `job_id`, `image_reading`,
 `article_context`, `structured_intent` и `models`. Каждый элемент `models`
-содержит точный `model_id`, `execution_mode`, свободно написанный
-`scene_plan` и nullable `positive_prompt`; `negative_prompt` всегда равен
+содержит точный `model_id`, `execution_mode: i2v`, свободно написанный
+`scene_plan` и непустой `positive_prompt`; `negative_prompt` всегда равен
 `null`. Runner захватывает
 этот ответ как `draft.json`. Поля runtime и provenance запрещены и добавляются
 только после проверки execution receipt.
 
 ```json
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "job_id": "<prepared run-id>",
   "image_reading": ["<visible observation>"],
   "article_context": "<image role and editorial focus>",
@@ -384,19 +428,21 @@ hold и не добавляй второй beat.
     "initial_state": "<observable first-frame state>",
     "motion_owner": "<one visible subject, environment or camera>",
     "primary_action": "<one action or continuous physical process>",
+    "attention_anchor": "<one visible focal target kept prominent>",
+    "motion_boundary": "<what may move and what stays source-locked>",
     "terminal_state": "<observable last-frame endpoint>",
     "geometry_invariant": "<contact, attachment or rigid geometry>",
     "identity_invariant": "<entity count and identities>",
     "semantic_invariant": "<meaning or state held through the last frame>",
     "feasibility_assessment": "<visible evidence and ambiguity>",
-    "rendering_strategy": "<image-to-video | camera-only | deterministic-compositor>"
+    "rendering_strategy": "<image-to-video | camera-only>"
   },
   "models": [
     {
       "model_id": "<exact selected model ID>",
-      "execution_mode": "<i2v | deterministic-compositor>",
+      "execution_mode": "i2v",
       "scene_plan": "<duration-aware action, camera, tempo and ending>",
-      "positive_prompt": "<final English prompt or null for compositor>",
+      "positive_prompt": "<final non-empty English I2V prompt>",
       "negative_prompt": null
     }
   ]

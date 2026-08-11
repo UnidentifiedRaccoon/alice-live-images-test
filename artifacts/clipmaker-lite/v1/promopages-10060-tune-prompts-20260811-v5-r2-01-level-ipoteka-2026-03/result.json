@@ -1,0 +1,255 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-03",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:f378bb0ab5cae5a3a80e03bf3ac7c80fa59b96b38cbfe9bd098cadd527199971",
+    "instruction_bundle_sha256": "9d89e904099e186e4f07b2009de9c467f23a9c838820b8a865b8ed1582eb9853",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "ea8a541b2ea886ded2105f16c6b4ab0a03c9cce9a39b76d9130538681556cf8d"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "93cb1b57158ab784d277dc19f215a6292e52917ea21265a15776fad4bc0f76ba"
+      }
+    ],
+    "inputs_sha256": "sha256:5ae80335be52526325ba2e1041250c7b13134bb9b71a09eb6360b3c168c297d2",
+    "execution_fingerprint": "sha256:52e994e5d99f69527aa79e5821eb859fc445be2556bbaff75fefbe2aa5019e38",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff244-3545-7621-a1e0-2e744bc7aa49"
+    },
+    "authored_payload_sha256": "e0c8da89f3f72f076c261cb3b4f0478770d1a1091186c60f2c3a4c6a39f2b2f3",
+    "draft_file_sha256": "71653cae2156b61ab34cafb11d7100dd11609a00739fa4a9ef9da5b474291894"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+      "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+      "bytes": 140116
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/01-level-ipoteka-2026/content.json",
+      "sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "bytes": 17879,
+      "locator": {
+        "article_id": "01-level-ipoteka-2026",
+        "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+        "lead": "Кому лучше купить недвижимость сейчас, а кому есть смысл подождать",
+        "image_id": "03",
+        "block_index": 13,
+        "role": "article_image",
+        "caption": "Чаще всего ипотеку оформляют в Москве и Московской области. В феврале 2026 года спрос на том же уровне, что и в том же месяце прошлого года",
+        "file": "03.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+        "current_heading": {
+          "block_index": 9,
+          "level": 2,
+          "text": "Ставки по ипотеке снижаются"
+        },
+        "nearest_text_before": {
+          "block_index": 12,
+          "type": "paragraph",
+          "text": "Что касается 2026 года, в феврале средневзвешенная ставка по ипотеке составила 10% — это ещё ниже, чем в 2025 году. Тем не менее, цены на недвижимость продолжат расти. Именно поэтому тем, кто хочет приобрести собственную квартиру, стоит купить недвижимость в ближайшее время."
+        },
+        "nearest_text_after": {
+          "block_index": 14,
+          "type": "heading",
+          "text": "Правила выдачи льготной ипотеки изменятся"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/01-03.json",
+      "sha256": "a66ddeaae41f04d524e43849c1deeff1660f017fbebfddb3b14b09b6bec89de0",
+      "bytes": 2583,
+      "canonical_sha256": "b82513469107d464f44049854a5e358aa165b5b3821e6e6077cd745257ab203f",
+      "models": {
+        "alibaba/wan-2.2": {
+          "evaluation_id": "01#03::alibaba/wan-2.2",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the mortgage issuance regional bar chart, especially the existing blue February 2026 bars",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 6.0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "All ten regions, three series, numeric labels, legend entries, title glyphs, and chart marks remain present and unchanged."
+            ],
+            "topology_anchors": [
+              "All bars retain their exact lengths, alignment, spacing, ordering, and positions relative to labels and gridlines."
+            ],
+            "rigid_regions": [
+              "the chart plane, regional labels, bars, values, axes, and legend layout"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the mortgage issuance regional bar chart, especially the existing blue February 2026 bars",
+              "the complete regional bar chart remains fully visible throughout"
+            ]
+          }
+        },
+        "alibaba/wan-2.7": {
+          "evaluation_id": "01#03::alibaba/wan-2.7",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the mortgage issuance regional bar chart, especially the existing blue February 2026 bars",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 6.0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "All ten regions, three series, numeric labels, legend entries, title glyphs, and chart marks remain present and unchanged."
+            ],
+            "topology_anchors": [
+              "All bars retain their exact lengths, alignment, spacing, ordering, and positions relative to labels and gridlines."
+            ],
+            "rigid_regions": [
+              "the chart plane, regional labels, bars, values, axes, and legend layout"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the mortgage issuance regional bar chart, especially the existing blue February 2026 bars",
+              "the complete regional bar chart remains fully visible throughout"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "Статичная горизонтальная столбчатая диаграмма объёма ипотечных выдач по десяти регионам, выраженного в миллиардах рублей.",
+      "Для каждого региона показаны три цветовые серии; синие столбцы февраля 2026 года снабжены точными числовыми подписями, а внизу находится легенда.",
+      "Самый длинный серый столбец и крупнейшее подписанное синее значение относятся к Москве; вся смысловая информация заключена в жёсткой плоскости графика.",
+      "В изображении нет физически подвижного объекта или доказанного направления движения; автономное изменение столбцов, чисел или подписей исказило бы данные."
+    ],
+    "article_context": "Изображение — body-график в разделе о снижении ипотечных ставок. Он показывает региональную концентрацию выдач: Москва и Московская область лидируют, а объём февраля 2026 года сопоставляется с январём 2026-го и февралём 2025-го; локальный редакционный акцент — устойчивый спрос в двух ведущих регионах на фоне меняющихся условий рынка.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть региональное распределение ипотечных выдач и лидерство Москвы и Московской области при сравнении февраля 2026 года с соседними периодами.",
+      "initial_state": "Полный статичный региональный столбчатый график целиком виден на белом фоне; все столбцы, подписи значений, оси и легенда неподвижны.",
+      "motion_owner": "Камера.",
+      "primary_action": "Один ограниченный push-in к существующим синим столбцам февраля 2026 года.",
+      "attention_anchor": "Существующие синие столбцы серии «Февраль 2026» внутри полного регионального графика.",
+      "motion_boundary": "Двигаться может только камера относительно единой жёсткой плоскости; весь график, текст, числа, столбцы, сетка и легенда source-locked, полный график непрерывно остаётся видимым.",
+      "terminal_state": "В последнем кадре весь неизменённый график по-прежнему виден в немного более близкой композиции, а синие столбцы февраля 2026 года остаются главным фокусом.",
+      "geometry_invariant": "Плоскость графика остаётся жёсткой; длины, выравнивание, интервалы, порядок и позиции всех столбцов относительно подписей и сетки неизменны.",
+      "identity_invariant": "Сохраняются все десять регионов, три серии, все числовые значения, русские glyphs, заголовок, оси, линии сетки, метки и три элемента легенды.",
+      "semantic_invariant": "Показанные значения и сравнение трёх периодов по регионам сохраняют исходный смысл; Москва и Московская область остаются визуальными лидерами.",
+      "feasibility_assessment": "Кадр является точной статичной диаграммой: движение данных, столбцов или подписей изображением не доказано и семантически небезопасно. Доказана только единая жёсткая плоскость графика, поэтому допустимо исключительно ограниченное camera-only I2V без открытия невидимого пространства.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Пятисекундный непрерывный camera-only shot: сразу начать ровный центрированный push-in к синим столбцам февраля 2026 года, за всю сцену дать читаемое смещение около 5% и плавно прийти к чуть более крупному виду в последних кадрах. Полный график постоянно остаётся в кадре; плоскость, данные и компоновка полностью жёсткие, невидимое пространство не открывается.",
+      "positive_prompt": "The camera makes a smooth centered push-in toward the existing blue February 2026 bars, moving about 5% of the frame while the complete chart remains continuously visible. The chart stays a single rigid plane with all ten regions, three series, Russian text, numbers, bar lengths, ordering, spacing, axes, gridlines, and legend unchanged, ending in a slightly closer full-chart view.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:d38bae21d4be8ece845825a95c55b4bfe8cb03aa8819f412895214be5aa52a4d",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "scene_plan": "Самостоятельный пятисекундный camera-only план: единый плавный push-in развивается равномерно почти всю длительность и удерживает фокус на существующих синих столбцах февраля 2026 года. Амплитуда ограничена 6% экрана с учётом риска provider expansion; к финалу получается умеренно приближённая, но всё ещё полная композиция графика без кропа, деформации или открытия пространства за исходными границами.",
+      "positive_prompt": "Push the camera steadily toward the existing blue February 2026 bars, with total screen travel capped at 6% and the complete chart visible throughout. Keep the chart plane rigid and every region, series, Russian glyph, value, bar length, alignment, gridline, and legend entry unchanged, finishing on a modestly closer full-chart composition.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:57812463b6ce73ff0d52dcb96f40c0e25047d2197df5ec89c63a82441e554fa4",
+      "negative_prompt": null
+    }
+  ]
+}

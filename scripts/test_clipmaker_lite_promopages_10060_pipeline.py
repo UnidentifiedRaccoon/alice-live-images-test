@@ -147,6 +147,7 @@ class FrozenContractRoutingTest(unittest.TestCase):
         expected = {
             **registered_batches,
             pipeline.FEMIBION_VEO_RECOVERY_ID: "2.0.8",
+            pipeline.TUNE_V4_PLANNING_BATCH_ID: "2.2.0",
         }
         self.assertEqual(pipeline.FROZEN_BATCH_CONTRACT_VERSIONS, expected)
         for batch_id, contract_version in registered_batches.items():
@@ -186,19 +187,53 @@ class FrozenContractRoutingTest(unittest.TestCase):
         current.assert_not_called()
         frozen.assert_called_once_with(pipeline.ROOT, run_id)
 
-    def test_all_historical_contracts_use_the_208_support_snapshot(self) -> None:
-        for version, frozen in pipeline.FROZEN_CONTRACTS.items():
+    def test_historical_contracts_use_their_exact_support_snapshots(self) -> None:
+        for version in ("2.0.6", "2.0.7", "2.0.8"):
             with self.subTest(version=version):
                 self.assertEqual(
-                    frozen["support_root"],
+                    pipeline.FROZEN_CONTRACTS[version]["support_root"],
                     pipeline.FROZEN_SUPPORT_208_ROOT_REL,
                 )
+        self.assertEqual(
+            pipeline.FROZEN_CONTRACTS["2.2.0"]["support_root"],
+            pipeline.FROZEN_SUPPORT_220_ROOT_REL,
+        )
         snapshot = pipeline._femibion_recovery_contract_snapshot(pipeline.ROOT)
         self.assertEqual(snapshot["path"], pipeline.CONTRACT_REL.as_posix())
         self.assertEqual(snapshot["contract_version"], "2.0.8")
         self.assertEqual(
             snapshot["sha256"],
             pipeline.FROZEN_208_CONTRACT_FILE_SHA256,
+        )
+
+    def test_tune_v4_run_prefix_routes_to_frozen_220(self) -> None:
+        run_id = f"{pipeline.TUNE_V4_PLANNING_BATCH_ID}-sample"
+        expected = {"verified": True, "contract_version": "2.2.0"}
+        with (
+            mock.patch.object(
+                pipeline.runner,
+                "provenance_summary",
+                side_effect=AssertionError("v4 routed to current contract"),
+            ) as current,
+            mock.patch.object(
+                pipeline,
+                "frozen_provenance_summary",
+                return_value=expected,
+            ) as frozen,
+        ):
+            self.assertEqual(
+                pipeline.planning_provenance_summary(pipeline.ROOT, run_id),
+                expected,
+            )
+        current.assert_not_called()
+        frozen.assert_called_once_with(pipeline.ROOT, run_id)
+        self.assertEqual(
+            pipeline.FROZEN_CONTRACTS["2.2.0"]["path"],
+            pipeline.FROZEN_220_CONTRACT_REL,
+        )
+        self.assertEqual(
+            pipeline.FROZEN_220_CONTRACT_FILE_SHA256,
+            "3428f60536e09e254150d7b3de880477dcadff357ccead6562c1e2757836cf4f",
         )
 
 

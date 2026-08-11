@@ -1,0 +1,177 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:db32b9a78e1c02f3f81bca9b4fd53fd3b6578237fffeb1779b0062befb41a85a",
+    "execution_fingerprint": "sha256:a487bfcc2a915a2e23b89a9706e46dc96dd3845ac26b651d53d1bac316142582",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff239-8b22-7710-988f-44511e074e1f"
+    },
+    "authored_payload_sha256": "b487ad1c1d8a40f6cf262b2e45198c935b9f61db0b1b3785f16e47291e40cb47",
+    "draft_file_sha256": "66a0c722f365da9284f4253a419b12870751ababbb179275bf3bdc846cd0ce35"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+      "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "bytes": 3190235
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "bytes": 24393,
+      "locator": {
+        "article_id": "07-femibion-gotovites-k-beremennosti",
+        "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+        "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+        "image_id": "06",
+        "block_index": 26,
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "file": "06.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "current_heading": {
+          "block_index": 20,
+          "level": 2,
+          "text": "Пройдите необходимые консультации и обследования"
+        },
+        "nearest_text_before": {
+          "block_index": 25,
+          "type": "paragraph",
+          "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+        },
+        "nearest_text_after": {
+          "block_index": 27,
+          "type": "heading",
+          "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/07-06.json",
+      "sha256": "0b171474bfc03666fd1d2e0eb66700d888f3e09625d48b5afa1c223f80ed0c2b",
+      "bytes": 1502,
+      "canonical_sha256": "9060ed0360f14b196ad9a8fa6f153df6b814ab15fdd1b942c3596cf41224a442",
+      "models": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "07#06::google/veo-3.1-lite",
+          "outcome": "worse",
+          "review_note": "На фото женщина, но почему-то совершенно нет никакой генерации - отсутствует движение. Хотя это человек, а не текст или интерфейс",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "route_rejected",
+            "fallback_rejected",
+            "provider_no_output",
+            "insufficient_motion"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "fixed",
+            "focal_target": "the visible woman and her phone",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Exactly one woman, two hands with unchanged fingers, and one red smartphone remain present and recognizable."
+            ],
+            "topology_anchors": [
+              "The phone stays supported by the left hand, and the right index finger remains aligned with the visible screen during the gesture."
+            ],
+            "rigid_regions": [
+              "the red smartphone, sofa, and visible room geometry"
+            ],
+            "contacts": [
+              "the left hand keeps supporting the phone while the right finger stays at the screen"
+            ],
+            "must_remain_visible": [
+              "the visible woman and her phone"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "Exactly one smiling woman sits on a sofa, looking down at a red smartphone held in her left hand.",
+      "Her right index finger is aligned with and touching or immediately above the visible phone screen, grounding a simple touchscreen gesture.",
+      "The phone, both hands, sofa, and room geometry are clearly visible; the screen content is not readable, so no specific interface change is evidenced."
+    ],
+    "article_context": "The body image supports the consultation-preparation advice: calmly compiling questions on a phone helps the reader arrive prepared and avoid missing important topics during a medical appointment.",
+    "structured_intent": {
+      "editorial_meaning": "Calmly preparing a list of questions helps preserve important points for a medical consultation.",
+      "initial_state": "One smiling woman sits on the sofa looking down at a red smartphone supported in her left hand, with her right index finger poised at the screen.",
+      "motion_owner": "the woman",
+      "primary_action": "she performs one calm upward swipe on the smartphone screen",
+      "attention_anchor": "the visible woman and her red smartphone",
+      "motion_boundary": "Only the woman's right index finger, subtle gaze tracking, and natural residual body motion may move; the left hand keeps supporting the rigid phone, while the sofa and visible room geometry remain source-locked.",
+      "terminal_state": "Her right index finger has settled near the upper part of the visible screen after one completed swipe, while she continues looking at the supported phone.",
+      "geometry_invariant": "The phone remains supported by the left hand while the right index finger stays aligned with the visible screen throughout the gesture.",
+      "identity_invariant": "Exactly one woman, two hands with unchanged fingers, and one red smartphone remain present and recognizable.",
+      "semantic_invariant": "She remains calmly focused on preparing information on her phone, with her gentle positive expression preserved through the last frame.",
+      "feasibility_assessment": "The image clearly supports one low-risk touchscreen gesture: the left hand supports the phone and the right index finger is aligned with its screen. The exact interface and whether the poised finger is tapping or scrolling are ambiguous, so only a small generic swipe is used and no screen-state change is asserted.",
+      "rendering_strategy": "image-to-video"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Over four seconds with a fixed camera, the woman begins the grounded touchscreen gesture immediately and moves her right index finger upward at a calm, readable pace while continuing to look at the phone. Her left hand keeps the phone stable, her relaxed smile persists, and the finger settles near the upper part of the screen close to the end without starting another gesture.",
+      "positive_prompt": "The woman makes one calm, deliberate upward swipe on the phone with her right index finger while her left hand steadily supports it, her gaze following the screen and her gentle smile remaining. Fixed camera; by the final frame her finger settles near the upper part of the visible screen, with the woman and phone continuously visible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

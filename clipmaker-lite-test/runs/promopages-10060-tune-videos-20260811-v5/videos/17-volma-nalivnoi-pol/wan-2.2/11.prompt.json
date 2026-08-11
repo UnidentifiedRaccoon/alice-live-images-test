@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+  "case_id": "17#11",
+  "sheet_row": 246,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df8bf5214766a58d277/orig",
+    "sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+    "width": 1940,
+    "height": 500,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Пятисекундный непрерывный camera-only shot: сразу начать ровный центрированный push-in к видимой композиции продуктов без рывка и изменения траектории. За пять секунд дать читаемое увеличение примерно на 6–8% в экранном пространстве, не превышая лимит 8%; центральные упаковки и рулон остаются непрерывно видимыми, а все зоны рекламного макета сохраняют взаимное расположение. К последним кадрам движение мягко замедляется на достигнутом увеличенном кадрировании, не открывая пространства за границами исходника.",
+  "prompt": {
+    "positive": "The camera smoothly pushes in toward the continuously visible product composition, producing a clear 6–8% screen-space enlargement by the final frames. Keep the entire rigid advertising layout, exactly two product bags, one underlay roll, one woman, all support and overlap relationships, logos, labels, glyphs, text, white framing lines, and silhouettes unchanged.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-11",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-11/result.json",
+    "result_sha256": "974cacf9efbbd49ddd36d50f36a0679a3116e120eaa70ac195df4c8f1fb7e02c",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/17-11.json",
+    "repair_feedback_sha256": "e357149d12285fa6805cab649cc1a152f314e65be0eaf8f59387343befad2126",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-11/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:84fcd5bd04789fa865f987322a9f19bc692c65662197270cd96b5bbe92a0bfb2",
+      "instruction_bundle_sha256": "fbf54abceb4442ea2b095715fde1ea0d5696e569735eaa64e70e45ecd5d3d4fd",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff23a-e974-75d1-9a8a-ef88bab9d6e3"
+      },
+      "models": [
+        "alibaba/wan-2.2"
+      ],
+      "source_image_sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

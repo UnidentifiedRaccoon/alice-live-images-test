@@ -1,0 +1,37 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "17#08::google/veo-3.1-lite",
+    "outcome": "same-or-unclear",
+    "review_note": "Пол сам поднимается. Выглядит не очень реалистично. В других примерах ты сделал так, как будто это мастер снимает на телефон и показывает работу, поэтому в других примерах дальше - выглядит лучше",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "rigid_world_deformation"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "handheld-inspection",
+      "focal_target": "the central broken floor section, cracks, raised slab, and visible tools",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 8,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "The same broken floor sections, one powered tool and the visible hand tools remain present and recognizable; nothing is added, removed or duplicated."
+      ],
+      "topology_anchors": [
+        "All cracks, slab fragments, rubble and tools retain their rigid shapes, locations and existing contacts with the floor."
+      ],
+      "rigid_regions": [
+        "the broken floor, cracks, raised slab, rubble, and all visible tools"
+      ],
+      "contacts": [
+        "floor fragments, rubble, and tools retain their existing floor contacts"
+      ],
+      "must_remain_visible": [
+        "the central broken floor section, cracks, raised slab, and visible tools"
+      ]
+    }
+  }
+}

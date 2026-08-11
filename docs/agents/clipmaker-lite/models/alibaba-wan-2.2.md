@@ -45,8 +45,8 @@ SHA-256 исходника. Сразу после успешного preflight �
   весь shot; не складывай pan, zoom, orbit и handheld motion.
 - Prompt должен быть коротким и самодостаточным: `prompt_extend` принудительно
   выключен. Используй одно-два коротких motion-first предложения. Ясно укажи
-  владельца движения, действие, направление, один typed anchor и конечное
-  состояние.
+  владельца движения, действие, `attention_anchor`, `motion_boundary`, один
+  наиболее важный typed anchor и конечное состояние.
 - Сохраняй image-grounded `geometry_invariant` и `identity_invariant`. Если
   endpoint уже виден в first frame, используй только low-amplitude residual
   continuation, затухание или camera-only — без нового цикла и реверса.
@@ -57,6 +57,10 @@ SHA-256 исходника. Сразу после успешного preflight �
   локального процесса видимая граница проходит хотя бы одну собственную ширину.
 - Не включай в prompt `150 frames`, `30 fps`, resolution, codec, watermark или
   seed. Это machine-owned runtime.
+- Camera route удерживает `attention_anchor` centered или continuously visible,
+  не уходит на соседнюю дверцу, пустой фон или край мебели и не открывает
+  пространство за границей source. Новые фасады, ряды механизма, части пола и
+  предметы не достраиваются.
 
 ## Terminal state и смысловая целостность
 
@@ -74,15 +78,26 @@ SHA-256 исходника. Сразу после успешного preflight �
 
 ## UI и people risks
 
-- Для точного текста, UI, chart, table, diagram и screenshot выбери
-  `deterministic-compositor`: `execution_mode` равен
-  `deterministic-compositor`, а `positive_prompt` равен `null`.
+- Каждый result имеет `execution_mode: i2v` и непустой `positive_prompt`. Для
+  точного текста, UI, chart, table, diagram и screenshot выбери `camera-only`:
+  экран или печатная графика остаётся одной жёсткой плоскостью, все labels,
+  числа, glyphs и controls входят в `motion_boundary`, а bounded camera move не
+  создаёт unseen space.
 - Для people удерживай точное число сущностей, конечности и props. Исключи
   контакт рук с лицом, сложное взаимодействие частей тела, речь и lip-sync.
-  Если gait, контакт или направление неоднозначны, выбери camera-only.
-- Articulated ride не выполняет полный arc/rotation; tool не действует без
-  видимой руки и точки контакта; layered fabric не billow и не перестраивает
-  слои. При неоднозначной механике выбери camera-only.
+  Если gait или новый контакт неоднозначны, используй дыхание, моргание, малый
+  поворот головы/взгляда либо camera-only; не оставляй prompt пустым.
+- Articulated ride не выполняет полный arc/rotation. Видимая ось и крепления
+  допускают одно малое bounded продолжение в правдоподобном направлении;
+  topology, riders и число seats фиксированы, новые ряды не появляются.
+- Tool действует только через видимую руку и точку контакта; layered fabric не
+  billow и не перестраивает слои. При неоднозначной механике выбери camera-only.
+- Статичный продуктовый packshot получает центрированный studio push или одно
+  сдержанное изменение света/камеры; флаконы, коробки и labels не двигаются
+  автономно, весь набор остаётся видимым.
+- На стройплощадке без доказанного действия используй observer/phone-inspection
+  camera move. Пол, плиты, трещины, инструменты и обломки остаются жёсткими и не
+  поднимаются сами.
 
 ## Negative prompt
 

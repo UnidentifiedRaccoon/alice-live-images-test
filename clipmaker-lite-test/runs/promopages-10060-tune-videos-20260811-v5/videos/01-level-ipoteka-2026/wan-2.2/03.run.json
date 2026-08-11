@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-01-level-ipoteka-2026-03-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-03",
+  "case_id": "01#03",
+  "sheet_row": 6,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/03.mp4",
+  "status": "succeeded",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a048ddca495b52c9d873940_6a049120952e1f1e50d73cc7/orig",
+      "prompt": "The camera makes a smooth centered push-in toward the existing blue February 2026 bars, moving about 5% of the frame while the complete chart remains continuously visible. The chart stays a single rigid plane with all ten regions, three series, Russian text, numbers, bar lengths, ordering, spacing, axes, gridlines, and legend unchanged, ending in a slightly closer full-chart view.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "4bb6bbd0311b75b448f5809dad3c9e7e9b579ea6353d02a276c643cf4ee8f97d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "947e3b36b7e5cf0d54a9e9e792dd9687",
+  "submitted_at": "2026-08-11T19:33:23Z",
+  "completed_at": "2026-08-11T19:33:23Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 140116,
+    "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "947e3b36b7e5cf0d54a9e9e792dd9687",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1184,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 2800341,
+    "sha256": "c743cb4642d0acdba8b630eb3e9a42f438722afdab2da494d3cc0ffc8675cab7"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

@@ -50,13 +50,14 @@ LEGACY_BATCH_ID = "promopages-10060-lite-all-images-20260805-v2"
 CAMPAIGN_EXTENSION_BATCH_ID = "promopages-10060-campaigns-20260805-v1"
 ARTICLE_02_BATCH_ID = "promopages-10060-article-02-20260806-v2"
 CAMPAIGN_20260807_BATCH_ID = "promopages-10060-campaigns-20260807-v1"
+TUNE_V4_PLANNING_BATCH_ID = "promopages-10060-tune-prompts-20260811-v4"
 AGENT_ID = "clipmaker-lite"
 MODEL_IDS = (
     "alibaba/wan-2.2",
     "alibaba/wan-2.7",
     "google/veo-3.1-lite",
 )
-REQUIRED_CONTRACT_VERSION = "2.2.0"
+REQUIRED_CONTRACT_VERSION = "2.3.0"
 FEMIBION_VEO_RECOVERY_CONTRACT_VERSION = "2.0.8"
 FEMIBION_VEO_RECOVERY_ID = (
     "promopages-10060-femibion-veo-recovery-20260810-v1"
@@ -65,6 +66,9 @@ FEMIBION_VEO_RECOVERY_ID = (
 CONTRACT_REL = Path("docs/agents/clipmaker-lite/contract.json")
 FROZEN_SUPPORT_208_ROOT_REL = Path(
     "docs/agents/clipmaker-lite/contracts/support-2.0.8"
+)
+FROZEN_SUPPORT_220_ROOT_REL = Path(
+    "docs/agents/clipmaker-lite/contracts/support-2.2.0"
 )
 FROZEN_206_CONTRACT_REL = Path(
     "docs/agents/clipmaker-lite/contracts/contract-2.0.6.json"
@@ -94,6 +98,16 @@ FROZEN_208_CONTRACT_SHA256 = (
     "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0"
 )
 FROZEN_208_BATCH_IDS = frozenset({FEMIBION_VEO_RECOVERY_ID})
+FROZEN_220_CONTRACT_REL = Path(
+    "docs/agents/clipmaker-lite/contracts/contract-2.2.0.json"
+)
+FROZEN_220_CONTRACT_FILE_SHA256 = (
+    "3428f60536e09e254150d7b3de880477dcadff357ccead6562c1e2757836cf4f"
+)
+FROZEN_220_CONTRACT_SHA256 = (
+    "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f"
+)
+FROZEN_220_BATCH_IDS = frozenset({TUNE_V4_PLANNING_BATCH_ID})
 FROZEN_CONTRACTS = {
     "2.0.6": {
         "path": FROZEN_206_CONTRACT_REL,
@@ -112,6 +126,12 @@ FROZEN_CONTRACTS = {
         "canonical_sha256": FROZEN_208_CONTRACT_SHA256,
         "batch_ids": FROZEN_208_BATCH_IDS,
         "support_root": FROZEN_SUPPORT_208_ROOT_REL,
+    },
+    "2.2.0": {
+        "path": FROZEN_220_CONTRACT_REL,
+        "canonical_sha256": FROZEN_220_CONTRACT_SHA256,
+        "batch_ids": FROZEN_220_BATCH_IDS,
+        "support_root": FROZEN_SUPPORT_220_ROOT_REL,
     },
 }
 FROZEN_BATCH_CONTRACT_VERSIONS = {

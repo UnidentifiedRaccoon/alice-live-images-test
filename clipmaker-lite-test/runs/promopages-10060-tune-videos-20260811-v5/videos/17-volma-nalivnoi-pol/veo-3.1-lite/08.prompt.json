@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-08-veo-3-1-lite",
+  "case_id": "17#08",
+  "sheet_row": 236,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+    "width": 1068,
+    "height": 699,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Четырехсекундный единый план: камера сразу начинает плавный осмотр с рук в манере мастера, снимающего работу на телефон, и движется с ровной умеренной скоростью вокруг центрального поврежденного участка. Траектория ограничена уже видимой глубиной и экранным смещением не более 8%; фокус непрерывно удерживает трещины, поднятую плиту и инструменты. Пол, все фрагменты, щебень и инструменты остаются абсолютно жесткими, сохраняют формы, расположение и контакты. К концу камера мягко замедляется; наблюдаемый результат — небольшой параллакс и смещение переднего плана примерно на 5–8% при сохранении всей поврежденной зоны в центре кадра.",
+  "prompt": {
+    "positive": "The camera makes a smooth, restrained handheld phone-inspection move around the central broken floor section, keeping the cracks, raised slab, rubble, powered tool, and hand tools continuously visible while every rigid object retains its exact shape, position, and floor contact. By the final frame, gentle source-grounded parallax has shifted the foreground by about 5–8% of the frame, with the damaged section still central and fully recognizable.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-08",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-08/result.json",
+    "result_sha256": "7b4c42f8488d8404130b8a331ee582e78b5da70258c441b985ca8fa836fdb0ea",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/17-08.json",
+    "repair_feedback_sha256": "22fb45746ef1600313fb1902b33c2f60140503b333bc8cc9244c9a4d5aed5b8e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-08/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+      "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff23a-b13b-7000-96f0-1b5549517699"
+      },
+      "models": [
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

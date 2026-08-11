@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07",
+  "case_id": "10#07",
+  "sheet_row": 122,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
+  "status": "provider-failed",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The seated woman gently lifts her gaze and turns her head slightly toward the man, her warm smile becoming a little clearer while her hands keep the cup in the same secure position. Fixed camera; by the final frame she is looking toward him, with exactly two adults and two children continuously visible and every hand-to-cup, hand-to-food, and hand-to-utensil contact preserved.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c96ff468ebf3bcb244359cf252f3160e5d8b1bf8c9da4c1356eafa5b167f156e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "pivxeTXch0waPlU20UzI",
+  "submitted_at": "2026-08-11T19:33:06Z",
+  "completed_at": "2026-08-11T20:08:12Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": null,
+  "contract_check": null,
+  "error": "provider poll/download: Eliza/OpenRouter job pivxeTXch0waPlU20UzI failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

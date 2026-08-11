@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-13-dream-island-top6-attrakcionov-05-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-13-dream-island-top6-attrakcionov-05",
+  "case_id": "13#05",
+  "sheet_row": 161,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/13-dream-island-top6-attrakcionov/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/13-dream-island-top6-attrakcionov/veo-3.1-lite/05.mp4",
+  "status": "succeeded",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The existing six-arm attraction makes one clearly visible, moderate bounded turn in a single direction while the attached cabins pivot slightly on their visible joints and every restrained rider remains secure; keep the camera fixed and the attraction continuously visible. By the final frame, the hub and arms have advanced to a noticeably new angle and the cabins have settled into slightly changed orientations, with the complete topology and every glyph of “МЕЛЬНИЦА” unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a5a10c7bf47d01035dc3f22_6a5a1a23fccb527e7235c2af/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "30a04e488bd0e26a317ee19d4307fefa01b3644794a79c0371778231c13591d1",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Db9L7xpmdtBS2Wkyvjki",
+  "submitted_at": "2026-08-11T19:37:04Z",
+  "completed_at": "2026-08-11T20:14:37Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 14480391,
+    "sha256": "d09b445a0b1e712e666343e718cb54db1c50852472b8bdb1ba95e3d81f0a8469"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

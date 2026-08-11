@@ -42,15 +42,20 @@ cross-model comparison.
 - Пиши коротко и конкретно: provider получает `prompt_extend: true` и может
   расширить формулировку.
 - Используй одно-два motion-first предложения и сохраняй image-grounded
-  `geometry_invariant` и `identity_invariant`. Если endpoint уже виден в first
-  frame, используй residual continuation, затухание или camera-only — без
-  нового цикла и реверса.
+  `attention_anchor`, `motion_boundary`, `geometry_invariant` и
+  `identity_invariant`. Если endpoint уже виден в first frame, используй
+  residual continuation, затухание или camera-only — без нового цикла и
+  реверса.
 - `prompt_extend: true` может усиливать travel, plume, glare и вторичное
   движение. Задавай source-relative composition ceiling: camera reference
   смещается не больше собственной ширины или примерно 5–10% кадра; mist
   остаётся одним коротким узким cone у видимого nozzle; optical effect остаётся
   внутри target-boundary. Избегай expansive verbs `sweeps across the scene`,
   `billows`, `fills`, `full rotation` и `wide arc`.
+- Provider expansion не получает `reveal`, `complete` или `extend` для
+  невидимой геометрии. Camera route удерживает `attention_anchor`, не уходит на
+  соседнюю дверцу или пустой фон и не создаёт новые фасады, ряды механизма,
+  части пола или объекты за source boundary.
 
 ## Terminal state и смысловая целостность
 
@@ -67,14 +72,27 @@ cross-model comparison.
 
 ## UI и people risks
 
-- Для точного текста, UI, chart, table, diagram и screenshot выбери
-  `deterministic-compositor`: `execution_mode` равен
-  `deterministic-compositor`, а `positive_prompt` равен `null`.
+- Каждый result имеет `execution_mode: i2v` и непустой `positive_prompt`. Для
+  точного текста, UI, chart, table, diagram и screenshot выбери `camera-only`:
+  экран или печатная графика остаётся одной жёсткой плоскостью, labels, числа,
+  glyphs и controls входят в `motion_boundary`, camera move остаётся bounded и
+  не открывает unseen space.
 - Для людей сохраняй точное число, конечности и props. Не добавляй контакт с
-  лицом, новый предмет, сложное взаимодействие или неоднозначный gait.
-- Articulated ride не выполняет полный arc/rotation; tool не действует без
-  видимой руки/контакта; layered fabric не billow. При неоднозначной механике
-  выбери camera-only.
+  лицом, новый предмет, сложное взаимодействие или неоднозначный gait. Когда
+  сложный жест не доказан, используй дыхание, моргание, малый поворот головы,
+  взгляда или корпуса либо camera-only.
+- Articulated ride не выполняет полный arc/rotation. Видимая ось и крепления
+  допускают одно малое bounded продолжение в выбранном правдоподобном
+  направлении; topology, riders и число seats фиксированы, новые секции не
+  появляются.
+- Tool не действует без видимой руки/контакта; layered fabric не billow. При
+  неоднозначной механике выбери camera-only.
+- Статичный продуктовый packshot получает центрированный studio push или одно
+  restrained изменение света/камеры; весь набор и labels остаются видимыми,
+  продукты не двигаются автономно.
+- На стройплощадке без доказанного действия используй плавный
+  observer/phone-inspection camera move. Пол, плиты, трещины, инструменты и
+  обломки остаются жёсткими и не поднимаются сами.
 
 ## Negative prompt
 

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-01-level-ipoteka-2026-02-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-02",
+  "case_id": "01#02",
+  "sheet_row": 2,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/veo-3.1-lite/02.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/veo-3.1-lite/02.mp4",
+  "status": "succeeded",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera makes one calm four-second push-in toward the existing January–February 2026 chart region, with total screen travel capped at 5% and the complete chart continuously visible. The graphic stays a single rigid plane with all three series, plotted marks, text, numbers, axes, legend, figure label, and footnote unchanged, ending with the rightmost decline slightly emphasized.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a0490f4a495b52c9d87bcd3/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "69957cee24138b609ab60411fc5e375725e7dad2176d03e531715d1b1e9f700c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "GQmBl08oqPgapaKl51L5",
+  "submitted_at": "2026-08-11T19:31:40Z",
+  "completed_at": "2026-08-11T19:32:57Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 2814912,
+    "sha256": "304773376fac3030a621108736d4a07ef762298c5a9542736dd9ab1a6deb3c7a"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

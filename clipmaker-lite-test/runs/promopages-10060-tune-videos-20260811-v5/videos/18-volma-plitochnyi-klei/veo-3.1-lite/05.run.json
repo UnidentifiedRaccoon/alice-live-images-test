@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-05-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-05",
+  "case_id": "18#05",
+  "sheet_row": 257,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.mp4",
+  "status": "succeeded",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera moves smoothly forward toward the centered two-row material recommendation table for four seconds, with screen travel capped at 1.5%. Keep the complete rigid table continuously visible and preserve every text glyph, cell, divider, green check and orange warning exactly in place, ending only slightly closer without showing unseen space.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "9a425bc7c8c738742185968280ece6bd7519bd58c16d2569490d2641f8558c36",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "uNAhOctPzfC7L69Amfr1",
+  "submitted_at": "2026-08-11T20:11:30Z",
+  "completed_at": "2026-08-11T20:14:23Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "check": "source-dimensions",
+    "model_id": "google/veo-3.1-lite",
+    "width": 758,
+    "height": 220,
+    "minimum_dimension_px": null,
+    "conforms": true,
+    "normalization_applied": false
+  },
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 1253121,
+    "sha256": "d2697da32b4248752b12e7e2ca6ae65d136d1d94d6df1e8ad30ed293915d0dba"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

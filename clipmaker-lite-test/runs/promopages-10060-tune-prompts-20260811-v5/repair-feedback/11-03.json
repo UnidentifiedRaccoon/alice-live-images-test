@@ -1,0 +1,39 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "11#03::google/veo-3.1-lite",
+    "outcome": "same-or-unclear",
+    "review_note": "Появляются новые объекты в кадре (новые части конструкции горки), которые выдумала модель",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "topology_hallucination",
+      "out_of_source_reveal"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "fixed",
+      "focal_target": "the existing visible ride structure",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 8,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Сохраняются один птерозавр и точное число всех видимых кресел, деталей конструкции и силуэтов людей или конечностей."
+      ],
+      "topology_anchors": [
+        "Жёсткая форма и взаимное расположение подвесной конструкции, кресел и опор сохраняются.",
+        "foreground seats and rails stay fixed; add no ride rows"
+      ],
+      "rigid_regions": [
+        "the foreground seats, rails, ride supports, and projected-screen boundary"
+      ],
+      "contacts": [
+        "seats, rails, and supports retain their existing attachment points"
+      ],
+      "must_remain_visible": [
+        "the existing visible ride structure"
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-01-level-ipoteka-2026-03-wan-2-7",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-03",
+  "case_id": "01#03",
+  "sheet_row": 7,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.7/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.7/03.mp4",
+  "status": "verification-failed",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Push the camera steadily toward the existing blue February 2026 bars, with total screen travel capped at 6% and the complete chart visible throughout. Keep the chart plane rigid and every region, series, Russian glyph, value, bar length, alignment, gridline, and legend entry unchanged, finishing on a modestly closer full-chart composition.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a048ddca495b52c9d873940_6a049120952e1f1e50d73cc7/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "e88a50b357777f450624297159fd251fa153a8112e5a8bdd3d8b607b3b92d448",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "AYTHOKWBaVUNnEgKGQRf",
+  "submitted_at": "2026-08-11T19:31:38Z",
+  "completed_at": "2026-08-11T19:32:53Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1780,
+    "height": 1164,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2492170,
+    "sha256": "e542a99e9b9ed6be6bd3c3f7ea9bc9062359511fe8eabf680f1e687a41774d57"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False",
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

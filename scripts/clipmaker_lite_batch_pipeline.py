@@ -65,6 +65,7 @@ MODEL_DIRECTORIES = {
 WAN_MODEL_ID = "alibaba/wan-2.2"
 WAN_27_MODEL_ID = "alibaba/wan-2.7"
 VEO_31_MODEL_ID = "google/veo-3.1-lite"
+WAN_27_MIN_SOURCE_DIMENSION_PX = 240
 ELIZA_MODEL_IDS = {WAN_27_MODEL_ID, VEO_31_MODEL_ID}
 DEFAULT_WAN_22_CONCURRENCY = int(
     transport.route_for_model(WAN_MODEL_ID)["capacity"]
@@ -118,6 +119,14 @@ LEGACY_SEGMIND_QUOTA_REQUEST_SHA256 = (
 
 class BatchPipelineError(RuntimeError):
     """A fail-closed error in the native Clipmaker Lite batch bridge."""
+
+
+class ProviderInputDimensionError(BatchPipelineError):
+    """A locally provable provider input rejection before any paid submit."""
+
+    def __init__(self, message: str, evidence: dict[str, Any]) -> None:
+        super().__init__(message)
+        self.evidence = dict(evidence)
 
 
 @dataclass(frozen=True)
@@ -347,6 +356,76 @@ def provider_request_preview(sample: dict[str, Any], prompt: dict[str, Any]) -> 
         prompt,
         wan_submit_mode=WAN_SUBMIT_MODE,
     )
+
+
+def provider_input_dimension_preflight(
+    sample: dict[str, Any],
+    model_id: str,
+) -> dict[str, Any]:
+    """Reject known Wan 2.7 minimum-dimension failures without a paid POST.
+
+    Source normalization is deliberately outside this helper: changing image
+    bytes or the provider URL requires a new immutable batch identity and a
+    provenance-bound normalized asset.  The normal worker must never invent a
+    pad/upscale transform or silently fall back after this check.
+    """
+
+    if model_id not in MODEL_IDS:
+        raise BatchPipelineError(f"Unsupported provider route: {model_id}")
+    width = sample.get("width")
+    height = sample.get("height")
+    if (
+        isinstance(width, bool)
+        or not isinstance(width, int)
+        or width <= 0
+        or isinstance(height, bool)
+        or not isinstance(height, int)
+        or height <= 0
+    ):
+        raise ProviderInputDimensionError(
+            f"{model_id} source dimensions must be positive integers; "
+            f"got {width!r}x{height!r}",
+            {
+                "check": "source-dimensions",
+                "model_id": model_id,
+                "width": width,
+                "height": height,
+                "minimum_dimension_px": (
+                    WAN_27_MIN_SOURCE_DIMENSION_PX
+                    if model_id == WAN_27_MODEL_ID
+                    else None
+                ),
+                "conforms": False,
+                "normalization_applied": False,
+            },
+        )
+
+    evidence = {
+        "check": "source-dimensions",
+        "model_id": model_id,
+        "width": width,
+        "height": height,
+        "minimum_dimension_px": (
+            WAN_27_MIN_SOURCE_DIMENSION_PX
+            if model_id == WAN_27_MODEL_ID
+            else None
+        ),
+        "conforms": True,
+        "normalization_applied": False,
+    }
+    if (
+        model_id == WAN_27_MODEL_ID
+        and min(width, height) < WAN_27_MIN_SOURCE_DIMENSION_PX
+    ):
+        evidence["conforms"] = False
+        raise ProviderInputDimensionError(
+            f"{WAN_27_MODEL_ID} source preflight rejected {width}x{height}: "
+            f"each side must be at least {WAN_27_MIN_SOURCE_DIMENSION_PX} px. "
+            "Create a new immutable batch with a provenance-bound normalized "
+            "source; automatic padding, upscale, retry, and fallback are disabled.",
+            evidence,
+        )
+    return evidence
 
 
 def read_json(path: Path) -> Any:
@@ -1452,6 +1531,42 @@ def run_provider_worker(
                 holds_provider_slot=True,
             )
 
+    dimension_preflight: dict[str, Any] | None = None
+    if not resume:
+        try:
+            dimension_preflight = provider_input_dimension_preflight(
+                row["sample"],
+                row["entry"].model_id,
+            )
+        except ProviderInputDimensionError as exc:
+            error = transport.safe_error(exc)
+            run.update(
+                {
+                    "status": "failed-pre-submit",
+                    "request": request,
+                    "request_sha256": fingerprint,
+                    "request_fingerprint_version": (
+                        transport.REQUEST_FINGERPRINT_VERSION
+                    ),
+                    "provider_job_id": None,
+                    "provider_session_hash": None,
+                    "submitted_at": None,
+                    "completed_at": None,
+                    "provider_may_be_active": False,
+                    "source_preflight": exc.evidence,
+                    "last_worker_failure": "provider-input-dimension",
+                    "error": error,
+                }
+            )
+            _persist_run(paths["run"], run)
+            return _result(
+                row,
+                failed=True,
+                status="failed-pre-submit",
+                error=error,
+                holds_provider_slot=False,
+            )
+
     if dry_run:
         if resume:
             return _result(row, failed=False, status=str(status))
@@ -1468,6 +1583,7 @@ def run_provider_worker(
                 "media": None,
                 "contract_check": None,
                 "provider_may_be_active": False,
+                "source_preflight": dimension_preflight,
                 "last_worker_failure": None,
                 "error": None,
             }
@@ -1494,6 +1610,7 @@ def run_provider_worker(
                 "media": None,
                 "contract_check": None,
                 "provider_may_be_active": pre_submit_status == "submitting",
+                "source_preflight": dimension_preflight,
                 "last_worker_failure": None,
                 "error": None,
             }

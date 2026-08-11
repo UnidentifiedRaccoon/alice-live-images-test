@@ -1,0 +1,254 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r3-03-level-nestandartnye-planirovki-09",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:3fde33b4ce84974cc4b03303f66ee481aca69a855a817878db7eda87d2746a16",
+    "instruction_bundle_sha256": "a5ca4de3a148c606e8731d1ffad9cfe2f21df95741fe919fbda71ddef3d3ec62",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "ea8a541b2ea886ded2105f16c6b4ab0a03c9cce9a39b76d9130538681556cf8d"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:a96e503e322f81c6b3067bcce2c5be507c068a831470f12c02d15ff8d8536aa1",
+    "execution_fingerprint": "sha256:da10046642a62dd8c1ba863becd0f13354e4f6e4b5ddf44aad8dc5b074ce9706",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff249-be47-7470-b112-d48ff693b5ac"
+    },
+    "authored_payload_sha256": "7ca53ec7137da7f4c5652ac1139ac8c534e0a54ac51bddd61a2a28e58f656bb0",
+    "draft_file_sha256": "1cc6bd01dfb646d961ff09b23a7e62272c634c72d169e0b12ed3ec2379a38841"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+      "sha256": "afe330d31feb4acefa159dd8c06146f346af31f13f4014813375e12dbb47cd7f",
+      "bytes": 143585
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/content.json",
+      "sha256": "fe2fc6f789301c45a97099730ffbafeed0146ee45a2a7e7ca4e9cdc14193600c",
+      "bytes": 23384,
+      "locator": {
+        "article_id": "03-level-nestandartnye-planirovki",
+        "title": "Топ-6 нестандартных планировок квартир от Level Group",
+        "lead": "Покажем несколько вариантов в разных районах Москвы",
+        "image_id": "09",
+        "block_index": 41,
+        "role": "article_image",
+        "caption": "Пример гардеробной на плане квартиры — при желании в ней можно хранить сезонные вещи",
+        "file": "09.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/03-level-nestandartnye-planirovki/09.png",
+        "current_heading": {
+          "block_index": 35,
+          "level": 2,
+          "text": "Квартира с гардеробной"
+        },
+        "nearest_text_before": {
+          "block_index": 40,
+          "type": "paragraph",
+          "text": "👉 Посмотреть планировку"
+        },
+        "nearest_text_after": {
+          "block_index": 42,
+          "type": "paragraph",
+          "text": "🔥 В премиальной коллекции квартир от Level вы найдёте просторные квартиры, которые сможете превратить в пространство своей мечты: уютный вариант с несколькими детскими, минималистичный островок спокойствия с отдельной рабочей зоной или центр притяжения семьи, где собираются все близкие. И всё это в любом районе Москвы, даже в центре. Выбирайте, что вам нравится, и не бойтесь экспериментировать: места хватит даже для нестандартных решений."
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r3/repair-feedback/03-09.json",
+      "sha256": "f091db4e304441951432bb33bcc81cb4d0ef864e34ae9199e830bb8418346d76",
+      "bytes": 2683,
+      "canonical_sha256": "d827dcb7eb76e2bdaebd3ca5d4594febda39cabee35b6529f0f229533e034fd5",
+      "models": {
+        "alibaba/wan-2.2": {
+          "evaluation_id": "03#09::alibaba/wan-2.2",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the complete apartment floor plan with its existing arrow and room 3.9",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 4.0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Preserve every room, furniture symbol, area label, window mark, and the single black arrow exactly once and unchanged."
+            ],
+            "topology_anchors": [
+              "All walls, doors, fixtures, room boundaries, adjacency, and arrow-to-wardrobe alignment remain fixed.",
+              "the positive_prompt must include the exact phrase \"total screen travel capped at 4%\""
+            ],
+            "rigid_regions": [
+              "the floor-plan plane, walls, room labels, dimensions, and existing arrow"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the complete apartment floor plan with its existing arrow and room 3.9",
+              "the complete apartment floor plan remains fully visible throughout"
+            ]
+          }
+        },
+        "google/veo-3.1-lite": {
+          "evaluation_id": "03#09::google/veo-3.1-lite",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the complete apartment floor plan with its existing arrow and room 3.9",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 4.0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Preserve every room, furniture symbol, area label, window mark, and the single black arrow exactly once and unchanged."
+            ],
+            "topology_anchors": [
+              "All walls, doors, fixtures, room boundaries, adjacency, and arrow-to-wardrobe alignment remain fixed.",
+              "the positive_prompt must include the exact phrase \"total screen travel capped at 4%\""
+            ],
+            "rigid_regions": [
+              "the floor-plan plane, walls, room labels, dimensions, and existing arrow"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the complete apartment floor plan with its existing arrow and room 3.9",
+              "the complete apartment floor plan remains fully visible throughout"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "A static top-down apartment floor-plan diagram fills most of the frame on a white background.",
+      "A single thick black arrow points diagonally toward the narrow central room labeled 3.9.",
+      "Walls, door swings, windows, furniture symbols, fixtures, plants, room-area numbers, and the arrow are precise semantic graphics with no physically grounded subject motion.",
+      "The complete plan and its outer boundary are visible; changing the diagram itself would risk altering room topology or numerical information."
+    ],
+    "article_context": "The body image illustrates the “Apartment with a walk-in wardrobe” section, using the arrow and the labeled 3.9 m² room to show how a dedicated storage area can support seasonal-item storage and flexible use of a spacious apartment.",
+    "structured_intent": {
+      "editorial_meaning": "Emphasize the dedicated walk-in wardrobe as a practical storage feature within a flexible premium-apartment layout.",
+      "initial_state": "A complete top-down apartment floor plan is fully visible, with one black arrow already pointing toward the narrow central room labeled 3.9.",
+      "motion_owner": "The camera.",
+      "primary_action": "The camera progressively increases visual emphasis on the existing arrow and room 3.9 while retaining the complete plan.",
+      "attention_anchor": "The existing black arrow and the central room labeled 3.9 within the complete apartment plan.",
+      "motion_boundary": "Only the camera may change the framing; the floor-plan plane, walls, labels, numbers, glyphs, arrow, furnishings, fixtures, windows, and background remain source-locked, with nothing added or removed beyond the visible frame.",
+      "terminal_state": "The existing arrow and room 3.9 are modestly more prominent while the entire unchanged apartment plan remains visible.",
+      "geometry_invariant": "All walls, room boundaries, door swings, fixtures, adjacency, and the arrow-to-room-3.9 alignment remain fixed on one rigid plane.",
+      "identity_invariant": "Preserve every room, area label, furniture and fixture symbol, plant, window mark, and the single black arrow exactly once.",
+      "semantic_invariant": "The arrow continues to identify room 3.9 as the wardrobe/storage area, and the apartment remains the same complete layout through the last frame.",
+      "feasibility_assessment": "The source is a static precision diagram with exact numbers, glyphs, symbols, boundaries, and an arrow; it provides no evidence for autonomous object motion. Only camera-led emphasis is safely supported, with the entire visible plan retained.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Over five seconds, begin the centered push-in immediately and maintain a steady, restrained pace toward the existing arrow and room 3.9. Ease gently near the end after reaching the 4% travel ceiling; the whole plan stays inside the frame throughout, with no parallax, diagram animation, topology change, or exposure of space beyond the source.",
+      "positive_prompt": "The camera begins a smooth centered push-in toward the arrow and room 3.9, with total screen travel capped at 4%, while the complete apartment floor plan remains continuously visible as one rigid printed plane. By the final frames, the wardrobe location is modestly more prominent and every wall, label, symbol, door, fixture, window mark, and the single arrow remains unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:d38bae21d4be8ece845825a95c55b4bfe8cb03aa8819f412895214be5aa52a4d",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Across four seconds, move inward from the start at an even real-time pace, keeping the full plan and the arrow-to-room-3.9 relationship continuously visible. Decelerate only near the endpoint at the 4% ceiling; preserve the flat graphic without autonomous motion, deformation, new details, cropping, or unseen-space reveal.",
+      "positive_prompt": "The camera makes one calm centered push-in toward the existing arrow and room 3.9, with total screen travel capped at 4%, keeping the complete apartment floor plan continuously visible as a rigid graphic. At the end, the wardrobe area reads slightly more prominently while all walls, numbers, glyphs, furniture symbols, doors, fixtures, window marks, and the single arrow remain unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

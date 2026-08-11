@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v6-retry-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v6",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v6-18-volma-plitochnyi-klei-05-wan-2-7",
+  "case_id": "18#05",
+  "sheet_row": 259,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "retry_reason": "provider-minimum-dimension-rejection-normalized-source",
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260811-v5",
+    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-05-wan-2-7",
+    "status": "provider-failed",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.7/05.prompt.json",
+    "prompt_sha256": "9cf37111f1250a60760776d2562b6803f3f47c1a92699ef81f153cc6d1b04b56",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.7/05.run.json",
+    "run_sha256": "511ddeac765f7bdc674b1cdc8cff459f69daf326c499ad9a79253aaba5fc27f2",
+    "provider_job_id": "L79RDAL4x9AH5sGa1mR5",
+    "provider_may_be_active": false,
+    "error": "provider poll/download: Eliza/OpenRouter job L79RDAL4x9AH5sGa1mR5 failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 758x220\", \"internal_name\": \"InvalidParameter\"}",
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "receipts_mutated": false
+  },
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/05.mp4",
+  "status": "verification-failed",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The camera performs a restrained centered push-in on the two-row material recommendation table, limited to 1.5% screen travel. The full rigid table stays visible while every existing label, line, cell, green check and orange warning remains unchanged, ending at a subtly closer framing with no new area shown.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b5174da86573a15d0acc2b4e90e09a41f3dea4db51ab37f3701609672406df8c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "4nW74RlYa4z4USN308T6",
+  "submitted_at": "2026-08-11T20:32:32Z",
+  "completed_at": "2026-08-11T20:36:02Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "check": "source-dimensions",
+    "model_id": "alibaba/wan-2.7",
+    "width": 882,
+    "height": 256,
+    "minimum_dimension_px": 240,
+    "conforms": true,
+    "normalization_applied": false
+  },
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 2672,
+    "height": 776,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 1360676,
+    "sha256": "3d1dc864b29b0669fb5732881e4d727b3172532b2dfe8a261bc49e3230670283"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False"
+    ]
+  },
+  "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False",
+  "submission_count": 1,
+  "budget_reservation_usd": 0.35,
+  "new_immutable_provider_run": true,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

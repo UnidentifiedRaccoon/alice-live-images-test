@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-retry-planning",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-prompts-20260811-v5-r6",
+  "agent_id": "clipmaker-lite",
+  "contract_version": "2.3.0",
+  "generated_at": "2026-08-11T20:25:57.223684Z",
+  "scope": {
+    "selection_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/selection.json",
+    "selection_sha256": "e0a8218b26480ee8b95401f21a8e80e22e6920cb8f44b9345a6ab778c6749560",
+    "case_count": 2,
+    "target_count": 2,
+    "required_execution_mode": "i2v",
+    "required_rendering_strategy": "camera-only",
+    "fallback": false,
+    "video_generation": false,
+    "s3_upload": false
+  },
+  "lineage": {
+    "source_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+      "sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+      "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4"
+    },
+    "source_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/generation-manifest.json",
+      "sha256": "1058daf1b10fe5e1b83f7d180881a5d42b957507c5240bc8290cbc447d66cf10",
+      "batch_id": "promopages-10060-tune-videos-20260811-v5",
+      "receipts_mutated": false
+    }
+  },
+  "summary": {
+    "case_count": 2,
+    "target_count": 2,
+    "model_counts": {
+      "google/veo-3.1-lite": 2
+    },
+    "source_status_counts": {
+      "provider-failed": 2
+    }
+  },
+  "cases": [
+    {
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "content_class": "person_phone",
+      "source": {
+        "image_id": "06",
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "width": 2400,
+        "height": 1600
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+        "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+        "locator": {
+          "article_id": "07-femibion-gotovites-k-beremennosti",
+          "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+          "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+          "image_id": "06",
+          "block_index": 26,
+          "role": "article_image",
+          "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+          "file": "06.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+          "current_heading": {
+            "block_index": 20,
+            "level": 2,
+            "text": "Пройдите необходимые консультации и обследования"
+          },
+          "nearest_text_before": {
+            "block_index": 25,
+            "type": "paragraph",
+            "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+          },
+          "nearest_text_after": {
+            "block_index": 27,
+            "type": "heading",
+            "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/07-06.json",
+      "repair_feedback_sha256": "3542a8996a6c297212c9588c0983cfacd771083a5e9dd5af0a1bab2970cdaba3",
+      "run_id": "promopages-10060-tune-prompts-20260811-v5-r6-07-femibion-gotovites-k-beremennosti-06",
+      "retry_reason": "terminal-provider-no-output-new-neutral-lite-prompt",
+      "source_prompt": {
+        "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+        "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06/result.json",
+        "result_sha256": "fbd9f9ba187fea3443f622bef5733a3a8bae23edadd9fbc3fe1dc5728a6f777f",
+        "positive_prompt_sha256": "1d75fea6d1f844a1092723d6a7736c20eddd6edfd4ab69b6309fe63290e7fafb"
+      },
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260811-v5",
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "status": "provider-failed",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "155f06509df013b452fbe6204a85f7f69b3c5e14a754d6322844ac1a65242245",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "573c31f534465a0485d45f5663f64bd1badf14cc27e017f0db400ce5e6f5e9f7",
+        "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
+        "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false,
+        "automatic_paid_retry": false,
+        "fallback": null
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v5-r6-07-femibion-gotovites-k-beremennosti-06",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-07-femibion-gotovites-k-beremennosti-06/result.json",
+        "result_sha256": "034cc9fa92b3727315e83def5f2162c21088948e2c2e69ee9e94ab5b3f51b98f",
+        "provenance": {
+          "verified": true,
+          "verification_scope": "trusted-workspace-route",
+          "cryptographically_signed": false,
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-07-femibion-gotovites-k-beremennosti-06/result.json",
+          "agent_id": "clipmaker-lite",
+          "contract_version": "2.3.0",
+          "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+          "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+          "runner": {
+            "path": "scripts/clipmaker_lite_runner.py",
+            "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+          },
+          "execution": {
+            "executor_id": "codex-exec",
+            "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+            "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+            "version": "codex-cli 0.147.0-alpha.6.5",
+            "requested_model": null,
+            "thread_id": "019ff280-686c-72b0-8372-d24c5ec0afa1"
+          },
+          "models": [
+            "google/veo-3.1-lite"
+          ],
+          "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+          "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+        },
+        "structured_intent": {
+          "editorial_meaning": "Calm preparation and writing down questions help a future medical consultation feel organized and complete.",
+          "initial_state": "One smiling adult sits cross-legged on a sofa, looking down at a red phone held with both hands in a wide living-room view.",
+          "motion_owner": "camera",
+          "primary_action": "The camera approaches the already visible person-and-phone sofa scene as one continuous movement.",
+          "attention_anchor": "the complete visible sofa scene centered on the woman and red phone",
+          "motion_boundary": "Only the camera may move; the person, pose, gaze, expression, hands, phone, clothing, sofa, decor, and all room geometry remain source-locked, with no unseen space introduced.",
+          "terminal_state": "The same complete woman-and-phone sofa scene remains intact and continuously visible, appearing modestly closer in the frame.",
+          "geometry_invariant": "The seated pose, both hand-to-phone contacts, phone shape, sofa structure, and room geometry remain fixed.",
+          "identity_invariant": "Exactly one visible adult with the same hands, red phone, clothing, sofa, furnishings, and wall decor; nothing appears, disappears, or changes identity.",
+          "semantic_invariant": "The calm, positive sense of preparing questions for a consultation remains unchanged through the final frame.",
+          "feasibility_assessment": "The image proves one seated adult, a stable pose, a visible phone, and existing hand-to-phone contacts, but it does not prove any safe gesture, typing motion, gaze change, or expression change; camera-only animation is the least risky option.",
+          "rendering_strategy": "camera-only"
+        },
+        "image_reading": [
+          "One smiling adult sits cross-legged on a sofa, looking down at a red phone held in both hands.",
+          "The existing pose and both hand-to-phone contacts are visible but physically delicate; no direction of human movement is established.",
+          "The wide living-room composition contains rigid furniture and wall decor, with the complete person-and-phone sofa scene already visible."
+        ],
+        "article_context": "The body image supports the consultation section by presenting calm, practical preparation: the visible phone serves as the focal tool for noting questions before a medical appointment.",
+        "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/07-06.json",
+        "repair_feedback_sha256": "3542a8996a6c297212c9588c0983cfacd771083a5e9dd5af0a1bab2970cdaba3"
+      },
+      "targets": [
+        {
+          "evaluation_id": "07#06::google/veo-3.1-lite",
+          "case_id": "07#06",
+          "sheet_row": 80,
+          "model_id": "google/veo-3.1-lite",
+          "repair_feedback": {
+            "evaluation_id": "07#06::google/veo-3.1-lite",
+            "outcome": "worse",
+            "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship.",
+            "evidence_strength": "explicit",
+            "failure_codes": [
+              "provider_no_output"
+            ],
+            "required_execution_mode": "i2v",
+            "fallback_policy": "none",
+            "camera_repair": {
+              "move": "push-in",
+              "focal_target": "the complete existing sofa scene with the visible person and phone",
+              "target_retention": "continuously-visible",
+              "max_screen_travel_percent": 5,
+              "reveal_unseen_space": false
+            },
+            "preservation": {
+              "entity_counts": [
+                "Preserve exactly one visible adult, the existing hands, red phone, clothing, sofa, and room; nothing appears, disappears, or changes identity."
+              ],
+              "topology_anchors": [
+                "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked."
+              ],
+              "rigid_regions": [
+                "the complete existing sofa scene with the visible person and phone"
+              ],
+              "contacts": [
+                "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked."
+              ],
+              "must_remain_visible": [
+                "the complete existing sofa scene with the visible person and phone"
+              ]
+            }
+          },
+          "tuned": {
+            "execution_mode": "i2v",
+            "scene_plan": "Across four seconds, execute a smooth centered push-in at a calm, even speed, easing only near the end. Limit total screen travel to 5%, retain the complete existing sofa scene with the woman and phone throughout, introduce no subject animation, and finish with the same composition modestly closer.",
+            "positive_prompt": "The camera makes one gentle centered push-in toward the complete existing sofa scene with the woman and red phone, keeping them continuously visible while her pose, expression, gaze, and hand-to-phone contacts remain unchanged. By the final frame, the woman and phone appear modestly closer within the same intact room composition.",
+            "negative_prompt": null,
+            "runtime": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratios": [
+                "16:9",
+                "9:16"
+              ],
+              "generate_audio": false,
+              "frame_inputs": [
+                "first_frame"
+              ],
+              "provider": "google-vertex",
+              "prompt_expansion": {
+                "parameter": "enhancePrompt",
+                "value": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "10#07",
+      "sheet_row": 122,
+      "article_slug": "10-krasnaya-polyana-reis-zaderzhali",
+      "brand": "Курорт Красная Поляна",
+      "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+      "publication_id": "6a54bb73d6edb03d5192b7e1",
+      "content_class": "multi_person",
+      "source": {
+        "image_id": "07",
+        "role": "article_image",
+        "caption": "",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig",
+        "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+        "width": 2048,
+        "height": 1365
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+        "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+        "locator": {
+          "article_id": "10-krasnaya-polyana-reis-zaderzhali",
+          "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+          "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+          "image_id": "07",
+          "block_index": 29,
+          "role": "article_image",
+          "caption": "",
+          "file": "07.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+          "current_heading": {
+            "block_index": 23,
+            "level": 2,
+            "text": "Как получить помощь на месте"
+          },
+          "nearest_text_before": {
+            "block_index": 28,
+            "type": "paragraph",
+            "text": "И четвёртый способ — для исключительных случаев, когда нет интернета и уведомлений: личное заявление, которое можно написать прямо на ресепшен отеля."
+          },
+          "nearest_text_after": {
+            "block_index": 30,
+            "type": "heading",
+            "text": "Если ещё остались вопросы"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/10-07.json",
+      "repair_feedback_sha256": "b5d02187e1d1597a2787eeaaf2fa6859974d681d0792760378f5bb8983602cfa",
+      "run_id": "promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07",
+      "retry_reason": "terminal-provider-no-output-new-neutral-lite-prompt",
+      "source_prompt": {
+        "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+        "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07/result.json",
+        "result_sha256": "c66ecc37acad4a3d4fe682ce94bc2685ed8f857906d1cc23bf35c3313637f0fa",
+        "positive_prompt_sha256": "169f791753d72a9bf10ebeb245fe5316e54482a3479cc383ba691f053310c220"
+      },
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260811-v5",
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+        "status": "provider-failed",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+        "prompt_sha256": "c4b8e436a781da4477181ae6f708cbf5881f596f3ea6412bb57b2a0d8a552eb9",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.run.json",
+        "run_sha256": "8361417d6bda21a06465f4952721ae79561c8b615a9a00ce6f2689a2a793d98c",
+        "provider_job_id": "pivxeTXch0waPlU20UzI",
+        "error": "provider poll/download: Eliza/OpenRouter job pivxeTXch0waPlU20UzI failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false,
+        "automatic_paid_retry": false,
+        "fallback": null
+      },
+      "planning": {
+        "run_id": "promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07/result.json",
+        "result_sha256": "fd469099b3ab4080f3134952de2cec367490309055607b4563f5f24122df463b",
+        "provenance": {
+          "verified": true,
+          "verification_scope": "trusted-workspace-route",
+          "cryptographically_signed": false,
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07/result.json",
+          "agent_id": "clipmaker-lite",
+          "contract_version": "2.3.0",
+          "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+          "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+          "runner": {
+            "path": "scripts/clipmaker_lite_runner.py",
+            "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+          },
+          "execution": {
+            "executor_id": "codex-exec",
+            "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+            "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+            "version": "codex-cli 0.147.0-alpha.6.5",
+            "requested_model": null,
+            "thread_id": "019ff280-686c-79c1-be87-b9a2a5dce130"
+          },
+          "models": [
+            "google/veo-3.1-lite"
+          ],
+          "source_image_sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+          "article_context_sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e"
+        },
+        "structured_intent": {
+          "editorial_meaning": "A calm hotel dining moment supports the article’s message that guests can remain comfortable and receive practical help on site when a flight is disrupted.",
+          "initial_state": "Four people are arranged around a breakfast table in a hotel room: two adults sit on the sofa while two children kneel beside the table, with existing poses and hand-to-object contacts already established.",
+          "motion_owner": "camera",
+          "primary_action": "a gentle centered push-in toward the complete dining group",
+          "attention_anchor": "the complete visible dining scene with all four people around the breakfast table",
+          "motion_boundary": "Only the camera may move; all people, poses, expressions, contacts, tableware, food, furniture, mirror, and room geometry remain source-locked, and no unseen space is introduced.",
+          "terminal_state": "The complete dining scene appears slightly closer while all four people and the full existing arrangement remain continuously visible and unchanged.",
+          "geometry_invariant": "Every pose and hand-to-object contact, the table arrangement, sofa, mirror, and rigid room geometry remain unchanged.",
+          "identity_invariant": "Exactly four visible people and all existing limbs, garments, dishes, utensils, cups, food items, and furniture remain present and keep their identities and ownership.",
+          "semantic_invariant": "The scene remains a calm, comfortable hotel breakfast moment that conveys settled support rather than disruption or interpersonal action.",
+          "feasibility_assessment": "The image clearly supports a small camera move through already visible room depth, but no safe direction or intent is established for human gestures, gaze, or interaction; camera-only is therefore the least risky I2V strategy.",
+          "rendering_strategy": "camera-only"
+        },
+        "image_reading": [
+          "A fixed wide interior view shows exactly four people: two adults seated on a sofa and two children beside a low breakfast table.",
+          "The complete dining group, food, cups, utensils, furniture, mirror, and room geometry are visible; several hands already contact cups, food, or the table area.",
+          "Human motion and the intent or direction of any gesture are ambiguous, while the room provides limited visible depth suitable for a restrained centered camera move."
+        ],
+        "article_context": "The body image closes the practical-help section by presenting a calm, comfortable hotel dining moment, reinforcing that guests can remain settled and supported while resolving a disrupted flight at reception.",
+        "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/10-07.json",
+        "repair_feedback_sha256": "b5d02187e1d1597a2787eeaaf2fa6859974d681d0792760378f5bb8983602cfa"
+      },
+      "targets": [
+        {
+          "evaluation_id": "10#07::google/veo-3.1-lite",
+          "case_id": "10#07",
+          "sheet_row": 122,
+          "model_id": "google/veo-3.1-lite",
+          "repair_feedback": {
+            "evaluation_id": "10#07::google/veo-3.1-lite",
+            "outcome": "worse",
+            "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship.",
+            "evidence_strength": "explicit",
+            "failure_codes": [
+              "provider_no_output"
+            ],
+            "required_execution_mode": "i2v",
+            "fallback_policy": "none",
+            "camera_repair": {
+              "move": "push-in",
+              "focal_target": "the complete existing dining scene and all visible people",
+              "target_retention": "continuously-visible",
+              "max_screen_travel_percent": 3,
+              "reveal_unseen_space": false
+            },
+            "preservation": {
+              "entity_counts": [
+                "Preserve exactly four visible people and every existing limb, garment, dish, utensil, cup, food item, and piece of furniture; nothing appears, disappears, or changes owner."
+              ],
+              "topology_anchors": [
+                "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+              ],
+              "rigid_regions": [
+                "the complete existing dining scene and all visible people"
+              ],
+              "contacts": [
+                "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+              ],
+              "must_remain_visible": [
+                "the complete existing dining scene and all visible people"
+              ]
+            }
+          },
+          "tuned": {
+            "execution_mode": "i2v",
+            "scene_plan": "Over four seconds, begin a smooth centered push-in immediately and maintain an even, low-jerk pace toward the whole dining group. Limit total screen travel to about 3%, preserve the full original framing and all contacts, and ease gently only near the end so the observable endpoint is the complete scene appearing slightly closer with every person still visible.",
+            "positive_prompt": "The camera makes one gentle centered push-in toward the complete existing dining scene at an even real-time pace, with all four people continuously visible and every pose and hand-to-object contact unchanged. By the final frame, the group and breakfast table appear about 3% closer without exposing any space beyond the source frame.",
+            "negative_prompt": null,
+            "runtime": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratios": [
+                "16:9",
+                "9:16"
+              ],
+              "generate_audio": false,
+              "frame_inputs": [
+                "first_frame"
+              ],
+              "provider": "google-vertex",
+              "prompt_expansion": {
+                "parameter": "enhancePrompt",
+                "value": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

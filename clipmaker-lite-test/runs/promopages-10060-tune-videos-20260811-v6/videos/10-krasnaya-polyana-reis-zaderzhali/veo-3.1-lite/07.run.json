@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v6-retry-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v6",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v6-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+  "case_id": "10#07",
+  "sheet_row": 122,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "retry_reason": "terminal-provider-no-output-new-lite-prompt",
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260811-v5",
+    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+    "status": "provider-failed",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+    "prompt_sha256": "c4b8e436a781da4477181ae6f708cbf5881f596f3ea6412bb57b2a0d8a552eb9",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.run.json",
+    "run_sha256": "8361417d6bda21a06465f4952721ae79561c8b615a9a00ce6f2689a2a793d98c",
+    "provider_job_id": "pivxeTXch0waPlU20UzI",
+    "provider_may_be_active": false,
+    "error": "provider poll/download: Eliza/OpenRouter job pivxeTXch0waPlU20UzI failed with status failed: Video generation completed with no output (content may have been filtered)",
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "receipts_mutated": false
+  },
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
+  "status": "succeeded",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera makes one gentle centered push-in toward the complete existing dining scene at an even real-time pace, with all four people continuously visible and every pose and hand-to-object contact unchanged. By the final frame, the group and breakfast table appear about 3% closer without exposing any space beyond the source frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c148353dfc9428e6df37f04a08afe047480768760b7eb0ac7a3d4481e0ef3299",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "zKAAPJF3eJH8V4E9MGl6",
+  "submitted_at": "2026-08-11T20:32:34Z",
+  "completed_at": "2026-08-11T20:34:23Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "check": "source-dimensions",
+    "model_id": "google/veo-3.1-lite",
+    "width": 2048,
+    "height": 1365,
+    "minimum_dimension_px": null,
+    "conforms": true,
+    "normalization_applied": false
+  },
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4869557,
+    "sha256": "24104cd0be79a8b92e91c495b111f4533556caac0186d792508740f116ea02cd"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "submission_count": 1,
+  "budget_reservation_usd": 0.35,
+  "new_immutable_provider_run": true,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

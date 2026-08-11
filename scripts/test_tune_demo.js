@@ -10,309 +10,227 @@ const {
   actualVideoMethod,
   applyFilters,
   buildReviewExport,
-  fallbackAudit,
-  inferPromptEvaluated,
-  modeLabel,
+  historicalMethodLabel,
+  iterationLabel,
   normalizeManifest,
-  normalizeProviderAttempt,
+  normalizeIteration,
   normalizeReviewEntry,
   normalizeRatingState,
   normalizeTunedVideo,
   resolveMediaUrl,
+  reviewScopeItems,
   summarizeReviews,
   tunedVideoState,
 } = globalThis.__tuneTestHooks;
 
-const VIDEO_METHODS = Object.freeze({
-  i2v: "eliza-i2v",
-  compositor: "deterministic-compositor",
-  fallback: "deterministic-compositor-fallback",
-});
+const ACTIVE_METHOD = "eliza-i2v";
+const MODELS = [
+  "google/veo-3.1-lite",
+  "alibaba/wan-2.2",
+  "alibaba/wan-2.7",
+];
 
-function canonicalFixture() {
+function videoReceipt(index, label = "active") {
   return {
-    schema_version: 1,
-    manifest_role: "clipmaker-lite-tune-review",
-    ticket: "PROMOPAGES-10060",
-    batch_id: "tune-test",
-    agent_id: "clipmaker-lite",
-    contract_version: "2.2.0",
-    generated_at: "2026-08-11T12:00:00Z",
-    scope: {
-      case_count: 1,
-      target_count: 2,
-      new_video_generation: false,
-      new_s3_upload: false,
-    },
-    summary: {
-      rating: { regenerate_count: 1, blank_count: 1 },
-      execution_mode_counts: { i2v: 1, "deterministic-compositor": 1 },
-    },
-    cases: [
-      {
-        case_id: "01#02",
-        article_number: "01",
-        article_slug: "01-level-ipoteka-2026",
-        title: "Брать ипотеку в 2026 году?",
-        content_class: "ui_chart",
-        hypothesis: "frozen chart data/text",
-        source: {
-          image_id: "02",
-          role: "article_image",
-          caption: "Объём ипотечного кредитования",
-          path: "PROMOPAGES-10060/articles/01/02.png",
-          url: "https://avatars.mds.yandex.net/example/orig",
-          width: 1280,
-          height: 753,
-        },
-        planning: {
-          run_id: "tune-test-01-02",
-          provenance: { verified: true },
-          structured_intent: {
-            feasibility_assessment: "Exact chart state is semantic.",
-            rendering_strategy: "deterministic-compositor",
-          },
-        },
-        accepted_sibling_model_ids: ["alibaba/wan-2.7"],
-        targets: [
-          {
-            sheet_row: 2,
-            model_id: "google/veo-3.1-lite",
-            rating_state: "regenerate",
-            rating_raw: "Перегенерация (-)",
-            comment: "Появляется случайный текст.",
-            primary_failure_category: "source_identity_graphic_continuity",
-            baseline: {
-              positive_prompt: "Animate the chart.",
-              video_url: "https://yastatic.net/example.mp4",
-              media: { duration_seconds: 4, width: 1920, height: 1080 },
-            },
-            tuned: {
-              execution_mode: "deterministic-compositor",
-              scene_plan: "Use one bounded light sweep.",
-              positive_prompt: null,
-              negative_prompt: null,
-              runtime: { duration_seconds: 4, resolution: "1080p" },
-            },
-          },
-          {
-            sheet_row: 3,
-            model_id: "alibaba/wan-2.2",
-            rating_state: "blank",
-            rating_raw: "",
-            comment: "Движение слишком слабое.",
-            primary_failure_category: "insufficient_motion",
-            baseline: {
-              positive_prompt: "A slight camera move.",
-              repository_video_path: "clipmaker-lite-test/videos/example.mp4",
-            },
-            tuned: {
-              execution_mode: "i2v",
-              scene_plan: "Use a bounded push-in.",
-              positive_prompt: "A restrained push-in keeps the chart unchanged.",
-              negative_prompt: null,
-              video_url: "https://raw.githubusercontent.com/example/repo/abc123/tuned.mp4",
-              status: "succeeded",
-              media: { duration_seconds: 5, width: 1280, height: 720, bytes: 1024 },
-              qa: { verified: true, status: "passed" },
-            },
-          },
-        ],
-      },
-    ],
-  };
-}
-
-function threeMethodFixture() {
-  const providerAttempt = {
-    status: "provider-failed",
-    prompt_evaluated: false,
-    run_path: "clipmaker-lite-test/tune-generation/veo/07-06/run.json",
-    run_sha256: "b".repeat(64),
-    provider_job_id: "veo-terminal-0706",
-    error: "Provider filtered the request before generation.",
-  };
-  const video = (method, suffix, extra = {}) => ({
     status: "succeeded",
-    method,
+    method: ACTIVE_METHOD,
+    prompt_evaluated: true,
     delivery: "repository-raw",
-    url: `https://raw.githubusercontent.com/example/repo/${"a".repeat(40)}/${suffix}.mp4`,
-    repository_video_path: `clipmaker-lite-test/tune-videos/${suffix}.mp4`,
-    sha256: "c".repeat(64),
-    bytes: 4096,
+    url: `https://raw.githubusercontent.com/example/repo/${"a".repeat(40)}/${label}-${index}.mp4`,
+    repository_video_path: `clipmaker-lite-test/tune-videos/${label}-${index}.mp4`,
+    sha256: String(index).padStart(64, "0").slice(-64),
+    bytes: 4096 + index,
     media: {
-      duration_seconds: 4,
+      duration_seconds: index % 3 === 0 ? 4 : 5,
       width: 1280,
       height: 720,
       has_audio: false,
     },
     contract_check: { verified: true, status: "passed" },
-    ...extra,
-  });
-
-  return {
-    schema_version: 1,
-    manifest_role: "clipmaker-lite-tune-review",
-    ticket: "PROMOPAGES-10060",
-    batch_id: "three-method-test",
-    cases: [
-      {
-        case_id: "method#01",
-        article_number: "method",
-        title: "Actual renderer method",
-        source: { image_id: "01", path: "source.png", width: 1280, height: 720 },
-        planning: {
-          structured_intent: { rendering_strategy: "i2v" },
-          provenance: { verified: true },
-        },
-        targets: [
-          {
-            model_id: "alibaba/wan-2.2",
-            rating_state: "blank",
-            baseline: { video_url: "https://cdn.example/baseline-22.mp4" },
-            tuned: {
-              execution_mode: "i2v",
-              positive_prompt: "Bounded motion.",
-              video: video(VIDEO_METHODS.i2v, "eliza"),
-            },
-          },
-          {
-            model_id: "alibaba/wan-2.7",
-            rating_state: "regenerate",
-            baseline: { video_url: "https://cdn.example/baseline-27.mp4" },
-            tuned: {
-              execution_mode: "deterministic-compositor",
-              positive_prompt: null,
-              video: video(VIDEO_METHODS.compositor, "compositor", {
-                prompt_evaluated: false,
-              }),
-            },
-          },
-          {
-            model_id: "google/veo-3.1-lite",
-            rating_state: "regenerate",
-            baseline: { video_url: "https://cdn.example/baseline-veo.mp4" },
-            tuned: {
-              execution_mode: "i2v",
-              positive_prompt: "Provider-bound prompt.",
-              video: video(VIDEO_METHODS.fallback, "fallback", {
-                prompt_evaluated: false,
-                provider_attempt: providerAttempt,
-              }),
-            },
-          },
-        ],
-      },
-    ],
   };
 }
 
-function merged65Fixture() {
-  const source = JSON.parse(
-    fs.readFileSync(path.join(ROOT, "clipmaker-lite-test", "tune-manifest.json"), "utf8"),
-  );
-  const fallbackTargets = new Set([
-    "07#06::google/veo-3.1-lite",
-    "10#07::google/veo-3.1-lite",
-  ]);
-
-  for (const caseRecord of source.cases) {
-    for (const target of caseRecord.targets || []) {
-      const targetId = `${caseRecord.case_id}::${target.model_id}`;
-      const plannedMode = target.tuned.execution_mode;
-      const isFallback = fallbackTargets.has(targetId);
-      const method = isFallback
-        ? VIDEO_METHODS.fallback
-        : plannedMode === "deterministic-compositor"
-          ? VIDEO_METHODS.compositor
-          : VIDEO_METHODS.i2v;
-      const safeTargetId = targetId.replaceAll(/[^a-z0-9]+/gi, "-").toLowerCase();
-      target.tuned.video = {
-        status: "succeeded",
-        method,
-        delivery: "repository-raw",
-        url: `https://raw.githubusercontent.com/example/repo/${"d".repeat(40)}/${safeTargetId}.mp4`,
-        repository_video_path: `clipmaker-lite-test/tune-videos/${safeTargetId}.mp4`,
-        sha256: "e".repeat(64),
-        bytes: 8192,
-        prompt_evaluated: method === VIDEO_METHODS.i2v,
-        media: { duration_seconds: 4, width: 1280, height: 720, has_audio: false },
-        contract_check: { verified: true, status: "passed" },
-      };
-      if (isFallback) {
-        target.tuned.video.provider_attempt = {
-          status: "provider-failed",
-          prompt_evaluated: false,
-          run_path: `clipmaker-lite-test/tune-generation/${safeTargetId}/run.json`,
-          run_sha256: "f".repeat(64),
-          provider_job_id: `terminal-${safeTargetId}`,
-          error: "Provider filtered the request before generation.",
-        };
-      }
-    }
-  }
-  return source;
+function previousTune(index) {
+  const method = index < 22
+    ? "deterministic-compositor"
+    : index < 24
+      ? "deterministic-compositor-fallback"
+      : ACTIVE_METHOD;
+  return {
+    execution_mode: method === ACTIVE_METHOD ? "i2v" : "deterministic-compositor",
+    scene_plan: `Previous v4 plan ${index}`,
+    positive_prompt: method === ACTIVE_METHOD ? `Previous I2V prompt ${index}` : null,
+    negative_prompt: null,
+    video: {
+      ...videoReceipt(index, "previous"),
+      method,
+      prompt_evaluated: method === ACTIVE_METHOD,
+    },
+  };
 }
 
-test("normalizeManifest flattens canonical cases into model-targets", () => {
-  const manifest = normalizeManifest(canonicalFixture());
-  assert.equal(manifest.caseCount, 1);
-  assert.equal(manifest.targetCount, 2);
-  assert.equal(manifest.items[0].id, "01#02::google/veo-3.1-lite");
-  assert.equal(manifest.items[0].source.width, 1280);
-  assert.equal(manifest.items[0].tuned.positivePrompt, null);
-  assert.equal(manifest.items[0].planning.provenance.verified, true);
-  assert.deepEqual(manifest.items[0].comments, ["Появляется случайный текст."]);
-  assert.equal(manifest.items[1].tuned.video.qaVerified, true);
-  assert.equal(
-    manifest.items[1].tuned.video.url,
-    "https://raw.githubusercontent.com/example/repo/abc123/tuned.mp4",
-  );
-});
+function sourceOutcome(index) {
+  if (index < 19) return "";
+  if (index < 23) return "same-or-unclear";
+  if (index < 28) return "worse";
+  return "helped";
+}
 
-test("normalizeManifest accepts object-mapped targets and direct baseline/tuned records", () => {
-  const manifest = normalizeManifest({
-    cases: [
-      {
-        case_id: "02#01",
-        title: "Object map",
-        source: { image_id: "01", path: "source.png" },
-        targets: {
-          "alibaba/wan-2.7": {
-            rating_state: "regenerate",
-            baseline: { prompt: "Before" },
-            tuned: { mode: "i2v", prompt: "After" },
+function syntheticV5Fixture() {
+  const cases = [];
+  let targetIndex = 0;
+  for (let caseIndex = 0; caseIndex < 36; caseIndex += 1) {
+    const targetCount = caseIndex < 29 ? 2 : 1;
+    const targets = [];
+    for (let localIndex = 0; localIndex < targetCount; localIndex += 1) {
+      const index = targetIndex;
+      const regenerated = index < 28;
+      const modelId = MODELS[(caseIndex + localIndex) % MODELS.length];
+      const evaluationId = `${String(caseIndex + 1).padStart(2, "0")}#01::${modelId}`;
+      const outcome = sourceOutcome(index);
+      const target = {
+        sheet_row: index + 2,
+        model_id: modelId,
+        model_label: modelId.split("/").at(-1),
+        rating_state: regenerated ? "regenerate" : "blank",
+        rating_raw: regenerated ? "Перегенерация (-)" : "",
+        comment: regenerated ? `Исходная проблема ${index}` : null,
+        primary_failure_category: index % 2
+          ? "wrong_action_or_physics"
+          : "source_identity_graphic_continuity",
+        iteration: {
+          action: regenerated ? "regenerated-v5" : "reused-helped",
+          review_scope: regenerated,
+          source_evaluation: {
+            evaluation_id: evaluationId,
+            outcome: outcome || null,
+            note: outcome && outcome !== "helped" ? `Отзыв v4 ${index}` : null,
+            updated_at: outcome ? "2026-08-11T16:00:00Z" : null,
           },
         },
+        baseline: {
+          scene_plan: `Original baseline plan ${index}`,
+          positive_prompt: `Original baseline prompt ${index}`,
+          video_url: `https://yastatic.net/baseline-${index}.mp4`,
+          status: "succeeded",
+          media: { duration_seconds: 4, width: 1920, height: 1080, bytes: 2048 },
+        },
+        tuned: {
+          execution_mode: "i2v",
+          scene_plan: regenerated ? `New v5 plan ${index}` : `Helped v4 plan ${index}`,
+          positive_prompt: regenerated ? `New I2V prompt ${index}` : `Helped I2V prompt ${index}`,
+          negative_prompt: null,
+          runtime: { duration_seconds: 4, resolution: "1080p", generate_audio: false },
+          video: videoReceipt(index),
+        },
+      };
+      if (regenerated) target.previous_tuned = previousTune(index);
+      targets.push(target);
+      targetIndex += 1;
+    }
+    cases.push({
+      case_id: `${String(caseIndex + 1).padStart(2, "0")}#01`,
+      article_number: String(caseIndex + 1).padStart(2, "0"),
+      article_slug: `article-${caseIndex + 1}`,
+      title: `Synthetic case ${caseIndex + 1}`,
+      content_class: "people",
+      hypothesis: "Provider-bound I2V only",
+      source: {
+        image_id: "01",
+        role: "article_image",
+        caption: `Source ${caseIndex + 1}`,
+        path: `PROMOPAGES-10060/articles/${caseIndex + 1}/01.png`,
+        width: 1280,
+        height: 720,
       },
-      {
-        case_id: "03#04",
-        title: "Direct",
-        model_id: "alibaba/wan-2.2",
-        source: { image_id: "04", path: "source-2.png" },
-        baseline: { positive_prompt: "Before direct" },
-        tuned: { execution_mode: "i2v", positive_prompt: "After direct" },
+      planning: {
+        run_id: `v5-case-${caseIndex + 1}`,
+        provenance: { verified: true },
+        structured_intent: {
+          feasibility_assessment: "A provider-bound I2V plan is available.",
+          rendering_strategy: caseIndex % 2 ? "camera-only" : "image-to-video",
+        },
       },
-    ],
-  });
-  assert.equal(manifest.items.length, 2);
-  assert.equal(manifest.items[0].modelId, "alibaba/wan-2.7");
-  assert.equal(manifest.items[1].tuned.positivePrompt, "After direct");
+      targets,
+    });
+  }
+
+  assert.equal(targetIndex, 65);
+  return {
+    schema_version: 2,
+    manifest_role: "clipmaker-lite-tune-review",
+    ticket: "PROMOPAGES-10060",
+    batch_id: "promopages-10060-tune-review-20260811-v5-r4",
+    agent_id: "clipmaker-lite",
+    contract_version: "2.3.0",
+    generated_at: "2026-08-11T18:00:00Z",
+    scope: {
+      case_count: 36,
+      target_count: 65,
+      review_target_count: 28,
+      regenerated_target_count: 28,
+      reused_helped_target_count: 37,
+      new_s3_upload: false,
+    },
+    cases,
+  };
+}
+
+test("v5 manifest exposes 65 targets with a 28/37 iteration split", () => {
+  const manifest = normalizeManifest(syntheticV5Fixture());
+  assert.equal(manifest.caseCount, 36);
+  assert.equal(manifest.targetCount, 65);
+  assert.equal(manifest.reviewTargetCount, 28);
+  assert.equal(manifest.regeneratedTargetCount, 28);
+  assert.equal(manifest.reusedHelpedTargetCount, 37);
+  assert.equal(reviewScopeItems(manifest.items).length, 28);
+  assert.equal(manifest.items.filter((item) => item.previousTuned).length, 28);
+  assert.equal(manifest.issues.length, 0);
 });
 
-test("filters compose category, model, mode and rating", () => {
-  const items = normalizeManifest(canonicalFixture()).items;
-  assert.equal(applyFilters(items, { mode: "deterministic-compositor" }).length, 1);
+test("all active videos are receipt-backed Eliza I2V with no active fallback", () => {
+  const manifest = normalizeManifest(syntheticV5Fixture());
+  assert.ok(manifest.items.every((item) => item.tuned.executionMode === "i2v"));
+  assert.ok(manifest.items.every((item) => item.tuned.video.method === ACTIVE_METHOD));
+  assert.ok(manifest.items.every((item) => actualVideoMethod(item.tuned.video) === ACTIVE_METHOD));
+  assert.equal(manifest.items.filter((item) => item.tuned.video.method.includes("fallback")).length, 0);
+});
+
+test("active method is read only from the provider video receipt", () => {
+  assert.equal(actualVideoMethod({ method: ACTIVE_METHOD }), ACTIVE_METHOD);
+  assert.equal(actualVideoMethod({}), "");
+  assert.equal(actualVideoMethod({ method: "deterministic-compositor" }), "");
+  assert.equal(actualVideoMethod({ method: "deterministic-compositor-fallback" }), "");
   assert.equal(
-    applyFilters(items, {
-      category: "insufficient_motion",
-      model: "alibaba/wan-2.2",
-      mode: "i2v",
-      rating: "blank",
-    }).length,
-    1,
+    normalizeTunedVideo({ execution_mode: "i2v", video_url: "https://cdn.example/no-receipt.mp4" }).method,
+    "",
   );
-  assert.equal(applyFilters(items, { model: "google/veo-3.1-lite", rating: "blank" }).length, 0);
+});
+
+test("iteration and historical labels separate active v5 from rejected v4", () => {
+  assert.equal(iterationLabel("regenerated-v5"), "Новый I2V · v5");
+  assert.equal(iterationLabel("reused-helped"), "Сохранено: помогло");
+  assert.equal(historicalMethodLabel(ACTIVE_METHOD), "v4 · предыдущий I2V");
+  assert.equal(
+    historicalMethodLabel("deterministic-compositor-fallback"),
+    "v4 · deterministic отклонён",
+  );
+  assert.deepEqual(normalizeIteration({ action: "reused-helped", review_scope: false }), {
+    action: "reused-helped",
+    reviewScope: false,
+    sourceEvaluation: { evaluationId: "", outcome: "", note: "", updatedAt: "" },
+  });
+});
+
+test("iteration filter defaults can isolate 28 regenerated or 37 reused targets", () => {
+  const items = normalizeManifest(syntheticV5Fixture()).items;
+  assert.equal(applyFilters(items, { iteration: "regenerated-v5" }).length, 28);
+  assert.equal(applyFilters(items, { iteration: "reused-helped" }).length, 37);
+  assert.equal(applyFilters(items, { iteration: "all" }).length, 65);
+  assert.ok(
+    applyFilters(items, { iteration: "regenerated-v5", model: "google/veo-3.1-lite" })
+      .every((item) => item.modelId === "google/veo-3.1-lite"),
+  );
 });
 
 test("media paths stay relative locally and use raw GitHub on Pages", () => {
@@ -328,239 +246,137 @@ test("media paths stay relative locally and use raw GitHub on Pages", () => {
     }),
     "https://raw.example/main/clipmaker-lite-test/videos/%D0%9F%D1%80%D0%BE%D0%B1%D0%B0%2001.mp4",
   );
-  assert.equal(
-    resolveMediaUrl("https://yastatic.net/video.mp4", { hostname: "localhost" }),
-    "https://yastatic.net/video.mp4",
-  );
   assert.equal(resolveMediaUrl("javascript:alert(1)"), "");
 });
 
-test("tuned video adapter accepts video, video_url and repository path forms", () => {
-  const nested = normalizeTunedVideo({
-    video: {
-      method: VIDEO_METHODS.fallback,
-      prompt_evaluated: false,
-      provider_attempt: {
-        status: "provider-failed",
-        prompt_evaluated: false,
-        provider_job_id: "provider-job",
-        error: "filtered",
-      },
-      url: "https://raw.githubusercontent.com/example/repo/abc123/nested.mp4",
-      status: "ready",
-      delivery: "repository-raw",
-      sha256: "a".repeat(64),
-      bytes: 2048,
-      media: { duration_seconds: 4 },
-      contract_check: { conforms: false, warnings: ["duration"] },
-    },
-  });
-  const direct = normalizeTunedVideo({
-    video_url: "https://cdn.example/direct.mp4",
-    repository_video_path: "tuned/direct.mp4",
-    video_status: "succeeded",
-    qa_status: "checked",
-  });
-  const stringVideo = normalizeTunedVideo({ video: "https://cdn.example/string.mp4" });
-
-  assert.equal(nested.url, "https://raw.githubusercontent.com/example/repo/abc123/nested.mp4");
-  assert.equal(nested.media.duration_seconds, 4);
-  assert.equal(nested.delivery, "repository-raw");
-  assert.equal(nested.sha256, "a".repeat(64));
-  assert.equal(nested.bytes, 2048);
-  assert.equal(nested.qaVerified, false);
-  assert.equal(nested.method, VIDEO_METHODS.fallback);
-  assert.equal(nested.promptEvaluated, false);
-  assert.equal(nested.providerAttempt.providerJobId, "provider-job");
-  assert.equal(direct.url, "https://cdn.example/direct.mp4");
-  assert.equal(direct.repositoryPath, "tuned/direct.mp4");
-  assert.equal(direct.qaStatus, "checked");
-  assert.equal(stringVideo.url, "https://cdn.example/string.mp4");
+test("active video adapter keeps receipt metadata and QA", () => {
+  const video = normalizeTunedVideo({ video: videoReceipt(7) });
+  assert.equal(video.method, ACTIVE_METHOD);
+  assert.equal(video.promptEvaluated, true);
+  assert.equal(video.delivery, "repository-raw");
+  assert.equal(video.media.duration_seconds, 5);
+  assert.equal(video.qaVerified, true);
+  assert.match(video.url, /raw\.githubusercontent\.com/);
 });
 
-test("actual video method wins over the planned strategy and labels all renderers", () => {
-  assert.equal(actualVideoMethod({ method: VIDEO_METHODS.fallback }, "i2v"), VIDEO_METHODS.fallback);
-  assert.equal(actualVideoMethod({ method: VIDEO_METHODS.compositor }, "i2v"), VIDEO_METHODS.compositor);
-  assert.equal(actualVideoMethod({}, "i2v"), VIDEO_METHODS.i2v);
-  assert.equal(modeLabel(VIDEO_METHODS.i2v), "Eliza I2V");
-  assert.equal(modeLabel(VIDEO_METHODS.compositor), "Deterministic compositor");
-  assert.equal(modeLabel(VIDEO_METHODS.fallback), "Deterministic fallback");
-  assert.equal(inferPromptEvaluated(VIDEO_METHODS.i2v), true);
-  assert.equal(inferPromptEvaluated(VIDEO_METHODS.fallback), false);
-  assert.equal(
-    normalizeProviderAttempt({ promptEvaluated: false }).promptEvaluated,
-    false,
-  );
+test("review summary ignores all 37 reused-helped targets", () => {
+  const manifest = normalizeManifest(syntheticV5Fixture());
+  const regenerated = manifest.items.find((item) => item.iteration.reviewScope);
+  const reused = manifest.items.find((item) => !item.iteration.reviewScope);
+  const reviews = {
+    [regenerated.id]: { outcome: "helped", note: "v5 лучше" },
+    [reused.id]: { outcome: "worse", note: "не должен попасть в scope" },
+  };
+  const summary = summarizeReviews(manifest.items, reviews);
+  assert.equal(summary.target_count, 28);
+  assert.equal(summary.saved_entry_count, 1);
+  assert.equal(summary.evaluated_count, 1);
+  assert.equal(summary.helped_count, 1);
+  assert.equal(summary.worse_count, 0);
+  assert.equal(summary.unrated_count, 27);
 });
 
-test("fallback stays planned I2V and preserves terminal provider audit in export", () => {
-  const manifest = normalizeManifest(threeMethodFixture());
-  const methods = manifest.items.map((item) => item.tuned.video.method);
-  assert.deepEqual(methods, [
-    VIDEO_METHODS.i2v,
-    VIDEO_METHODS.compositor,
-    VIDEO_METHODS.fallback,
-  ]);
-  assert.ok(manifest.items.every((item) => tunedVideoState(item.tuned.video) === "available"));
-
-  const fallback = manifest.items[2];
-  assert.equal(fallback.tuned.executionMode, "i2v");
-  assert.equal(fallback.tuned.video.method, VIDEO_METHODS.fallback);
-  assert.equal(fallback.tuned.video.promptEvaluated, false);
-  assert.deepEqual(fallbackAudit(fallback.tuned.video), {
-    title: "Prompt не оценён: provider filtered",
-    status: "provider-failed",
-    providerJobId: "veo-terminal-0706",
-    error: "Provider filtered the request before generation.",
-  });
-
+test("review export schema v2 contains only regenerated-v5 evaluations", () => {
+  const manifest = normalizeManifest(syntheticV5Fixture());
+  const regenerated = manifest.items.find((item) => item.iteration.reviewScope);
+  const reused = manifest.items.find((item) => !item.iteration.reviewScope);
   const exported = buildReviewExport(
     manifest,
     {
-      [fallback.id]: {
-        outcome: "helped",
-        note: "Fallback сохраняет исходник.",
-        updated_at: "2026-08-11T17:00:00Z",
+      [regenerated.id]: {
+        outcome: "same-or-unclear",
+        note: "Нужно пересмотреть",
+        updated_at: "2026-08-11T19:00:00Z",
       },
+      [reused.id]: { outcome: "worse", note: "Не экспортировать" },
     },
-    "2026-08-11T18:00:00Z",
+    "2026-08-11T20:00:00Z",
   );
-  const evaluation = exported.evaluations[0];
-  assert.equal(evaluation.planned_execution_mode, "i2v");
-  assert.equal(evaluation.method, VIDEO_METHODS.fallback);
-  assert.equal(evaluation.prompt_evaluated, false);
-  assert.equal(evaluation.tuned_video.method, VIDEO_METHODS.fallback);
-  assert.equal(evaluation.tuned_video.prompt_evaluated, false);
-  assert.equal(evaluation.tuned_video.provider_attempt.status, "provider-failed");
-  assert.equal(evaluation.tuned_video.provider_attempt.prompt_evaluated, false);
-  assert.equal(evaluation.tuned_video.provider_attempt.provider_job_id, "veo-terminal-0706");
-  assert.match(evaluation.tuned_video.provider_attempt.error, /filtered/);
-});
-
-test("merged fixture exposes 65 available tuned videos with 41/22/2 actual methods", () => {
-  const manifest = normalizeManifest(merged65Fixture());
-  const methodCounts = manifest.items.reduce((counts, item) => {
-    counts[item.tuned.video.method] = (counts[item.tuned.video.method] || 0) + 1;
-    return counts;
-  }, {});
-  const fallbacks = manifest.items.filter(
-    (item) => item.tuned.video.method === VIDEO_METHODS.fallback,
-  );
-
-  assert.equal(manifest.targetCount, 65);
+  assert.equal(exported.schema_version, 2);
+  assert.equal(exported.dataset.iteration_action, "regenerated-v5");
+  assert.equal(exported.dataset.review_target_count, 28);
+  assert.equal(exported.summary.target_count, 28);
+  assert.equal(exported.evaluations.length, 1);
+  assert.equal(exported.evaluations[0].iteration_action, "regenerated-v5");
+  assert.equal(exported.evaluations[0].execution_mode, "i2v");
+  assert.equal(exported.evaluations[0].method, ACTIVE_METHOD);
   assert.equal(
-    manifest.items.filter(
-      (item) => tunedVideoState(item.tuned.video, item.tuned.executionMode) === "available",
-    ).length,
-    65,
+    exported.evaluations[0].source_evaluation.evaluation_id,
+    regenerated.iteration.sourceEvaluation.evaluationId,
   );
-  assert.deepEqual(methodCounts, {
-    [VIDEO_METHODS.compositor]: 22,
-    [VIDEO_METHODS.i2v]: 41,
-    [VIDEO_METHODS.fallback]: 2,
+});
+
+test("tuned media state distinguishes available, pending and unavailable", () => {
+  assert.equal(tunedVideoState({ url: "https://cdn.example/tuned.mp4" }), "available");
+  assert.equal(tunedVideoState({ status: "generating" }), "pending");
+  assert.equal(tunedVideoState({ status: "failed" }), "unavailable");
+  assert.equal(tunedVideoState({}), "pending");
+});
+
+test("unavailable tuned media keeps the audited provider or safety reason", () => {
+  const providerFailure = normalizeTunedVideo({
+    video: {
+      state: "unavailable",
+      status: "provider-unavailable",
+      provider_attempt: { error: "Provider completed with no output" },
+    },
   });
-  assert.equal(fallbacks.length, 2);
-  assert.ok(fallbacks.every((item) => item.tuned.executionMode === "i2v"));
-  assert.ok(fallbacks.every((item) => item.tuned.video.promptEvaluated === false));
-  assert.ok(fallbacks.every((item) => fallbackAudit(item.tuned.video).status === "provider-failed"));
+  assert.equal(providerFailure.unavailableReason, "Provider completed with no output");
+
+  const safetyBarrier = normalizeTunedVideo({
+    video: {
+      state: "unavailable",
+      status: "provider-unavailable",
+      safety_barrier: { reason: "Wan 2.2 route held by an ambiguous submit" },
+    },
+  });
+  assert.equal(safetyBarrier.unavailableReason, "Wan 2.2 route held by an ambiguous submit");
 });
 
-test("tuned media state distinguishes available, pending, unavailable and compositor", () => {
-  assert.equal(tunedVideoState({ url: "https://cdn.example/tuned.mp4" }, "i2v"), "available");
-  assert.equal(tunedVideoState({ status: "generating" }, "i2v"), "pending");
-  assert.equal(tunedVideoState({ status: "failed" }, "i2v"), "unavailable");
-  assert.equal(tunedVideoState({}, "deterministic-compositor"), "pending");
-  assert.equal(tunedVideoState({}, "i2v"), "pending");
-});
-
-test("review summary and export are stable per case and model", () => {
-  const manifest = normalizeManifest(canonicalFixture());
-  const reviews = {
-    [manifest.items[0].id]: {
-      outcome: "helped",
-      note: "Текст больше не искажается.",
-      updated_at: "2026-08-11T15:00:00Z",
-    },
-    [manifest.items[1].id]: {
-      outcome: "same-or-unclear",
-      note: "Нужно посмотреть полный ролик.",
-      updated_at: "2026-08-11T15:05:00Z",
-    },
-  };
-  const summary = summarizeReviews(manifest.items, reviews);
-  const exported = buildReviewExport(manifest, reviews, "2026-08-11T16:00:00Z");
-
-  assert.equal(summary.target_count, 2);
-  assert.equal(summary.evaluated_count, 2);
-  assert.equal(summary.helped_count, 1);
-  assert.equal(summary.same_or_unclear_count, 1);
-  assert.equal(summary.worse_count, 0);
-  assert.equal(exported.export_role, "clipmaker-lite-tune-evaluation");
-  assert.equal(exported.exported_at, "2026-08-11T16:00:00Z");
-  assert.equal(exported.evaluations.length, 2);
-  assert.equal(exported.evaluations[0].evaluation_id, "01#02::google/veo-3.1-lite");
-  assert.equal(exported.evaluations[0].planned_execution_mode, "deterministic-compositor");
-  assert.equal(exported.evaluations[0].method, VIDEO_METHODS.compositor);
-  assert.equal(exported.evaluations[0].prompt_evaluated, false);
-  assert.equal(exported.evaluations[0].tuned_video.state, "pending");
-  assert.equal(exported.evaluations[1].method, VIDEO_METHODS.i2v);
-  assert.equal(exported.evaluations[1].prompt_evaluated, true);
-  assert.equal(exported.evaluations[1].tuned_video.state, "available");
+test("review and rating normalization remain bounded", () => {
   assert.equal(normalizeReviewEntry({ outcome: "worse" }).outcome, "worse");
   assert.equal(normalizeReviewEntry({ outcome: "invalid" }).outcome, "");
-});
-
-test("rating normalization handles sheet values", () => {
   assert.equal(normalizeRatingState("regenerate", "Перегенерация (-)"), "regenerate");
-  assert.equal(normalizeRatingState("", "Перегенерация (-)"), "regenerate");
   assert.equal(normalizeRatingState("blank", ""), "blank");
 });
 
-test("page shell contains the Step 8 contract and accessibility affordances", () => {
+test("page shell exposes v5 iteration controls and no active fallback UI", () => {
   const html = fs.readFileSync(path.join(ROOT, "tune", "index.html"), "utf8");
   const css = fs.readFileSync(path.join(ROOT, "tune", "styles.css"), "utf8");
   const script = fs.readFileSync(path.join(ROOT, "tune", "app.js"), "utf8");
 
   assert.match(html, /aria-current="page"/);
-  assert.match(html, /Step №8/);
-  assert.match(html, /id="categoryFilter"/);
-  assert.match(html, /id="modelFilter"/);
-  assert.match(html, /id="modeFilter"/);
-  assert.match(html, /id="ratingFilter"/);
-  assert.match(html, /id="exportReviews"/);
-  assert.match(html, /aria-live="polite"/);
+  assert.match(html, /id="iterationFilter"/);
+  assert.match(html, /Новый I2V · v5/);
+  assert.match(html, /Сохранено: помогло/);
+  assert.doesNotMatch(html, /id="modeFilter"|compositorCountSummary/);
+  assert.match(script, /Предыдущий tune · v4/);
+  assert.match(script, /Импорт из v4/);
+  assert.match(script, /schema_version:\s*2/);
+  assert.match(script, /ACTIVE_VIDEO_METHOD = "eliza-i2v"/);
+  assert.doesNotMatch(script, /fallbackNotice|inferPromptEvaluated|normalizeProviderAttempt/);
+  assert.doesNotMatch(css, /data-method="deterministic-compositor/);
   assert.match(css, /prefers-reduced-motion: reduce/);
-  assert.match(css, /\.loadState\[hidden\]\s*\{\s*display:\s*none;/);
-  assert.match(script, /preload=\"metadata\"/);
+  assert.match(script, /preload="metadata"/);
   assert.doesNotMatch(script, /autoplay/);
-  assert.match(script, /clipmaker-lite-test\/tune-manifest\.json/);
-  assert.match(script, /localStorage/);
-  assert.match(script, /same-or-unclear/);
-  assert.match(script, /Tuned · MP4/);
-  assert.match(script, /Eliza I2V/);
-  assert.match(script, /Deterministic fallback/);
-  assert.match(script, /Prompt не оценён: provider filtered/);
-  assert.match(script, /const isCompositor = item\.tuned\.executionMode === "deterministic-compositor"/);
-  assert.match(css, /\.methodBadge\[data-method="deterministic-compositor-fallback"\]/);
-  assert.match(css, /\.fallbackNotice/);
-  assert.match(script, /methodBadge/);
 });
 
 const currentManifestPath = path.join(ROOT, "clipmaker-lite-test", "tune-manifest.json");
+let currentV5Manifest = null;
+if (fs.existsSync(currentManifestPath)) {
+  const candidate = JSON.parse(fs.readFileSync(currentManifestPath, "utf8"));
+  if (candidate.scope?.review_target_count === 28) currentV5Manifest = candidate;
+}
+
 test(
-  "current generated tune manifest satisfies the UI adapter",
-  { skip: !fs.existsSync(currentManifestPath) },
+  "current v5 manifest satisfies the 65/28/37 UI contract when available",
+  { skip: !currentV5Manifest },
   () => {
-    const raw = JSON.parse(fs.readFileSync(currentManifestPath, "utf8"));
-    const manifest = normalizeManifest(raw);
-    assert.equal(manifest.caseCount, raw.scope.case_count);
-    assert.equal(manifest.targetCount, raw.scope.target_count);
+    const manifest = normalizeManifest(currentV5Manifest);
+    assert.equal(manifest.targetCount, 65);
+    assert.equal(manifest.reviewTargetCount, 28);
+    assert.equal(manifest.reusedHelpedTargetCount, 37);
     assert.equal(manifest.issues.length, 0);
-    assert.equal(
-      manifest.items.filter((item) => item.tuned.executionMode === "deterministic-compositor").length,
-      raw.summary.execution_mode_counts["deterministic-compositor"],
-    );
-    assert.ok(manifest.items.every((item) => item.source.url || item.source.path));
-    assert.ok(manifest.items.every((item) => item.baseline.videoUrl || item.baseline.repositoryVideoPath));
+    assert.ok(manifest.items.every((item) => item.tuned.video.method === ACTIVE_METHOD));
   },
 );

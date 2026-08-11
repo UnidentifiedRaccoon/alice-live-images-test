@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-01-level-ipoteka-2026-03-wan-2-7",
+  "case_id": "01#03",
+  "sheet_row": 7,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/03.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a048ddca495b52c9d873940_6a049120952e1f1e50d73cc7/orig",
+    "sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+    "width": 1460,
+    "height": 954,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Самостоятельный пятисекундный camera-only план: единый плавный push-in развивается равномерно почти всю длительность и удерживает фокус на существующих синих столбцах февраля 2026 года. Амплитуда ограничена 6% экрана с учётом риска provider expansion; к финалу получается умеренно приближённая, но всё ещё полная композиция графика без кропа, деформации или открытия пространства за исходными границами.",
+  "prompt": {
+    "positive": "Push the camera steadily toward the existing blue February 2026 bars, with total screen travel capped at 6% and the complete chart visible throughout. Keep the chart plane rigid and every region, series, Russian glyph, value, bar length, alignment, gridline, and legend entry unchanged, finishing on a modestly closer full-chart composition.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-03",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-03/result.json",
+    "result_sha256": "89ed4ee08817d1ea3ec3f83c2f967ec0571f108c8a15636273bcf694ab42bec6",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/01-03.json",
+    "repair_feedback_sha256": "b82513469107d464f44049854a5e358aa165b5b3821e6e6077cd745257ab203f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-01-level-ipoteka-2026-03/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:f378bb0ab5cae5a3a80e03bf3ac7c80fa59b96b38cbfe9bd098cadd527199971",
+      "instruction_bundle_sha256": "9d89e904099e186e4f07b2009de9c467f23a9c838820b8a865b8ed1582eb9853",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff244-3545-7621-a1e0-2e744bc7aa49"
+      },
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7"
+      ],
+      "source_image_sha256": "5e78bdbd4e7c101a7720c8e1b9d5194d98318829642a7b1a8bd431f6f9fca977",
+      "article_context_sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-14-promopages-govorit-s-auditoriei-05-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-14-promopages-govorit-s-auditoriei-05",
+  "case_id": "14#05",
+  "sheet_row": 182,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/05.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/05.mp4",
+  "status": "succeeded",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera moves immediately in one gentle centered push toward the existing two-column interface card grid, keeping all four cards continuously visible as a single rigid, unchanged UI plane. At the end, the grid is clearly but slightly closer within 8% screen travel, with every original label, glyph, and control unchanged.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe911c0a3777e9c6a2de/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "c628fffe24c02133de7a13bb50caf43c4231c14219843f6a59a8e63fc3b6bf51",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "bIvj9KX2yNYvadUtW9J8",
+  "submitted_at": "2026-08-11T20:08:21Z",
+  "completed_at": "2026-08-11T20:14:30Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "check": "source-dimensions",
+    "model_id": "google/veo-3.1-lite",
+    "width": 2048,
+    "height": 895,
+    "minimum_dimension_px": null,
+    "conforms": true,
+    "normalization_applied": false
+  },
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 4217428,
+    "sha256": "ade0354c554a58ddf4eeeee21150460c9d1f6ed80bff872482de9b770d59a835"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}
