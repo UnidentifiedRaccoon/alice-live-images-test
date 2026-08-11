@@ -4,8 +4,14 @@
   const MANIFEST_URL = "../clipmaker-lite-test/tune-manifest.json";
   const RAW_REPOSITORY_BASE =
     "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/";
-  const REVIEW_STORAGE_PREFIX = "alice-live:tune-review:v1:";
+  const REVIEW_STORAGE_PREFIX = "alice-live:tune-review:v2:";
   const REVIEW_OUTCOMES = Object.freeze(["helped", "same-or-unclear", "worse"]);
+  const ACTIVE_VIDEO_METHOD = "eliza-i2v";
+
+  const ITERATION_LABELS = Object.freeze({
+    "regenerated-v5": "Новый I2V · v5",
+    "reused-helped": "Сохранено: помогло",
+  });
 
   const MODEL_LABELS = Object.freeze({
     "alibaba/wan-2.2": "Wan 2.2",
@@ -31,11 +37,7 @@
     landscape: "Среда",
   });
 
-  const MODE_LABELS = Object.freeze({
-    i2v: "Eliza I2V",
-    "eliza-i2v": "Eliza I2V",
-    "deterministic-compositor": "Deterministic compositor",
-    "deterministic-compositor-fallback": "Deterministic fallback",
+  const STRATEGY_LABELS = Object.freeze({
     "image-to-video": "Image-to-video",
     "camera-only": "Camera-only",
   });
@@ -135,62 +137,42 @@
     return state || rating || "unclassified";
   }
 
-  function normalizeMode(target, tuned, planning) {
-    const direct = firstText(
-      tuned.execution_mode,
-      tuned.mode,
-      target.execution_mode,
-      target.mode,
-    );
-    if (direct) return direct;
-
-    const strategy = firstText(
-      asObject(planning.structured_intent).rendering_strategy,
-      planning.rendering_strategy,
-    );
-    return strategy === "deterministic-compositor" ? strategy : strategy ? "i2v" : "unknown";
-  }
-
-  function normalizeProviderAttempt(value) {
-    const attempt = asObject(value);
-    const promptEvaluated =
-      typeof attempt.prompt_evaluated === "boolean"
-        ? attempt.prompt_evaluated
-        : typeof attempt.promptEvaluated === "boolean"
-          ? attempt.promptEvaluated
-          : null;
+  function normalizeSourceEvaluation(value) {
+    const evaluation = asObject(value);
     return {
-      status: firstText(attempt.status),
-      promptEvaluated,
-      runPath: firstText(attempt.run_path, attempt.runPath),
-      runSha256: firstText(attempt.run_sha256, attempt.runSha256),
-      providerJobId: firstText(attempt.provider_job_id, attempt.providerJobId),
-      error: firstText(attempt.error, attempt.terminal_error),
+      evaluationId: firstText(evaluation.evaluation_id, evaluation.evaluationId),
+      outcome: REVIEW_OUTCOMES.includes(evaluation.outcome) ? evaluation.outcome : "",
+      note: cleanText(evaluation.note).slice(0, 2000),
+      updatedAt: firstText(evaluation.updated_at, evaluation.updatedAt),
     };
   }
 
-  function actualVideoMethod(videoValue, executionMode = "") {
+  function normalizeIteration(value) {
+    const iteration = asObject(value);
+    const action = firstText(iteration.action);
+    const normalizedAction = Object.hasOwn(ITERATION_LABELS, action) ? action : "";
+    const reviewScope = normalizedAction === "regenerated-v5" && iteration.review_scope === true;
+    return {
+      action: normalizedAction,
+      reviewScope,
+      sourceEvaluation: normalizeSourceEvaluation(iteration.source_evaluation),
+    };
+  }
+
+  function actualVideoMethod(videoValue) {
     const video = asObject(videoValue);
     const explicit = firstText(video.method);
-    if (explicit) return explicit;
-    if (executionMode === "deterministic-compositor") return executionMode;
-    if (executionMode === "i2v") return "eliza-i2v";
-    return executionMode || "unknown";
+    return explicit === ACTIVE_VIDEO_METHOD ? explicit : "";
   }
 
-  function inferPromptEvaluated(method, explicitValue) {
-    if (typeof explicitValue === "boolean") return explicitValue;
-    if (method === "eliza-i2v") return true;
-    if (
-      method === "deterministic-compositor" ||
-      method === "deterministic-compositor-fallback"
-    ) {
-      return false;
-    }
-    return null;
+  function historicalMethodLabel(value) {
+    const method = cleanText(value);
+    if (method === ACTIVE_VIDEO_METHOD) return "v4 · предыдущий I2V";
+    if (method.includes("deterministic")) return "v4 · deterministic отклонён";
+    return "v4 · исторический результат";
   }
 
-  function normalizeTunedVideo(tunedValue, executionMode = "") {
+  function normalizeVideoRecord(tunedValue, { active = false } = {}) {
     const tuned = asObject(tunedValue);
     const videoValue = tuned.video;
     const video = asObject(videoValue);
@@ -198,16 +180,12 @@
       tuned.qa ?? tuned.video_qa ?? tuned.contract_check ?? video.qa ?? video.contract_check;
     const qa = asObject(qaValue);
     const media = asObject(tuned.media || video.media);
-    const method = actualVideoMethod(
-      { method: firstText(video.method, tuned.video_method) },
-      executionMode,
-    );
-    const promptEvaluated = inferPromptEvaluated(
-      method,
-      typeof video.prompt_evaluated === "boolean"
-        ? video.prompt_evaluated
-        : tuned.prompt_evaluated,
-    );
+    const methodRaw = firstText(video.method);
+    const method = active ? actualVideoMethod(video) : methodRaw;
+    const promptEvaluated =
+      typeof video.prompt_evaluated === "boolean" ? video.prompt_evaluated : null;
+    const providerAttempt = asObject(video.provider_attempt);
+    const safetyBarrier = asObject(video.safety_barrier);
     return {
       url: firstText(
         tuned.video_url,
@@ -230,9 +208,13 @@
       media,
       qa,
       method,
+      methodRaw,
       promptEvaluated,
-      providerAttempt: normalizeProviderAttempt(
-        video.provider_attempt ?? tuned.provider_attempt,
+      unavailableReason: firstText(
+        video.unavailable_reason,
+        video.error,
+        safetyBarrier.reason,
+        providerAttempt.error,
       ),
       qaStatus: firstText(tuned.qa_status, video.qa_status, qa.status),
       qaVerified:
@@ -244,7 +226,25 @@
     };
   }
 
-  function tunedVideoState(videoValue, executionMode) {
+  function normalizeTunedVideo(tunedValue) {
+    return normalizeVideoRecord(tunedValue, { active: true });
+  }
+
+  function normalizePreviousTuned(value) {
+    const tuned = asObject(value);
+    if (!Object.keys(tuned).length) return null;
+    return {
+      executionMode: firstText(tuned.execution_mode),
+      scenePlan: firstText(tuned.scene_plan, tuned.plan),
+      positivePrompt:
+        tuned.positive_prompt === null
+          ? null
+          : firstText(tuned.positive_prompt, tuned.prompt),
+      video: normalizeVideoRecord(tuned),
+    };
+  }
+
+  function tunedVideoState(videoValue) {
     const video = asObject(videoValue);
     if (firstText(video.url, video.repositoryPath)) return "available";
     const status = firstText(video.status).toLowerCase();
@@ -307,16 +307,33 @@
           ...textList(target.comment),
           ...textList(target.feedback),
         ].filter((value, index, all) => all.indexOf(value) === index);
-        const executionMode = normalizeMode(target, tuned, planning);
-        const tunedVideo = normalizeTunedVideo(tuned, executionMode);
+        const executionMode = firstText(tuned.execution_mode);
+        const tunedVideo = normalizeTunedVideo(tuned);
+        const iteration = normalizeIteration(target.iteration);
+        const previousTuned = normalizePreviousTuned(target.previous_tuned);
         const structuredIntent = asObject(
           planning.structured_intent || caseRecord.structured_intent || tuned.structured_intent,
         );
         const sourceWidth = finiteNumber(source.width || caseRecord.width);
         const sourceHeight = finiteNumber(source.height || caseRecord.height);
 
+        const itemId = `${caseId}::${modelId}`;
+        if (!iteration.action) issues.push(`${itemId}: iteration.action не указан`);
+        if (iteration.action === "regenerated-v5" && !iteration.reviewScope) {
+          issues.push(`${itemId}: regenerated-v5 должен входить в review_scope`);
+        }
+        if (iteration.action === "reused-helped" && iteration.reviewScope) {
+          issues.push(`${itemId}: reused-helped не должен входить в review_scope`);
+        }
+        if (executionMode !== "i2v") {
+          issues.push(`${itemId}: active tuned.execution_mode должен быть i2v`);
+        }
+        if (tunedVideo.method !== ACTIVE_VIDEO_METHOD) {
+          issues.push(`${itemId}: active tuned.video.method должен быть eliza-i2v`);
+        }
+
         items.push({
-          id: `${caseId}::${modelId}`,
+          id: itemId,
           caseId,
           articleNumber: firstText(caseRecord.article_number, caseRecord.articleNumber),
           articleSlug: firstText(caseRecord.article_slug, caseRecord.articleSlug),
@@ -346,6 +363,7 @@
           ratingRaw,
           failureCategory: failureCategory || "unclassified",
           comments,
+          iteration,
           baseline: {
             scenePlan: firstText(baseline.scene_plan, baseline.plan),
             positivePrompt: firstText(baseline.positive_prompt, baseline.prompt),
@@ -376,6 +394,7 @@
             runtime: asObject(tuned.runtime),
             video: tunedVideo,
           },
+          previousTuned,
           planning: {
             runId: firstText(planning.run_id, caseRecord.run_id),
             resultPath: firstText(planning.result_path, caseRecord.result_path),
@@ -393,6 +412,13 @@
     }
 
     const uniqueCaseIds = new Set(items.map((item) => item.caseId));
+    const reviewTargetCount = items.filter((item) => item.iteration.reviewScope).length;
+    const regeneratedTargetCount = items.filter(
+      (item) => item.iteration.action === "regenerated-v5",
+    ).length;
+    const reusedHelpedTargetCount = items.filter(
+      (item) => item.iteration.action === "reused-helped",
+    ).length;
     return {
       schemaVersion: raw.schema_version,
       role: firstText(raw.manifest_role),
@@ -405,6 +431,9 @@
       summary: asObject(raw.summary),
       caseCount: uniqueCaseIds.size,
       targetCount: items.length,
+      reviewTargetCount,
+      regeneratedTargetCount,
+      reusedHelpedTargetCount,
       items,
       issues,
     };
@@ -452,13 +481,17 @@
 
   function applyFilters(items, filters = {}) {
     return items.filter((item) => {
+      if (
+        filters.iteration &&
+        filters.iteration !== "all" &&
+        item.iteration.action !== filters.iteration
+      ) {
+        return false;
+      }
       if (filters.category && filters.category !== "all" && item.failureCategory !== filters.category) {
         return false;
       }
       if (filters.model && filters.model !== "all" && item.modelId !== filters.model) {
-        return false;
-      }
-      if (filters.mode && filters.mode !== "all" && item.tuned.executionMode !== filters.mode) {
         return false;
       }
       if (filters.rating && filters.rating !== "all" && item.ratingState !== filters.rating) {
@@ -476,19 +509,24 @@
     return { outcome, note, updatedAt };
   }
 
+  function reviewScopeItems(items) {
+    return items.filter((item) => item.iteration?.reviewScope === true);
+  }
+
   function summarizeReviews(items, reviewValue) {
+    const scopedItems = reviewScopeItems(items);
     const reviews = asObject(reviewValue);
     const summary = {
-      target_count: items.length,
+      target_count: scopedItems.length,
       saved_entry_count: 0,
       evaluated_count: 0,
       draft_count: 0,
       helped_count: 0,
       same_or_unclear_count: 0,
       worse_count: 0,
-      unrated_count: items.length,
+      unrated_count: scopedItems.length,
     };
-    items.forEach((item) => {
+    scopedItems.forEach((item) => {
       const review = normalizeReviewEntry(reviews[item.id]);
       if (!review.outcome && !review.note) return;
       summary.saved_entry_count += 1;
@@ -505,44 +543,16 @@
     return summary;
   }
 
-  function fallbackAudit(videoValue) {
-    const video = asObject(videoValue);
-    if (actualVideoMethod(video) !== "deterministic-compositor-fallback") return null;
-    const attempt = normalizeProviderAttempt(video.providerAttempt || video.provider_attempt);
-    return {
-      title: "Prompt не оценён: provider filtered",
-      status: attempt.status || "provider-failed",
-      providerJobId: attempt.providerJobId,
-      error: attempt.error || "Provider завершил попытку без reviewable output.",
-    };
-  }
-
-  function exportProviderAttempt(value) {
-    const attempt = normalizeProviderAttempt(value);
-    if (!attempt.status && !attempt.providerJobId && !attempt.error) return null;
-    return {
-      status: attempt.status || null,
-      prompt_evaluated: attempt.promptEvaluated,
-      run_path: attempt.runPath || null,
-      run_sha256: attempt.runSha256 || null,
-      provider_job_id: attempt.providerJobId || null,
-      error: attempt.error || null,
-    };
-  }
-
   function buildReviewExport(manifestValue, reviewValue, exportedAt = new Date().toISOString()) {
     const manifest = asObject(manifestValue);
-    const items = Array.isArray(manifest.items) ? manifest.items : [];
+    const items = reviewScopeItems(Array.isArray(manifest.items) ? manifest.items : []);
     const reviews = asObject(reviewValue);
     const evaluations = [];
     items.forEach((item) => {
       const review = normalizeReviewEntry(reviews[item.id]);
       if (!review.outcome && !review.note) return;
-      const method = actualVideoMethod(item.tuned.video, item.tuned.executionMode);
-      const promptEvaluated = inferPromptEvaluated(
-        method,
-        item.tuned.video.promptEvaluated,
-      );
+      const method = actualVideoMethod(item.tuned.video);
+      const sourceEvaluation = item.iteration.sourceEvaluation;
       evaluations.push({
         evaluation_id: item.id,
         case_id: item.caseId,
@@ -550,29 +560,35 @@
         article_slug: item.articleSlug || null,
         image_id: item.source.imageId || null,
         model_id: item.modelId,
-        planned_execution_mode: item.tuned.executionMode,
+        iteration_action: item.iteration.action,
+        execution_mode: item.tuned.executionMode,
         method,
-        prompt_evaluated: promptEvaluated,
+        prompt_evaluated: item.tuned.video.promptEvaluated,
+        source_evaluation: {
+          evaluation_id: sourceEvaluation.evaluationId || null,
+          outcome: sourceEvaluation.outcome || null,
+          note: sourceEvaluation.note || null,
+          updated_at: sourceEvaluation.updatedAt || null,
+        },
         outcome: review.outcome || null,
         note: review.note || null,
         updated_at: review.updatedAt || null,
         tuned_video: {
-          state: tunedVideoState(item.tuned.video, item.tuned.executionMode),
+          state: tunedVideoState(item.tuned.video),
           status: item.tuned.video.status || null,
           delivery: item.tuned.video.delivery || null,
           url: item.tuned.video.url || null,
           repository_video_path: item.tuned.video.repositoryPath || null,
           sha256: item.tuned.video.sha256 || null,
           method,
-          prompt_evaluated: promptEvaluated,
-          provider_attempt: exportProviderAttempt(item.tuned.video.providerAttempt),
+          prompt_evaluated: item.tuned.video.promptEvaluated,
           qa_status: item.tuned.video.qaStatus || null,
           qa_verified: item.tuned.video.qaVerified,
         },
       });
     });
     return {
-      schema_version: 1,
+      schema_version: 2,
       export_role: "clipmaker-lite-tune-evaluation",
       exported_at: exportedAt,
       dataset: {
@@ -580,6 +596,8 @@
         batch_id: manifest.batchId || null,
         contract_version: manifest.contractVersion || null,
         manifest_generated_at: manifest.generatedAt || null,
+        iteration_action: "regenerated-v5",
+        review_target_count: items.length,
       },
       summary: summarizeReviews(items, reviews),
       evaluations,
@@ -591,14 +609,14 @@
     applyFilters,
     buildReviewExport,
     encodeRepositoryPath,
-    fallbackAudit,
-    inferPromptEvaluated,
-    modeLabel,
+    historicalMethodLabel,
+    iterationLabel,
     normalizeManifest,
-    normalizeProviderAttempt,
+    normalizeIteration,
     normalizeReviewEntry,
     normalizeRatingState,
     normalizeTunedVideo,
+    reviewScopeItems,
     resolveMediaUrl,
     summarizeReviews,
     tunedVideoState,
@@ -611,13 +629,13 @@
     datasetStatus: document.querySelector("#datasetStatus"),
     caseCountSummary: document.querySelector("#caseCountSummary"),
     targetCountSummary: document.querySelector("#targetCountSummary"),
-    regenerateCountSummary: document.querySelector("#regenerateCountSummary"),
-    blankCountSummary: document.querySelector("#blankCountSummary"),
-    compositorCountSummary: document.querySelector("#compositorCountSummary"),
+    regeneratedCountSummary: document.querySelector("#regeneratedCountSummary"),
+    reusedCountSummary: document.querySelector("#reusedCountSummary"),
+    reviewTargetCountSummary: document.querySelector("#reviewTargetCountSummary"),
     filterForm: document.querySelector("#filterForm"),
+    iterationFilter: document.querySelector("#iterationFilter"),
     categoryFilter: document.querySelector("#categoryFilter"),
     modelFilter: document.querySelector("#modelFilter"),
-    modeFilter: document.querySelector("#modeFilter"),
     ratingFilter: document.querySelector("#ratingFilter"),
     resetFilters: document.querySelector("#resetFilters"),
     filterResult: document.querySelector("#filterResult"),
@@ -701,7 +719,7 @@
       if (raw) {
         const parsed = JSON.parse(raw);
         const entries = asObject(parsed.entries || parsed);
-        const validIds = new Set(state.items.map((item) => item.id));
+        const validIds = new Set(reviewScopeItems(state.items).map((item) => item.id));
         Object.entries(entries).forEach(([id, value]) => {
           if (!validIds.has(id)) return;
           const review = normalizeReviewEntry(value);
@@ -724,7 +742,7 @@
       window.localStorage.setItem(
         state.reviewStorageKey,
         JSON.stringify({
-          schema_version: 1,
+          schema_version: 2,
           dataset_id: state.manifest.batchId || state.manifest.ticket || null,
           entries: state.reviews,
         }),
@@ -774,8 +792,16 @@
     return CONTENT_CLASS_LABELS[value] || value.replaceAll("_", " ") || "—";
   }
 
-  function modeLabel(value) {
-    return MODE_LABELS[value] || value || "Не указан";
+  function iterationLabel(value) {
+    return ITERATION_LABELS[value] || "Итерация не указана";
+  }
+
+  function strategyLabel(value) {
+    return STRATEGY_LABELS[value] || value || "Не указана";
+  }
+
+  function activeMethodLabel(value) {
+    return value === ACTIVE_VIDEO_METHOD ? "Eliza I2V" : "Метод не подтверждён";
   }
 
   function ratingLabel(item) {
@@ -784,9 +810,9 @@
 
   function setControlState(enabled) {
     [
+      dom.iterationFilter,
       dom.categoryFilter,
       dom.modelFilter,
-      dom.modeFilter,
       dom.ratingFilter,
       dom.resetFilters,
       dom.targetSelect,
@@ -812,13 +838,22 @@
 
   function populateFilters() {
     const previous = {
+      iteration: dom.iterationFilter.value || "regenerated-v5",
       category: dom.categoryFilter.value,
       model: dom.modelFilter.value,
-      mode: dom.modeFilter.value,
       rating: dom.ratingFilter.value,
     };
     const unique = (selector) => [...new Set(state.items.map(selector).filter(Boolean))].sort();
 
+    setOptions(
+      dom.iterationFilter,
+      [
+        { value: "regenerated-v5", label: ITERATION_LABELS["regenerated-v5"] },
+        { value: "reused-helped", label: ITERATION_LABELS["reused-helped"] },
+        { value: "all", label: "Все 65 целей" },
+      ],
+      previous.iteration,
+    );
     setOptions(
       dom.categoryFilter,
       [
@@ -842,17 +877,6 @@
       previous.model,
     );
     setOptions(
-      dom.modeFilter,
-      [
-        { value: "all", label: "Все режимы" },
-        ...unique((item) => item.tuned.executionMode).map((value) => ({
-          value,
-          label: modeLabel(value),
-        })),
-      ],
-      previous.mode,
-    );
-    setOptions(
       dom.ratingFilter,
       [
         { value: "all", label: "Все оценки" },
@@ -867,32 +891,32 @@
 
   function readFilters() {
     return {
+      iteration: dom.iterationFilter.value,
       category: dom.categoryFilter.value,
       model: dom.modelFilter.value,
-      mode: dom.modeFilter.value,
       rating: dom.ratingFilter.value,
     };
   }
 
   function updateSummary() {
-    const ratingSummary = asObject(state.manifest.summary.rating);
-    const modeSummary = asObject(state.manifest.summary.execution_mode_counts);
-    const regenerate = finiteNumber(ratingSummary.regenerate_count) ??
-      state.items.filter((item) => item.ratingState === "regenerate").length;
-    const blank = finiteNumber(ratingSummary.blank_count) ??
-      state.items.filter((item) => item.ratingState === "blank").length;
-    const compositor = finiteNumber(modeSummary["deterministic-compositor"]) ??
-      state.items.filter((item) => item.tuned.executionMode === "deterministic-compositor").length;
-
     dom.caseCountSummary.textContent = formatNumber(
       finiteNumber(state.manifest.scope.case_count) ?? state.manifest.caseCount,
     );
     dom.targetCountSummary.textContent = formatNumber(
       finiteNumber(state.manifest.scope.target_count) ?? state.manifest.targetCount,
     );
-    dom.regenerateCountSummary.textContent = formatNumber(regenerate);
-    dom.blankCountSummary.textContent = formatNumber(blank);
-    dom.compositorCountSummary.textContent = formatNumber(compositor);
+    dom.regeneratedCountSummary.textContent = formatNumber(
+      finiteNumber(state.manifest.scope.regenerated_target_count) ??
+        state.manifest.regeneratedTargetCount,
+    );
+    dom.reusedCountSummary.textContent = formatNumber(
+      finiteNumber(state.manifest.scope.reused_helped_target_count) ??
+        state.manifest.reusedHelpedTargetCount,
+    );
+    dom.reviewTargetCountSummary.textContent = formatNumber(
+      finiteNumber(state.manifest.scope.review_target_count) ??
+        state.manifest.reviewTargetCount,
+    );
   }
 
   function updateTargetSelect(selectedId) {
@@ -909,7 +933,7 @@
     url.searchParams.set("case", item.caseId);
     url.searchParams.set("model", item.modelId);
     const filters = readFilters();
-    ["category", "mode", "rating"].forEach((key) => {
+    ["iteration", "category", "rating"].forEach((key) => {
       if (filters[key] && filters[key] !== "all") url.searchParams.set(key, filters[key]);
       else url.searchParams.delete(key);
     });
@@ -963,10 +987,6 @@
         title: "Tuned MP4 недоступен",
         note: videoStatus || "Manifest помечает результат как недоступный.",
       },
-      "not-applicable": {
-        title: "MP4 не требуется",
-        note: "Deterministic compositor — осознанный abstention от generative I2V.",
-      },
     }[videoState] || {
       title: "Tuned MP4 не указан",
       note: "Добавьте HTTPS URL или repository video path в manifest.",
@@ -982,29 +1002,48 @@
     `;
   }
 
-  function fallbackNoticeMarkup(video) {
-    const audit = fallbackAudit(video);
-    if (!audit) return "";
-    const terminal = [audit.status, audit.providerJobId && `job ${audit.providerJobId}`]
-      .filter(Boolean)
-      .join(" · ");
+  function sourceEvaluationMarkup(item) {
+    const evaluation = item.iteration.sourceEvaluation;
+    const outcome = evaluation.outcome || "unrated";
+    const outcomeLabel = {
+      helped: "Helped",
+      "same-or-unclear": "Same / unclear",
+      worse: "Worse",
+      unrated: "Без оценки",
+    }[outcome] || outcome;
+    const note = evaluation.note || "Текстовый комментарий отсутствует.";
+    const timestamp = evaluation.updatedAt ? ` · ${formatDate(evaluation.updatedAt)}` : "";
     return `
-      <aside class="fallbackNotice" aria-label="Provider fallback audit">
-        <strong>${escapeHtml(audit.title)}</strong>
-        <p>provider_attempt terminal${terminal ? ` · ${escapeHtml(terminal)}` : ""}</p>
-        <small>${escapeHtml(audit.error)}</small>
+      <aside class="priorEvaluation" aria-label="Импортированная оценка предыдущей итерации">
+        <div>
+          <p class="sectionKicker">Импорт из v4</p>
+          <strong>${escapeHtml(outcomeLabel)}</strong>
+        </div>
+        <p>${escapeHtml(note)}</p>
+        <small>${escapeHtml(evaluation.evaluationId || item.id)}${escapeHtml(timestamp)}</small>
       </aside>
     `;
   }
 
   function reviewEditorMarkup(item) {
+    if (!item.iteration.reviewScope) {
+      return `
+        <section class="reviewScopeNotice" aria-label="Статус review scope">
+          <div>
+            <p class="sectionKicker">Не входит в review v5</p>
+            <h3>${escapeHtml(ITERATION_LABELS["reused-helped"])}</h3>
+          </div>
+          <p>Этот I2V уже получил Helped в предыдущей итерации. Он сохранён как контрольный результат и не попадёт в экспорт v5.</p>
+        </section>
+      `;
+    }
     const review = normalizeReviewEntry(state.reviews[item.id]);
-    const videoState = tunedVideoState(item.tuned.video, item.tuned.executionMode);
-    const method = actualVideoMethod(item.tuned.video, item.tuned.executionMode);
+    const videoState = tunedVideoState(item.tuned.video);
+    const comparisonCopy = item.previousTuned
+      ? "original baseline и предыдущим tune v4"
+      : "original baseline";
     const reviewPrompt = videoState === "available"
-      ? method === "deterministic-compositor-fallback"
-        ? "Сравните deterministic fallback с baseline. Оценка относится к fallback MP4; исходный I2V prompt provider не оценил."
-        : "Сравните tuned MP4 с baseline и оцените, помогло ли изменение Clipmaker Lite."
+      ? `Сравните новый I2V v5 с ${comparisonCopy}, затем оцените изменение Clipmaker Lite.`
       : "Tuned MP4 ещё нельзя сравнить с baseline; оценку и заметку можно сохранить сейчас и уточнить после delivery.";
     const checked = (outcome) => review.outcome === outcome ? " checked" : "";
     const saved = review.updatedAt
@@ -1014,7 +1053,7 @@
       <section class="reviewWorkbench" aria-labelledby="tuneReviewTitle">
         <div>
           <p class="sectionKicker">Human review · local only</p>
-          <h3 id="tuneReviewTitle">Помог ли tune?</h3>
+          <h3 id="tuneReviewTitle">Помог ли новый I2V?</h3>
           <p class="reviewPrompt">${escapeHtml(reviewPrompt)}</p>
         </div>
         <div class="reviewEditor" data-review-editor>
@@ -1080,44 +1119,62 @@
       item.baseline.videoUrl || item.baseline.repositoryVideoPath,
     );
     const tunedVideo = item.tuned.video;
-    const tunedMethod = actualVideoMethod(tunedVideo, item.tuned.executionMode);
+    const tunedMethod = actualVideoMethod(tunedVideo);
     const tunedVideoUrl = resolveMediaUrl(tunedVideo.url || tunedVideo.repositoryPath);
-    const tunedState = tunedVideoState(tunedVideo, item.tuned.executionMode);
+    const tunedState = tunedVideoState(tunedVideo);
+    const previousTuned = item.previousTuned;
+    const previousVideo = previousTuned?.video || null;
+    const previousVideoUrl = previousVideo
+      ? resolveMediaUrl(previousVideo.url || previousVideo.repositoryPath)
+      : "";
+    const previousState = previousVideo ? tunedVideoState(previousVideo) : "unavailable";
     const sourceDimensions = item.source.width && item.source.height
       ? `${formatNumber(item.source.width)} × ${formatNumber(item.source.height)}`
       : "Размер не указан";
-    const media = item.baseline.media;
+    const baselineMediaInfo = item.baseline.media;
     const comparisonRatio = mediaRatio(item.source.width, item.source.height);
-    const baselineDimensions = finiteNumber(media.width) && finiteNumber(media.height)
-      ? `${formatNumber(media.width)} × ${formatNumber(media.height)}`
+    const baselineDimensions = finiteNumber(baselineMediaInfo.width) && finiteNumber(baselineMediaInfo.height)
+      ? `${formatNumber(baselineMediaInfo.width)} × ${formatNumber(baselineMediaInfo.height)}`
       : "—";
-    const baselineDuration = finiteNumber(media.duration_seconds);
-    const tunedMedia = tunedVideo.media;
-    const tunedDimensions = finiteNumber(tunedMedia.width) && finiteNumber(tunedMedia.height)
-      ? `${formatNumber(tunedMedia.width)} × ${formatNumber(tunedMedia.height)}`
+    const baselineDuration = finiteNumber(baselineMediaInfo.duration_seconds);
+    const tunedMediaInfo = tunedVideo.media;
+    const tunedDimensions = finiteNumber(tunedMediaInfo.width) && finiteNumber(tunedMediaInfo.height)
+      ? `${formatNumber(tunedMediaInfo.width)} × ${formatNumber(tunedMediaInfo.height)}`
       : "—";
-    const tunedDuration = finiteNumber(tunedMedia.duration_seconds);
+    const tunedDuration = finiteNumber(tunedMediaInfo.duration_seconds);
+    const previousMediaInfo = previousVideo?.media || {};
+    const previousDimensions = finiteNumber(previousMediaInfo.width) && finiteNumber(previousMediaInfo.height)
+      ? `${formatNumber(previousMediaInfo.width)} × ${formatNumber(previousMediaInfo.height)}`
+      : "—";
+    const previousDuration = finiteNumber(previousMediaInfo.duration_seconds);
     const runtime = item.tuned.runtime;
     const intent = item.planning.structuredIntent;
     const strategy = firstText(intent.rendering_strategy);
-    const isCompositor = item.tuned.executionMode === "deterministic-compositor";
+    const iteration = iterationLabel(item.iteration.action);
     const sourceMedia = sourceUrl
       ? `<img data-source-image src="${escapeHtml(sourceUrl)}" alt="${escapeHtml(item.source.caption || item.title)}" decoding="async" /><p class="mediaUnavailable" data-source-error hidden>Исходник не удалось загрузить. Проверьте URL или repository path в manifest.</p>`
       : '<p class="mediaUnavailable">В manifest нет URL или repository path исходника.</p>';
     const baselineMedia = baselineVideoUrl
-      ? `<video data-media-video data-media-role="baseline" data-media-src="${escapeHtml(baselineVideoUrl)}" controls playsinline preload="metadata"${sourceUrl ? ` poster="${escapeHtml(sourceUrl)}"` : ""} aria-label="Baseline ${escapeHtml(item.modelLabel)}"></video><p class="mediaUnavailable" data-media-error="baseline" hidden>Baseline MP4 не удалось загрузить. Проверьте delivery URL в manifest.</p>`
-      : '<p class="mediaUnavailable">В manifest нет existing baseline MP4.</p>';
+      ? `<video data-media-video data-media-role="baseline" data-media-src="${escapeHtml(baselineVideoUrl)}" controls playsinline preload="metadata"${sourceUrl ? ` poster="${escapeHtml(sourceUrl)}"` : ""} aria-label="Original baseline ${escapeHtml(item.modelLabel)}"></video><p class="mediaUnavailable" data-media-error="baseline" hidden>Original baseline MP4 не удалось загрузить.</p>`
+      : '<p class="mediaUnavailable">В manifest нет original baseline MP4.</p>';
+    const previousMediaMarkup = previousVideoUrl && previousState === "available"
+      ? `<video data-media-video data-media-role="previous" data-media-src="${escapeHtml(previousVideoUrl)}" controls playsinline preload="metadata"${sourceUrl ? ` poster="${escapeHtml(sourceUrl)}"` : ""} aria-label="Previous tune v4 ${escapeHtml(item.modelLabel)}"></video><p class="mediaUnavailable" data-media-error="previous" hidden>Previous tune v4 MP4 не удалось загрузить.</p>`
+      : previousVideo
+        ? tunedMediaPlaceholder(previousState, previousVideo.status)
+        : "";
     const tunedMediaMarkup = tunedState === "available"
-      ? `<video data-media-video data-media-role="tuned" data-media-src="${escapeHtml(tunedVideoUrl)}" controls playsinline preload="metadata"${sourceUrl ? ` poster="${escapeHtml(sourceUrl)}"` : ""} aria-label="Tuned ${escapeHtml(item.modelLabel)}"></video><p class="mediaUnavailable" data-media-error="tuned" hidden>Tuned MP4 не удалось загрузить. Проверьте remote delivery URL в manifest.</p>`
-      : tunedMediaPlaceholder(tunedState, tunedVideo.status);
+      ? `<video data-media-video data-media-role="tuned" data-media-src="${escapeHtml(tunedVideoUrl)}" controls playsinline preload="metadata"${sourceUrl ? ` poster="${escapeHtml(sourceUrl)}"` : ""} aria-label="${escapeHtml(iteration)} ${escapeHtml(item.modelLabel)}"></video><p class="mediaUnavailable" data-media-error="tuned" hidden>Active I2V MP4 не удалось загрузить. Проверьте remote delivery URL в manifest.</p>`
+      : tunedMediaPlaceholder(
+          tunedState,
+          tunedVideo.unavailableReason || tunedVideo.status,
+        );
     const tunedQaDetails = Object.keys(tunedVideo.qa).length
-      ? `<details class="mediaQa"><summary>QA tuned MP4</summary><pre>${escapeHtml(JSON.stringify(tunedVideo.qa, null, 2))}</pre></details>`
+      ? `<details class="mediaQa"><summary>QA active I2V MP4</summary><pre>${escapeHtml(JSON.stringify(tunedVideo.qa, null, 2))}</pre></details>`
       : "";
     const tunedDelivery = [
       tunedVideo.delivery,
       tunedVideo.url || tunedVideo.repositoryPath,
     ].filter(Boolean).join(" · ");
-    const fallbackNotice = fallbackNoticeMarkup(tunedVideo);
     const feedback = item.comments.length
       ? item.comments.map((comment) => `<p>${escapeHtml(comment)}</p>`).join("")
       : '<p class="feedbackMissing">Комментарий в исходной оценке отсутствует.</p>';
@@ -1127,12 +1184,35 @@
     const verified = item.planning.provenance.verified === true;
     const provenanceState = verified ? "verified" : "not verified";
     const feasibility = firstText(intent.feasibility_assessment);
-    const decisionDescription = isCompositor
-      ? "Generative I2V намеренно не получает prompt. Scene plan передаёт один ограниченный 2D-эффект детерминированному compositor и сохраняет точный текст, UI или графическое состояние."
-      : `Clipmaker Lite оставил цель в generative I2V${strategy ? ` со стратегией ${modeLabel(strategy)}` : ""}.`;
-    const tunedPromptEmpty = isCompositor
-      ? "null — prompt для video provider не создаётся"
-      : "Tuned prompt не передан.";
+    const decisionDescription = item.iteration.action === "regenerated-v5"
+      ? `Clipmaker Lite заново подготовил provider-bound I2V${strategy ? ` со стратегией ${strategyLabel(strategy)}` : ""}. Предыдущий v4 остаётся только историческим сравнением.`
+      : "Предыдущий Helped I2V сохранён без новой генерации и служит контрольным результатом.";
+    const previousPanel = previousTuned ? `
+      <figure class="mediaPanel historicalPanel">
+        <div class="mediaPanelHeading">
+          <h3>Предыдущий tune · v4</h3>
+          <p class="historicalBadge">${escapeHtml(historicalMethodLabel(previousVideo?.methodRaw))}</p>
+        </div>
+        <div class="mediaFrame" style="--media-ratio: ${escapeHtml(comparisonRatio)}">
+          ${previousMediaMarkup}
+        </div>
+        <figcaption class="mediaCaption">
+          <dl class="mediaFacts">
+            ${inlineFacts([
+              ["Статус", previousVideo?.status || previousState],
+              ["Исторический метод", previousVideo?.methodRaw || "—"],
+              ["Размер", previousDimensions],
+              ["Длительность", previousDuration === null ? "—" : `${previousDuration.toFixed(1)} с`],
+              ["Вес", formatBytes(previousVideo?.bytes)],
+            ])}
+          </dl>
+        </figcaption>
+      </figure>
+    ` : "";
+    const panelCount = previousTuned ? 4 : 3;
+    const comparisonLabel = previousTuned
+      ? "Исходник, original baseline, предыдущий tune v4 и новый I2V v5"
+      : "Исходник, original baseline и сохранённый Helped I2V";
 
     dom.targetView.innerHTML = `
       <header class="caseIdentity">
@@ -1143,15 +1223,15 @@
         </div>
         <dl class="caseFacts">
           ${inlineFacts([
+            ["Итерация", iteration],
             ["Модель", item.modelLabel],
             ["Категория", categoryLabel(item.failureCategory)],
-            ["Класс", contentClassLabel(item.contentClass)],
-            ["Режим", modeLabel(item.tuned.executionMode)],
+            ["Активный метод", activeMethodLabel(tunedMethod)],
           ])}
         </dl>
       </header>
 
-      <section class="mediaComparison" aria-label="Исходник, baseline и tuned video">
+      <section class="mediaComparison" data-panel-count="${panelCount}" aria-label="${escapeHtml(comparisonLabel)}">
         <figure class="mediaPanel">
           <div class="mediaPanelHeading">
             <h3>Исходник</h3>
@@ -1167,7 +1247,7 @@
 
         <figure class="mediaPanel">
           <div class="mediaPanelHeading">
-            <h3>Baseline · existing MP4</h3>
+            <h3>Original baseline</h3>
             <p>${escapeHtml(item.modelLabel)} · ${escapeHtml(item.baseline.status || "status —")}</p>
           </div>
           <div class="mediaFrame" style="--media-ratio: ${escapeHtml(comparisonRatio)}">
@@ -1178,17 +1258,19 @@
               ${inlineFacts([
                 ["Размер", baselineDimensions],
                 ["Длительность", baselineDuration === null ? "—" : `${baselineDuration.toFixed(1)} с`],
-                ["Вес", formatBytes(media.bytes)],
-                ["Звук", media.has_audio === true ? "есть" : media.has_audio === false ? "нет" : "—"],
+                ["Вес", formatBytes(baselineMediaInfo.bytes)],
+                ["Звук", baselineMediaInfo.has_audio === true ? "есть" : baselineMediaInfo.has_audio === false ? "нет" : "—"],
               ])}
             </dl>
           </figcaption>
         </figure>
 
-        <figure class="mediaPanel">
+        ${previousPanel}
+
+        <figure class="mediaPanel activePanel">
           <div class="mediaPanelHeading">
-            <h3>Tuned · MP4</h3>
-            <p class="methodBadge" data-method="${escapeHtml(tunedMethod)}">${escapeHtml(modeLabel(tunedMethod))}</p>
+            <h3>${escapeHtml(iteration)}</h3>
+            <p class="methodBadge" data-method="${escapeHtml(tunedMethod || "unverified")}">${escapeHtml(activeMethodLabel(tunedMethod))}</p>
           </div>
           <div class="mediaFrame" style="--media-ratio: ${escapeHtml(comparisonRatio)}">
             ${tunedMediaMarkup}
@@ -1197,7 +1279,7 @@
             <dl class="mediaFacts">
               ${inlineFacts([
                 ["Статус", tunedVideo.status || tunedState],
-                ["Метод", modeLabel(tunedMethod)],
+                ["Метод из receipt", activeMethodLabel(tunedMethod)],
                 ["Prompt evaluated", tunedVideo.promptEvaluated === true ? "да" : tunedVideo.promptEvaluated === false ? "нет" : "—"],
                 ["QA", tunedQaLabel(tunedVideo)],
                 ["Размер", tunedDimensions],
@@ -1211,7 +1293,7 @@
         </figure>
       </section>
 
-      <section class="analysisComparison" aria-label="Baseline и tuned prompt">
+      <section class="analysisComparison" aria-label="Baseline feedback и active I2V prompt">
         <section class="textPanel">
           <header class="textPanelHeader">
             <div>
@@ -1221,6 +1303,7 @@
             <p class="statusText" data-rating="${escapeHtml(item.ratingState)}">${escapeHtml(ratingLabel(item))}</p>
           </header>
           <blockquote class="feedbackQuote">${feedback}</blockquote>
+          ${sourceEvaluationMarkup(item)}
           <section class="hypothesisBlock">
             <h4>Рабочая гипотеза</h4>
             <p>${escapeHtml(item.hypothesis || "Не указана.")}</p>
@@ -1239,16 +1322,15 @@
         <section class="textPanel">
           <header class="textPanelHeader">
             <div>
-              <p class="sectionKicker">Updated Clipmaker Lite</p>
-              <h3>Tuned plan</h3>
+              <p class="sectionKicker">Active Clipmaker Lite</p>
+              <h3>${escapeHtml(iteration)}</h3>
             </div>
-            <p class="statusText">${escapeHtml(modeLabel(item.tuned.executionMode))}</p>
+            <p class="statusText">${escapeHtml(activeMethodLabel(tunedMethod))}</p>
           </header>
-          ${fallbackNotice}
-          <section class="decisionBlock" data-mode="${escapeHtml(item.tuned.executionMode)}">
+          <section class="decisionBlock" data-mode="i2v">
             <span class="decisionMark" aria-hidden="true"></span>
             <div>
-              <h4 class="decisionTitle">${isCompositor ? "Deterministic compositor · abstention" : "Generative I2V · продолжить"}</h4>
+              <h4 class="decisionTitle">Generative I2V · active</h4>
               <p class="decisionText">${escapeHtml(decisionDescription)}</p>
               ${feasibility ? `<p class="decisionNote">Gate: ${escapeHtml(feasibility)}</p>` : ""}
             </div>
@@ -1257,7 +1339,7 @@
             <h4>Model-specific scene plan</h4>
             <p>${escapeHtml(item.tuned.scenePlan || "Tuned scene plan не передан.")}</p>
           </section>
-          ${promptBlock("Tuned prompt", item.tuned.positivePrompt, tunedPromptEmpty)}
+          ${promptBlock("Active I2V prompt", item.tuned.positivePrompt, "I2V prompt не передан.")}
           <details class="detailDisclosure">
             <summary>Structured intent и runtime</summary>
             ${renderIntent(intent)}
@@ -1364,8 +1446,8 @@
     state.requestedCase = cleanText(query.get("case"));
     state.requestedModel = cleanText(query.get("model"));
     const requestedFilters = {
+      iteration: cleanText(query.get("iteration")),
       category: cleanText(query.get("category")),
-      mode: cleanText(query.get("mode")),
       rating: cleanText(query.get("rating")),
     };
     Object.entries(requestedFilters).forEach(([key, value]) => {
@@ -1418,13 +1500,14 @@
       setControlState(true);
       const generated = formatDate(state.manifest.generatedAt);
       const tunedAvailable = state.items.filter(
-        (item) => tunedVideoState(item.tuned.video, item.tuned.executionMode) === "available",
+        (item) => tunedVideoState(item.tuned.video) === "available",
       ).length;
       dom.datasetStatus.dataset.state = "ready";
       dom.datasetStatus.textContent = [
         state.manifest.ticket || "Tune",
         `${formatNumber(state.manifest.caseCount)} кейсов`,
         `${formatNumber(state.manifest.targetCount)} целей`,
+        `${formatNumber(state.manifest.reviewTargetCount)} на оценку v5`,
         `${formatNumber(tunedAvailable)} tuned MP4`,
         generated ? `собрано ${generated}` : "",
       ].filter(Boolean).join(" · ");
@@ -1436,9 +1519,10 @@
 
   function resetFilters({ focusTitle = true } = {}) {
     dom.filterForm.reset();
-    [dom.categoryFilter, dom.modelFilter, dom.modeFilter, dom.ratingFilter].forEach((select) => {
+    [dom.categoryFilter, dom.modelFilter, dom.ratingFilter].forEach((select) => {
       select.value = "all";
     });
+    dom.iterationFilter.value = "regenerated-v5";
     applyCurrentFilters({ focusTitle });
   }
 

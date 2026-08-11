@@ -8,12 +8,12 @@
     <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
     <meta
       name="description"
-      content="Step 8 Tune — сравнение baseline и обновлённых планов Clipmaker Lite."
+      content="Step 8 Tune — сравнение предыдущего результата и новой I2V-итерации Clipmaker Lite."
     />
     <title>Alice Live · Step №8 · Tune</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../shared.css?v=13" />
-    <link rel="stylesheet" href="styles.css?v=2" />
+    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body>
     <a class="skipLink" href="#caseTitle">К выбранной цели</a>
@@ -59,7 +59,7 @@
             <strong class="viewSwitchTitle">Подготовка к A/B</strong>
             <span class="viewSwitchDescription">PROMOPAGES-10060</span>
           </a>
-          <a aria-current="page" href="./?v=2" aria-label="Шаг 8. Tune — 36 кейсов, 65 целей">
+          <a aria-current="page" href="./?v=3" aria-label="Шаг 8. Tune — 36 кейсов, 65 целей">
             <span class="viewSwitchStep" lang="en">Step №8</span>
             <strong class="viewSwitchTitle">Tune</strong>
             <span class="viewSwitchDescription">36 кейсов · 65 целей</span>
@@ -74,12 +74,11 @@
           <p class="eyebrow">Step №8 · Video tune</p>
           <h1>Tune.</h1>
           <p class="tuneIntro">
-            Сопоставление исходника и существующего baseline MP4 с обратной связью,
-            новым планом Clipmaker Lite, точным prompt и tuned MP4. Фактический
-            renderer берётся из <code>tuned.video.method</code>: Eliza I2V,
-            deterministic compositor или deterministic fallback. Fallback не меняет
-            planned I2V и явно отмечает, что provider не оценил prompt. MP4 подключены
-            через remote delivery и не входят в Pages payload.
+            Сопоставление исходника, original baseline, предыдущего tune v4 и нового
+            I2V v5. В оценку входят только 28 перегенерированных целей; ещё 37 Helped
+            результатов сохранены как контрольная выборка. Активный метод подтверждается
+            только provider receipt <code>tuned.video.method</code>. MP4 подключены через
+            remote delivery и не входят в Pages payload.
           </p>
           <p class="datasetStatus" id="datasetStatus" aria-live="polite">
             Загружаем tune manifest…
@@ -96,21 +95,29 @@
             <dd id="targetCountSummary">—</dd>
           </div>
           <div>
-            <dt>Перегенерация</dt>
-            <dd id="regenerateCountSummary">—</dd>
+            <dt>Новый I2V · v5</dt>
+            <dd id="regeneratedCountSummary">—</dd>
           </div>
           <div>
-            <dt>Пустая оценка</dt>
-            <dd id="blankCountSummary">—</dd>
+            <dt>Сохранено: помогло</dt>
+            <dd id="reusedCountSummary">—</dd>
           </div>
           <div>
-            <dt>Compositor</dt>
-            <dd id="compositorCountSummary">—</dd>
+            <dt>На оценку</dt>
+            <dd id="reviewTargetCountSummary">—</dd>
           </div>
         </dl>
       </header>
 
       <form class="filterRail" id="filterForm" aria-label="Фильтры tune-целей">
+        <label class="filterControl" for="iterationFilter">
+          <span>Итерация</span>
+          <select id="iterationFilter" name="iteration" disabled>
+            <option value="regenerated-v5" selected>Новый I2V · v5</option>
+            <option value="reused-helped">Сохранено: помогло</option>
+            <option value="all">Все 65 целей</option>
+          </select>
+        </label>
         <label class="filterControl" for="categoryFilter">
           <span>Категория</span>
           <select id="categoryFilter" name="category" disabled>
@@ -121,12 +128,6 @@
           <span>Модель</span>
           <select id="modelFilter" name="model" disabled>
             <option value="all">Все модели</option>
-          </select>
-        </label>
-        <label class="filterControl" for="modeFilter">
-          <span>Режим</span>
-          <select id="modeFilter" name="mode" disabled>
-            <option value="all">Все режимы</option>
           </select>
         </label>
         <label class="filterControl" for="ratingFilter">
@@ -144,7 +145,7 @@
       <section class="reviewOverview" aria-label="Прогресс оценки tune">
         <div>
           <p class="reviewProgress" id="reviewProgress" aria-live="polite">
-            Оценено 0 из 0 целей
+            Оценено 0 из 28 целей
           </p>
           <p class="reviewBreakdown" id="reviewBreakdown">
             Helped 0 · Same / unclear 0 · Worse 0
@@ -196,6 +197,6 @@
       <p class="noscriptMessage">Для просмотра tune manifest нужен JavaScript.</p>
     </noscript>
 
-    <script src="app.js?v=2" defer></script>
+    <script src="app.js?v=3" defer></script>
   </body>
 </html>
