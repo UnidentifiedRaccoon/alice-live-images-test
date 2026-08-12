@@ -2,13 +2,13 @@
   "schema_version": 2,
   "manifest_role": "clipmaker-lite-tune-review",
   "ticket": "PROMOPAGES-10060",
-  "batch_id": "promopages-10060-tune-review-20260811-v6",
+  "batch_id": "promopages-10060-tune-review-20260812-v8",
   "agent_id": "clipmaker-lite",
   "contract_versions": [
     "2.2.0",
     "2.3.0"
   ],
-  "generated_at": "2026-08-11T20:57:31Z",
+  "generated_at": "2026-08-12T00:08:12Z",
   "scope": {
     "case_count": 36,
     "target_count": 65,
@@ -16,8 +16,9 @@
     "reused_helped_target_count": 37,
     "regenerated_target_count": 28,
     "retry_target_count": 8,
-    "available_video_count": 60,
-    "unavailable_video_count": 5,
+    "retry_attempt_count": 12,
+    "available_video_count": 62,
+    "unavailable_video_count": 3,
     "execution_mode_counts": {
       "i2v": 65
     },
@@ -27,7 +28,7 @@
     "new_video_generation": true,
     "new_s3_upload": false,
     "generated_video_delivery": "repository-raw",
-    "media_commit_sha": "98164f103b265da70489cbab7d0c1beca61ae7c3"
+    "media_commit_sha": "1531003f3dda3b48bbb48ca8ac81f6a39d529e72"
   },
   "lineage": {
     "evaluation_export": {
@@ -53,10 +54,30 @@
     },
     "v6_retry_generation_manifest": {
       "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/generation-manifest.json",
-      "sha256": "043692f6a47269829a70207da65a0163c10b6be63d52edf91eb706327d035c23",
+      "sha256": "67b92f9eddfb2bb193d3c060ce75c5799a0383c2f55799a08624a53c8efdada6",
       "superseded_v5_target_count": 8
     },
-    "media_commit_sha": "98164f103b265da70489cbab7d0c1beca61ae7c3"
+    "v7_filter_retry_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/prompt-manifest.json",
+      "sha256": "71bf815a44e88a0f7cf08dfa25f7f46ad54e5de36f12f85e738d74917a9f6c08"
+    },
+    "v7_filter_retry_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/generation-manifest.json",
+      "sha256": "937d447c2df3f5f6dd985a9e3493650d9f500faa6dc7892a2c02285609b8c80a",
+      "superseded_v6_target_count": 1
+    },
+    "v8_prompt_experiment_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/prompt-manifest.json",
+      "sha256": "56f221a685ca44186b369392f41b7a76b01540218a24be4fe634b1a1962e21b0",
+      "experiment_count": 3
+    },
+    "v8_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/generation-manifest.json",
+      "sha256": "fcb71618ce83d8ad5bd9c678b2fcfc7bcd094ccb82d4a4bb235f38327779e130",
+      "experiment_count": 3,
+      "superseded_v7_target_count": 1
+    },
+    "media_commit_sha": "1531003f3dda3b48bbb48ca8ac81f6a39d529e72"
   },
   "summary": {
     "iteration_action_counts": {
@@ -72,11 +93,12 @@
       "eliza-i2v": 65
     },
     "generation_batch_counts": {
-      "reused-helped-v4": 37,
       "promopages-10060-tune-videos-20260811-v5": 20,
-      "promopages-10060-tune-videos-20260811-v6": 8
+      "reused-helped-v4": 37,
+      "promopages-10060-tune-videos-20260812-v8": 1,
+      "promopages-10060-tune-videos-20260811-v6": 7
     },
-    "unavailable_video_count": 5
+    "unavailable_video_count": 3
   },
   "cases": [
     {
@@ -273,7 +295,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/veo-3.1-lite/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/veo-3.1-lite/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/veo-3.1-lite/02.mp4",
               "sha256": "304773376fac3030a621108736d4a07ef762298c5a9542736dd9ab1a6deb3c7a",
               "bytes": 2814912,
@@ -542,7 +564,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/02.mp4",
               "sha256": "813c4d3864577fbe40e218057783c602193900a3b6930726fb36b09338efe618",
               "bytes": 5292568,
@@ -962,7 +984,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/03.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/03.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.2/03.mp4",
               "sha256": "c743cb4642d0acdba8b630eb3e9a42f438722afdab2da494d3cc0ffc8675cab7",
               "bytes": 2800341,
@@ -1245,7 +1267,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.7/03.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.7/03.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/01-level-ipoteka-2026/wan-2.7/03.mp4",
               "sha256": "e542a99e9b9ed6be6bd3c3f7ea9bc9062359511fe8eabf680f1e687a41774d57",
               "bytes": 2492170,
@@ -1584,7 +1606,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/02.mp4",
               "sha256": "0a32de92707bdef3ef4a76ca0fb647a89edc4a59cd59c334bb86640127ca4508",
               "bytes": 17845035,
@@ -1929,7 +1951,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/06.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/06.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/06.mp4",
               "sha256": "697e7b061e55ae75a4f403a81439971e203e22e37275fc0e6ea5d21bc7f72284",
               "bytes": 2995604,
@@ -2110,7 +2132,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.2/06.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.2/06.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.2/06.mp4",
               "sha256": "920eb2eb0c435e0ae8601f8e4df0690079dc54c9ce92ede382ded7d005971cf4",
               "bytes": 5686349,
@@ -2286,7 +2308,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.7/06.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.7/06.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.7/06.mp4",
               "sha256": "579fcc2b6c81a2606b43667aa621d641c7b6b0831dbbb936b0cfd34094ba3b1f",
               "bytes": 3935058,
@@ -2530,7 +2552,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/02.mp4",
               "sha256": "a25e067263590e69cfa968954ec51961f065698b81d9093d1b835c651c7c89b8",
               "bytes": 8723509,
@@ -2835,7 +2857,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/09.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/09.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/09.mp4",
               "sha256": "d8c191cc4009a5236547b13d0db7eb88c51677928f82e6a394170612baef453a",
               "bytes": 1164589,
@@ -3103,7 +3125,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/03-level-nestandartnye-planirovki/wan-2.2/09.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/03-level-nestandartnye-planirovki/wan-2.2/09.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/03-level-nestandartnye-planirovki/wan-2.2/09.mp4",
               "sha256": "728490a070ee966c851e57d50ac4973eb43aa4b5b7bcf7474085dbfa54c36405",
               "bytes": 4031653,
@@ -3509,7 +3531,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/04.mp4",
               "sha256": "722d3572cc9748f2375a2cd8ae9bbd32030785d687e8bdcd1df7921c1d8735e4",
               "bytes": 2980550,
@@ -3777,7 +3799,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/04-level-pokupat-kvartiru-seichas/wan-2.2/04.mp4",
               "sha256": "0f894d5822322d33a31509c492c97117112a200cc7d7caf262221ae11b962f97",
               "bytes": 4389699,
@@ -4116,7 +4138,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.mp4",
               "sha256": "37d38f8c89b5801aed860ba97e51dd4167cf67fcc6493931a95227abf288695c",
               "bytes": 20135544,
@@ -4409,7 +4431,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/04.mp4",
               "sha256": "4e0f5544fc809b8520753c8f947ae6f5d945549299b79f6665da9ef527f33de6",
               "bytes": 2799774,
@@ -4582,7 +4604,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/05-momatrino-zalozhennost-nosa/wan-2.7/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/05-momatrino-zalozhennost-nosa/wan-2.7/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/05-momatrino-zalozhennost-nosa/wan-2.7/04.mp4",
               "sha256": "0ea959b808e42d9fcdc9cc894d8c5c7fabdd2fe89aa0a55554568446a4f8e213",
               "bytes": 3835620,
@@ -4914,7 +4936,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/02.mp4",
               "sha256": "7e4be8475fc4a3320d8e7ccd19cc79af4cd3c483a04ff974b836ce439e6cd639",
               "bytes": 9514992,
@@ -5223,7 +5245,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.mp4",
               "sha256": "cf4f39db4baecbcbf0fd5e1eb8b455906335c7211ce0d3f7d7e1c2c9c269c08d",
               "bytes": 7216060,
@@ -5396,7 +5418,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.mp4",
               "sha256": "24817a53beb7649bb286df51e8123ee7a0a1a882f50113ee91add48bd4c6a767",
               "bytes": 6373237,
@@ -5651,7 +5673,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.mp4",
               "sha256": "038c19499050e5c5273c68253621eb590835621931caae467fb0b2b996a9c8e8",
               "bytes": 5377276,
@@ -5788,14 +5810,14 @@
       "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
       "planning_by_model": {
         "google/veo-3.1-lite": {
-          "run_id": "promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06",
-          "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06/result.json",
-          "result_sha256": "94e679266f7255b058acc4ef88e3343e3994743353d5cd168d09ec101a2e1572",
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06",
+          "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06/result.json",
+          "result_sha256": "48202864407085fb9e8873a36add72edf1ceb6f5ae116a713f095755f4fb61b5",
           "provenance": {
             "verified": true,
             "verification_scope": "trusted-workspace-route",
             "cryptographically_signed": false,
-            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06/result.json",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06/result.json",
             "agent_id": "clipmaker-lite",
             "contract_version": "2.3.0",
             "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
@@ -5810,7 +5832,7 @@
               "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
               "version": "codex-cli 0.147.0-alpha.6.5",
               "requested_model": null,
-              "thread_id": "019ff285-6565-7721-afe2-81a1e5e57540"
+              "thread_id": "019ff31f-ecf8-7692-bade-98d238501ab8"
             },
             "models": [
               "google/veo-3.1-lite"
@@ -5819,27 +5841,27 @@
             "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
           },
           "structured_intent": {
-            "editorial_meaning": "Support the practical value of preparing questions before a medical consultation so important topics are not overlooked.",
-            "initial_state": "One smiling adult woman sits cross-legged on a sofa, looking down at a red phone held with both hands in a bright room.",
-            "motion_owner": "The camera.",
-            "primary_action": "The camera approaches the complete existing sofa scene in one continuous centered push-in.",
-            "attention_anchor": "The complete existing sofa scene with the visible woman and red phone.",
-            "motion_boundary": "Only the camera may move; the woman, phone, hands, pose, facial expression, clothing, sofa, furnishings, and room geometry remain source-locked, and no unseen space is exposed.",
-            "terminal_state": "The woman and phone appear slightly larger while the complete existing sofa scene remains continuously visible and unchanged.",
-            "geometry_invariant": "The seated pose, hand-to-phone contacts, phone geometry, sofa structure, and room geometry remain fixed.",
-            "identity_invariant": "Preserve exactly one visible adult, her existing hands and clothing, the red phone, sofa, and room; nothing appears, disappears, or changes identity.",
-            "semantic_invariant": "The calm, focused sense of personal preparation remains unchanged through the final frame.",
-            "feasibility_assessment": "The seated woman, phone, hand-to-phone contacts, pose, and expression are visible, but no safe next gesture, gaze change, or phone interaction is proven; a camera-only treatment is the least risky option.",
+            "editorial_meaning": "A calm moment of organizing questions supports thoughtful preparation for a professional consultation.",
+            "initial_state": "A smiling woman sits cross-legged on a sofa, looking down at a red smartphone held in one hand while the other index finger rests near the screen.",
+            "motion_owner": "camera",
+            "primary_action": "A bounded centered push-in toward the complete existing scene.",
+            "attention_anchor": "The complete existing scene, with the seated woman and red smartphone remaining continuously visible.",
+            "motion_boundary": "Only the camera may move; the woman, phone, hands, facial expression, clothing, furniture, decor, and all visible source elements remain source-locked, with no new or removed content.",
+            "terminal_state": "The complete unchanged composition remains visible and appears about 5% closer.",
+            "geometry_invariant": "The woman's seated pose, hand-to-phone contact, sofa support, and rigid room geometry remain unchanged.",
+            "identity_invariant": "Exactly one woman, one red smartphone, the same limbs, clothing, furniture, cushions, frames, books, vessels, and decorative elements remain present and recognizable.",
+            "semantic_invariant": "The calm, focused sense of preparing and organizing information remains unchanged through the final frame.",
+            "feasibility_assessment": "The image clearly shows one seated woman holding and attending to a smartphone, but no definite typing direction, interface state, or next bodily action is established; fragile hands, device contact, and facial identity make subject animation risky, so bounded camera-only motion is safest.",
             "rendering_strategy": "camera-only"
           },
           "image_reading": [
-            "One adult woman sits cross-legged on a sofa, smiling while looking down at a red phone held in both hands.",
-            "Her hands visibly contact the phone; her seated pose, expression, clothing, sofa, and surrounding room are clearly established.",
-            "The image does not prove a safe next gesture or interface action, so subject and phone motion are ambiguous."
+            "One smiling woman sits cross-legged on a sofa and looks down at a red smartphone held in her left hand.",
+            "Her right index finger is poised at or lightly touching the phone screen; the exact interface and any on-screen text are not visible.",
+            "The woman, phone, sofa, cushions, framed pictures, books, vessels, and decorative branches form a stable indoor composition; hand and device contact is visually important."
           ],
-          "article_context": "The body image supports the consultation-preparation section by showing a woman with a phone, reinforcing the practical reminder to prepare a list of questions so important points are not missed at a medical appointment.",
-          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r7/repair-feedback/07-06.json",
-          "repair_feedback_sha256": "8d837c0039e6ec2359b6e6b3e97fbef9192b3c064cea244cbcf4bc9b368acfbf"
+          "article_context": "The body image supports the consultation-preparation advice: making a question list helps the reader arrive organized and avoid missing important topics during a medical appointment.",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/repair-feedback/07-06.json",
+          "repair_feedback_sha256": "38be340c0f27ebac4231b23bfe647bd65282c1311d7995f6a42c893fe334725c"
         }
       },
       "targets": [
@@ -5880,8 +5902,8 @@
           "review_note": "На фото женщина, но почему-то совершенно нет никакой генерации - отсутствует движение. Хотя это человек, а не текст или интерфейс",
           "tuned": {
             "execution_mode": "i2v",
-            "scene_plan": "Over four seconds, execute one gentle centered push-in toward the complete existing sofa scene. Begin immediately at a calm, even pace and ease softly near the end; keep travel within 5% of the frame, preserve the full visible person-and-phone composition, and finish with both slightly larger without revealing unseen space or animating the subject.",
-            "positive_prompt": "The camera gently pushes straight toward the complete existing sofa scene with the visible woman and phone, within a 5% screen-travel cap, while her pose, hand-to-phone contacts, expression, and all room geometry remain source-locked. By the final frame the woman and phone appear slightly larger, with the complete sofa scene still continuously visible.",
+            "scene_plan": "Across four seconds, perform one smooth centered push-in at a calm, even speed, easing gently near the end. Keep every source element rigid and continuously visible, introduce no subject animation or unseen space, and finish with the unchanged composition appearing approximately 5% closer.",
+            "positive_prompt": "Slow, gentle centered dolly in on the existing scene. By the final frame, the same composition appears about 5% closer.",
             "negative_prompt": null,
             "runtime": {
               "duration_seconds": 4,
@@ -5913,58 +5935,132 @@
               "bytes": null,
               "media": null,
               "contract_check": null,
-              "unavailable_reason": "provider poll/download: Eliza/OpenRouter job FjVDTD6oBHrOmJGu5cal failed with status failed: Video generation completed with no output (content may have been filtered)",
+              "unavailable_reason": "3/3 additional Veo prompt experiments completed with no output (content may have been filtered)",
               "safety_barrier": null,
               "generation": {
-                "origin": "regenerated-v6-retry",
-                "batch_id": "promopages-10060-tune-videos-20260811-v6",
-                "provider_run_id": "promopages-10060-tune-videos-20260811-v6-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
-                "retry_reason": "terminal-provider-no-output-new-lite-prompt",
-                "prompt_lineage_kind": "new-provenance-verified-lite-camera-only",
-                "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
-                "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+                "origin": "regenerated-v8-veo-prompt-experiment",
+                "batch_id": "promopages-10060-tune-videos-20260812-v8",
+                "planning_batch_id": "promopages-10060-tune-prompts-20260812-v5-r9",
+                "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/prompt-manifest.json",
+                "provider_run_ids": [
+                  "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-minimal-zoom",
+                  "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-camera-forward",
+                  "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-framing-endpoint"
+                ],
+                "experiment_count": 3,
+                "shared_seed": 20260812,
+                "changed_factor": "motion-only positive-prompt formulation",
+                "displayed_tuned_prompt_is_prior_baseline": true,
                 "prior_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+                  "batch_id": "promopages-10060-tune-videos-20260812-v7",
+                  "provider_run_id": "promopages-10060-tune-videos-20260812-v7-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
                   "status": "provider-failed",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
-                  "prompt_sha256": "155f06509df013b452fbe6204a85f7f69b3c5e14a754d6322844ac1a65242245",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
-                  "run_sha256": "573c31f534465a0485d45f5663f64bd1badf14cc27e017f0db400ce5e6f5e9f7",
-                  "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
+                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+                  "run_sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7",
+                  "provider_job_id": "MqfNhJZllV0ZEVNQUElh",
                   "provider_may_be_active": false,
-                  "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
-                  "automatic_paid_retry": false,
-                  "fallback": null,
-                  "receipts_mutated": false
+                  "submission_count": 1,
+                  "terminal_no_output_stop_applied": true
                 }
               },
               "provider_attempt": {
-                "status": "provider-failed",
-                "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
-                "run_sha256": "6a90ecedecfeb3ff5a3093231072f421ecc57eb325b0bc0adc53a546913781de",
-                "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
-                "prompt_sha256": "37ae4af78340ab55ff8472a562c7ee357ca7099c62980f25ba00c0e271d1ae98",
-                "provider_job_id": "FjVDTD6oBHrOmJGu5cal",
-                "submission_count": 1,
-                "error": "provider poll/download: Eliza/OpenRouter job FjVDTD6oBHrOmJGu5cal failed with status failed: Video generation completed with no output (content may have been filtered)",
+                "status": "all-provider-failed",
+                "attempt_count": 3,
+                "terminal_no_output_count": 3,
+                "attempts": [
+                  {
+                    "experiment_id": "07#06::google/veo-3.1-lite::minimal-zoom",
+                    "variant_id": "minimal-zoom",
+                    "controlled_factor": "minimal imperative wording",
+                    "rationale": "Minimal lexical baseline: inward motion only, with no scene nouns, subject references, preservation prose, or numeric endpoint.",
+                    "positive_prompt": "Slow centered zoom in.",
+                    "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-minimal-zoom",
+                    "status": "provider-failed",
+                    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-minimal-zoom.run.json",
+                    "run_sha256": "d5e453a0bf1eb43bf1f6a94da76375a089f3a8324491954257ed2923d6455d9c",
+                    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-minimal-zoom.prompt.json",
+                    "prompt_sha256": "daf62dbe47248e0f655ce3da8d9752c426e02395101dac1a06387dee24bfd9f7",
+                    "provider_job_id": "v1IyzmwzywP5OeyyeVCL",
+                    "provider_may_be_active": false,
+                    "submission_count": 1,
+                    "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+                    "provider_terminal_diagnostics": {
+                      "id": "v1IyzmwzywP5OeyyeVCL",
+                      "generation_id": "gen-vid-1786492211-Zcnk7N9WCXv3v7NNjh7f",
+                      "status": "failed",
+                      "error": "Video generation completed with no output (content may have been filtered)",
+                      "request_id": "1786492311562851-18217977997291158240-gze6iy57wssor74m-BAL",
+                      "diagnostics_unavailable_upstream": true
+                    },
+                    "diagnostics_unavailable_upstream": true,
+                    "terminal_no_output_stop_applied": true,
+                    "automatic_paid_retry": false,
+                    "fallback": null,
+                    "s3_upload": false
+                  },
+                  {
+                    "experiment_id": "07#06::google/veo-3.1-lite::camera-forward",
+                    "variant_id": "camera-forward",
+                    "controlled_factor": "explicit physical camera trajectory",
+                    "rationale": "Physical-camera formulation: names a steady trajectory but no source entity, scene meaning, body, device, health topic, or brand.",
+                    "positive_prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+                    "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-camera-forward",
+                    "status": "provider-failed",
+                    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.run.json",
+                    "run_sha256": "66c576e6bdc6468b7709cc6bd9459dbedd476f75e2850e9822ef43517e73af06",
+                    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.prompt.json",
+                    "prompt_sha256": "3702c749cea62001be83b07ce96f375dbe5e465edaa43f99739a3be8ef137968",
+                    "provider_job_id": "1oM0io6whFdOx2kMr8L7",
+                    "provider_may_be_active": false,
+                    "submission_count": 1,
+                    "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+                    "provider_terminal_diagnostics": {
+                      "id": "1oM0io6whFdOx2kMr8L7",
+                      "generation_id": "gen-vid-1786492211-7r9hQmGXu4V4XhfUXBOZ",
+                      "status": "failed",
+                      "error": "Video generation completed with no output (content may have been filtered)",
+                      "request_id": "1786492328325328-10558355251708618270-xcunskkz2sjvf2re-BAL",
+                      "diagnostics_unavailable_upstream": true
+                    },
+                    "diagnostics_unavailable_upstream": true,
+                    "terminal_no_output_stop_applied": true,
+                    "automatic_paid_retry": false,
+                    "fallback": null,
+                    "s3_upload": false
+                  },
+                  {
+                    "experiment_id": "07#06::google/veo-3.1-lite::framing-endpoint",
+                    "variant_id": "framing-endpoint",
+                    "controlled_factor": "image-space endpoint wording",
+                    "rationale": "Image-space formulation: states the same small inward endpoint without naming a camera path or any source entity.",
+                    "positive_prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+                    "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-framing-endpoint",
+                    "status": "provider-failed",
+                    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-framing-endpoint.run.json",
+                    "run_sha256": "56401b307a508731d9a698e834e4560577fe5eb24ec82d854b868995faaa9fb5",
+                    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-framing-endpoint.prompt.json",
+                    "prompt_sha256": "0cae2f76daea23bf720a59fa4c2c3f2a118b6431adb7ac544ad39f5793909daf",
+                    "provider_job_id": "QYqhSGkR6DOqjaDEL2oe",
+                    "provider_may_be_active": false,
+                    "submission_count": 1,
+                    "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+                    "provider_terminal_diagnostics": {
+                      "id": "QYqhSGkR6DOqjaDEL2oe",
+                      "generation_id": "gen-vid-1786492211-YDOVPu6gS7v3Z6FxQYKk",
+                      "status": "failed",
+                      "error": "Video generation completed with no output (content may have been filtered)",
+                      "request_id": "1786492405525435-9008224883534424833-gze6iy57wssor74m-BAL",
+                      "diagnostics_unavailable_upstream": true
+                    },
+                    "diagnostics_unavailable_upstream": true,
+                    "terminal_no_output_stop_applied": true,
+                    "automatic_paid_retry": false,
+                    "fallback": null,
+                    "s3_upload": false
+                  }
+                ],
                 "automatic_paid_retry": false,
-                "fallback": null,
-                "prior_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
-                  "status": "provider-failed",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
-                  "prompt_sha256": "155f06509df013b452fbe6204a85f7f69b3c5e14a754d6322844ac1a65242245",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
-                  "run_sha256": "573c31f534465a0485d45f5663f64bd1badf14cc27e017f0db400ce5e6f5e9f7",
-                  "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
-                  "provider_may_be_active": false,
-                  "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
-                  "automatic_paid_retry": false,
-                  "fallback": null,
-                  "receipts_mutated": false
-                }
+                "fallback": null
               }
             }
           },
@@ -6076,14 +6172,14 @@
             }
           },
           "planning": {
-            "run_id": "promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06",
-            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06/result.json",
-            "result_sha256": "94e679266f7255b058acc4ef88e3343e3994743353d5cd168d09ec101a2e1572",
+            "run_id": "promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06/result.json",
+            "result_sha256": "48202864407085fb9e8873a36add72edf1ceb6f5ae116a713f095755f4fb61b5",
             "provenance": {
               "verified": true,
               "verification_scope": "trusted-workspace-route",
               "cryptographically_signed": false,
-              "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06/result.json",
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06/result.json",
               "agent_id": "clipmaker-lite",
               "contract_version": "2.3.0",
               "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
@@ -6098,7 +6194,7 @@
                 "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
                 "version": "codex-cli 0.147.0-alpha.6.5",
                 "requested_model": null,
-                "thread_id": "019ff285-6565-7721-afe2-81a1e5e57540"
+                "thread_id": "019ff31f-ecf8-7692-bade-98d238501ab8"
               },
               "models": [
                 "google/veo-3.1-lite"
@@ -6107,27 +6203,309 @@
               "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
             },
             "structured_intent": {
-              "editorial_meaning": "Support the practical value of preparing questions before a medical consultation so important topics are not overlooked.",
-              "initial_state": "One smiling adult woman sits cross-legged on a sofa, looking down at a red phone held with both hands in a bright room.",
-              "motion_owner": "The camera.",
-              "primary_action": "The camera approaches the complete existing sofa scene in one continuous centered push-in.",
-              "attention_anchor": "The complete existing sofa scene with the visible woman and red phone.",
-              "motion_boundary": "Only the camera may move; the woman, phone, hands, pose, facial expression, clothing, sofa, furnishings, and room geometry remain source-locked, and no unseen space is exposed.",
-              "terminal_state": "The woman and phone appear slightly larger while the complete existing sofa scene remains continuously visible and unchanged.",
-              "geometry_invariant": "The seated pose, hand-to-phone contacts, phone geometry, sofa structure, and room geometry remain fixed.",
-              "identity_invariant": "Preserve exactly one visible adult, her existing hands and clothing, the red phone, sofa, and room; nothing appears, disappears, or changes identity.",
-              "semantic_invariant": "The calm, focused sense of personal preparation remains unchanged through the final frame.",
-              "feasibility_assessment": "The seated woman, phone, hand-to-phone contacts, pose, and expression are visible, but no safe next gesture, gaze change, or phone interaction is proven; a camera-only treatment is the least risky option.",
+              "editorial_meaning": "A calm moment of organizing questions supports thoughtful preparation for a professional consultation.",
+              "initial_state": "A smiling woman sits cross-legged on a sofa, looking down at a red smartphone held in one hand while the other index finger rests near the screen.",
+              "motion_owner": "camera",
+              "primary_action": "A bounded centered push-in toward the complete existing scene.",
+              "attention_anchor": "The complete existing scene, with the seated woman and red smartphone remaining continuously visible.",
+              "motion_boundary": "Only the camera may move; the woman, phone, hands, facial expression, clothing, furniture, decor, and all visible source elements remain source-locked, with no new or removed content.",
+              "terminal_state": "The complete unchanged composition remains visible and appears about 5% closer.",
+              "geometry_invariant": "The woman's seated pose, hand-to-phone contact, sofa support, and rigid room geometry remain unchanged.",
+              "identity_invariant": "Exactly one woman, one red smartphone, the same limbs, clothing, furniture, cushions, frames, books, vessels, and decorative elements remain present and recognizable.",
+              "semantic_invariant": "The calm, focused sense of preparing and organizing information remains unchanged through the final frame.",
+              "feasibility_assessment": "The image clearly shows one seated woman holding and attending to a smartphone, but no definite typing direction, interface state, or next bodily action is established; fragile hands, device contact, and facial identity make subject animation risky, so bounded camera-only motion is safest.",
               "rendering_strategy": "camera-only"
             },
             "image_reading": [
-              "One adult woman sits cross-legged on a sofa, smiling while looking down at a red phone held in both hands.",
-              "Her hands visibly contact the phone; her seated pose, expression, clothing, sofa, and surrounding room are clearly established.",
-              "The image does not prove a safe next gesture or interface action, so subject and phone motion are ambiguous."
+              "One smiling woman sits cross-legged on a sofa and looks down at a red smartphone held in her left hand.",
+              "Her right index finger is poised at or lightly touching the phone screen; the exact interface and any on-screen text are not visible.",
+              "The woman, phone, sofa, cushions, framed pictures, books, vessels, and decorative branches form a stable indoor composition; hand and device contact is visually important."
             ],
-            "article_context": "The body image supports the consultation-preparation section by showing a woman with a phone, reinforcing the practical reminder to prepare a list of questions so important points are not missed at a medical appointment.",
-            "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r7/repair-feedback/07-06.json",
-            "repair_feedback_sha256": "8d837c0039e6ec2359b6e6b3e97fbef9192b3c064cea244cbcf4bc9b368acfbf"
+            "article_context": "The body image supports the consultation-preparation advice: making a question list helps the reader arrive organized and avoid missing important topics during a medical appointment.",
+            "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/repair-feedback/07-06.json",
+            "repair_feedback_sha256": "38be340c0f27ebac4231b23bfe647bd65282c1311d7995f6a42c893fe334725c"
+          },
+          "prompt_experiment": {
+            "planning_batch_id": "promopages-10060-tune-prompts-20260812-v5-r9",
+            "generation_batch_id": "promopages-10060-tune-videos-20260812-v8",
+            "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/prompt-manifest.json",
+            "prompt_manifest_sha256": "56f221a685ca44186b369392f41b7a76b01540218a24be4fe634b1a1962e21b0",
+            "shared_seed": 20260812,
+            "fixed_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+            "changed_factor": "motion-only positive-prompt formulation",
+            "variant_order": [
+              "minimal-zoom",
+              "camera-forward",
+              "framing-endpoint"
+            ],
+            "displayed_tuned_prompt_is_prior_baseline": true,
+            "experiments": [
+              {
+                "experiment_id": "07#06::google/veo-3.1-lite::minimal-zoom",
+                "variant_id": "minimal-zoom",
+                "controlled_factor": "minimal imperative wording",
+                "rationale": "Minimal lexical baseline: inward motion only, with no scene nouns, subject references, preservation prose, or numeric endpoint.",
+                "positive_prompt": "Slow centered zoom in.",
+                "shared_provider_seed": 20260812,
+                "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom",
+                "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-minimal-zoom.json",
+                "repair_feedback_sha256": "2cd5aaad09bb2e5f2042ec0d116fd2f44b3579dd03b69276fb4f1ec43e27638e",
+                "planning": {
+                  "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom",
+                  "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom/result.json",
+                  "result_sha256": "ca1bfba3ffb2c09e3f9684d7bcf0711b06df8e33c3539c6919215f8c0f483f9b",
+                  "provenance": {
+                    "verified": true,
+                    "verification_scope": "trusted-workspace-route",
+                    "cryptographically_signed": false,
+                    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom/result.json",
+                    "agent_id": "clipmaker-lite",
+                    "contract_version": "2.3.0",
+                    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+                    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+                    "runner": {
+                      "path": "scripts/clipmaker_lite_runner.py",
+                      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+                    },
+                    "execution": {
+                      "executor_id": "codex-exec",
+                      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+                      "version": "codex-cli 0.147.0-alpha.6.5",
+                      "requested_model": null,
+                      "thread_id": "019ff336-7e5d-7cd0-a062-fb1c4d89aaeb"
+                    },
+                    "models": [
+                      "google/veo-3.1-lite"
+                    ],
+                    "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+                    "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+                  },
+                  "structured_intent": {
+                    "editorial_meaning": "Quiet, organized preparation helps a person record questions before a medical consultation and avoid overlooking important concerns.",
+                    "initial_state": "One smiling woman is seated cross-legged on a sofa, looking down while holding an orange smartphone with both hands and keeping one index finger near its screen.",
+                    "motion_owner": "The camera.",
+                    "primary_action": "A restrained centered push-in toward the existing composition.",
+                    "attention_anchor": "The seated woman holding the orange smartphone.",
+                    "motion_boundary": "Only the camera may move; the woman, phone, hands, screen state, sofa, cushions, furnishings, wall art, and all other source-defined regions remain source-locked, with no new space or entities introduced.",
+                    "terminal_state": "The same composition is modestly closer while the seated woman and smartphone remain centered, fully recognizable, and continuously visible.",
+                    "geometry_invariant": "Preserve the woman's seated body geometry, finger and hand placement, phone-hand contacts, and the rigid geometry of the sofa and room.",
+                    "identity_invariant": "Keep exactly one woman, one orange smartphone, the same visible limbs, clothing, cushions, furnishings, and decorative objects.",
+                    "semantic_invariant": "The calm, attentive sense of preparing and organizing information remains unchanged through the final frame.",
+                    "feasibility_assessment": "The seated pose, gaze toward the phone, and hand-device contact are visible, but a reliable tap, typing sequence, or interface response cannot be inferred from one frame; a bounded camera-only treatment is safer.",
+                    "rendering_strategy": "camera-only"
+                  },
+                  "image_reading": [
+                    "One smiling woman sits cross-legged on a sofa and looks down at an orange smartphone held in both hands.",
+                    "Her right index finger is poised at or touching the phone screen; the device-hand contact and intended interface action are visually delicate.",
+                    "The woman, sofa, cushions, wall art, fireplace, books, and decorative objects form a stable indoor composition with no other people visible."
+                  ],
+                  "article_context": "The body image supports the advice to prepare questions before a medical consultation so important health concerns are not overlooked.",
+                  "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-minimal-zoom.json",
+                  "repair_feedback_sha256": "2cd5aaad09bb2e5f2042ec0d116fd2f44b3579dd03b69276fb4f1ec43e27638e"
+                },
+                "tuned": {
+                  "execution_mode": "i2v",
+                  "scene_plan": "Over four seconds, execute one smooth centered push-in at an even pace, keeping the current framing and its focal subject centered and continuously visible. Limit total screen travel to about 5%, reveal no unseen space, and ease gently into the final closer composition.",
+                  "positive_prompt": "Slow centered zoom in.",
+                  "negative_prompt": null,
+                  "runtime": {
+                    "duration_seconds": 4,
+                    "resolution": "1080p",
+                    "aspect_ratios": [
+                      "16:9",
+                      "9:16"
+                    ],
+                    "generate_audio": false,
+                    "frame_inputs": [
+                      "first_frame"
+                    ],
+                    "provider": "google-vertex",
+                    "prompt_expansion": {
+                      "parameter": "enhancePrompt",
+                      "value": true
+                    }
+                  }
+                }
+              },
+              {
+                "experiment_id": "07#06::google/veo-3.1-lite::camera-forward",
+                "variant_id": "camera-forward",
+                "controlled_factor": "explicit physical camera trajectory",
+                "rationale": "Physical-camera formulation: names a steady trajectory but no source entity, scene meaning, body, device, health topic, or brand.",
+                "positive_prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+                "shared_provider_seed": 20260812,
+                "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward",
+                "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-camera-forward.json",
+                "repair_feedback_sha256": "18ecf9d146aa6910e0073c5b541bea42e608ed3c111b73dbd2bdd71301225901",
+                "planning": {
+                  "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward",
+                  "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward/result.json",
+                  "result_sha256": "18fe3fe14b9f56abb6105d7be5b5d5b28a60c5d1c17ec32f879a02984ce9731c",
+                  "provenance": {
+                    "verified": true,
+                    "verification_scope": "trusted-workspace-route",
+                    "cryptographically_signed": false,
+                    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward/result.json",
+                    "agent_id": "clipmaker-lite",
+                    "contract_version": "2.3.0",
+                    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+                    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+                    "runner": {
+                      "path": "scripts/clipmaker_lite_runner.py",
+                      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+                    },
+                    "execution": {
+                      "executor_id": "codex-exec",
+                      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+                      "version": "codex-cli 0.147.0-alpha.6.5",
+                      "requested_model": null,
+                      "thread_id": "019ff336-b9cc-7f43-91bc-6f4830b15577"
+                    },
+                    "models": [
+                      "google/veo-3.1-lite"
+                    ],
+                    "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+                    "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+                  },
+                  "structured_intent": {
+                    "editorial_meaning": "Calm, organized preparation helps a person collect questions before a medical consultation and avoid overlooking important concerns.",
+                    "initial_state": "One smiling woman is seated cross-legged on a sofa, holding an orange smartphone and looking down at it, with her other index finger poised near the screen.",
+                    "motion_owner": "The camera.",
+                    "primary_action": "A bounded straight push-in toward the current framing.",
+                    "attention_anchor": "The woman holding the orange smartphone.",
+                    "motion_boundary": "Only the camera may move; the woman, hands, phone, clothing, sofa, cushions, frames, books, fireplace, and all other source-defined regions remain locked in state and topology, with no new screen content or objects.",
+                    "terminal_state": "The same centered composition is viewed slightly closer, with the woman and smartphone still fully recognizable and all original semantic regions retained.",
+                    "geometry_invariant": "The phone remains supported by the visible hand; the seated pose, sofa contact, and rigid room geometry remain unchanged.",
+                    "identity_invariant": "Exactly one woman, one orange smartphone, two visible hands with unchanged fingers and limbs, and the same furniture and background objects.",
+                    "semantic_invariant": "The woman remains calm, attentive, and engaged in organized preparation through the final frame.",
+                    "feasibility_assessment": "The image clearly establishes one seated woman holding a smartphone and looking toward it, but the fingertip-to-screen contact and any specific interface action are ambiguous. A bounded camera-only push-in is safer than inventing tapping, typing, or screen changes.",
+                    "rendering_strategy": "camera-only"
+                  },
+                  "image_reading": [
+                    "One smiling woman sits cross-legged on a sofa, looking down at an orange smartphone held in her left hand.",
+                    "Her right index finger is poised close to the visible phone screen, but the exact touch state and intended interface action are ambiguous.",
+                    "The woman and phone are the central foreground subjects; the sofa, cushions, wall frames, books, and fireplace form rigid surrounding regions.",
+                    "The image does not expose readable screen content, and no additional people or active environmental motion are visible."
+                  ],
+                  "article_context": "Body image supporting the advice to prepare questions before a medical consultation, emphasizing calm, organized preparation so important concerns are not overlooked.",
+                  "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-camera-forward.json",
+                  "repair_feedback_sha256": "18ecf9d146aa6910e0073c5b541bea42e608ed3c111b73dbd2bdd71301225901"
+                },
+                "tuned": {
+                  "execution_mode": "i2v",
+                  "scene_plan": "Over four seconds, execute one centered, steady push-in at a calm, even speed, slowing gently near the end. Keep the original framing continuously retained and the woman with her phone centered; finish after no more than about 5% screen-space travel, without exposing space beyond the source frame or animating the subject, phone, furniture, or background independently.",
+                  "positive_prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+                  "negative_prompt": null,
+                  "runtime": {
+                    "duration_seconds": 4,
+                    "resolution": "1080p",
+                    "aspect_ratios": [
+                      "16:9",
+                      "9:16"
+                    ],
+                    "generate_audio": false,
+                    "frame_inputs": [
+                      "first_frame"
+                    ],
+                    "provider": "google-vertex",
+                    "prompt_expansion": {
+                      "parameter": "enhancePrompt",
+                      "value": true
+                    }
+                  }
+                }
+              },
+              {
+                "experiment_id": "07#06::google/veo-3.1-lite::framing-endpoint",
+                "variant_id": "framing-endpoint",
+                "controlled_factor": "image-space endpoint wording",
+                "rationale": "Image-space formulation: states the same small inward endpoint without naming a camera path or any source entity.",
+                "positive_prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+                "shared_provider_seed": 20260812,
+                "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint",
+                "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-framing-endpoint.json",
+                "repair_feedback_sha256": "82bd959e2d7d426e5a60abaf46d8946341e372f8f8b62e9633b6f0b3a3b6f577",
+                "planning": {
+                  "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint",
+                  "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint/result.json",
+                  "result_sha256": "0061ce596e2b1bd30f86856d7a5b5d8ef03b41fb20e479f7ad35f769fbc3f766",
+                  "provenance": {
+                    "verified": true,
+                    "verification_scope": "trusted-workspace-route",
+                    "cryptographically_signed": false,
+                    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint/result.json",
+                    "agent_id": "clipmaker-lite",
+                    "contract_version": "2.3.0",
+                    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+                    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+                    "runner": {
+                      "path": "scripts/clipmaker_lite_runner.py",
+                      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+                    },
+                    "execution": {
+                      "executor_id": "codex-exec",
+                      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+                      "version": "codex-cli 0.147.0-alpha.6.5",
+                      "requested_model": null,
+                      "thread_id": "019ff337-04cf-7e33-a0ec-03d4167fb87e"
+                    },
+                    "models": [
+                      "google/veo-3.1-lite"
+                    ],
+                    "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+                    "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+                  },
+                  "structured_intent": {
+                    "editorial_meaning": "Support the article’s advice to prepare questions before a medical consultation so important concerns are not forgotten.",
+                    "initial_state": "One smiling woman sits cross-legged on a sofa, looking down at a red smartphone held in her left hand, with her right index finger near the screen.",
+                    "motion_owner": "The camera.",
+                    "primary_action": "The camera smoothly tightens the centered framing.",
+                    "attention_anchor": "The seated woman holding the red smartphone.",
+                    "motion_boundary": "Only the camera may move; the woman, hands, phone, unseen screen state, furniture, decor, and all rigid regions remain source-locked, with no new contacts or revealed space.",
+                    "terminal_state": "The same centered scene appears observably about 5% tighter, with the woman and smartphone still fully recognizable and continuously visible.",
+                    "geometry_invariant": "Preserve the seated pose, hand–phone relationship, sofa geometry, and all source-defined rigid structures.",
+                    "identity_invariant": "Keep exactly one woman, one red smartphone, the same visible limbs, clothing, furniture, cushions, frames, books, and decor; add or remove nothing.",
+                    "semantic_invariant": "The calm, focused sense of organizing information in preparation for a consultation remains unchanged through the final frame.",
+                    "feasibility_assessment": "The image clearly shows one seated woman holding and looking at a smartphone, but no readable interface or unambiguous finger action establishes typing, scrolling, or list creation. Human and device motion would risk changing hand contact or screen state, so bounded camera motion is safer.",
+                    "rendering_strategy": "camera-only"
+                  },
+                  "image_reading": [
+                    "One woman sits cross-legged on a sofa, smiling and looking down at a red smartphone held in her left hand.",
+                    "Her right index finger is poised at or lightly touching the phone screen; the exact interface and whether she is typing or scrolling are not visible.",
+                    "The woman, phone, sofa, cushions, wall frames, books, vessels, and fireplace form a stable indoor composition; hand–phone geometry and the precise finger contact are fragile motion areas."
+                  ],
+                  "article_context": "A body image illustrating practical preparation for a medical consultation: making a question list helps the reader arrive organized and avoid missing important topics, including chronic conditions, treatment, and prescribed vitamins.",
+                  "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-framing-endpoint.json",
+                  "repair_feedback_sha256": "82bd959e2d7d426e5a60abaf46d8946341e372f8f8b62e9633b6f0b3a3b6f577"
+                },
+                "tuned": {
+                  "execution_mode": "i2v",
+                  "scene_plan": "Over four seconds, use a smooth centered push-in with continuous even motion, totaling about 5% screen travel and easing gently near the end. Preserve the current composition, keep the woman and smartphone continuously visible, and introduce no autonomous subject or screen motion; the final frame is a slightly tighter version of the same centered view without exposing unseen space.",
+                  "positive_prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+                  "negative_prompt": null,
+                  "runtime": {
+                    "duration_seconds": 4,
+                    "resolution": "1080p",
+                    "aspect_ratios": [
+                      "16:9",
+                      "9:16"
+                    ],
+                    "generate_audio": false,
+                    "frame_inputs": [
+                      "first_frame"
+                    ],
+                    "provider": "google-vertex",
+                    "prompt_expansion": {
+                      "parameter": "enhancePrompt",
+                      "value": true
+                    }
+                  }
+                }
+              }
+            ]
           },
           "iteration": {
             "action": "regenerated-v5",
@@ -6138,26 +6516,32 @@
               "note": "На фото женщина, но почему-то совершенно нет никакой генерации - отсутствует движение. Хотя это человек, а не текст или интерфейс",
               "updated_at": "2026-08-11T16:47:48.415Z"
             },
-            "planning_batch_id": "promopages-10060-tune-prompts-20260811-v5-r7",
-            "generation_batch_id": "promopages-10060-tune-videos-20260811-v6",
+            "planning_batch_id": "promopages-10060-tune-prompts-20260812-v5-r8",
+            "generation_batch_id": "promopages-10060-tune-videos-20260812-v8",
             "retry": {
-              "reason": "terminal-provider-no-output-new-lite-prompt",
-              "prompt_lineage_kind": "new-provenance-verified-lite-camera-only",
+              "reason": "Three controlled motion-only prompt variants were submitted after the V7 terminal no-output result.",
+              "prompt_lineage_kind": "v8-controlled-veo-motion-only-prompt-experiment",
               "prior_attempt": {
-                "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+                "batch_id": "promopages-10060-tune-videos-20260812-v7",
+                "provider_run_id": "promopages-10060-tune-videos-20260812-v7-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
                 "status": "provider-failed",
-                "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
-                "prompt_sha256": "155f06509df013b452fbe6204a85f7f69b3c5e14a754d6322844ac1a65242245",
-                "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
-                "run_sha256": "573c31f534465a0485d45f5663f64bd1badf14cc27e017f0db400ce5e6f5e9f7",
-                "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
+                "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+                "run_sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7",
+                "provider_job_id": "MqfNhJZllV0ZEVNQUElh",
                 "provider_may_be_active": false,
-                "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
-                "automatic_paid_retry": false,
-                "fallback": null,
-                "receipts_mutated": false
-              }
+                "submission_count": 1,
+                "terminal_no_output_stop_applied": true
+              },
+              "diagnosis": {
+                "type": "suspected_source_filter",
+                "classification": "suspected-source-image-safety-false-positive",
+                "evidence_strength": "strong-indirect",
+                "person_preserving_provider_failures_at_least": 12,
+                "provider_support_code_available": false,
+                "active_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+                "active_source_transform": null
+              },
+              "experiment_count": 3
             }
           }
         }
@@ -6303,7 +6687,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.mp4",
               "sha256": "9c3ccad93f3dd9f3d639adf060c0f3ead1bff8af5fc4d5b3ae08d5024834ec43",
               "bytes": 5834836,
@@ -6555,7 +6939,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
               "sha256": "24104cd0be79a8b92e91c495b111f4533556caac0186d792508740f116ea02cd",
               "bytes": 4869557,
@@ -6608,7 +6992,8 @@
                   "automatic_paid_retry": false,
                   "fallback": null,
                   "receipts_mutated": false
-                }
+                },
+                "duplicate_risk_acceptance": null
               },
               "provider_attempt": null
             }
@@ -6948,7 +7333,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.mp4",
               "sha256": "11de15c5489129fb189138db2fe7f92a6032e6916c928f389bb997dbaf88448b",
               "bytes": 9103599,
@@ -7200,7 +7585,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.mp4",
               "sha256": "4bf2175fb6974c7cf7aa59eb4b0500ceded54c7ca67090dbc73ebca8c80d0c0e",
               "bytes": 5258563,
@@ -7619,7 +8004,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/02.mp4",
               "sha256": "28801bd626f0473e7e90a6fa17771622c0c786aa9451473fe2b229aecd40437a",
               "bytes": 10177812,
@@ -7800,7 +8185,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/02.mp4",
               "sha256": "928bd717218f96a87fcb73fa2381836ab68d91a4949beef8978176f8ec059b0d",
               "bytes": 16296553,
@@ -7976,7 +8361,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/02.mp4",
               "sha256": "8f974b34536e4ab78684be671d5b95501e975f9421d86f85981f90fbbd4ff23f",
               "bytes": 16806506,
@@ -8323,7 +8708,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.mp4",
               "sha256": "7210654e5e84a83448597a8d573dbacf5e11d557b6efb2845bb7fa5e2cf93f63",
               "bytes": 10596379,
@@ -8503,7 +8888,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.mp4",
               "sha256": "794d41ddcdb0adbbea5bc605182620f4bc4353e6cc3de88f7760815450b791f2",
               "bytes": 19235024,
@@ -8678,7 +9063,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/08.mp4",
               "sha256": "ee62e4a58193aa4cbc18ee68cfa357ba99b97cdf1d592b7c4f987d2bb6727c87",
               "bytes": 21073125,
@@ -8930,7 +9315,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/13-dream-island-top6-attrakcionov/veo-3.1-lite/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/13-dream-island-top6-attrakcionov/veo-3.1-lite/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/13-dream-island-top6-attrakcionov/veo-3.1-lite/05.mp4",
               "sha256": "d09b445a0b1e712e666343e718cb54db1c50852472b8bdb1ba95e3d81f0a8469",
               "bytes": 14480391,
@@ -9378,7 +9763,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/04.mp4",
               "sha256": "9e2ce2f1708c49cb2bcaa42c169e1c081f28df7a5cccec9e299551624843d497",
               "bytes": 4826120,
@@ -9657,7 +10042,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/04.mp4",
               "sha256": "06a08ba1c42496a5f01cc0a3146728edca4a7f03ae72ee223163ce7eebbf98ef",
               "bytes": 12493936,
@@ -9941,7 +10326,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.7/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.7/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.7/04.mp4",
               "sha256": "749fae032130f842a31faf31121519da970225f648057876583955746a00accb",
               "bytes": 4392567,
@@ -10348,7 +10733,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/veo-3.1-lite/05.mp4",
               "sha256": "ade0354c554a58ddf4eeeee21150460c9d1f6ed80bff872482de9b770d59a835",
               "bytes": 4217428,
@@ -10616,7 +11001,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/05.mp4",
               "sha256": "258e12e33680e15ed60f3ba5dc15c40c11b04db85cf4e27549d542153dfcd07c",
               "bytes": 5567281,
@@ -11006,7 +11391,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.mp4",
               "sha256": "6719df17b9fc640dc8b240171574b5d252d28a4655765448328826958cd069b0",
               "bytes": 5559971,
@@ -11175,7 +11560,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.mp4",
               "sha256": "10be7ca0092e40e452441302bea26bc833ba09d761c44100e7aaab1aced5a39c",
               "bytes": 6246917,
@@ -11439,7 +11824,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/16-marykay-trendy-krasoty/wan-2.2/06.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/16-marykay-trendy-krasoty/wan-2.2/06.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/16-marykay-trendy-krasoty/wan-2.2/06.mp4",
               "sha256": "c01d7498c3d0feef4ab9694e3acda7de3e0d952b9b9b2e40b0d623832155013b",
               "bytes": 3190481,
@@ -11779,7 +12164,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
               "sha256": "4187ae6b3a6c9d6a4090705b9351e6419ee37fd9e5f7bc973ce036a2456ef686",
               "bytes": 3829219,
@@ -12074,7 +12459,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.mp4",
               "sha256": "ab275e19b74b9c9dbe64fcc6e221affad78607858c95f50501f1d98496688844",
               "bytes": 4896798,
@@ -12244,7 +12629,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.mp4",
               "sha256": "7b5e1e5c543fecf5fbfea385cbd2ee8f2286b3f981edc3bcb03ead3d8440b15f",
               "bytes": 11728064,
@@ -12599,7 +12984,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.mp4",
               "sha256": "2b790385a2d3e7fcdd0ee71921a091c316af7d7137a5e8eff376777b45fd23aa",
               "bytes": 3527312,
@@ -12852,7 +13237,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
               "sha256": "b2af4d9699335956ea91b6880265efa1c4b3d2ac8c9d830d9ea8baded6e9e141",
               "bytes": 16678070,
@@ -13027,7 +13412,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.mp4",
               "sha256": "1aee1b66fd796baa4dc2c2706bd92d1f9e93a79a437ab4ba1dd7a2fcfbc95a9d",
               "bytes": 16869839,
@@ -13374,7 +13759,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.mp4",
               "sha256": "9eab9ac0ff0d3762c051386394b9399aff1f7522527e4576ffcd3226def2907a",
               "bytes": 2072460,
@@ -13554,7 +13939,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.mp4",
               "sha256": "aeeb45db38db42a3f7b7831405eed1c4be395118d91b1a0bbf17872d72b945b0",
               "bytes": 5652166,
@@ -13729,7 +14114,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
               "sha256": "2aa8ade141a8721c0eeedb41542a663d08fb2209afb218653d54acc3d5b155eb",
               "bytes": 2326213,
@@ -13989,41 +14374,46 @@
               }
             },
             "video": {
-              "state": "unavailable",
-              "status": "provider-unavailable",
-              "recorded_status": "submit-unknown",
+              "state": "available",
+              "status": "succeeded",
               "method": "eliza-i2v",
-              "prompt_evaluated": null,
-              "delivery": "unavailable",
-              "url": null,
-              "repository_video_path": null,
-              "sha256": null,
-              "bytes": null,
-              "media": null,
-              "contract_check": null,
-              "unavailable_reason": "Исходная Wan 2.2 попытка завершилась как submit-unknown без job ID; провайдер всё ещё может выполнять запрос, поэтому новый запуск не делался.",
-              "safety_barrier": {
-                "model_id": "alibaba/wan-2.2",
-                "route_capacity": 1,
-                "reason": "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt still has provider_may_be_active=true; no new Wan 2.2 submit is allowed.",
-                "source_provider_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                  "status": "submit-unknown",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                  "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                  "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                  "provider_job_id": null,
-                  "provider_may_be_active": true,
-                  "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
-                  "automatic_paid_retry": false,
-                  "fallback": null,
-                  "receipts_mutated": false
-                }
+              "prompt_evaluated": true,
+              "delivery": "repository-raw",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.mp4",
+              "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.mp4",
+              "sha256": "bac0e01c8512a7e8e16d73ce478b201b74abe56ebf08c8c6cb8539bd32622264",
+              "bytes": 5736040,
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 5.0,
+                "width": 1888,
+                "height": 480,
+                "fps": 30.0,
+                "frames": 150,
+                "has_audio": false,
+                "bytes": 5736040,
+                "sha256": "bac0e01c8512a7e8e16d73ce478b201b74abe56ebf08c8c6cb8539bd32622264"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 5,
+                  "resolution": "720p",
+                  "generate_audio": false,
+                  "frames": 150,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true
+                },
+                "conforms": true,
+                "warnings": []
               },
               "generation": {
-                "origin": "withheld-v6-route-safety",
+                "origin": "regenerated-v6-retry",
                 "batch_id": "promopages-10060-tune-videos-20260811-v6",
                 "provider_run_id": "promopages-10060-tune-videos-20260811-v6-17-volma-nalivnoi-pol-11-wan-2-2",
                 "retry_reason": "prior-submit-unknown-operator-authorized-new-run",
@@ -14045,55 +14435,36 @@
                   "fallback": null,
                   "receipts_mutated": false
                 },
-                "run_status": "pending"
-              },
-              "provider_attempt": {
-                "status": "submit-unknown",
-                "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                "run_sha256": "168f5d1dbc01c2d5707361b0bc4415963ca133d8ec479b1974ce592c7f3e794a",
-                "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                "prompt_sha256": "a762731b66d2521cdbb0c5d427f2ca3c1592428a337846505e81aa3bbef94710",
-                "provider_job_id": null,
-                "provider_may_be_active": true,
-                "submission_count": 0,
-                "error": "Исходная Wan 2.2 попытка завершилась как submit-unknown без job ID; провайдер всё ещё может выполнять запрос, поэтому новый запуск не делался.",
-                "automatic_paid_retry": false,
-                "fallback": null,
-                "source_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                  "status": "submit-unknown",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                  "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                  "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                  "provider_job_id": null,
-                  "provider_may_be_active": true,
-                  "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
+                "duplicate_risk_acceptance": {
+                  "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+                  "prior_inactive_not_confirmed": true,
+                  "source_evaluation_id": "17#11::alibaba/wan-2.2",
+                  "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+                  "source_status": "submit-unknown",
+                  "source_provider_job_id": null,
+                  "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+                  "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+                  "maximum_possible_duplicate_charge_usd": 0.35,
                   "automatic_paid_retry": false,
                   "fallback": null,
-                  "receipts_mutated": false
-                },
-                "safety_barrier": {
-                  "model_id": "alibaba/wan-2.2",
-                  "route_capacity": 1,
-                  "reason": "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt still has provider_may_be_active=true; no new Wan 2.2 submit is allowed.",
-                  "source_provider_attempt": {
-                    "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                    "status": "submit-unknown",
-                    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                    "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                    "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                    "provider_job_id": null,
-                    "provider_may_be_active": true,
-                    "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
-                    "automatic_paid_retry": false,
-                    "fallback": null,
-                    "receipts_mutated": false
-                  }
+                  "authorized_evaluation_id": "17#11::alibaba/wan-2.2"
                 }
+              },
+              "provider_attempt": null,
+              "qa": {
+                "status": "visual-review-failed",
+                "verified": false,
+                "reviewable": true,
+                "reviewer": "codex-visual-qa",
+                "video_sha256": "bac0e01c8512a7e8e16d73ce478b201b74abe56ebf08c8c6cb8539bd32622264",
+                "automatic_rejection": false,
+                "scope": "strict-visual-fidelity",
+                "summary": "Counts, copy and the woman are mostly stable, but the product cluster does not preserve rigid image-space relationships during the push.",
+                "findings": [
+                  "The product cluster independently enlarges and moves instead of following one uniform camera push.",
+                  "Package overlap and spacing change during the shot.",
+                  "Small labels and glyphs deform or flicker."
+                ]
               }
             }
           },
@@ -14412,7 +14783,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.mp4",
               "sha256": "c890f7158ca79da4fa6f5f5ac3f44a2d9c480726b86676930f2e2d3dc4895461",
               "bytes": 2272200,
@@ -14777,7 +15148,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/05.mp4",
               "sha256": "d2697da32b4248752b12e7e2ca6ae65d136d1d94d6df1e8ad30ed293915d0dba",
               "bytes": 1253121,
@@ -15044,7 +15415,7 @@
             "video": {
               "state": "unavailable",
               "status": "provider-unavailable",
-              "recorded_status": "dry-run",
+              "recorded_status": "provider-failed",
               "method": "eliza-i2v",
               "prompt_evaluated": false,
               "delivery": "unavailable",
@@ -15054,29 +15425,10 @@
               "bytes": null,
               "media": null,
               "contract_check": null,
-              "unavailable_reason": "Новый Wan 2.2 запуск не делался: route capacity=1 удерживается исходной submit-unknown попыткой 17#11.",
-              "safety_barrier": {
-                "model_id": "alibaba/wan-2.2",
-                "route_capacity": 1,
-                "reason": "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt still has provider_may_be_active=true; no new Wan 2.2 submit is allowed.",
-                "source_provider_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                  "status": "submit-unknown",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                  "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                  "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                  "provider_job_id": null,
-                  "provider_may_be_active": true,
-                  "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
-                  "automatic_paid_retry": false,
-                  "fallback": null,
-                  "receipts_mutated": false
-                }
-              },
+              "unavailable_reason": "provider submit: Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"3c062dcc-2f1d-4a15-9513-1886e02a1504\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-12 07:39:58.718\\\", \\\"scheduled_time\\\": \\\"2026-08-12 07:39:58.736\\\", \\\"end_time\\\": \\\"2026-08-12 07:39:59.895\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
+              "safety_barrier": null,
               "generation": {
-                "origin": "withheld-v6-route-safety",
+                "origin": "regenerated-v6-retry",
                 "batch_id": "promopages-10060-tune-videos-20260811-v6",
                 "provider_run_id": "promopages-10060-tune-videos-20260811-v6-18-volma-plitochnyi-klei-05-wan-2-2",
                 "retry_reason": "prior-dry-run-never-submitted-new-run",
@@ -15098,21 +15450,34 @@
                   "fallback": null,
                   "receipts_mutated": false
                 },
-                "run_status": "dry-run"
+                "duplicate_risk_acceptance": {
+                  "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+                  "prior_inactive_not_confirmed": true,
+                  "source_evaluation_id": "17#11::alibaba/wan-2.2",
+                  "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+                  "source_status": "submit-unknown",
+                  "source_provider_job_id": null,
+                  "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+                  "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+                  "maximum_possible_duplicate_charge_usd": 0.35,
+                  "automatic_paid_retry": false,
+                  "fallback": null,
+                  "authorized_evaluation_id": "18#05::alibaba/wan-2.2"
+                }
               },
               "provider_attempt": {
-                "status": "not-attempted-route-safety",
+                "status": "provider-failed",
                 "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.run.json",
-                "run_sha256": "affc2ca9944785943abe0d8c1e523dc66be6a0bb3493e6d68606f58b7d2c92de",
+                "run_sha256": "cd8246bf413f26c27de2e1b8c284470a7561fc77fcfd593251ec69d346d1d477",
                 "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.prompt.json",
                 "prompt_sha256": "d800457a1276903d3b25dfa2ccb0c6eba63d6721f8b35940783fbc35b7876ef1",
                 "provider_job_id": null,
                 "provider_may_be_active": false,
-                "submission_count": 0,
-                "error": "Новый Wan 2.2 запуск не делался: route capacity=1 удерживается исходной submit-unknown попыткой 17#11.",
+                "submission_count": 1,
+                "error": "provider submit: Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"3c062dcc-2f1d-4a15-9513-1886e02a1504\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-12 07:39:58.718\\\", \\\"scheduled_time\\\": \\\"2026-08-12 07:39:58.736\\\", \\\"end_time\\\": \\\"2026-08-12 07:39:59.895\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
                 "automatic_paid_retry": false,
                 "fallback": null,
-                "source_attempt": {
+                "prior_attempt": {
                   "batch_id": "promopages-10060-tune-videos-20260811-v5",
                   "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-05-wan-2-2",
                   "status": "dry-run",
@@ -15127,25 +15492,19 @@
                   "fallback": null,
                   "receipts_mutated": false
                 },
-                "safety_barrier": {
-                  "model_id": "alibaba/wan-2.2",
-                  "route_capacity": 1,
-                  "reason": "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt still has provider_may_be_active=true; no new Wan 2.2 submit is allowed.",
-                  "source_provider_attempt": {
-                    "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                    "status": "submit-unknown",
-                    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                    "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                    "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                    "provider_job_id": null,
-                    "provider_may_be_active": true,
-                    "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
-                    "automatic_paid_retry": false,
-                    "fallback": null,
-                    "receipts_mutated": false
-                  }
+                "duplicate_risk_acceptance": {
+                  "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+                  "prior_inactive_not_confirmed": true,
+                  "source_evaluation_id": "17#11::alibaba/wan-2.2",
+                  "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+                  "source_status": "submit-unknown",
+                  "source_provider_job_id": null,
+                  "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+                  "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+                  "maximum_possible_duplicate_charge_usd": 0.35,
+                  "automatic_paid_retry": false,
+                  "fallback": null,
+                  "authorized_evaluation_id": "18#05::alibaba/wan-2.2"
                 }
               }
             }
@@ -15401,7 +15760,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/05.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/05.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/05.mp4",
               "sha256": "3d1dc864b29b0669fb5732881e4d727b3172532b2dfe8a261bc49e3230670283",
               "bytes": 1360676,
@@ -15456,7 +15815,8 @@
                   "automatic_paid_retry": false,
                   "fallback": null,
                   "receipts_mutated": false
-                }
+                },
+                "duplicate_risk_acceptance": null
               },
               "provider_attempt": null
             }
@@ -15836,41 +16196,46 @@
               }
             },
             "video": {
-              "state": "unavailable",
-              "status": "provider-unavailable",
-              "recorded_status": "dry-run",
+              "state": "available",
+              "status": "succeeded",
               "method": "eliza-i2v",
-              "prompt_evaluated": false,
-              "delivery": "unavailable",
-              "url": null,
-              "repository_video_path": null,
-              "sha256": null,
-              "bytes": null,
-              "media": null,
-              "contract_check": null,
-              "unavailable_reason": "Новый Wan 2.2 запуск не делался: route capacity=1 удерживается исходной submit-unknown попыткой 17#11.",
-              "safety_barrier": {
-                "model_id": "alibaba/wan-2.2",
-                "route_capacity": 1,
-                "reason": "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt still has provider_may_be_active=true; no new Wan 2.2 submit is allowed.",
-                "source_provider_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                  "status": "submit-unknown",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                  "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                  "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                  "provider_job_id": null,
-                  "provider_may_be_active": true,
-                  "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
-                  "automatic_paid_retry": false,
-                  "fallback": null,
-                  "receipts_mutated": false
-                }
+              "prompt_evaluated": true,
+              "delivery": "repository-raw",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
+              "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
+              "sha256": "f6918a5638fcafa8b8c9621dcb020e7f7a1e24967ff1cdfd20c5a43fed4c8717",
+              "bytes": 4630963,
+              "media": {
+                "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                "codec": "h264",
+                "duration_seconds": 5.0,
+                "width": 1168,
+                "height": 784,
+                "fps": 30.0,
+                "frames": 150,
+                "has_audio": false,
+                "bytes": 4630963,
+                "sha256": "f6918a5638fcafa8b8c9621dcb020e7f7a1e24967ff1cdfd20c5a43fed4c8717"
+              },
+              "contract_check": {
+                "requested": {
+                  "duration_seconds": 5,
+                  "resolution": "720p",
+                  "generate_audio": false,
+                  "frames": 150,
+                  "fps": 30
+                },
+                "checks": {
+                  "duration": true,
+                  "audio": true,
+                  "frames": true,
+                  "fps": true
+                },
+                "conforms": true,
+                "warnings": []
               },
               "generation": {
-                "origin": "withheld-v6-route-safety",
+                "origin": "regenerated-v6-retry",
                 "batch_id": "promopages-10060-tune-videos-20260811-v6",
                 "provider_run_id": "promopages-10060-tune-videos-20260811-v6-18-volma-plitochnyi-klei-06-wan-2-2",
                 "retry_reason": "prior-dry-run-never-submitted-new-run",
@@ -15892,55 +16257,35 @@
                   "fallback": null,
                   "receipts_mutated": false
                 },
-                "run_status": "dry-run"
-              },
-              "provider_attempt": {
-                "status": "not-attempted-route-safety",
-                "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.run.json",
-                "run_sha256": "b09392e9a09796cdd8fbd1e754f9b790e68cae30bd7a21f991113ea510b46ddf",
-                "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
-                "prompt_sha256": "6ca59da8083f628841949b5e78057256f789e514d6b8c042fe1e3159bd58b40f",
-                "provider_job_id": null,
-                "provider_may_be_active": false,
-                "submission_count": 0,
-                "error": "Новый Wan 2.2 запуск не делался: route capacity=1 удерживается исходной submit-unknown попыткой 17#11.",
-                "automatic_paid_retry": false,
-                "fallback": null,
-                "source_attempt": {
-                  "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-06-wan-2-2",
-                  "status": "dry-run",
-                  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
-                  "prompt_sha256": "2b2207a854b4bbbfc81ddbfe20b2f1592a552a17f85b16095e253a04006d141c",
-                  "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.2/06.run.json",
-                  "run_sha256": "55c9255352b9d0506643638929fa8204ad47b45fe7b5e1019a58d8d31aaec0a3",
-                  "provider_job_id": null,
-                  "provider_may_be_active": false,
-                  "error": null,
+                "duplicate_risk_acceptance": {
+                  "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+                  "prior_inactive_not_confirmed": true,
+                  "source_evaluation_id": "17#11::alibaba/wan-2.2",
+                  "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+                  "source_status": "submit-unknown",
+                  "source_provider_job_id": null,
+                  "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+                  "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+                  "maximum_possible_duplicate_charge_usd": 0.35,
                   "automatic_paid_retry": false,
                   "fallback": null,
-                  "receipts_mutated": false
-                },
-                "safety_barrier": {
-                  "model_id": "alibaba/wan-2.2",
-                  "route_capacity": 1,
-                  "reason": "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt still has provider_may_be_active=true; no new Wan 2.2 submit is allowed.",
-                  "source_provider_attempt": {
-                    "batch_id": "promopages-10060-tune-videos-20260811-v5",
-                    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
-                    "status": "submit-unknown",
-                    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
-                    "prompt_sha256": "8398d12126821f6312e1b70c1db4cf125e95a4ed772d18e708acd7dfe74e2d2c",
-                    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
-                    "run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
-                    "provider_job_id": null,
-                    "provider_may_be_active": true,
-                    "error": "provider submit: Eliza/Segmind POST failed: The read operation timed out",
-                    "automatic_paid_retry": false,
-                    "fallback": null,
-                    "receipts_mutated": false
-                  }
+                  "authorized_evaluation_id": "18#06::alibaba/wan-2.2"
                 }
+              },
+              "provider_attempt": null,
+              "qa": {
+                "status": "visual-review-failed",
+                "verified": false,
+                "reviewable": true,
+                "reviewer": "codex-visual-qa",
+                "video_sha256": "f6918a5638fcafa8b8c9621dcb020e7f7a1e24967ff1cdfd20c5a43fed4c8717",
+                "automatic_rejection": false,
+                "scope": "strict-visual-fidelity",
+                "summary": "Camera, floor, adhesive, guides and detached trowel remain rigid, but the worker exceeds the requested head-shoulder-torso microshift.",
+                "findings": [
+                  "The hips, knees, feet and whole body translate or reform during the shot.",
+                  "The worker shows visible morphology drift beyond the bounded microshift."
+                ]
               }
             }
           },
@@ -16183,7 +16528,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.mp4",
               "sha256": "f8388f89ce1a5cf217465f53d1f3f051d4db3b557462555c7a3d4d6ae7aa4b8f",
               "bytes": 3692769,
@@ -16548,7 +16893,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/veo-3.1-lite/07.mp4",
               "sha256": "2c926879d71a24766239d8e08d65a5fd72c2f5b483cc890633910ac40df31c35",
               "bytes": 1784920,
@@ -16877,6 +17222,7 @@
                   "fallback": null,
                   "receipts_mutated": false
                 },
+                "duplicate_risk_acceptance": null,
                 "run_status": "dry-run"
               },
               "provider_attempt": {
@@ -17188,7 +17534,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.7/07.mp4",
               "sha256": "d4efd40b79d0983004f531d97817aea20517af9b6683fdfa5a583ac0ca2622ad",
               "bytes": 1786440,
@@ -17243,7 +17589,8 @@
                   "automatic_paid_retry": false,
                   "fallback": null,
                   "receipts_mutated": false
-                }
+                },
+                "duplicate_risk_acceptance": null
               },
               "provider_attempt": null
             }
@@ -17616,7 +17963,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.mp4",
               "sha256": "15ff6b86f646345158175030184b172660b23c81ef813fd3757dab2a019b203b",
               "bytes": 8851888,
@@ -17796,7 +18143,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.mp4",
               "sha256": "d5a18ac0c4593ca3ed531b0357c0dce8949869fa16e8fc3aa0085d33f4a95f60",
               "bytes": 13136400,
@@ -18148,7 +18495,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.mp4",
               "sha256": "5ddb2a79df7f32cb50c498fedf54be14efff50bdafb81ded15b7f32f2448ca70",
               "bytes": 6540127,
@@ -18329,7 +18676,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.mp4",
               "sha256": "e99b0f30a5d505bd7104c8c92d93156b858ee3a372e4e7eb83f2c9b3064262f3",
               "bytes": 18102614,
@@ -18505,7 +18852,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/07.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/07.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/07.mp4",
               "sha256": "8a2aea0ab1e75a2085167864291c5772d0364fd6bbe91a4ca843471af8c44df2",
               "bytes": 23962407,
@@ -18763,7 +19110,7 @@
               "method": "eliza-i2v",
               "prompt_evaluated": true,
               "delivery": "repository-raw",
-              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/98164f103b265da70489cbab7d0c1beca61ae7c3/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.mp4",
+              "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/1531003f3dda3b48bbb48ca8ac81f6a39d529e72/clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.mp4",
               "repository_video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.mp4",
               "sha256": "154a0b1772ba4cfab9aba76997a9211e9a9d48cf25a68c6f7c2a651bd3fedad5",
               "bytes": 8307949,
