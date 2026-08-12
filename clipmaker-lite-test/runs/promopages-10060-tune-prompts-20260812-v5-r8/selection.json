@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v7-filter-retry-selection",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-prompts-20260812-v5-r8",
+  "agent_id": "clipmaker-lite",
+  "policy": {
+    "selection": "one repeated terminal Veo provider-no-output target",
+    "required_execution_mode": "i2v",
+    "required_rendering_strategy": "camera-only",
+    "prompt_author": "clipmaker-lite",
+    "hand_authored_provider_prompt": false,
+    "canonical_full_source_only": true,
+    "disable_provider_safety_filters": false,
+    "source_transform": null,
+    "fallback": false,
+    "compositor": false,
+    "s3_upload": false,
+    "one_new_paid_attempt_only": true,
+    "terminal_no_output_stop": "no-further-prompt-retries-on-the-same-canonical-full-source",
+    "capture_provider_safety_diagnostics_if_present": true
+  },
+  "diagnosis": {
+    "type": "suspected_source_filter",
+    "classification": "suspected-source-image-safety-false-positive",
+    "evidence_strength": "strong-indirect",
+    "provider_support_code_available": false,
+    "prior_provider_response_present": false,
+    "person_preserving_provider_failures_at_least": 11,
+    "observed_failed_seeds": [
+      9681,
+      27183
+    ],
+    "failed_source_variants": [
+      {
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "dimensions": {
+          "width": 2400,
+          "height": 1600
+        },
+        "observed_failed_seeds": [
+          9681,
+          27183
+        ]
+      },
+      {
+        "sha256": "f3eac13ca2c71c7cec3a1a860c701caea68728a3f9dc9e77c1d05b2455143ce9",
+        "dimensions": {
+          "width": 1920,
+          "height": 1080
+        },
+        "observed_failed_seeds": [
+          9681
+        ]
+      },
+      {
+        "sha256": "74764f50e6a2b6c307817c2862df40c8ed50367aa9f5e191106f22772397bb88",
+        "dimensions": {
+          "width": 1920,
+          "height": 1080
+        },
+        "observed_failed_seeds": [
+          9681
+        ]
+      }
+    ],
+    "background_only_success_is_evidence_only": true,
+    "background_only_source_sha256": "31672c5832458e9698f2a5710a159b10cbb99febf55c7f1b0906393f977cb88e",
+    "active_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "active_source_transform": null
+  },
+  "lineage": {
+    "source_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r7/prompt-manifest.json",
+      "sha256": "7bbbc1fee981480edfcdc268e5611f1fe6d91b3b0ac0270597c02d7f0045e5d5",
+      "batch_id": "promopages-10060-tune-prompts-20260811-v5-r7"
+    },
+    "source_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/generation-manifest.json",
+      "sha256": "043692f6a47269829a70207da65a0163c10b6be63d52edf91eb706327d035c23",
+      "batch_id": "promopages-10060-tune-videos-20260811-v6",
+      "receipts_mutated": false
+    },
+    "filter_forensics": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-femibion-veo-recovery-20260810-v7/all-attempts-selection-manifest.json",
+      "sha256": "df471ab6fa5a530ca690b40ce9791aae9bcb56b1893a0f25b80ef777072dac0d",
+      "used_as_generation_input": false
+    },
+    "additional_terminal_filter_receipt": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "sha256": "bf9bafc04cb2eae3467355696026706582c38f1b6f0cd67536e43dd172b8ca82",
+      "used_as_generation_input": false
+    }
+  },
+  "summary": {
+    "case_count": 1,
+    "target_count": 1,
+    "model_counts": {
+      "google/veo-3.1-lite": 1
+    },
+    "source_status_counts": {
+      "provider-failed": 1
+    }
+  },
+  "cases": [
+    {
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "content_class": "person_phone",
+      "source": {
+        "image_id": "06",
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "width": 2400,
+        "height": 1600
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+        "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+        "locator": {
+          "article_id": "07-femibion-gotovites-k-beremennosti",
+          "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+          "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+          "image_id": "06",
+          "block_index": 26,
+          "role": "article_image",
+          "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+          "file": "06.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+          "current_heading": {
+            "block_index": 20,
+            "level": 2,
+            "text": "Пройдите необходимые консультации и обследования"
+          },
+          "nearest_text_before": {
+            "block_index": 25,
+            "type": "paragraph",
+            "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+          },
+          "nearest_text_after": {
+            "block_index": 27,
+            "type": "heading",
+            "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/repair-feedback/07-06.json",
+      "repair_feedback_sha256": "38be340c0f27ebac4231b23bfe647bd65282c1311d7995f6a42c893fe334725c",
+      "repair_feedback": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "07#06::google/veo-3.1-lite",
+          "outcome": "worse",
+          "review_note": "Repeated provider no-output receipts indicate a suspected source-image safety false positive, not a known prompt-policy violation. Author the positive_prompt exactly as supplied in the preservation rule below. Keep the treatment camera-only and do not name or describe any visible subject, body part, device, activity, relationship, health topic, or brand.",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "provider_no_output"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the complete existing scene",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 5,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Keep the complete source composition unchanged."
+            ],
+            "topology_anchors": [
+              "The positive_prompt must be exactly: \"Slow, gentle centered dolly in on the existing scene. By the final frame, the same composition appears about 5% closer.\""
+            ],
+            "rigid_regions": [
+              "the complete existing scene"
+            ],
+            "contacts": [
+              "Do not animate any source element."
+            ],
+            "must_remain_visible": [
+              "the complete existing scene"
+            ]
+          }
+        }
+      },
+      "run_id": "promopages-10060-tune-prompts-20260812-v5-r8-07-femibion-gotovites-k-beremennosti-06",
+      "retry_reason": "repeated-provider-filter-neutral-source-bound-repair",
+      "source_prompt": {
+        "batch_id": "promopages-10060-tune-prompts-20260811-v5-r7",
+        "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06/result.json",
+        "result_sha256": "94e679266f7255b058acc4ef88e3343e3994743353d5cd168d09ec101a2e1572",
+        "positive_prompt_sha256": "9df7921d5f7135a1eb74bedb79c51d39765d0731aacaa75ccda07636e56f82cd"
+      },
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260811-v6",
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v6-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "status": "provider-failed",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "37ae4af78340ab55ff8472a562c7ee357ca7099c62980f25ba00c0e271d1ae98",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "6a90ecedecfeb3ff5a3093231072f421ecc57eb325b0bc0adc53a546913781de",
+        "provider_job_id": "FjVDTD6oBHrOmJGu5cal",
+        "error": "provider poll/download: Eliza/OpenRouter job FjVDTD6oBHrOmJGu5cal failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false,
+        "submission_count": 1,
+        "automatic_paid_retry": false,
+        "fallback": null
+      },
+      "targets": [
+        {
+          "evaluation_id": "07#06::google/veo-3.1-lite",
+          "case_id": "07#06",
+          "sheet_row": 80,
+          "model_id": "google/veo-3.1-lite",
+          "repair_feedback": {
+            "evaluation_id": "07#06::google/veo-3.1-lite",
+            "outcome": "worse",
+            "review_note": "Repeated provider no-output receipts indicate a suspected source-image safety false positive, not a known prompt-policy violation. Author the positive_prompt exactly as supplied in the preservation rule below. Keep the treatment camera-only and do not name or describe any visible subject, body part, device, activity, relationship, health topic, or brand.",
+            "evidence_strength": "explicit",
+            "failure_codes": [
+              "provider_no_output"
+            ],
+            "required_execution_mode": "i2v",
+            "fallback_policy": "none",
+            "camera_repair": {
+              "move": "push-in",
+              "focal_target": "the complete existing scene",
+              "target_retention": "continuously-visible",
+              "max_screen_travel_percent": 5,
+              "reveal_unseen_space": false
+            },
+            "preservation": {
+              "entity_counts": [
+                "Keep the complete source composition unchanged."
+              ],
+              "topology_anchors": [
+                "The positive_prompt must be exactly: \"Slow, gentle centered dolly in on the existing scene. By the final frame, the same composition appears about 5% closer.\""
+              ],
+              "rigid_regions": [
+                "the complete existing scene"
+              ],
+              "contacts": [
+                "Do not animate any source element."
+              ],
+              "must_remain_visible": [
+                "the complete existing scene"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

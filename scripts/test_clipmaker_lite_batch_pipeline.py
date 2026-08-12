@@ -420,101 +420,106 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             {"enhancePrompt": True},
         )
 
-    def test_wan27_dimension_preflight_is_exactly_240_per_side(self) -> None:
-        accepted = batch.provider_input_dimension_preflight(
-            {"width": 1000, "height": 240},
-            batch.WAN_27_MODEL_ID,
-        )
-        self.assertTrue(accepted["conforms"])
-        self.assertEqual(
-            accepted["minimum_dimension_px"],
-            batch.WAN_27_MIN_SOURCE_DIMENSION_PX,
-        )
-        for width, height in ((758, 220), (773, 239)):
-            with self.subTest(width=width, height=height):
-                with self.assertRaises(batch.ProviderInputDimensionError) as raised:
-                    batch.provider_input_dimension_preflight(
-                        {"width": width, "height": height},
-                        batch.WAN_27_MODEL_ID,
+    def test_wan_dimension_preflight_is_exactly_240_per_side(self) -> None:
+        for model_id in (batch.WAN_MODEL_ID, batch.WAN_27_MODEL_ID):
+            accepted = batch.provider_input_dimension_preflight(
+                {"width": 1000, "height": 240},
+                model_id,
+            )
+            self.assertTrue(accepted["conforms"])
+            self.assertEqual(
+                accepted["minimum_dimension_px"],
+                batch.WAN_MIN_SOURCE_DIMENSION_PX,
+            )
+            for width, height in ((758, 220), (773, 239)):
+                with self.subTest(model_id=model_id, width=width, height=height):
+                    with self.assertRaises(batch.ProviderInputDimensionError) as raised:
+                        batch.provider_input_dimension_preflight(
+                            {"width": width, "height": height},
+                            model_id,
+                        )
+                    self.assertEqual(
+                        raised.exception.evidence,
+                        {
+                            "check": "source-dimensions",
+                            "model_id": model_id,
+                            "width": width,
+                            "height": height,
+                            "minimum_dimension_px": 240,
+                            "conforms": False,
+                            "normalization_applied": False,
+                        },
                     )
-                self.assertEqual(
-                    raised.exception.evidence,
-                    {
-                        "check": "source-dimensions",
-                        "model_id": batch.WAN_27_MODEL_ID,
+                    self.assertIn("new immutable batch", str(raised.exception))
+
+    def test_wan_undersize_fails_before_credentials_or_paid_submit(self) -> None:
+        for model_id in (batch.WAN_MODEL_ID, batch.WAN_27_MODEL_ID):
+            for width, height, dry_run in (
+                (758, 220, False),
+                (758, 220, True),
+                (773, 239, False),
+                (773, 239, True),
+            ):
+                with (
+                    self.subTest(
+                        model_id=model_id,
+                        width=width,
+                        height=height,
+                        dry_run=dry_run,
+                    ),
+                    tempfile.TemporaryDirectory() as directory,
+                ):
+                    root = Path(directory)
+                    row = self.temp_row(root, model_id)
+                    row["sample"] = {
+                        **row["sample"],
                         "width": width,
                         "height": height,
-                        "minimum_dimension_px": 240,
-                        "conforms": False,
-                        "normalization_applied": False,
-                    },
-                )
-                self.assertIn("new immutable batch", str(raised.exception))
-
-    def test_wan27_undersize_fails_before_credentials_or_paid_submit(self) -> None:
-        for width, height, dry_run in (
-            (758, 220, False),
-            (758, 220, True),
-            (773, 239, False),
-            (773, 239, True),
-        ):
-            with (
-                self.subTest(width=width, height=height, dry_run=dry_run),
-                tempfile.TemporaryDirectory() as directory,
-            ):
-                root = Path(directory)
-                row = self.temp_row(root, batch.WAN_27_MODEL_ID)
-                row["sample"] = {
-                    **row["sample"],
-                    "width": width,
-                    "height": height,
-                }
-                forbidden = mock.Mock(
-                    side_effect=AssertionError("provider operation must not run")
-                )
-                operations = self.provider_operations(
-                    batch.WAN_27_MODEL_ID,
-                    eliza_headers=forbidden,
-                    http_json=forbidden,
-                    eliza_poll=forbidden,
-                    http_download=forbidden,
-                )
-
-                with mock.patch.object(batch, "materialize_entry", return_value=row):
-                    result = batch.run_provider_worker(
-                        row,
-                        self.args(dry_run=dry_run),
-                        root,
-                        operations,
+                    }
+                    forbidden = mock.Mock(
+                        side_effect=AssertionError("provider operation must not run")
+                    )
+                    operations = self.provider_operations(
+                        model_id,
+                        eliza_headers=forbidden,
+                        http_json=forbidden,
+                        eliza_poll=forbidden,
+                        http_download=forbidden,
                     )
 
-                self.assertTrue(result.failed)
-                self.assertEqual(result.status, "failed-pre-submit")
-                self.assertFalse(result.holds_provider_slot)
-                self.assertEqual(forbidden.call_count, 0)
-                persisted = transport.read_json(row["paths"]["run"])
-                self.assertEqual(persisted["status"], "failed-pre-submit")
-                self.assertFalse(persisted["provider_may_be_active"])
-                self.assertIsNone(persisted["provider_job_id"])
-                self.assertIsNone(persisted["submitted_at"])
-                self.assertEqual(
-                    persisted["last_worker_failure"],
-                    "provider-input-dimension",
-                )
-                self.assertEqual(
-                    persisted["source_preflight"]["minimum_dimension_px"],
-                    240,
-                )
+                    with mock.patch.object(batch, "materialize_entry", return_value=row):
+                        result = batch.run_provider_worker(
+                            row,
+                            self.args(dry_run=dry_run),
+                            root,
+                            operations,
+                        )
 
-    def test_dimension_preflight_does_not_change_other_model_routes(self) -> None:
-        for model_id in (batch.WAN_MODEL_ID, batch.VEO_31_MODEL_ID):
-            with self.subTest(model_id=model_id):
-                evidence = batch.provider_input_dimension_preflight(
-                    {"width": 758, "height": 220},
-                    model_id,
-                )
-                self.assertTrue(evidence["conforms"])
-                self.assertIsNone(evidence["minimum_dimension_px"])
+                    self.assertTrue(result.failed)
+                    self.assertEqual(result.status, "failed-pre-submit")
+                    self.assertFalse(result.holds_provider_slot)
+                    self.assertEqual(forbidden.call_count, 0)
+                    persisted = transport.read_json(row["paths"]["run"])
+                    self.assertEqual(persisted["status"], "failed-pre-submit")
+                    self.assertFalse(persisted["provider_may_be_active"])
+                    self.assertIsNone(persisted["provider_job_id"])
+                    self.assertIsNone(persisted["submitted_at"])
+                    self.assertEqual(
+                        persisted["last_worker_failure"],
+                        "provider-input-dimension",
+                    )
+                    self.assertEqual(
+                        persisted["source_preflight"]["minimum_dimension_px"],
+                        240,
+                    )
+
+    def test_dimension_preflight_does_not_change_veo_route(self) -> None:
+        evidence = batch.provider_input_dimension_preflight(
+            {"width": 758, "height": 220},
+            batch.VEO_31_MODEL_ID,
+        )
+        self.assertTrue(evidence["conforms"])
+        self.assertIsNone(evidence["minimum_dimension_px"])
 
     def test_non_null_negative_prompt_is_rejected_before_transport(self) -> None:
         entries = {entry.model_id: entry for entry in batch.matrix()[:3]}

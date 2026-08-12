@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v7-filter-retry-video-generation",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260812-v7",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-11T23:36:41Z",
+  "scope": {
+    "expected_i2v_outputs": 1,
+    "model_counts": {
+      "google/veo-3.1-lite": 1
+    },
+    "prompt_batch_id": "promopages-10060-tune-prompts-20260812-v5-r8",
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/prompt-manifest.json",
+    "prompt_manifest_sha256": "71bf815a44e88a0f7cf08dfa25f7f46ad54e5de36f12f85e738d74917a9f6c08",
+    "canonical_full_source_only": true,
+    "source_transform": null,
+    "disable_provider_safety_filters": false,
+    "compositor_outputs": 0,
+    "fallback_outputs": 0,
+    "s3_upload": false,
+    "delivery": "repository-files"
+  },
+  "budget": {
+    "currency": "USD",
+    "hard_incremental_budget_cap_usd": 0.35,
+    "reserved_output_count": 1,
+    "accounting_cost_per_output_usd": 0.35,
+    "maximum_estimated_cost_usd": 0.35,
+    "provider_unit_costs_asserted": false,
+    "one_submit_per_new_provider_run_id": true,
+    "automatic_paid_retry": false
+  },
+  "policy": {
+    "terminal_no_output_stops_same_source_prompt_retry": true,
+    "automatic_paid_retry": false,
+    "fallback": false,
+    "compositor": false,
+    "disable_provider_safety_filters": false
+  },
+  "scheduling": {
+    "one_paid_submission_per_new_provider_run_id": true,
+    "automatic_paid_retry": false,
+    "fallback": false
+  },
+  "last_invocation": {
+    "mode": "generate",
+    "selected_evaluation_ids": [
+      "07#06::google/veo-3.1-lite"
+    ],
+    "budget_cap_usd": 0.35,
+    "one_paid_submit": true,
+    "automatic_paid_retry": false
+  },
+  "summary": {
+    "provider-failed": 1
+  },
+  "outputs": [
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260812-v7-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+      "evaluation_id": "07#06::google/veo-3.1-lite",
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "provider-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+      "submission_count": 1,
+      "provider_terminal_diagnostics": {
+        "id": "MqfNhJZllV0ZEVNQUElh",
+        "generation_id": "gen-vid-1786491165-DWVSHtNSAOVzUaBoCaRH",
+        "status": "failed",
+        "error": "Video generation completed with no output (content may have been filtered)",
+        "request_id": "1786491401406318-3085853662466157234-fgj3gwlvspupq2he-BAL",
+        "diagnostics_unavailable_upstream": true
+      },
+      "diagnostics_unavailable_upstream": true,
+      "terminal_no_output_stop_applied": true,
+      "automatic_paid_retry": false,
+      "fallback": null,
+      "s3_upload": false
+    }
+  ]
+}

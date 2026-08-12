@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v8-veo-prompt-experiment-video-generation",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260812-v8",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-11T23:53:25Z",
+  "scope": {
+    "expected_i2v_outputs": 3,
+    "experiment_count": 3,
+    "model_counts": {
+      "google/veo-3.1-lite": 3
+    },
+    "prompt_batch_id": "promopages-10060-tune-prompts-20260812-v5-r9",
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/prompt-manifest.json",
+    "prompt_manifest_sha256": "56f221a685ca44186b369392f41b7a76b01540218a24be4fe634b1a1962e21b0",
+    "canonical_full_source_only": true,
+    "source_transform": null,
+    "disable_provider_safety_filters": false,
+    "compositor_outputs": 0,
+    "fallback_outputs": 0,
+    "s3_upload": false,
+    "delivery": "repository-files"
+  },
+  "experiment_design": {
+    "shared_seed": 20260812,
+    "fixed_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "changed_factor": "motion-only positive-prompt formulation",
+    "variant_order": [
+      "minimal-zoom",
+      "camera-forward",
+      "framing-endpoint"
+    ]
+  },
+  "budget": {
+    "currency": "USD",
+    "hard_incremental_budget_cap_usd": 1.05,
+    "reserved_output_count": 3,
+    "accounting_cost_per_output_usd": 0.35,
+    "maximum_estimated_cost_usd": 1.05,
+    "provider_unit_costs_asserted": false,
+    "one_submit_per_new_provider_run_id": true,
+    "automatic_paid_retry": false
+  },
+  "policy": {
+    "terminal_no_output_stops_same_experiment_retry": true,
+    "automatic_paid_retry": false,
+    "fallback": false,
+    "compositor": false,
+    "source_transform": null,
+    "disable_provider_safety_filters": false
+  },
+  "scheduling": {
+    "route_capacity": 3,
+    "worker_count": 3,
+    "start_together": true,
+    "coordinator_only_writes_aggregate_manifest": true,
+    "one_paid_submission_per_new_provider_run_id": true,
+    "automatic_paid_retry": false,
+    "fallback": false
+  },
+  "last_invocation": {
+    "mode": "generate",
+    "selected_experiment_ids": [
+      "07#06::google/veo-3.1-lite::minimal-zoom",
+      "07#06::google/veo-3.1-lite::camera-forward",
+      "07#06::google/veo-3.1-lite::framing-endpoint"
+    ],
+    "budget_cap_usd": 1.05,
+    "one_paid_submit_per_provider_run_id": true,
+    "automatic_paid_retry": false
+  },
+  "summary": {
+    "provider-failed": 3
+  },
+  "outputs": [
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-minimal-zoom",
+      "evaluation_id": "07#06::google/veo-3.1-lite",
+      "experiment_id": "07#06::google/veo-3.1-lite::minimal-zoom",
+      "variant_id": "minimal-zoom",
+      "controlled_factor": "minimal imperative wording",
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "provider-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-minimal-zoom.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-minimal-zoom.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-minimal-zoom.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+      "submission_count": 1,
+      "provider_terminal_diagnostics": {
+        "id": "v1IyzmwzywP5OeyyeVCL",
+        "generation_id": "gen-vid-1786492211-Zcnk7N9WCXv3v7NNjh7f",
+        "status": "failed",
+        "error": "Video generation completed with no output (content may have been filtered)",
+        "request_id": "1786492311562851-18217977997291158240-gze6iy57wssor74m-BAL",
+        "diagnostics_unavailable_upstream": true
+      },
+      "diagnostics_unavailable_upstream": true,
+      "terminal_no_output_stop_applied": true,
+      "automatic_paid_retry": false,
+      "fallback": null,
+      "s3_upload": false
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-camera-forward",
+      "evaluation_id": "07#06::google/veo-3.1-lite",
+      "experiment_id": "07#06::google/veo-3.1-lite::camera-forward",
+      "variant_id": "camera-forward",
+      "controlled_factor": "explicit physical camera trajectory",
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "provider-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+      "submission_count": 1,
+      "provider_terminal_diagnostics": {
+        "id": "1oM0io6whFdOx2kMr8L7",
+        "generation_id": "gen-vid-1786492211-7r9hQmGXu4V4XhfUXBOZ",
+        "status": "failed",
+        "error": "Video generation completed with no output (content may have been filtered)",
+        "request_id": "1786492328325328-10558355251708618270-xcunskkz2sjvf2re-BAL",
+        "diagnostics_unavailable_upstream": true
+      },
+      "diagnostics_unavailable_upstream": true,
+      "terminal_no_output_stop_applied": true,
+      "automatic_paid_retry": false,
+      "fallback": null,
+      "s3_upload": false
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-framing-endpoint",
+      "evaluation_id": "07#06::google/veo-3.1-lite",
+      "experiment_id": "07#06::google/veo-3.1-lite::framing-endpoint",
+      "variant_id": "framing-endpoint",
+      "controlled_factor": "image-space endpoint wording",
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "provider-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-framing-endpoint.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-framing-endpoint.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-framing-endpoint.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+      "submission_count": 1,
+      "provider_terminal_diagnostics": {
+        "id": "QYqhSGkR6DOqjaDEL2oe",
+        "generation_id": "gen-vid-1786492211-YDOVPu6gS7v3Z6FxQYKk",
+        "status": "failed",
+        "error": "Video generation completed with no output (content may have been filtered)",
+        "request_id": "1786492405525435-9008224883534424833-gze6iy57wssor74m-BAL",
+        "diagnostics_unavailable_upstream": true
+      },
+      "diagnostics_unavailable_upstream": true,
+      "terminal_no_output_stop_applied": true,
+      "automatic_paid_retry": false,
+      "fallback": null,
+      "s3_upload": false
+    }
+  ]
+}

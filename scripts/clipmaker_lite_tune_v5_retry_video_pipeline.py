@@ -112,6 +112,7 @@ ROUTE_SAFETY_REASON = (
     "Wan 2.2 route capacity is 1 and the source 17#11 submit-unknown receipt "
     "still has provider_may_be_active=true; no new Wan 2.2 submit is allowed."
 )
+MAXIMUM_POSSIBLE_DUPLICATE_CHARGE_USD = Decimal("0.35")
 
 NORMALIZED_ASSETS = {
     "18#05": {
@@ -932,6 +933,22 @@ def run_provider_worker(
     entry: Entry = row["entry"]
     paths = row["paths"]
     run = read_json(paths["run"])
+    duplicate_risk_acceptance = original.get("duplicate_risk_acceptance")
+    if duplicate_risk_acceptance is not None:
+        if entry.model_id != "alibaba/wan-2.2":
+            raise TuneV5RetryVideoError(
+                "Duplicate-risk acceptance may bind only a Wan 2.2 run"
+            )
+        existing_acceptance = run.get("duplicate_risk_acceptance")
+        if existing_acceptance is not None and existing_acceptance != duplicate_risk_acceptance:
+            raise TuneV5RetryVideoError(
+                f"Duplicate-risk acceptance changed: {entry.provider_run_id}"
+            )
+        if existing_acceptance is None:
+            run["duplicate_risk_acceptance"] = copy.deepcopy(
+                duplicate_risk_acceptance
+            )
+            _persist(paths["run"], run)
     request = transport.build_request_preview(row["sample"], row["prompt"])
     fingerprint = transport.request_fingerprint(request, row["sample"])
     status = str(run.get("status"))
@@ -1208,6 +1225,9 @@ def generation_manifest_document(
                 "contract_check": run.get("contract_check"),
                 "error": run.get("error"),
                 "submission_count": run.get("submission_count"),
+                "duplicate_risk_acceptance": copy.deepcopy(
+                    run.get("duplicate_risk_acceptance")
+                ),
                 "automatic_paid_retry": False,
                 "fallback": None,
             }
@@ -1274,6 +1294,7 @@ def run_batch(
     targets: list[str] | None = None,
     allow_external_processing: bool = False,
     acknowledge_prior_submit_unknown_inactive: bool = False,
+    authorize_wan22_despite_unresolved_submit_unknown: bool = False,
     timeout: int = 1800,
     poll_interval: float = 10.0,
     fail_fast: bool = False,
@@ -1295,19 +1316,65 @@ def run_batch(
     selected_keys = [entry.evaluation_id for entry in selected]
     selects_wan_22 = any(entry.model_id == "alibaba/wan-2.2" for entry in selected)
     if (
+        acknowledge_prior_submit_unknown_inactive
+        and authorize_wan22_despite_unresolved_submit_unknown
+    ):
+        raise TuneV5RetryVideoError(
+            "Choose either confirmed inactivity or explicit duplicate-risk acceptance, not both"
+        )
+    if (
         not dry_run
         and selects_wan_22
         and not acknowledge_prior_submit_unknown_inactive
+        and not authorize_wan22_despite_unresolved_submit_unknown
     ):
         raise TuneV5RetryVideoError(
             "The Wan 2.2 route has capacity 1 and the prior 17#11 submit-unknown receipt "
             "still holds that route slot. No Wan 2.2 target may submit until out-of-band "
             "evidence confirms the prior request is inactive; only then pass "
-            "--acknowledge-prior-submit-unknown-inactive"
+            "--acknowledge-prior-submit-unknown-inactive. If an operator instead accepts "
+            "the bounded duplicate-charge risk without claiming inactivity, pass "
+            "--authorize-wan22-despite-unresolved-submit-unknown."
         )
     rows = [materialize_entry(entry, output_root=output_root) for entry in inventory.entries]
     selected_ids = {entry.provider_run_id for entry in selected}
     selected_rows = [row for row in rows if row["entry"].provider_run_id in selected_ids]
+    duplicate_risk_receipt: dict[str, Any] | None = None
+    if selects_wan_22 and authorize_wan22_despite_unresolved_submit_unknown:
+        barrier_entry = next(
+            entry for entry in inventory.entries if entry.evaluation_id == SUBMIT_UNKNOWN_KEY
+        )
+        barrier = barrier_entry.prior_attempt
+        if (
+            barrier.get("status") != "submit-unknown"
+            or barrier.get("provider_job_id") is not None
+            or barrier.get("provider_may_be_active") is not True
+            or barrier.get("run_sha256") != sha256_file(root / barrier["run_path"])
+        ):
+            raise TuneV5RetryVideoError(
+                "The duplicate-risk authorization source receipt changed"
+            )
+        duplicate_risk_receipt = {
+            "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+            "prior_inactive_not_confirmed": True,
+            "source_evaluation_id": SUBMIT_UNKNOWN_KEY,
+            "source_provider_run_id": barrier["provider_run_id"],
+            "source_status": "submit-unknown",
+            "source_provider_job_id": None,
+            "source_run_path": barrier["run_path"],
+            "source_run_sha256": barrier["run_sha256"],
+            "maximum_possible_duplicate_charge_usd": float(
+                MAXIMUM_POSSIBLE_DUPLICATE_CHARGE_USD
+            ),
+            "automatic_paid_retry": False,
+            "fallback": None,
+        }
+        for row in selected_rows:
+            if row["entry"].model_id == "alibaba/wan-2.2":
+                row["duplicate_risk_acceptance"] = {
+                    **copy.deepcopy(duplicate_risk_receipt),
+                    "authorized_evaluation_id": row["entry"].evaluation_id,
+                }
     invocation = {
         "mode": "dry-run" if dry_run else "generate",
         "selected_evaluation_ids": selected_keys,
@@ -1316,6 +1383,7 @@ def run_batch(
         "prior_submit_unknown_acknowledged_inactive": (
             acknowledge_prior_submit_unknown_inactive if selects_wan_22 else None
         ),
+        "duplicate_risk_acceptance": copy.deepcopy(duplicate_risk_receipt),
     }
     write_generation_manifest(
         inventory, rows, invocation=invocation, output_root=output_root
@@ -1427,6 +1495,14 @@ def build_parser() -> argparse.ArgumentParser:
     generate.add_argument("--budget-cap-usd", type=budget_arg, required=True)
     generate.add_argument("--allow-external-processing", action="store_true")
     generate.add_argument("--acknowledge-prior-submit-unknown-inactive", action="store_true")
+    generate.add_argument(
+        "--authorize-wan22-despite-unresolved-submit-unknown",
+        action="store_true",
+        help=(
+            "Explicitly accept at most $0.35 possible duplicate spend without claiming "
+            "that the prior submit-unknown request is inactive"
+        ),
+    )
     generate.add_argument("--timeout", type=int, default=1800)
     generate.add_argument("--poll-interval", type=float, default=10.0)
     generate.add_argument("--fail-fast", action="store_true")
@@ -1459,6 +1535,9 @@ def main(argv: list[str] | None = None, *, root: Path = ROOT) -> int:
                 allow_external_processing=args.allow_external_processing,
                 acknowledge_prior_submit_unknown_inactive=(
                     args.acknowledge_prior_submit_unknown_inactive
+                ),
+                authorize_wan22_despite_unresolved_submit_unknown=(
+                    args.authorize_wan22_despite_unresolved_submit_unknown
                 ),
                 timeout=args.timeout,
                 poll_interval=args.poll_interval,

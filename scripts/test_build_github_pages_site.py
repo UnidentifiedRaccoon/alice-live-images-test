@@ -1,11 +1,13 @@
 import hashlib
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
 
 from scripts import build_github_pages_site as pages
+from scripts import clipmaker_lite_tune_v5_media_overlay as tune_overlay
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1584,6 +1586,43 @@ def _tune_manifest_fixture(*, root, terminal_failure_indices=()):
     }
 
 
+def _apply_v8_prompt_experiment_fixture(root: Path, manifest: dict) -> dict:
+    generation_path = ROOT / tune_overlay.V8_EXPERIMENT_GENERATION_MANIFEST_REL
+    document = json.loads(generation_path.read_text(encoding="utf-8"))
+    outputs, entries, prompt_case, _generation_sha, _prompt_sha = (
+        tune_overlay.validate_v8_experiment_generation_manifest(
+            document,
+            path=generation_path,
+            root=ROOT,
+        )
+    )
+    video = tune_overlay._v8_experiment_video(  # noqa: SLF001
+        outputs,
+        entries,
+        prompt_case,
+        root=ROOT,
+    )
+    record = tune_overlay._v8_prompt_experiment_record(  # noqa: SLF001
+        prompt_case,
+        entries,
+    )
+    audit_paths = [
+        attempt[field]
+        for attempt in video["provider_attempt"]["attempts"]
+        for field in ("run_path", "prompt_path")
+    ]
+    audit_paths.append(video["generation"]["prior_attempt"]["run_path"])
+    for value in audit_paths:
+        source = ROOT / value
+        destination = root / value
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+    target = manifest["cases"][0]["targets"][0]
+    target["tuned"]["video"] = video
+    target["prompt_experiment"] = record
+    return target
+
+
 class GitHubPagesSiteTest(unittest.TestCase):
     def test_tune_v5_payload_keeps_all_tune_media_outside_pages(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
@@ -2196,6 +2235,133 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "provider_may_be_active"
             ] = False
             with self.assertRaisesRegex(ValueError, "safety barrier"):
+                pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_v7_filter_retry_success_and_failure_are_valid_without_pages_media(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root)
+            video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+            video["generation"]["origin"] = pages.TUNE_V7_FILTER_RETRY_ORIGIN
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+            collected = {
+                Path(target["tuned"]["video"]["repository_video_path"])
+                for case in manifest["cases"]
+                for target in case["targets"]
+                if target["tuned"]["video"]["repository_video_path"]
+            }
+            self.assertTrue(all(path.suffix == ".mp4" for path in collected))
+            self.assertTrue(all(path not in pages.STATIC_FILES for path in collected))
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root, terminal_failure_indices={0})
+            video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+            run_path = root / video["provider_attempt"]["run_path"]
+            run = json.loads(run_path.read_text(encoding="utf-8"))
+            run["submission_count"] = 1
+            run_path.write_text(json.dumps(run) + "\n", encoding="utf-8")
+            video.update(
+                {
+                    "status": "provider-unavailable",
+                    "recorded_status": "provider-failed",
+                    "unavailable_reason": video["provider_attempt"]["error"],
+                    "safety_barrier": None,
+                }
+            )
+            video["generation"]["origin"] = pages.TUNE_V7_FILTER_RETRY_ORIGIN
+            video["provider_attempt"].update(
+                {
+                    "run_sha256": hashlib.sha256(run_path.read_bytes()).hexdigest(),
+                    "submission_count": 1,
+                    "provider_may_be_active": False,
+                }
+            )
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+            self.assertIsNone(video["repository_video_path"])
+            self.assertIsNone(video["provider_attempt"]["fallback"])
+
+    def test_tune_v8_prompt_experiment_preserves_all_three_terminal_attempts(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root, terminal_failure_indices={0})
+            target = _apply_v8_prompt_experiment_fixture(root, manifest)
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+            video = target["tuned"]["video"]
+            self.assertEqual(video["unavailable_reason"], pages.TUNE_V8_UNAVAILABLE_REASON)
+            self.assertEqual(video["provider_attempt"]["attempt_count"], 3)
+            self.assertEqual(
+                [
+                    attempt["variant_id"]
+                    for attempt in video["provider_attempt"]["attempts"]
+                ],
+                list(pages.TUNE_V8_VARIANT_ORDER),
+            )
+            self.assertTrue(
+                target["prompt_experiment"][
+                    "displayed_tuned_prompt_is_prior_baseline"
+                ]
+            )
+            self.assertTrue(
+                all(
+                    not (root / attempt["run_path"]).with_suffix(".mp4").exists()
+                    for attempt in video["provider_attempt"]["attempts"]
+                )
+            )
+
+        for name, mutate in (
+            (
+                "aggregate",
+                lambda target: target["tuned"]["video"]["provider_attempt"].update(
+                    {"attempt_count": 2}
+                ),
+            ),
+            (
+                "run IDs",
+                lambda target: target["tuned"]["video"]["generation"].update(
+                    {"provider_run_ids": ["wrong"] * 3}
+                ),
+            ),
+            (
+                "prompt experiment record",
+                lambda target: target["prompt_experiment"].update(
+                    {"prompt_manifest_sha256": "f" * 64}
+                ),
+            ),
+        ):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                manifest = _tune_manifest_fixture(
+                    root=root,
+                    terminal_failure_indices={0},
+                )
+                target = _apply_v8_prompt_experiment_fixture(root, manifest)
+                mutate(target)
+                with self.assertRaisesRegex(ValueError, name):
+                    pages._validate_tune_manifest_for_pages(manifest, root=root)
+
+    def test_tune_manual_visual_qa_is_sha_bound_and_non_rejecting(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest = _tune_manifest_fixture(root=root)
+            video = manifest["cases"][0]["targets"][0]["tuned"]["video"]
+            video["qa"] = {
+                "status": "visual-review-failed",
+                "verified": False,
+                "reviewable": True,
+                "reviewer": "codex-visual-qa",
+                "video_sha256": video["sha256"],
+                "automatic_rejection": False,
+                "scope": "strict-visual-fidelity",
+                "summary": "Strict visual fidelity failed; provider contract still conforms.",
+                "findings": ["A semantic region changes independently."],
+            }
+            pages._validate_tune_manifest_for_pages(manifest, root=root)
+            self.assertEqual(video["status"], "succeeded")
+            self.assertTrue(video["contract_check"]["conforms"])
+            self.assertFalse(video["qa"]["automatic_rejection"])
+            video["qa"]["video_sha256"] = "f" * 64
+            with self.assertRaisesRegex(ValueError, "manual visual QA"):
                 pages._validate_tune_manifest_for_pages(manifest, root=root)
 
     def test_article_02_replacement_is_published_but_media_stays_raw(self):

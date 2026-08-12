@@ -149,6 +149,62 @@ class TuneV5RetryVideoTests(unittest.TestCase):
                 )
         operations.assert_not_called()
 
+    def test_duplicate_risk_authorization_is_honest_and_bounded(self) -> None:
+        entry = next(
+            item
+            for item in video.load_inventory(root=video.ROOT).entries
+            if item.evaluation_id == "18#05::alibaba/wan-2.2"
+        )
+        operations = video.ProviderOperations(
+            eliza_headers=mock.Mock(),
+            http_json=mock.Mock(),
+            eliza_poll=mock.Mock(),
+            http_download=mock.Mock(),
+            segmind_generate=mock.Mock(
+                side_effect=video.transport.PreSubmitRejectedError(
+                    "test pre-submit stop", 429
+                )
+            ),
+            media_probe=mock.Mock(),
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            output_root = Path(temporary)
+            failures = video.run_batch(
+                "0.35",
+                dry_run=False,
+                targets=[entry.evaluation_id],
+                allow_external_processing=True,
+                authorize_wan22_despite_unresolved_submit_unknown=True,
+                output_root=output_root,
+                operations=operations,
+            )
+            run = video.read_json(video.artifact_paths(entry, output_root)["run"])
+            manifest = video.read_json(output_root / video.GENERATION_MANIFEST_REL)
+        self.assertEqual(failures, 1)
+        receipt = run["duplicate_risk_acceptance"]
+        self.assertTrue(receipt["prior_inactive_not_confirmed"])
+        self.assertIsNone(receipt["source_provider_job_id"])
+        self.assertEqual(receipt["maximum_possible_duplicate_charge_usd"], 0.35)
+        self.assertEqual(receipt["authorized_evaluation_id"], entry.evaluation_id)
+        self.assertFalse(receipt["automatic_paid_retry"])
+        self.assertIsNone(receipt["fallback"])
+        invocation = manifest["last_invocation"]
+        self.assertFalse(invocation["prior_submit_unknown_acknowledged_inactive"])
+        self.assertTrue(
+            invocation["duplicate_risk_acceptance"]["prior_inactive_not_confirmed"]
+        )
+
+    def test_inactivity_and_duplicate_risk_flags_are_mutually_exclusive(self) -> None:
+        with self.assertRaisesRegex(video.TuneV5RetryVideoError, "either confirmed inactivity"):
+            video.run_batch(
+                "0.35",
+                dry_run=False,
+                targets=[video.SUBMIT_UNKNOWN_KEY],
+                allow_external_processing=True,
+                acknowledge_prior_submit_unknown_inactive=True,
+                authorize_wan22_despite_unresolved_submit_unknown=True,
+            )
+
     def test_terminal_attempt_consumes_one_submit_and_never_resubmits_same_run_id(self) -> None:
         entry = next(
             item

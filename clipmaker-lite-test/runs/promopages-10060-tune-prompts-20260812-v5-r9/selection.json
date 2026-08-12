@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v8-veo-prompt-experiment-selection",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-prompts-20260812-v5-r9",
+  "agent_id": "clipmaker-lite",
+  "policy": {
+    "selection": "three user-authorized controlled Veo prompt experiments",
+    "required_execution_mode": "i2v",
+    "required_rendering_strategy": "camera-only",
+    "prompt_author": "clipmaker-lite",
+    "hand_authored_provider_prompt": false,
+    "canonical_full_source_only": true,
+    "source_transform": null,
+    "disable_provider_safety_filters": false,
+    "fallback": false,
+    "compositor": false,
+    "s3_upload": false,
+    "one_paid_submit_per_new_provider_run_id": true,
+    "automatic_paid_retry": false,
+    "terminal_no_output_stop_per_experiment": true,
+    "capture_provider_safety_diagnostics_if_present": true
+  },
+  "experiment_design": {
+    "hypothesis": "If wording contributes to the terminal no-output result, one or more semantically similar motion-only phrasings may differ while source, runtime, seed, and safety settings remain fixed.",
+    "inference_limit": "Three outcomes cannot identify a safety category and cannot prove that the prompt, rather than the source-image classifier, caused filtering.",
+    "fixed_factors": [
+      "canonical source SHA-256",
+      "google/veo-3.1-lite route",
+      "4 second 1080p runtime",
+      "enhancePrompt=true",
+      "seed=20260812",
+      "provider safety enabled"
+    ],
+    "changed_factor": "motion-only positive-prompt formulation",
+    "variant_order": [
+      "minimal-zoom",
+      "camera-forward",
+      "framing-endpoint"
+    ]
+  },
+  "diagnosis": {
+    "type": "suspected_source_filter",
+    "classification": "suspected-source-image-safety-false-positive",
+    "evidence_strength": "strong-indirect",
+    "person_preserving_provider_failures_at_least": 12,
+    "provider_support_code_available": false,
+    "active_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "active_source_transform": null
+  },
+  "lineage": {
+    "source_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/prompt-manifest.json",
+      "sha256": "71bf815a44e88a0f7cf08dfa25f7f46ad54e5de36f12f85e738d74917a9f6c08",
+      "batch_id": "promopages-10060-tune-prompts-20260812-v5-r8"
+    },
+    "source_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/generation-manifest.json",
+      "sha256": "937d447c2df3f5f6dd985a9e3493650d9f500faa6dc7892a2c02285609b8c80a",
+      "batch_id": "promopages-10060-tune-videos-20260812-v7",
+      "receipts_mutated": false
+    },
+    "source_terminal_run": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7"
+    }
+  },
+  "summary": {
+    "case_count": 1,
+    "experiment_count": 3,
+    "provider_request_count": 3,
+    "model_counts": {
+      "google/veo-3.1-lite": 3
+    }
+  },
+  "cases": [
+    {
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "content_class": "person_phone",
+      "source": {
+        "image_id": "06",
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "width": 2400,
+        "height": 1600
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+        "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+        "locator": {
+          "article_id": "07-femibion-gotovites-k-beremennosti",
+          "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+          "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+          "image_id": "06",
+          "block_index": 26,
+          "role": "article_image",
+          "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+          "file": "06.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+          "current_heading": {
+            "block_index": 20,
+            "level": 2,
+            "text": "Пройдите необходимые консультации и обследования"
+          },
+          "nearest_text_before": {
+            "block_index": 25,
+            "type": "paragraph",
+            "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+          },
+          "nearest_text_after": {
+            "block_index": 27,
+            "type": "heading",
+            "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260812-v7",
+        "provider_run_id": "promopages-10060-tune-videos-20260812-v7-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "status": "provider-failed",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7",
+        "provider_job_id": "MqfNhJZllV0ZEVNQUElh",
+        "provider_may_be_active": false,
+        "submission_count": 1,
+        "terminal_no_output_stop_applied": true
+      },
+      "experiments": [
+        {
+          "experiment_id": "07#06::google/veo-3.1-lite::minimal-zoom",
+          "variant_id": "minimal-zoom",
+          "controlled_factor": "minimal imperative wording",
+          "rationale": "Minimal lexical baseline: inward motion only, with no scene nouns, subject references, preservation prose, or numeric endpoint.",
+          "positive_prompt": "Slow centered zoom in.",
+          "shared_provider_seed": 20260812,
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-minimal-zoom.json",
+          "repair_feedback_sha256": "2cd5aaad09bb2e5f2042ec0d116fd2f44b3579dd03b69276fb4f1ec43e27638e",
+          "repair_feedback": {
+            "google/veo-3.1-lite": {
+              "evaluation_id": "07#06::google/veo-3.1-lite",
+              "outcome": "worse",
+              "review_note": "This is one controlled, policy-compliant prompt experiment after repeated terminal provider no-output receipts. Author the positive_prompt exactly as supplied below. Keep it camera-only and do not name or describe any visible subject, body part, device, activity, relationship, health topic, or brand.",
+              "evidence_strength": "explicit",
+              "failure_codes": [
+                "provider_no_output"
+              ],
+              "required_execution_mode": "i2v",
+              "fallback_policy": "none",
+              "camera_repair": {
+                "move": "push-in",
+                "focal_target": "the current framing",
+                "target_retention": "centered",
+                "max_screen_travel_percent": 5,
+                "reveal_unseen_space": false
+              },
+              "preservation": {
+                "entity_counts": [
+                  "Keep source entity counts unchanged."
+                ],
+                "topology_anchors": [
+                  "The positive_prompt must be exactly: \"Slow centered zoom in.\""
+                ],
+                "rigid_regions": [
+                  "all source-defined rigid regions"
+                ],
+                "contacts": [
+                  "Do not introduce or change source contacts."
+                ],
+                "must_remain_visible": [
+                  "the current framing"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "experiment_id": "07#06::google/veo-3.1-lite::camera-forward",
+          "variant_id": "camera-forward",
+          "controlled_factor": "explicit physical camera trajectory",
+          "rationale": "Physical-camera formulation: names a steady trajectory but no source entity, scene meaning, body, device, health topic, or brand.",
+          "positive_prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+          "shared_provider_seed": 20260812,
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-camera-forward.json",
+          "repair_feedback_sha256": "18ecf9d146aa6910e0073c5b541bea42e608ed3c111b73dbd2bdd71301225901",
+          "repair_feedback": {
+            "google/veo-3.1-lite": {
+              "evaluation_id": "07#06::google/veo-3.1-lite",
+              "outcome": "worse",
+              "review_note": "This is one controlled, policy-compliant prompt experiment after repeated terminal provider no-output receipts. Author the positive_prompt exactly as supplied below. Keep it camera-only and do not name or describe any visible subject, body part, device, activity, relationship, health topic, or brand.",
+              "evidence_strength": "explicit",
+              "failure_codes": [
+                "provider_no_output"
+              ],
+              "required_execution_mode": "i2v",
+              "fallback_policy": "none",
+              "camera_repair": {
+                "move": "push-in",
+                "focal_target": "the current framing",
+                "target_retention": "centered",
+                "max_screen_travel_percent": 5,
+                "reveal_unseen_space": false
+              },
+              "preservation": {
+                "entity_counts": [
+                  "Keep source entity counts unchanged."
+                ],
+                "topology_anchors": [
+                  "The positive_prompt must be exactly: \"The camera moves slowly straight forward, centered and steady throughout the shot.\""
+                ],
+                "rigid_regions": [
+                  "all source-defined rigid regions"
+                ],
+                "contacts": [
+                  "Do not introduce or change source contacts."
+                ],
+                "must_remain_visible": [
+                  "the current framing"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "experiment_id": "07#06::google/veo-3.1-lite::framing-endpoint",
+          "variant_id": "framing-endpoint",
+          "controlled_factor": "image-space endpoint wording",
+          "rationale": "Image-space formulation: states the same small inward endpoint without naming a camera path or any source entity.",
+          "positive_prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+          "shared_provider_seed": 20260812,
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-framing-endpoint.json",
+          "repair_feedback_sha256": "82bd959e2d7d426e5a60abaf46d8946341e372f8f8b62e9633b6f0b3a3b6f577",
+          "repair_feedback": {
+            "google/veo-3.1-lite": {
+              "evaluation_id": "07#06::google/veo-3.1-lite",
+              "outcome": "worse",
+              "review_note": "This is one controlled, policy-compliant prompt experiment after repeated terminal provider no-output receipts. Author the positive_prompt exactly as supplied below. Keep it camera-only and do not name or describe any visible subject, body part, device, activity, relationship, health topic, or brand.",
+              "evidence_strength": "explicit",
+              "failure_codes": [
+                "provider_no_output"
+              ],
+              "required_execution_mode": "i2v",
+              "fallback_policy": "none",
+              "camera_repair": {
+                "move": "push-in",
+                "focal_target": "the current framing",
+                "target_retention": "centered",
+                "max_screen_travel_percent": 5,
+                "reveal_unseen_space": false
+              },
+              "preservation": {
+                "entity_counts": [
+                  "Keep source entity counts unchanged."
+                ],
+                "topology_anchors": [
+                  "The positive_prompt must be exactly: \"Smoothly tighten the centered framing by about 5% from start to finish.\""
+                ],
+                "rigid_regions": [
+                  "all source-defined rigid regions"
+                ],
+                "contacts": [
+                  "Do not introduce or change source contacts."
+                ],
+                "must_remain_visible": [
+                  "the current framing"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

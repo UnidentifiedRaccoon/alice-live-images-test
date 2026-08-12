@@ -1,0 +1,37 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "07#06::google/veo-3.1-lite",
+    "outcome": "worse",
+    "review_note": "This is one controlled, policy-compliant prompt experiment after repeated terminal provider no-output receipts. Author the positive_prompt exactly as supplied below. Keep it camera-only and do not name or describe any visible subject, body part, device, activity, relationship, health topic, or brand.",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "provider_no_output"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "push-in",
+      "focal_target": "the current framing",
+      "target_retention": "centered",
+      "max_screen_travel_percent": 5,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Keep source entity counts unchanged."
+      ],
+      "topology_anchors": [
+        "The positive_prompt must be exactly: \"The camera moves slowly straight forward, centered and steady throughout the shot.\""
+      ],
+      "rigid_regions": [
+        "all source-defined rigid regions"
+      ],
+      "contacts": [
+        "Do not introduce or change source contacts."
+      ],
+      "must_remain_visible": [
+        "the current framing"
+      ]
+    }
+  }
+}

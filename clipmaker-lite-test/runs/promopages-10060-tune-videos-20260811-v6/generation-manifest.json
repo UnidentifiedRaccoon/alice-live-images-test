@@ -4,7 +4,7 @@
   "ticket": "PROMOPAGES-10060",
   "batch_id": "promopages-10060-tune-videos-20260811-v6",
   "agent_id": "clipmaker-lite",
-  "updated_at": "2026-08-11T20:36:46Z",
+  "updated_at": "2026-08-11T23:42:20Z",
   "scope": {
     "expected_i2v_outputs": 8,
     "model_counts": {
@@ -49,32 +49,42 @@
     "fallback": false
   },
   "last_invocation": {
-    "mode": "dry-run",
+    "mode": "generate",
     "selected_evaluation_ids": [
-      "18#05::alibaba/wan-2.2",
-      "18#06::alibaba/wan-2.2",
-      "18#07::alibaba/wan-2.2"
+      "17#11::alibaba/wan-2.2"
     ],
     "selected_model_counts": {
-      "alibaba/wan-2.2": 3
+      "alibaba/wan-2.2": 1
     },
     "budget": {
       "currency": "USD",
-      "operator_subset_budget_cap_usd": 1.05,
-      "selected_output_count": 3,
+      "operator_subset_budget_cap_usd": 0.35,
+      "selected_output_count": 1,
       "accounting_cost_per_output_usd": 0.35,
-      "maximum_estimated_cost_usd": 1.05,
+      "maximum_estimated_cost_usd": 0.35,
       "provider_unit_costs_asserted": false,
       "one_submit_per_new_provider_run_id": true,
       "automatic_paid_retry": false
     },
-    "prior_submit_unknown_acknowledged_inactive": null
+    "prior_submit_unknown_acknowledged_inactive": false,
+    "duplicate_risk_acceptance": {
+      "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+      "prior_inactive_not_confirmed": true,
+      "source_evaluation_id": "17#11::alibaba/wan-2.2",
+      "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+      "source_status": "submit-unknown",
+      "source_provider_job_id": null,
+      "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+      "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+      "maximum_possible_duplicate_charge_usd": 0.35,
+      "automatic_paid_retry": false,
+      "fallback": null
+    }
   },
   "summary": {
-    "dry-run": 3,
-    "pending": 1,
-    "provider-failed": 1,
-    "succeeded": 1,
+    "dry-run": 1,
+    "provider-failed": 2,
+    "succeeded": 3,
     "verification-failed": 2
   },
   "outputs": [
@@ -112,6 +122,7 @@
       "contract_check": null,
       "error": "provider poll/download: Eliza/OpenRouter job FjVDTD6oBHrOmJGu5cal failed with status failed: Video generation completed with no output (content may have been filtered)",
       "submission_count": 1,
+      "duplicate_risk_acceptance": null,
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -174,6 +185,7 @@
       },
       "error": null,
       "submission_count": 1,
+      "duplicate_risk_acceptance": null,
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -203,14 +215,55 @@
         "receipts_mutated": false
       },
       "prompt_lineage_kind": "exact-verified-r4-prompt-bytes",
-      "status": "pending",
+      "status": "succeeded",
       "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.prompt.json",
       "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
       "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/17-volma-nalivnoi-pol/wan-2.2/11.mp4",
-      "media": null,
-      "contract_check": null,
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1888,
+        "height": 480,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5736040,
+        "sha256": "bac0e01c8512a7e8e16d73ce478b201b74abe56ebf08c8c6cb8539bd32622264"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
       "error": null,
-      "submission_count": 0,
+      "submission_count": 1,
+      "duplicate_risk_acceptance": {
+        "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+        "prior_inactive_not_confirmed": true,
+        "source_evaluation_id": "17#11::alibaba/wan-2.2",
+        "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+        "source_status": "submit-unknown",
+        "source_provider_job_id": null,
+        "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+        "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+        "maximum_possible_duplicate_charge_usd": 0.35,
+        "automatic_paid_retry": false,
+        "fallback": null,
+        "authorized_evaluation_id": "17#11::alibaba/wan-2.2"
+      },
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -240,14 +293,28 @@
         "receipts_mutated": false
       },
       "prompt_lineage_kind": "exact-verified-r4-prompt-bytes",
-      "status": "dry-run",
+      "status": "provider-failed",
       "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.prompt.json",
       "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.run.json",
       "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.mp4",
       "media": null,
       "contract_check": null,
-      "error": null,
-      "submission_count": 0,
+      "error": "provider submit: Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"3c062dcc-2f1d-4a15-9513-1886e02a1504\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-12 07:39:58.718\\\", \\\"scheduled_time\\\": \\\"2026-08-12 07:39:58.736\\\", \\\"end_time\\\": \\\"2026-08-12 07:39:59.895\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
+      "submission_count": 1,
+      "duplicate_risk_acceptance": {
+        "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+        "prior_inactive_not_confirmed": true,
+        "source_evaluation_id": "17#11::alibaba/wan-2.2",
+        "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+        "source_status": "submit-unknown",
+        "source_provider_job_id": null,
+        "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+        "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+        "maximum_possible_duplicate_charge_usd": 0.35,
+        "automatic_paid_retry": false,
+        "fallback": null,
+        "authorized_evaluation_id": "18#05::alibaba/wan-2.2"
+      },
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -312,6 +379,7 @@
       },
       "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False",
       "submission_count": 1,
+      "duplicate_risk_acceptance": null,
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -341,14 +409,55 @@
         "receipts_mutated": false
       },
       "prompt_lineage_kind": "exact-verified-r4-prompt-bytes",
-      "status": "dry-run",
+      "status": "succeeded",
       "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
       "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.run.json",
       "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
-      "media": null,
-      "contract_check": null,
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 4630963,
+        "sha256": "f6918a5638fcafa8b8c9621dcb020e7f7a1e24967ff1cdfd20c5a43fed4c8717"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
       "error": null,
-      "submission_count": 0,
+      "submission_count": 1,
+      "duplicate_risk_acceptance": {
+        "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+        "prior_inactive_not_confirmed": true,
+        "source_evaluation_id": "17#11::alibaba/wan-2.2",
+        "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+        "source_status": "submit-unknown",
+        "source_provider_job_id": null,
+        "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+        "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+        "maximum_possible_duplicate_charge_usd": 0.35,
+        "automatic_paid_retry": false,
+        "fallback": null,
+        "authorized_evaluation_id": "18#06::alibaba/wan-2.2"
+      },
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -386,6 +495,7 @@
       "contract_check": null,
       "error": null,
       "submission_count": 0,
+      "duplicate_risk_acceptance": null,
       "automatic_paid_retry": false,
       "fallback": null
     },
@@ -450,6 +560,7 @@
       },
       "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False",
       "submission_count": 1,
+      "duplicate_risk_acceptance": null,
       "automatic_paid_retry": false,
       "fallback": null
     }

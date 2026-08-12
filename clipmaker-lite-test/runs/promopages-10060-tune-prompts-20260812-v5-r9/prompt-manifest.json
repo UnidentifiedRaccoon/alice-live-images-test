@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v8-veo-prompt-experiment-planning",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-prompts-20260812-v5-r9",
+  "agent_id": "clipmaker-lite",
+  "contract_version": "2.3.0",
+  "generated_at": "2026-08-11T23:45:18.524713Z",
+  "scope": {
+    "selection_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/selection.json",
+    "selection_sha256": "6356815b45dc316e164c5877811e21303cabfb9ba07ec42ab062462cd45d4a05",
+    "case_count": 1,
+    "experiment_count": 3,
+    "provider_request_count": 3,
+    "required_execution_mode": "i2v",
+    "required_rendering_strategy": "camera-only",
+    "canonical_full_source_only": true,
+    "source_transform": null,
+    "disable_provider_safety_filters": false,
+    "fallback": false,
+    "compositor": false,
+    "video_generation": false,
+    "s3_upload": false
+  },
+  "experiment_design": {
+    "hypothesis": "If wording contributes to the terminal no-output result, one or more semantically similar motion-only phrasings may differ while source, runtime, seed, and safety settings remain fixed.",
+    "inference_limit": "Three outcomes cannot identify a safety category and cannot prove that the prompt, rather than the source-image classifier, caused filtering.",
+    "fixed_factors": [
+      "canonical source SHA-256",
+      "google/veo-3.1-lite route",
+      "4 second 1080p runtime",
+      "enhancePrompt=true",
+      "seed=20260812",
+      "provider safety enabled"
+    ],
+    "changed_factor": "motion-only positive-prompt formulation",
+    "variant_order": [
+      "minimal-zoom",
+      "camera-forward",
+      "framing-endpoint"
+    ]
+  },
+  "diagnosis": {
+    "type": "suspected_source_filter",
+    "classification": "suspected-source-image-safety-false-positive",
+    "evidence_strength": "strong-indirect",
+    "person_preserving_provider_failures_at_least": 12,
+    "provider_support_code_available": false,
+    "active_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "active_source_transform": null
+  },
+  "lineage": {
+    "source_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r8/prompt-manifest.json",
+      "sha256": "71bf815a44e88a0f7cf08dfa25f7f46ad54e5de36f12f85e738d74917a9f6c08",
+      "batch_id": "promopages-10060-tune-prompts-20260812-v5-r8"
+    },
+    "source_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/generation-manifest.json",
+      "sha256": "937d447c2df3f5f6dd985a9e3493650d9f500faa6dc7892a2c02285609b8c80a",
+      "batch_id": "promopages-10060-tune-videos-20260812-v7",
+      "receipts_mutated": false
+    },
+    "source_terminal_run": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7"
+    }
+  },
+  "summary": {
+    "case_count": 1,
+    "experiment_count": 3,
+    "provider_request_count": 3,
+    "model_counts": {
+      "google/veo-3.1-lite": 3
+    }
+  },
+  "cases": [
+    {
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "content_class": "person_phone",
+      "source": {
+        "image_id": "06",
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "width": 2400,
+        "height": 1600
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+        "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+        "locator": {
+          "article_id": "07-femibion-gotovites-k-beremennosti",
+          "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+          "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+          "image_id": "06",
+          "block_index": 26,
+          "role": "article_image",
+          "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+          "file": "06.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+          "current_heading": {
+            "block_index": 20,
+            "level": 2,
+            "text": "Пройдите необходимые консультации и обследования"
+          },
+          "nearest_text_before": {
+            "block_index": 25,
+            "type": "paragraph",
+            "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+          },
+          "nearest_text_after": {
+            "block_index": 27,
+            "type": "heading",
+            "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260812-v7",
+        "provider_run_id": "promopages-10060-tune-videos-20260812-v7-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "status": "provider-failed",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7",
+        "provider_job_id": "MqfNhJZllV0ZEVNQUElh",
+        "provider_may_be_active": false,
+        "submission_count": 1,
+        "terminal_no_output_stop_applied": true
+      },
+      "experiments": [
+        {
+          "experiment_id": "07#06::google/veo-3.1-lite::minimal-zoom",
+          "variant_id": "minimal-zoom",
+          "controlled_factor": "minimal imperative wording",
+          "rationale": "Minimal lexical baseline: inward motion only, with no scene nouns, subject references, preservation prose, or numeric endpoint.",
+          "positive_prompt": "Slow centered zoom in.",
+          "shared_provider_seed": 20260812,
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-minimal-zoom.json",
+          "repair_feedback_sha256": "2cd5aaad09bb2e5f2042ec0d116fd2f44b3579dd03b69276fb4f1ec43e27638e",
+          "planning": {
+            "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom/result.json",
+            "result_sha256": "ca1bfba3ffb2c09e3f9684d7bcf0711b06df8e33c3539c6919215f8c0f483f9b",
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-minimal-zoom/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.3.0",
+              "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+              "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+                "version": "codex-cli 0.147.0-alpha.6.5",
+                "requested_model": null,
+                "thread_id": "019ff336-7e5d-7cd0-a062-fb1c4d89aaeb"
+              },
+              "models": [
+                "google/veo-3.1-lite"
+              ],
+              "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+              "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+            },
+            "structured_intent": {
+              "editorial_meaning": "Quiet, organized preparation helps a person record questions before a medical consultation and avoid overlooking important concerns.",
+              "initial_state": "One smiling woman is seated cross-legged on a sofa, looking down while holding an orange smartphone with both hands and keeping one index finger near its screen.",
+              "motion_owner": "The camera.",
+              "primary_action": "A restrained centered push-in toward the existing composition.",
+              "attention_anchor": "The seated woman holding the orange smartphone.",
+              "motion_boundary": "Only the camera may move; the woman, phone, hands, screen state, sofa, cushions, furnishings, wall art, and all other source-defined regions remain source-locked, with no new space or entities introduced.",
+              "terminal_state": "The same composition is modestly closer while the seated woman and smartphone remain centered, fully recognizable, and continuously visible.",
+              "geometry_invariant": "Preserve the woman's seated body geometry, finger and hand placement, phone-hand contacts, and the rigid geometry of the sofa and room.",
+              "identity_invariant": "Keep exactly one woman, one orange smartphone, the same visible limbs, clothing, cushions, furnishings, and decorative objects.",
+              "semantic_invariant": "The calm, attentive sense of preparing and organizing information remains unchanged through the final frame.",
+              "feasibility_assessment": "The seated pose, gaze toward the phone, and hand-device contact are visible, but a reliable tap, typing sequence, or interface response cannot be inferred from one frame; a bounded camera-only treatment is safer.",
+              "rendering_strategy": "camera-only"
+            },
+            "image_reading": [
+              "One smiling woman sits cross-legged on a sofa and looks down at an orange smartphone held in both hands.",
+              "Her right index finger is poised at or touching the phone screen; the device-hand contact and intended interface action are visually delicate.",
+              "The woman, sofa, cushions, wall art, fireplace, books, and decorative objects form a stable indoor composition with no other people visible."
+            ],
+            "article_context": "The body image supports the advice to prepare questions before a medical consultation so important health concerns are not overlooked.",
+            "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-minimal-zoom.json",
+            "repair_feedback_sha256": "2cd5aaad09bb2e5f2042ec0d116fd2f44b3579dd03b69276fb4f1ec43e27638e"
+          },
+          "tuned": {
+            "execution_mode": "i2v",
+            "scene_plan": "Over four seconds, execute one smooth centered push-in at an even pace, keeping the current framing and its focal subject centered and continuously visible. Limit total screen travel to about 5%, reveal no unseen space, and ease gently into the final closer composition.",
+            "positive_prompt": "Slow centered zoom in.",
+            "negative_prompt": null,
+            "runtime": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratios": [
+                "16:9",
+                "9:16"
+              ],
+              "generate_audio": false,
+              "frame_inputs": [
+                "first_frame"
+              ],
+              "provider": "google-vertex",
+              "prompt_expansion": {
+                "parameter": "enhancePrompt",
+                "value": true
+              }
+            }
+          }
+        },
+        {
+          "experiment_id": "07#06::google/veo-3.1-lite::camera-forward",
+          "variant_id": "camera-forward",
+          "controlled_factor": "explicit physical camera trajectory",
+          "rationale": "Physical-camera formulation: names a steady trajectory but no source entity, scene meaning, body, device, health topic, or brand.",
+          "positive_prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+          "shared_provider_seed": 20260812,
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-camera-forward.json",
+          "repair_feedback_sha256": "18ecf9d146aa6910e0073c5b541bea42e608ed3c111b73dbd2bdd71301225901",
+          "planning": {
+            "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward/result.json",
+            "result_sha256": "18fe3fe14b9f56abb6105d7be5b5d5b28a60c5d1c17ec32f879a02984ce9731c",
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-camera-forward/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.3.0",
+              "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+              "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+                "version": "codex-cli 0.147.0-alpha.6.5",
+                "requested_model": null,
+                "thread_id": "019ff336-b9cc-7f43-91bc-6f4830b15577"
+              },
+              "models": [
+                "google/veo-3.1-lite"
+              ],
+              "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+              "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+            },
+            "structured_intent": {
+              "editorial_meaning": "Calm, organized preparation helps a person collect questions before a medical consultation and avoid overlooking important concerns.",
+              "initial_state": "One smiling woman is seated cross-legged on a sofa, holding an orange smartphone and looking down at it, with her other index finger poised near the screen.",
+              "motion_owner": "The camera.",
+              "primary_action": "A bounded straight push-in toward the current framing.",
+              "attention_anchor": "The woman holding the orange smartphone.",
+              "motion_boundary": "Only the camera may move; the woman, hands, phone, clothing, sofa, cushions, frames, books, fireplace, and all other source-defined regions remain locked in state and topology, with no new screen content or objects.",
+              "terminal_state": "The same centered composition is viewed slightly closer, with the woman and smartphone still fully recognizable and all original semantic regions retained.",
+              "geometry_invariant": "The phone remains supported by the visible hand; the seated pose, sofa contact, and rigid room geometry remain unchanged.",
+              "identity_invariant": "Exactly one woman, one orange smartphone, two visible hands with unchanged fingers and limbs, and the same furniture and background objects.",
+              "semantic_invariant": "The woman remains calm, attentive, and engaged in organized preparation through the final frame.",
+              "feasibility_assessment": "The image clearly establishes one seated woman holding a smartphone and looking toward it, but the fingertip-to-screen contact and any specific interface action are ambiguous. A bounded camera-only push-in is safer than inventing tapping, typing, or screen changes.",
+              "rendering_strategy": "camera-only"
+            },
+            "image_reading": [
+              "One smiling woman sits cross-legged on a sofa, looking down at an orange smartphone held in her left hand.",
+              "Her right index finger is poised close to the visible phone screen, but the exact touch state and intended interface action are ambiguous.",
+              "The woman and phone are the central foreground subjects; the sofa, cushions, wall frames, books, and fireplace form rigid surrounding regions.",
+              "The image does not expose readable screen content, and no additional people or active environmental motion are visible."
+            ],
+            "article_context": "Body image supporting the advice to prepare questions before a medical consultation, emphasizing calm, organized preparation so important concerns are not overlooked.",
+            "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-camera-forward.json",
+            "repair_feedback_sha256": "18ecf9d146aa6910e0073c5b541bea42e608ed3c111b73dbd2bdd71301225901"
+          },
+          "tuned": {
+            "execution_mode": "i2v",
+            "scene_plan": "Over four seconds, execute one centered, steady push-in at a calm, even speed, slowing gently near the end. Keep the original framing continuously retained and the woman with her phone centered; finish after no more than about 5% screen-space travel, without exposing space beyond the source frame or animating the subject, phone, furniture, or background independently.",
+            "positive_prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+            "negative_prompt": null,
+            "runtime": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratios": [
+                "16:9",
+                "9:16"
+              ],
+              "generate_audio": false,
+              "frame_inputs": [
+                "first_frame"
+              ],
+              "provider": "google-vertex",
+              "prompt_expansion": {
+                "parameter": "enhancePrompt",
+                "value": true
+              }
+            }
+          }
+        },
+        {
+          "experiment_id": "07#06::google/veo-3.1-lite::framing-endpoint",
+          "variant_id": "framing-endpoint",
+          "controlled_factor": "image-space endpoint wording",
+          "rationale": "Image-space formulation: states the same small inward endpoint without naming a camera path or any source entity.",
+          "positive_prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+          "shared_provider_seed": 20260812,
+          "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint",
+          "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-framing-endpoint.json",
+          "repair_feedback_sha256": "82bd959e2d7d426e5a60abaf46d8946341e372f8f8b62e9633b6f0b3a3b6f577",
+          "planning": {
+            "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint",
+            "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint/result.json",
+            "result_sha256": "0061ce596e2b1bd30f86856d7a5b5d8ef03b41fb20e479f7ad35f769fbc3f766",
+            "provenance": {
+              "verified": true,
+              "verification_scope": "trusted-workspace-route",
+              "cryptographically_signed": false,
+              "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint/result.json",
+              "agent_id": "clipmaker-lite",
+              "contract_version": "2.3.0",
+              "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+              "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+              "runner": {
+                "path": "scripts/clipmaker_lite_runner.py",
+                "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+              },
+              "execution": {
+                "executor_id": "codex-exec",
+                "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+                "version": "codex-cli 0.147.0-alpha.6.5",
+                "requested_model": null,
+                "thread_id": "019ff337-04cf-7e33-a0ec-03d4167fb87e"
+              },
+              "models": [
+                "google/veo-3.1-lite"
+              ],
+              "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+              "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+            },
+            "structured_intent": {
+              "editorial_meaning": "Support the article’s advice to prepare questions before a medical consultation so important concerns are not forgotten.",
+              "initial_state": "One smiling woman sits cross-legged on a sofa, looking down at a red smartphone held in her left hand, with her right index finger near the screen.",
+              "motion_owner": "The camera.",
+              "primary_action": "The camera smoothly tightens the centered framing.",
+              "attention_anchor": "The seated woman holding the red smartphone.",
+              "motion_boundary": "Only the camera may move; the woman, hands, phone, unseen screen state, furniture, decor, and all rigid regions remain source-locked, with no new contacts or revealed space.",
+              "terminal_state": "The same centered scene appears observably about 5% tighter, with the woman and smartphone still fully recognizable and continuously visible.",
+              "geometry_invariant": "Preserve the seated pose, hand–phone relationship, sofa geometry, and all source-defined rigid structures.",
+              "identity_invariant": "Keep exactly one woman, one red smartphone, the same visible limbs, clothing, furniture, cushions, frames, books, and decor; add or remove nothing.",
+              "semantic_invariant": "The calm, focused sense of organizing information in preparation for a consultation remains unchanged through the final frame.",
+              "feasibility_assessment": "The image clearly shows one seated woman holding and looking at a smartphone, but no readable interface or unambiguous finger action establishes typing, scrolling, or list creation. Human and device motion would risk changing hand contact or screen state, so bounded camera motion is safer.",
+              "rendering_strategy": "camera-only"
+            },
+            "image_reading": [
+              "One woman sits cross-legged on a sofa, smiling and looking down at a red smartphone held in her left hand.",
+              "Her right index finger is poised at or lightly touching the phone screen; the exact interface and whether she is typing or scrolling are not visible.",
+              "The woman, phone, sofa, cushions, wall frames, books, vessels, and fireplace form a stable indoor composition; hand–phone geometry and the precise finger contact are fragile motion areas."
+            ],
+            "article_context": "A body image illustrating practical preparation for a medical consultation: making a question list helps the reader arrive organized and avoid missing important topics, including chronic conditions, treatment, and prescribed vitamins.",
+            "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-framing-endpoint.json",
+            "repair_feedback_sha256": "82bd959e2d7d426e5a60abaf46d8946341e372f8f8b62e9633b6f0b3a3b6f577"
+          },
+          "tuned": {
+            "execution_mode": "i2v",
+            "scene_plan": "Over four seconds, use a smooth centered push-in with continuous even motion, totaling about 5% screen travel and easing gently near the end. Preserve the current composition, keep the woman and smartphone continuously visible, and introduce no autonomous subject or screen motion; the final frame is a slightly tighter version of the same centered view without exposing unseen space.",
+            "positive_prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+            "negative_prompt": null,
+            "runtime": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratios": [
+                "16:9",
+                "9:16"
+              ],
+              "generate_audio": false,
+              "frame_inputs": [
+                "first_frame"
+              ],
+              "provider": "google-vertex",
+              "prompt_expansion": {
+                "parameter": "enhancePrompt",
+                "value": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

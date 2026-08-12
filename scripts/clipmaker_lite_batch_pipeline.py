@@ -65,7 +65,11 @@ MODEL_DIRECTORIES = {
 WAN_MODEL_ID = "alibaba/wan-2.2"
 WAN_27_MODEL_ID = "alibaba/wan-2.7"
 VEO_31_MODEL_ID = "google/veo-3.1-lite"
-WAN_27_MIN_SOURCE_DIMENSION_PX = 240
+WAN_MIN_SOURCE_DIMENSION_PX = 240
+# Backward-compatible name for callers that were written while the provider
+# minimum was known only for Wan 2.7.  Wan 2.2 enforces the same limit.
+WAN_27_MIN_SOURCE_DIMENSION_PX = WAN_MIN_SOURCE_DIMENSION_PX
+WAN_MIN_DIMENSION_MODEL_IDS = frozenset({WAN_MODEL_ID, WAN_27_MODEL_ID})
 ELIZA_MODEL_IDS = {WAN_27_MODEL_ID, VEO_31_MODEL_ID}
 DEFAULT_WAN_22_CONCURRENCY = int(
     transport.route_for_model(WAN_MODEL_ID)["capacity"]
@@ -362,7 +366,7 @@ def provider_input_dimension_preflight(
     sample: dict[str, Any],
     model_id: str,
 ) -> dict[str, Any]:
-    """Reject known Wan 2.7 minimum-dimension failures without a paid POST.
+    """Reject known Wan minimum-dimension failures without a paid POST.
 
     Source normalization is deliberately outside this helper: changing image
     bytes or the provider URL requires a new immutable batch identity and a
@@ -391,8 +395,8 @@ def provider_input_dimension_preflight(
                 "width": width,
                 "height": height,
                 "minimum_dimension_px": (
-                    WAN_27_MIN_SOURCE_DIMENSION_PX
-                    if model_id == WAN_27_MODEL_ID
+                    WAN_MIN_SOURCE_DIMENSION_PX
+                    if model_id in WAN_MIN_DIMENSION_MODEL_IDS
                     else None
                 ),
                 "conforms": False,
@@ -406,21 +410,21 @@ def provider_input_dimension_preflight(
         "width": width,
         "height": height,
         "minimum_dimension_px": (
-            WAN_27_MIN_SOURCE_DIMENSION_PX
-            if model_id == WAN_27_MODEL_ID
+            WAN_MIN_SOURCE_DIMENSION_PX
+            if model_id in WAN_MIN_DIMENSION_MODEL_IDS
             else None
         ),
         "conforms": True,
         "normalization_applied": False,
     }
     if (
-        model_id == WAN_27_MODEL_ID
-        and min(width, height) < WAN_27_MIN_SOURCE_DIMENSION_PX
+        model_id in WAN_MIN_DIMENSION_MODEL_IDS
+        and min(width, height) < WAN_MIN_SOURCE_DIMENSION_PX
     ):
         evidence["conforms"] = False
         raise ProviderInputDimensionError(
-            f"{WAN_27_MODEL_ID} source preflight rejected {width}x{height}: "
-            f"each side must be at least {WAN_27_MIN_SOURCE_DIMENSION_PX} px. "
+            f"{model_id} source preflight rejected {width}x{height}: "
+            f"each side must be at least {WAN_MIN_SOURCE_DIMENSION_PX} px. "
             "Create a new immutable batch with a provenance-bound normalized "
             "source; automatic padding, upscale, retry, and fallback are disabled.",
             evidence,

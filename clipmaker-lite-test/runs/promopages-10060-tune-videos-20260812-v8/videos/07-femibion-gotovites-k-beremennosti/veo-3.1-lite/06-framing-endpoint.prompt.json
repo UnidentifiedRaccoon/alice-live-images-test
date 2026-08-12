@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v8-veo-prompt-experiment-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260812-v8",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-framing-endpoint",
+  "evaluation_id": "07#06::google/veo-3.1-lite",
+  "experiment_id": "07#06::google/veo-3.1-lite::framing-endpoint",
+  "variant_id": "framing-endpoint",
+  "controlled_factor": "image-space endpoint wording",
+  "rationale": "Image-space formulation: states the same small inward endpoint without naming a camera path or any source entity.",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "canonical_source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+    "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "width": 2400,
+    "height": 1600,
+    "transform": null
+  },
+  "scene_plan": "Over four seconds, use a smooth centered push-in with continuous even motion, totaling about 5% screen travel and easing gently near the end. Preserve the current composition, keep the woman and smartphone continuously visible, and introduce no autonomous subject or screen motion; the final frame is a slightly tighter version of the same centered view without exposing unseen space.",
+  "prompt": {
+    "positive": "Smoothly tighten the centered framing by about 5% from start to finish.",
+    "positive_utf8_sha256": "6c96a530ff5b83e8ca84547bfea12c5d0166e376c769ec66ffda4a45aba98ee9",
+    "negative": null,
+    "rewritten_by_provider_coordinator": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "wire_request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Smoothly tighten the centered framing by about 5% from start to finish.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 20260812,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "experimental_controls": {
+    "shared_seed": 20260812,
+    "fixed_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "changed_factor": "motion-only positive-prompt formulation"
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260812-v5-r9",
+    "run_id": "promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint/result.json",
+    "result_sha256": "0061ce596e2b1bd30f86856d7a5b5d8ef03b41fb20e479f7ad35f769fbc3f766",
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/prompt-manifest.json",
+    "prompt_manifest_sha256": "56f221a685ca44186b369392f41b7a76b01540218a24be4fe634b1a1962e21b0",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/repair-feedback/07-06-framing-endpoint.json",
+    "repair_feedback_sha256": "82bd959e2d7d426e5a60abaf46d8946341e372f8f8b62e9633b6f0b3a3b6f577",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260812-v5-r9-07-femibion-gotovites-k-beremennosti-06-framing-endpoint/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+      "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff337-04cf-7e33-a0ec-03d4167fb87e"
+      },
+      "models": [
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c"
+    }
+  },
+  "diagnosis": {
+    "type": "suspected_source_filter",
+    "classification": "suspected-source-image-safety-false-positive",
+    "evidence_strength": "strong-indirect",
+    "person_preserving_provider_failures_at_least": 12,
+    "provider_support_code_available": false,
+    "active_source_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "active_source_transform": null
+  },
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260812-v7",
+    "provider_run_id": "promopages-10060-tune-videos-20260812-v7-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "status": "provider-failed",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v7/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+    "run_sha256": "6cfe970fc11bdf2cd55cb9248f8a8435e94742bb3aa658ec622082ab7cfc31b7",
+    "provider_job_id": "MqfNhJZllV0ZEVNQUElh",
+    "provider_may_be_active": false,
+    "submission_count": 1,
+    "terminal_no_output_stop_applied": true
+  },
+  "policy": {
+    "new_immutable_provider_run": true,
+    "one_paid_submit": true,
+    "terminal_no_output_stops_same_experiment_retry": true,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "compositor": false,
+    "source_transform": null,
+    "disable_provider_safety_filters": false,
+    "s3_upload": false
+  },
+  "bindings": {
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

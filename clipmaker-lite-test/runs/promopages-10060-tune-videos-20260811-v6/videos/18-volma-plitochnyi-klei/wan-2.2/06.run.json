@@ -28,7 +28,7 @@
   },
   "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
   "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
-  "status": "dry-run",
+  "status": "succeeded",
   "request": {
     "endpoint": "/wan-2.2-i2v-flash",
     "model": "alibaba/wan-2.2",
@@ -46,27 +46,70 @@
   },
   "request_sha256": "b9f96222ed46926396476eae96fff385ec08c206905f2ef0542449f01c08a295",
   "request_fingerprint_version": 2,
-  "provider_job_id": null,
-  "submitted_at": null,
-  "completed_at": null,
+  "provider_job_id": "043721c8f4423e1c52d2b73529a8fe4a",
+  "submitted_at": "2026-08-11T23:41:17Z",
+  "completed_at": "2026-08-11T23:41:18Z",
   "provider_may_be_active": false,
   "source_preflight": {
-    "check": "source-dimensions",
-    "model_id": "alibaba/wan-2.2",
-    "width": 752,
-    "height": 502,
-    "minimum_dimension_px": null,
-    "conforms": true,
-    "normalization_applied": false
+    "http_status": 200,
+    "bytes": 56115,
+    "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a"
   },
-  "provider_response": null,
-  "media": null,
-  "contract_check": null,
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "043721c8f4423e1c52d2b73529a8fe4a",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4630963,
+    "sha256": "f6918a5638fcafa8b8c9621dcb020e7f7a1e24967ff1cdfd20c5a43fed4c8717"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
   "error": null,
-  "submission_count": 0,
+  "submission_count": 1,
   "budget_reservation_usd": 0.35,
   "new_immutable_provider_run": true,
   "automatic_paid_retry": false,
   "fallback": null,
-  "s3_upload": false
+  "s3_upload": false,
+  "duplicate_risk_acceptance": {
+    "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+    "prior_inactive_not_confirmed": true,
+    "source_evaluation_id": "17#11::alibaba/wan-2.2",
+    "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+    "source_status": "submit-unknown",
+    "source_provider_job_id": null,
+    "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+    "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+    "maximum_possible_duplicate_charge_usd": 0.35,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "authorized_evaluation_id": "18#06::alibaba/wan-2.2"
+  }
 }

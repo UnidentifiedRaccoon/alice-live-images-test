@@ -28,7 +28,7 @@
   },
   "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.prompt.json",
   "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/05.mp4",
-  "status": "dry-run",
+  "status": "provider-failed",
   "request": {
     "endpoint": "/wan-2.2-i2v-flash",
     "model": "alibaba/wan-2.2",
@@ -48,25 +48,35 @@
   "request_fingerprint_version": 2,
   "provider_job_id": null,
   "submitted_at": null,
-  "completed_at": null,
+  "completed_at": "2026-08-11T23:40:04Z",
   "provider_may_be_active": false,
   "source_preflight": {
-    "check": "source-dimensions",
-    "model_id": "alibaba/wan-2.2",
-    "width": 758,
-    "height": 220,
-    "minimum_dimension_px": null,
-    "conforms": true,
-    "normalization_applied": false
+    "http_status": 200,
+    "bytes": 17569,
+    "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543"
   },
   "provider_response": null,
   "media": null,
   "contract_check": null,
-  "error": null,
-  "submission_count": 0,
+  "error": "provider submit: Eliza/Segmind POST failed with HTTP 400: {\"error\": \"the provider task failed: {\\\"task_id\\\": \\\"3c062dcc-2f1d-4a15-9513-1886e02a1504\\\", \\\"task_status\\\": \\\"FAILED\\\", \\\"video_url\\\": \\\"\\\", \\\"submit_time\\\": \\\"2026-08-12 07:39:58.718\\\", \\\"scheduled_time\\\": \\\"2026-08-12 07:39:58.736\\\", \\\"end_time\\\": \\\"2026-08-12 07:39:59.895\\\", \\\"code\\\": \\\"InvalidParameter\\\", \\\"message\\\": \\\"Image height or width is too small than 240\\\"}\"}",
+  "submission_count": 1,
   "budget_reservation_usd": 0.35,
   "new_immutable_provider_run": true,
   "automatic_paid_retry": false,
   "fallback": null,
-  "s3_upload": false
+  "s3_upload": false,
+  "duplicate_risk_acceptance": {
+    "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+    "prior_inactive_not_confirmed": true,
+    "source_evaluation_id": "17#11::alibaba/wan-2.2",
+    "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+    "source_status": "submit-unknown",
+    "source_provider_job_id": null,
+    "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+    "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+    "maximum_possible_duplicate_charge_usd": 0.35,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "authorized_evaluation_id": "18#05::alibaba/wan-2.2"
+  }
 }
