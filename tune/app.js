@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const MANIFEST_URL = "../clipmaker-lite-test/tune-manifest.json";
+  const MANIFEST_URL = "../clipmaker-lite-test/tune-manifest.json?v=4";
   const RAW_REPOSITORY_BASE =
     "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/main/";
   const REVIEW_STORAGE_PREFIX = "alice-live:tune-review:v2:";
