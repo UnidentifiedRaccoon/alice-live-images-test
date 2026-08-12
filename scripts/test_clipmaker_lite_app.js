@@ -1,6 +1,7 @@
 "use strict";
 
 const assert = require("node:assert/strict");
+const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
 const test = require("node:test");
@@ -39,6 +40,22 @@ const PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH = path.join(
   "clipmaker-lite-test",
   "promopages-10060-s3-delivery.json",
 );
+const PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "promopages-10060-tune-approved-s3-overlay.json",
+);
+const TUNE_MANIFEST_PATH = path.join(
+  ROOT,
+  "clipmaker-lite-test",
+  "tune-manifest.json",
+);
+const PROMOPAGES_10060_S3_ARTICLES_PATH = path.join(
+  ROOT,
+  "PROMOPAGES-10060",
+  "s3-export",
+  "articles.json",
+);
 
 const loadHooks = () => {
   const source = fs
@@ -60,6 +77,7 @@ const loadHooks = () => {
         "  globalThis.__sortPromopages10060Articles = sortPromopages10060Articles;\n" +
       "  globalThis.__mergeUnavailableArticleCollections = mergeUnavailableArticleCollections;\n" +
         "  globalThis.__validatePromopages10060S3Delivery = validatePromopages10060S3Delivery;\n" +
+        "  globalThis.__validateAndApplyPromopages10060TuneApprovedS3Overlay = validateAndApplyPromopages10060TuneApprovedS3Overlay;\n" +
         "  globalThis.__datasetCounts = datasetCounts;\n" +
         "  globalThis.__availableOutputCount = availableOutputCount;\n" +
         "  globalThis.__resolveRequestedArticleIndex = resolveRequestedArticleIndex;\n\n" +
@@ -134,6 +152,152 @@ const actualPromopages10060Articles = (hooks) => {
     ...article02.articles,
     ...campaign20260807.articles,
   ]);
+};
+
+const TUNE_APPROVED_MODEL_COUNTS = {
+  "alibaba/wan-2.2": 16,
+  "alibaba/wan-2.7": 12,
+  "google/veo-3.1-lite": 17,
+};
+const TUNE_APPROVED_MODEL_DIRS = {
+  "alibaba/wan-2.2": "wan_2_2",
+  "alibaba/wan-2.7": "wan_2_7",
+  "google/veo-3.1-lite": "veo_3_1",
+};
+const TUNE_EXPLICIT_IDS = new Set([
+  "17#11::alibaba/wan-2.2",
+  "18#06::alibaba/wan-2.2",
+]);
+
+const tuneApprovedOverlayFixture = () => {
+  const tune = loadJson(TUNE_MANIFEST_PATH);
+  const routing = loadJson(PROMOPAGES_10060_S3_ARTICLES_PATH);
+  const routes = new Map(
+    routing.articles.map((article) => [article.article_slug, article]),
+  );
+  const candidates = tune.cases.flatMap((tuneCase) =>
+    tuneCase.targets
+      .filter((target) => target.tuned.video.state === "available")
+      .map((target) => ({
+        tuneCase,
+        target,
+        evaluationId: `${tuneCase.case_id}::${target.model_id}`,
+      })),
+  );
+  const selected = [];
+  const selectedIds = new Set();
+  const remaining = { ...TUNE_APPROVED_MODEL_COUNTS };
+  for (const candidate of candidates) {
+    if (!TUNE_EXPLICIT_IDS.has(candidate.evaluationId)) continue;
+    selected.push(candidate);
+    selectedIds.add(candidate.evaluationId);
+    remaining[candidate.target.model_id] -= 1;
+  }
+  for (const modelId of Object.keys(remaining)) {
+    for (const candidate of candidates) {
+      if (remaining[modelId] === 0) break;
+      if (
+        candidate.target.model_id !== modelId ||
+        selectedIds.has(candidate.evaluationId)
+      ) {
+        continue;
+      }
+      selected.push(candidate);
+      selectedIds.add(candidate.evaluationId);
+      remaining[modelId] -= 1;
+    }
+    assert.equal(remaining[modelId], 0);
+  }
+  const outputs = selected
+    .map(({ tuneCase, target, evaluationId }) => {
+      const route = routes.get(tuneCase.article_slug);
+      const video = target.tuned.video;
+      const experiment = TUNE_APPROVED_MODEL_DIRS[target.model_id];
+      const objectKey =
+        `front-images/exp_video/${route.cabinet.slug}__${route.cabinet.id}/` +
+        `${route.publication_id}/${experiment}/` +
+        `image_${tuneCase.source.image_id}--sha256-${video.sha256.slice(0, 12)}.mp4`;
+      const explicit = TUNE_EXPLICIT_IDS.has(evaluationId);
+      return {
+        evaluation_id: evaluationId,
+        sheet_row: target.sheet_row,
+        case_id: tuneCase.case_id,
+        article_number: tuneCase.article_number,
+        article_slug: tuneCase.article_slug,
+        publication_id: tuneCase.publication_id,
+        image_id: tuneCase.source.image_id,
+        model_id: target.model_id,
+        experiment,
+        approval_kind: explicit ? "explicit-latest-wan" : "helped",
+        approval_source: explicit
+          ? "explicit-latest-wan"
+          : target.iteration.action === "reused-helped"
+            ? "v4-evaluation"
+            : "v6-evaluation",
+        generation_origin: video.generation.origin,
+        source_video_path: video.repository_video_path,
+        sha256: video.sha256,
+        bytes: video.bytes,
+        object_key: objectKey,
+        yastatic_url:
+          "https://yastatic.net/s3/promopages-front-bundles/" + objectKey,
+      };
+    })
+    .sort((left, right) => left.sheet_row - right.sheet_row);
+  const tuneSha = crypto
+    .createHash("sha256")
+    .update(fs.readFileSync(TUNE_MANIFEST_PATH))
+    .digest("hex");
+  return {
+    tune,
+    overlay: {
+      schema_version: 1,
+      manifest_role: "promopages-10060-tune-approved-s3-overlay",
+      ticket: "PROMOPAGES-10060",
+      bucket: "promopages-front-bundles",
+      object_prefix: "front-images/exp_video/",
+      public_base_url:
+        "https://yastatic.net/s3/promopages-front-bundles/",
+      selection_contract: {
+        path: "PROMOPAGES-10060/tune-s3-export/selection-contract.json",
+        sha256: "1".repeat(64),
+      },
+      evaluation_inputs: [
+        {
+          kind: "v4-evaluation",
+          path:
+            "PROMOPAGES-10060/tune-s3-export/inputs/promopages-10060-tune-prompts-20260811-v4-evaluation.json",
+          sha256: "2".repeat(64),
+          batch_id: "promopages-10060-tune-prompts-20260811-v4",
+        },
+        {
+          kind: "v6-evaluation",
+          path:
+            "PROMOPAGES-10060/tune-s3-export/inputs/promopages-10060-tune-review-20260811-v6-evaluation.json",
+          sha256: "3".repeat(64),
+          batch_id: "promopages-10060-tune-review-20260811-v6",
+        },
+      ],
+      selection_policy: {
+        approved_outcome: "helped",
+        deduplication_key: "evaluation_id",
+        precedence:
+          "v6-helped-over-v4; preserve-v4-helped-when-v6-is-not-helped",
+        explicit_latest_wan_evaluation_ids: [...TUNE_EXPLICIT_IDS],
+        current_tune_binding_required: true,
+        previous_tuned_fallback_allowed: false,
+      },
+      tune_manifest: {
+        path: "clipmaker-lite-test/tune-manifest.json",
+        sha256: tuneSha,
+        batch_id: tune.batch_id,
+        media_commit_sha: tune.scope.media_commit_sha,
+      },
+      selected_output_count: outputs.length,
+      model_counts: { ...TUNE_APPROVED_MODEL_COUNTS },
+      outputs,
+    },
+  };
 };
 
 const REVIEW_ARTICLE_IMAGE_COUNTS = [
@@ -1848,6 +2012,171 @@ test("S3 delivery fails closed on missing, media-drifted, or foreign-host entrie
     assert.throws(
       () => hooks.__validatePromopages10060S3Delivery(changed, canonicalArticles),
       pattern,
+    );
+  });
+});
+
+test("Tune-approved S3 overlay replaces exactly 45 current tuned outputs and keeps 465 baseline fallbacks", () => {
+  const hooks = loadHooks();
+  const canonicalArticles = actualPromopages10060Articles(hooks);
+  const baselineArticles = hooks.__validatePromopages10060S3Delivery(
+    loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH),
+    canonicalArticles,
+  );
+  const { tune, overlay } = tuneApprovedOverlayFixture();
+  const result = hooks.__validateAndApplyPromopages10060TuneApprovedS3Overlay(
+    overlay,
+    tune,
+    baselineArticles,
+  );
+
+  assert.equal(result.selectedOutputCount, 45);
+  assert.equal(result.baselineOutputCount, 465);
+  assert.deepEqual({ ...result.modelCounts }, TUNE_APPROVED_MODEL_COUNTS);
+  const allOutputs = result.articles.flatMap((article) =>
+    article.images.flatMap((record) => record.outputs),
+  );
+  assert.equal(allOutputs.length, 510);
+  assert.equal(allOutputs.filter((output) => output.tuneApproval).length, 45);
+  assert.equal(allOutputs.filter((output) => !output.tuneApproval).length, 465);
+
+  const article = result.articles.find(
+    (item) => item.article_slug === "17-volma-nalivnoi-pol",
+  );
+  const record = article.images.find((item) => item.image.image_id === "11");
+  const selected = record.outputs.find(
+    (output) => output.model_id === "alibaba/wan-2.2",
+  );
+  const fallback = record.outputs.find(
+    (output) => output.model_id === "alibaba/wan-2.7",
+  );
+  const baselineRecord = baselineArticles
+    .find((item) => item.article_slug === "17-volma-nalivnoi-pol")
+    .images.find((item) => item.image.image_id === "11");
+  const baselineSelected = baselineRecord.outputs.find(
+    (output) => output.model_id === "alibaba/wan-2.2",
+  );
+  const baselineFallback = baselineRecord.outputs.find(
+    (output) => output.model_id === "alibaba/wan-2.7",
+  );
+  const tuneCase = tune.cases.find((item) => item.case_id === "17#11");
+  const tuneTarget = tuneCase.targets.find(
+    (target) => target.model_id === "alibaba/wan-2.2",
+  );
+
+  assert.equal(selected.tuneApproval.kind, "explicit-latest-wan");
+  assert.equal(selected.positive_prompt, tuneTarget.tuned.positive_prompt);
+  assert.equal(selected.negative_prompt, tuneTarget.tuned.negative_prompt);
+  assert.equal(
+    selected.video_path,
+    tuneTarget.tuned.video.repository_video_path,
+  );
+  assert.equal(selected.media.sha256, tuneTarget.tuned.video.sha256);
+  assert.equal(selected.lite_run_id, tuneTarget.planning.run_id);
+  assert.equal(
+    selected.prompt_path,
+    tuneTarget.tuned.video.generation.prompt_path,
+  );
+  assert.equal(selected.run_path, tuneTarget.tuned.video.generation.run_path);
+  assert.notEqual(selected.lite_run_id, baselineSelected.lite_run_id);
+  assert.notEqual(selected.prompt_path, baselineSelected.prompt_path);
+  assert.notEqual(selected.run_path, baselineSelected.run_path);
+  assert.equal(fallback.tuneApproval, undefined);
+  assert.equal(fallback.video_path, baselineFallback.video_path);
+  assert.equal(fallback.publicVideoUrl, baselineFallback.publicVideoUrl);
+  assert.equal(record.outputs.length, 3);
+  assert.equal(record.displayOutputs.length, 3);
+
+  const markup = hooks.__renderModel(article, record, selected, 0);
+  assert.match(markup, /Tune · последняя Wan-итерация/);
+  assert.match(markup, /Tune selection/);
+  assert.match(markup, /17#11::alibaba\/wan-2\.2/);
+  assert.match(markup, new RegExp(selected.publicVideoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+});
+
+test("published Tune-approved S3 overlay binds exact current Tune lineage", () => {
+  const hooks = loadHooks();
+  const baselineArticles = hooks.__validatePromopages10060S3Delivery(
+    loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH),
+    actualPromopages10060Articles(hooks),
+  );
+  const tune = loadJson(TUNE_MANIFEST_PATH);
+  const overlay = loadJson(PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_PATH);
+  const result = hooks.__validateAndApplyPromopages10060TuneApprovedS3Overlay(
+    overlay,
+    tune,
+    baselineArticles,
+  );
+
+  assert.equal(result.selectedOutputCount, 45);
+  assert.equal(result.baselineOutputCount, 465);
+  assert.deepEqual({ ...result.modelCounts }, TUNE_APPROVED_MODEL_COUNTS);
+  overlay.outputs.forEach((row) => {
+    const article = result.articles.find(
+      (item) => item.article_slug === row.article_slug,
+    );
+    const record = article.images.find(
+      (item) => item.image.image_id === row.image_id,
+    );
+    const output = record.outputs.find((item) => item.model_id === row.model_id);
+    const tuneCase = tune.cases.find((item) => item.case_id === row.case_id);
+    const target = tuneCase.targets.find(
+      (item) => item.model_id === row.model_id,
+    );
+    assert.equal(output.positive_prompt, target.tuned.positive_prompt);
+    assert.equal(output.negative_prompt, null);
+    assert.equal(output.lite_run_id, target.planning.run_id);
+    assert.equal(
+      output.prompt_path,
+      target.tuned.video.generation.prompt_path ?? null,
+    );
+    assert.equal(output.run_path, target.tuned.video.generation.run_path ?? null);
+    assert.equal(output.video_path, row.source_video_path);
+    assert.equal(output.publicVideoUrl, row.yastatic_url);
+  });
+});
+
+test("Tune-approved S3 overlay fails closed on approval, current Tune, duplicate and route drift", () => {
+  const hooks = loadHooks();
+  const baselineArticles = hooks.__validatePromopages10060S3Delivery(
+    loadJson(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH),
+    actualPromopages10060Articles(hooks),
+  );
+  const fixture = tuneApprovedOverlayFixture();
+  const mutations = [
+    (overlay) => {
+      overlay.outputs[0].approval_kind = "unrated";
+    },
+    (overlay) => {
+      overlay.outputs[0].sha256 = "0".repeat(64);
+    },
+    (overlay) => {
+      overlay.outputs[1] = clone(overlay.outputs[0]);
+    },
+    (overlay) => {
+      overlay.outputs[0].yastatic_url = "https://example.test/video.mp4";
+    },
+    (overlay, tune) => {
+      const row = overlay.outputs[0];
+      const tuneCase = tune.cases.find((item) => item.case_id === row.case_id);
+      const target = tuneCase.targets.find(
+        (item) => item.model_id === row.model_id,
+      );
+      target.tuned.negative_prompt = "stale baseline negative prompt";
+    },
+  ];
+  mutations.forEach((mutate) => {
+    const overlay = clone(fixture.overlay);
+    const tune = clone(fixture.tune);
+    mutate(overlay, tune);
+    assert.throws(
+      () =>
+        hooks.__validateAndApplyPromopages10060TuneApprovedS3Overlay(
+          overlay,
+          tune,
+          baselineArticles,
+        ),
+      /Tune-approved S3 overlay/,
     );
   });
 });

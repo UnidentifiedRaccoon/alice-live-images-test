@@ -121,10 +121,36 @@ PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS = ("19", "20", "21")
 PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH = Path(
     "clipmaker-lite-test/promopages-10060-s3-delivery.json"
 )
+PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH = Path(
+    "clipmaker-lite-test/promopages-10060-tune-approved-s3-overlay.json"
+)
+PROMOPAGES_10060_TUNE_APPROVED_SELECTION_CONTRACT_RELATIVE_PATH = Path(
+    "PROMOPAGES-10060/tune-s3-export/selection-contract.json"
+)
+PROMOPAGES_10060_TUNE_APPROVED_EVALUATION_RELATIVE_PATHS = (
+    Path(
+        "PROMOPAGES-10060/tune-s3-export/inputs/"
+        "promopages-10060-tune-prompts-20260811-v4-evaluation.json"
+    ),
+    Path(
+        "PROMOPAGES-10060/tune-s3-export/inputs/"
+        "promopages-10060-tune-review-20260811-v6-evaluation.json"
+    ),
+)
 PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH = Path(
     "PROMOPAGES-10060/s3-export/articles.json"
 )
 PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 510
+PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT = 45
+PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS = {
+    "alibaba/wan-2.2": 16,
+    "alibaba/wan-2.7": 12,
+    "google/veo-3.1-lite": 17,
+}
+PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS = (
+    "17#11::alibaba/wan-2.2",
+    "18#06::alibaba/wan-2.2",
+)
 PROMOPAGES_10060_S3_BUCKET = "promopages-front-bundles"
 PROMOPAGES_10060_S3_OBJECT_PREFIX = "front-images/exp_video/"
 PROMOPAGES_10060_S3_PUBLIC_BASE_URL = (
@@ -311,6 +337,7 @@ STATIC_FILES = (
     "clipmaker-lite-test/promopages-9930-manifest.json",
     "clipmaker-lite-test/case-21-manifest.json",
     "clipmaker-lite-test/promopages-10060-manifest.json",
+    PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH.as_posix(),
     TUNE_MANIFEST_RELATIVE_PATH.as_posix(),
 )
 
@@ -1991,6 +2018,293 @@ def _validate_promopages_10060_s3_delivery(
     if seen_keys != set(canonical_outputs):
         raise ValueError(f"{label} has missing or extra canonical outputs")
     return seen_video_paths
+
+
+def _validate_promopages_10060_tune_approved_s3_overlay(
+    overlay: Any,
+    routing_config: dict[str, Any],
+    tune_manifest: dict[str, Any],
+    baseline_delivery: dict[str, Any],
+    *,
+    root: Path,
+) -> set[Path]:
+    """Validate the post-upload curated Tune overlay against local evidence."""
+
+    label = "PROMOPAGES-10060 Tune-approved S3 overlay"
+    top_fields = {
+        "schema_version",
+        "manifest_role",
+        "ticket",
+        "bucket",
+        "object_prefix",
+        "public_base_url",
+        "selection_contract",
+        "evaluation_inputs",
+        "selection_policy",
+        "tune_manifest",
+        "selected_output_count",
+        "model_counts",
+        "outputs",
+    }
+    if (
+        not isinstance(overlay, dict)
+        or set(overlay) != top_fields
+        or overlay.get("schema_version") != 1
+        or overlay.get("manifest_role")
+        != "promopages-10060-tune-approved-s3-overlay"
+        or overlay.get("ticket") != "PROMOPAGES-10060"
+        or overlay.get("bucket") != PROMOPAGES_10060_S3_BUCKET
+        or overlay.get("object_prefix") != PROMOPAGES_10060_S3_OBJECT_PREFIX
+        or overlay.get("public_base_url")
+        != PROMOPAGES_10060_S3_PUBLIC_BASE_URL
+    ):
+        raise ValueError(f"{label} identity is invalid")
+
+    def validate_receipt(
+        receipt: Any,
+        expected_path: Path,
+        *,
+        receipt_label: str,
+        extra_fields: set[str] | None = None,
+    ) -> None:
+        fields = {"path", "sha256"} | (extra_fields or set())
+        if (
+            not isinstance(receipt, dict)
+            or set(receipt) != fields
+            or receipt.get("path") != expected_path.as_posix()
+            or not _is_sha256(receipt.get("sha256"))
+        ):
+            raise ValueError(f"{label} {receipt_label} receipt is invalid")
+        local_path = root / expected_path
+        if (
+            not local_path.is_file()
+            or local_path.is_symlink()
+            or _sha256_file(local_path) != receipt["sha256"]
+        ):
+            raise ValueError(f"{label} {receipt_label} hash differs")
+        for field in extra_fields or set():
+            if not isinstance(receipt.get(field), str) or not receipt[field].strip():
+                raise ValueError(f"{label} {receipt_label} {field} is invalid")
+
+    validate_receipt(
+        overlay.get("selection_contract"),
+        PROMOPAGES_10060_TUNE_APPROVED_SELECTION_CONTRACT_RELATIVE_PATH,
+        receipt_label="selection contract",
+    )
+    evaluation_receipts = overlay.get("evaluation_inputs")
+    if not isinstance(evaluation_receipts, list) or len(evaluation_receipts) != 2:
+        raise ValueError(f"{label} must bind exactly two evaluation inputs")
+    evaluation_by_path = {
+        receipt.get("path"): receipt
+        for receipt in evaluation_receipts
+        if isinstance(receipt, dict)
+    }
+    if set(evaluation_by_path) != {
+        path.as_posix()
+        for path in PROMOPAGES_10060_TUNE_APPROVED_EVALUATION_RELATIVE_PATHS
+    }:
+        raise ValueError(f"{label} evaluation input paths differ")
+    for evaluation_path in PROMOPAGES_10060_TUNE_APPROVED_EVALUATION_RELATIVE_PATHS:
+        validate_receipt(
+            evaluation_by_path[evaluation_path.as_posix()],
+            evaluation_path,
+            receipt_label=f"evaluation {evaluation_path.name}",
+            extra_fields={"kind", "batch_id"},
+        )
+
+    policy = overlay.get("selection_policy")
+    if (
+        not isinstance(policy, dict)
+        or set(policy)
+        != {
+            "approved_outcome",
+            "deduplication_key",
+            "precedence",
+            "explicit_latest_wan_evaluation_ids",
+            "current_tune_binding_required",
+            "previous_tuned_fallback_allowed",
+        }
+        or policy.get("approved_outcome") != "helped"
+        or policy.get("deduplication_key") != "evaluation_id"
+        or policy.get("precedence")
+        != "v6-helped-over-v4; preserve-v4-helped-when-v6-is-not-helped"
+        or policy.get("current_tune_binding_required") is not True
+        or policy.get("previous_tuned_fallback_allowed") is not False
+        or policy.get("explicit_latest_wan_evaluation_ids")
+        != list(PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS)
+    ):
+        raise ValueError(f"{label} selection policy is invalid")
+
+    tune_receipt = overlay.get("tune_manifest")
+    validate_receipt(
+        tune_receipt,
+        TUNE_MANIFEST_RELATIVE_PATH,
+        receipt_label="Tune manifest",
+        extra_fields={"batch_id", "media_commit_sha"},
+    )
+    if (
+        tune_manifest.get("schema_version") != 2
+        or tune_manifest.get("manifest_role") != "clipmaker-lite-tune-review"
+        or tune_manifest.get("ticket") != "PROMOPAGES-10060"
+        or tune_manifest.get("agent_id") != "clipmaker-lite"
+        or tune_manifest.get("batch_id") != tune_receipt["batch_id"]
+        or (tune_manifest.get("scope") or {}).get("media_commit_sha")
+        != tune_receipt["media_commit_sha"]
+    ):
+        raise ValueError(f"{label} differs from current Tune manifest")
+    if (
+        overlay.get("selected_output_count")
+        != PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT
+        or overlay.get("model_counts")
+        != PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS
+        or not isinstance(overlay.get("outputs"), list)
+        or len(overlay["outputs"])
+        != PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT
+    ):
+        raise ValueError(f"{label} must contain exact 45 / 16 / 12 / 17")
+
+    route_by_slug = {
+        article["article_slug"]: article
+        for article in routing_config.get("articles", [])
+        if isinstance(article, dict)
+    }
+    baseline_keys = {
+        (row.get("article_slug"), row.get("image_id"), row.get("model_id"))
+        for row in baseline_delivery.get("outputs", [])
+        if isinstance(row, dict)
+    }
+    if len(baseline_keys) != PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT:
+        raise ValueError(f"{label} requires the complete 510-output baseline")
+
+    tune_targets: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
+    for case in tune_manifest.get("cases", []):
+        if not isinstance(case, dict) or not isinstance(case.get("targets"), list):
+            raise ValueError(f"{label} current Tune cases are invalid")
+        for target in case["targets"]:
+            if not isinstance(target, dict):
+                raise ValueError(f"{label} current Tune target is invalid")
+            evaluation_id = f"{case.get('case_id')}::{target.get('model_id')}"
+            if evaluation_id in tune_targets:
+                raise ValueError(f"{label} current Tune target is duplicated")
+            tune_targets[evaluation_id] = (case, target)
+
+    row_fields = {
+        "evaluation_id",
+        "sheet_row",
+        "case_id",
+        "article_number",
+        "article_slug",
+        "publication_id",
+        "image_id",
+        "model_id",
+        "experiment",
+        "approval_kind",
+        "approval_source",
+        "generation_origin",
+        "source_video_path",
+        "sha256",
+        "bytes",
+        "object_key",
+        "yastatic_url",
+    }
+    seen_logical_keys: set[tuple[str, str, str]] = set()
+    seen_source_paths: set[Path] = set()
+    seen_object_keys: set[Path] = set()
+    model_counts = {model_id: 0 for model_id in PROMOPAGES_10060_MODELS}
+    for row in overlay["outputs"]:
+        if not isinstance(row, dict) or set(row) != row_fields:
+            raise ValueError(f"{label} output shape is invalid")
+        tune_entry = tune_targets.get(row["evaluation_id"])
+        if tune_entry is None:
+            raise ValueError(f"{label} output is absent from current Tune")
+        case, target = tune_entry
+        tuned = target.get("tuned")
+        video = tuned.get("video") if isinstance(tuned, dict) else None
+        logical_key = (row["article_slug"], row["image_id"], row["model_id"])
+        route = route_by_slug.get(row["article_slug"])
+        experiment = PROMOPAGES_10060_S3_MODEL_DIRECTORIES.get(row["model_id"])
+        source_path = _safe_extension_audit_path(
+            row["source_video_path"], label=f"{label} source_video_path"
+        )
+        object_key = _safe_extension_audit_path(
+            row["object_key"], label=f"{label} object_key"
+        )
+        approval_is_helped = (
+            row["approval_kind"] == "helped"
+            and row["approval_source"] in {"v4-evaluation", "v6-evaluation"}
+        )
+        approval_is_explicit = (
+            row["approval_kind"] == "explicit-latest-wan"
+            and row["approval_source"] == "explicit-latest-wan"
+            and row["evaluation_id"]
+            in PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS
+        )
+        expected_object_key = (
+            f"{PROMOPAGES_10060_S3_OBJECT_PREFIX}"
+            f"{route['cabinet']['slug']}__{route['cabinet']['id']}/"
+            f"{route['publication_id']}/{experiment}/"
+            f"image_{row['image_id']}--sha256-{row['sha256'][:12]}.mp4"
+            if route is not None and experiment is not None
+            else None
+        )
+        if (
+            logical_key not in baseline_keys
+            or logical_key in seen_logical_keys
+            or route is None
+            or row["case_id"] != case.get("case_id")
+            or row["article_number"] != case.get("article_number")
+            or row["article_slug"] != case.get("article_slug")
+            or row["publication_id"] != case.get("publication_id")
+            or row["image_id"] != (case.get("source") or {}).get("image_id")
+            or (case.get("source") or {}).get("role") != "article_image"
+            or row["model_id"] != target.get("model_id")
+            or row["sheet_row"] != target.get("sheet_row")
+            or row["evaluation_id"]
+            != f"{row['case_id']}::{row['model_id']}"
+            or not (approval_is_helped or approval_is_explicit)
+            or not isinstance(video, dict)
+            or video.get("state") != "available"
+            or video.get("status") not in {"succeeded", "verification-failed"}
+            or video.get("delivery") != "repository-raw"
+            or row["source_video_path"] != source_path.as_posix()
+            or source_path.suffix.lower() != ".mp4"
+            or video.get("repository_video_path") != row["source_video_path"]
+            or not _is_sha256(row["sha256"])
+            or video.get("sha256") != row["sha256"]
+            or not isinstance(row["bytes"], int)
+            or isinstance(row["bytes"], bool)
+            or row["bytes"] <= 0
+            or video.get("bytes") != row["bytes"]
+            or (video.get("media") or {}).get("sha256") != row["sha256"]
+            or (video.get("media") or {}).get("bytes") != row["bytes"]
+            or (video.get("generation") or {}).get("origin")
+            != row["generation_origin"]
+            or not isinstance(tuned.get("positive_prompt"), str)
+            or not tuned["positive_prompt"].strip()
+            or tuned.get("negative_prompt") is not None
+            or row["experiment"] != experiment
+            or row["object_key"] != object_key.as_posix()
+            or row["object_key"] != expected_object_key
+            or row["yastatic_url"]
+            != PROMOPAGES_10060_S3_PUBLIC_BASE_URL + row["object_key"]
+            or source_path in seen_source_paths
+            or object_key in seen_object_keys
+        ):
+            raise ValueError(
+                f"{label} current-Tune/S3 binding is invalid: "
+                f"{row.get('evaluation_id')}"
+            )
+        seen_logical_keys.add(logical_key)
+        seen_source_paths.add(source_path)
+        seen_object_keys.add(object_key)
+        model_counts[row["model_id"]] += 1
+
+    if (
+        len(seen_logical_keys) != PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT
+        or model_counts != PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS
+    ):
+        raise ValueError(f"{label} actual selection differs from 45 / 16 / 12 / 17")
+    return seen_source_paths
 
 
 def _validate_provider_filtered_attempt(
@@ -4544,6 +4858,13 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
 
     s3_delivery_video_paths: set[Path] = set()
     s3_delivery_path = root / PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH
+    tune_approved_s3_overlay_path = (
+        root / PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH
+    )
+    tune_approved_s3_overlay_required = (
+        PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH
+        in relative_paths
+    )
     s3_articles_path = root / PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH
     if promopages_10060_manifest is not None:
         if not s3_delivery_path.is_file():
@@ -4553,6 +4874,13 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
         if not s3_articles_path.is_file():
             raise FileNotFoundError(
                 "PROMOPAGES-10060 base dataset requires its S3 routing config"
+            )
+        if (
+            tune_approved_s3_overlay_required
+            and not tune_approved_s3_overlay_path.is_file()
+        ):
+            raise FileNotFoundError(
+                "PROMOPAGES-10060 base dataset requires its Tune-approved S3 overlay"
             )
         relative_paths.add(PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH)
         s3_delivery_manifest = json.loads(
@@ -4574,15 +4902,29 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             s3_routing_config,
             *source_manifests,
         )
+        if tune_approved_s3_overlay_required:
+            tune_approved_s3_overlay = json.loads(
+                tune_approved_s3_overlay_path.read_text(encoding="utf-8")
+            )
+            _validate_promopages_10060_tune_approved_s3_overlay(
+                tune_approved_s3_overlay,
+                s3_routing_config,
+                tune_manifest,
+                s3_delivery_manifest,
+                root=root,
+            )
         if not s3_delivery_video_paths <= remote_repository_paths:
             raise ValueError(
                 "PROMOPAGES-10060 S3 delivery overlay contains a non-canonical "
                 "repository path"
             )
         remote_repository_paths.difference_update(s3_delivery_video_paths)
-    elif s3_delivery_path.is_file():
+    elif s3_delivery_path.is_file() or (
+        tune_approved_s3_overlay_required
+        and tune_approved_s3_overlay_path.is_file()
+    ):
         raise ValueError(
-            "PROMOPAGES-10060 S3 delivery overlay requires the base dataset"
+            "PROMOPAGES-10060 S3 delivery overlays require the base dataset"
         )
 
     if article_02_manifest is not None:

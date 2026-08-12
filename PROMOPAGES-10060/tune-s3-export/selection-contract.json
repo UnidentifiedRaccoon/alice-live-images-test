@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-10060-tune-approved-selection-contract",
+  "ticket": "PROMOPAGES-10060",
+  "evaluation_inputs": [
+    {
+      "kind": "v4-evaluation",
+      "path": "PROMOPAGES-10060/tune-s3-export/inputs/promopages-10060-tune-prompts-20260811-v4-evaluation.json",
+      "sha256": "196fe3a0183b6a4d6ffd912d7e8f9d7157b0986dd47da7102134adf44540563d",
+      "batch_id": "promopages-10060-tune-prompts-20260811-v4"
+    },
+    {
+      "kind": "v6-evaluation",
+      "path": "PROMOPAGES-10060/tune-s3-export/inputs/promopages-10060-tune-review-20260811-v6-evaluation.json",
+      "sha256": "b82e593550bdb23f5f3e1821b4ca75be0568be9fd7360148f30183b252149156",
+      "batch_id": "promopages-10060-tune-review-20260811-v6"
+    }
+  ],
+  "selection_policy": {
+    "approved_outcome": "helped",
+    "deduplication_key": "evaluation_id",
+    "precedence": "v6-helped-over-v4; preserve-v4-helped-when-v6-is-not-helped",
+    "explicit_latest_wan_evaluation_ids": [
+      "17#11::alibaba/wan-2.2",
+      "18#06::alibaba/wan-2.2"
+    ],
+    "current_tune_binding_required": true,
+    "previous_tuned_fallback_allowed": false
+  },
+  "tune_manifest": {
+    "path": "clipmaker-lite-test/tune-manifest.json",
+    "sha256": "e41c38ce1552effb0336ac183ea8a23bfb9fb58c1e6718eee29b1a52f1824509",
+    "batch_id": "promopages-10060-tune-review-20260812-v8",
+    "media_commit_sha": "1531003f3dda3b48bbb48ca8ac81f6a39d529e72"
+  },
+  "routing_config": {
+    "path": "PROMOPAGES-10060/s3-export/articles.json",
+    "sha256": "f2223c0fa955dbafd9099675d3a431cc84052463c171d45c40c7e00b0c501038"
+  },
+  "expected_counts": {
+    "selected_outputs": 45,
+    "approval_kinds": {
+      "explicit-latest-wan": 2,
+      "helped": 43
+    },
+    "approval_sources": {
+      "explicit-latest-wan": 2,
+      "v4-evaluation": 37,
+      "v6-evaluation": 6
+    },
+    "models": {
+      "alibaba/wan-2.2": 16,
+      "alibaba/wan-2.7": 12,
+      "google/veo-3.1-lite": 17
+    }
+  },
+  "items": [
+    {
+      "evaluation_id": "02#02::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "02#06::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "02#06::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "02#06::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "03#02::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "04#05::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "05#04::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "05#04::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v6-evaluation"
+    },
+    {
+      "evaluation_id": "06#02::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "07#03::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "07#03::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "07#04::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "08#03::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "10#07::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v6-evaluation"
+    },
+    {
+      "evaluation_id": "10#08::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "11#03::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v6-evaluation"
+    },
+    {
+      "evaluation_id": "12#02::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "12#02::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "12#02::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "12#08::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "12#08::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "12#08::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "13#05::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v6-evaluation"
+    },
+    {
+      "evaluation_id": "15#04::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "15#04::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "16#06::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v6-evaluation"
+    },
+    {
+      "evaluation_id": "17#05::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#07::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#07::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#08::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v6-evaluation"
+    },
+    {
+      "evaluation_id": "17#08::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#08::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#09::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#09::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#09::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "17#11::alibaba/wan-2.2",
+      "approval_kind": "explicit-latest-wan",
+      "approval_source": "explicit-latest-wan"
+    },
+    {
+      "evaluation_id": "18#04::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "18#06::alibaba/wan-2.2",
+      "approval_kind": "explicit-latest-wan",
+      "approval_source": "explicit-latest-wan"
+    },
+    {
+      "evaluation_id": "18#06::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "21#02::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "21#02::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "21#07::google/veo-3.1-lite",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "21#07::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "21#07::alibaba/wan-2.7",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    },
+    {
+      "evaluation_id": "21#10::alibaba/wan-2.2",
+      "approval_kind": "helped",
+      "approval_source": "v4-evaluation"
+    }
+  ]
+}

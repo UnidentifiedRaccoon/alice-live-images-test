@@ -1240,6 +1240,79 @@ def _write_s3_delivery_fixture(root, *source_manifests):
     delivery_path.write_text(json.dumps(delivery_manifest), encoding="utf-8")
 
 
+def _tune_approved_s3_overlay_fixture():
+    contract_path = (
+        ROOT / pages.PROMOPAGES_10060_TUNE_APPROVED_SELECTION_CONTRACT_RELATIVE_PATH
+    )
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    tune = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
+    routing = json.loads(
+        PROMOPAGES_10060_S3_ARTICLES_PATH.read_text(encoding="utf-8")
+    )
+    routes = {article["article_slug"]: article for article in routing["articles"]}
+    targets = {}
+    for case in tune["cases"]:
+        for target in case["targets"]:
+            targets[f"{case['case_id']}::{target['model_id']}"] = (case, target)
+
+    outputs = []
+    for selected in contract["items"]:
+        evaluation_id = selected["evaluation_id"]
+        case, target = targets[evaluation_id]
+        video = target["tuned"]["video"]
+        route = routes[case["article_slug"]]
+        experiment = pages.PROMOPAGES_10060_S3_MODEL_DIRECTORIES[
+            target["model_id"]
+        ]
+        object_key = (
+            f"{pages.PROMOPAGES_10060_S3_OBJECT_PREFIX}"
+            f"{route['cabinet']['slug']}__{route['cabinet']['id']}/"
+            f"{route['publication_id']}/{experiment}/"
+            f"image_{case['source']['image_id']}--sha256-{video['sha256'][:12]}.mp4"
+        )
+        outputs.append(
+            {
+                "evaluation_id": evaluation_id,
+                "sheet_row": target["sheet_row"],
+                "case_id": case["case_id"],
+                "article_number": case["article_number"],
+                "article_slug": case["article_slug"],
+                "publication_id": case["publication_id"],
+                "image_id": case["source"]["image_id"],
+                "model_id": target["model_id"],
+                "experiment": experiment,
+                "approval_kind": selected["approval_kind"],
+                "approval_source": selected["approval_source"],
+                "generation_origin": video["generation"]["origin"],
+                "source_video_path": video["repository_video_path"],
+                "sha256": video["sha256"],
+                "bytes": video["bytes"],
+                "object_key": object_key,
+                "yastatic_url": (
+                    pages.PROMOPAGES_10060_S3_PUBLIC_BASE_URL + object_key
+                ),
+            }
+        )
+    return {
+        "schema_version": 1,
+        "manifest_role": "promopages-10060-tune-approved-s3-overlay",
+        "ticket": "PROMOPAGES-10060",
+        "bucket": pages.PROMOPAGES_10060_S3_BUCKET,
+        "object_prefix": pages.PROMOPAGES_10060_S3_OBJECT_PREFIX,
+        "public_base_url": pages.PROMOPAGES_10060_S3_PUBLIC_BASE_URL,
+        "selection_contract": {
+            "path": pages.PROMOPAGES_10060_TUNE_APPROVED_SELECTION_CONTRACT_RELATIVE_PATH.as_posix(),
+            "sha256": pages._sha256_file(contract_path),
+        },
+        "evaluation_inputs": contract["evaluation_inputs"],
+        "selection_policy": contract["selection_policy"],
+        "tune_manifest": contract["tune_manifest"],
+        "selected_output_count": len(outputs),
+        "model_counts": pages.PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS,
+        "outputs": outputs,
+    }
+
+
 def _write_promopages_collection_fixture(root, *, include_campaign_extension):
     def write_text(relative_path, content):
         path = root / relative_path
@@ -2155,6 +2228,87 @@ class GitHubPagesSiteTest(unittest.TestCase):
                         delivery, routing_config, *source_manifests
                     )
 
+    def test_tune_approved_s3_overlay_binds_45_current_tune_outputs(self):
+        overlay = _tune_approved_s3_overlay_fixture()
+        tune = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
+        routing = json.loads(
+            PROMOPAGES_10060_S3_ARTICLES_PATH.read_text(encoding="utf-8")
+        )
+        baseline = json.loads(
+            PROMOPAGES_10060_S3_DELIVERY_PATH.read_text(encoding="utf-8")
+        )
+
+        paths = pages._validate_promopages_10060_tune_approved_s3_overlay(
+            overlay,
+            routing,
+            tune,
+            baseline,
+            root=ROOT,
+        )
+
+        self.assertEqual(len(paths), 45)
+        self.assertEqual(
+            overlay["model_counts"],
+            {"alibaba/wan-2.2": 16, "alibaba/wan-2.7": 12, "google/veo-3.1-lite": 17},
+        )
+        self.assertTrue(
+            all(path.suffix == ".mp4" for path in paths)
+        )
+
+    def test_tune_approved_s3_overlay_fails_closed_on_evidence_or_binding_drift(self):
+        tune = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
+        routing = json.loads(
+            PROMOPAGES_10060_S3_ARTICLES_PATH.read_text(encoding="utf-8")
+        )
+        baseline = json.loads(
+            PROMOPAGES_10060_S3_DELIVERY_PATH.read_text(encoding="utf-8")
+        )
+        mutations = {
+            "selection contract": lambda overlay: overlay["selection_contract"].update(
+                {"sha256": "0" * 64}
+            ),
+            "approval": lambda overlay: overlay["outputs"][0].update(
+                {"approval_kind": "unrated"}
+            ),
+            "current Tune": lambda overlay: overlay["outputs"][0].update(
+                {"sha256": "0" * 64}
+            ),
+            "S3 route": lambda overlay: overlay["outputs"][0].update(
+                {"yastatic_url": "https://example.invalid/video.mp4"}
+            ),
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(name=name):
+                overlay = _tune_approved_s3_overlay_fixture()
+                mutate(overlay)
+                with self.assertRaisesRegex(ValueError, "Tune-approved S3 overlay"):
+                    pages._validate_promopages_10060_tune_approved_s3_overlay(
+                        overlay,
+                        routing,
+                        tune,
+                        baseline,
+                        root=ROOT,
+                    )
+
+        overlay = _tune_approved_s3_overlay_fixture()
+        row = overlay["outputs"][0]
+        mutated_tune = json.loads(TUNE_MANIFEST_PATH.read_text(encoding="utf-8"))
+        tune_case = next(
+            item for item in mutated_tune["cases"] if item["case_id"] == row["case_id"]
+        )
+        target = next(
+            item for item in tune_case["targets"] if item["model_id"] == row["model_id"]
+        )
+        target["tuned"]["negative_prompt"] = "stale baseline negative prompt"
+        with self.assertRaisesRegex(ValueError, "Tune-approved S3 overlay"):
+            pages._validate_promopages_10060_tune_approved_s3_overlay(
+                overlay,
+                routing,
+                mutated_tune,
+                baseline,
+                root=ROOT,
+            )
+
     def test_tune_v6_route_safety_withholding_is_audited_unavailable(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
@@ -2911,6 +3065,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
             or not CASE_21_MANIFEST_PATH.is_file()
             or not PROMOPAGES_10060_MANIFEST_PATH.is_file()
             or not PROMOPAGES_10060_S3_DELIVERY_PATH.is_file()
+            or not (
+                ROOT
+                / pages.PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH
+            ).is_file()
             or not PROMOPAGES_10060_S3_ARTICLES_PATH.is_file()
             or not TUNE_MANIFEST_PATH.is_file()
             or any(not (ROOT / path).is_file() for path in pages.TUNE_STATIC_FILES)
@@ -2943,7 +3101,7 @@ class GitHubPagesSiteTest(unittest.TestCase):
 
         self.assertEqual(
             len(paths),
-            253
+            254
             + len(pages.TUNE_STATIC_FILES)
             + 1
             + int(PROMOPAGES_10060_ARTICLE_02_PATH.is_file())
@@ -2966,6 +3124,10 @@ class GitHubPagesSiteTest(unittest.TestCase):
             Path("clipmaker-lite-test/promopages-10060-manifest.json"), paths
         )
         self.assertIn(pages.PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH, paths)
+        self.assertIn(
+            pages.PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH,
+            paths,
+        )
         self.assertNotIn(pages.PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH, paths)
         if PROMOPAGES_10060_ARTICLE_02_PATH.is_file():
             self.assertIn(
