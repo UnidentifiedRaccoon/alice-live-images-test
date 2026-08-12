@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import hashlib
+import inspect
 import json
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -17,6 +19,11 @@ LITE = ROOT / "docs/agents/clipmaker-lite"
 README = LITE / "README.md"
 MODELS = LITE / "models"
 CONTRACT = LITE / "contract.json"
+ARCHIVED_207_CONTRACT = LITE / "contracts/contract-2.0.7.json"
+ARCHIVED_208_CONTRACT = LITE / "contracts/contract-2.0.8.json"
+ARCHIVED_208_SUPPORT = LITE / "contracts/support-2.0.8"
+ARCHIVED_220_CONTRACT = LITE / "contracts/contract-2.2.0.json"
+ARCHIVED_220_SUPPORT = LITE / "contracts/support-2.2.0"
 RUNNER = ROOT / "scripts/clipmaker_lite_runner.py"
 
 
@@ -61,10 +68,10 @@ class ClipmakerLiteContractTest(unittest.TestCase):
     def test_machine_contract_locks_runner_and_instructions(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
         self.assertEqual(contract["agent_id"], "clipmaker-lite")
-        self.assertEqual(contract["contract_version"], "2.1.4")
-        self.assertEqual(contract["runner"]["runner_version"], 8)
-        self.assertEqual(runner.DRAFT_SCHEMA_VERSION, 3)
-        self.assertEqual(runner.RESULT_SCHEMA_VERSION, 3)
+        self.assertEqual(contract["contract_version"], "2.3.0")
+        self.assertEqual(contract["runner"]["runner_version"], 10)
+        self.assertEqual(runner.DRAFT_SCHEMA_VERSION, 5)
+        self.assertEqual(runner.RESULT_SCHEMA_VERSION, 5)
         self.assertEqual(contract["output_namespace"], "artifacts/clipmaker-lite/v1")
         self.assertEqual(contract["execution"]["executor_id"], "codex-exec")
         self.assertEqual(contract["execution"]["tool_event_policy"], "reject-run")
@@ -73,6 +80,14 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         self.assertEqual(
             contract["execution"]["binary"]["path"],
             "/Applications/ChatGPT.app/Contents/Resources/codex",
+        )
+        self.assertEqual(
+            contract["execution"]["binary"]["sha256"],
+            "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        )
+        self.assertEqual(
+            contract["execution"]["binary"]["version"],
+            "codex-cli 0.147.0-alpha.6.5",
         )
         self.assertEqual(contract["input_binding"]["image_root"], "PROMOPAGES-9857")
         self.assertEqual(contract["input_binding"]["context_root"], "PROMOPAGES-9884")
@@ -121,6 +136,128 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         )
         self.assertEqual(contract["models"]["alibaba/wan-2.7"]["runtime"]["duration_seconds"], 5)
         self.assertEqual(contract["models"]["google/veo-3.1-lite"]["runtime"]["duration_seconds"], 4)
+
+    def test_installed_codex_binary_matches_lock_when_present(self) -> None:
+        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        locked = contract["execution"]["binary"]
+        binary = Path(locked["path"])
+        if not binary.is_file():
+            self.skipTest("locked macOS Codex binary is not installed")
+        self.assertFalse(binary.is_symlink())
+        self.assertEqual(sha256_file(binary), locked["sha256"])
+        inspected = subprocess.run(
+            [str(binary), "--version"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=30,
+        )
+        self.assertEqual(
+            inspected.stdout.decode("utf-8", errors="replace").strip(),
+            locked["version"],
+        )
+
+    def test_207_contract_is_archived_with_exact_historical_lock(self) -> None:
+        contract = json.loads(ARCHIVED_207_CONTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(contract["agent_id"], "clipmaker-lite")
+        self.assertEqual(contract["contract_version"], "2.0.7")
+        self.assertEqual(
+            contract["execution"]["binary"],
+            {
+                "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "sha256": (
+                    "9f6748b4ab10ffc92c28b9ccedae89e61a302bbc011df7d276ee38f55906e481"
+                ),
+                "version": "codex-cli 0.147.0-alpha.1.2",
+            },
+        )
+        self.assertEqual(
+            sha256_file(ARCHIVED_207_CONTRACT),
+            "3336d03bb268cb73515256b438a02905fb2455f5875cb028f239bfafa11e0d86",
+        )
+        self.assertEqual(
+            runner.sha256_bytes(runner.canonical_json_bytes(contract)),
+            "1e804e0f1f8cddb8738179e50c50688a0b8d5ef4480c1f41dc1828f892fe17dd",
+        )
+
+    def test_208_contract_and_support_are_archived_with_exact_historical_lock(
+        self,
+    ) -> None:
+        contract = json.loads(ARCHIVED_208_CONTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(contract["agent_id"], "clipmaker-lite")
+        self.assertEqual(contract["contract_version"], "2.0.8")
+        self.assertEqual(contract["runner"]["runner_version"], 7)
+        self.assertEqual(
+            contract["execution"]["binary"],
+            {
+                "path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+                "sha256": (
+                    "e4432c0c085e4a2e5b9cf982e4dd2ebdb44ed33c422827b6e6c64353778e773b"
+                ),
+                "version": "codex-cli 0.147.0-alpha.6.5",
+            },
+        )
+        self.assertEqual(
+            sha256_file(ARCHIVED_208_CONTRACT),
+            "500731400dc59b191ab73bf9a890efae7c84a44115c40b9f3b0bb1a646bc095f",
+        )
+        self.assertEqual(
+            runner.sha256_bytes(runner.canonical_json_bytes(contract)),
+            "62abfd56e1b68abf2a6e7bb0eba402a73fd29eebc26b72055b66aefd1c6ccbc0",
+        )
+
+        support_bindings = [
+            (contract["runner"]["path"], contract["runner"]["sha256"]),
+            (
+                contract["base_instruction"]["path"],
+                contract["base_instruction"]["sha256"],
+            ),
+            *[
+                (model["spec_path"], model["spec_sha256"])
+                for model in contract["models"].values()
+            ],
+        ]
+        self.assertEqual(len(support_bindings), 5)
+        for relative, expected_sha256 in support_bindings:
+            with self.subTest(relative=relative):
+                path = ARCHIVED_208_SUPPORT / relative
+                self.assertTrue(path.is_file())
+                self.assertFalse(path.is_symlink())
+                self.assertEqual(sha256_file(path), expected_sha256)
+
+    def test_220_contract_and_support_are_archived_with_exact_historical_lock(
+        self,
+    ) -> None:
+        contract = json.loads(ARCHIVED_220_CONTRACT.read_text(encoding="utf-8"))
+        self.assertEqual(contract["agent_id"], "clipmaker-lite")
+        self.assertEqual(contract["contract_version"], "2.2.0")
+        self.assertEqual(contract["runner"]["runner_version"], 9)
+        self.assertEqual(
+            sha256_file(ARCHIVED_220_CONTRACT),
+            "3428f60536e09e254150d7b3de880477dcadff357ccead6562c1e2757836cf4f",
+        )
+        self.assertEqual(
+            runner.sha256_bytes(runner.canonical_json_bytes(contract)),
+            "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+        )
+        support_bindings = [
+            (contract["runner"]["path"], contract["runner"]["sha256"]),
+            (
+                contract["base_instruction"]["path"],
+                contract["base_instruction"]["sha256"],
+            ),
+            *[
+                (model["spec_path"], model["spec_sha256"])
+                for model in contract["models"].values()
+            ],
+        ]
+        self.assertEqual(len(support_bindings), 5)
+        for relative, expected_sha256 in support_bindings:
+            with self.subTest(relative=relative):
+                path = ARCHIVED_220_SUPPORT / relative
+                self.assertTrue(path.is_file())
+                self.assertFalse(path.is_symlink())
+                self.assertEqual(sha256_file(path), expected_sha256)
 
     def test_codex_authoring_model_is_not_fixed_by_contract(self) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
@@ -186,86 +323,30 @@ class ClipmakerLiteContractTest(unittest.TestCase):
         for field in (
             "editorial_meaning",
             "initial_state",
+            "motion_owner",
             "primary_action",
             "terminal_state",
             "geometry_invariant",
+            "identity_invariant",
             "semantic_invariant",
+            "feasibility_assessment",
+            "attention_anchor",
+            "motion_boundary",
+            "rendering_strategy",
         ):
             self.assertIn(field, text)
-        self.assertIn("image-grounded physics", text)
-        self.assertIn("Если первый кадр уже соответствует `terminal_state`", text)
-        self.assertIn("одно-два коротких motion-first предложения", text)
-        self.assertIn("`negative_prompt` всегда и буквально равен `null`", text)
+        for marker in (
+            "#### Feasibility gate",
+            "execution_mode: i2v",
+            "непустой `positive_prompt`",
+            "Если первый кадр уже соответствует `terminal_state`",
+            "### Risk-aware action policy",
+            "Статичная архитектура и выраженная глубина",
+            "visibility floor",
+            "composition ceiling",
+        ):
+            self.assertIn(marker, text)
         self.assertIn("model × scene routing", text)
-
-    def test_architecture_motion_is_camera_led_source_grounded_and_real_time(self) -> None:
-        base = " ".join(README.read_text(encoding="utf-8").split())
-        for marker in (
-            "### Статичная архитектура и выраженная глубина",
-            "at normal real-time speed",
-            "плавный push-in",
-            "мягкий lateral track",
-            "не должен создавать новые фасады, деревья, людей, транспорт",
-            "Существующие деревья и кустарники слегка покачиваются на месте",
-            "wind wave",
-            "камера даёт основную динамику",
-        ):
-            self.assertIn(marker, base)
-
-        veo = " ".join(
-            (MODELS / "google-veo-3.1-lite.md").read_text(encoding="utf-8").split()
-        )
-        for marker in (
-            "### Архитектурный exterior с читаемой глубиной",
-            "основной источник динамики",
-            "at normal real-time speed",
-            "enhancePrompt: true",
-            "gently sway in place in a light breeze",
-            "source-grounded параллакс",
-        ):
-            self.assertIn(marker, veo)
-
-        selection = runner.load_selection(ROOT, ["google/veo-3.1-lite"])
-        bundle = " ".join(selection["instruction_bundle"].decode("utf-8").split())
-        self.assertIn("Статичная архитектура и выраженная глубина", bundle)
-        self.assertIn("Архитектурный exterior с читаемой глубиной", bundle)
-        self.assertIn("at normal real-time speed", bundle)
-        self.assertNotIn("Selected model spec: `alibaba/wan-2.7`", bundle)
-        self.assertNotIn("Selected model spec: `alibaba/wan-2.2`", bundle)
-
-    def test_veo_camera_motion_has_visibility_floor(self) -> None:
-        base = " ".join(README.read_text(encoding="utf-8").split())
-        for marker in (
-            "неподвижность в world space",
-            "source-grounded параллакса",
-            "не отменяет наблюдаемый endpoint",
-            "repair уже удачного camera move",
-            "не уменьшает полный travel автоматически",
-            "без human review",
-        ):
-            self.assertIn(marker, base)
-
-        veo = " ".join(
-            (MODELS / "google-veo-3.1-lite.md").read_text(encoding="utf-8").split()
-        )
-        for marker in (
-            "### Visibility floor для движения камеры",
-            "ниже perceptual threshold Veo",
-            "Softer` означает отсутствие рывка",
-            "screen-space изменение",
-            "world-space preservation",
-            "every physical element stays motionless",
-            "enhancer может превратить такой перечень в приоритет заморозки",
-            "continuous even travel",
-            "Не превращай `softer` в обязательный composition ceiling",
-            "human review имеет приоритет",
-        ):
-            self.assertIn(marker, veo)
-
-        selection = runner.load_selection(ROOT, ["google/veo-3.1-lite"])
-        bundle = " ".join(selection["instruction_bundle"].decode("utf-8").split())
-        self.assertIn("Visibility floor для движения камеры", bundle)
-        self.assertIn("неподвижность в world space", bundle)
 
     def test_each_model_has_endpoint_persistence_ui_and_people_policy(self) -> None:
         for path in sorted(MODELS.glob("*.md")):
@@ -275,15 +356,39 @@ class ClipmakerLiteContractTest(unittest.TestCase):
                     "Terminal state",
                     "semantic_invariant",
                     "geometry_invariant",
+                    "identity_invariant",
                     "Ключевой объект",
                     "## UI и people risks",
                     "camera state",
-                    "endpoint уже виден в first frame",
-                    "low-amplitude residual continuation",
-                    "не больше двух коротких motion-first предложений",
-                    "`negative_prompt` всегда и буквально равен `null`",
+                    "`execution_mode: i2v`",
+                    "непустой `positive_prompt`",
+                    "Authored `negative_prompt` всегда и буквально равен `null`",
                 ):
                     self.assertIn(marker, text)
+
+    def test_runner_schema_projects_every_scene_strategy_to_i2v(self) -> None:
+        schema = runner.draft_output_schema(
+            "contract-schema",
+            ["alibaba/wan-2.2"],
+        )
+        model_schema = schema["properties"]["models"]["items"]
+        self.assertEqual(
+            model_schema["properties"]["execution_mode"],
+            {"type": "string", "const": "i2v"},
+        )
+        self.assertEqual(
+            model_schema["properties"]["positive_prompt"],
+            {"type": "string", "minLength": 1, "maxLength": 500},
+        )
+        source = inspect.getsource(runner.validate_draft)
+        self.assertIn('execution_mode != "i2v"', source)
+        self.assertIn("require_short_positive_prompt", source)
+
+    def test_active_contract_has_no_compositor_route(self) -> None:
+        documents = [README, CONTRACT, *sorted(MODELS.glob("*.md")), RUNNER]
+        text = "\n".join(path.read_text(encoding="utf-8") for path in documents)
+        self.assertNotIn("deterministic-compositor", text)
+        self.assertNotIn("compositor", text.lower())
 
     def test_heavy_clipmaker_contract_is_not_imported(self) -> None:
         documents = [README, CONTRACT, *sorted(MODELS.glob("*.md"))]

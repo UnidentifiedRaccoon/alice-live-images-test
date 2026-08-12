@@ -1,0 +1,143 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-11",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:ed19e479359b78d378b9dedde8cf943f7f38f8704e3edebe33448966090400df",
+    "instruction_bundle_sha256": "60fe9706d0a6ba23e2ac047d89a693104705943312a454557c987b859e9c25ba",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      }
+    ],
+    "inputs_sha256": "sha256:7e5fad6af75ee2aab7820be8645cf9162248f878c3d2437b35027c94491d0c4a",
+    "execution_fingerprint": "sha256:ad0d0528015dd6778f639695219c62f327e28fa3caf7b7991ae1d6203918e9c6",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10c-795f-7f22-818f-0500039f7240"
+    },
+    "authored_payload_sha256": "30a3a89a59b1e5c69fd802cdb09b43e41d2a14bc49f614eaca96568043c1b4ce",
+    "draft_file_sha256": "765c13abc017850306de083d3a659d788a069a1193d469f50898e104086df1b0"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+      "sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+      "bytes": 138681
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/content.json",
+      "sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "bytes": 23912,
+      "locator": {
+        "article_id": "17-volma-nalivnoi-pol",
+        "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+        "lead": "Разбираем ошибки при заливке наливного пола, которые часто приводят к проблемам",
+        "image_id": "11",
+        "block_index": 49,
+        "role": "article_image",
+        "caption": "",
+        "file": "11.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+        "current_heading": {
+          "block_index": 47,
+          "level": 3,
+          "text": "Где возникает разница в результате?"
+        },
+        "nearest_text_before": {
+          "block_index": 48,
+          "type": "paragraph",
+          "text": "Даже при соблюдении технологии многое зависит от состава — от того, насколько он «прощает» ошибки, как растекается и насколько предсказуемо твердеет. Именно поэтому опытные строители выбирают решения, с которыми проще работать."
+        },
+        "nearest_text_after": {
+          "block_index": 50,
+          "type": "paragraph",
+          "text": "Так, с наливными полами ВОЛМА:"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A wide static advertising composition shows two blue VOLMA product bags and a blue underlay roll centered against a black background.",
+      "Large Russian promotional copy and the VOLMA logo occupy the left side; a testimonial and a portrait of one woman occupy the right side.",
+      "Thin white framing lines connect the product area to the surrounding layout; the composition contains no visible physical action or unambiguous natural motion.",
+      "Exact brand marks, package labels, testimonial text, typography, product count, and the woman's identity are semantically important."
+    ],
+    "article_context": "The body image introduces the VOLMA self-leveling floor range at the transition from discussing predictable material behavior to listing practical benefits and product choices. Its editorial role is a branded proof point emphasizing professional trust, controlled flow, and reliable results.",
+    "structured_intent": {
+      "editorial_meaning": "Present VOLMA self-leveling floor products as predictable, professional solutions that are easier to work with and help reduce defects.",
+      "initial_state": "A static wide promotional graphic with two product bags and an underlay roll centered between large text blocks and a single portrait.",
+      "motion_owner": "camera",
+      "primary_action": "A bounded source-preserving 2D push-in emphasizes the central product group.",
+      "terminal_state": "The central product group appears modestly larger while every original semantic zone remains visible and pixel-identical apart from uniform scaling.",
+      "geometry_invariant": "The rigid advertising layout, product silhouettes, white framing lines, and relative placement of all zones remain fixed.",
+      "identity_invariant": "Exactly two product bags, one underlay roll, one woman, the VOLMA logo, all package labels, glyphs, and text remain unchanged.",
+      "semantic_invariant": "The products remain a trustworthy professional choice associated with predictable work and results; no claim, label, or testimonial changes.",
+      "feasibility_assessment": "The image proves a static graphic layout with products, exact typography, branding, and one portrait, but provides no unambiguous physical action, direction, contact, or natural mechanism. Generative motion could corrupt semantically important labels, text, product identities, or the person, so only a source-preserving compositor move is safe.",
+      "rendering_strategy": "deterministic-compositor"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Over five seconds, apply one smooth, bounded 2D push-in toward the two central product bags, beginning immediately and easing gently near the end. Enlarge the source uniformly by about 5% while keeping the logo, product range, testimonial, portrait, and all outer text zones continuously visible; finish with the bags observably larger and all source pixels, typography, and layout unchanged.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    }
+  ]
+}

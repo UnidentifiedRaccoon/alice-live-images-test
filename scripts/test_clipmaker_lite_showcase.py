@@ -33,6 +33,8 @@ NAVIGATION_PAGES = [
     ROOT / "model-comparison-5s" / "index.html",
     ROOT / "manual-review" / "index.html",
     ROOT / "clipmaker-lite" / "index.html",
+    ROOT / "ab-preparation" / "index.html",
+    ROOT / "tune" / "index.html",
 ]
 
 
@@ -534,32 +536,45 @@ class ClipmakerLiteShowcaseTest(unittest.TestCase):
         )
         self.assertEqual(20 + self.additional_manifest["image_count"] + 1, 41)
 
-    def test_all_demo_pages_include_ab_preparation_step_six(self):
+    def test_all_demo_pages_publish_steps_one_to_six_and_eight(self):
         step_pattern = re.compile(r'<span class="viewSwitchStep" lang="en">Step №(\d+)</span>')
 
         for page in NAVIGATION_PAGES:
             with self.subTest(page=page.relative_to(ROOT)):
                 html = page.read_text(encoding="utf-8")
                 self.assertEqual(
-                    step_pattern.findall(html), ["1", "2", "3", "4", "5", "6"]
+                    step_pattern.findall(html),
+                    ["1", "2", "3", "4", "5", "6", "8"],
                 )
                 self.assertIn('<strong class="viewSwitchTitle">Разметка</strong>', html)
                 self.assertIn('<strong class="viewSwitchTitle">Clipmaker Lite</strong>', html)
                 self.assertIn(
                     '<strong class="viewSwitchTitle">Подготовка к A/B</strong>', html
                 )
+                self.assertIn('<strong class="viewSwitchTitle">Tune</strong>', html)
+                self.assertIn("36 кейсов · 65 целей", html)
+                self.assertNotIn("Step №7", html)
+                self.assertIn("shared.css?v=13", html)
                 self.assertIn("История · 3 модели", html)
                 self.assertNotIn("41 изображение · 3 модели", html)
                 self.assertEqual(html.count('aria-current="page"'), 1)
                 self.assertEqual(
                     len(
                         re.findall(
-                            r'href="(?:\./\?v=7|(?:\.\./)?clipmaker-lite/\?v=7)"',
+                            r'href="(?:\./\?v=8|(?:\.\./)?clipmaker-lite/\?v=8)"',
                             html,
                         )
                     ),
                     1,
                 )
+                tune_href = (
+                    "./?v=2"
+                    if page.parent == ROOT / "tune"
+                    else "tune/?v=2"
+                    if page.parent == ROOT
+                    else "../tune/?v=2"
+                )
+                self.assertEqual(html.count(f'href="{tune_href}"'), 1)
 
     def test_case_21_smooth_retry_shape_is_explicit_and_keeps_four_demo_outputs(self):
         if self.case_21_manifest is None or "smooth_experiment" not in self.case_21_manifest:

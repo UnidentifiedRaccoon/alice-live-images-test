@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-07-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07",
+  "lite_result_sha256": "09adffd5f8d2796c7b87701e19e9f1d8b2e27996282393e44c7512dc038ab8a0",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "21#07",
+  "sheet_row": 297,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig",
+      "prompt": "The camera makes a steady bounded push-in toward the two hikers and the «АРХЫЗ» sign, with source-grounded parallax while the rigid Cyrillic letters keep their exact shapes and order. By the final frame they appear moderately closer and the nearest rocks have shifted about 5–8% of the frame, with both people and all planted trekking poles still visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "55e1b90a0b9c44697c7639b25ffcca5f2abbb2325cbe6a6e2164e17bb9cde19c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "094f4e00b0f1be0e28e1d47b1770a07d",
+  "submitted_at": "2026-08-11T15:42:09Z",
+  "completed_at": "2026-08-11T15:42:09Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 946440,
+    "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "094f4e00b0f1be0e28e1d47b1770a07d",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1136,
+    "height": 800,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 18102614,
+    "sha256": "e99b0f30a5d505bd7104c8c92d93156b858ee3a372e4e7eb83f2c9b3064262f3"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 2554,
+      "source_height": 1806,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1136x800 differs from source 2554x1806 by 0.412% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "e99b0f30a5d505bd7104c8c92d93156b858ee3a372e4e7eb83f2c9b3064262f3",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

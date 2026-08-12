@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-14-promopages-govorit-s-auditoriei-04-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-14-promopages-govorit-s-auditoriei-04",
+  "case_id": "14#04",
+  "sheet_row": 180,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/14-promopages-govorit-s-auditoriei/wan-2.2/04.mp4",
+  "status": "succeeded",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe910f014557219e1b58/orig",
+      "prompt": "The camera makes a steady centered push-in toward the exact text screenshot, keeping the full page continuously visible and limiting screen travel to 4%. The rigid page layout, every glyph, line break, paragraph, and bold span remain unchanged as the text finishes slightly larger in frame.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "d0c2de88e4a9b59cd47955bdb43051482e6611dbbe5e052874907b2bbebd178e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "5e207876954ec1009c3ebec5abe4da79",
+  "submitted_at": "2026-08-11T19:35:59Z",
+  "completed_at": "2026-08-11T19:35:59Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 126619,
+    "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "5e207876954ec1009c3ebec5abe4da79",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1200,
+    "height": 752,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 12493936,
+    "sha256": "06a08ba1c42496a5f01cc0a3146728edca4a7f03ae72ee223163ce7eebbf98ef"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

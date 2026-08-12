@@ -1,0 +1,130 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:401b652e683e20a241c8a243d24cb88308acfe77ca1dff28b4237fa7dfa82b13",
+    "execution_fingerprint": "sha256:510d21c46fe226767cbc18fed185ad02014187cec112013fa7026ef2fbdf850c",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10a-caae-75f1-b7a1-8812d29d9f4b"
+    },
+    "authored_payload_sha256": "b15ef88e3bb84e4f13a47b5e68cce7849f72c6950a670ee67f93fe7ea42c49d3",
+    "draft_file_sha256": "ff754d2e8eec14f2d1099b1c3dfc8e3b887fe407c30bba2b294c4e03e13d2198"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+      "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+      "bytes": 555984
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+      "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "bytes": 20404,
+      "locator": {
+        "article_id": "10-krasnaya-polyana-reis-zaderzhali",
+        "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+        "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+        "image_id": "07",
+        "block_index": 29,
+        "role": "article_image",
+        "caption": "",
+        "file": "07.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+        "current_heading": {
+          "block_index": 23,
+          "level": 2,
+          "text": "Как получить помощь на месте"
+        },
+        "nearest_text_before": {
+          "block_index": 28,
+          "type": "paragraph",
+          "text": "И четвёртый способ — для исключительных случаев, когда нет интернета и уведомлений: личное заявление, которое можно написать прямо на ресепшен отеля."
+        },
+        "nearest_text_after": {
+          "block_index": 30,
+          "type": "heading",
+          "text": "Если ещё остались вопросы"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A family of four is gathered around a low breakfast table in a hotel room; two adults sit on the sofa and two children kneel beside the table.",
+      "The woman holds a cup, the child on the left has a hand near a serving plate, and the child on the right holds food and a small utensil; the exact next direction of these gestures is ambiguous.",
+      "The foreground table, seated family, sofa, wall, and mirror form several clearly separated depth planes suitable for source-grounded parallax.",
+      "All four people, the food, crockery, furniture, and visible hand-to-prop contacts are editorially meaningful and must remain intact."
+    ],
+    "article_context": "The body image closes the section on receiving help at the hotel and supports a reassuring editorial message: guests can remain comfortable and cared for while resolving an exceptional travel disruption at the resort.",
+    "structured_intent": {
+      "editorial_meaning": "A calm family breakfast at the hotel conveys that the resort remains a comfortable, supportive place while guests handle disrupted travel plans and request assistance.",
+      "initial_state": "Two adults sit together on the sofa while two children kneel beside a breakfast-laden coffee table; the woman holds a cup and the children hold or reach near visible food and utensils.",
+      "motion_owner": "camera",
+      "primary_action": "A bounded forward camera move approaches the family using the visible room depth.",
+      "terminal_state": "The family appears modestly larger in frame, with the foreground table displaced outward relative to the sofa and wall while all four people remain fully recognizable and visible.",
+      "geometry_invariant": "Preserve every visible hand-to-cup, hand-to-food, and hand-to-utensil relationship, along with the rigid geometry of the table, sofa, mirror, dishes, and room.",
+      "identity_invariant": "Keep exactly two adults and two children, with the same bodies, limbs, clothing, cups, utensils, dishes, food, and furniture; nothing appears, disappears, or changes owner.",
+      "semantic_invariant": "The family remains relaxed, together, and comfortably accommodated through the last frame.",
+      "feasibility_assessment": "The image clearly establishes four seated or kneeling people, multiple depth planes, and several hand-to-prop contacts, but it does not unambiguously establish the direction or mechanics of anyone’s next gesture. Subject animation would risk changing hands, props, or interactions; the visible depth safely supports camera-only motion.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Over four seconds, begin the push-in immediately and maintain a calm, even speed toward the adults and children as the focal group, easing only near the end. Use the foreground table against the sofa and wall to create readable parallax without inventing unseen space; preserve the full family group in frame and reach a modestly tighter composition near the final frame.",
+      "positive_prompt": "The camera makes a smooth, bounded push-in toward the family at a steady real-time pace, with source-grounded parallax across the breakfast table, sofa, and wall. Keep all four people, their poses and held props intact; by the final frame the family is modestly larger while the near table edge has shifted outward by about 5–8% of the frame.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

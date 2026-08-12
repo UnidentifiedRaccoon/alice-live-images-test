@@ -1,0 +1,319 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:5e430a74dcff401ba21ca013abc3f68fe6116eb54d4f2e6410a9a72dc0a2a65e",
+    "instruction_bundle_sha256": "bda6885bd9ffe91e385e432ac704e46501c9a7fd011bec7443adddd387c50691",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "ea8a541b2ea886ded2105f16c6b4ab0a03c9cce9a39b76d9130538681556cf8d"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "93cb1b57158ab784d277dc19f215a6292e52917ea21265a15776fad4bc0f76ba"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:56590053631faad9256895e971912500decac1de252af46b3c96857fd39d3210",
+    "execution_fingerprint": "sha256:bca44f2f522356d46d10c57a65d08459637db0b2513ba17c763b1c9f65fa544e",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff245-39c2-7770-b3ba-3ac13ae753a8"
+    },
+    "authored_payload_sha256": "17105b9a2b46126d32118b2a50e99344dee0c24cea7555369b74605f9d255617",
+    "draft_file_sha256": "2485e476ebcf5e0794cb30df3e98729af2da7490b550eacbe3c9af6b32f8274b"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+      "sha256": "07fd4373396697d3078265a72337a759d591449deb6cafe9869e9d2f92fb43e8",
+      "bytes": 27754
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/content.json",
+      "sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2",
+      "bytes": 19996,
+      "locator": {
+        "article_id": "18-volma-plitochnyi-klei",
+        "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+        "lead": "В статье — ответы экспертов на главные вопросы по плитке во время ремонта",
+        "image_id": "07",
+        "block_index": 36,
+        "role": "article_image",
+        "caption": "",
+        "file": "07.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/07.png",
+        "current_heading": {
+          "block_index": 34,
+          "level": 2,
+          "text": "Вопрос 5. На какой клей укладывать керамогранит?"
+        },
+        "nearest_text_before": {
+          "block_index": 35,
+          "type": "paragraph",
+          "text": "Проблема: керамогранит — тяжелый материал, требует особого подхода. Выбор клея зависит от формата плитки."
+        },
+        "nearest_text_after": {
+          "block_index": 37,
+          "type": "heading",
+          "text": "Чек-лист перед укладкой плитки"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/18-07.json",
+      "sha256": "fc9121aa558c41314249c3167635fcb7d5882dd7306307eaf4ee4b78ccc5985b",
+      "bytes": 3671,
+      "canonical_sha256": "d56807ab2abd285a8ab00f9fa79ff53c3a6483e44dd087d4ba0fa622ac6967b5",
+      "models": {
+        "alibaba/wan-2.2": {
+          "evaluation_id": "18#07::alibaba/wan-2.2",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the two-row adhesive recommendation table and its existing warning",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 1.5,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Both format labels, all four adhesive names, both headings, and the complete warning remain present and unchanged."
+            ],
+            "topology_anchors": [
+              "The two-column layout, two row boundaries, column divider, headings, and warning position remain fixed."
+            ],
+            "rigid_regions": [
+              "the recommendation-table plane, both rows, glyphs, and warning"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the two-row adhesive recommendation table and its existing warning",
+              "the complete two-row adhesive table remains fully visible throughout"
+            ]
+          }
+        },
+        "alibaba/wan-2.7": {
+          "evaluation_id": "18#07::alibaba/wan-2.7",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the two-row adhesive recommendation table and its existing warning",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 1.5,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Both format labels, all four adhesive names, both headings, and the complete warning remain present and unchanged."
+            ],
+            "topology_anchors": [
+              "The two-column layout, two row boundaries, column divider, headings, and warning position remain fixed."
+            ],
+            "rigid_regions": [
+              "the recommendation-table plane, both rows, glyphs, and warning"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the two-row adhesive recommendation table and its existing warning",
+              "the complete two-row adhesive table remains fully visible throughout"
+            ]
+          }
+        },
+        "google/veo-3.1-lite": {
+          "evaluation_id": "18#07::google/veo-3.1-lite",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the two-row adhesive recommendation table and its existing warning",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 1.5,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Both format labels, all four adhesive names, both headings, and the complete warning remain present and unchanged."
+            ],
+            "topology_anchors": [
+              "The two-column layout, two row boundaries, column divider, headings, and warning position remain fixed."
+            ],
+            "rigid_regions": [
+              "the recommendation-table plane, both rows, glyphs, and warning"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the two-row adhesive recommendation table and its existing warning",
+              "the complete two-row adhesive table remains fully visible throughout"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "A static white two-column recommendation table contains two headings, two format categories, four adhesive names, horizontal row rules, and a vertical divider.",
+      "A separate warning below the table states that the porcelain-stoneware substrate must be very strong.",
+      "The image is exact-text informational graphics with no independently movable subject or visible physical mechanism."
+    ],
+    "article_context": "The body image serves as a precise reference table for choosing VOLMA adhesive according to porcelain-stoneware format, reinforcing that heavier large-format material requires a stronger substrate and a suitable adhesive.",
+    "structured_intent": {
+      "editorial_meaning": "Clarify that porcelain-stoneware format determines the recommended adhesive and that the substrate must be very strong.",
+      "initial_state": "A fully visible static two-column table shows two porcelain-stoneware format rows with adhesive recommendations, with a complete warning below.",
+      "motion_owner": "camera",
+      "primary_action": "Move closer toward the complete recommendation graphic while keeping it fully visible.",
+      "attention_anchor": "The complete two-row adhesive recommendation table together with its warning.",
+      "motion_boundary": "Only the camera may move; the table plane, text, glyphs, rules, divider, row structure, and warning remain source-locked, with the complete graphic continuously inside the original frame boundaries.",
+      "terminal_state": "The same complete table and warning are shown from a slightly closer centered view, with all content still visible and unchanged.",
+      "geometry_invariant": "The graphic remains one rigid flat plane; its two-column structure, two row boundaries, central divider, headings, and warning position stay fixed.",
+      "identity_invariant": "Both headings, both format labels, all four adhesive names, every glyph, and the complete warning remain present and unchanged.",
+      "semantic_invariant": "The mapping between each tile-format category and its listed adhesives, plus the warning that the substrate must be very strong, remains unchanged through the final frame.",
+      "feasibility_assessment": "The source proves only a static flat informational graphic containing exact text, rules, and a warning; it provides no evidence for autonomous object motion, direction, contact, or physical mechanics, so only bounded camera-driven I2V is safe.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Over five seconds, begin the restrained centered push-in immediately and maintain an even, gentle rate toward the full table and warning. Decelerate only near the end, reaching a clearly settled but tightly capped 1.5% screen-space change while the entire graphic remains within frame and no surrounding space is introduced.",
+      "positive_prompt": "The camera performs a smooth centered push-in toward the complete two-row adhesive recommendation table, with screen travel capped at 1.5%. Keep the entire table and warning continuously visible and rigid, with both headings, both format labels, all four adhesive names, every glyph, divider, and row boundary unchanged; end slightly closer while preserving the full layout.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:d38bae21d4be8ece845825a95c55b4bfe8cb03aa8819f412895214be5aa52a4d",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "scene_plan": "Use the full five-second shot for one continuous centered push-in, progressing uniformly and easing gently into the endpoint. Constrain travel to 1.5% to counter provider expansion; retain the complete table and warning without cropping, deformation, text changes, parallax, or newly exposed space.",
+      "positive_prompt": "The camera makes one steady centered push-in toward the full recommendation table and warning, limited to 1.5% screen travel. Preserve the complete rigid graphic continuously in frame—both headings, format labels, all four adhesive names, glyphs, rules, divider, and warning remain unchanged—and finish at the slightly closer framing.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:57812463b6ce73ff0d52dcb96f40c0e25047d2197df5ec89c63a82441e554fa4",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Across four seconds, execute one continuous centered push-in with calm uniform motion and a brief natural deceleration at the endpoint. Reach the explicit 1.5% maximum near the final frames while keeping the full table and warning visible, preserving the single flat plane and exact layout without revealing anything beyond the source.",
+      "positive_prompt": "The camera moves immediately in one smooth centered push-in toward the complete two-row adhesive table and its warning, reaching no more than 1.5% screen travel. Hold the whole rigid graphic continuously visible with every heading, label, adhesive name, glyph, rule, divider, and warning unchanged, ending at the closer centered view.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

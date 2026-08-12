@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-09-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09",
+  "lite_result_sha256": "441c688530db976f46fd8da604e7dd00b3cdec8528afe74eb349c4e5d4152663",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "17#09",
+  "sheet_row": 240,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d269/orig",
+      "prompt": "The camera tracks steadily sideways across the rigid pitted floor, keeping the central crater cluster in focus as nearby foreground pits shift about 7% of the frame through natural parallax. The defects retain their exact shapes and count, ending with a slightly broader adjacent patch of the same damaged surface visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "994f0d3dd6b5927fc05050cf9f3368ca92833d2a5e50d012c565a0df25713261",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "11cebc6d3ac9d5ad8fb2d6bb3dc95ffb",
+  "submitted_at": "2026-08-11T15:10:24Z",
+  "completed_at": "2026-08-11T15:10:24Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 274107,
+    "sha256": "a2a7fb67485d3b1ba9c79cb0d379a575883c73a2926909b94cbe7023ce36d0e7"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "11cebc6d3ac9d5ad8fb2d6bb3dc95ffb",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 768,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5652166,
+    "sha256": "aeeb45db38db42a3f7b7831405eed1c4be395118d91b1a0bbf17872d72b945b0"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 640,
+      "source_height": 426,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1168x768 differs from source 640x426 by 1.230% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "aeeb45db38db42a3f7b7831405eed1c4be395118d91b1a0bbf17872d72b945b0",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

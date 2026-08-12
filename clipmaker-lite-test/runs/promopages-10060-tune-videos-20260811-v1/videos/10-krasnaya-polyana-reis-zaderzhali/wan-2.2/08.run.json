@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-10-krasnaya-polyana-reis-zaderzhali-08-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-08",
+  "lite_result_sha256": "1f184f2ddfa21fcfa21afd9fac7e62a6f94e9087ab62ebbdd7576feb2a59187f",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "10#08",
+  "sheet_row": 126,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb342c6081a1fe9b90b/orig",
+      "prompt": "The camera makes a steady bounded push-in toward the arriving couple at reception, with the four people, suitcase, travel documents, handbag, counter, and rigid lobby geometry remaining source-locked. By the final frames, the foreground suitcase has shifted about 6% outward in screen space from parallax while the couple remains fully visible at the focal center.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "b44d58b7f4a09c6d1ef2f1e368c63b80092a3a5f656380349094c252a6cf90ae",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "4da5d2bc3dde486966d2fdcb3734b581",
+  "submitted_at": "2026-08-11T15:06:42Z",
+  "completed_at": "2026-08-11T15:06:42Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 538058,
+    "sha256": "044277f8afedad3ddd54157ac359f86184af8830ebd820020351bd11abce6a11"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "4da5d2bc3dde486966d2fdcb3734b581",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 9103599,
+    "sha256": "11de15c5489129fb189138db2fe7f92a6032e6916c928f389bb997dbaf88448b"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 2048,
+      "source_height": 1365,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1168x784 differs from source 2048x1365 by 0.705% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "11de15c5489129fb189138db2fe7f92a6032e6916c928f389bb997dbaf88448b",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

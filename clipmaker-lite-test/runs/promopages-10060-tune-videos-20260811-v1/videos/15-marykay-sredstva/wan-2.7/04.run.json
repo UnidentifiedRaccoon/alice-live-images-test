@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-15-marykay-sredstva-04-wan-2-7",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-15-marykay-sredstva-04",
+  "lite_result_sha256": "31a628c1926b1b978df15fd416640387d3862d22c3fb05f177ac91a2b7a2166a",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "15#04",
+  "sheet_row": 193,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The camera makes a steady bounded push-in toward the crowded open cosmetic bag, creating gentle source-grounded parallax while every container stays rigidly nested in place. By the final frame, the bag and overlapping products appear modestly larger and remain fully recognizable, with framing changed by no more than about 8%.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a519cc4ba4f49af203a5bebe766ec9b9e7bec0b79aec6de3e735e8e10058a706",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "SxijWAeTrOQPoVRjBFwD",
+  "submitted_at": "2026-08-11T14:58:31Z",
+  "completed_at": "2026-08-11T15:43:25Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1176,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 6246917,
+    "sha256": "10be7ca0092e40e452441302bea26bc833ba09d761c44100e7aaab1aced5a39c"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "4:3",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "pixels": true,
+      "requested_aspect": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False",
+      "actual aspect 1764x1176 differs from requested 4:3 by 12.500%, beyond the 3% provider quantization tolerance"
+    ]
+  },
+  "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1764x1176 differs from requested 4:3 by 12.500%, beyond the 3% provider quantization tolerance",
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "10be7ca0092e40e452441302bea26bc833ba09d761c44100e7aaab1aced5a39c",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

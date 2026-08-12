@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-11-dream-island-pochemu-vybiraiu-03-veo-3-1-lite",
+  "case_id": "11#03",
+  "sheet_row": 131,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a5404ca2ddc03fc550956/orig",
+    "sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+    "width": 1600,
+    "height": 1059
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a5404ca2ddc03fc550956/orig",
+    "sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+    "width": 1600,
+    "height": 1059,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Передать ощущение полного погружения и захватывающего полёта в юрском мире на аттракционе «На крыльях ветра».",
+    "initial_state": "Тёмная подвесная конструкция с креслами и силуэтами занимает левый передний план; на ярком экране справа один птерозавр находится над лесной долиной перед вулканом.",
+    "motion_owner": "камера",
+    "primary_action": "Непрерывно приблизиться к уже видимому птерозавру, используя глубину между конструкцией аттракциона и экранным пейзажем.",
+    "terminal_state": "Птерозавр наблюдаемо немного крупнее, а ближайший край конструкции смещён в кадре, при сохранении всех исходных смысловых зон.",
+    "geometry_invariant": "Жёсткая форма и взаимное расположение подвесной конструкции, кресел и опор сохраняются.",
+    "identity_invariant": "Сохраняются один птерозавр и точное число всех видимых кресел, деталей конструкции и силуэтов людей или конечностей.",
+    "semantic_invariant": "Кадр до конца остаётся изображением иммерсивного полёта на аттракционе в юрском мире.",
+    "feasibility_assessment": "Надёжно видны жёсткая конструкция аттракциона, многоплановая экранная сцена и один птерозавр; направление, ось и механика движения кресел, а также дальнейшая траектория птерозавра неоднозначны. Выраженная глубина позволяет безопасное движение камеры без выдумывания действия объектов.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "В течение четырёх секунд камера сразу начинает плавный равномерный push-in к видимому птерозавру. Жёсткая конструкция аттракциона не деформируется и лишь смещается в экранном пространстве за счёт параллакса; экранные персонажи не получают самостоятельной анимации. Ближе к финалу камера мягко замедляется: край кресел смещён примерно на 5% кадра, птерозавр немного крупнее, но вся исходная композиция и число силуэтов сохранены.",
+  "prompt": {
+    "positive": "The camera makes one smooth, steady push toward the visible flying reptile, preserving the rigid ride structure, every existing seat and rider silhouette, and the single reptile continuously. By the final frame the foreground seat edge has shifted about 5% of the frame and the reptile appears modestly larger, with all original scene regions still visible.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-11-dream-island-pochemu-vybiraiu-03",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-11-dream-island-pochemu-vybiraiu-03/result.json",
+    "result_sha256": "64e53d9a529a269d1935841f5c7e24d1f15777a86e9ebb5f55fe4088bb1f91b2",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+      "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+      "source_image_sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+      "article_context_sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

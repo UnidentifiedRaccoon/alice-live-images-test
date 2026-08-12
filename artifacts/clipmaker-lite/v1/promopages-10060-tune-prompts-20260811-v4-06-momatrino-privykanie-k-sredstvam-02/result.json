@@ -1,0 +1,142 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-06-momatrino-privykanie-k-sredstvam-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:ed19e479359b78d378b9dedde8cf943f7f38f8704e3edebe33448966090400df",
+    "instruction_bundle_sha256": "60fe9706d0a6ba23e2ac047d89a693104705943312a454557c987b859e9c25ba",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      }
+    ],
+    "inputs_sha256": "sha256:5e9c6f040821f991362cb162d1c99dcf43c5c13d8700b76fb6acdd211cf62043",
+    "execution_fingerprint": "sha256:771f65b0ad4fab9b6673e3f11dd4aca9a90154692c5b1604f4e1b9b4e13f5833",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10a-2f74-7290-aca3-95235c459334"
+    },
+    "authored_payload_sha256": "d65b068501a2c280fe1b0100b60460965747cfc131c1f760c1343468177ba8ea",
+    "draft_file_sha256": "6f1df0f570f85b22ce8a1b77e02837b77fbd46e81c4aebdebe42671fe7320ed4"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/02.png",
+      "sha256": "74d0e197501b948d46b8178fe105e3e57edef2683b0c8e5777e560ff721073f9",
+      "bytes": 1527458
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/content.json",
+      "sha256": "2c55f3e8a705dbe8519b15ecf3607ec304c725380ee2647dbe8e0ff9e56c1da2",
+      "bytes": 17395,
+      "locator": {
+        "article_id": "06-momatrino-privykanie-k-sredstvam",
+        "title": "Что стоит знать о привыкании к средствам от насморка",
+        "lead": "Откуда берется зависимость от средств для носа и когда может помочь Момат Рино",
+        "image_id": "02",
+        "block_index": 8,
+        "role": "article_image",
+        "caption": "При медикаментозном рините может нарушиться механизм самоочищения носовой полости из-за повреждения реснитчатых клеток слизистой [1, 2]",
+        "file": "02.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/06-momatrino-privykanie-k-sredstvam/02.png",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "От каких[1]  средств может возникнуть зависимость"
+        },
+        "nearest_text_before": {
+          "block_index": 7,
+          "type": "paragraph",
+          "text": "Если применять сосудосуживающие спреи или капли дольше, чем указано в инструкции, рецепторы слизистой оболочки носа могут перестать реагировать на них. Со временем способен развиться медикаментозный ринит — состояние, при котором слизистая утолщается и отек сохраняется постоянно из-за регулярного воздействия средства. В итоге, даже если нет контакта с аллергеном или простуды, чувство заложенности остается [1, 2]."
+        },
+        "nearest_text_after": {
+          "block_index": 9,
+          "type": "heading",
+          "text": "Как помочь себе дышать легче без капель"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "На переднем плане женщина сидит за столом, опираясь щекой на ладонь, и держит смятую белую салфетку над чашкой.",
+      "Поза и выражение лица передают усталость или недомогание; направление возможного движения руки с салфеткой не доказано.",
+      "В глубине видны ещё три человека; стол, чашка, кресло, окна и растения создают несколько отчётливых планов глубины."
+    ],
+    "article_context": "Изображение в основном тексте визуализирует постоянное чувство заложенности и утомление при медикаментозном рините, поддерживая переход от объяснения повреждения слизистой к способам облегчить дыхание без капель.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть сохраняющееся недомогание и заложенность, связанные с медикаментозным ринитом.",
+      "initial_state": "Женщина сидит за столом, прижав ладонь к щеке, и держит смятую салфетку над чашкой; три человека находятся на размытом фоне.",
+      "motion_owner": "camera",
+      "primary_action": "Непрерывное приближение к женщине с естественным параллаксом между столом, героиней и фоном.",
+      "terminal_state": "Женщина и салфетка наблюдаемо крупнее в кадре, ближний край стола смещён относительно фона, исходная поза и все сущности сохранены.",
+      "geometry_invariant": "Ладонь остаётся в контакте со щекой; салфетка остаётся в руке над чашкой; жёсткая геометрия стола и чашки не меняется.",
+      "identity_invariant": "Сохраняются одна женщина на переднем плане, три человека на фоне, две руки женщины, белая салфетка и одна чашка; ничего не появляется и не исчезает.",
+      "semantic_invariant": "Усталость и ощущение недомогания сохраняются до последнего кадра без перехода к облегчению или бодрости.",
+      "feasibility_assessment": "Поза, контакт ладони со щекой, салфетка в другой руке и выражение усталости видны однозначно, но направление и цель движения рук не доказаны; выраженная глубина сцены позволяет безопасное движение камеры.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Пятисекундный непрерывный camera-only shot: сразу начать плавный умеренный push-in к лицу женщины как focal target. За счёт читаемой глубины ближний край стола смещается в кадре примерно на 5–10%, тогда как женщина сохраняет исходную позу, контакт ладони со щекой и положение салфетки над чашкой; фоновые посетители остаются пассивными. К последним кадрам лицо и салфетка занимают немного большую долю композиции, чувство усталости сохраняется.",
+      "positive_prompt": "The camera makes a steady bounded push-in toward the tired woman, with source-grounded parallax shifting the near table edge by about 5–10% of the frame while her hand-to-cheek contact, tissue, and cup remain fixed. By the final frames her weary face and tissue fill slightly more of the composition, with all four people still recognizable and unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-05-momatrino-zalozhennost-nosa-04",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:82632c2fc2dea558510239581c04edb42ae5b3d7e5c90909d20909246adf4e6c",
+    "instruction_bundle_sha256": "200e788fcea80ab67fbdb6b8950e43024a4d9b0bee38249130c4c9de8cb258dd",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "93cb1b57158ab784d277dc19f215a6292e52917ea21265a15776fad4bc0f76ba"
+      }
+    ],
+    "inputs_sha256": "sha256:7c5f12855580bbf61df5453a82e25ea9985d10ebbafa0da8bebe4ff51c1ab671",
+    "execution_fingerprint": "sha256:f5226b67efe797ea70dc5ba2b62f9f39099049b56b4974ca85133b366277408b",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff239-8513-71f3-816b-bf89e1dc927d"
+    },
+    "authored_payload_sha256": "20ea53aeba306b28f265bc699db5ad37b98f2601f84273cf0423a398cc6b4524",
+    "draft_file_sha256": "1878aa1ea56be9fa8ad013081a323662bfc7442d98700af910a7ddfe9c7946ff"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/04.png",
+      "sha256": "9fb38f97af30b51107d6fbdf842148f07fc7021ea6500d7234acc22b59157d65",
+      "bytes": 1371930
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/content.json",
+      "sha256": "e29c063f0b4d55e6f78f34e38e7f4ef3888dad6677f55dfa62601fa234d91374",
+      "bytes": 19193,
+      "locator": {
+        "article_id": "05-momatrino-zalozhennost-nosa",
+        "title": "4 возможных причины длительной заложенности носа",
+        "lead": "Как бытовые факторы влияют на течение ринита и чем может помочь Момат Рино",
+        "image_id": "04",
+        "block_index": 30,
+        "role": "article_image",
+        "caption": "Чтобы понять, как бытовая химия влияет на дискомфорт в носу, можно вести дневник запахов. В нем нужно отмечать, какой аромат или продукт использовался, когда появилась заложенность или другие симптомы [7]",
+        "file": "04.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/05-momatrino-zalozhennost-nosa/04.png",
+        "current_heading": {
+          "block_index": 23,
+          "level": 2,
+          "text": "Бытовые привычки, усиливающие заложенность"
+        },
+        "nearest_text_before": {
+          "block_index": 29,
+          "type": "paragraph",
+          "text": "● используйте вытяжные вентиляторы.[6]"
+        },
+        "nearest_text_after": {
+          "block_index": 31,
+          "type": "heading",
+          "text": "Длительное использование сосудосуживающих капель"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/05-04.json",
+      "sha256": "846539741e8de6f411a0daf5f58a4ec1e0243bb4448bfd8fc18d6b4558261750",
+      "bytes": 1799,
+      "canonical_sha256": "c7c13999cc85f5df41b498b3e7b683619d7f493190db55a6084f2dc972b999a8",
+      "models": {
+        "alibaba/wan-2.7": {
+          "evaluation_id": "05#04::alibaba/wan-2.7",
+          "outcome": "same-or-unclear",
+          "review_note": "Камера смещается вбок. Показывая дверцу шкафа вместо средств",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "focal_target_drift",
+            "out_of_source_reveal"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the cleaning products on the two cabinet shelves, not the cabinet door",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Сохраняются четыре ёмкости и три салфетки на верхней полке, а также все видимые ёмкости, щётка, совок и текстильные принадлежности на нижней; ничего не появляется, не исчезает и не подменяется."
+            ],
+            "topology_anchors": [
+              "Все флаконы стоят на своих полках; стопки салфеток, щётка и совок сохраняют опору, взаимное расположение и жёсткую форму."
+            ],
+            "rigid_regions": [
+              "the cabinet, both shelves, cleaning-product containers, brush, and dustpan"
+            ],
+            "contacts": [
+              "all products and tools retain their existing shelf support"
+            ],
+            "must_remain_visible": [
+              "the cleaning products on the two cabinet shelves, not the cabinet door",
+              "all four upper bottles throughout the shot"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "В открытом шкафу на двух полках неподвижно размещены флаконы бытовой химии, распылители, салфетки, щётка, совок и губки.",
+      "Все предметы опираются на полки или друг на друга; видимого активного действия, человека или доказанной механики движения нет.",
+      "Композиция фронтальная и статичная; дверца видна лишь узкой частью слева, а смысловой центр занимает набор средств на обеих полках."
+    ],
+    "article_context": "Иллюстрация в разделе о бытовых привычках показывает набор чистящих средств как возможный источник раздражающих запахов; анимация поддерживает идею наблюдать связь между используемой бытовой химией и дискомфортом в носу.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть бытовую химию как возможный источник запахов, связь которых с заложенностью и дискомфортом полезно отслеживать.",
+      "initial_state": "Фронтальный вид открытого шкафа: чистящие средства и принадлежности неподвижно стоят и лежат на двух полках.",
+      "motion_owner": "Камера.",
+      "primary_action": "Ограниченно приблизиться к набору чистящих средств на обеих полках.",
+      "attention_anchor": "Набор чистящих средств и принадлежностей на двух полках шкафа.",
+      "motion_boundary": "Двигаться может только камера; шкаф, обе полки, все флаконы, распылители, салфетки, щётка, совок, губки и их точки опоры остаются source-locked, а пространство вне исходного кадра не раскрывается.",
+      "terminal_state": "Тот же полный набор на обеих полках виден немного крупнее, без смещения внимания к дверце и без появления новых областей или предметов.",
+      "geometry_invariant": "Шкаф и обе полки сохраняют жёсткую геометрию; все ёмкости и принадлежности остаются на существующих опорах с тем же взаимным расположением и формой.",
+      "identity_invariant": "Сохраняются четыре ёмкости и три салфетки на верхней полке, а также все видимые ёмкости, щётка, совок, салфетка, губки и прочие принадлежности на нижней; ничего не появляется, не исчезает и не подменяется.",
+      "semantic_invariant": "Средства остаются узнаваемым статичным набором бытовой химии, связанным с темой отслеживания раздражающих запахов.",
+      "feasibility_assessment": "Изображение доказывает только статичное размещение предметов и их опору на полки; самостоятельное движение флаконов, распылителей, щётки, совка или текстиля физически не обосновано, поэтому безопасна только ограниченная камера.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "scene_plan": "Пятисекундный непрерывный camera-only shot: камера сразу начинает плавный равномерный центрированный push-in к средствам на обеих полках и проходит около 5–8% экранного пространства. Все четыре верхних флакона и весь двухполочный набор постоянно остаются в кадре; дверца не становится целью, бокового смещения и открытия пространства за границами исходника нет. К концу камера естественно замедляется на немного более крупной, но всё ещё полной фронтальной композиции, при этом каждый предмет и его опора остаются неизменными.",
+      "positive_prompt": "The camera makes a smooth centered push-in toward the cleaning products on both shelves, with total screen travel limited to about 5–8% and every upper bottle continuously visible. All containers, cloths, brush, dustpan, sponges, cabinet surfaces, and shelf contacts remain rigid and unchanged; the shot ends slightly closer on the same complete arrangement without revealing space beyond the source frame or drifting toward the door.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:57812463b6ce73ff0d52dcb96f40c0e25047d2197df5ec89c63a82441e554fa4",
+      "negative_prompt": null
+    }
+  ]
+}

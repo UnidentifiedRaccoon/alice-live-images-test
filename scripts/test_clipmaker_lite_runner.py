@@ -32,9 +32,18 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             schema["properties"]["structured_intent"]["required"],
             list(runner.STRUCTURED_INTENT_KEYS),
         )
+        model_schema = schema["properties"]["models"]["items"]
         self.assertEqual(
-            schema["properties"]["models"]["items"]["properties"]["negative_prompt"],
+            model_schema["properties"]["negative_prompt"],
             {"type": "null"},
+        )
+        self.assertEqual(
+            model_schema["properties"]["execution_mode"],
+            {"type": "string", "const": "i2v"},
+        )
+        self.assertEqual(
+            model_schema["properties"]["positive_prompt"],
+            {"type": "string", "minLength": 1, "maxLength": 500},
         )
 
     def make_workspace(self, directory: str) -> tuple[Path, Path, Path]:
@@ -197,14 +206,21 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             "structured_intent": {
                 "editorial_meaning": "Support the nearby editorial point.",
                 "initial_state": "The subject starts in one observable physical state.",
+                "motion_owner": "The visible subject owns the primary movement.",
                 "primary_action": "One visible change develops from the source frame.",
+                "attention_anchor": "The visible subject stays centered and continuously visible.",
+                "motion_boundary": "Motion remains inside the source-visible subject and space.",
                 "terminal_state": "The change reaches an observable endpoint.",
                 "geometry_invariant": "The subject keeps the same connected geometry.",
+                "identity_invariant": "One subject remains one recognizable subject.",
                 "semantic_invariant": "The editorial state remains unchanged through the end.",
+                "feasibility_assessment": "The action and direction are visible in the source.",
+                "rendering_strategy": "image-to-video",
             },
             "models": [
                 {
                     "model_id": model_id,
+                    "execution_mode": "i2v",
                     "scene_plan": f"A duration-aware plan for {model_id}.",
                     "positive_prompt": (
                         f"The subject completes one continuous natural movement for {model_id}."
@@ -215,6 +231,38 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             ],
         }
         return json.dumps(draft, ensure_ascii=False).encode("utf-8")
+
+    @staticmethod
+    def repair_feedback(model_ids: list[str]) -> dict[str, object]:
+        return {
+            model_id: {
+                "evaluation_id": f"evaluation-20260811::{model_id}",
+                "outcome": "worse",
+                "review_note": "Keep the focal product visible and do not reveal new space.",
+                "evidence_strength": "explicit",
+                "failure_codes": [
+                    "focal_target_drift",
+                    "out_of_source_reveal",
+                ],
+                "required_execution_mode": "i2v",
+                "fallback_policy": "none",
+                "camera_repair": {
+                    "move": "push-in",
+                    "focal_target": "the visible focal product",
+                    "target_retention": "continuously-visible",
+                    "max_screen_travel_percent": 4,
+                    "reveal_unseen_space": False,
+                },
+                "preservation": {
+                    "entity_counts": ["one focal product"],
+                    "topology_anchors": ["the source-visible shelf edge"],
+                    "rigid_regions": ["cabinet and floor"],
+                    "contacts": ["product remains on its support"],
+                    "must_remain_visible": ["the focal product"],
+                },
+            }
+            for model_id in model_ids
+        }
 
     def fake_executor(self, job_id: str, model_ids: list[str]):
         def execute(request, execution_policy, author_model, timeout):
@@ -305,9 +353,10 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 "The change reaches an observable endpoint.",
             )
             self.assertEqual(
-                result["analysis"]["structured_intent"]["geometry_invariant"],
-                "The subject keeps the same connected geometry.",
+                result["analysis"]["structured_intent"]["identity_invariant"],
+                "One subject remains one recognizable subject.",
             )
+            self.assertEqual(result["models"][0]["execution_mode"], "i2v")
             summary = runner.provenance_summary(root, "sample-run")
             self.assertTrue(summary["verified"])
             self.assertEqual(summary["agent_id"], "clipmaker-lite")
@@ -472,7 +521,7 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 (root / runner.OUTPUT_NAMESPACE / "wan22-replay/result.json").exists()
             )
 
-    def test_structured_intent_is_required_and_has_only_six_fields(self) -> None:
+    def test_structured_intent_is_required_and_has_only_twelve_fields(self) -> None:
         draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
         draft["base_scene"] = "Legacy unstructured scene."
         del draft["structured_intent"]
@@ -490,13 +539,13 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
 
         draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
-        del draft["structured_intent"]["initial_state"]
-        with self.assertRaisesRegex(runner.LiteRunnerError, "initial_state"):
+        del draft["structured_intent"]["identity_invariant"]
+        with self.assertRaisesRegex(runner.LiteRunnerError, "identity_invariant"):
             runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
 
         draft = json.loads(self.draft_bytes("intent-run", ["alibaba/wan-2.7"]))
-        draft["structured_intent"]["geometry_invariant"] = "   "
-        with self.assertRaisesRegex(runner.LiteRunnerError, "geometry_invariant"):
+        draft["structured_intent"]["rendering_strategy"] = "unsafe-magic"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "rendering_strategy"):
             runner.validate_draft(draft, "intent-run", ["alibaba/wan-2.7"])
 
     def test_changed_instruction_fails_closed(self) -> None:
@@ -609,14 +658,139 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
             request = runner.build_agent_request(job, selection, run, root.resolve())
             prompt = request["prompt"].decode("utf-8")
             self.assertIn("write structured_intent before any model plan", prompt)
-            self.assertIn("Keep camera, timing, amplitude, scene type", prompt)
-            self.assertIn("never image-grounded physics", prompt)
-            self.assertIn("one or two short motion-first sentences", prompt)
-            self.assertIn("always use null for negative_prompt", prompt)
+            self.assertIn("Keep camera route, timing, amplitude", prompt)
+            self.assertIn("<selected-image-context>", prompt)
+            self.assertIn('"block_index": 1', prompt)
+            self.assertIn('"caption": "Caption"', prompt)
+            self.assertIn("Apply the feasibility gate", prompt)
+            self.assertIn("always use null for", prompt)
+            self.assertIn("attention anchor", prompt)
+            self.assertIn("never reveal or construct unseen space", prompt)
+            self.assertIn("<repair-feedback-data>", prompt)
+            self.assertNotIn("compositor", prompt.lower())
+            self.assertEqual(
+                request["article_context_locator_sha256"],
+                runner.sha256_bytes(
+                    runner.canonical_json_bytes(
+                        job["inputs"]["article_context"]["locator"]
+                    )
+                ),
+            )
             self.assertLess(
                 prompt.index("write structured_intent before any model plan"),
                 prompt.index("return only the JSON object"),
             )
+
+    def test_typed_repair_feedback_is_bound_into_request_result_and_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            model_ids = ["alibaba/wan-2.7", "google/veo-3.1-lite"]
+            feedback = self.repair_feedback(model_ids)
+            feedback_path = root / "repair-feedback.json"
+            feedback_path.write_text(
+                json.dumps(feedback, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            run = runner.prepare_run(
+                root,
+                "repair-bound",
+                image,
+                context,
+                model_ids=model_ids,
+                repair_feedback_path=feedback_path,
+            )
+            job, selection, validated_run = runner.validate_prepared_job(
+                root, "repair-bound"
+            )
+            repair_input = job["inputs"]["repair_feedback"]
+            self.assertEqual(repair_input["models"], feedback)
+            self.assertEqual(repair_input["sha256"], runner.sha256_file(feedback_path))
+            request = runner.build_agent_request(
+                job, selection, validated_run, root.resolve()
+            )
+            self.assertEqual(
+                request["repair_feedback_sha256"],
+                repair_input["canonical_sha256"],
+            )
+            prompt = request["prompt"].decode("utf-8")
+            self.assertIn("evaluation-20260811::alibaba/wan-2.7", prompt)
+            self.assertIn("focal_target_drift", prompt)
+
+            result_path = self.run_with_fake(root, "repair-bound", model_ids)
+            result = runner.read_json(result_path)
+            receipt = runner.read_json(run / "execution.json")
+            self.assertEqual(result["inputs"]["repair_feedback"], repair_input)
+            self.assertEqual(
+                receipt["request"]["repair_feedback_sha256"],
+                repair_input["canonical_sha256"],
+            )
+            self.assertTrue(runner.provenance_summary(root, "repair-bound")["verified"])
+
+    def test_repair_feedback_requires_exact_models_and_strict_bounded_values(self) -> None:
+        model_id = "google/veo-3.1-lite"
+        valid = self.repair_feedback([model_id])
+        self.assertEqual(
+            runner.validate_repair_feedback_models(valid, [model_id]),
+            valid,
+        )
+
+        with self.assertRaisesRegex(runner.LiteRunnerError, "exactly the selected"):
+            runner.validate_repair_feedback_models(valid, ["alibaba/wan-2.7"])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["evaluation_id"] = "wrong-model::alibaba/wan-2.7"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "bound to model"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["outcome"] = "better"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "outcome is invalid"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["failure_codes"].append("focal_target_drift")
+        with self.assertRaisesRegex(runner.LiteRunnerError, "duplicate"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["camera_repair"]["max_screen_travel_percent"] = True
+        with self.assertRaisesRegex(runner.LiteRunnerError, "between 0 and 10"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["camera_repair"]["reveal_unseen_space"] = True
+        with self.assertRaisesRegex(runner.LiteRunnerError, "must be false"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["fallback_policy"] = "projected"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "must be none"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+        invalid = json.loads(json.dumps(valid))
+        invalid[model_id]["preservation"]["rigid_regions"] = ["floor"] * 13
+        with self.assertRaisesRegex(runner.LiteRunnerError, "between 0 and 12"):
+            runner.validate_repair_feedback_models(invalid, [model_id])
+
+    def test_repair_feedback_mutation_after_prepare_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, image, context = self.make_workspace(directory)
+            model_ids = ["google/veo-3.1-lite"]
+            feedback = self.repair_feedback(model_ids)
+            feedback_path = root / "repair-feedback.json"
+            feedback_path.write_text(json.dumps(feedback), encoding="utf-8")
+            runner.prepare_run(
+                root,
+                "repair-mutated",
+                image,
+                context,
+                model_ids=model_ids,
+                repair_feedback_path=feedback_path,
+            )
+            feedback[model_ids[0]]["review_note"] = "A changed but still valid note."
+            feedback_path.write_text(json.dumps(feedback), encoding="utf-8")
+            with self.assertRaisesRegex(runner.LiteRunnerError, "changed after"):
+                runner.validate_prepared_job(root, "repair-mutated")
 
     def test_context_image_must_match_exactly(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -680,6 +854,35 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                         "non-null-negative",
                         external_processing_approved=True,
                     )
+
+    def test_every_rendering_strategy_requires_i2v_and_a_non_null_prompt(self) -> None:
+        model_ids = ["google/veo-3.1-lite"]
+        draft = json.loads(self.draft_bytes("camera-only-run", model_ids))
+        draft["structured_intent"]["rendering_strategy"] = "camera-only"
+        validated = runner.validate_draft(draft, "camera-only-run", model_ids)
+        self.assertEqual(validated["models"][0]["execution_mode"], "i2v")
+        self.assertIsInstance(validated["models"][0]["positive_prompt"], str)
+
+        draft = json.loads(self.draft_bytes("camera-only-run", model_ids))
+        draft["structured_intent"]["rendering_strategy"] = "deterministic-compositor"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "rendering_strategy"):
+            runner.validate_draft(draft, "camera-only-run", model_ids)
+
+        draft = json.loads(self.draft_bytes("camera-only-run", model_ids))
+        draft["models"][0]["execution_mode"] = "deterministic-compositor"
+        with self.assertRaisesRegex(runner.LiteRunnerError, "execution_mode"):
+            runner.validate_draft(draft, "camera-only-run", model_ids)
+
+        draft = json.loads(self.draft_bytes("camera-only-run", model_ids))
+        draft["models"][0]["positive_prompt"] = None
+        with self.assertRaisesRegex(runner.LiteRunnerError, "positive_prompt"):
+            runner.validate_draft(draft, "camera-only-run", model_ids)
+
+    def test_positive_prompt_is_limited_to_two_short_sentences(self) -> None:
+        draft = json.loads(self.draft_bytes("long-prompt", ["alibaba/wan-2.2"]))
+        draft["models"][0]["positive_prompt"] = "One move. A second move. A third move."
+        with self.assertRaisesRegex(runner.LiteRunnerError, "no more than two"):
+            runner.validate_draft(draft, "long-prompt", ["alibaba/wan-2.2"])
 
     def test_codex_event_parser_allows_only_exact_mdm_approval_policy_error(
         self,
@@ -805,6 +1008,15 @@ class ClipmakerLiteRunnerTest(unittest.TestCase):
                 "--json",
             ):
                 self.assertIn(flag, command)
+            disabled_features = [
+                command[index + 1]
+                for index, value in enumerate(command[:-1])
+                if value == "--disable"
+            ]
+            self.assertEqual(
+                disabled_features,
+                ["plugins", "remote_plugin", "recommended_plugins", "apps"],
+            )
             self.assertEqual(execution["executor"]["thread_id"], "thread-real")
             self.assertIsNone(execution["executor"]["requested_model"])
             self.assertEqual(

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-02-level-rabotaiu-v-level-02-veo-3-1-lite",
+  "case_id": "02#02",
+  "sheet_row": 11,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_67d2c36fbc3de24f2683a8ac_67d2c3cd069b5d181c0d1ca7/orig",
+    "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+    "width": 2400,
+    "height": 1600
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_67d2c36fbc3de24f2683a8ac_67d2c3cd069b5d181c0d1ca7/orig",
+    "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+    "width": 2400,
+    "height": 1600,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Present the completed residential complex as a tangible, high-quality home the author confidently chose for himself.",
+    "initial_state": "A still, unoccupied landscaped courtyard is seen from a low wide viewpoint, with benches and paths in the foreground and multiple brick-and-glass residential towers receding upward across several depth planes.",
+    "motion_owner": "camera",
+    "primary_action": "A continuous source-grounded forward move through the visible courtyard depth toward the central pair of towers.",
+    "terminal_state": "The two central towers appear modestly closer while foreground courtyard references have shifted outward enough to make the forward parallax clearly visible, with the original architectural composition still recognizable.",
+    "geometry_invariant": "All façades, windows, paths, benches, playground structures, fencing, and rooted vegetation retain rigid shapes, attachments, and spatial relationships.",
+    "identity_invariant": "The same visible buildings, courtyard fixtures, playground elements, benches, trees, and shrubs remain present; no people, vehicles, windows, structures, or plants are added or removed.",
+    "semantic_invariant": "The scene remains an orderly, completed, welcoming residential complex and the author’s chosen home through the final frame.",
+    "feasibility_assessment": "The image clearly proves a static architectural scene with foreground, middle-ground, and tall background façades, providing reliable depth for source-grounded camera parallax. It does not prove any subject-led action, direction, or mechanical interaction, so camera motion is safer than inventing activity.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Over four seconds, begin the forward camera move immediately and maintain a calm, even push-in toward the two central towers. Use the visible foreground path, benches, planting, and playground as source-grounded parallax references; rigid structures retain their world-space geometry, while existing foliage has only weak in-place motion. Ease gently near the end, reaching a clearly readable 5–8% outward screen-space displacement of foreground references and a modestly closer view of the central towers without revealing space beyond the source frame.",
+  "prompt": {
+    "positive": "The camera makes a smooth bounded push-in toward the two central towers at a steady real-time pace, preserving every rigid façade and courtyard structure while the rooted foliage sways only slightly in place. By the final frame, the foreground path and benches have expanded outward by about 5–8% in screen space and the central towers appear modestly closer, with all original areas still visible.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02/result.json",
+    "result_sha256": "c1103343c75540130969495f283b6755873642f8df6916ab755fd1d71b5a9eb8",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+      "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+      "source_image_sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+      "article_context_sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-02-veo-3-1-lite",
+  "case_id": "12#02",
+  "sheet_row": 137,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/02.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+    "sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297",
+    "width": 2560,
+    "height": 2561
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+    "sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297",
+    "width": 2560,
+    "height": 2561,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize the exhilarating, persistence-driven experience of the Flight School ride while preserving the credibility of the photographed moment.",
+    "initial_state": "Five excited riders are secured in wing-shaped seats at different orientations around a large articulated indoor ride, with the woman in pink nearly horizontal at the right.",
+    "motion_owner": "camera",
+    "primary_action": "The camera approaches the visible woman in pink through the ride’s existing depth planes.",
+    "terminal_state": "The woman in pink appears observably closer and more prominent while all five riders and the ride’s original pose remain visible and unchanged.",
+    "geometry_invariant": "All seats, wings, restraints, support arms, and the orange hub retain their rigid shapes, attachments, and current articulated topology.",
+    "identity_invariant": "Exactly five visible riders remain the same people with unchanged bodies, clothing, limbs, seats, restraints, and ride components; nothing appears or disappears.",
+    "semantic_invariant": "The riders remain safely secured and visibly excited throughout; the scene continues to convey controlled thrill rather than danger or mechanical failure.",
+    "feasibility_assessment": "The image proves rigid seat-to-arm attachments, secured riders, multiple depth planes, and an articulated ride pose. It does not prove the axis, direction, phase, or safe continuation of the mechanism, so a rotation or 360° arc would be invented; the visible depth supports a safe camera-only treatment.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "For four seconds, start a direct, steady push-in immediately toward the rightmost woman in pink and sustain it until a gentle final slowdown. Use the several visible depth layers to produce clear but bounded parallax, with foreground travel around 5–7% of frame width. Keep the machinery source-locked in world space and preserve the full rider count; finish before the framing excludes any rider or implies mechanical rotation.",
+  "prompt": {
+    "positive": "The camera moves forward at a steady real-time pace toward the woman in pink, creating restrained parallax while all five riders, seats, restraints, wings, and support arms remain rigidly connected. In the last frame she is visibly closer and the foreground structure has shifted about 5–7% across the frame, with every rider still present.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-12-dream-island-7-fishek-02",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-12-dream-island-7-fishek-02/result.json",
+    "result_sha256": "caaa06f653f90f2213a4620ea2a0ddd9f453c1a93626e996d2a093d725300d22",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+      "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+      "source_image_sha256": "66982df64e42b4949425a73a2988c7747a0bd6938411f2473c659d5e1575e297",
+      "article_context_sha256": "f873287c9c994b4dedf6faf6eb5199362f1ea79f4a8e96f63537658e248e3ecf",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

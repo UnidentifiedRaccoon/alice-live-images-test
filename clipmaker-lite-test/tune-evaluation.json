@@ -1,0 +1,1242 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "promopages-10060-tune-20260811-v1",
+  "source": {
+    "spreadsheet_url": "https://docs.google.com/spreadsheets/d/18yfX_hV3h1JnQsdj67JPubievxs2xpjW4_NcfluaZ-E/edit?gid=1657768450#gid=1657768450",
+    "sheet": "Оценка",
+    "range": "A:P",
+    "rating_column": "M",
+    "comment_column": "P",
+    "ignored_columns": [
+      "N",
+      "O"
+    ],
+    "read_only": true
+  },
+  "selection": {
+    "target_rule": "M is blank or equals Перегенерация (-)",
+    "row_count": 65,
+    "unique_image_count": 36,
+    "regenerate_count": 38,
+    "blank_count": 27,
+    "comment_present_count": 62,
+    "model_target_counts": {
+      "google/veo-3.1-lite": 25,
+      "alibaba/wan-2.2": 24,
+      "alibaba/wan-2.7": 16
+    },
+    "failure_category_counts": {
+      "source_identity_graphic_continuity": 20,
+      "wrong_action_or_physics": 25,
+      "camera_shot_tempo": 7,
+      "insufficient_motion": 6,
+      "optical_accent": 4,
+      "no_feedback": 3
+    }
+  },
+  "notes": [
+    "Blank M rows are unresolved/borderline targets, not unreviewed rows: all 27 have a P comment.",
+    "Rows 17-19 are regeneration targets without P feedback.",
+    "Accepted sibling outputs are relative counterexamples, not gold labels.",
+    "Fresh human review and repair-specific assertions are required before quality acceptance."
+  ],
+  "cases": [
+    {
+      "case_id": "01#02",
+      "article_number": "01",
+      "brand": "Level Group",
+      "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "image_id": "02",
+      "image_type": "article_image",
+      "caption": "С января 2026 года объём ипотечного жилищного кредитования начал уменьшаться. Источник: Банк России",
+      "dimensions": "1280×753",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a048ddca495b52c9d873940_6a0490f4a495b52c9d87bcd3/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A01-level-ipoteka-2026&image=02",
+      "content_class": "ui_chart",
+      "hypothesis": "deterministic overlay/skip generative; frozen chart data/text",
+      "targets": [
+        {
+          "sheet_row": 2,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: появляется случайный текст. Хорошо: анимация через блик",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 3,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: график двигается, размеры столбцов меняются",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "01#03",
+      "article_number": "01",
+      "brand": "Level Group",
+      "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "image_id": "03",
+      "image_type": "article_image",
+      "caption": "Чаще всего ипотеку оформляют в Москве и Московской области. В феврале 2026 года спрос на том же уровне, что и в том же месяце прошлого года",
+      "dimensions": "1460×954",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a048ddca495b52c9d873940_6a049120952e1f1e50d73cc7/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A01-level-ipoteka-2026&image=03",
+      "content_class": "ui_chart",
+      "hypothesis": "deterministic overlay/skip generative; never animate bars or data",
+      "targets": [
+        {
+          "sheet_row": 6,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: график двигается, размеры столбцов меняются",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 7,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: появляется жирный столбец и он заполняется/растет. Хорошо: остальные столбцы и текст не меняются",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "02#02",
+      "article_number": "02",
+      "brand": "Level Group",
+      "title": "Работаю в Level: почему купил квартиру от нашей компании",
+      "publication_id": "69ef21df12346c2fdfdffecd",
+      "image_id": "02",
+      "image_type": "article_image",
+      "caption": "Мой новый дом, Левел Причальный, находится в районе Хорошёво-Мневники",
+      "dimensions": "2400×1600",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_67d2c36fbc3de24f2683a8ac_67d2c3cd069b5d181c0d1ca7/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A02-level-rabotaiu-v-level&image=02",
+      "content_class": "architecture",
+      "hypothesis": "normal-real-time single camera move with explicit tempo and screen-space endpoint",
+      "targets": [
+        {
+          "sheet_row": 11,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Плохо: выглядит ускорено",
+          "primary_failure_category": "camera_shot_tempo"
+        }
+      ]
+    },
+    {
+      "case_id": "02#06",
+      "article_number": "02",
+      "brand": "Level Group",
+      "title": "Работаю в Level: почему купил квартиру от нашей компании",
+      "publication_id": "69ef21df12346c2fdfdffecd",
+      "image_id": "06",
+      "image_type": "article_image",
+      "caption": "Благодаря зонированию в такой квартире можно даже жить вдвоём — у каждого останется пространство, где получится уединиться",
+      "dimensions": "1296×972",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_67d2c36fbc3de24f2683a8ac_67d2c4727502773ae398e2d9/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A02-level-rabotaiu-v-level&image=06",
+      "content_class": "layered_interior",
+      "hypothesis": "camera-only; layered curtains stay source-locked",
+      "targets": [
+        {
+          "sheet_row": 17,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "",
+          "primary_failure_category": "no_feedback"
+        },
+        {
+          "sheet_row": 18,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "",
+          "primary_failure_category": "no_feedback"
+        },
+        {
+          "sheet_row": 19,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "",
+          "primary_failure_category": "no_feedback"
+        }
+      ]
+    },
+    {
+      "case_id": "03#02",
+      "article_number": "03",
+      "brand": "Level Group",
+      "title": "Топ-6 нестандартных планировок квартир от Level Group",
+      "publication_id": "69ef21df12346c2fdfdffee5",
+      "image_id": "02",
+      "image_type": "article_image",
+      "caption": "Открытое пространство создаёт ощущение роскоши, а виды на Москву можно считать своеобразной деталью интерьера",
+      "dimensions": "1600×902",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69d4aaf3b4df0f51975be64b_69d4ab19e6b97617ed7ba92f/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A03-level-nestandartnye-planirovki&image=02",
+      "content_class": "architecture_vegetation",
+      "hypothesis": "existing stems sway in place; roots and entity count stay fixed",
+      "targets": [
+        {
+          "sheet_row": 23,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Плохо: Появляются деревья",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "03#09",
+      "article_number": "03",
+      "brand": "Level Group",
+      "title": "Топ-6 нестандартных планировок квартир от Level Group",
+      "publication_id": "69ef21df12346c2fdfdffee5",
+      "image_id": "09",
+      "image_type": "article_image",
+      "caption": "Пример гардеробной на плане квартиры — при желании в ней можно хранить сезонные вещи",
+      "dimensions": "1192×798",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_69d4aaf3b4df0f51975be64b_69d4ab1bb4df0f51975bea82/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A03-level-nestandartnye-planirovki&image=09",
+      "content_class": "annotated_floorplan",
+      "hypothesis": "initial equals terminal; arrow stays fixed; use deterministic local highlight",
+      "targets": [
+        {
+          "sheet_row": 35,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Хорошо: Стрелка двигается к комнате и исчезает., выбран удачный цвет подсветки Плохо: выбрана и подсвечивается не та комната ",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 36,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Подсветки нет, стрелка уезжает, подсветки нет, указана не та комната",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "04#04",
+      "article_number": "04",
+      "brand": "Level Group",
+      "title": "Стоит ли покупать квартиру сейчас: мнение экспертов",
+      "publication_id": "69ef21df12346c2fdfdffecf",
+      "image_id": "04",
+      "image_type": "article_image",
+      "caption": "Небольшая квартира — это ещё и выгодный актив: её можно сдавать и получать пассивный доход, ведь студии и однокомнатные лоты всегда будут востребованы у арендаторов",
+      "dimensions": "1385×615",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c48362490f252844dcfd/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A04-level-pokupat-kvartiru-seichas&image=04",
+      "content_class": "ui_card_floorplan",
+      "hypothesis": "deterministic overlay; preserve card, plan and text exactly",
+      "targets": [
+        {
+          "sheet_row": 44,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Появляются какие-то лишние лейблы с текстами. Хорошо: Приятный блик",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 45,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: На карточке расширяется схема квартиры (сдутия превращается в двухкомнатную квартиру), что может вводить людей в заблуждение.",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "04#05",
+      "article_number": "04",
+      "brand": "Level Group",
+      "title": "Стоит ли покупать квартиру сейчас: мнение экспертов",
+      "publication_id": "69ef21df12346c2fdfdffecf",
+      "image_id": "05",
+      "image_type": "article_image",
+      "caption": "Максимальная высота домов в Левел Лесной — 15 этажей, поэтому здания не будут сильно загораживать вид на зелёные зоны",
+      "dimensions": "1600×1066",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_68e3beeb4b9a6709c589f56b_68e3c484a27d223d14941370/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A04-level-pokupat-kvartiru-seichas&image=05",
+      "content_class": "aerial_architecture",
+      "hypothesis": "same complex and layout; one source-grounded camera move, no cut or rebuild",
+      "targets": [
+        {
+          "sheet_row": 47,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Не понятная раскадровка. Вместо приближения сделано что-то вроде клипа в рамках которого появляется совсем другой ЖК",
+          "primary_failure_category": "camera_shot_tempo"
+        }
+      ]
+    },
+    {
+      "case_id": "05#04",
+      "article_number": "05",
+      "brand": "Момат Рино",
+      "title": "4 возможных причины длительной заложенности носа",
+      "publication_id": "6a22ea4881cbac61b68c8b7a",
+      "image_id": "04",
+      "image_type": "article_image",
+      "caption": "Чтобы понять, как бытовая химия влияет на дискомфорт в носу, можно вести дневник запахов. В нем нужно отмечать, какой аромат или продукт использовался, когда появилась заложенность или другие симптомы [7]",
+      "dimensions": "1024×1024",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_694a6039f141406a65b10339_694a6c416745fd1ab1193003/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A05-momatrino-zalozhennost-nosa&image=04",
+      "content_class": "spray_mechanism",
+      "hypothesis": "mist originates only at the visible nozzle as one short narrow cone",
+      "targets": [
+        {
+          "sheet_row": 59,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Пшикалки на картинке работают странно. Вначале пшик идет в правильном направлении, потом пшикает из задней стенки (там где нет выходного клапана)",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 61,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Пшикалка как будто сломана - нет направленного облака/струи - всё летит в разные стороны",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "06#02",
+      "article_number": "06",
+      "brand": "Момат Рино",
+      "title": "Что стоит знать о привыкании к средствам от насморка",
+      "publication_id": "6a0efe272def417608f1a976",
+      "image_id": "02",
+      "image_type": "article_image",
+      "caption": "При медикаментозном рините может нарушиться механизм самоочищения носовой полости из-за повреждения реснитчатых клеток слизистой [1, 2]",
+      "dimensions": "1344×768",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_693bc9e8d469ca47a341cedd_694a68baf141406a65b2044b/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A06-momatrino-privykanie-k-sredstvam&image=02",
+      "content_class": "person_deformable_object",
+      "hypothesis": "avoid tissue manipulation and face-adjacent hands; prefer camera or breathing",
+      "targets": [
+        {
+          "sheet_row": 63,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Плохо: Девушка разворачивает платок и зачем-то смотрит в него",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "07#03",
+      "article_number": "07",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "image_id": "03",
+      "image_type": "article_image",
+      "caption": "Если вам тяжело, то начните с малого. Даже 30 минут ходьбы каждый день может быть достаточно [8]",
+      "dimensions": "1920×1080",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4740453107264122b27b/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A07-femibion-gotovites-k-beremennosti&image=03",
+      "content_class": "people_exercise",
+      "hypothesis": "initial equals terminal; no full repetition or reversal; residual hold and breathing",
+      "targets": [
+        {
+          "sheet_row": 72,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно выглядит",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 73,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно выглядит",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "07#04",
+      "article_number": "07",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "image_id": "04",
+      "image_type": "article_image",
+      "caption": "Создайте вечерний ритуал, например, за полчаса до сна выключите гаджеты, примите душ и проветрите спальню. Такие привычки помогут улучшить качество сна [11]",
+      "dimensions": "1920×1280",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7191255/pub_685a45c483113703283d5b0e_685a477b646ea17f6e81e434/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A07-femibion-gotovites-k-beremennosti&image=04",
+      "content_class": "sleeping_people_bedding",
+      "hypothesis": "tripod-locked; low-amplitude duvet motion only, no handheld reframe",
+      "targets": [
+        {
+          "sheet_row": 75,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Сделан эфект подрагивающий камеры, как будто снимают на телефон без стабилизатора",
+          "primary_failure_category": "camera_shot_tempo"
+        }
+      ]
+    },
+    {
+      "case_id": "07#06",
+      "article_number": "07",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "image_id": "06",
+      "image_type": "article_image",
+      "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+      "dimensions": "2400×1600",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A07-femibion-gotovites-k-beremennosti&image=06",
+      "content_class": "person_phone",
+      "hypothesis": "clear visibility floor: one moderate source-grounded action or safe camera move",
+      "targets": [
+        {
+          "sheet_row": 80,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Статичное видео - на нем ничего не происходит. Девушка неподвижна",
+          "primary_failure_category": "insufficient_motion"
+        }
+      ]
+    },
+    {
+      "case_id": "08#03",
+      "article_number": "08",
+      "brand": "Фемибион",
+      "title": "Грудное вскармливание без стресса: что нужно знать маме",
+      "publication_id": "69cccb918a227d62148118b3",
+      "image_id": "03",
+      "image_type": "article_image",
+      "caption": "Помните, чем чаще вы кормите грудью, тем больше молока вырабатывается. Поэтому кормите малыша по требованию — обычно это 8–12 раз в день. Не нужно придерживаться строгого графика, просто ориентируйтесь на ребенка [5]",
+      "dimensions": "2400×1600",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_685a4ed183113703283dcca7_685a4fbe0cd7b33158b900e2/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A08-femibion-grudnoe-vskarmlivanie&image=03",
+      "content_class": "liquid_still_life",
+      "hypothesis": "Wan 2.2 visibility floor: one visible concentric ripple then settle",
+      "targets": [
+        {
+          "sheet_row": 87,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Статичное видео - на нем ничего не происходит. ",
+          "primary_failure_category": "insufficient_motion"
+        }
+      ]
+    },
+    {
+      "case_id": "10#07",
+      "article_number": "10",
+      "brand": "Курорт Красная Поляна",
+      "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+      "publication_id": "6a54bb73d6edb03d5192b7e1",
+      "image_id": "07",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "2048×1365",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A10-krasnaya-polyana-reis-zaderzhali&image=07",
+      "content_class": "multi_person",
+      "hypothesis": "entity count equals four; only the mother moves; nobody enters or exits",
+      "targets": [
+        {
+          "sheet_row": 122,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Фантомный ребенок - в кадре из под стола неожиданно появляется ещё 1 ребенок ",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "10#08",
+      "article_number": "10",
+      "brand": "Курорт Красная Поляна",
+      "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+      "publication_id": "6a54bb73d6edb03d5192b7e1",
+      "image_id": "08",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "2048×1365",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb342c6081a1fe9b90b/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A10-krasnaya-polyana-reis-zaderzhali&image=08",
+      "content_class": "people_contact",
+      "hypothesis": "avoid handshake and body contact; use camera or pose micro-motion",
+      "targets": [
+        {
+          "sheet_row": 126,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Не естественно жмут руки",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "11#03",
+      "article_number": "11",
+      "brand": "Остров Мечты",
+      "title": "Почему я выбираю парк развлечений «Остров Мечты»?",
+      "publication_id": "687a5391bcfe3d7b9a29bcb7",
+      "image_id": "03",
+      "image_type": "article_image",
+      "caption": "Фантастическое путешествие по миру юрского периода «На крыльях ветра»!",
+      "dimensions": "1600×1059",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_687a5391bcfe3d7b9a29bcb7_687a5404ca2ddc03fc550956/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A11-dream-island-pochemu-vybiraiu&image=03",
+      "content_class": "ride_foreground_creature",
+      "hypothesis": "only the pterosaur is active; rigid seat rows remain anchored",
+      "targets": [
+        {
+          "sheet_row": 131,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Ряд скамеек двигается не естественно",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "12#02",
+      "article_number": "12",
+      "brand": "Остров Мечты",
+      "title": "7 фишек «Острова Мечты», которые сделают ваш отдых ярче",
+      "publication_id": "6a59e32a3a302a69aec403c2",
+      "image_id": "02",
+      "image_type": "article_image",
+      "caption": "Правильное место посадки, четкий ритм и ваше упорство — три составляющие успешного переворота",
+      "dimensions": "2560×2561",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a59e32a3a302a69aec403c2_6a59fd7243e3f821aa3009a5/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A12-dream-island-7-fishek&image=02",
+      "content_class": "articulated_ride_people",
+      "hypothesis": "no full rotation or inversion; small continuation with attachment invariant",
+      "targets": [
+        {
+          "sheet_row": 137,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странный атракцион",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 138,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странный атракцион",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 139,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странный атракцион",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "12#08",
+      "article_number": "12",
+      "brand": "Остров Мечты",
+      "title": "7 фишек «Острова Мечты», которые сделают ваш отдых ярче",
+      "publication_id": "6a59e32a3a302a69aec403c2",
+      "image_id": "08",
+      "image_type": "article_image",
+      "caption": "Аттракцион стилизован под руины древнего храма — выглядит эпично даже со стороны",
+      "dimensions": "5445×3635",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A12-dream-island-7-fishek&image=08",
+      "content_class": "articulated_pendulum_people",
+      "hypothesis": "no full arc; bounded swing with seat-arm attachment and cardinality",
+      "targets": [
+        {
+          "sheet_row": 149,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странный атракцион",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 150,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странный атракцион",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 151,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странный атракцион",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "13#05",
+      "article_number": "13",
+      "brand": "Остров Мечты",
+      "title": "Топ-6 аттракционов в «Острове Мечты» для фаната экстрима",
+      "publication_id": "6a5a10c7bf47d01035dc3f22",
+      "image_id": "05",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "5039×3359",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a5a10c7bf47d01035dc3f22_6a5a1a23fccb527e7235c2af/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A13-dream-island-top6-attrakcionov&image=05",
+      "content_class": "articulated_ride_crowd",
+      "hypothesis": "preserve rider count and seat attachments; use lower amplitude",
+      "targets": [
+        {
+          "sheet_row": 161,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Пропадают и появляются люди",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "14#04",
+      "article_number": "14",
+      "brand": "ПромоСтраницы",
+      "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+      "publication_id": "6a6afe8c1c0a3777e9c6a1fc",
+      "image_id": "04",
+      "image_type": "article_image",
+      "caption": "А в финале остается собрать основные выводы и подсказать дальнейшее действие: посмотреть модель, рассчитать стоимость, сравнить тарифы или оставить заявку. Так путь к покупке продолжается логично, без резкого перехода от рекомендаций к рекламе",
+      "dimensions": "867×554",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe910f014557219e1b58/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A14-promopages-govorit-s-auditoriei&image=04",
+      "content_class": "text_screenshot",
+      "hypothesis": "hard deterministic-compositor gate; all models failed despite preservation prose",
+      "targets": [
+        {
+          "sheet_row": 179,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: появляется выдуманный текст",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 180,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: оригинальный текст стирается и появляется выдуманный",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 181,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: не удачный блик - выглядит так как будто это бумага, которую подожгли",
+          "primary_failure_category": "optical_accent"
+        }
+      ]
+    },
+    {
+      "case_id": "14#05",
+      "article_number": "14",
+      "brand": "ПромоСтраницы",
+      "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+      "publication_id": "6a6afe8c1c0a3777e9c6a1fc",
+      "image_id": "05",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "2048×895",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe911c0a3777e9c6a2de/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A14-promopages-govorit-s-auditoriei&image=05",
+      "content_class": "ui_screenshot",
+      "hypothesis": "deterministic contained button pulse; preserve controls, text and layout",
+      "targets": [
+        {
+          "sheet_row": 182,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Появляются новые элементы интерфейса, которых изначально не было",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 183,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Кнопки меняют размер и текст",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "15#04",
+      "article_number": "15",
+      "brand": "Mary Kay",
+      "title": "Средства Mary Kay®, которые заменили мне десятки других",
+      "publication_id": "6a3d0f7c5a8cab7b46b606c7",
+      "image_id": "04",
+      "image_type": "article_image",
+      "caption": "Раньше я часто покупала новинки разных брендов в поиске идеального результата",
+      "dimensions": "1500×1000",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A15-marykay-sredstva&image=04",
+      "content_class": "product_packshot",
+      "hypothesis": "product silhouette and components immutable; camera-only push preferred",
+      "targets": [
+        {
+          "sheet_row": 191,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: У флакончика появляется носик с дозатором которого изначально не было",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 193,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Банка дергается, можно было бы сделать просто облет камерой как в wan 2.2",
+          "primary_failure_category": "camera_shot_tempo"
+        }
+      ]
+    },
+    {
+      "case_id": "16#06",
+      "article_number": "16",
+      "brand": "Mary Kay",
+      "title": "Тренды красоты: что нового в косметике и уходе за кожей",
+      "publication_id": "6a3d13553046bd041c2e78a2",
+      "image_id": "06",
+      "image_type": "article_image",
+      "caption": "Подходит для профилактики старения кожи женщинам в любом возрасте, но особенно от 35 лет",
+      "dimensions": "768×768",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a3d13553046bd041c2e78a2_6a3d13685a8cab7b46b6a8f0/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A16-marykay-trendy-krasoty&image=06",
+      "content_class": "multi_product_packshot",
+      "hypothesis": "single uninterrupted shot; product count and identity anchored; camera-only",
+      "targets": [
+        {
+          "sheet_row": 216,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: В конце резко происходит смена кадра и меняется количество объектов в кадре",
+          "primary_failure_category": "camera_shot_tempo"
+        }
+      ]
+    },
+    {
+      "case_id": "17#05",
+      "article_number": "17",
+      "brand": "ВОЛМА",
+      "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+      "publication_id": "6a268ddbbf5214766a58cd74",
+      "image_id": "05",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "618×342",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cb/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A17-volma-nalivnoi-pol&image=05",
+      "content_class": "tool_vacuum",
+      "hypothesis": "causal direction: debris moves into the intake only; no ejection",
+      "targets": [
+        {
+          "sheet_row": 229,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо - от пылесоса отлетает пыль и камни, в итоге грязи больше чем до уборки",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "17#07",
+      "article_number": "17",
+      "brand": "ВОЛМА",
+      "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+      "publication_id": "6a268ddbbf5214766a58cd74",
+      "image_id": "07",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "786×524",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df381cbac61b6b9a323/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A17-volma-nalivnoi-pol&image=07",
+      "content_class": "person_tool_tape",
+      "hypothesis": "preserve visible hand-tool contact; one short source-grounded pass, no cut",
+      "targets": [
+        {
+          "sheet_row": 233,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Плохо: Криво порезал ленту",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 235,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Плохо: лента зацепилась за нож и строитель её отклеил от стены, кроме того произвольная смена кадров/сцены",
+          "primary_failure_category": "camera_shot_tempo"
+        }
+      ]
+    },
+    {
+      "case_id": "17#08",
+      "article_number": "17",
+      "brand": "ВОЛМА",
+      "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+      "publication_id": "6a268ddbbf5214766a58cd74",
+      "image_id": "08",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "1068×699",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A17-volma-nalivnoi-pol&image=08",
+      "content_class": "interior_floor",
+      "hypothesis": "rigid floor in world space; camera-only, no independent slab motion",
+      "targets": [
+        {
+          "sheet_row": 236,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Я бы ожидал облет комнаты, но тут пол двигается и проваливается",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 237,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Я бы ожидал облет комнаты, но тут пол двигается",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 238,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Плита двигается так, как будто пол сейчас провалится",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "17#09",
+      "article_number": "17",
+      "brand": "ВОЛМА",
+      "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+      "publication_id": "6a268ddbbf5214766a58cd74",
+      "image_id": "09",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "640×426",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d269/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A17-volma-nalivnoi-pol&image=09",
+      "content_class": "material_cement",
+      "hypothesis": "restrained source-grounded surface process; no bubbling; Wan 2.2 visibility floor",
+      "targets": [
+        {
+          "sheet_row": 239,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: цемент необычно пузырится",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 240,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: анимации почти нет",
+          "primary_failure_category": "insufficient_motion"
+        },
+        {
+          "sheet_row": 241,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: цемент необычно пузырится",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "17#11",
+      "article_number": "17",
+      "brand": "ВОЛМА",
+      "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+      "publication_id": "6a268ddbbf5214766a58cd74",
+      "image_id": "11",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "1940×500",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df8bf5214766a58d277/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A17-volma-nalivnoi-pol&image=11",
+      "content_class": "optical_accent",
+      "hypothesis": "one contained low-opacity accent, never full-frame; compositor if graphic",
+      "targets": [
+        {
+          "sheet_row": 246,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: В середине видео появляется блик, перекрывающий всё содержимое ",
+          "primary_failure_category": "optical_accent"
+        }
+      ]
+    },
+    {
+      "case_id": "18#04",
+      "article_number": "18",
+      "brand": "ВОЛМА",
+      "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+      "publication_id": "6a267e54c6621a31e5630a18",
+      "image_id": "04",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "752×500",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf27231/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A18-volma-plitochnyi-klei&image=04",
+      "content_class": "tile_process",
+      "hypothesis": "already attached tile stays attached; residual pressure or camera, no reversal",
+      "targets": [
+        {
+          "sheet_row": 254,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: В конце видео приклееная плитка - отваливается",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "18#05",
+      "article_number": "18",
+      "brand": "ВОЛМА",
+      "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+      "publication_id": "6a267e54c6621a31e5630a18",
+      "image_id": "05",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "758×220",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A18-volma-plitochnyi-klei&image=05",
+      "content_class": "graphic_checkmark",
+      "hypothesis": "deterministic overlay; keep glyph bounds and text; visible contained pulse",
+      "targets": [
+        {
+          "sheet_row": 257,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: неудачный блик",
+          "primary_failure_category": "optical_accent"
+        },
+        {
+          "sheet_row": 258,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Ничего не происходит",
+          "primary_failure_category": "insufficient_motion"
+        },
+        {
+          "sheet_row": 259,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: увеличивается галочка, начинает перекрывать тект",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        }
+      ]
+    },
+    {
+      "case_id": "18#06",
+      "article_number": "18",
+      "brand": "ВОЛМА",
+      "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+      "publication_id": "6a267e54c6621a31e5630a18",
+      "image_id": "06",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "752×502",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf2723e/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A18-volma-plitochnyi-klei&image=06",
+      "content_class": "person_tool_adhesive",
+      "hypothesis": "person remains attached to tool; correct bare-floor surface and path",
+      "targets": [
+        {
+          "sheet_row": 261,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Шпатель работает без мастера (сам размазывает клей)",
+          "primary_failure_category": "wrong_action_or_physics"
+        },
+        {
+          "sheet_row": 262,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Мастер размазывает клей не по полу, а по уже уложенной плитке",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "18#07",
+      "article_number": "18",
+      "brand": "ВОЛМА",
+      "title": "Плиточный клей: 5 вопросов экспертам по ремонту",
+      "publication_id": "6a267e54c6621a31e5630a18",
+      "image_id": "07",
+      "image_type": "article_image",
+      "caption": "",
+      "dimensions": "773×239",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A18-volma-plitochnyi-klei&image=07",
+      "content_class": "text_graphic",
+      "hypothesis": "deterministic thin glint; no generated text; contained visibility floor",
+      "targets": [
+        {
+          "sheet_row": 263,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: В конце появляется какой-то случайный текст \"зайно\"",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 264,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: не удачный стиль блика",
+          "primary_failure_category": "optical_accent"
+        },
+        {
+          "sheet_row": 265,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Почти ничего не происходит",
+          "primary_failure_category": "insufficient_motion"
+        }
+      ]
+    },
+    {
+      "case_id": "21#02",
+      "article_number": "21",
+      "brand": "Курорт Архыз",
+      "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+      "publication_id": "69ef07630b7ce5350e5d405d",
+      "image_id": "02",
+      "image_type": "article_image",
+      "caption": "Курорт Архыз летом — это подъемники и экотропы в окружении хвойных лесов и заснеженных вершин",
+      "dimensions": "2554×1806",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0847fd6312232e9783ef/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A21-arkhyz-semeinyi-otdykh&image=02",
+      "content_class": "landscape",
+      "hypothesis": "one source-grounded push-in; no ripple distortion; visible travel and cloud motion",
+      "targets": [
+        {
+          "sheet_row": 290,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Ожидался эффект приближения, вместо этого по фото расходятся волны, как будто камень упал в воду",
+          "primary_failure_category": "camera_shot_tempo"
+        },
+        {
+          "sheet_row": 291,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Ничего не происходит. Ожидалось что камера будет приближать или облака будут двигаться",
+          "primary_failure_category": "insufficient_motion"
+        }
+      ]
+    },
+    {
+      "case_id": "21#07",
+      "article_number": "21",
+      "brand": "Курорт Архыз",
+      "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+      "publication_id": "69ef07630b7ce5350e5d405d",
+      "image_id": "07",
+      "image_type": "article_image",
+      "caption": "Всего на Курорте Архыз несколько экотроп разного уровня сложности",
+      "dimensions": "2554×1806",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_69ef07630b7ce5350e5d405d_69ef09e8ca75b55ea88eeea7/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A21-arkhyz-semeinyi-otdykh&image=07",
+      "content_class": "multi_person_hikers",
+      "hypothesis": "person count, identity and limbs fixed; simple forward gait, no props or reverse",
+      "targets": [
+        {
+          "sheet_row": 296,
+          "model_id": "google/veo-3.1-lite",
+          "model_label": "Veo 3.1 Lite",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Женщина поправляет волосы, потом неожиданно у неё в рука материализуется палка. У мужчины появляется шапка на голове",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 297,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: У женщины то поялвяется, то пропадает часть тела (рука)",
+          "primary_failure_category": "source_identity_graphic_continuity"
+        },
+        {
+          "sheet_row": 298,
+          "model_id": "alibaba/wan-2.7",
+          "model_label": "Wan 2.7",
+          "rating_state": "regenerate",
+          "rating_raw": "Перегенерация (-)",
+          "comment": "Плохо: Мужчина и женщина двигаются обратным шагом (т.е. идут назад)",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    },
+    {
+      "case_id": "21#10",
+      "article_number": "21",
+      "brand": "Курорт Архыз",
+      "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+      "publication_id": "69ef07630b7ce5350e5d405d",
+      "image_id": "10",
+      "image_type": "article_image",
+      "caption": "Рядом с милыми альпаками заряжаешься спокойствием и хорошим настроением одновременно",
+      "dimensions": "2554×1806",
+      "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_69ef07630b7ce5350e5d405d_69ef0a973ba10e0ae4c2262d/orig",
+      "demo_url": "https://unidentifiedraccoon.github.io/alice-live-images-test/ab-preparation/?case=PROMOPAGES-10060%3A21-arkhyz-semeinyi-otdykh&image=10",
+      "content_class": "person_animal",
+      "hypothesis": "avoid face contact; ambient animal micro-motion or camera instead",
+      "targets": [
+        {
+          "sheet_row": 306,
+          "model_id": "alibaba/wan-2.2",
+          "model_label": "Wan 2.2",
+          "rating_state": "blank",
+          "rating_raw": "",
+          "comment": "Странно: Лама кусает девушку за лицо",
+          "primary_failure_category": "wrong_action_or_physics"
+        }
+      ]
+    }
+  ]
+}

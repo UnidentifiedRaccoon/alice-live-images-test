@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-09-wan-2-7",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-09",
+  "lite_result_sha256": "441c688530db976f46fd8da604e7dd00b3cdec8528afe74eb349c4e5d4152663",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "17#09",
+  "sheet_row": 241,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The camera glides laterally across the pitted floor while the central defects stay recognizable and foreground pits move no more than about 8% of the frame through parallax. It settles with a slightly wider neighboring area of the same damaged surface visible, with every crater fixed in shape and position on the floor.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "4:3",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6429949/pub_6a268ddbbf5214766a58cd74_6a268df7bf5214766a58d269/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "accd9df1e20d3073eb1645ccb2104a91fb5ac241fa367252d2d6d0d07fc448b7",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "nhFBTlG0QtYEr3FTlk65",
+  "submitted_at": "2026-08-11T15:43:24Z",
+  "completed_at": "2026-08-11T15:44:36Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1764,
+    "height": 1174,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 2326213,
+    "sha256": "2aa8ade141a8721c0eeedb41542a663d08fb2209afb218653d54acc3d5b155eb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 2073600,
+      "pixel_area_min": 1900000,
+      "pixel_area_max": 2200000,
+      "aspect_ratio": "4:3",
+      "aspect_tolerance_fraction": 0.03
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "pixels": true,
+      "requested_aspect": false
+    },
+    "conforms": false,
+    "warnings": [
+      "provider returned has_audio=True despite generate_audio=False",
+      "actual aspect 1764x1174 differs from requested 4:3 by 12.692%, beyond the 3% provider quantization tolerance"
+    ]
+  },
+  "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1764x1174 differs from requested 4:3 by 12.692%, beyond the 3% provider quantization tolerance",
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "2aa8ade141a8721c0eeedb41542a663d08fb2209afb218653d54acc3d5b155eb",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

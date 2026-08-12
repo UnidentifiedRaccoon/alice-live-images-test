@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+    "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "width": 2400,
+    "height": 1600
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+    "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+    "width": 2400,
+    "height": 1600,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Calmly organizing questions in advance helps the reader prepare for a thorough medical consultation.",
+    "initial_state": "One smiling woman sits cross-legged on a sofa, looking down at a red smartphone held in her left hand, with her right index finger poised at its screen.",
+    "motion_owner": "the woman",
+    "primary_action": "She performs one deliberate upward swipe on the smartphone screen.",
+    "terminal_state": "Her right index finger rests slightly higher on the phone screen while the phone remains steady and her relaxed smile and downward gaze persist.",
+    "geometry_invariant": "The phone stays supported by the left hand, and the right index finger remains aligned with the visible screen during the gesture.",
+    "identity_invariant": "Exactly one woman, two hands with unchanged fingers, and one red smartphone remain present and recognizable.",
+    "semantic_invariant": "She remains calmly focused on preparing information on her phone through the final frame.",
+    "feasibility_assessment": "The image clearly shows one woman looking at a phone, with her right index finger positioned at the visible screen and the phone supported by her left hand; a small screen-directed swipe is grounded, while the unseen interface and any specific text or app state remain ambiguous.",
+    "rendering_strategy": "image-to-video"
+  },
+  "scene_plan": "Over four seconds, begin the source-grounded swipe immediately and let the right index finger travel smoothly upward at a measured pace while the left hand keeps the phone stable. Keep the camera locked and all body motion secondary; near the end, gently decelerate until the fingertip rests higher on the screen, with her gaze and relaxed smile unchanged.",
+  "prompt": {
+    "positive": "The woman makes one slow, deliberate upward swipe across the phone screen with her right index finger while keeping the phone steady in her left hand and maintaining her calm smile and downward gaze. The fixed camera holds the framing as her fingertip comes to rest slightly higher on the screen near the end.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-06",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-06/result.json",
+    "result_sha256": "37db4ec3e86366f52cea010f1283ca125eb7723ee9e89b61e36dd6ed326df98e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+      "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+      "source_image_sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+      "article_context_sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+      "models": [
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

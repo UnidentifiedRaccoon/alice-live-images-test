@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:230bfb6e0f4860b4bba65020112afe0bc2b5aa4b40b1e09c96d7f5353dc635e2",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+      "sha256": "6d05fe84d6a9329d0d8d0f3e49a410f367654a7b8644d482025abbf2c0392749",
+      "bytes": 290961
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/content.json",
+      "sha256": "bbdf826fa00b2558736690835d6ce15c7c80b83651a58aaac2b3833c91684019",
+      "bytes": 15975,
+      "locator": {
+        "article_id": "11-dream-island-pochemu-vybiraiu",
+        "title": "Почему я выбираю парк развлечений «Остров Мечты»?",
+        "lead": "Крытый парк развлечений «Остров Мечты». 1 билет = 49 аттракционов + 5 шоу",
+        "image_id": "03",
+        "block_index": 18,
+        "role": "article_image",
+        "caption": "Фантастическое путешествие по миру юрского периода «На крыльях ветра»!",
+        "file": "03.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/11-dream-island-pochemu-vybiraiu/03.jpeg",
+        "current_heading": {
+          "block_index": 10,
+          "level": 3,
+          "text": "1 входной билет на все развлечения"
+        },
+        "nearest_text_before": {
+          "block_index": 17,
+          "type": "paragraph",
+          "text": "*При покупке тарифа «Семейный 4» 10 000₽/4=2500₽. Стоимость билетов актуальна на июнь-август 2026 года."
+        },
+        "nearest_text_after": {
+          "block_index": 19,
+          "type": "heading",
+          "text": "Когда приезжать и что обязательно стоит посетить: 2 маршрута на выбор"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/11-03.json",
+      "sha256": "354cee853af09e318de93b36011226a36b27915fa4340e64192b2bb85277b0eb",
+      "bytes": 1864,
+      "canonical_sha256": "53cf26959c1b3b41b108a92144bc4d5c295cc9246ce41dee2e86b44a8896c9f2",
+      "models": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "11#03::google/veo-3.1-lite",
+          "outcome": "same-or-unclear",
+          "review_note": "Появляются новые объекты в кадре (новые части конструкции горки), которые выдумала модель",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "topology_hallucination",
+            "out_of_source_reveal"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "fixed",
+            "focal_target": "the projected pterosaur, kept fully inside the existing screen and away from the upper-right crop",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 0,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Сохраняются один птерозавр и точное число всех видимых кресел, деталей конструкции и силуэтов людей или конечностей."
+            ],
+            "topology_anchors": [
+              "Жёсткая форма и взаимное расположение подвесной конструкции, кресел и опор сохраняются.",
+              "foreground seats and rails stay fixed; add no ride rows",
+              "the projected pterosaur may only flap in place or drift slightly inward; it never approaches the upper-right crop"
+            ],
+            "rigid_regions": [
+              "the foreground seats, rails, ride supports, and projected-screen boundary"
+            ],
+            "contacts": [
+              "seats, rails, and supports retain their existing attachment points"
+            ],
+            "must_remain_visible": [
+              "the projected pterosaur, kept fully inside the existing screen and away from the upper-right crop"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "selected_models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-11-dream-island-pochemu-vybiraiu-03/result.json"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-15-marykay-sredstva-04-veo-3-1-lite",
+  "case_id": "15#04",
+  "sheet_row": 191,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/15-marykay-sredstva/04.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig",
+    "sha256": "0da169fe5bf12eb74627485d969ea6f8bff626ebe9aa5a0fb5d9c33cc9a047ae",
+    "width": 1500,
+    "height": 1000
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a3d0f7c5a8cab7b46b606c7_6a3d0f9f3046bd041c2dd51d/orig",
+    "sha256": "0da169fe5bf12eb74627485d969ea6f8bff626ebe9aa5a0fb5d9c33cc9a047ae",
+    "width": 1500,
+    "height": 1000,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть накопившийся избыток разрозненных косметических покупок, который привёл героиню к усталости и поиску более надёжного подхода.",
+    "initial_state": "Открытая плетёная косметичка справа заполнена неподвижными перекрывающимися флаконами, банками и щётками; позади стоят плетёные ёмкости, слева находится свободное поле ткани.",
+    "motion_owner": "камера",
+    "primary_action": "Ограниченное приближение к тесно собранным средствам с параллаксом между видимыми планами глубины.",
+    "terminal_state": "Косметичка и скопление продуктов занимают немного большую и более акцентную часть кадра, при этом все исходные предметы остаются узнаваемыми и на своих местах.",
+    "geometry_invariant": "Флаконы, банки, дозаторы и щётки сохраняют жёсткую форму, взаимные перекрытия и опору внутри открытой косметички.",
+    "identity_invariant": "Сохраняются точное число и внешний вид всех видимых продуктов, крышек, дозаторов, щёток, косметички и плетёных ёмкостей; надписи не подменяются.",
+    "semantic_invariant": "Кадр до конца передаёт ощущение избытка и накопления косметических средств, не превращая его в упорядоченный минимальный набор.",
+    "feasibility_assessment": "Неподвижные продукты и их контакты с косметичкой видны, но причина, направление и механика возможного движения любого предмета не доказаны. Несколько отчётливых планов глубины позволяют безопасно оживить кадр только движением камеры.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Четырёхсекундный focused moment: камера без задержки выполняет короткий плавный lateral track вправо к открытой косметичке, удерживая фокус на тесно собранных средствах. Равномерное движение даёт заметный, но ограниченный параллакс между краем сумки, продуктами и задними корзинами и замедляется только у финала. В последнем кадре косметичка немного ближе к центру, передний край смещён примерно на 6% ширины кадра, а исходное число, форма и взаимное расположение предметов сохранены.",
+  "prompt": {
+    "positive": "The camera tracks gently right toward the crowded cosmetic bag at a continuous real-time pace, with source-grounded parallax and all products fixed in their original contacts. In the last frame, the bag is slightly more centered and the foreground rim has shifted about 6% of the frame while every item remains visible and recognizable.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-15-marykay-sredstva-04",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-15-marykay-sredstva-04/result.json",
+    "result_sha256": "31a628c1926b1b978df15fd416640387d3862d22c3fb05f177ac91a2b7a2166a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:94141eb0ada5eead364e2935e29e8eeca5ada6c324fad4e7720ddc1ce6494aef",
+      "instruction_bundle_sha256": "655e772fff5d60c14395c2b6bdb38684e35d9a22621d686c059db20e270e2960",
+      "source_image_sha256": "0da169fe5bf12eb74627485d969ea6f8bff626ebe9aa5a0fb5d9c33cc9a047ae",
+      "article_context_sha256": "b21a2bc879f15d5f2d65468d7ae2d8d91a9379337f1d4283259a25930d66a0ad",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:94141eb0ada5eead364e2935e29e8eeca5ada6c324fad4e7720ddc1ce6494aef",
+    "instruction_bundle_sha256": "655e772fff5d60c14395c2b6bdb38684e35d9a22621d686c059db20e270e2960",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:54ea94d63bb78bceaab639d73e2e3f8c5b2874cdaa161ce401639d685a6b9606",
+    "execution_fingerprint": "sha256:a6dab56ea2584a6f3edc78166586b20839ca79dfa058053519f322ebb24c31e6",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10c-2ca8-70a0-bf4b-757f7d31bea9"
+    },
+    "authored_payload_sha256": "ed8477d169a32fb26a1772d363edcefb69e4aac41f6b9d0a1525afe59d3ccbd6",
+    "draft_file_sha256": "4f57e57024e49ad9c187c0234f17d2dbe85ca17da6c92e1117a1713a45c4ba7b"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+      "sha256": "8145903ee322fc593365b5372f839c37bca0dd20cc52b496bf6ca1e801b991c9",
+      "bytes": 779595
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/content.json",
+      "sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "bytes": 23912,
+      "locator": {
+        "article_id": "17-volma-nalivnoi-pol",
+        "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+        "lead": "Разбираем ошибки при заливке наливного пола, которые часто приводят к проблемам",
+        "image_id": "07",
+        "block_index": 24,
+        "role": "article_image",
+        "caption": "",
+        "file": "07.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+        "current_heading": {
+          "block_index": 22,
+          "level": 2,
+          "text": "Ошибка №4. Отсутствие демпферной ленты"
+        },
+        "nearest_text_before": {
+          "block_index": 23,
+          "type": "paragraph",
+          "text": "Проблема: пропуск монтажа демпфера по периметру. Раствор расширяется при затвердевании, и если нет компенсации, возникают трещины."
+        },
+        "nearest_text_after": {
+          "block_index": 25,
+          "type": "paragraph",
+          "text": "Решение: установить демпферную ленту перед заливкой."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A single visible hand holds a black hand tool against green perimeter tape at the floor-to-wall junction.",
+      "The green tape follows both walls around a corner; a loose pale-green strip curves into the foreground.",
+      "The hand, tool, tape, wall corner, and rough floor are visible, but the tool’s intended travel direction and the exact fastening mechanics are not unambiguous from the still frame.",
+      "The room corner provides clear foreground-to-background depth around the visible tool-to-tape contact area."
+    ],
+    "article_context": "The body image illustrates the solution to error No. 4: installing perimeter damping tape before pouring a self-leveling floor so the hardened material has expansion compensation and is less likely to crack.",
+    "structured_intent": {
+      "editorial_meaning": "Emphasize the correct placement of damping tape along the room perimeter before the floor is poured, supporting crack prevention through expansion compensation.",
+      "initial_state": "One hand holds a black tool against green perimeter tape at a rough floor-to-wall corner, with a loose curved strip extending into the foreground.",
+      "motion_owner": "camera",
+      "primary_action": "Move closer toward the visible tool-to-tape contact point in one bounded continuous approach.",
+      "terminal_state": "The same contact point is shown modestly closer and more clearly, while the hand, tool, tape arrangement, and room corner remain intact.",
+      "geometry_invariant": "The tool remains in the visible hand and against the same tape section; the tape stays aligned with the floor-to-wall perimeter and keeps its existing shape.",
+      "identity_invariant": "Preserve exactly one hand, one black tool, and the existing green tape strips; no added fingers, tools, fasteners, or materials.",
+      "semantic_invariant": "The scene continues to represent damping tape being positioned along the perimeter before floor pouring; the installation state is not reversed or completed through invented mechanics.",
+      "feasibility_assessment": "The hand, tool, tape, perimeter junction, and apparent contact are visible, but neither the tool’s travel direction nor the precise fastening mechanism is proven by the still image. The corner and foreground strip provide sufficient depth for a safe source-grounded camera move.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "scene_plan": "Over five seconds, begin the push-in immediately and maintain a calm, even pace toward the contact point where the tool meets the green tape. Use the corner and curved foreground strip for restrained source-grounded parallax, then ease gently near the end; the final view makes the installation contact clearer without moving the hand or tool, deforming the tape, or revealing space outside the source frame.",
+      "positive_prompt": "The camera makes a steady bounded push-in toward the visible tool-to-tape contact point, with source-grounded parallax while the hand, tool, and perimeter tape remain fixed in contact and unchanged. By the final frame the contact area is modestly larger and clearer, with framing shift limited to about 5–8% of the frame.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "For four seconds, use one continuous push-in that starts at once, travels evenly toward the tool-to-tape contact point, and decelerates only at the end. The curved foreground strip and wall corner shift through restrained parallax; the endpoint is a visibly closer view of the same contact area while all entities, rigid geometry, and the existing tape arrangement remain unchanged.",
+      "positive_prompt": "The camera moves steadily forward toward the visible tool-to-tape contact point at normal real-time speed; the hand, tool, and perimeter tape stay fixed in contact and retain their exact shapes. At the end the contact area appears clearly closer, with roughly 5–7% screen-space travel and only source-grounded parallax.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

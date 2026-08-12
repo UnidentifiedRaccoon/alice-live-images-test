@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v6-retry-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v6",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v6-18-volma-plitochnyi-klei-05-wan-2-7",
+  "case_id": "18#05",
+  "sheet_row": 259,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "retry_reason": "provider-minimum-dimension-rejection-normalized-source",
+  "canonical_source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+    "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+    "width": 758,
+    "height": 220
+  },
+  "provider_source": {
+    "path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+    "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+    "sha256": "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23",
+    "width": 882,
+    "height": 256,
+    "normalized_source": {
+      "strategy": "uniform-scale-source",
+      "audit_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/asset.json",
+      "audit_sha256": "9c15789fad15c0418ec4eef4d223e66177621d7f274b3b4122066440c1cbcedc",
+      "source_commit_sha": "25995ee6ea168d2ae7025e5a416bc008ae17a908",
+      "transform": {
+        "operation": "uniform-scale",
+        "target_height": 256,
+        "resampler": "lanczos",
+        "crop": false,
+        "local_reencode": true
+      },
+      "original": {
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a2682a081cbac61b6b77c7f/orig",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/18-volma-plitochnyi-klei/05.png",
+        "sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+        "bytes": 17569,
+        "width": 758,
+        "height": 220
+      },
+      "normalized": {
+        "http_status": 200,
+        "url": "https://raw.githubusercontent.com/UnidentifiedRaccoon/alice-live-images-test/25995ee6ea168d2ae7025e5a416bc008ae17a908/clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+        "sha256": "4ad98c730c783a63bce382ecffe640d51c936b3ccaec019b637861f8ddbf5b23",
+        "bytes": 46883,
+        "width": 882,
+        "height": 256,
+        "format": "PNG",
+        "delivery": "repository-raw",
+        "repository_path": "clipmaker-lite-test/runs/promopages-10060-campaigns-20260805-v1/normalized-input-assets-v1/660c32c4d1331cb3a82d/normalized.png",
+        "source_commit_sha": "25995ee6ea168d2ae7025e5a416bc008ae17a908"
+      }
+    }
+  },
+  "scene_plan": "На протяжении пяти секунд камера выполняет один сдержанный центрированный push-in с ровным темпом и плавным завершением. Амплитуда ограничена 1,5% экранного перемещения, чтобы provider expansion не усилил приближение; вся таблица непрерывно видна, её три колонки, две строки, подписи, линии и два значка source-locked. Последний кадр лишь немного крупнее первого и не показывает ничего вне исходного изображения.",
+  "prompt": {
+    "positive": "The camera performs a restrained centered push-in on the two-row material recommendation table, limited to 1.5% screen travel. The full rigid table stays visible while every existing label, line, cell, green check and orange warning remains unchanged, ending at a subtly closer framing with no new area shown.",
+    "positive_utf8_sha256": "a10ab007e5a65c2ac98152b823e114095cf1e062dbdcd1f706f586b9637046c2",
+    "scene_plan_utf8_sha256": "31f373e79555f6b0fd738bafef1b8fcf9b22ca51bb345e4ec6ba76f2e9b54fd3",
+    "negative": null,
+    "rewritten_by_provider_coordinator": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "planning": {
+    "lineage_kind": "exact-verified-r4-prompt-bytes",
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-05",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-05/result.json",
+    "result_sha256": "b3d14977be181b88008fb32db11298bcdab06dfb6fdfbed7b33b33d7c73376f1",
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r2/repair-feedback/18-05.json",
+    "repair_feedback_sha256": "b890fbbdf47b607b0b1362b980d44edccc39bd2aa7753094f8fadf2018afedc2",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-05/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:5e430a74dcff401ba21ca013abc3f68fe6116eb54d4f2e6410a9a72dc0a2a65e",
+      "instruction_bundle_sha256": "bda6885bd9ffe91e385e432ac704e46501c9a7fd011bec7443adddd387c50691",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff245-0070-7220-a66e-7785b5cac2d7"
+      },
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "95a38e9469f6055c7eab934ab7173af57d5445112e835e200a83964f74938543",
+      "article_context_sha256": "9214ae075fbb3ba31d35911841c8263eeea113ee1eab62d47828fe6c8c0435a2"
+    }
+  },
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260811-v5",
+    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-05-wan-2-7",
+    "status": "provider-failed",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.7/05.prompt.json",
+    "prompt_sha256": "9cf37111f1250a60760776d2562b6803f3f47c1a92699ef81f153cc6d1b04b56",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.7/05.run.json",
+    "run_sha256": "511ddeac765f7bdc674b1cdc8cff459f69daf326c499ad9a79253aaba5fc27f2",
+    "provider_job_id": "L79RDAL4x9AH5sGa1mR5",
+    "provider_may_be_active": false,
+    "error": "provider poll/download: Eliza/OpenRouter job L79RDAL4x9AH5sGa1mR5 failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 758x220\", \"internal_name\": \"InvalidParameter\"}",
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "receipts_mutated": false
+  },
+  "policy": {
+    "new_immutable_provider_run": true,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "s3_upload": false
+  },
+  "bindings": {
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-13-dream-island-top6-attrakcionov-05",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:e47c1e901de430a76308aef4c5f32d2b1e6699147ad4c05c2643bbda797bf449",
+    "execution_fingerprint": "sha256:7fb9d4f80ac4f57432b1d81823bdadf642542507e96df0b276cac23bb87d4330",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff239-fe91-7dd3-8f50-fa72442dd8b7"
+    },
+    "authored_payload_sha256": "c09c133e0f93c190489a874831e39c71768263e35cf17c757066ef1446967c86",
+    "draft_file_sha256": "933fa04e0df1ae1830dc52605e0ea960516c05ed8e651a51a8300b130d8ea4cc"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+      "sha256": "7ec5104f2456949b7fc32e4fb9d8e60a62a088bd0d78cc20ca82694bb3b5eb5c",
+      "bytes": 3092282
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/content.json",
+      "sha256": "90d1160126f0d74d2a859104c80ad1f83068f8f9498c3460b860af9a4249deee",
+      "bytes": 19526,
+      "locator": {
+        "article_id": "13-dream-island-top6-attrakcionov",
+        "title": "Топ-6 аттракционов в «Острове Мечты» для фаната экстрима",
+        "lead": "6 экстремальных аттракционов «Острова Мечты» — ловите адреналин!",
+        "image_id": "05",
+        "block_index": 19,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/13-dream-island-top6-attrakcionov/05.jpeg",
+        "current_heading": {
+          "block_index": 17,
+          "level": 2,
+          "text": "3️⃣ место. «Мельница»"
+        },
+        "nearest_text_before": {
+          "block_index": 18,
+          "type": "paragraph",
+          "text": "Еще один способ забыть о гравитации. Аттракцион напоминает огромную ветряную мельницу с лопастями, к которым подвешены сиденья. Шесть крыльев вращаются по часовой стрелке на высоте 16 метров, а сиденья на них крутятся хаотично под углом 70°. Вы не знаете, куда вас развернет через секунду, и от этого адреналин зашкаливает."
+        },
+        "nearest_text_after": {
+          "block_index": 20,
+          "type": "paragraph",
+          "text": "Положение кабинок меняется при каждом запуске, так что, даже если вы катаетесь во второй раз, ощущения будут совсем другими"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/13-05.json",
+      "sha256": "8acd940996c5d3fc4c883d080bab086c0564f1cf20854973c8aaffd876ecd67d",
+      "bytes": 1398,
+      "canonical_sha256": "d02c15cbe71eff4a4141f2e9dd6527e6de9a893c5e38b902efead042e7bd9b83",
+      "models": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "13#05::google/veo-3.1-lite",
+          "outcome": "worse",
+          "review_note": "на фото горка, но анимации вообще нет. Это не текст и не интерфейс, тут должна быть анимация",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "route_rejected",
+            "insufficient_motion"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "fixed",
+            "focal_target": "the existing visible attraction",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Preserve all visible arms, cabins, riders, limbs, lights, signs, and every glyph of “МЕЛЬНИЦА”; nothing appears, disappears, or changes identity."
+            ],
+            "topology_anchors": [
+              "The rigid hub-and-arm topology, cabin attachments, rider restraints, and all source-image geometry remain unchanged."
+            ],
+            "rigid_regions": [
+              "the visible attraction structure and its existing supports"
+            ],
+            "contacts": [
+              "the attraction structure retains all visible support contacts"
+            ],
+            "must_remain_visible": [
+              "the existing visible attraction"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "A large blue-and-orange amusement ride with a central hub, six articulated arms, suspended cabins, and visible riders dominates the frame.",
+      "The hub, arms, cabins, restraints, support column, and riders form a visibly connected mechanical assembly; the still image does not prove the current rotation direction.",
+      "A large illuminated sign reading “МЕЛЬНИЦА” occupies the left foreground, while the attraction remains fully visible beneath the indoor glass roof."
+    ],
+    "article_context": "The body image illustrates the third-ranked attraction, “Мельница,” emphasizing its gravity-defying, unpredictable ride experience and the changing orientation of its suspended cabins.",
+    "structured_intent": {
+      "editorial_meaning": "Convey the attraction’s gravity-defying motion and the unpredictable changing orientation of its cabins.",
+      "initial_state": "The six-arm attraction is shown elevated around its central hub, with occupied cabins attached at varied visible orientations and the full support structure in place.",
+      "motion_owner": "the existing six-arm attraction",
+      "primary_action": "The hub-and-arm assembly makes one bounded rotational continuation while its attached cabins pivot slightly on their visible joints.",
+      "attention_anchor": "the existing visible six-arm attraction",
+      "motion_boundary": "Only the existing hub-and-arm assembly and its attached cabins may move: the arms turn together as one bounded mechanism and cabins pivot only slightly at visible joints. The camera, support column, riders within restraints, illuminated “МЕЛЬНИЦА” sign, roof, buildings, and all surrounding rides remain source-locked.",
+      "terminal_state": "The hub and six arms end at a noticeably advanced angle, with the attached cabins resting in slightly changed orientations and the complete attraction still visible.",
+      "geometry_invariant": "The rigid hub-and-six-arm topology, support contacts, cabin attachments, joints, restraints, and rider-seat contacts remain intact.",
+      "identity_invariant": "Preserve all visible six arms, cabins, riders, limbs, lights, signs, and every glyph of “МЕЛЬНИЦА”; nothing appears, disappears, duplicates, or changes identity.",
+      "semantic_invariant": "The scene remains an active, thrilling but mechanically secure amusement ride with every rider continuously restrained.",
+      "feasibility_assessment": "The visible central hub, six rigid arms, cabin joints, support structure, and restrained riders establish a plausible articulated ride mechanism. The still frame does not establish rotation direction or permit a full rotation, but it supports one moderate bounded continuation with small cabin pivots.",
+      "rendering_strategy": "image-to-video"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Over four seconds, use a fixed camera and begin the ride motion immediately. Advance the hub-and-arm assembly smoothly through a noticeable but limited angular displacement, well short of a full arc, while the already visible cabins respond with weaker, small joint-bound pivots; ease gently near the end without reversing. Finish with the six arms at a clearly different angle and the cabins at slightly changed orientations, preserving all attachments, riders, supports, lights, signs, and framing.",
+      "positive_prompt": "The existing six-arm attraction makes one clearly visible, moderate bounded turn in a single direction while the attached cabins pivot slightly on their visible joints and every restrained rider remains secure; keep the camera fixed and the attraction continuously visible. By the final frame, the hub and arms have advanced to a noticeably new angle and the cabins have settled into slightly changed orientations, with the complete topology and every glyph of “МЕЛЬНИЦА” unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

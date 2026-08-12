@@ -41,10 +41,21 @@ cross-model comparison.
   стиль, уже заданные изображением.
 - Пиши коротко и конкретно: provider получает `prompt_extend: true` и может
   расширить формулировку.
-- Сохраняй image-grounded действие и один `geometry_invariant` из анализа
-  изображения. Если endpoint уже виден в first frame, используй только
-  low-amplitude residual continuation или естественное затухание, без нового
-  цикла и выхода из endpoint.
+- Используй одно-два motion-first предложения и сохраняй image-grounded
+  `attention_anchor`, `motion_boundary`, `geometry_invariant` и
+  `identity_invariant`. Если endpoint уже виден в first frame, используй
+  residual continuation, затухание или camera-only — без нового цикла и
+  реверса.
+- `prompt_extend: true` может усиливать travel, plume, glare и вторичное
+  движение. Задавай source-relative composition ceiling: camera reference
+  смещается не больше собственной ширины или примерно 5–10% кадра; mist
+  остаётся одним коротким узким cone у видимого nozzle; optical effect остаётся
+  внутри target-boundary. Избегай expansive verbs `sweeps across the scene`,
+  `billows`, `fills`, `full rotation` и `wide arc`.
+- Provider expansion не получает `reveal`, `complete` или `extend` для
+  невидимой геометрии. Camera route удерживает `attention_anchor`, не уходит на
+  соседнюю дверцу или пустой фон и не создаёт новые фасады, ряды механизма,
+  части пола или объекты за source boundary.
 
 ## Terminal state и смысловая целостность
 
@@ -53,27 +64,41 @@ cross-model comparison.
   независимый beat.
 - `semantic_invariant` не меняется при естественном затухании движения. Эмоция,
   напряжение или редакционный смысл не переходят в противоположное состояние.
-- `geometry_invariant` сохраняется до последнего кадра: ключевые части остаются
-  в той же видимой физической связи.
+- `geometry_invariant` сохраняет контакт, крепление и жёсткую форму;
+  `identity_invariant` удерживает точное число сущностей, конечностей, props и
+  деталей.
 - Ключевой объект остаётся непрерывно видимым, геометрически узнаваемым и связан
   с тем же действием от первого до последнего кадра.
 
 ## UI и people risks
 
-- Для UI камера fixed; допустим максимум один мягкий блик, pulse или optical
-  accent существующего элемента. Не меняй текст, числа, даты, glyphs, layout,
-  chart state, значения, checkbox и controls.
-- Для людей используй одно простое движение умеренной амплитуды. Исключи контакт
-  рук с лицом, сложное взаимодействие частей тела и быстрые повторные жесты
-  вместе с речью или lip-sync; заданная эмоция сохраняется до финала.
+- Каждый result имеет `execution_mode: i2v` и непустой `positive_prompt`. Для
+  точного текста, UI, chart, table, diagram и screenshot выбери `camera-only`:
+  экран или печатная графика остаётся одной жёсткой плоскостью, labels, числа,
+  glyphs и controls входят в `motion_boundary`, camera move остаётся bounded и
+  не открывает unseen space.
+- Для людей сохраняй точное число, конечности и props. Не добавляй контакт с
+  лицом, новый предмет, сложное взаимодействие или неоднозначный gait. Когда
+  сложный жест не доказан, используй дыхание, моргание, малый поворот головы,
+  взгляда или корпуса либо camera-only.
+- Articulated ride не выполняет полный arc/rotation. Видимая ось и крепления
+  допускают одно малое bounded продолжение в выбранном правдоподобном
+  направлении; topology, riders и число seats фиксированы, новые секции не
+  появляются.
+- Tool не действует без видимой руки/контакта; layered fabric не billow. При
+  неоднозначной механике выбери camera-only.
+- Статичный продуктовый packshot получает центрированный studio push или одно
+  restrained изменение света/камеры; весь набор и labels остаются видимыми,
+  продукты не двигаются автономно.
+- На стройплощадке без доказанного действия используй плавный
+  observer/phone-inspection camera move. Пол, плиты, трещины, инструменты и
+  обломки остаются жёсткими и не поднимаются сами.
 
 ## Negative prompt
 
-Authored `negative_prompt` всегда и буквально равен `null`; параметр
-`negative_prompt` провайдеру не отправляется. Repair и generic tail не
-используются для negative prompt. `positive_prompt` занимает не больше двух
-коротких motion-first предложений; дальнейшее расширение выполняет
-`prompt_extend: true`.
+Authored `negative_prompt` всегда и буквально равен `null` и не отправляется.
+Repair и generic tail не используются: failure преобразуется в positive anchor,
+composition ceiling или более безопасную rendering strategy.
 
 ## Runtime fragment
 

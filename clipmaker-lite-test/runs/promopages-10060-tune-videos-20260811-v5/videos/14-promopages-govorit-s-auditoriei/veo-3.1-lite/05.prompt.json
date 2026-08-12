@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-14-promopages-govorit-s-auditoriei-05-veo-3-1-lite",
+  "case_id": "14#05",
+  "sheet_row": 182,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_6a6afe8c1c0a3777e9c6a1fc_6a6afe911c0a3777e9c6a2de/orig",
+    "sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+    "width": 2048,
+    "height": 895,
+    "normalized_overlay": null
+  },
+  "scene_plan": "Четырёхсекундный focused shot: камера без задержки выполняет один мягкий центрированный push-in к двухколоночной сетке, движется равномерно большую часть времени и замедляется только у финала. Интерфейс не анимируется, все четыре карточки сохраняют исходную геометрию и остаются целиком видимыми; финал показывает умеренно более крупную композицию в пределах 8% screen travel без reveal невидимого пространства.",
+  "prompt": {
+    "positive": "The camera moves immediately in one gentle centered push toward the existing two-column interface card grid, keeping all four cards continuously visible as a single rigid, unchanged UI plane. At the end, the grid is clearly but slightly closer within 8% screen travel, with every original label, glyph, and control unchanged.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-14-promopages-govorit-s-auditoriei-05",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-14-promopages-govorit-s-auditoriei-05/result.json",
+    "result_sha256": "a5099c8b96314d7aa506b2f2b0e349c50b4634f2507d430216a18d8353cf3c95",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/14-05.json",
+    "repair_feedback_sha256": "0299b1cc0e4b3e07faa4c12484508b0979ee13ce3ff4bcb7b897e383e2973f5c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-14-promopages-govorit-s-auditoriei-05/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:3fde33b4ce84974cc4b03303f66ee481aca69a855a817878db7eda87d2746a16",
+      "instruction_bundle_sha256": "a5ca4de3a148c606e8731d1ffad9cfe2f21df95741fe919fbda71ddef3d3ec62",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff23a-5d2a-7d80-8860-4a283cf46540"
+      },
+      "models": [
+        "alibaba/wan-2.2",
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+      "article_context_sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5"
+    }
+  },
+  "bindings": {
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+    "prompt_manifest_sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

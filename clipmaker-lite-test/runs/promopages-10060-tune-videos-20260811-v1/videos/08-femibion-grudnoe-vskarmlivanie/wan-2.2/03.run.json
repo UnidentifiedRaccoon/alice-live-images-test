@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-08-femibion-grudnoe-vskarmlivanie-03-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-08-femibion-grudnoe-vskarmlivanie-03",
+  "lite_result_sha256": "7d2a88e8c3401ad18d19a2cc3e2e77e2814c96aafb7077445be0402966e59aef",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "08#03",
+  "sheet_row": 87,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/4956602/pub_685a4ed183113703283dcca7_685a4fbe0cd7b33158b900e2/orig",
+      "prompt": "The camera makes a smooth bounded push-in toward the central glass, with source-grounded parallax shifting the foreground plate and left bottle by about 5–8% of the frame while every rigid object keeps its exact shape and placement on the table. By the final frames the glass is modestly larger and remains fully visible, with the same bottles, biscuits, plates, cloth, and milk levels unchanged.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "1abbe6fd8f508d319190c80e5859f470f03c69e0357da2cba0fd3809bf1fceff",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "3a97166a8e642cfdffbf16904ffca673",
+  "submitted_at": "2026-08-11T15:05:37Z",
+  "completed_at": "2026-08-11T15:05:37Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 3198323,
+    "sha256": "a43821a33f1c867389568c8149b57409c0dbab3105174894d5a6429b13c2ae86"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "3a97166a8e642cfdffbf16904ffca673",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 5834836,
+    "sha256": "9c3ccad93f3dd9f3d639adf060c0f3ead1bff8af5fc4d5b3ae08d5024834ec43"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 2400,
+      "source_height": 1600,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1168x784 differs from source 2400x1600 by 0.680% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "9c3ccad93f3dd9f3d639adf060c0f3ead1bff8af5fc4d5b3ae08d5024834ec43",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

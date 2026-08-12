@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v6-retry-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v6",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v6-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "retry_reason": "terminal-provider-no-output-new-lite-prompt",
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260811-v5",
+    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+    "status": "provider-failed",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+    "prompt_sha256": "155f06509df013b452fbe6204a85f7f69b3c5e14a754d6322844ac1a65242245",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+    "run_sha256": "573c31f534465a0485d45f5663f64bd1badf14cc27e017f0db400ce5e6f5e9f7",
+    "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
+    "provider_may_be_active": false,
+    "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "receipts_mutated": false
+  },
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+  "status": "provider-failed",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera gently pushes straight toward the complete existing sofa scene with the visible woman and phone, within a 5% screen-travel cap, while her pose, hand-to-phone contacts, expression, and all room geometry remain source-locked. By the final frame the woman and phone appear slightly larger, with the complete sofa scene still continuously visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "b4b49bced87a35d29c64960f413f8ce41902cdf293a422dc0bc19f574bbc28ef",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "FjVDTD6oBHrOmJGu5cal",
+  "submitted_at": "2026-08-11T20:32:33Z",
+  "completed_at": "2026-08-11T20:34:17Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "check": "source-dimensions",
+    "model_id": "google/veo-3.1-lite",
+    "width": 2400,
+    "height": 1600,
+    "minimum_dimension_px": null,
+    "conforms": true,
+    "normalization_applied": false
+  },
+  "provider_response": null,
+  "media": null,
+  "contract_check": null,
+  "error": "provider poll/download: Eliza/OpenRouter job FjVDTD6oBHrOmJGu5cal failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "submission_count": 1,
+  "budget_reservation_usd": 0.35,
+  "new_immutable_provider_run": true,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+  "status": "provider-failed",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The woman makes one calm, deliberate upward swipe on the phone with her right index finger while her left hand steadily supports it, her gaze following the screen and her gentle smile remaining. Fixed camera; by the final frame her finger settles near the upper part of the visible screen, with the woman and phone continuously visible.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "6a9b53ccbd337faa95931deba60c0aac17b10f4c7b3ad424b733448563b2a79c",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
+  "submitted_at": "2026-08-11T19:33:02Z",
+  "completed_at": "2026-08-11T19:35:06Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": null,
+  "contract_check": null,
+  "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

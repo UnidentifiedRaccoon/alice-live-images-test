@@ -1,0 +1,37 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "10#07::google/veo-3.1-lite",
+    "outcome": "worse",
+    "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship.",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "provider_no_output"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "push-in",
+      "focal_target": "the complete existing dining scene and all visible people",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 3,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Preserve exactly four visible people and every existing limb, garment, dish, utensil, cup, food item, and piece of furniture; nothing appears, disappears, or changes owner."
+      ],
+      "topology_anchors": [
+        "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+      ],
+      "rigid_regions": [
+        "the complete existing dining scene and all visible people"
+      ],
+      "contacts": [
+        "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+      ],
+      "must_remain_visible": [
+        "the complete existing dining scene and all visible people"
+      ]
+    }
+  }
+}

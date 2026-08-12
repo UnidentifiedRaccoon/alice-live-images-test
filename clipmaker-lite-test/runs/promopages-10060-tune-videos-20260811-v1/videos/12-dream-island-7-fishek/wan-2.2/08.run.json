@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-08-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-12-dream-island-7-fishek-08",
+  "lite_result_sha256": "e8c0b64177c527db2cb0e36019f0f6f21d9426423f44ae07fdb5750f3027d6f3",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "12#08",
+  "sheet_row": 150,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/scale_1200",
+      "prompt": "The camera steadily pushes toward the suspended gondola and carved temple disc, creating source-grounded parallax while the ride remains fixed in its visible position and every rider stays secured to the same seat. By the final frame, the nearest support has shifted about 7% of the frame width and the gondola and relief appear moderately closer without leaving the original scene.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "6afbc2d7e62c2f65189b15ee63fe042514f99f71b34eda8639dd49a04c99fa98",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "cef515d6efb8e8a2c284153dfffb1a6c",
+  "submitted_at": "2026-08-11T15:08:40Z",
+  "completed_at": "2026-08-11T15:08:40Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 386709,
+    "sha256": "66bfa65fd8c8c81d5d2e83be831f946ab1572082ecebf9d468a027d9b2bac691"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "cef515d6efb8e8a2c284153dfffb1a6c",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 19235024,
+    "sha256": "794d41ddcdb0adbbea5bc605182620f4bc4353e6cc3de88f7760815450b791f2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 1200,
+      "source_height": 801,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": [
+      "provider aspect quantization: actual 1168x784 differs from source 1200x801 by 0.556% within the 2% tolerance"
+    ]
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "794d41ddcdb0adbbea5bc605182620f4bc4353e6cc3de88f7760815450b791f2",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

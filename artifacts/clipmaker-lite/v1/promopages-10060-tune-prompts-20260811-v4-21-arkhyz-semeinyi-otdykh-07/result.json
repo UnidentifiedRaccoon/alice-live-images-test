@@ -1,0 +1,208 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-21-arkhyz-semeinyi-otdykh-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+    "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:c1ab2e55a5ea585b5000a2d7164697305a52ca5dc35bb2cd20fadc22820658da",
+    "execution_fingerprint": "sha256:d05ba840f92cc269f48df5591b4f5de08d630a34535ef40b818dc9a4cc088163",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10d-57a6-72e0-84db-99ad55f8c08a"
+    },
+    "authored_payload_sha256": "0db295c9a59ac8c0b0aab9c48f4dbb91434f59ec88e8bbd6b65ccfbe1ddbd758",
+    "draft_file_sha256": "4aaeb0b5552c3a19532ba823177d3eabb51ec11ae2ee614bda554147e70e357c"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+      "sha256": "7387ae19bd6ba9f40713e7dfe053802086264451f8ffdcfdd49b0d7c67f0c212",
+      "bytes": 946440
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/content.json",
+      "sha256": "1997f5bae7ce326125c4dec359eb2a1de4fd63ba952ae44697c10233deb6c269",
+      "bytes": 26011,
+      "locator": {
+        "article_id": "21-arkhyz-semeinyi-otdykh",
+        "title": "Курорт Архыз: лучшие места для семейного отдыха в 2026",
+        "lead": "Подсказываем, как интересно отдохнуть всей семьей и получить максимум эмоций",
+        "image_id": "07",
+        "block_index": 28,
+        "role": "article_image",
+        "caption": "Всего на Курорте Архыз несколько экотроп разного уровня сложности",
+        "file": "07.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260807-v1/articles/21-arkhyz-semeinyi-otdykh/07.jpeg",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Легкие пешие маршруты для незабываемых впечатлений"
+        },
+        "nearest_text_before": {
+          "block_index": 27,
+          "type": "paragraph",
+          "text": "Для семей с детьми от 6 лет рекомендуем две самые легкие тропы — «Аланский путь» и «Пик Смирнова». Обе промаркированы зеленым уровнем, оборудованы лавочками и не требуют специальной подготовки."
+        },
+        "nearest_text_after": {
+          "block_index": 29,
+          "type": "paragraph",
+          "text": "«Аланский путь» расположен на южном склоне. Маршрут кольцевой: начинается от верхней станции канатной дороги «Млечный путь» и возвращается в ту же точку, 6 километров, перепад высоты всего 120 метров. На прогулку уйдет 2–3 часа в спокойном темпе. Вокруг — субальпийские луга с пряным запахом чабреца и прогретой солнцем землей."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A wide, strongly layered mountain scene shows a rigid «АРХЫЗ» sign on the left slope and exactly two hikers standing on the trail at right.",
+      "Both hikers are already posed with trekking poles planted on the ground; the woman holds a small object above her head, but the intended next body action and direction are ambiguous.",
+      "Foreground rocks and soil, the midground sign and hikers, and the distant wooded slope provide reliable depth for a source-grounded camera move.",
+      "The sign’s Cyrillic glyphs are prominent and semantically identify the resort, so their shapes and ordering must remain unchanged."
+    ],
+    "article_context": "The body image introduces the section on easy family-friendly ecotrails and presents hiking in Arkhyz as an accessible, cheerful mountain experience; the prominent resort sign establishes the location while the two equipped hikers reinforce active but unhurried recreation.",
+    "structured_intent": {
+      "editorial_meaning": "Support the article’s message that Arkhyz offers approachable, enjoyable hiking routes for families amid an inviting mountain landscape.",
+      "initial_state": "Two hikers stand posed on a mountain trail with their trekking poles planted, beside a large rigid «АРХЫЗ» sign on the slope; foreground rocks lead into wooded distant terrain.",
+      "motion_owner": "camera",
+      "primary_action": "A bounded forward camera move creates source-grounded parallax toward the hikers and resort sign.",
+      "terminal_state": "The hikers and sign are observably closer and slightly larger while foreground rocks have shifted in screen space; all original subjects, props, lettering, and meaningful zones remain visible.",
+      "geometry_invariant": "The sign and terrain remain rigid; each trekking pole stays attached to its visible hiker and planted at the same ground contact.",
+      "identity_invariant": "Exactly two hikers, four trekking poles, and the single «АРХЫЗ» sign with its original Cyrillic glyph count, shapes, and order remain present and recognizable.",
+      "semantic_invariant": "The scene continues to communicate a cheerful, accessible hiking experience at Arkhyz, and the resort sign remains legible as the location identifier.",
+      "feasibility_assessment": "The image clearly proves layered depth, a stable trail, two stationary hikers, planted trekking poles, and a rigid resort sign. It does not prove a safe next gesture, walking direction, or intended interaction for either person; a source-grounded camera move is therefore safer than animating their bodies.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Over five seconds, begin a smooth forward camera move immediately and maintain an even moderate pace toward the hikers and sign. Use the foreground rocks against the midground subjects to create readable parallax, then ease gently near the end; finish with the focal subjects moderately larger and the nearest rocks displaced roughly 5–8% in screen space, without changing the hikers’ pose or the sign.",
+      "positive_prompt": "The camera makes a steady bounded push-in toward the two hikers and the «АРХЫЗ» sign, with source-grounded parallax while the rigid Cyrillic letters keep their exact shapes and order. By the final frame they appear moderately closer and the nearest rocks have shifted about 5–8% of the frame, with both people and all planted trekking poles still visible.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "scene_plan": "Use the full five seconds for one restrained push-in centered between the hikers and the sign. Keep travel continuous and level, with foreground terrain providing clear parallax and a composition ceiling of about 8% screen-space displacement; decelerate only in the final moments, ending closer without cropping either person or reconstructing the sign.",
+      "positive_prompt": "The camera advances smoothly toward the hikers and the «АРХЫЗ» sign, keeping both people, every planted trekking pole, and the exact rigid lettering continuously intact. End with the focal group visibly closer and foreground rocks shifted no more than about 8% of the frame through natural parallax.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "For four seconds, start an immediate continuous push-in toward the hikers and sign, moving slightly faster than the five-second variants while remaining smooth. Let the closest rocks shift about 5–7% across the image and reveal only already visible depth; ease at the endpoint with the sign and hikers enlarged but fully framed.",
+      "positive_prompt": "The camera pushes forward at a calm, even real-time speed toward the two hikers and the «АРХЫЗ» sign; rigid terrain and exact Cyrillic glyphs remain unchanged as natural parallax moves the nearest rocks. At the end the focal subjects are clearly closer and the foreground has shifted about 5–7% of the frame, with both hikers and all trekking poles still visible.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

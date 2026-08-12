@@ -2,8 +2,10 @@
 """Build the exact static payload published from the gh-pages branch.
 
 The repository is larger than the GitHub Pages 1 GB published-site limit.  This
-builder follows only runtime references used by the six demo screens and
-copies those files into an isolated directory while preserving their paths.
+builder follows only runtime references used by the seven published demo
+screens (Steps 1–6 and 8) and copies those files into an isolated directory
+while preserving their paths. Step 7 is intentionally absent until it has a
+tracked source; untracked worktree files must never become an implicit payload.
 """
 
 from __future__ import annotations
@@ -13,8 +15,10 @@ import hashlib
 import json
 import os
 import shutil
+import stat
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -117,10 +121,36 @@ PROMOPAGES_10060_CAMPAIGN_20260807_ARTICLE_NUMBERS = ("19", "20", "21")
 PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH = Path(
     "clipmaker-lite-test/promopages-10060-s3-delivery.json"
 )
+PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH = Path(
+    "clipmaker-lite-test/promopages-10060-tune-approved-s3-overlay.json"
+)
+PROMOPAGES_10060_TUNE_APPROVED_SELECTION_CONTRACT_RELATIVE_PATH = Path(
+    "PROMOPAGES-10060/tune-s3-export/selection-contract.json"
+)
+PROMOPAGES_10060_TUNE_APPROVED_EVALUATION_RELATIVE_PATHS = (
+    Path(
+        "PROMOPAGES-10060/tune-s3-export/inputs/"
+        "promopages-10060-tune-prompts-20260811-v4-evaluation.json"
+    ),
+    Path(
+        "PROMOPAGES-10060/tune-s3-export/inputs/"
+        "promopages-10060-tune-review-20260811-v6-evaluation.json"
+    ),
+)
 PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH = Path(
     "PROMOPAGES-10060/s3-export/articles.json"
 )
 PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 510
+PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT = 45
+PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS = {
+    "alibaba/wan-2.2": 16,
+    "alibaba/wan-2.7": 12,
+    "google/veo-3.1-lite": 17,
+}
+PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS = (
+    "17#11::alibaba/wan-2.2",
+    "18#06::alibaba/wan-2.2",
+)
 PROMOPAGES_10060_S3_BUCKET = "promopages-front-bundles"
 PROMOPAGES_10060_S3_OBJECT_PREFIX = "front-images/exp_video/"
 PROMOPAGES_10060_S3_PUBLIC_BASE_URL = (
@@ -223,6 +253,60 @@ PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID = (
     "c45a8447813d1b4e4df0-18-volma-plitochnyi-klei-07-wan-2-7"
 )
 MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024
+TUNE_MANIFEST_RELATIVE_PATH = Path("clipmaker-lite-test/tune-manifest.json")
+TUNE_CASE_COUNT = 36
+TUNE_TARGET_COUNT = 65
+TUNE_I2V_TARGET_COUNT = 65
+TUNE_REVIEW_TARGET_COUNT = 28
+TUNE_REGENERATED_TARGET_COUNT = 28
+TUNE_REUSED_HELPED_TARGET_COUNT = 37
+TUNE_ACTIVE_VIDEO_METHOD = "eliza-i2v"
+TUNE_REGENERATED_ACTION = "regenerated-v5"
+TUNE_REUSED_ACTION = "reused-helped"
+TUNE_RETRY_ORIGIN = "regenerated-v6-retry"
+TUNE_V7_FILTER_RETRY_ORIGIN = "regenerated-v7-filter-retry"
+TUNE_V8_EXPERIMENT_ORIGIN = "regenerated-v8-veo-prompt-experiment"
+TUNE_ROUTE_SAFETY_ORIGIN = "withheld-v6-route-safety"
+TUNE_V8_EXPERIMENT_BATCH_ID = "promopages-10060-tune-videos-20260812-v8"
+TUNE_V8_PLANNING_BATCH_ID = "promopages-10060-tune-prompts-20260812-v5-r9"
+TUNE_V8_PROMPT_MANIFEST_PATH = (
+    "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260812-v5-r9/"
+    "prompt-manifest.json"
+)
+TUNE_V8_PROMPT_MANIFEST_SHA256 = (
+    "56f221a685ca44186b369392f41b7a76b01540218a24be4fe634b1a1962e21b0"
+)
+TUNE_V8_SOURCE_SHA256 = (
+    "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12"
+)
+TUNE_V8_UNAVAILABLE_REASON = (
+    "3/3 additional Veo prompt experiments completed with no output "
+    "(content may have been filtered)"
+)
+TUNE_V8_VARIANT_ORDER = (
+    "minimal-zoom",
+    "camera-forward",
+    "framing-endpoint",
+)
+TUNE_V8_SHARED_SEED = 20260812
+TUNE_V8_CHANGED_FACTOR = "motion-only positive-prompt formulation"
+TUNE_SOURCE_OUTCOMES = {
+    None,
+    "helped",
+    "same-or-unclear",
+    "unrated",
+    "worse",
+}
+TUNE_FORBIDDEN_ACTIVE_MARKERS = (
+    "deterministic",
+    "compositor",
+    "fallback",
+)
+TUNE_STATIC_FILES = (
+    "tune/index.html",
+    "tune/styles.css",
+    "tune/app.js",
+)
 
 STATIC_FILES = (
     ".nojekyll",
@@ -248,10 +332,13 @@ STATIC_FILES = (
     "clipmaker-lite/styles.css",
     "clipmaker-lite/app.js",
     "ab-preparation/index.html",
+    *TUNE_STATIC_FILES,
     "clipmaker-lite-test/manifest.json",
     "clipmaker-lite-test/promopages-9930-manifest.json",
     "clipmaker-lite-test/case-21-manifest.json",
     "clipmaker-lite-test/promopages-10060-manifest.json",
+    PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH.as_posix(),
+    TUNE_MANIFEST_RELATIVE_PATH.as_posix(),
 )
 
 STATIC_TREES = (
@@ -293,6 +380,1295 @@ def _is_sha256(value: Any) -> bool:
         and len(value) == 64
         and all(character in "0123456789abcdef" for character in value)
     )
+
+
+def _canonical_tune_repository_path(value: Any, *, label: str) -> Path:
+    if not isinstance(value, str) or "\\" in value:
+        raise ValueError(f"{label} must be a canonical repository path")
+    try:
+        path = _safe_relative_path(value)
+    except ValueError as exc:
+        raise ValueError(f"{label} must be a canonical repository path") from exc
+    if path.as_posix() != value or path.suffix.lower() != ".mp4":
+        raise ValueError(f"{label} must be a canonical repository MP4 path")
+    return path
+
+
+def _validate_tune_raw_url(value: Any, repository_path: Path, *, label: str) -> None:
+    if not isinstance(value, str) or "%" in value or "\\" in value:
+        raise ValueError(f"{label} must be an immutable raw.githubusercontent.com URL")
+    parsed = urlsplit(value)
+    url_parts = parsed.path.removeprefix("/").split("/")
+    if (
+        parsed.scheme != "https"
+        or parsed.netloc != "raw.githubusercontent.com"
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.port is not None
+        or parsed.query
+        or parsed.fragment
+        or len(url_parts) < 5
+        or not url_parts[0]
+        or not url_parts[1]
+        or len(url_parts[2]) != 40
+        or any(character not in "0123456789abcdef" for character in url_parts[2])
+        or "/".join(url_parts[3:]) != repository_path.as_posix()
+    ):
+        raise ValueError(f"{label} must be an immutable raw.githubusercontent.com URL")
+
+
+def _canonical_tune_audit_path(
+    value: Any,
+    *,
+    label: str,
+    suffix: str,
+) -> Path:
+    if not isinstance(value, str) or "\\" in value:
+        raise ValueError(f"{label} must be a canonical repository path")
+    try:
+        path = _safe_relative_path(value)
+    except ValueError as exc:
+        raise ValueError(f"{label} must be a canonical repository path") from exc
+    if path.as_posix() != value or not value.endswith(suffix):
+        raise ValueError(f"{label} must end with {suffix}")
+    return path
+
+
+def _tune_confined_regular_file(
+    root: Path,
+    relative_path: Path,
+    *,
+    label: str,
+    required: bool,
+) -> Path | None:
+    root = root.resolve()
+    file_path = root / relative_path
+    try:
+        file_stat = file_path.lstat()
+    except FileNotFoundError:
+        if required:
+            raise ValueError(f"{label} is missing or unsafe")
+        return None
+    except OSError as exc:
+        raise ValueError(f"{label} is missing or unsafe") from exc
+    try:
+        resolved_path = file_path.resolve(strict=True)
+        resolved_path.relative_to(root)
+    except (FileNotFoundError, OSError, ValueError) as exc:
+        raise ValueError(f"{label} is missing or unsafe") from exc
+    if not stat.S_ISREG(file_stat.st_mode):
+        raise ValueError(f"{label} must be regular")
+    return file_path
+
+
+def _contains_forbidden_tune_marker(value: str) -> bool:
+    lowered = value.lower()
+    return any(marker in lowered for marker in TUNE_FORBIDDEN_ACTIVE_MARKERS)
+
+
+def _reject_forbidden_active_tune_metadata(value: Any, *, label: str) -> None:
+    """Reject old compositor/fallback routing only in active receipt metadata.
+
+    Free-form prompts are deliberately outside this check. The active video
+    receipt, its paths, method, delivery and generation metadata are the
+    authority for what actually ran.
+    """
+
+    def walk(item: Any, key: str | None = None) -> None:
+        if isinstance(item, dict):
+            for child_key, child_value in item.items():
+                normalized_key = str(child_key).lower().replace("_", "-")
+                if (
+                    ("deterministic" in normalized_key or "compositor" in normalized_key)
+                    or ("fallback" in normalized_key and child_value is not None)
+                ):
+                    raise ValueError(f"{label} contains forbidden active metadata")
+                walk(child_value, str(child_key))
+        elif isinstance(item, list):
+            for child in item:
+                walk(child, key)
+        elif isinstance(item, str) and key != "error":
+            if _contains_forbidden_tune_marker(item):
+                raise ValueError(f"{label} contains forbidden active metadata")
+
+    walk(value)
+
+
+def _validate_tune_historical_fallback_receipt(
+    root: Path,
+    video: dict[str, Any],
+    *,
+    label: str,
+) -> None:
+    attempt = video.get("provider_attempt")
+    if (
+        video.get("prompt_evaluated") is not False
+        or not isinstance(attempt, dict)
+        or attempt.get("status") != "provider-failed"
+        or attempt.get("prompt_evaluated") is not False
+        or not _is_sha256(attempt.get("run_sha256"))
+        or not isinstance(attempt.get("error"), str)
+        or not attempt["error"].strip()
+    ):
+        raise ValueError(f"{label} historical fallback audit is invalid")
+    run_path = _canonical_tune_audit_path(
+        attempt.get("run_path"),
+        label=f"{label} historical run_path",
+        suffix=".run.json",
+    )
+    run_file = _tune_confined_regular_file(
+        root,
+        run_path,
+        label=f"{label} historical run file",
+        required=False,
+    )
+    if run_file is not None and _sha256_file(run_file) != attempt["run_sha256"]:
+        raise ValueError(f"{label} historical run SHA mismatch")
+
+
+def _validate_tune_failed_provider_attempt(
+    root: Path,
+    video: dict[str, Any],
+    *,
+    label: str,
+) -> None:
+    attempt = video.get("provider_attempt")
+    generation = video.get("generation")
+    if not isinstance(attempt, dict) or not isinstance(generation, dict):
+        raise ValueError(f"{label} terminal provider audit is invalid")
+    run_path = _canonical_tune_audit_path(
+        attempt.get("run_path"),
+        label=f"{label} provider_attempt run_path",
+        suffix=".run.json",
+    )
+    prompt_path = _canonical_tune_audit_path(
+        attempt.get("prompt_path"),
+        label=f"{label} provider_attempt prompt_path",
+        suffix=".prompt.json",
+    )
+    provider_job_id = attempt.get("provider_job_id")
+    error = attempt.get("error")
+    if (
+        attempt.get("status") != "provider-failed"
+        or not _is_sha256(attempt.get("run_sha256"))
+        or not _is_sha256(attempt.get("prompt_sha256"))
+        or not (
+            provider_job_id is None
+            or (isinstance(provider_job_id, str) and provider_job_id.strip())
+        )
+        or not isinstance(error, str)
+        or not error.strip()
+        or attempt.get("automatic_paid_retry") is not False
+        or attempt.get("fallback") is not None
+        or generation.get("origin") != TUNE_REGENERATED_ACTION
+        or not isinstance(generation.get("batch_id"), str)
+        or not generation["batch_id"].strip()
+        or not isinstance(generation.get("provider_run_id"), str)
+        or not generation["provider_run_id"].strip()
+        or generation.get("run_path") != run_path.as_posix()
+        or generation.get("prompt_path") != prompt_path.as_posix()
+    ):
+        raise ValueError(f"{label} terminal provider audit is invalid")
+
+    run_file = _tune_confined_regular_file(
+        root,
+        run_path,
+        label=f"{label} provider_attempt run file",
+        required=True,
+    )
+    prompt_file = _tune_confined_regular_file(
+        root,
+        prompt_path,
+        label=f"{label} provider_attempt prompt file",
+        required=True,
+    )
+    assert run_file is not None and prompt_file is not None
+    if _sha256_file(run_file) != attempt["run_sha256"]:
+        raise ValueError(f"{label} provider_attempt run SHA mismatch")
+    if _sha256_file(prompt_file) != attempt["prompt_sha256"]:
+        raise ValueError(f"{label} provider_attempt prompt SHA mismatch")
+    try:
+        run = json.loads(run_file.read_text(encoding="utf-8"))
+        prompt = json.loads(prompt_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{label} provider_attempt audit file is invalid") from exc
+    if not isinstance(run, dict) or not isinstance(prompt, dict):
+        raise ValueError(f"{label} provider_attempt audit file is invalid")
+    output_path = _canonical_tune_repository_path(
+        run.get("output_path"),
+        label=f"{label} provider_attempt output_path",
+    )
+    if (
+        run.get("status") != "provider-failed"
+        or run.get("execution_mode") != "i2v"
+        or run.get("provider_may_be_active") is not False
+        or run.get("provider_job_id") != provider_job_id
+        or run.get("provider_run_id") != generation["provider_run_id"]
+        or run.get("prompt_path") != prompt_path.as_posix()
+        or run.get("error") != error
+        or run.get("media") is not None
+        or run.get("contract_check") is not None
+        or run.get("automatic_paid_retry") is not False
+        or run.get("fallback") is not None
+        or run.get("s3_upload") is not False
+        or (
+            generation.get("output_path") is not None
+            and generation.get("output_path") != output_path.as_posix()
+        )
+    ):
+        raise ValueError(f"{label} provider_attempt does not bind terminal failure")
+    if _contains_forbidden_tune_marker(output_path.as_posix()):
+        raise ValueError(f"{label} contains forbidden active metadata")
+    if os.path.lexists(root.resolve() / output_path):
+        raise ValueError(f"{label} terminal provider failure must not have an MP4")
+
+
+def _validate_tune_v8_experiment_unavailable(
+    root: Path,
+    video: dict[str, Any],
+    *,
+    label: str,
+) -> None:
+    """Validate the immutable three-attempt V8 Veo no-output experiment."""
+
+    generation = video.get("generation")
+    aggregate = video.get("provider_attempt")
+    attempts = aggregate.get("attempts") if isinstance(aggregate, dict) else None
+    prior = generation.get("prior_attempt") if isinstance(generation, dict) else None
+    if (
+        video.get("status") != "provider-unavailable"
+        or video.get("recorded_status") != "provider-failed"
+        or video.get("prompt_evaluated") is not False
+        or video.get("unavailable_reason") != TUNE_V8_UNAVAILABLE_REASON
+        or video.get("safety_barrier") is not None
+        or not isinstance(generation, dict)
+        or generation.get("origin") != TUNE_V8_EXPERIMENT_ORIGIN
+        or generation.get("batch_id") != TUNE_V8_EXPERIMENT_BATCH_ID
+        or generation.get("planning_batch_id") != TUNE_V8_PLANNING_BATCH_ID
+        or generation.get("prompt_manifest_path") != TUNE_V8_PROMPT_MANIFEST_PATH
+        or generation.get("experiment_count") != 3
+        or generation.get("shared_seed") != TUNE_V8_SHARED_SEED
+        or generation.get("changed_factor") != TUNE_V8_CHANGED_FACTOR
+        or generation.get("displayed_tuned_prompt_is_prior_baseline") is not True
+        or not isinstance(aggregate, dict)
+        or aggregate.get("status") != "all-provider-failed"
+        or aggregate.get("attempt_count") != 3
+        or aggregate.get("terminal_no_output_count") != 3
+        or aggregate.get("automatic_paid_retry") is not False
+        or aggregate.get("fallback") is not None
+        or not isinstance(attempts, list)
+        or len(attempts) != 3
+    ):
+        raise ValueError(f"{label} V8 experiment aggregate is invalid")
+
+    prior_path = _canonical_tune_audit_path(
+        prior.get("run_path") if isinstance(prior, dict) else None,
+        label=f"{label} V7 prior run_path",
+        suffix=".run.json",
+    )
+    prior_file = _tune_confined_regular_file(
+        root,
+        prior_path,
+        label=f"{label} V7 prior run file",
+        required=True,
+    )
+    assert prior_file is not None
+    if (
+        not isinstance(prior, dict)
+        or prior.get("batch_id")
+        != "promopages-10060-tune-videos-20260812-v7"
+        or prior.get("status") != "provider-failed"
+        or prior.get("provider_may_be_active") is not False
+        or prior.get("submission_count") != 1
+        or prior.get("terminal_no_output_stop_applied") is not True
+        or not isinstance(prior.get("provider_run_id"), str)
+        or not prior["provider_run_id"].strip()
+        or not isinstance(prior.get("provider_job_id"), str)
+        or not prior["provider_job_id"].strip()
+        or not _is_sha256(prior.get("run_sha256"))
+        or _sha256_file(prior_file) != prior["run_sha256"]
+    ):
+        raise ValueError(f"{label} V7 prior attempt is invalid")
+    try:
+        prior_run = json.loads(prior_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{label} V7 prior attempt is invalid") from exc
+    if (
+        not isinstance(prior_run, dict)
+        or prior_run.get("status") != "provider-failed"
+        or prior_run.get("provider_run_id") != prior["provider_run_id"]
+        or prior_run.get("provider_job_id") != prior["provider_job_id"]
+        or prior_run.get("provider_may_be_active") is not False
+        or prior_run.get("submission_count") != 1
+        or prior_run.get("terminal_no_output_stop_applied") is not True
+        or prior_run.get("media") is not None
+        or prior_run.get("contract_check") is not None
+        or prior_run.get("automatic_paid_retry") is not False
+        or prior_run.get("fallback") is not None
+        or prior_run.get("s3_upload") is not False
+    ):
+        raise ValueError(f"{label} V7 prior attempt is invalid")
+
+    expected_run_ids = generation.get("provider_run_ids")
+    if not isinstance(expected_run_ids, list) or len(expected_run_ids) != 3:
+        raise ValueError(f"{label} V8 experiment run IDs are invalid")
+    seen_run_ids: set[str] = set()
+    seen_job_ids: set[str] = set()
+    seen_paths: set[Path] = set()
+    actual_run_ids: list[str] = []
+    for attempt, variant in zip(attempts, TUNE_V8_VARIANT_ORDER, strict=True):
+        if not isinstance(attempt, dict):
+            raise ValueError(f"{label} V8 experiment attempt is invalid")
+        run_path = _canonical_tune_audit_path(
+            attempt.get("run_path"),
+            label=f"{label} V8 {variant} run_path",
+            suffix=".run.json",
+        )
+        prompt_path = _canonical_tune_audit_path(
+            attempt.get("prompt_path"),
+            label=f"{label} V8 {variant} prompt_path",
+            suffix=".prompt.json",
+        )
+        run_file = _tune_confined_regular_file(
+            root,
+            run_path,
+            label=f"{label} V8 {variant} run file",
+            required=True,
+        )
+        prompt_file = _tune_confined_regular_file(
+            root,
+            prompt_path,
+            label=f"{label} V8 {variant} prompt file",
+            required=True,
+        )
+        assert run_file is not None and prompt_file is not None
+        provider_run_id = attempt.get("provider_run_id")
+        provider_job_id = attempt.get("provider_job_id")
+        diagnostics = attempt.get("provider_terminal_diagnostics")
+        if (
+            attempt.get("experiment_id")
+            != f"07#06::google/veo-3.1-lite::{variant}"
+            or attempt.get("variant_id") != variant
+            or not isinstance(attempt.get("controlled_factor"), str)
+            or not attempt["controlled_factor"].strip()
+            or not isinstance(attempt.get("rationale"), str)
+            or not attempt["rationale"].strip()
+            or not isinstance(attempt.get("positive_prompt"), str)
+            or not attempt["positive_prompt"].strip()
+            or not isinstance(provider_run_id, str)
+            or not provider_run_id.startswith(f"{TUNE_V8_EXPERIMENT_BATCH_ID}-")
+            or not isinstance(provider_job_id, str)
+            or not provider_job_id.strip()
+            or attempt.get("status") != "provider-failed"
+            or attempt.get("provider_may_be_active") is not False
+            or attempt.get("submission_count") != 1
+            or not isinstance(attempt.get("error"), str)
+            or "no output" not in attempt["error"].lower()
+            or not isinstance(diagnostics, dict)
+            or diagnostics.get("id") != provider_job_id
+            or diagnostics.get("status") != "failed"
+            or diagnostics.get("diagnostics_unavailable_upstream") is not True
+            or attempt.get("diagnostics_unavailable_upstream") is not True
+            or attempt.get("terminal_no_output_stop_applied") is not True
+            or attempt.get("automatic_paid_retry") is not False
+            or attempt.get("fallback") is not None
+            or attempt.get("s3_upload") is not False
+            or not _is_sha256(attempt.get("run_sha256"))
+            or not _is_sha256(attempt.get("prompt_sha256"))
+            or _sha256_file(run_file) != attempt["run_sha256"]
+            or _sha256_file(prompt_file) != attempt["prompt_sha256"]
+            or not run_path.as_posix().endswith(f"/06-{variant}.run.json")
+            or not prompt_path.as_posix().endswith(f"/06-{variant}.prompt.json")
+        ):
+            raise ValueError(f"{label} V8 {variant} attempt receipt is invalid")
+        try:
+            run = json.loads(run_file.read_text(encoding="utf-8"))
+            prompt = json.loads(prompt_file.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError(f"{label} V8 {variant} receipt is invalid") from exc
+        output_path = _canonical_tune_repository_path(
+            run.get("output_path") if isinstance(run, dict) else None,
+            label=f"{label} V8 {variant} output_path",
+        )
+        prompt_value = prompt.get("prompt") if isinstance(prompt, dict) else None
+        prompt_policy = prompt.get("policy") if isinstance(prompt, dict) else None
+        if (
+            not isinstance(run, dict)
+            or not isinstance(prompt, dict)
+            or run.get("manifest_role")
+            != "clipmaker-lite-tune-v8-veo-prompt-experiment-video-run"
+            or run.get("batch_id") != TUNE_V8_EXPERIMENT_BATCH_ID
+            or run.get("provider_run_id") != provider_run_id
+            or run.get("experiment_id") != attempt["experiment_id"]
+            or run.get("variant_id") != variant
+            or run.get("model_id") != "google/veo-3.1-lite"
+            or run.get("execution_mode") != "i2v"
+            or run.get("prompt_path") != prompt_path.as_posix()
+            or run.get("status") != "provider-failed"
+            or run.get("provider_job_id") != provider_job_id
+            or run.get("provider_may_be_active") is not False
+            or run.get("submission_count") != 1
+            or run.get("media") is not None
+            or run.get("contract_check") is not None
+            or run.get("error") != attempt["error"]
+            or run.get("provider_terminal_diagnostics") != diagnostics
+            or run.get("diagnostics_unavailable_upstream") is not True
+            or run.get("terminal_no_output_stop_applied") is not True
+            or run.get("automatic_paid_retry") is not False
+            or run.get("fallback") is not None
+            or run.get("compositor") is not False
+            or run.get("s3_upload") is not False
+            or prompt.get("manifest_role")
+            != "clipmaker-lite-tune-v8-veo-prompt-experiment-video-prompt"
+            or prompt.get("batch_id") != TUNE_V8_EXPERIMENT_BATCH_ID
+            or prompt.get("provider_run_id") != provider_run_id
+            or prompt.get("experiment_id") != attempt["experiment_id"]
+            or prompt.get("variant_id") != variant
+            or prompt.get("controlled_factor") != attempt["controlled_factor"]
+            or prompt.get("rationale") != attempt["rationale"]
+            or not isinstance(prompt_value, dict)
+            or prompt_value.get("positive") != attempt["positive_prompt"]
+            or not isinstance(prompt_policy, dict)
+            or prompt_policy.get("automatic_paid_retry") is not False
+            or prompt_policy.get("fallback") is not None
+            or prompt_policy.get("compositor") is not False
+            or prompt_policy.get("s3_upload") is not False
+            or os.path.lexists(root.resolve() / output_path)
+        ):
+            raise ValueError(f"{label} V8 {variant} receipt binding is invalid")
+        if (
+            provider_run_id in seen_run_ids
+            or provider_job_id in seen_job_ids
+            or run_path in seen_paths
+            or prompt_path in seen_paths
+        ):
+            raise ValueError(f"{label} V8 experiment attempts are not unique")
+        seen_run_ids.add(provider_run_id)
+        seen_job_ids.add(provider_job_id)
+        seen_paths.update({run_path, prompt_path})
+        actual_run_ids.append(provider_run_id)
+    if actual_run_ids != expected_run_ids:
+        raise ValueError(f"{label} V8 experiment run IDs are invalid")
+
+
+def _validate_tune_retry_unavailable(
+    root: Path,
+    video: dict[str, Any],
+    *,
+    label: str,
+) -> None:
+    """Validate retry failures and fail-closed historical Wan 2.2 withholding."""
+
+    attempt = video.get("provider_attempt")
+    generation = video.get("generation")
+    recorded_status = video.get("recorded_status")
+    origin = generation.get("origin") if isinstance(generation, dict) else None
+    if origin == TUNE_V8_EXPERIMENT_ORIGIN:
+        _validate_tune_v8_experiment_unavailable(root, video, label=label)
+        return
+    if (
+        video.get("status") != "provider-unavailable"
+        or recorded_status
+        not in {"provider-failed", "failed-pre-submit", "submit-unknown", "dry-run"}
+        or not isinstance(video.get("unavailable_reason"), str)
+        or not video["unavailable_reason"].strip()
+        or not isinstance(attempt, dict)
+        or not isinstance(generation, dict)
+        or origin
+        not in {
+            TUNE_RETRY_ORIGIN,
+            TUNE_V7_FILTER_RETRY_ORIGIN,
+            TUNE_ROUTE_SAFETY_ORIGIN,
+        }
+        or attempt.get("automatic_paid_retry") is not False
+        or attempt.get("fallback") is not None
+        or not _is_sha256(attempt.get("run_sha256"))
+        or not _is_sha256(attempt.get("prompt_sha256"))
+    ):
+        raise ValueError(f"{label} v6 unavailable audit is invalid")
+    run_path = _canonical_tune_audit_path(
+        attempt.get("run_path"),
+        label=f"{label} retry run_path",
+        suffix=".run.json",
+    )
+    prompt_path = _canonical_tune_audit_path(
+        attempt.get("prompt_path"),
+        label=f"{label} retry prompt_path",
+        suffix=".prompt.json",
+    )
+    run_file = _tune_confined_regular_file(
+        root, run_path, label=f"{label} retry run file", required=True
+    )
+    prompt_file = _tune_confined_regular_file(
+        root, prompt_path, label=f"{label} retry prompt file", required=True
+    )
+    assert run_file is not None and prompt_file is not None
+    if (
+        _sha256_file(run_file) != attempt["run_sha256"]
+        or _sha256_file(prompt_file) != attempt["prompt_sha256"]
+    ):
+        raise ValueError(f"{label} v6 unavailable receipt SHA mismatch")
+    try:
+        run = json.loads(run_file.read_text(encoding="utf-8"))
+        prompt = json.loads(prompt_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{label} v6 unavailable audit file is invalid") from exc
+    if not isinstance(run, dict) or not isinstance(prompt, dict):
+        raise ValueError(f"{label} v6 unavailable audit file is invalid")
+    output_path = _canonical_tune_repository_path(
+        run.get("output_path"), label=f"{label} retry output_path"
+    )
+    if (
+        run.get("execution_mode") != "i2v"
+        or run.get("provider_run_id") != generation.get("provider_run_id")
+        or run.get("prompt_path") != prompt_path.as_posix()
+        or run.get("media") is not None
+        or run.get("contract_check") is not None
+        or run.get("automatic_paid_retry") is not False
+        or run.get("fallback") is not None
+        or run.get("s3_upload") is not False
+        or os.path.lexists(root.resolve() / output_path)
+    ):
+        raise ValueError(f"{label} v6 unavailable run binding is invalid")
+
+    if origin in {TUNE_RETRY_ORIGIN, TUNE_V7_FILTER_RETRY_ORIGIN}:
+        expected_active = recorded_status == "submit-unknown"
+        expected_submission_counts = (
+            {1}
+            if recorded_status in {"provider-failed", "submit-unknown"}
+            else {0, 1}
+        )
+        if (
+            recorded_status
+            not in {"provider-failed", "failed-pre-submit", "submit-unknown"}
+            or video.get("prompt_evaluated") is not False
+            or video.get("safety_barrier") is not None
+            or attempt.get("status") != recorded_status
+            or attempt.get("submission_count") not in expected_submission_counts
+            or run.get("status") != recorded_status
+            or run.get("submission_count") not in expected_submission_counts
+            or attempt.get("submission_count") != run.get("submission_count")
+            or run.get("provider_may_be_active") is not expected_active
+            or (
+                attempt.get("provider_may_be_active") is not None
+                and attempt.get("provider_may_be_active") is not expected_active
+            )
+            or (
+                recorded_status == "submit-unknown"
+                and (
+                    run.get("provider_job_id") is not None
+                    or attempt.get("provider_job_id") is not None
+                )
+            )
+            or run.get("error") != attempt.get("error")
+        ):
+            raise ValueError(f"{label} retry provider failure is invalid")
+        return
+
+    barrier = video.get("safety_barrier")
+    attempt_barrier = attempt.get("safety_barrier")
+    source_attempt = (
+        barrier.get("source_provider_attempt") if isinstance(barrier, dict) else None
+    )
+    if (
+        not isinstance(barrier, dict)
+        or barrier != attempt_barrier
+        or barrier.get("model_id") != "alibaba/wan-2.2"
+        or barrier.get("route_capacity") != 1
+        or not isinstance(barrier.get("reason"), str)
+        or not barrier["reason"].strip()
+        or not isinstance(source_attempt, dict)
+        or source_attempt.get("status") != "submit-unknown"
+        or source_attempt.get("provider_may_be_active") is not True
+        or source_attempt.get("automatic_paid_retry") is not False
+        or source_attempt.get("fallback") is not None
+        or not _is_sha256(source_attempt.get("run_sha256"))
+        or not _is_sha256(source_attempt.get("prompt_sha256"))
+    ):
+        raise ValueError(f"{label} Wan 2.2 safety barrier is invalid")
+    source_run_path = _canonical_tune_audit_path(
+        source_attempt.get("run_path"),
+        label=f"{label} source submit-unknown run_path",
+        suffix=".run.json",
+    )
+    source_prompt_path = _canonical_tune_audit_path(
+        source_attempt.get("prompt_path"),
+        label=f"{label} source submit-unknown prompt_path",
+        suffix=".prompt.json",
+    )
+    source_run_file = _tune_confined_regular_file(
+        root, source_run_path, label=f"{label} source submit-unknown run", required=True
+    )
+    source_prompt_file = _tune_confined_regular_file(
+        root,
+        source_prompt_path,
+        label=f"{label} source submit-unknown prompt",
+        required=True,
+    )
+    assert source_run_file is not None and source_prompt_file is not None
+    if (
+        _sha256_file(source_run_file) != source_attempt["run_sha256"]
+        or _sha256_file(source_prompt_file) != source_attempt["prompt_sha256"]
+    ):
+        raise ValueError(f"{label} source submit-unknown SHA mismatch")
+    try:
+        source_run = json.loads(source_run_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"{label} source submit-unknown receipt is invalid") from exc
+    if (
+        not isinstance(source_run, dict)
+        or source_run.get("status") != "submit-unknown"
+        or source_run.get("provider_may_be_active") is not True
+        or source_run.get("provider_job_id") is not None
+        or source_run.get("automatic_paid_retry") is not False
+        or source_run.get("fallback") is not None
+    ):
+        raise ValueError(f"{label} source submit-unknown receipt is invalid")
+
+    if recorded_status == "submit-unknown":
+        valid_withholding = (
+            video.get("prompt_evaluated") is None
+            and attempt.get("status") == "submit-unknown"
+            and attempt.get("provider_may_be_active") is True
+            and run.get("status") == "pending"
+            and generation.get("run_status") == "pending"
+        )
+    else:
+        valid_withholding = (
+            recorded_status == "dry-run"
+            and video.get("prompt_evaluated") is False
+            and attempt.get("status") == "not-attempted-route-safety"
+            and attempt.get("provider_may_be_active") is False
+            and run.get("status") == "dry-run"
+            and generation.get("run_status") == "dry-run"
+        )
+    if (
+        not valid_withholding
+        or attempt.get("submission_count") != 0
+        or run.get("submission_count") != 0
+        or run.get("provider_may_be_active") is not False
+        or run.get("provider_job_id") is not None
+    ):
+        raise ValueError(f"{label} fail-closed route withholding is invalid")
+
+
+def _validate_tune_media_contract(
+    root: Path,
+    video: dict[str, Any],
+    *,
+    label: str,
+    expected_method: str,
+    historical: bool,
+) -> None:
+    expected_sha256 = video.get("sha256")
+    expected_bytes = video.get("bytes")
+    media = video.get("media")
+    contract_check = video.get("contract_check")
+    video_status = video.get("status")
+    warnings = (
+        contract_check.get("warnings") if isinstance(contract_check, dict) else None
+    )
+    if (
+        not _is_sha256(expected_sha256)
+        or not isinstance(expected_bytes, int)
+        or isinstance(expected_bytes, bool)
+        or expected_bytes <= 0
+        or expected_bytes >= MAX_FILE_BYTES
+        or not isinstance(media, dict)
+        or media.get("sha256") != expected_sha256
+        or media.get("bytes") != expected_bytes
+        or not isinstance(media.get("duration_seconds"), (int, float))
+        or isinstance(media.get("duration_seconds"), bool)
+        or media["duration_seconds"] <= 0
+        or not isinstance(media.get("width"), int)
+        or isinstance(media.get("width"), bool)
+        or media["width"] <= 0
+        or not isinstance(media.get("height"), int)
+        or isinstance(media.get("height"), bool)
+        or media["height"] <= 0
+        or not isinstance(media.get("fps"), (int, float))
+        or isinstance(media.get("fps"), bool)
+        or media["fps"] <= 0
+        or not isinstance(media.get("frames"), int)
+        or isinstance(media.get("frames"), bool)
+        or media["frames"] <= 0
+    ):
+        raise ValueError(f"{label} common media contract is invalid")
+
+    if expected_method == TUNE_ACTIVE_VIDEO_METHOD:
+        has_audio = media.get("has_audio")
+        requested = (
+            contract_check.get("requested")
+            if isinstance(contract_check, dict)
+            else None
+        )
+        checks = (
+            contract_check.get("checks")
+            if isinstance(contract_check, dict)
+            else None
+        )
+        if (
+            video_status not in {"succeeded", "verification-failed"}
+            or not isinstance(media.get("container"), str)
+            or not media["container"].strip()
+            or not isinstance(media.get("codec"), str)
+            or not media["codec"].strip()
+            or not isinstance(has_audio, bool)
+            or video.get("provider_attempt") is not None
+            or not isinstance(contract_check, dict)
+            or (
+                video_status == "succeeded"
+                and (
+                    has_audio is not False
+                    or contract_check.get("conforms") is not True
+                )
+            )
+            or (
+                video_status == "verification-failed"
+                and contract_check.get("conforms") is not False
+            )
+            or not isinstance(warnings, list)
+            or any(
+                not isinstance(warning, str) or not warning.strip()
+                for warning in warnings
+            )
+            or (video_status == "verification-failed" and not warnings)
+            or (
+                video_status == "verification-failed"
+                and has_audio is True
+                and (
+                    not isinstance(requested, dict)
+                    or requested.get("generate_audio") is not False
+                    or not isinstance(checks, dict)
+                    or checks.get("audio") is not False
+                    or not any("has_audio=True" in warning for warning in warnings)
+                )
+            )
+        ):
+            raise ValueError(f"{label} I2V media or contract warnings are invalid")
+        return
+
+    if not historical or expected_method not in {
+        "deterministic-compositor",
+        "deterministic-compositor-fallback",
+    }:
+        raise ValueError(f"{label} generated video method is unsupported")
+    required_checks = {
+        "codec_h264",
+        "pixel_format_yuv420p",
+        "dimensions_exact",
+        "fps_exact",
+        "frames_exact",
+        "duration_exact",
+        "no_audio",
+        "source_sha256_bound",
+        "source_dimensions_bound",
+    }
+    if (
+        video_status != "succeeded"
+        or media.get("video_codec") != "h264"
+        or media.get("pixel_format") != "yuv420p"
+        or media.get("audio_streams") != 0
+        or not isinstance(contract_check, dict)
+        or set(contract_check) != required_checks
+        or any(contract_check.get(check) is not True for check in required_checks)
+    ):
+        raise ValueError(f"{label} historical compositor contract is invalid")
+    if expected_method == "deterministic-compositor-fallback":
+        _validate_tune_historical_fallback_receipt(root, video, label=label)
+    elif video.get("provider_attempt") is not None:
+        raise ValueError(f"{label} historical compositor receipt is invalid")
+
+
+def _validate_tune_visual_qa(video: dict[str, Any], *, label: str) -> None:
+    qa = video.get("qa")
+    if qa is None:
+        return
+    expected_keys = {
+        "status",
+        "verified",
+        "reviewable",
+        "reviewer",
+        "video_sha256",
+        "automatic_rejection",
+        "scope",
+        "summary",
+        "findings",
+    }
+    findings = qa.get("findings") if isinstance(qa, dict) else None
+    if (
+        not isinstance(qa, dict)
+        or set(qa) != expected_keys
+        or qa.get("status") != "visual-review-failed"
+        or qa.get("verified") is not False
+        or qa.get("reviewable") is not True
+        or qa.get("reviewer") != "codex-visual-qa"
+        or qa.get("video_sha256") != video.get("sha256")
+        or qa.get("automatic_rejection") is not False
+        or qa.get("scope") != "strict-visual-fidelity"
+        or not isinstance(qa.get("summary"), str)
+        or not qa["summary"].strip()
+        or not isinstance(findings, list)
+        or not findings
+        or any(
+            not isinstance(finding, str) or not finding.strip()
+            for finding in findings
+        )
+    ):
+        raise ValueError(f"{label} manual visual QA is invalid")
+
+
+def _validate_tune_repository_video(
+    root: Path,
+    video: Any,
+    *,
+    label: str,
+    expected_method: str,
+    historical: bool = False,
+) -> tuple[Path, str]:
+    if (
+        not isinstance(video, dict)
+        or video.get("delivery") != "repository-raw"
+        or video.get("method") != expected_method
+    ):
+        raise ValueError(f"{label} must be a reviewable repository-raw object")
+    if not historical and (
+        video.get("state") != "available"
+        or video.get("prompt_evaluated") is not True
+    ):
+        raise ValueError(f"{label} active availability receipt is invalid")
+
+    repository_path = _canonical_tune_repository_path(
+        video.get("repository_video_path"),
+        label=f"{label} repository_video_path",
+    )
+    _validate_tune_raw_url(video.get("url"), repository_path, label=f"{label} URL")
+    _validate_tune_media_contract(
+        root,
+        video,
+        label=label,
+        expected_method=expected_method,
+        historical=historical,
+    )
+    if not historical:
+        _validate_tune_visual_qa(video, label=label)
+
+    file_path = _tune_confined_regular_file(
+        root,
+        repository_path,
+        label=f"{label} repository file",
+        required=not historical,
+    )
+    if file_path is not None:
+        actual_bytes = file_path.stat().st_size
+        if actual_bytes >= MAX_FILE_BYTES:
+            raise ValueError(f"{label} repository file exceeds the GitHub file limit")
+        if (
+            actual_bytes != video["bytes"]
+            or _sha256_file(file_path) != video["sha256"]
+        ):
+            raise ValueError(f"{label} repository file SHA/bytes mismatch")
+    return repository_path, video["url"]
+
+
+def _validate_tune_active_video(
+    root: Path,
+    video: Any,
+    *,
+    label: str,
+) -> tuple[Path, str] | None:
+    if not isinstance(video, dict) or video.get("method") != TUNE_ACTIVE_VIDEO_METHOD:
+        raise ValueError(f"{label} active video method must be eliza-i2v")
+    _reject_forbidden_active_tune_metadata(video, label=label)
+    if video.get("state") == "unavailable":
+        status = video.get("status")
+        if (
+            status not in {"provider-failed", "provider-unavailable"}
+            or video.get("delivery") != "unavailable"
+            or any(
+                video.get(field) is not None
+                for field in (
+                    "url",
+                    "repository_video_path",
+                    "sha256",
+                    "bytes",
+                    "media",
+                    "contract_check",
+                )
+            )
+        ):
+            raise ValueError(f"{label} unavailable video receipt is invalid")
+        if status == "provider-unavailable":
+            _validate_tune_retry_unavailable(root, video, label=label)
+        else:
+            if video.get("prompt_evaluated") is not False:
+                raise ValueError(f"{label} unavailable prompt audit is invalid")
+            _validate_tune_failed_provider_attempt(root, video, label=label)
+        return None
+    return _validate_tune_repository_video(
+        root,
+        video,
+        label=label,
+        expected_method=TUNE_ACTIVE_VIDEO_METHOD,
+    )
+
+
+def _validate_tune_iteration(
+    target: dict[str, Any],
+    *,
+    case_id: str,
+    model_id: str,
+    label: str,
+) -> str:
+    iteration = target.get("iteration")
+    source_evaluation = (
+        iteration.get("source_evaluation") if isinstance(iteration, dict) else None
+    )
+    expected_evaluation_id = f"{case_id}::{model_id}"
+    if (
+        not isinstance(iteration, dict)
+        or iteration.get("action")
+        not in {TUNE_REGENERATED_ACTION, TUNE_REUSED_ACTION}
+        or not isinstance(iteration.get("review_scope"), bool)
+        or not isinstance(source_evaluation, dict)
+        or source_evaluation.get("evaluation_id") != expected_evaluation_id
+        or source_evaluation.get("outcome") not in TUNE_SOURCE_OUTCOMES
+        or not (
+            source_evaluation.get("note") is None
+            or isinstance(source_evaluation.get("note"), str)
+        )
+        or not (
+            source_evaluation.get("updated_at") is None
+            or (
+                isinstance(source_evaluation.get("updated_at"), str)
+                and source_evaluation["updated_at"].strip()
+            )
+        )
+    ):
+        raise ValueError(f"{label} iteration audit is invalid")
+    action = iteration["action"]
+    if action == TUNE_REGENERATED_ACTION:
+        if (
+            iteration["review_scope"] is not True
+            or source_evaluation["outcome"] == "helped"
+            or not isinstance(target.get("previous_tuned"), dict)
+        ):
+            raise ValueError(f"{label} regenerated-v5 review scope is invalid")
+    elif (
+        iteration["review_scope"] is not False
+        or source_evaluation["outcome"] != "helped"
+        or "previous_tuned" in target
+    ):
+        raise ValueError(f"{label} reused-helped review scope is invalid")
+    return action
+
+
+def _validate_tune_historical_video(
+    root: Path,
+    previous_tuned: dict[str, Any],
+    *,
+    label: str,
+) -> tuple[Path, str]:
+    execution_mode = previous_tuned.get("execution_mode")
+    video = previous_tuned.get("video")
+    method = video.get("method") if isinstance(video, dict) else None
+    valid_execution_receipt = (
+        execution_mode == "i2v"
+        and method in {TUNE_ACTIVE_VIDEO_METHOD, "deterministic-compositor-fallback"}
+    ) or (
+        execution_mode == "deterministic-compositor"
+        and method == "deterministic-compositor"
+    )
+    if not valid_execution_receipt:
+        raise ValueError(f"{label} historical execution receipt is invalid")
+    return _validate_tune_repository_video(
+        root,
+        video,
+        label=label,
+        expected_method=method,
+        historical=True,
+    )
+
+
+def _validate_tune_v8_prompt_experiment(
+    target: dict[str, Any],
+    video: dict[str, Any],
+    *,
+    label: str,
+) -> None:
+    record = target.get("prompt_experiment")
+    experiments = record.get("experiments") if isinstance(record, dict) else None
+    aggregate = video.get("provider_attempt")
+    attempts = aggregate.get("attempts") if isinstance(aggregate, dict) else None
+    if (
+        not isinstance(record, dict)
+        or set(record)
+        != {
+            "planning_batch_id",
+            "generation_batch_id",
+            "prompt_manifest_path",
+            "prompt_manifest_sha256",
+            "shared_seed",
+            "fixed_source_sha256",
+            "changed_factor",
+            "variant_order",
+            "displayed_tuned_prompt_is_prior_baseline",
+            "experiments",
+        }
+        or record.get("planning_batch_id") != TUNE_V8_PLANNING_BATCH_ID
+        or record.get("generation_batch_id") != TUNE_V8_EXPERIMENT_BATCH_ID
+        or record.get("prompt_manifest_path") != TUNE_V8_PROMPT_MANIFEST_PATH
+        or record.get("prompt_manifest_sha256")
+        != TUNE_V8_PROMPT_MANIFEST_SHA256
+        or record.get("shared_seed") != TUNE_V8_SHARED_SEED
+        or record.get("fixed_source_sha256") != TUNE_V8_SOURCE_SHA256
+        or record.get("changed_factor") != TUNE_V8_CHANGED_FACTOR
+        or record.get("variant_order") != list(TUNE_V8_VARIANT_ORDER)
+        or record.get("displayed_tuned_prompt_is_prior_baseline") is not True
+        or not isinstance(experiments, list)
+        or len(experiments) != 3
+        or not isinstance(attempts, list)
+        or len(attempts) != 3
+    ):
+        raise ValueError(f"{label} V8 prompt experiment record is invalid")
+    for experiment, attempt, variant in zip(
+        experiments,
+        attempts,
+        TUNE_V8_VARIANT_ORDER,
+        strict=True,
+    ):
+        planning_record = (
+            experiment.get("planning") if isinstance(experiment, dict) else None
+        )
+        tuned = experiment.get("tuned") if isinstance(experiment, dict) else None
+        if (
+            not isinstance(experiment, dict)
+            or experiment.get("experiment_id") != attempt.get("experiment_id")
+            or experiment.get("variant_id") != variant
+            or experiment.get("controlled_factor")
+            != attempt.get("controlled_factor")
+            or experiment.get("rationale") != attempt.get("rationale")
+            or experiment.get("positive_prompt") != attempt.get("positive_prompt")
+            or experiment.get("shared_provider_seed") != TUNE_V8_SHARED_SEED
+            or not isinstance(planning_record, dict)
+            or not isinstance(planning_record.get("provenance"), dict)
+            or planning_record["provenance"].get("verified") is not True
+            or not isinstance(tuned, dict)
+            or tuned.get("execution_mode") != "i2v"
+            or tuned.get("positive_prompt") != attempt.get("positive_prompt")
+        ):
+            raise ValueError(f"{label} V8 {variant} prompt experiment is invalid")
+
+
+def _validate_tune_manifest_for_pages(
+    manifest: Any,
+    *,
+    root: Path = ROOT,
+) -> None:
+    """Validate Tune v5 while keeping every Tune MP4 outside Pages.
+
+    Active media is always Eliza I2V. Successful media is locally hash-bound
+    to an immutable repository-raw URL; a terminal provider failure remains
+    explicitly unavailable and must carry a complete audited receipt. Previous
+    v4 media is comparison history only and may be remote-only.
+    """
+
+    if not isinstance(manifest, dict):
+        raise ValueError("Tune manifest must be an object")
+    scope = manifest.get("scope")
+    cases = manifest.get("cases")
+    if (
+        manifest.get("schema_version") != 2
+        or manifest.get("manifest_role") != "clipmaker-lite-tune-review"
+        or manifest.get("ticket") != "PROMOPAGES-10060"
+        or manifest.get("agent_id") != "clipmaker-lite"
+        or not isinstance(scope, dict)
+        or scope.get("case_count") != TUNE_CASE_COUNT
+        or scope.get("target_count") != TUNE_TARGET_COUNT
+        or scope.get("review_target_count") != TUNE_REVIEW_TARGET_COUNT
+        or scope.get("regenerated_target_count") != TUNE_REGENERATED_TARGET_COUNT
+        or scope.get("reused_helped_target_count") != TUNE_REUSED_HELPED_TARGET_COUNT
+        or scope.get("new_video_generation") is not True
+        or scope.get("new_s3_upload") is not False
+        or scope.get("execution_mode_counts") != {"i2v": TUNE_I2V_TARGET_COUNT}
+        or scope.get("video_method_counts")
+        != {TUNE_ACTIVE_VIDEO_METHOD: TUNE_TARGET_COUNT}
+        or not isinstance(cases, list)
+        or len(cases) != TUNE_CASE_COUNT
+    ):
+        raise ValueError("Tune v5 identity or iteration scope is invalid")
+    _reject_forbidden_active_tune_metadata(scope, label="Tune v5 scope")
+
+    seen_case_ids: set[str] = set()
+    seen_sheet_rows: set[int] = set()
+    seen_evaluation_ids: set[str] = set()
+    seen_video_paths: set[Path] = set()
+    seen_video_urls: set[str] = set()
+    action_counts = {TUNE_REGENERATED_ACTION: 0, TUNE_REUSED_ACTION: 0}
+    model_counts = {model_id: 0 for model_id in PROMOPAGES_10060_MODELS}
+    review_count = 0
+    unavailable_count = 0
+    target_count = 0
+    for case in cases:
+        if not isinstance(case, dict):
+            raise ValueError("Tune manifest cases must contain objects")
+        case_id = case.get("case_id")
+        source = case.get("source")
+        targets = case.get("targets")
+        source_url = source.get("url") if isinstance(source, dict) else None
+        if (
+            not isinstance(case_id, str)
+            or not case_id.strip()
+            or case_id in seen_case_ids
+            or not isinstance(source_url, str)
+            or not source_url.startswith("https://")
+            or not isinstance(targets, list)
+            or not targets
+        ):
+            raise ValueError("Tune manifest case identity or source delivery is invalid")
+        seen_case_ids.add(case_id)
+        for target in targets:
+            if not isinstance(target, dict):
+                raise ValueError("Tune manifest targets must contain objects")
+            sheet_row = target.get("sheet_row")
+            model_id = target.get("model_id")
+            baseline = target.get("baseline")
+            tuned = target.get("tuned")
+            video_url = (
+                baseline.get("video_url") if isinstance(baseline, dict) else None
+            )
+            if (
+                not isinstance(sheet_row, int)
+                or isinstance(sheet_row, bool)
+                or sheet_row in seen_sheet_rows
+                or model_id not in PROMOPAGES_10060_MODELS
+                or not isinstance(video_url, str)
+                or not video_url.startswith("https://")
+                or not isinstance(tuned, dict)
+                or tuned.get("execution_mode") != "i2v"
+            ):
+                raise ValueError(
+                    "Tune manifest target identity, baseline or active I2V mode is invalid"
+                )
+            seen_sheet_rows.add(sheet_row)
+            evaluation_id = f"{case_id}::{model_id}"
+            if evaluation_id in seen_evaluation_ids:
+                raise ValueError("Tune manifest target identity is duplicated")
+            seen_evaluation_ids.add(evaluation_id)
+            target_count += 1
+            model_counts[model_id] += 1
+            label = f"Tune target row {sheet_row}"
+            action = _validate_tune_iteration(
+                target,
+                case_id=case_id,
+                model_id=model_id,
+                label=label,
+            )
+            action_counts[action] += 1
+            if target["iteration"]["review_scope"]:
+                review_count += 1
+            _reject_forbidden_active_tune_metadata(
+                {
+                    key: value
+                    for key, value in tuned.items()
+                    if key not in {"scene_plan", "positive_prompt", "negative_prompt"}
+                },
+                label=f"{label} active tuned metadata",
+            )
+
+            active_binding = _validate_tune_active_video(
+                root,
+                tuned.get("video"),
+                label=f"{label} active video",
+            )
+            active_video = tuned["video"]
+            active_origin = (
+                active_video.get("generation", {}).get("origin")
+                if isinstance(active_video.get("generation"), dict)
+                else None
+            )
+            valid_origins = (
+                {
+                    TUNE_REGENERATED_ACTION,
+                    TUNE_RETRY_ORIGIN,
+                    TUNE_V7_FILTER_RETRY_ORIGIN,
+                    TUNE_V8_EXPERIMENT_ORIGIN,
+                    TUNE_ROUTE_SAFETY_ORIGIN,
+                }
+                if action == TUNE_REGENERATED_ACTION
+                else {"reused-helped-v4"}
+            )
+            if (
+                not isinstance(active_video.get("generation"), dict)
+                or active_origin not in valid_origins
+            ):
+                raise ValueError(f"{label} active generation origin is invalid")
+            if active_origin == TUNE_V8_EXPERIMENT_ORIGIN:
+                _validate_tune_v8_prompt_experiment(
+                    target,
+                    active_video,
+                    label=label,
+                )
+            elif "prompt_experiment" in target:
+                raise ValueError(f"{label} has an unexpected prompt experiment")
+            if active_binding is None:
+                unavailable_count += 1
+                if action != TUNE_REGENERATED_ACTION:
+                    raise ValueError(
+                        f"{label} reused-helped video cannot be unavailable"
+                    )
+            else:
+                repository_path, immutable_url = active_binding
+                if (
+                    repository_path in seen_video_paths
+                    or immutable_url in seen_video_urls
+                ):
+                    raise ValueError("Tune active video bindings must be unique")
+                seen_video_paths.add(repository_path)
+                seen_video_urls.add(immutable_url)
+
+            if action == TUNE_REGENERATED_ACTION:
+                history_path, history_url = _validate_tune_historical_video(
+                    root,
+                    target["previous_tuned"],
+                    label=f"{label} previous v4 video",
+                )
+                if history_path in seen_video_paths or history_url in seen_video_urls:
+                    raise ValueError("Tune active and historical video bindings must differ")
+                seen_video_paths.add(history_path)
+                seen_video_urls.add(history_url)
+
+    if target_count != TUNE_TARGET_COUNT:
+        raise ValueError(f"Tune manifest must contain {TUNE_TARGET_COUNT} targets")
+    if action_counts != {
+        TUNE_REGENERATED_ACTION: TUNE_REGENERATED_TARGET_COUNT,
+        TUNE_REUSED_ACTION: TUNE_REUSED_HELPED_TARGET_COUNT,
+    } or review_count != TUNE_REVIEW_TARGET_COUNT:
+        raise ValueError(
+            "Tune v5 must contain exactly 28 regenerated review targets and "
+            "37 reused-helped targets"
+        )
+    available_count = TUNE_TARGET_COUNT - unavailable_count
+    if (
+        scope.get("available_video_count") != available_count
+        or scope.get("unavailable_video_count") != unavailable_count
+    ):
+        raise ValueError("Tune v5 available/unavailable video counts are invalid")
+    summary = manifest.get("summary")
+    if summary is not None:
+        if (
+            not isinstance(summary, dict)
+            or summary.get("iteration_action_counts") != action_counts
+            or summary.get("video_method_counts")
+            != {TUNE_ACTIVE_VIDEO_METHOD: TUNE_TARGET_COUNT}
+            or summary.get("unavailable_video_count") != unavailable_count
+            or (
+                "model_counts" in summary
+                and summary.get("model_counts") != model_counts
+            )
+        ):
+            raise ValueError("Tune v5 summary counts are invalid")
+        _reject_forbidden_active_tune_metadata(summary, label="Tune v5 summary")
 
 
 def _sha256_file(path: Path) -> str:
@@ -642,6 +2018,293 @@ def _validate_promopages_10060_s3_delivery(
     if seen_keys != set(canonical_outputs):
         raise ValueError(f"{label} has missing or extra canonical outputs")
     return seen_video_paths
+
+
+def _validate_promopages_10060_tune_approved_s3_overlay(
+    overlay: Any,
+    routing_config: dict[str, Any],
+    tune_manifest: dict[str, Any],
+    baseline_delivery: dict[str, Any],
+    *,
+    root: Path,
+) -> set[Path]:
+    """Validate the post-upload curated Tune overlay against local evidence."""
+
+    label = "PROMOPAGES-10060 Tune-approved S3 overlay"
+    top_fields = {
+        "schema_version",
+        "manifest_role",
+        "ticket",
+        "bucket",
+        "object_prefix",
+        "public_base_url",
+        "selection_contract",
+        "evaluation_inputs",
+        "selection_policy",
+        "tune_manifest",
+        "selected_output_count",
+        "model_counts",
+        "outputs",
+    }
+    if (
+        not isinstance(overlay, dict)
+        or set(overlay) != top_fields
+        or overlay.get("schema_version") != 1
+        or overlay.get("manifest_role")
+        != "promopages-10060-tune-approved-s3-overlay"
+        or overlay.get("ticket") != "PROMOPAGES-10060"
+        or overlay.get("bucket") != PROMOPAGES_10060_S3_BUCKET
+        or overlay.get("object_prefix") != PROMOPAGES_10060_S3_OBJECT_PREFIX
+        or overlay.get("public_base_url")
+        != PROMOPAGES_10060_S3_PUBLIC_BASE_URL
+    ):
+        raise ValueError(f"{label} identity is invalid")
+
+    def validate_receipt(
+        receipt: Any,
+        expected_path: Path,
+        *,
+        receipt_label: str,
+        extra_fields: set[str] | None = None,
+    ) -> None:
+        fields = {"path", "sha256"} | (extra_fields or set())
+        if (
+            not isinstance(receipt, dict)
+            or set(receipt) != fields
+            or receipt.get("path") != expected_path.as_posix()
+            or not _is_sha256(receipt.get("sha256"))
+        ):
+            raise ValueError(f"{label} {receipt_label} receipt is invalid")
+        local_path = root / expected_path
+        if (
+            not local_path.is_file()
+            or local_path.is_symlink()
+            or _sha256_file(local_path) != receipt["sha256"]
+        ):
+            raise ValueError(f"{label} {receipt_label} hash differs")
+        for field in extra_fields or set():
+            if not isinstance(receipt.get(field), str) or not receipt[field].strip():
+                raise ValueError(f"{label} {receipt_label} {field} is invalid")
+
+    validate_receipt(
+        overlay.get("selection_contract"),
+        PROMOPAGES_10060_TUNE_APPROVED_SELECTION_CONTRACT_RELATIVE_PATH,
+        receipt_label="selection contract",
+    )
+    evaluation_receipts = overlay.get("evaluation_inputs")
+    if not isinstance(evaluation_receipts, list) or len(evaluation_receipts) != 2:
+        raise ValueError(f"{label} must bind exactly two evaluation inputs")
+    evaluation_by_path = {
+        receipt.get("path"): receipt
+        for receipt in evaluation_receipts
+        if isinstance(receipt, dict)
+    }
+    if set(evaluation_by_path) != {
+        path.as_posix()
+        for path in PROMOPAGES_10060_TUNE_APPROVED_EVALUATION_RELATIVE_PATHS
+    }:
+        raise ValueError(f"{label} evaluation input paths differ")
+    for evaluation_path in PROMOPAGES_10060_TUNE_APPROVED_EVALUATION_RELATIVE_PATHS:
+        validate_receipt(
+            evaluation_by_path[evaluation_path.as_posix()],
+            evaluation_path,
+            receipt_label=f"evaluation {evaluation_path.name}",
+            extra_fields={"kind", "batch_id"},
+        )
+
+    policy = overlay.get("selection_policy")
+    if (
+        not isinstance(policy, dict)
+        or set(policy)
+        != {
+            "approved_outcome",
+            "deduplication_key",
+            "precedence",
+            "explicit_latest_wan_evaluation_ids",
+            "current_tune_binding_required",
+            "previous_tuned_fallback_allowed",
+        }
+        or policy.get("approved_outcome") != "helped"
+        or policy.get("deduplication_key") != "evaluation_id"
+        or policy.get("precedence")
+        != "v6-helped-over-v4; preserve-v4-helped-when-v6-is-not-helped"
+        or policy.get("current_tune_binding_required") is not True
+        or policy.get("previous_tuned_fallback_allowed") is not False
+        or policy.get("explicit_latest_wan_evaluation_ids")
+        != list(PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS)
+    ):
+        raise ValueError(f"{label} selection policy is invalid")
+
+    tune_receipt = overlay.get("tune_manifest")
+    validate_receipt(
+        tune_receipt,
+        TUNE_MANIFEST_RELATIVE_PATH,
+        receipt_label="Tune manifest",
+        extra_fields={"batch_id", "media_commit_sha"},
+    )
+    if (
+        tune_manifest.get("schema_version") != 2
+        or tune_manifest.get("manifest_role") != "clipmaker-lite-tune-review"
+        or tune_manifest.get("ticket") != "PROMOPAGES-10060"
+        or tune_manifest.get("agent_id") != "clipmaker-lite"
+        or tune_manifest.get("batch_id") != tune_receipt["batch_id"]
+        or (tune_manifest.get("scope") or {}).get("media_commit_sha")
+        != tune_receipt["media_commit_sha"]
+    ):
+        raise ValueError(f"{label} differs from current Tune manifest")
+    if (
+        overlay.get("selected_output_count")
+        != PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT
+        or overlay.get("model_counts")
+        != PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS
+        or not isinstance(overlay.get("outputs"), list)
+        or len(overlay["outputs"])
+        != PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT
+    ):
+        raise ValueError(f"{label} must contain exact 45 / 16 / 12 / 17")
+
+    route_by_slug = {
+        article["article_slug"]: article
+        for article in routing_config.get("articles", [])
+        if isinstance(article, dict)
+    }
+    baseline_keys = {
+        (row.get("article_slug"), row.get("image_id"), row.get("model_id"))
+        for row in baseline_delivery.get("outputs", [])
+        if isinstance(row, dict)
+    }
+    if len(baseline_keys) != PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT:
+        raise ValueError(f"{label} requires the complete 510-output baseline")
+
+    tune_targets: dict[str, tuple[dict[str, Any], dict[str, Any]]] = {}
+    for case in tune_manifest.get("cases", []):
+        if not isinstance(case, dict) or not isinstance(case.get("targets"), list):
+            raise ValueError(f"{label} current Tune cases are invalid")
+        for target in case["targets"]:
+            if not isinstance(target, dict):
+                raise ValueError(f"{label} current Tune target is invalid")
+            evaluation_id = f"{case.get('case_id')}::{target.get('model_id')}"
+            if evaluation_id in tune_targets:
+                raise ValueError(f"{label} current Tune target is duplicated")
+            tune_targets[evaluation_id] = (case, target)
+
+    row_fields = {
+        "evaluation_id",
+        "sheet_row",
+        "case_id",
+        "article_number",
+        "article_slug",
+        "publication_id",
+        "image_id",
+        "model_id",
+        "experiment",
+        "approval_kind",
+        "approval_source",
+        "generation_origin",
+        "source_video_path",
+        "sha256",
+        "bytes",
+        "object_key",
+        "yastatic_url",
+    }
+    seen_logical_keys: set[tuple[str, str, str]] = set()
+    seen_source_paths: set[Path] = set()
+    seen_object_keys: set[Path] = set()
+    model_counts = {model_id: 0 for model_id in PROMOPAGES_10060_MODELS}
+    for row in overlay["outputs"]:
+        if not isinstance(row, dict) or set(row) != row_fields:
+            raise ValueError(f"{label} output shape is invalid")
+        tune_entry = tune_targets.get(row["evaluation_id"])
+        if tune_entry is None:
+            raise ValueError(f"{label} output is absent from current Tune")
+        case, target = tune_entry
+        tuned = target.get("tuned")
+        video = tuned.get("video") if isinstance(tuned, dict) else None
+        logical_key = (row["article_slug"], row["image_id"], row["model_id"])
+        route = route_by_slug.get(row["article_slug"])
+        experiment = PROMOPAGES_10060_S3_MODEL_DIRECTORIES.get(row["model_id"])
+        source_path = _safe_extension_audit_path(
+            row["source_video_path"], label=f"{label} source_video_path"
+        )
+        object_key = _safe_extension_audit_path(
+            row["object_key"], label=f"{label} object_key"
+        )
+        approval_is_helped = (
+            row["approval_kind"] == "helped"
+            and row["approval_source"] in {"v4-evaluation", "v6-evaluation"}
+        )
+        approval_is_explicit = (
+            row["approval_kind"] == "explicit-latest-wan"
+            and row["approval_source"] == "explicit-latest-wan"
+            and row["evaluation_id"]
+            in PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS
+        )
+        expected_object_key = (
+            f"{PROMOPAGES_10060_S3_OBJECT_PREFIX}"
+            f"{route['cabinet']['slug']}__{route['cabinet']['id']}/"
+            f"{route['publication_id']}/{experiment}/"
+            f"image_{row['image_id']}--sha256-{row['sha256'][:12]}.mp4"
+            if route is not None and experiment is not None
+            else None
+        )
+        if (
+            logical_key not in baseline_keys
+            or logical_key in seen_logical_keys
+            or route is None
+            or row["case_id"] != case.get("case_id")
+            or row["article_number"] != case.get("article_number")
+            or row["article_slug"] != case.get("article_slug")
+            or row["publication_id"] != case.get("publication_id")
+            or row["image_id"] != (case.get("source") or {}).get("image_id")
+            or (case.get("source") or {}).get("role") != "article_image"
+            or row["model_id"] != target.get("model_id")
+            or row["sheet_row"] != target.get("sheet_row")
+            or row["evaluation_id"]
+            != f"{row['case_id']}::{row['model_id']}"
+            or not (approval_is_helped or approval_is_explicit)
+            or not isinstance(video, dict)
+            or video.get("state") != "available"
+            or video.get("status") not in {"succeeded", "verification-failed"}
+            or video.get("delivery") != "repository-raw"
+            or row["source_video_path"] != source_path.as_posix()
+            or source_path.suffix.lower() != ".mp4"
+            or video.get("repository_video_path") != row["source_video_path"]
+            or not _is_sha256(row["sha256"])
+            or video.get("sha256") != row["sha256"]
+            or not isinstance(row["bytes"], int)
+            or isinstance(row["bytes"], bool)
+            or row["bytes"] <= 0
+            or video.get("bytes") != row["bytes"]
+            or (video.get("media") or {}).get("sha256") != row["sha256"]
+            or (video.get("media") or {}).get("bytes") != row["bytes"]
+            or (video.get("generation") or {}).get("origin")
+            != row["generation_origin"]
+            or not isinstance(tuned.get("positive_prompt"), str)
+            or not tuned["positive_prompt"].strip()
+            or tuned.get("negative_prompt") is not None
+            or row["experiment"] != experiment
+            or row["object_key"] != object_key.as_posix()
+            or row["object_key"] != expected_object_key
+            or row["yastatic_url"]
+            != PROMOPAGES_10060_S3_PUBLIC_BASE_URL + row["object_key"]
+            or source_path in seen_source_paths
+            or object_key in seen_object_keys
+        ):
+            raise ValueError(
+                f"{label} current-Tune/S3 binding is invalid: "
+                f"{row.get('evaluation_id')}"
+            )
+        seen_logical_keys.add(logical_key)
+        seen_source_paths.add(source_path)
+        seen_object_keys.add(object_key)
+        model_counts[row["model_id"]] += 1
+
+    if (
+        len(seen_logical_keys) != PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT
+        or model_counts != PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS
+    ):
+        raise ValueError(f"{label} actual selection differs from 45 / 16 / 12 / 17")
+    return seen_source_paths
 
 
 def _validate_provider_filtered_attempt(
@@ -2556,6 +4219,12 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
     for tree in STATIC_TREES:
         relative_paths.update(_tree_files(root, tree))
 
+    if TUNE_MANIFEST_RELATIVE_PATH in relative_paths:
+        tune_manifest = json.loads(
+            (root / TUNE_MANIFEST_RELATIVE_PATH).read_text(encoding="utf-8")
+        )
+        _validate_tune_manifest_for_pages(tune_manifest, root=root)
+
     gallery = _load_js_assignment(
         root / "generated-gallery-data.js", "generatedGalleryData"
     )
@@ -3189,6 +4858,13 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
 
     s3_delivery_video_paths: set[Path] = set()
     s3_delivery_path = root / PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH
+    tune_approved_s3_overlay_path = (
+        root / PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH
+    )
+    tune_approved_s3_overlay_required = (
+        PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_RELATIVE_PATH
+        in relative_paths
+    )
     s3_articles_path = root / PROMOPAGES_10060_S3_ARTICLES_RELATIVE_PATH
     if promopages_10060_manifest is not None:
         if not s3_delivery_path.is_file():
@@ -3198,6 +4874,13 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
         if not s3_articles_path.is_file():
             raise FileNotFoundError(
                 "PROMOPAGES-10060 base dataset requires its S3 routing config"
+            )
+        if (
+            tune_approved_s3_overlay_required
+            and not tune_approved_s3_overlay_path.is_file()
+        ):
+            raise FileNotFoundError(
+                "PROMOPAGES-10060 base dataset requires its Tune-approved S3 overlay"
             )
         relative_paths.add(PROMOPAGES_10060_S3_DELIVERY_RELATIVE_PATH)
         s3_delivery_manifest = json.loads(
@@ -3219,15 +4902,29 @@ def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
             s3_routing_config,
             *source_manifests,
         )
+        if tune_approved_s3_overlay_required:
+            tune_approved_s3_overlay = json.loads(
+                tune_approved_s3_overlay_path.read_text(encoding="utf-8")
+            )
+            _validate_promopages_10060_tune_approved_s3_overlay(
+                tune_approved_s3_overlay,
+                s3_routing_config,
+                tune_manifest,
+                s3_delivery_manifest,
+                root=root,
+            )
         if not s3_delivery_video_paths <= remote_repository_paths:
             raise ValueError(
                 "PROMOPAGES-10060 S3 delivery overlay contains a non-canonical "
                 "repository path"
             )
         remote_repository_paths.difference_update(s3_delivery_video_paths)
-    elif s3_delivery_path.is_file():
+    elif s3_delivery_path.is_file() or (
+        tune_approved_s3_overlay_required
+        and tune_approved_s3_overlay_path.is_file()
+    ):
         raise ValueError(
-            "PROMOPAGES-10060 S3 delivery overlay requires the base dataset"
+            "PROMOPAGES-10060 S3 delivery overlays require the base dataset"
         )
 
     if article_02_manifest is not None:

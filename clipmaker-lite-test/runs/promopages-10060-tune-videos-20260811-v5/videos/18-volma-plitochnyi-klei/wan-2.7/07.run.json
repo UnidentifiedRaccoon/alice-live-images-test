@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v5",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-07-wan-2-7",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r2-18-volma-plitochnyi-klei-07",
+  "case_id": "18#07",
+  "sheet_row": 265,
+  "model_id": "alibaba/wan-2.7",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.7/07.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.7/07.mp4",
+  "status": "provider-failed",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The camera makes one steady centered push-in toward the full recommendation table and warning, limited to 1.5% screen travel. Preserve the complete rigid graphic continuously in frame—both headings, format labels, all four adhesive names, glyphs, rules, divider, and warning remain unchanged—and finish at the slightly closer framing.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_6a267e54c6621a31e5630a18_6a269812b55c4222ecf7445c/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "8dfea68a4dcb58143b23ea5fd84202c50d992cf7f943cecae4cb08125af42435",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "VXfoqD7ywaQ7xmwJ7VkA",
+  "submitted_at": "2026-08-11T19:32:55Z",
+  "completed_at": "2026-08-11T19:33:48Z",
+  "provider_may_be_active": false,
+  "source_preflight": null,
+  "provider_response": null,
+  "media": null,
+  "contract_check": null,
+  "error": "provider poll/download: Eliza/OpenRouter job VXfoqD7ywaQ7xmwJ7VkA failed with status failed: Error validating image resolution: {\"name\": \"InvalidParameter\", \"code\": 400, \"message\": \"image *** resolution must be at least 240x240, got 773x239\", \"internal_name\": \"InvalidParameter\"}",
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false
+}

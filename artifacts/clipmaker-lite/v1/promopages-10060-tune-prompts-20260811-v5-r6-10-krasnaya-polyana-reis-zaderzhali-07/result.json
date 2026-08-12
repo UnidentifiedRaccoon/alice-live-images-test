@@ -1,0 +1,174 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:df8656bf0c4fd8615002576af9f94979ee20bff61419f206078e753b10bcc40d",
+    "execution_fingerprint": "sha256:dd5781e87112c6c5a2d686a33ccf16b25e21e34c8e496ed57ea82f686eb43099",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff280-686c-79c1-be87-b9a2a5dce130"
+    },
+    "authored_payload_sha256": "02f235e89c0732db19debbbc350ec74c69d421a15680fbff45797f571ec7cce1",
+    "draft_file_sha256": "fc2839c9cac2d421df758d270bfba7082fb33886bd2a940623772121c83121b6"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+      "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+      "bytes": 555984
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+      "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "bytes": 20404,
+      "locator": {
+        "article_id": "10-krasnaya-polyana-reis-zaderzhali",
+        "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+        "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+        "image_id": "07",
+        "block_index": 29,
+        "role": "article_image",
+        "caption": "",
+        "file": "07.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+        "current_heading": {
+          "block_index": 23,
+          "level": 2,
+          "text": "Как получить помощь на месте"
+        },
+        "nearest_text_before": {
+          "block_index": 28,
+          "type": "paragraph",
+          "text": "И четвёртый способ — для исключительных случаев, когда нет интернета и уведомлений: личное заявление, которое можно написать прямо на ресепшен отеля."
+        },
+        "nearest_text_after": {
+          "block_index": 30,
+          "type": "heading",
+          "text": "Если ещё остались вопросы"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/10-07.json",
+      "sha256": "9163738569f6b477d82b9dbdfc0fb99086ff8432751b9bb1de45145af9b72bfe",
+      "bytes": 1569,
+      "canonical_sha256": "b5d02187e1d1597a2787eeaaf2fa6859974d681d0792760378f5bb8983602cfa",
+      "models": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "10#07::google/veo-3.1-lite",
+          "outcome": "worse",
+          "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship.",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "provider_no_output"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the complete existing dining scene and all visible people",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 3,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Preserve exactly four visible people and every existing limb, garment, dish, utensil, cup, food item, and piece of furniture; nothing appears, disappears, or changes owner."
+            ],
+            "topology_anchors": [
+              "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+            ],
+            "rigid_regions": [
+              "the complete existing dining scene and all visible people"
+            ],
+            "contacts": [
+              "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+            ],
+            "must_remain_visible": [
+              "the complete existing dining scene and all visible people"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "A fixed wide interior view shows exactly four people: two adults seated on a sofa and two children beside a low breakfast table.",
+      "The complete dining group, food, cups, utensils, furniture, mirror, and room geometry are visible; several hands already contact cups, food, or the table area.",
+      "Human motion and the intent or direction of any gesture are ambiguous, while the room provides limited visible depth suitable for a restrained centered camera move."
+    ],
+    "article_context": "The body image closes the practical-help section by presenting a calm, comfortable hotel dining moment, reinforcing that guests can remain settled and supported while resolving a disrupted flight at reception.",
+    "structured_intent": {
+      "editorial_meaning": "A calm hotel dining moment supports the article’s message that guests can remain comfortable and receive practical help on site when a flight is disrupted.",
+      "initial_state": "Four people are arranged around a breakfast table in a hotel room: two adults sit on the sofa while two children kneel beside the table, with existing poses and hand-to-object contacts already established.",
+      "motion_owner": "camera",
+      "primary_action": "a gentle centered push-in toward the complete dining group",
+      "attention_anchor": "the complete visible dining scene with all four people around the breakfast table",
+      "motion_boundary": "Only the camera may move; all people, poses, expressions, contacts, tableware, food, furniture, mirror, and room geometry remain source-locked, and no unseen space is introduced.",
+      "terminal_state": "The complete dining scene appears slightly closer while all four people and the full existing arrangement remain continuously visible and unchanged.",
+      "geometry_invariant": "Every pose and hand-to-object contact, the table arrangement, sofa, mirror, and rigid room geometry remain unchanged.",
+      "identity_invariant": "Exactly four visible people and all existing limbs, garments, dishes, utensils, cups, food items, and furniture remain present and keep their identities and ownership.",
+      "semantic_invariant": "The scene remains a calm, comfortable hotel breakfast moment that conveys settled support rather than disruption or interpersonal action.",
+      "feasibility_assessment": "The image clearly supports a small camera move through already visible room depth, but no safe direction or intent is established for human gestures, gaze, or interaction; camera-only is therefore the least risky I2V strategy.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Over four seconds, begin a smooth centered push-in immediately and maintain an even, low-jerk pace toward the whole dining group. Limit total screen travel to about 3%, preserve the full original framing and all contacts, and ease gently only near the end so the observable endpoint is the complete scene appearing slightly closer with every person still visible.",
+      "positive_prompt": "The camera makes one gentle centered push-in toward the complete existing dining scene at an even real-time pace, with all four people continuously visible and every pose and hand-to-object contact unchanged. By the final frame, the group and breakfast table appear about 3% closer without exposing any space beyond the source frame.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

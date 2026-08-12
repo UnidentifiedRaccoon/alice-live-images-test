@@ -1,0 +1,40 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "10#07::google/veo-3.1-lite",
+    "outcome": "worse",
+    "review_note": "На фото изображена семья. Люди. Должна быть анимация, но вместо этого какой-то дергающийся кадр. Это не текст и не интерфейс. Должна быть нормальная анимация",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "route_rejected",
+      "fallback_rejected",
+      "provider_no_output",
+      "insufficient_motion"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "fixed",
+      "focal_target": "the visible family",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 8,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Keep exactly two adults and two children, with the same bodies, limbs, clothing, cups, utensils, dishes, food, and furniture; nothing appears, disappears, or changes owner."
+      ],
+      "topology_anchors": [
+        "Preserve every visible hand-to-cup, hand-to-food, and hand-to-utensil relationship, along with the rigid geometry of the table, sofa, mirror, dishes, and room."
+      ],
+      "rigid_regions": [
+        "the table, sofa, room, dishes, cups, utensils, and food"
+      ],
+      "contacts": [
+        "preserve every visible hand-to-cup, hand-to-food, and hand-to-utensil contact"
+      ],
+      "must_remain_visible": [
+        "the visible family"
+      ]
+    }
+  }
+}

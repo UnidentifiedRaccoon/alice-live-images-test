@@ -1,0 +1,188 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-11",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:84fcd5bd04789fa865f987322a9f19bc692c65662197270cd96b5bbe92a0bfb2",
+    "instruction_bundle_sha256": "fbf54abceb4442ea2b095715fde1ea0d5696e569735eaa64e70e45ecd5d3d4fd",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "ea8a541b2ea886ded2105f16c6b4ab0a03c9cce9a39b76d9130538681556cf8d"
+      }
+    ],
+    "inputs_sha256": "sha256:5a4196adf0aa78a7d9720b4aa21c93bf9f467ce900f7313efb68bd4503dc0e3b",
+    "execution_fingerprint": "sha256:e4f5466e4fbb1c10aeb2f95d66113a2385381166593b4948e074bc5855551421",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff23a-e974-75d1-9a8a-ef88bab9d6e3"
+    },
+    "authored_payload_sha256": "4d9f515984b1a58188d23522f84a1f7d5cb07cad51a3ade6f6b51ad8d6e370e8",
+    "draft_file_sha256": "0f257cbc01f4ac094852f52ec7a019ebb0912726231ae8959f011d57a5817676"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+      "sha256": "0946413a1158e50212d7d2454d329e9b89621e0ed412866ec80da2bf0fde9719",
+      "bytes": 138681
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/content.json",
+      "sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "bytes": 23912,
+      "locator": {
+        "article_id": "17-volma-nalivnoi-pol",
+        "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+        "lead": "Разбираем ошибки при заливке наливного пола, которые часто приводят к проблемам",
+        "image_id": "11",
+        "block_index": 49,
+        "role": "article_image",
+        "caption": "",
+        "file": "11.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/11.jpeg",
+        "current_heading": {
+          "block_index": 47,
+          "level": 3,
+          "text": "Где возникает разница в результате?"
+        },
+        "nearest_text_before": {
+          "block_index": 48,
+          "type": "paragraph",
+          "text": "Даже при соблюдении технологии многое зависит от состава — от того, насколько он «прощает» ошибки, как растекается и насколько предсказуемо твердеет. Именно поэтому опытные строители выбирают решения, с которыми проще работать."
+        },
+        "nearest_text_after": {
+          "block_index": 50,
+          "type": "paragraph",
+          "text": "Так, с наливными полами ВОЛМА:"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/17-11.json",
+      "sha256": "7ade6b807ca78378b4dd605dda773cb32244d7010f55ee7006727f500cb021f4",
+      "bytes": 1269,
+      "canonical_sha256": "e357149d12285fa6805cab649cc1a152f314e65be0eaf8f59387343befad2126",
+      "models": {
+        "alibaba/wan-2.2": {
+          "evaluation_id": "17#11::alibaba/wan-2.2",
+          "outcome": "worse",
+          "review_note": "Deterministic compositor применен не правильно",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "route_rejected",
+            "insufficient_motion"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the visible product composition",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Exactly two product bags, one underlay roll, one woman, the VOLMA logo, all package labels, glyphs, and text remain unchanged."
+            ],
+            "topology_anchors": [
+              "The rigid advertising layout, product silhouettes, white framing lines, and relative placement of all zones remain fixed."
+            ],
+            "rigid_regions": [
+              "the product packages, labels, and existing composition"
+            ],
+            "contacts": [
+              "all packages retain their existing support and overlap relationships"
+            ],
+            "must_remain_visible": [
+              "the visible product composition"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "Широкая статичная рекламная композиция на чёрном фоне: слева логотип и крупный текст, в центре две упаковки наливного пола и один рулон подложки, справа цитата и портрет одной женщины.",
+      "Упаковки, рулон, портрет, надписи и белые линии образуют жёсткий графический макет; физически обоснованного движения объектов в кадре нет.",
+      "Точные логотипы, названия продуктов, числа, glyphs и рекламный текст создают высокий риск искажения при генеративной анимации."
+    ],
+    "article_context": "Изображение служит рекламным переходом от разбора ошибок к преимуществам наливных полов ВОЛМА: акцентирует предсказуемость результата, удобство работы и выбор профессионального решения.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть наливные полы ВОЛМА как предсказуемое и удобное в работе профессиональное решение, помогающее получить ровную поверхность.",
+      "initial_state": "Полностью видимый жёсткий рекламный макет: две синие упаковки и рулон в центре, логотип и текст слева, цитата и одна женщина справа.",
+      "motion_owner": "Камера.",
+      "primary_action": "Один ограниченный push-in к видимой продуктовой композиции.",
+      "attention_anchor": "Видимая центральная композиция из двух упаковок ВОЛМА и рулона подложки.",
+      "motion_boundary": "Двигаться может только камера; упаковки, рулон, женщина, весь текст, логотипы, labels, glyphs, белые линии, фон и взаимное размещение зон остаются source-locked.",
+      "terminal_state": "К финальному кадру продуктовая композиция заметно увеличена в экранном пространстве, остаётся целиком узнаваемой и непрерывно видимой, без раскрытия невидимых областей.",
+      "geometry_invariant": "Обе упаковки и рулон сохраняют исходные опоры, перекрытия, жёсткие силуэты и взаимное расположение; белые линии и все зоны макета остаются зафиксированы относительно друг друга.",
+      "identity_invariant": "Ровно две упаковки продукта, один рулон подложки, одна женщина, логотип ВОЛМА, все надписи, числа, labels и glyphs сохраняются без появления, исчезновения или замены.",
+      "semantic_invariant": "Рекламный тезис о профессиональном, удобном и предсказуемом решении ВОЛМА сохраняется до последнего кадра.",
+      "feasibility_assessment": "Кадр является статичной рекламной графикой с продуктовым packshot, портретом и большим объёмом точного текста; движение продуктов, женщины или графических элементов изображением не доказано. Безопасно только ограниченное движение камеры по уже видимой плоскости без раскрытия нового пространства.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Пятисекундный непрерывный camera-only shot: сразу начать ровный центрированный push-in к видимой композиции продуктов без рывка и изменения траектории. За пять секунд дать читаемое увеличение примерно на 6–8% в экранном пространстве, не превышая лимит 8%; центральные упаковки и рулон остаются непрерывно видимыми, а все зоны рекламного макета сохраняют взаимное расположение. К последним кадрам движение мягко замедляется на достигнутом увеличенном кадрировании, не открывая пространства за границами исходника.",
+      "positive_prompt": "The camera smoothly pushes in toward the continuously visible product composition, producing a clear 6–8% screen-space enlargement by the final frames. Keep the entire rigid advertising layout, exactly two product bags, one underlay roll, one woman, all support and overlap relationships, logos, labels, glyphs, text, white framing lines, and silhouettes unchanged.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:d38bae21d4be8ece845825a95c55b4bfe8cb03aa8819f412895214be5aa52a4d",
+      "negative_prompt": null
+    }
+  ]
+}

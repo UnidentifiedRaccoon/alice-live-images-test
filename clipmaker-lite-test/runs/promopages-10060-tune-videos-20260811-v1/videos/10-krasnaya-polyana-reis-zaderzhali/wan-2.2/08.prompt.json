@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-10-krasnaya-polyana-reis-zaderzhali-08-wan-2-2",
+  "case_id": "10#08",
+  "sheet_row": 126,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/08.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb342c6081a1fe9b90b/orig",
+    "sha256": "044277f8afedad3ddd54157ac359f86184af8830ebd820020351bd11abce6a11",
+    "width": 2048,
+    "height": 1365
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb342c6081a1fe9b90b/orig",
+    "sha256": "044277f8afedad3ddd54157ac359f86184af8830ebd820020351bd11abce6a11",
+    "width": 2048,
+    "height": 1365,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Спокойное прибытие и готовность курорта помочь гостям сохраняют радость отпуска несмотря на изменения расписания.",
+    "initial_state": "Четыре человека неподвижно стоят у стойки гостиничного ресепшен; перед парой расположен чемодан, женщина держит паспорт с документом и сумку.",
+    "motion_owner": "камера",
+    "primary_action": "плавно приблизиться к паре гостей у стойки, используя видимую глубину сцены",
+    "terminal_state": "Пара остаётся полностью видимой в центре внимания, а чемодан переднего плана наблюдаемо смещён относительно стойки за счёт параллакса.",
+    "geometry_invariant": "Чемодан остаётся на полу у мужчины; люди, стойка и жёсткая архитектура сохраняют исходные взаимные положения и форму.",
+    "identity_invariant": "Ровно четыре человека; сохраняются их внешность, конечности, одежда, чемодан, паспорт с документом, сумка, стойка и существующие вывески.",
+    "semantic_invariant": "Сцена остаётся спокойным, доброжелательным прибытием гостей и не превращается в конфликт или срочное событие.",
+    "feasibility_assessment": "Четыре человека, чемодан, документы, сумка и стойка видны однозначно, а многоплановая глубина поддерживает безопасный параллакс; направление жестов, передача документов и характер взаимодействия между людьми не доказаны, поэтому действие людей не планируется.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Пятисекундный непрерывный camera-only кадр: сразу начать плавный умеренный push-in к паре у стойки и вести его с постоянным темпом без жестов или действий людей. За счёт исходной глубины чемодан переднего плана к последним кадрам заметно смещается примерно на 6% ширины кадра относительно стойки; все четыре человека и их предметы остаются неподвижными, узнаваемыми и полностью в кадре.",
+  "prompt": {
+    "positive": "The camera makes a steady bounded push-in toward the arriving couple at reception, with the four people, suitcase, travel documents, handbag, counter, and rigid lobby geometry remaining source-locked. By the final frames, the foreground suitcase has shifted about 6% outward in screen space from parallax while the couple remains fully visible at the focal center.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-08",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-08/result.json",
+    "result_sha256": "1f184f2ddfa21fcfa21afd9fac7e62a6f94e9087ab62ebbdd7576feb2a59187f",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:ed19e479359b78d378b9dedde8cf943f7f38f8704e3edebe33448966090400df",
+      "instruction_bundle_sha256": "60fe9706d0a6ba23e2ac047d89a693104705943312a454557c987b859e9c25ba",
+      "source_image_sha256": "044277f8afedad3ddd54157ac359f86184af8830ebd820020351bd11abce6a11",
+      "article_context_sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "models": [
+        "alibaba/wan-2.2"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

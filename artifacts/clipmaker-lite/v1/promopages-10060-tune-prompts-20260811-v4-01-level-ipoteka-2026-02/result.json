@@ -1,0 +1,173 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:a6b0cbbe07573db938c1e16f9996ed9a588453e448a638468605c91742f1b3dd",
+    "instruction_bundle_sha256": "50b12625461fe6574c20649778d8f0085a9182f1ca168655feb3d197c1e48d80",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:1ae0b153bffa19f694264f29505c789dae2d6979a10d720edcb7ce5efbe26f0b",
+    "execution_fingerprint": "sha256:dd5108184b741ea21c0db971763d2681d62036903b6980342aba7c2b9d6449e2",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff109-5464-7bb0-b22d-6c8ae5828b41"
+    },
+    "authored_payload_sha256": "b71f2c05a3b32c4e8d2830d44b01012f4edfa6f669f2fee88b9e974ee48eff54",
+    "draft_file_sha256": "6a047cbffa0da4dff82ed558ae4f4f9ecb40b2dfd73144d2637a2fef509cca98"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+      "sha256": "5adeb293b09e5fde11abf1c1d12e02d3c520050eb94e3e112f3c280a157d0a8a",
+      "bytes": 103223
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/01-level-ipoteka-2026/content.json",
+      "sha256": "a256a9913fdde223d823f77c7653d170d6750d50c7c36f5330e50dd7b1a550c1",
+      "bytes": 17879,
+      "locator": {
+        "article_id": "01-level-ipoteka-2026",
+        "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+        "lead": "Кому лучше купить недвижимость сейчас, а кому есть смысл подождать",
+        "image_id": "02",
+        "block_index": 8,
+        "role": "article_image",
+        "caption": "С января 2026 года объём ипотечного жилищного кредитования начал уменьшаться. Источник: Банк России",
+        "file": "02.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/01-level-ipoteka-2026/02.jpeg",
+        "current_heading": {
+          "block_index": 4,
+          "level": 2,
+          "text": "Количество займов снижается"
+        },
+        "nearest_text_before": {
+          "block_index": 7,
+          "type": "paragraph",
+          "text": "Тем не менее, выдача ипотеки без господдержки в феврале выросла в 1,5 раза, что говорит о том, что рыночные условия становятся привлекательнее."
+        },
+        "nearest_text_after": {
+          "block_index": 9,
+          "type": "heading",
+          "text": "Ставки по ипотеке снижаются"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A static multi-series financial chart shows dark-blue and light-blue bars plus a red filled line across annual and monthly periods from 2019 to February 2026.",
+      "The chart contains exact Russian labels, dates, legend entries, axis values, and data geometry; the January and February 2026 values appear at the far right after a pronounced December 2025 peak.",
+      "The semantic entities are the three fixed data series and their exact relationship to the two axes and chronological x-axis; there is no naturally moving physical subject."
+    ],
+    "article_context": "The body chart substantiates the section’s claim that mortgage lending activity declined after the late-2025 peak, with the caption specifically focusing attention on the decrease from January 2026 onward while preserving the Bank of Russia data as evidence.",
+    "structured_intent": {
+      "editorial_meaning": "Direct attention to the documented fall in mortgage lending volume at the start of 2026 after the late-2025 peak, without changing the underlying evidence.",
+      "initial_state": "The full static chart is visible, including its title, axes, three data series, legend, footnote, and the January–February 2026 values at the far right.",
+      "motion_owner": "camera",
+      "primary_action": "A bounded deterministic 2D push-in directs attention toward the January–February 2026 data cluster.",
+      "terminal_state": "The unchanged January–February 2026 cluster is modestly enlarged and more prominent while the chart’s essential labels and comparative context remain visible.",
+      "geometry_invariant": "All bars, filled-line geometry, axes, gridlines, labels, legend markers, and their spatial relationships remain exactly fixed.",
+      "identity_invariant": "Exactly three data series remain present with the same colors, dates, values, title, legend entries, figure label, and footnote.",
+      "semantic_invariant": "The chart continues to communicate the original Bank of Russia data and the decrease in mortgage lending from January 2026, with no recalculation or reinterpretation.",
+      "feasibility_assessment": "The image unambiguously presents a static chart and the relevant January–February 2026 region, but its exact text, numbers, chronology, and plotted geometry are semantically essential. No safe natural subject motion exists, so generative image-to-video is unsuitable; a deterministic 2D viewport move is feasible.",
+      "rendering_strategy": "deterministic-compositor"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Over five seconds, apply one smooth deterministic 2D push-in of about 4% toward the far-right January–February 2026 data cluster, beginning immediately and easing gently near the end. Preserve every source pixel, label, number, series shape, color, axis, and legend entry; finish with the January–February decline slightly more prominent while the full title, chart area, and explanatory context remain readable.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Over four seconds, perform one bounded deterministic 2D push-in of about 3% toward the January–February 2026 cluster at the chart’s right edge, moving steadily and settling only in the final moments. Do not regenerate or alter any chart pixel, text, value, date, series geometry, axis, or legend; end with the recent decline more visually prominent and all essential chart context still visible.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

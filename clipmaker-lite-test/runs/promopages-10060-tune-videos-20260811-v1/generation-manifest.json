@@ -1,0 +1,2435 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-generation",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-11T16:11:42Z",
+  "scope": {
+    "planning_batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "contract_path": "docs/agents/clipmaker-lite/contract.json",
+    "contract_sha256": "3428f60536e09e254150d7b3de880477dcadff357ccead6562c1e2757836cf4f",
+    "expected_i2v_outputs": 43,
+    "compositor_provider_outputs": 0,
+    "s3_upload": false,
+    "delivery": "repository-files"
+  },
+  "budget": {
+    "currency": "USD",
+    "operator_budget_cap_usd": 15.05,
+    "hard_budget_cap_usd": 15.05,
+    "accounting_cost_per_output_usd": 0.35,
+    "reserved_output_count": 43,
+    "maximum_estimated_cost_usd": 15.05,
+    "provider_unit_costs_asserted": false,
+    "basis": "local frozen accounting evidence only; each admitted immutable provider job reserves $0.35 and may submit at most once",
+    "automatic_paid_retry": false
+  },
+  "scheduling": {
+    "independent_route_pools": true,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "one_paid_submission_per_provider_run_id": true,
+    "automatic_paid_retry": false
+  },
+  "summary": {
+    "succeeded": 29,
+    "verification-failed": 12,
+    "provider-failed": 2
+  },
+  "outputs": [
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-02-level-rabotaiu-v-level-02-veo-3-1-lite",
+      "case_id": "02#02",
+      "sheet_row": 11,
+      "article_slug": "02-level-rabotaiu-v-level",
+      "image_id": "02",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 17845035,
+        "sha256": "0a32de92707bdef3ef4a76ca0fb647a89edc4a59cd59c334bb86640127ca4508"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-02-level-rabotaiu-v-level-06-veo-3-1-lite",
+      "case_id": "02#06",
+      "sheet_row": 17,
+      "article_slug": "02-level-rabotaiu-v-level",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/veo-3.1-lite/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2995604,
+        "sha256": "697e7b061e55ae75a4f403a81439971e203e22e37275fc0e6ea5d21bc7f72284"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-02-level-rabotaiu-v-level-06-wan-2-2",
+      "case_id": "02#06",
+      "sheet_row": 18,
+      "article_slug": "02-level-rabotaiu-v-level",
+      "image_id": "06",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1104,
+        "height": 816,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5686349,
+        "sha256": "920eb2eb0c435e0ae8601f8e4df0690079dc54c9ce92ede382ded7d005971cf4"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 1296,
+          "source_height": 972,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1104x816 differs from source 1296x972 by 1.471% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-02-level-rabotaiu-v-level-06-wan-2-7",
+      "case_id": "02#06",
+      "sheet_row": 19,
+      "article_slug": "02-level-rabotaiu-v-level",
+      "image_id": "06",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/02-level-rabotaiu-v-level/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1662,
+        "height": 1246,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3935058,
+        "sha256": "579fcc2b6c81a2606b43667aa621d641c7b6b0831dbbb936b0cfd34094ba3b1f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "provider aspect quantization: actual 1662x1246 differs from requested 4:3 by 0.040% within the 3% tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; provider aspect quantization: actual 1662x1246 differs from requested 4:3 by 0.040% within the 3% tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-03-level-nestandartnye-planirovki-02-veo-3-1-lite",
+      "case_id": "03#02",
+      "sheet_row": 23,
+      "article_slug": "03-level-nestandartnye-planirovki",
+      "image_id": "02",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/03-level-nestandartnye-planirovki/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 8723509,
+        "sha256": "a25e067263590e69cfa968954ec51961f065698b81d9093d1b835c651c7c89b8"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-04-level-pokupat-kvartiru-seichas-05-veo-3-1-lite",
+      "case_id": "04#05",
+      "sheet_row": 47,
+      "article_slug": "04-level-pokupat-kvartiru-seichas",
+      "image_id": "05",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/04-level-pokupat-kvartiru-seichas/veo-3.1-lite/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 20135544,
+        "sha256": "37d38f8c89b5801aed860ba97e51dd4167cf67fcc6493931a95227abf288695c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-05-momatrino-zalozhennost-nosa-04-veo-3-1-lite",
+      "case_id": "05#04",
+      "sheet_row": 59,
+      "article_slug": "05-momatrino-zalozhennost-nosa",
+      "image_id": "04",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2799774,
+        "sha256": "4e0f5544fc809b8520753c8f947ae6f5d945549299b79f6665da9ef527f33de6"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-05-momatrino-zalozhennost-nosa-04-wan-2-7",
+      "case_id": "05#04",
+      "sheet_row": 61,
+      "article_slug": "05-momatrino-zalozhennost-nosa",
+      "image_id": "04",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/05-momatrino-zalozhennost-nosa/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 4148804,
+        "sha256": "1bf4ee4f8dd38435768b7601024ec3ff2af1169acf311c8a4508e6f36ccbb14f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "1:1",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-06-momatrino-privykanie-k-sredstvam-02-wan-2-2",
+      "case_id": "06#02",
+      "sheet_row": 63,
+      "article_slug": "06-momatrino-privykanie-k-sredstvam",
+      "image_id": "02",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/06-momatrino-privykanie-k-sredstvam/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1264,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 9514992,
+        "sha256": "7e4be8475fc4a3320d8e7ccd19cc79af4cd3c483a04ff974b836ce439e6cd639"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 1344,
+          "source_height": 768,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1264x720 differs from source 1344x768 by 0.317% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-03-wan-2-2",
+      "case_id": "07#03",
+      "sheet_row": 72,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "03",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1280,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 7216060,
+        "sha256": "cf4f39db4baecbcbf0fd5e1eb8b455906335c7211ce0d3f7d7e1c2c9c269c08d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 1920,
+          "source_height": 1080,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-03-wan-2-7",
+      "case_id": "07#03",
+      "sheet_row": 73,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "03",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.7/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 6373237,
+        "sha256": "24817a53beb7649bb286df51e8123ee7a0a1a882f50113ee91add48bd4c6a767"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-04-wan-2-2",
+      "case_id": "07#04",
+      "sheet_row": 75,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "04",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5377276,
+        "sha256": "038c19499050e5c5273c68253621eb590835621931caae467fb0b2b996a9c8e8"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 1920,
+          "source_height": 1280,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1168x784 differs from source 1920x1280 by 0.680% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "image_id": "06",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "provider-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "provider poll/download: Eliza/OpenRouter job lkVqOh5FmFC2nj931yFH failed with status failed: Video generation completed with no output (content may have been filtered)"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-08-femibion-grudnoe-vskarmlivanie-03-wan-2-2",
+      "case_id": "08#03",
+      "sheet_row": 87,
+      "article_slug": "08-femibion-grudnoe-vskarmlivanie",
+      "image_id": "03",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/08-femibion-grudnoe-vskarmlivanie/wan-2.2/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5834836,
+        "sha256": "9c3ccad93f3dd9f3d639adf060c0f3ead1bff8af5fc4d5b3ae08d5024834ec43"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 2400,
+          "source_height": 1600,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1168x784 differs from source 2400x1600 by 0.680% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+      "case_id": "10#07",
+      "sheet_row": 122,
+      "article_slug": "10-krasnaya-polyana-reis-zaderzhali",
+      "image_id": "07",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "provider-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.mp4",
+      "media": null,
+      "contract_check": null,
+      "error": "provider poll/download: Eliza/OpenRouter job vix3OSm0iISSLk0ZtLoR failed with status failed: Video generation completed with no output (content may have been filtered)"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-10-krasnaya-polyana-reis-zaderzhali-08-wan-2-2",
+      "case_id": "10#08",
+      "sheet_row": 126,
+      "article_slug": "10-krasnaya-polyana-reis-zaderzhali",
+      "image_id": "08",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/10-krasnaya-polyana-reis-zaderzhali/wan-2.2/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 9103599,
+        "sha256": "11de15c5489129fb189138db2fe7f92a6032e6916c928f389bb997dbaf88448b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 2048,
+          "source_height": 1365,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1168x784 differs from source 2048x1365 by 0.705% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-11-dream-island-pochemu-vybiraiu-03-veo-3-1-lite",
+      "case_id": "11#03",
+      "sheet_row": 131,
+      "article_slug": "11-dream-island-pochemu-vybiraiu",
+      "image_id": "03",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/11-dream-island-pochemu-vybiraiu/veo-3.1-lite/03.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 8128313,
+        "sha256": "effbb5e29d8b48ac7896922045f56d5fe4b6b66bd72edf278cdf81347cd66b3a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-02-veo-3-1-lite",
+      "case_id": "12#02",
+      "sheet_row": 137,
+      "article_slug": "12-dream-island-7-fishek",
+      "image_id": "02",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1080,
+        "height": 1920,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 10177812,
+        "sha256": "28801bd626f0473e7e90a6fa17771622c0c786aa9451473fe2b229aecd40437a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "9:16",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-02-wan-2-2",
+      "case_id": "12#02",
+      "sheet_row": 138,
+      "article_slug": "12-dream-island-7-fishek",
+      "image_id": "02",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 960,
+        "height": 960,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 16296553,
+        "sha256": "928bd717218f96a87fcb73fa2381836ab68d91a4949beef8978176f8ec059b0d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 2560,
+          "source_height": 2561,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 960x960 differs from source 2560x2561 by 0.039% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-02-wan-2-7",
+      "case_id": "12#02",
+      "sheet_row": 139,
+      "article_slug": "12-dream-island-7-fishek",
+      "image_id": "02",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1440,
+        "height": 1440,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 16806506,
+        "sha256": "8f974b34536e4ab78684be671d5b95501e975f9421d86f85981f90fbbd4ff23f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "1:1",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-08-veo-3-1-lite",
+      "case_id": "12#08",
+      "sheet_row": 149,
+      "article_slug": "12-dream-island-7-fishek",
+      "image_id": "08",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/veo-3.1-lite/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 10596379,
+        "sha256": "7210654e5e84a83448597a8d573dbacf5e11d557b6efb2845bb7fa5e2cf93f63"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-08-wan-2-2",
+      "case_id": "12#08",
+      "sheet_row": 150,
+      "article_slug": "12-dream-island-7-fishek",
+      "image_id": "08",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.2/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 19235024,
+        "sha256": "794d41ddcdb0adbbea5bc605182620f4bc4353e6cc3de88f7760815450b791f2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 1200,
+          "source_height": 801,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1168x784 differs from source 1200x801 by 0.556% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-08-wan-2-7",
+      "case_id": "12#08",
+      "sheet_row": 151,
+      "article_slug": "12-dream-island-7-fishek",
+      "image_id": "08",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/12-dream-island-7-fishek/wan-2.7/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 21073125,
+        "sha256": "ee62e4a58193aa4cbc18ee68cfa357ba99b97cdf1d592b7c4f987d2bb6727c87"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1762x1176 differs from requested 4:3 by 12.372%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1762x1176 differs from requested 4:3 by 12.372%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-15-marykay-sredstva-04-veo-3-1-lite",
+      "case_id": "15#04",
+      "sheet_row": 191,
+      "article_slug": "15-marykay-sredstva",
+      "image_id": "04",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 5559971,
+        "sha256": "6719df17b9fc640dc8b240171574b5d252d28a4655765448328826958cd069b0"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-15-marykay-sredstva-04-wan-2-7",
+      "case_id": "15#04",
+      "sheet_row": 193,
+      "article_slug": "15-marykay-sredstva",
+      "image_id": "04",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/15-marykay-sredstva/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 6246917,
+        "sha256": "10be7ca0092e40e452441302bea26bc833ba09d761c44100e7aaab1aced5a39c"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1764x1176 differs from requested 4:3 by 12.500%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1764x1176 differs from requested 4:3 by 12.500%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-05-wan-2-7",
+      "case_id": "17#05",
+      "sheet_row": 229,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "05",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/05.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1936,
+        "height": 1070,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3829219,
+        "sha256": "4187ae6b3a6c9d6a4090705b9351e6419ee37fd9e5f7bc973ce036a2456ef686"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "provider aspect quantization: actual 1936x1070 differs from requested 16:9 by 1.776% within the 3% tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; provider aspect quantization: actual 1936x1070 differs from requested 16:9 by 1.776% within the 3% tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-07-veo-3-1-lite",
+      "case_id": "17#07",
+      "sheet_row": 233,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "07",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4896798,
+        "sha256": "ab275e19b74b9c9dbe64fcc6e221affad78607858c95f50501f1d98496688844"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-07-wan-2-7",
+      "case_id": "17#07",
+      "sheet_row": 235,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "07",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 11728064,
+        "sha256": "7b5e1e5c543fecf5fbfea385cbd2ee8f2286b3f981edc3bcb03ead3d8440b15f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1764x1176 differs from requested 4:3 by 12.500%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1764x1176 differs from requested 4:3 by 12.500%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-08-veo-3-1-lite",
+      "case_id": "17#08",
+      "sheet_row": 236,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "08",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 4637884,
+        "sha256": "bad094817be64edb0027c555e431e19ec2232a52614be027e81a1605eaec8395"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-08-wan-2-2",
+      "case_id": "17#08",
+      "sheet_row": 237,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "08",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1184,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 16678070,
+        "sha256": "b2af4d9699335956ea91b6880265efa1c4b3d2ac8c9d830d9ea8baded6e9e141"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 1068,
+          "source_height": 699,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1184x768 differs from source 1068x699 by 0.901% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-08-wan-2-7",
+      "case_id": "17#08",
+      "sheet_row": 238,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "08",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/08.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1780,
+        "height": 1164,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 16869839,
+        "sha256": "1aee1b66fd796baa4dc2c2706bd92d1f9e93a79a437ab4ba1dd7a2fcfbc95a9d"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1780x1164 differs from requested 4:3 by 14.691%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1780x1164 differs from requested 4:3 by 14.691%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-09-veo-3-1-lite",
+      "case_id": "17#09",
+      "sheet_row": 239,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "09",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/veo-3.1-lite/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2072460,
+        "sha256": "9eab9ac0ff0d3762c051386394b9399aff1f7522527e4576ffcd3226def2907a"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-09-wan-2-2",
+      "case_id": "17#09",
+      "sheet_row": 240,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "09",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.2/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 768,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5652166,
+        "sha256": "aeeb45db38db42a3f7b7831405eed1c4be395118d91b1a0bbf17872d72b945b0"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 640,
+          "source_height": 426,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1168x768 differs from source 640x426 by 1.230% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-09-wan-2-7",
+      "case_id": "17#09",
+      "sheet_row": 241,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "09",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/17-volma-nalivnoi-pol/wan-2.7/09.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1764,
+        "height": 1174,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 2326213,
+        "sha256": "2aa8ade141a8721c0eeedb41542a663d08fb2209afb218653d54acc3d5b155eb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1764x1174 differs from requested 4:3 by 12.692%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1764x1174 differs from requested 4:3 by 12.692%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-18-volma-plitochnyi-klei-04-veo-3-1-lite",
+      "case_id": "18#04",
+      "sheet_row": 254,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "04",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 2272200,
+        "sha256": "c890f7158ca79da4fa6f5f5ac3f44a2d9c480726b86676930f2e2d3dc4895461"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-18-volma-plitochnyi-klei-06-wan-2-2",
+      "case_id": "18#06",
+      "sheet_row": 261,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "06",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1168,
+        "height": 784,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 5093681,
+        "sha256": "26e244104e5a6d06a985183918276d53dc8445d85c868c72fbcbc1e0d70acd23"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 752,
+          "source_height": 502,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1168x784 differs from source 752x502 by 0.548% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-18-volma-plitochnyi-klei-06-wan-2-7",
+      "case_id": "18#06",
+      "sheet_row": 262,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "06",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/18-volma-plitochnyi-klei/wan-2.7/06.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1762,
+        "height": 1176,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 3692769,
+        "sha256": "f8388f89ce1a5cf217465f53d1f3f051d4db3b557462555c7a3d4d6ae7aa4b8f"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1762x1176 differs from requested 4:3 by 12.372%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1762x1176 differs from requested 4:3 by 12.372%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-02-veo-3-1-lite",
+      "case_id": "21#02",
+      "sheet_row": 290,
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "image_id": "02",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 8851888,
+        "sha256": "15ff6b86f646345158175030184b172660b23c81ef813fd3757dab2a019b203b"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-02-wan-2-2",
+      "case_id": "21#02",
+      "sheet_row": 291,
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "image_id": "02",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/02.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1136,
+        "height": 800,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 13136400,
+        "sha256": "d5a18ac0c4593ca3ed531b0357c0dce8949869fa16e8fc3aa0085d33f4a95f60"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 2554,
+          "source_height": 1806,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1136x800 differs from source 2554x1806 by 0.412% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-07-veo-3-1-lite",
+      "case_id": "21#07",
+      "sheet_row": 296,
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "image_id": "07",
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/veo-3.1-lite/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 6540127,
+        "sha256": "5ddb2a79df7f32cb50c498fedf54be14efff50bdafb81ded15b7f32f2448ca70"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "16:9",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "pixels": true,
+          "requested_aspect": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-07-wan-2-2",
+      "case_id": "21#07",
+      "sheet_row": 297,
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "image_id": "07",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1136,
+        "height": 800,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 18102614,
+        "sha256": "e99b0f30a5d505bd7104c8c92d93156b858ee3a372e4e7eb83f2c9b3064262f3"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 2554,
+          "source_height": 1806,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1136x800 differs from source 2554x1806 by 0.412% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-07-wan-2-7",
+      "case_id": "21#07",
+      "sheet_row": 298,
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "image_id": "07",
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "i2v",
+      "status": "verification-failed",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/07.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/07.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.7/07.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1712,
+        "height": 1210,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 23962407,
+        "sha256": "8a2aea0ab1e75a2085167864291c5772d0364fd6bbe91a4ca843471af8c44df2"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 2073600,
+          "pixel_area_min": 1900000,
+          "pixel_area_max": 2200000,
+          "aspect_ratio": "4:3",
+          "aspect_tolerance_fraction": 0.03
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "pixels": true,
+          "requested_aspect": false
+        },
+        "conforms": false,
+        "warnings": [
+          "provider returned has_audio=True despite generate_audio=False",
+          "actual aspect 1712x1210 differs from requested 4:3 by 6.116%, beyond the 3% provider quantization tolerance"
+        ]
+      },
+      "error": "Media contract warnings: provider returned has_audio=True despite generate_audio=False; actual aspect 1712x1210 differs from requested 4:3 by 6.116%, beyond the 3% provider quantization tolerance"
+    },
+    {
+      "provider_run_id": "promopages-10060-tune-videos-20260811-v1-21-arkhyz-semeinyi-otdykh-10-wan-2-2",
+      "case_id": "21#10",
+      "sheet_row": 306,
+      "article_slug": "21-arkhyz-semeinyi-otdykh",
+      "image_id": "10",
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "status": "succeeded",
+      "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/21-arkhyz-semeinyi-otdykh/wan-2.2/10.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1136,
+        "height": 800,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 8307949,
+        "sha256": "154a0b1772ba4cfab9aba76997a9211e9a9d48cf25a68c6f7c2a651bd3fedad5"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30,
+          "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+          "pixel_budget": 921600,
+          "pixel_tolerance_fraction": 0.03,
+          "aspect_ratio": "source",
+          "source_width": 2554,
+          "source_height": 1806,
+          "aspect_tolerance_fraction": 0.02
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "pixels": true,
+          "source_aspect": true
+        },
+        "conforms": true,
+        "warnings": [
+          "provider aspect quantization: actual 1136x800 differs from source 2554x1806 by 0.412% within the 2% tolerance"
+        ]
+      },
+      "error": null
+    }
+  ],
+  "compositor_exclusions": [
+    {
+      "case_id": "01#02",
+      "sheet_row": 2,
+      "article_slug": "01-level-ipoteka-2026",
+      "image_id": "02",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "01#02",
+      "sheet_row": 3,
+      "article_slug": "01-level-ipoteka-2026",
+      "image_id": "02",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-02",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "01#03",
+      "sheet_row": 6,
+      "article_slug": "01-level-ipoteka-2026",
+      "image_id": "03",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-03",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "01#03",
+      "sheet_row": 7,
+      "article_slug": "01-level-ipoteka-2026",
+      "image_id": "03",
+      "model_id": "alibaba/wan-2.7",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-01-level-ipoteka-2026-03",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "03#09",
+      "sheet_row": 35,
+      "article_slug": "03-level-nestandartnye-planirovki",
+      "image_id": "09",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-03-level-nestandartnye-planirovki-09",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "03#09",
+      "sheet_row": 36,
+      "article_slug": "03-level-nestandartnye-planirovki",
+      "image_id": "09",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-03-level-nestandartnye-planirovki-09",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "04#04",
+      "sheet_row": 44,
+      "article_slug": "04-level-pokupat-kvartiru-seichas",
+      "image_id": "04",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-04",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "04#04",
+      "sheet_row": 45,
+      "article_slug": "04-level-pokupat-kvartiru-seichas",
+      "image_id": "04",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-04-level-pokupat-kvartiru-seichas-04",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "13#05",
+      "sheet_row": 161,
+      "article_slug": "13-dream-island-top6-attrakcionov",
+      "image_id": "05",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-13-dream-island-top6-attrakcionov-05",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "14#04",
+      "sheet_row": 179,
+      "article_slug": "14-promopages-govorit-s-auditoriei",
+      "image_id": "04",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "14#04",
+      "sheet_row": 180,
+      "article_slug": "14-promopages-govorit-s-auditoriei",
+      "image_id": "04",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "14#04",
+      "sheet_row": 181,
+      "article_slug": "14-promopages-govorit-s-auditoriei",
+      "image_id": "04",
+      "model_id": "alibaba/wan-2.7",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "14#05",
+      "sheet_row": 182,
+      "article_slug": "14-promopages-govorit-s-auditoriei",
+      "image_id": "05",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-05",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "14#05",
+      "sheet_row": 183,
+      "article_slug": "14-promopages-govorit-s-auditoriei",
+      "image_id": "05",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-05",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "16#06",
+      "sheet_row": 216,
+      "article_slug": "16-marykay-trendy-krasoty",
+      "image_id": "06",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-16-marykay-trendy-krasoty-06",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "17#11",
+      "sheet_row": 246,
+      "article_slug": "17-volma-nalivnoi-pol",
+      "image_id": "11",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-11",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "18#05",
+      "sheet_row": 257,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "05",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "18#05",
+      "sheet_row": 258,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "05",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "18#05",
+      "sheet_row": 259,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "05",
+      "model_id": "alibaba/wan-2.7",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-05",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "18#07",
+      "sheet_row": 263,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "07",
+      "model_id": "google/veo-3.1-lite",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "18#07",
+      "sheet_row": 264,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "07",
+      "model_id": "alibaba/wan-2.2",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    },
+    {
+      "case_id": "18#07",
+      "sheet_row": 265,
+      "article_slug": "18-volma-plitochnyi-klei",
+      "image_id": "07",
+      "model_id": "alibaba/wan-2.7",
+      "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-18-volma-plitochnyi-klei-07",
+      "execution_mode": "deterministic-compositor",
+      "status": "abstained",
+      "provider_artifact": null
+    }
+  ]
+}

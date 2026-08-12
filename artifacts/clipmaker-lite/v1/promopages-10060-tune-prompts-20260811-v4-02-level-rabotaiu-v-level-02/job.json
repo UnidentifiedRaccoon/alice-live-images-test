@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02",
+  "status": "prepared",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:6fea7f4c102ad9d08445361d55be0e605bb293aef0e5e8eb591ac18b4855f360",
+    "instruction_bundle_sha256": "04426f46d1a158fe69c9f4e9b05ca047a9d7ff6f77279606b82bc4433739b574",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ]
+  },
+  "inputs_sha256": "sha256:97c23cacd7d59deb82bf2673778151eb77c244ba973e51c3b61f41738e5b5559",
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+      "sha256": "c86c61a64691b07f15d4652315dbed0cf4af137bae205f2fbeeb7188c3378523",
+      "bytes": 7046431
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/content.json",
+      "sha256": "eaefa3abb2474e097dcb39f52dc38acf108c3a2f489d033de40141d6c1b96f58",
+      "bytes": 20252,
+      "locator": {
+        "article_id": "02-level-rabotaiu-v-level",
+        "title": "Работаю в Level: почему купил квартиру от нашей компании",
+        "lead": "История, как я купил квартиру в Левел Групп после шести лет работы в компании",
+        "image_id": "02",
+        "block_index": 4,
+        "role": "article_image",
+        "caption": "Мой новый дом, Левел Причальный, находится в районе Хорошёво-Мневники",
+        "file": "02.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060-article-02-20260806-v1/articles/02-level-rabotaiu-v-level/02.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 3,
+          "type": "paragraph",
+          "text": "Я выбрал этот дом не просто потому, что работаю в компании. Дело в том, что я сам проверяю наши объекты и на 100% уверен в их качестве. Но это далеко не единственная причина. В статье расскажу, что ещё мне понравилось в Левел Причальный."
+        },
+        "nearest_text_after": {
+          "block_index": 5,
+          "type": "heading",
+          "text": "Захотел жить у реки"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "selected_models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508"
+    }
+  ],
+  "artifacts": {
+    "instruction_bundle": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02/instruction-bundle.md",
+    "draft": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02/draft.json",
+    "execution": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02/execution.json",
+    "result": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-02-level-rabotaiu-v-level-02/result.json"
+  }
+}

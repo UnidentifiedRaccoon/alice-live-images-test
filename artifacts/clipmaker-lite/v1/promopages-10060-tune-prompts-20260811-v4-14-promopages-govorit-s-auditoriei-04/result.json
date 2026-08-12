@@ -1,0 +1,207 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-14-promopages-govorit-s-auditoriei-04",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+    "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "0cb54b27784d0b3fca07f2825a5c697b137d69662e574b84203857e68e9eab17"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "d8afa3268c9d89560d987edab8d4c210d4d0bf20577c0989fbb66d9871edaf1a"
+      }
+    ],
+    "inputs_sha256": "sha256:b7d9538e79bbfced0dfa87250d8ba826b9b632abfa89e0def8c06c31c11c3c87",
+    "execution_fingerprint": "sha256:2698af45c4092e59960403f4124ef7c8486975d1c5dd8a6f437bfefe00d83a04",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10b-8801-7f90-b60e-e403cd8a3f9c"
+    },
+    "authored_payload_sha256": "af8cb5267c790b295c39c6407d255900cbc71aa0cd017744271d239a5ae8313e",
+    "draft_file_sha256": "f8291e07b24a236e25615a1504434c19b5a915a65de537c569e578016ecd96a5"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+      "sha256": "c98b72e53cd8186fcc90478ce41c1ae828fb2321030c9627b9c9c8e548f96632",
+      "bytes": 126619
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/content.json",
+      "sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "bytes": 21581,
+      "locator": {
+        "article_id": "14-promopages-govorit-s-auditoriei",
+        "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+        "lead": "Разбираем, как удержать внимание, вызвать доверие и подвести человека к покупке",
+        "image_id": "04",
+        "block_index": 17,
+        "role": "article_image",
+        "caption": "А в финале остается собрать основные выводы и подсказать дальнейшее действие: посмотреть модель, рассчитать стоимость, сравнить тарифы или оставить заявку. Так путь к покупке продолжается логично, без резкого перехода от рекомендаций к рекламе",
+        "file": "04.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/04.png",
+        "current_heading": {
+          "block_index": 12,
+          "level": 2,
+          "text": "Делитесь пользой, прежде чем продавать"
+        },
+        "nearest_text_before": {
+          "block_index": 16,
+          "type": "paragraph",
+          "text": "Ваше предложение становится частью такого разбора. Человек уже знает, на какие параметры смотреть, и может понять, подходит ли ему этот вариант."
+        },
+        "nearest_text_after": {
+          "block_index": 18,
+          "type": "heading",
+          "text": "Говорите с конкретным человеком, а не всей ЦА"
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "Статичный скриншот текстового фрагмента на белом фоне; людей, предметов и физической глубины нет.",
+      "В кадре четыре абзаца на русском языке, второй и последний набраны жирным; последний абзац содержит призыв перейти к цене, доставке и заказу.",
+      "Смысл изображения зависит от точного текста, переносов строк и типографической иерархии."
+    ],
+    "article_context": "Скриншот служит примером финала полезной рекламной статьи: после выводов читателю спокойно предлагают следующий шаг — посмотреть цену, выбрать доставку и заказать товар. Точный текст и выделение заключительного призыва являются главным редакционным содержанием изображения.",
+    "structured_intent": {
+      "editorial_meaning": "Подчеркнуть, что полезный разбор естественно завершается понятным следующим действием без резкого перехода к рекламе.",
+      "initial_state": "Полностью видимый неподвижный скриншот с четырьмя текстовыми абзацами и жирным заключительным призывом.",
+      "motion_owner": "композиторный оптический акцент",
+      "primary_action": "Один раз провести сдержанную подсветку вдоль заключительного жирного призыва.",
+      "terminal_state": "Подсветка полностью исчезла, а исходный скриншот снова виден без каких-либо изменений.",
+      "geometry_invariant": "Положение строк, интервалы, переносы и границы текстовых блоков остаются неизменными.",
+      "identity_invariant": "Сохраняются все четыре абзаца, каждый glyph и исходные жирные выделения; ничего не добавляется и не исчезает.",
+      "semantic_invariant": "Точный смысл выводов и призыва к следующему шагу сохраняется до последнего кадра.",
+      "feasibility_assessment": "В кадре нет физического субъекта, направления действия, контактов или надежной глубины; семантика полностью зависит от точного русского текста и типографики, поэтому generative I2V и generative camera небезопасны.",
+      "rendering_strategy": "deterministic-compositor"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Пятисекундная 2D-композиция: исходный скриншот остается неподвижным и пиксельно неизменным. Один мягкий полупрозрачный акцент ограниченной ширины проходит слева направо только под строками последнего жирного абзаца, затем плавно исчезает к финалу, полностью возвращая исходный вид текста.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "В течение пяти секунд один тонкий световой акцент последовательно скользит слева направо вдоль нижнего жирного призыва, не перекрывая и не меняя буквы. Движение ровное, занимает почти всю сцену и мягко затухает у правого края; последний кадр совпадает с исходным скриншотом.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:c3651474c514aee499c80b0095e9661a452c40b441a17d914e1c796af73f0348",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "deterministic-compositor",
+      "scene_plan": "Четырехсекундный contained overlay: узкая полупрозрачная подсветка сразу начинает проход по последнему жирному абзацу слева направо, оставаясь внутри его границ. Она завершает проход и исчезает ближе к концу, оставляя точный исходный текст, верстку и выделения без изменений.",
+      "positive_prompt": null,
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:aeb19999d97c1a4ce70f9c0ff9af1bc92c01a0ec4372ece4aea45d8e783a1508",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "google/veo-3.1-lite": {
+    "evaluation_id": "07#06::google/veo-3.1-lite",
+    "outcome": "worse",
+    "review_note": "На фото женщина, но почему-то совершенно нет никакой генерации - отсутствует движение. Хотя это человек, а не текст или интерфейс",
+    "evidence_strength": "explicit",
+    "failure_codes": [
+      "route_rejected",
+      "fallback_rejected",
+      "provider_no_output",
+      "insufficient_motion"
+    ],
+    "required_execution_mode": "i2v",
+    "fallback_policy": "none",
+    "camera_repair": {
+      "move": "fixed",
+      "focal_target": "the visible woman and her phone",
+      "target_retention": "continuously-visible",
+      "max_screen_travel_percent": 8,
+      "reveal_unseen_space": false
+    },
+    "preservation": {
+      "entity_counts": [
+        "Exactly one woman, two hands with unchanged fingers, and one red smartphone remain present and recognizable."
+      ],
+      "topology_anchors": [
+        "The phone stays supported by the left hand, and the right index finger remains aligned with the visible screen during the gesture."
+      ],
+      "rigid_regions": [
+        "the red smartphone, sofa, and visible room geometry"
+      ],
+      "contacts": [
+        "the left hand keeps supporting the phone while the right finger stays at the screen"
+      ],
+      "must_remain_visible": [
+        "the visible woman and her phone"
+      ]
+    }
+  }
+}

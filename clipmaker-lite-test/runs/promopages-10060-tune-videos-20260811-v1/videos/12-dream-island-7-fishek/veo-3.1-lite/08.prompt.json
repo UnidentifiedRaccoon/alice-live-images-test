@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-12-dream-island-7-fishek-08-veo-3-1-lite",
+  "case_id": "12#08",
+  "sheet_row": 149,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/12-dream-island-7-fishek/08.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+    "sha256": "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d",
+    "width": 5445,
+    "height": 3635
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a59e32a3a302a69aec403c2_6a5a036cb1afef7284d68d17/orig",
+    "sha256": "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d",
+    "width": 5445,
+    "height": 3635,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Present the ride’s imposing scale and ancient-temple staging from an observer’s viewpoint while preserving its sense of extreme tension.",
+    "initial_state": "A rider-filled horizontal gondola is suspended beside a carved temple relief, with the articulated arms and supports occupying the foreground.",
+    "motion_owner": "camera",
+    "primary_action": "Move through the visible depth of the scene toward the gondola and temple relief.",
+    "terminal_state": "The gondola and carved relief remain fully visible in a measurably closer or shifted composition with clear parallax between foreground supports and the temple wall.",
+    "geometry_invariant": "The gondola, seats, restraints, long arms, pivots, and supports retain their rigid shapes and existing attachments.",
+    "identity_invariant": "The same single ride assembly, gondola, and exact set of visible riders remain present and recognizable.",
+    "semantic_invariant": "The riders remain visibly secured in a tense thrill-ride moment, and the attraction retains its monumental temple presentation.",
+    "feasibility_assessment": "The articulated ride, seated riders, restraints, pivots, and multiple depth planes are visible, but the ride’s travel direction and current mechanical phase are ambiguous; subject animation would require invented motion, while a source-grounded camera move is feasible.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "For four seconds, start a small continuous rising camera move immediately, centered on the gondola and carved disc. Keep an even pace until a mild final deceleration, using the lower barrier, supports, gondola, and wall as depth references; finish after about 6% vertical foreground displacement without moving the ride or extending the set.",
+  "prompt": {
+    "positive": "The camera rises slightly toward the suspended gondola and golden temple relief at a smooth real-time pace, producing natural parallax while the rigid ride assembly and every restrained rider remain in the same visible state. By the last frame, the lower foreground barrier has shifted downward about 6% of the frame height and the gondola remains fully visible against the relief.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-12-dream-island-7-fishek-08",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-12-dream-island-7-fishek-08/result.json",
+    "result_sha256": "e8c0b64177c527db2cb0e36019f0f6f21d9426423f44ae07fdb5750f3027d6f3",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+      "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+      "source_image_sha256": "2cf03435b0ae53b208f033a4ec407750ed494e0cd6ec6c76e1b36e397dd1377d",
+      "article_context_sha256": "f873287c9c994b4dedf6faf6eb5199362f1ea79f4a8e96f63537658e248e3ecf",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

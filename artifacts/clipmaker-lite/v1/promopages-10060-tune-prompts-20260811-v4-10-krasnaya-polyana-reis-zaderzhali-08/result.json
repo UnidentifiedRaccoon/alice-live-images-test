@@ -1,0 +1,142 @@
+{
+  "schema_version": 4,
+  "job_id": "promopages-10060-tune-prompts-20260811-v4-10-krasnaya-polyana-reis-zaderzhali-08",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.2.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 9,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "b81df0faaf3674807f13bc9f800c0f1d2d66aae9edc9414c99345321cfb0cc5f",
+    "contract_fingerprint": "sha256:ed19e479359b78d378b9dedde8cf943f7f38f8704e3edebe33448966090400df",
+    "instruction_bundle_sha256": "60fe9706d0a6ba23e2ac047d89a693104705943312a454557c987b859e9c25ba",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "4e500af432320c9e269526365ea756609d3daa0c48e058ece588499382af178a"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "f31d0268c5db42d065ff6cdaa15ff8479a4401b85aae7b8a22e2587a296f4dc8"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "2d6ee595ccfd4dffd56c7007a04f911c2420326f9fa15475a15066e5cd42137f"
+      }
+    ],
+    "inputs_sha256": "sha256:97d7ae54e0979f00d1da163a509917f6ba933485302cea6b55757d50509869d8",
+    "execution_fingerprint": "sha256:ae065d20ef0941cf9df554fb8931080851ef72c677369cb6b9b2ef964f31006c",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff10a-edb1-7a61-80cc-d7216f6f0efc"
+    },
+    "authored_payload_sha256": "c5d6199763f483fd726e43e39884e3426ea0e9725cb56e366a1a8841c132a883",
+    "draft_file_sha256": "cb29297a3ce73a673b3b3208bcdd4882f003f897d251c9469d531eea5191699f"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/08.jpeg",
+      "sha256": "044277f8afedad3ddd54157ac359f86184af8830ebd820020351bd11abce6a11",
+      "bytes": 538058
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+      "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+      "bytes": 20404,
+      "locator": {
+        "article_id": "10-krasnaya-polyana-reis-zaderzhali",
+        "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+        "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+        "image_id": "08",
+        "block_index": 37,
+        "role": "article_image",
+        "caption": "",
+        "file": "08.jpeg",
+        "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/08.jpeg",
+        "current_heading": {
+          "block_index": 30,
+          "level": 2,
+          "text": "Если ещё остались вопросы"
+        },
+        "nearest_text_before": {
+          "block_index": 36,
+          "type": "paragraph",
+          "text": "Они действуют для любых открытых тарифов, включая акции и спецпредложения. Единственное исключение: скидки на проживание, SPA или рестораны, полученные по этим гарантиям, не суммируются с другими скидками — по акциям или спецпредложениям."
+        },
+        "nearest_text_after": {
+          "block_index": 38,
+          "type": "paragraph",
+          "text": "Мы делаем всё, чтобы ваш отпуск состоялся и принёс долгожданную радость — что бы ни происходило с расписанием самолетов."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "В просторном гостиничном лобби у стойки ресепшен находятся ровно четыре человека: сотрудник с чемоданом, пара гостей и администратор.",
+      "Мужчина и женщина стоят рядом у стойки; женщина держит паспорт с посадочным документом и сумку, перед мужчиной неподвижно стоит чемодан.",
+      "Контакт и последующее действие между людьми неоднозначны, но передний план с чемоданом, средний план с гостями и стойкой и глубокий фон создают читаемую пространственную глубину."
+    ],
+    "article_context": "Финальное изображение раздела с вопросами показывает гостей, уже прибывших к стойке отеля, и поддерживает завершающий тезис статьи: курорт помогает сохранить спокойное и радостное начало отдыха несмотря на сбои рейсов.",
+    "structured_intent": {
+      "editorial_meaning": "Спокойное прибытие и готовность курорта помочь гостям сохраняют радость отпуска несмотря на изменения расписания.",
+      "initial_state": "Четыре человека неподвижно стоят у стойки гостиничного ресепшен; перед парой расположен чемодан, женщина держит паспорт с документом и сумку.",
+      "motion_owner": "камера",
+      "primary_action": "плавно приблизиться к паре гостей у стойки, используя видимую глубину сцены",
+      "terminal_state": "Пара остаётся полностью видимой в центре внимания, а чемодан переднего плана наблюдаемо смещён относительно стойки за счёт параллакса.",
+      "geometry_invariant": "Чемодан остаётся на полу у мужчины; люди, стойка и жёсткая архитектура сохраняют исходные взаимные положения и форму.",
+      "identity_invariant": "Ровно четыре человека; сохраняются их внешность, конечности, одежда, чемодан, паспорт с документом, сумка, стойка и существующие вывески.",
+      "semantic_invariant": "Сцена остаётся спокойным, доброжелательным прибытием гостей и не превращается в конфликт или срочное событие.",
+      "feasibility_assessment": "Четыре человека, чемодан, документы, сумка и стойка видны однозначно, а многоплановая глубина поддерживает безопасный параллакс; направление жестов, передача документов и характер взаимодействия между людьми не доказаны, поэтому действие людей не планируется.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Пятисекундный непрерывный camera-only кадр: сразу начать плавный умеренный push-in к паре у стойки и вести его с постоянным темпом без жестов или действий людей. За счёт исходной глубины чемодан переднего плана к последним кадрам заметно смещается примерно на 6% ширины кадра относительно стойки; все четыре человека и их предметы остаются неподвижными, узнаваемыми и полностью в кадре.",
+      "positive_prompt": "The camera makes a steady bounded push-in toward the arriving couple at reception, with the four people, suitcase, travel documents, handbag, counter, and rigid lobby geometry remaining source-locked. By the final frames, the foreground suitcase has shifted about 6% outward in screen space from parallax while the couple remains fully visible at the focal center.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:5138badfe77e2584c946963445ed0e640f58ce65828c17be7fec1a1fe9e23589",
+      "negative_prompt": null
+    }
+  ]
+}

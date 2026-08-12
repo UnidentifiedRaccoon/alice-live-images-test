@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v5-retry-selection",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-prompts-20260811-v5-r7",
+  "agent_id": "clipmaker-lite",
+  "policy": {
+    "selection": "two terminal Veo provider-no-output attempts",
+    "required_execution_mode": "i2v",
+    "required_rendering_strategy": "camera-only",
+    "prompt_author": "clipmaker-lite",
+    "hand_authored_provider_prompt": false,
+    "fallback": false,
+    "s3_upload": false
+  },
+  "lineage": {
+    "source_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r4/prompt-manifest.json",
+      "sha256": "8db266c46890240b64a8b220bdeea4e2d1f3fde9c44b0bcae223397da37616f9",
+      "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4"
+    },
+    "source_generation_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/generation-manifest.json",
+      "sha256": "1058daf1b10fe5e1b83f7d180881a5d42b957507c5240bc8290cbc447d66cf10",
+      "batch_id": "promopages-10060-tune-videos-20260811-v5",
+      "receipts_mutated": false
+    },
+    "previous_retry_prompt_manifest": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/prompt-manifest.json",
+      "sha256": "c06d2c65f06e26a84aaf9a19014c0c6c8598b189a82181caaec79d0fec306020",
+      "batch_id": "promopages-10060-tune-prompts-20260811-v5-r6",
+      "reused_case_ids": [
+        "10#07"
+      ]
+    }
+  },
+  "summary": {
+    "case_count": 2,
+    "target_count": 2,
+    "model_counts": {
+      "google/veo-3.1-lite": 2
+    },
+    "source_status_counts": {
+      "provider-failed": 2
+    },
+    "new_repair_case_count": 1,
+    "reused_previous_case_count": 1
+  },
+  "cases": [
+    {
+      "case_id": "07#06",
+      "sheet_row": 80,
+      "article_slug": "07-femibion-gotovites-k-beremennosti",
+      "brand": "Фемибион",
+      "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+      "publication_id": "69ccbb1d79b9a0623bf6adf1",
+      "content_class": "person_phone",
+      "source": {
+        "image_id": "06",
+        "role": "article_image",
+        "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig",
+        "sha256": "35c6fd00f399b2061746d6a27fc9f01adeedd25c3ae5ff80d70b9439b9b4ad12",
+        "width": 2400,
+        "height": 1600
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/content.json",
+        "sha256": "765a6fc158a59ce0c07a5e838b4d1f2fb3ecc39cbe21884dd33f5c28bb7edb5c",
+        "locator": {
+          "article_id": "07-femibion-gotovites-k-beremennosti",
+          "title": "Готовитесь к беременности? Узнайте, что нужно учесть",
+          "lead": "Даем простые советы, как улучшить здоровье, и рассказываем про комплекс Фемибион®",
+          "image_id": "06",
+          "block_index": 26,
+          "role": "article_image",
+          "caption": "Не забудьте составить список вопросов — это поможет ничего не упустить на приеме",
+          "file": "06.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/07-femibion-gotovites-k-beremennosti/06.jpeg",
+          "current_heading": {
+            "block_index": 20,
+            "level": 2,
+            "text": "Пройдите необходимые консультации и обследования"
+          },
+          "nearest_text_before": {
+            "block_index": 25,
+            "type": "paragraph",
+            "text": "Если у вас есть хронические заболевания, например диабет, заболевания щитовидной железы или гипертония, то это нужно обсудить с профильным специалистом. Он подберет безопасное лечение, скорректирует лекарства и назначит нужные витамины."
+          },
+          "nearest_text_after": {
+            "block_index": 27,
+            "type": "heading",
+            "text": "Принимайте фолиевую кислоту и дополнительные витамины по назначению"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r7/repair-feedback/07-06.json",
+      "repair_feedback_sha256": "8d837c0039e6ec2359b6e6b3e97fbef9192b3c064cea244cbcf4bc9b368acfbf",
+      "repair_feedback": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "07#06::google/veo-3.1-lite",
+          "outcome": "worse",
+          "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship. The positive_prompt must include the exact phrase \"within a 5% screen-travel cap\".",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "provider_no_output"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the complete existing sofa scene with the visible person and phone",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 5,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Preserve exactly one visible adult, the existing hands, red phone, clothing, sofa, and room; nothing appears, disappears, or changes identity."
+            ],
+            "topology_anchors": [
+              "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked.",
+              "The positive_prompt must include the exact phrase \"within a 5% screen-travel cap\"."
+            ],
+            "rigid_regions": [
+              "the complete existing sofa scene with the visible person and phone"
+            ],
+            "contacts": [
+              "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked."
+            ],
+            "must_remain_visible": [
+              "the complete existing sofa scene with the visible person and phone"
+            ]
+          }
+        }
+      },
+      "run_id": "promopages-10060-tune-prompts-20260811-v5-r7-07-femibion-gotovites-k-beremennosti-06",
+      "retry_reason": "r7-numeric-cap-repair-after-r6-semantic-gate",
+      "source_prompt": {
+        "batch_id": "promopages-10060-tune-prompts-20260811-v5-r4",
+        "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-07-femibion-gotovites-k-beremennosti-06/result.json",
+        "result_sha256": "fbd9f9ba187fea3443f622bef5733a3a8bae23edadd9fbc3fe1dc5728a6f777f",
+        "positive_prompt_sha256": "1d75fea6d1f844a1092723d6a7736c20eddd6edfd4ab69b6309fe63290e7fafb"
+      },
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260811-v5",
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v5-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite",
+        "status": "provider-failed",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.prompt.json",
+        "prompt_sha256": "155f06509df013b452fbe6204a85f7f69b3c5e14a754d6322844ac1a65242245",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06.run.json",
+        "run_sha256": "573c31f534465a0485d45f5663f64bd1badf14cc27e017f0db400ce5e6f5e9f7",
+        "provider_job_id": "W6m0J6IEZmyS8op7zzIU",
+        "error": "provider poll/download: Eliza/OpenRouter job W6m0J6IEZmyS8op7zzIU failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false,
+        "automatic_paid_retry": false,
+        "fallback": null
+      },
+      "targets": [
+        {
+          "evaluation_id": "07#06::google/veo-3.1-lite",
+          "case_id": "07#06",
+          "sheet_row": 80,
+          "model_id": "google/veo-3.1-lite",
+          "repair_feedback": {
+            "evaluation_id": "07#06::google/veo-3.1-lite",
+            "outcome": "worse",
+            "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship. The positive_prompt must include the exact phrase \"within a 5% screen-travel cap\".",
+            "evidence_strength": "explicit",
+            "failure_codes": [
+              "provider_no_output"
+            ],
+            "required_execution_mode": "i2v",
+            "fallback_policy": "none",
+            "camera_repair": {
+              "move": "push-in",
+              "focal_target": "the complete existing sofa scene with the visible person and phone",
+              "target_retention": "continuously-visible",
+              "max_screen_travel_percent": 5,
+              "reveal_unseen_space": false
+            },
+            "preservation": {
+              "entity_counts": [
+                "Preserve exactly one visible adult, the existing hands, red phone, clothing, sofa, and room; nothing appears, disappears, or changes identity."
+              ],
+              "topology_anchors": [
+                "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked.",
+                "The positive_prompt must include the exact phrase \"within a 5% screen-travel cap\"."
+              ],
+              "rigid_regions": [
+                "the complete existing sofa scene with the visible person and phone"
+              ],
+              "contacts": [
+                "Keep the existing pose, hand-to-phone contacts, phone geometry, facial expression, and all room geometry source-locked."
+              ],
+              "must_remain_visible": [
+                "the complete existing sofa scene with the visible person and phone"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "10#07",
+      "sheet_row": 122,
+      "article_slug": "10-krasnaya-polyana-reis-zaderzhali",
+      "brand": "Курорт Красная Поляна",
+      "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+      "publication_id": "6a54bb73d6edb03d5192b7e1",
+      "content_class": "multi_person",
+      "source": {
+        "image_id": "07",
+        "role": "article_image",
+        "caption": "",
+        "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+        "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig",
+        "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+        "width": 2048,
+        "height": 1365
+      },
+      "context_path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+      "context_binding": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/content.json",
+        "sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e",
+        "locator": {
+          "article_id": "10-krasnaya-polyana-reis-zaderzhali",
+          "title": "Рейс на Курорт Красная Поляна задержали. Что делать?",
+          "lead": "Разбираем гарантии по каждой ситуации и 4 способа получить помощь на месте",
+          "image_id": "07",
+          "block_index": 29,
+          "role": "article_image",
+          "caption": "",
+          "file": "07.jpeg",
+          "manifest_file_path": "PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+          "current_heading": {
+            "block_index": 23,
+            "level": 2,
+            "text": "Как получить помощь на месте"
+          },
+          "nearest_text_before": {
+            "block_index": 28,
+            "type": "paragraph",
+            "text": "И четвёртый способ — для исключительных случаев, когда нет интернета и уведомлений: личное заявление, которое можно написать прямо на ресепшен отеля."
+          },
+          "nearest_text_after": {
+            "block_index": 30,
+            "type": "heading",
+            "text": "Если ещё остались вопросы"
+          }
+        }
+      },
+      "selected_model_ids": [
+        "google/veo-3.1-lite"
+      ],
+      "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/10-07.json",
+      "repair_feedback_sha256": "b5d02187e1d1597a2787eeaaf2fa6859974d681d0792760378f5bb8983602cfa",
+      "repair_feedback": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "10#07::google/veo-3.1-lite",
+          "outcome": "worse",
+          "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship.",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "provider_no_output"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the complete existing dining scene and all visible people",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 3,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Preserve exactly four visible people and every existing limb, garment, dish, utensil, cup, food item, and piece of furniture; nothing appears, disappears, or changes owner."
+            ],
+            "topology_anchors": [
+              "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+            ],
+            "rigid_regions": [
+              "the complete existing dining scene and all visible people"
+            ],
+            "contacts": [
+              "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+            ],
+            "must_remain_visible": [
+              "the complete existing dining scene and all visible people"
+            ]
+          }
+        }
+      },
+      "run_id": "promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07",
+      "retry_reason": "reused-provenance-verified-r6-neutral-prompt",
+      "source_prompt": {
+        "batch_id": "promopages-10060-tune-prompts-20260811-v5-r6",
+        "planning_run_id": "promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07",
+        "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07/result.json",
+        "result_sha256": "fd469099b3ab4080f3134952de2cec367490309055607b4563f5f24122df463b",
+        "positive_prompt_sha256": "070ddb4c09d6d8b43d72f838b035deeaf5bcf6fb391cb7071a3f71aa6b1993ee"
+      },
+      "source_provider_attempt": {
+        "batch_id": "promopages-10060-tune-videos-20260811-v5",
+        "provider_run_id": "promopages-10060-tune-videos-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+        "status": "provider-failed",
+        "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+        "prompt_sha256": "c4b8e436a781da4477181ae6f708cbf5881f596f3ea6412bb57b2a0d8a552eb9",
+        "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.run.json",
+        "run_sha256": "8361417d6bda21a06465f4952721ae79561c8b615a9a00ce6f2689a2a793d98c",
+        "provider_job_id": "pivxeTXch0waPlU20UzI",
+        "error": "provider poll/download: Eliza/OpenRouter job pivxeTXch0waPlU20UzI failed with status failed: Video generation completed with no output (content may have been filtered)",
+        "provider_may_be_active": false,
+        "automatic_paid_retry": false,
+        "fallback": null
+      },
+      "targets": [
+        {
+          "evaluation_id": "10#07::google/veo-3.1-lite",
+          "case_id": "10#07",
+          "sheet_row": 122,
+          "model_id": "google/veo-3.1-lite",
+          "repair_feedback": {
+            "evaluation_id": "10#07::google/veo-3.1-lite",
+            "outcome": "worse",
+            "review_note": "The prior Veo provider attempt ended terminally with no output. Author a neutral camera-only I2V shot: one gentle centered push-in. Do not script gestures, gaze or expression changes, interpersonal actions, speech, or any inferred relationship.",
+            "evidence_strength": "explicit",
+            "failure_codes": [
+              "provider_no_output"
+            ],
+            "required_execution_mode": "i2v",
+            "fallback_policy": "none",
+            "camera_repair": {
+              "move": "push-in",
+              "focal_target": "the complete existing dining scene and all visible people",
+              "target_retention": "continuously-visible",
+              "max_screen_travel_percent": 3,
+              "reveal_unseen_space": false
+            },
+            "preservation": {
+              "entity_counts": [
+                "Preserve exactly four visible people and every existing limb, garment, dish, utensil, cup, food item, and piece of furniture; nothing appears, disappears, or changes owner."
+              ],
+              "topology_anchors": [
+                "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+              ],
+              "rigid_regions": [
+                "the complete existing dining scene and all visible people"
+              ],
+              "contacts": [
+                "Keep every pose and hand-to-object contact, the table arrangement, sofa, mirror, and room geometry source-locked."
+              ],
+              "must_remain_visible": [
+                "the complete existing dining scene and all visible people"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-07-veo-3-1-lite",
+  "case_id": "17#07",
+  "sheet_row": 233,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/07.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df381cbac61b6b9a323/orig",
+    "sha256": "8145903ee322fc593365b5372f839c37bca0dd20cc52b496bf6ca1e801b991c9",
+    "width": 786,
+    "height": 524
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df381cbac61b6b9a323/orig",
+    "sha256": "8145903ee322fc593365b5372f839c37bca0dd20cc52b496bf6ca1e801b991c9",
+    "width": 786,
+    "height": 524,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize the correct placement of damping tape along the room perimeter before the floor is poured, supporting crack prevention through expansion compensation.",
+    "initial_state": "One hand holds a black tool against green perimeter tape at a rough floor-to-wall corner, with a loose curved strip extending into the foreground.",
+    "motion_owner": "camera",
+    "primary_action": "Move closer toward the visible tool-to-tape contact point in one bounded continuous approach.",
+    "terminal_state": "The same contact point is shown modestly closer and more clearly, while the hand, tool, tape arrangement, and room corner remain intact.",
+    "geometry_invariant": "The tool remains in the visible hand and against the same tape section; the tape stays aligned with the floor-to-wall perimeter and keeps its existing shape.",
+    "identity_invariant": "Preserve exactly one hand, one black tool, and the existing green tape strips; no added fingers, tools, fasteners, or materials.",
+    "semantic_invariant": "The scene continues to represent damping tape being positioned along the perimeter before floor pouring; the installation state is not reversed or completed through invented mechanics.",
+    "feasibility_assessment": "The hand, tool, tape, perimeter junction, and apparent contact are visible, but neither the tool’s travel direction nor the precise fastening mechanism is proven by the still image. The corner and foreground strip provide sufficient depth for a safe source-grounded camera move.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "For four seconds, use one continuous push-in that starts at once, travels evenly toward the tool-to-tape contact point, and decelerates only at the end. The curved foreground strip and wall corner shift through restrained parallax; the endpoint is a visibly closer view of the same contact area while all entities, rigid geometry, and the existing tape arrangement remain unchanged.",
+  "prompt": {
+    "positive": "The camera moves steadily forward toward the visible tool-to-tape contact point at normal real-time speed; the hand, tool, and perimeter tape stay fixed in contact and retain their exact shapes. At the end the contact area appears clearly closer, with roughly 5–7% screen-space travel and only source-grounded parallax.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-07",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-07/result.json",
+    "result_sha256": "bd93279a5bbe6ebe29f3d36186369df0f7baed7b2e3cb32a90174452dcd5ece3",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:94141eb0ada5eead364e2935e29e8eeca5ada6c324fad4e7720ddc1ce6494aef",
+      "instruction_bundle_sha256": "655e772fff5d60c14395c2b6bdb38684e35d9a22621d686c059db20e270e2960",
+      "source_image_sha256": "8145903ee322fc593365b5372f839c37bca0dd20cc52b496bf6ca1e801b991c9",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

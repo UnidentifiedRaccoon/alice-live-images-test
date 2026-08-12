@@ -1,0 +1,175 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-17-volma-nalivnoi-pol-08",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+    "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:29ed4af590ec89359fb3303ca2af8bf99c7f3f15f89639764cf67473e32a3222",
+    "execution_fingerprint": "sha256:d4838da4ed29158d53ac5a4be85bda105552497d23bd6c38bec6a266cd1db3a5",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff23a-b13b-7000-96f0-1b5549517699"
+    },
+    "authored_payload_sha256": "e08a2f17325a7c365055d8136b9b70532416a7462af727abde63d1e857ac1c37",
+    "draft_file_sha256": "3d55d4d8333871c80a119203a2c72a16f828407a25892c7eab449b9e0ca26393"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+      "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+      "bytes": 1304336
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/content.json",
+      "sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "bytes": 23912,
+      "locator": {
+        "article_id": "17-volma-nalivnoi-pol",
+        "title": "Наливной пол трескается и пылит? В чем может быть ошибка",
+        "lead": "Разбираем ошибки при заливке наливного пола, которые часто приводят к проблемам",
+        "image_id": "08",
+        "block_index": 28,
+        "role": "article_image",
+        "caption": "",
+        "file": "08.png",
+        "manifest_file_path": "PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+        "current_heading": {
+          "block_index": 26,
+          "level": 2,
+          "text": "Ошибка №5. Медленная работа"
+        },
+        "nearest_text_before": {
+          "block_index": 27,
+          "type": "paragraph",
+          "text": "Проблема: работа с перерывами, медленное нанесение. (Заливка должна выполняться не более с 10-15 минутами разницы между партиями). Если заливка идет частями, появляются трещины из-за неравномерного затвердевания. Как только раствор начнет схватываться, его уже невозможно выровнять."
+        },
+        "nearest_text_after": {
+          "block_index": 29,
+          "type": "paragraph",
+          "text": "Решение: залить поверхность в один заход без перерывов. Схватывание должно происходить одновременно по всему периметру."
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/17-08.json",
+      "sha256": "5070351c836db179ec313ce4146962c493afca729fe7a8ac27459c0a1c1555c0",
+      "bytes": 1689,
+      "canonical_sha256": "22fb45746ef1600313fb1902b33c2f60140503b333bc8cc9244c9a4d5aed5b8e",
+      "models": {
+        "google/veo-3.1-lite": {
+          "evaluation_id": "17#08::google/veo-3.1-lite",
+          "outcome": "same-or-unclear",
+          "review_note": "Пол сам поднимается. Выглядит не очень реалистично. В других примерах ты сделал так, как будто это мастер снимает на телефон и показывает работу, поэтому в других примерах дальше - выглядит лучше",
+          "evidence_strength": "explicit",
+          "failure_codes": [
+            "rigid_world_deformation"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "handheld-inspection",
+            "focal_target": "the central broken floor section, cracks, raised slab, and visible tools",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "The same broken floor sections, one powered tool and the visible hand tools remain present and recognizable; nothing is added, removed or duplicated."
+            ],
+            "topology_anchors": [
+              "All cracks, slab fragments, rubble and tools retain their rigid shapes, locations and existing contacts with the floor."
+            ],
+            "rigid_regions": [
+              "the broken floor, cracks, raised slab, rubble, and all visible tools"
+            ],
+            "contacts": [
+              "floor fragments, rubble, and tools retain their existing floor contacts"
+            ],
+            "must_remain_visible": [
+              "the central broken floor section, cracks, raised slab, and visible tools"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "В помещении виден вскрытый участок пола с крупной приподнятой плитой, глубокими трещинами, мелкими обломками и пылью.",
+      "На полу лежат один электрический демонтажный инструмент с кабелем и несколько ручных инструментов; людей и доказанного активного процесса нет.",
+      "Плиты, трещины, обломки и инструменты имеют видимые неподвижные контакты с основанием; направление или механика их движения изображением не подтверждены.",
+      "Главный композиционный объект — центральная разрушенная зона пола с поднятым фрагментом и расходящимися трещинами."
+    ],
+    "article_context": "Изображение иллюстрирует последствия медленной, прерывистой заливки: разрушенный и растрескавшийся пол подчеркивает необходимость заливать всю поверхность за один заход, чтобы она схватывалась равномерно.",
+    "structured_intent": {
+      "editorial_meaning": "Показать уже возникшее повреждение как наглядное последствие прерывистой и медленной заливки, поддерживая совет выполнять работу за один заход.",
+      "initial_state": "Разрушенный участок пола, приподнятая плита, трещины, обломки, пыль и инструменты неподвижно лежат в видимых положениях.",
+      "motion_owner": "Камера.",
+      "primary_action": "Плавно осматривает центральную разрушенную зону пола как мастер, снимающий состояние работ на телефон.",
+      "attention_anchor": "Центральный разрушенный участок пола с трещинами и приподнятой плитой.",
+      "motion_boundary": "Двигаться может только камера; разрушенный пол, трещины, приподнятая плита, обломки, кабель и все инструменты остаются жесткими и source-locked, а камера использует только уже видимую глубину.",
+      "terminal_state": "Центральная поврежденная зона остается полностью видимой и узнаваемой после небольшого наблюдаемого параллакса, без движения или деформации пола, обломков и инструментов.",
+      "geometry_invariant": "Все трещины, фрагменты плит, обломки и инструменты сохраняют жесткую форму, взаимное расположение и существующие контакты с полом.",
+      "identity_invariant": "Сохраняются те же поврежденные секции пола, одна приподнятая плита, один электрический инструмент и все видимые ручные инструменты; ничего не добавляется, не удаляется и не дублируется.",
+      "semantic_invariant": "Поврежденный пол остается свидетельством дефекта от неравномерного выполнения работ; его состояние не исправляется и не усугубляется.",
+      "feasibility_assessment": "Изображение надежно подтверждает неподвижные поврежденные плиты, трещины, обломки и лежащие инструменты, но не подтверждает активную работу, направление движения или механику подъема пола; безопасна только наблюдательная камера.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Четырехсекундный единый план: камера сразу начинает плавный осмотр с рук в манере мастера, снимающего работу на телефон, и движется с ровной умеренной скоростью вокруг центрального поврежденного участка. Траектория ограничена уже видимой глубиной и экранным смещением не более 8%; фокус непрерывно удерживает трещины, поднятую плиту и инструменты. Пол, все фрагменты, щебень и инструменты остаются абсолютно жесткими, сохраняют формы, расположение и контакты. К концу камера мягко замедляется; наблюдаемый результат — небольшой параллакс и смещение переднего плана примерно на 5–8% при сохранении всей поврежденной зоны в центре кадра.",
+      "positive_prompt": "The camera makes a smooth, restrained handheld phone-inspection move around the central broken floor section, keeping the cracks, raised slab, rubble, powered tool, and hand tools continuously visible while every rigid object retains its exact shape, position, and floor contact. By the final frame, gentle source-grounded parallax has shifted the foreground by about 5–8% of the frame, with the damaged section still central and fully recognizable.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v8-veo-prompt-experiment-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260812-v8",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260812-v8-07-femibion-gotovites-k-beremennosti-06-veo-3-1-lite-camera-forward",
+  "evaluation_id": "07#06::google/veo-3.1-lite",
+  "experiment_id": "07#06::google/veo-3.1-lite::camera-forward",
+  "variant_id": "camera-forward",
+  "case_id": "07#06",
+  "sheet_row": 80,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "adapter": "eliza-openrouter",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260812-v8/videos/07-femibion-gotovites-k-beremennosti/veo-3.1-lite/06-camera-forward.mp4",
+  "status": "provider-failed",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera moves slowly straight forward, centered and steady throughout the shot.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 20260812,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5096941/pub_685a45c483113703283d5b0e_685ab42c046a3d4397850a85/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "66111fafc90e938ec8f2e38ce56f82295333f76c5ec0c65fde8d91427004a929",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1oM0io6whFdOx2kMr8L7",
+  "submitted_at": "2026-08-11T23:50:15Z",
+  "completed_at": "2026-08-11T23:52:08Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "check": "source-dimensions",
+    "model_id": "google/veo-3.1-lite",
+    "width": 2400,
+    "height": 1600,
+    "minimum_dimension_px": null,
+    "conforms": true,
+    "normalization_applied": false
+  },
+  "provider_response": {
+    "id": "1oM0io6whFdOx2kMr8L7",
+    "status": "pending",
+    "request_id": "1786492211091227-10511873198480947115-xcunskkz2sjvf2re-BAL",
+    "diagnostics_unavailable_upstream": true
+  },
+  "provider_terminal_diagnostics": {
+    "id": "1oM0io6whFdOx2kMr8L7",
+    "generation_id": "gen-vid-1786492211-7r9hQmGXu4V4XhfUXBOZ",
+    "status": "failed",
+    "error": "Video generation completed with no output (content may have been filtered)",
+    "request_id": "1786492328325328-10558355251708618270-xcunskkz2sjvf2re-BAL",
+    "diagnostics_unavailable_upstream": true
+  },
+  "diagnostics_unavailable_upstream": true,
+  "terminal_no_output_stop_applied": true,
+  "media": null,
+  "contract_check": null,
+  "error": "provider terminal: Video generation completed with no output (content may have been filtered)",
+  "submission_count": 1,
+  "budget_reservation_usd": 0.35,
+  "new_immutable_provider_run": true,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "compositor": false,
+  "source_transform": null,
+  "disable_provider_safety_filters": false,
+  "s3_upload": false
+}

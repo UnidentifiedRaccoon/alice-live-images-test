@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v6-retry-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v6",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v6-18-volma-plitochnyi-klei-06-wan-2-2",
+  "case_id": "18#06",
+  "sheet_row": 261,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "retry_reason": "prior-dry-run-never-submitted-new-run",
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260811-v5",
+    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-18-volma-plitochnyi-klei-06-wan-2-2",
+    "status": "dry-run",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
+    "prompt_sha256": "2b2207a854b4bbbfc81ddbfe20b2f1592a552a17f85b16095e253a04006d141c",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/18-volma-plitochnyi-klei/wan-2.2/06.run.json",
+    "run_sha256": "55c9255352b9d0506643638929fa8204ad47b45fe7b5e1019a58d8d31aaec0a3",
+    "provider_job_id": null,
+    "provider_may_be_active": false,
+    "error": null,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "receipts_mutated": false
+  },
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v6/videos/18-volma-plitochnyi-klei/wan-2.2/06.mp4",
+  "status": "succeeded",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/5400274/pub_6a267e54c6621a31e5630a18_6a267e6fb55c4222ecf2723e/orig",
+      "prompt": "The kneeling worker makes one measured inspection shift of his head, shoulders, and torso over the prepared floor, with his arms staying away from the detached trowel at right. Keep the camera fixed and the tiles, adhesive, substrate, grout lines, and red guides rigid; by the end he settles into a slightly adjusted inspection posture with both worker and trowel continuously visible.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "b9f96222ed46926396476eae96fff385ec08c206905f2ef0542449f01c08a295",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "043721c8f4423e1c52d2b73529a8fe4a",
+  "submitted_at": "2026-08-11T23:41:17Z",
+  "completed_at": "2026-08-11T23:41:18Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 56115,
+    "sha256": "d71c1d3e126dada5d0ef8d45535fdc48ef9047b2debd3629bb73fd8c141ac10a"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "043721c8f4423e1c52d2b73529a8fe4a",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1168,
+    "height": 784,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 4630963,
+    "sha256": "f6918a5638fcafa8b8c9621dcb020e7f7a1e24967ff1cdfd20c5a43fed4c8717"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "submission_count": 1,
+  "budget_reservation_usd": 0.35,
+  "new_immutable_provider_run": true,
+  "automatic_paid_retry": false,
+  "fallback": null,
+  "s3_upload": false,
+  "duplicate_risk_acceptance": {
+    "authorization_kind": "explicit-operator-duplicate-risk-acceptance",
+    "prior_inactive_not_confirmed": true,
+    "source_evaluation_id": "17#11::alibaba/wan-2.2",
+    "source_provider_run_id": "promopages-10060-tune-videos-20260811-v5-17-volma-nalivnoi-pol-11-wan-2-2",
+    "source_status": "submit-unknown",
+    "source_provider_job_id": null,
+    "source_run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/17-volma-nalivnoi-pol/wan-2.2/11.run.json",
+    "source_run_sha256": "5f8e9f7af132884783f914ae6e63a25b3c60fe70b83e7bd28743021ff17cf681",
+    "maximum_possible_duplicate_charge_usd": 0.35,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "authorized_evaluation_id": "18#06::alibaba/wan-2.2"
+  }
+}

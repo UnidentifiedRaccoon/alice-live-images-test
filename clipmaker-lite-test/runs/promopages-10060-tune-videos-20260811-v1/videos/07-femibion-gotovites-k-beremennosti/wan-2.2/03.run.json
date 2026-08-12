@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-run",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-07-femibion-gotovites-k-beremennosti-03-wan-2-2",
+  "planning_run_id": "promopages-10060-tune-prompts-20260811-v4-07-femibion-gotovites-k-beremennosti-03",
+  "lite_result_sha256": "44921c78458394964defafefe5d1e72d996528eddbaf8fb49e7208feb8cb2c20",
+  "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+  "route_registry_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+  "case_id": "07#03",
+  "sheet_row": 72,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "adapter": "eliza-segmind",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v1/videos/07-femibion-gotovites-k-beremennosti/wan-2.2/03.mp4",
+  "request": {
+    "endpoint": "/wan-2.2-i2v-flash",
+    "model": "alibaba/wan-2.2",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "input": {
+      "image": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_685a45c483113703283d5b0e_685a4740453107264122b27b/orig",
+      "prompt": "The camera makes a steady bounded push-in toward the exercising pair while both people hold their current poses, keeping exactly two people and unchanged body geometry. By the final frames, the pair is modestly larger and the nearest floor reference has shifted about 5–10% of the frame.",
+      "negative_prompt": "",
+      "resolution": "720p",
+      "prompt_extend": false,
+      "watermark": false,
+      "seed": 220214
+    }
+  },
+  "request_sha256": "a547110e24033068ae4f977a071b1e0e9ca1359e07d7e3238c82628ed5c37b19",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "92e8f0a1ca1c2c17f21eea3b66b4ccd2",
+  "submitted_at": "2026-08-11T15:01:32Z",
+  "completed_at": "2026-08-11T15:01:32Z",
+  "provider_may_be_active": false,
+  "source_preflight": {
+    "http_status": 200,
+    "bytes": 164192,
+    "sha256": "2fb53d52473b30ff4adb33058c89bb0294a33ce32c4892d661d3c3947b3e14b1"
+  },
+  "provider_response": {
+    "http_status": 200,
+    "content_type": "video/mp4",
+    "request_id": "92e8f0a1ca1c2c17f21eea3b66b4ccd2",
+    "response_cost": "0.18",
+    "automatic_retry": false
+  },
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1280,
+    "height": 720,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": false,
+    "bytes": 7216060,
+    "sha256": "cf4f39db4baecbcbf0fd5e1eb8b455906335c7211ce0d3f7d7e1c2c9c269c08d"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "720p",
+      "generate_audio": false,
+      "frames": 150,
+      "fps": 30,
+      "qa_profile": "clipmaker-lite-tune-strict-media-v1",
+      "pixel_budget": 921600,
+      "pixel_tolerance_fraction": 0.03,
+      "aspect_ratio": "source",
+      "source_width": 1920,
+      "source_height": 1080,
+      "aspect_tolerance_fraction": 0.02
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "frames": true,
+      "fps": true,
+      "pixels": true,
+      "source_aspect": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "automatic_paid_retry": false,
+  "local_media_verification": {
+    "profile": "clipmaker-lite-tune-strict-media-v1",
+    "source": "local-mp4-ffprobe",
+    "media_sha256": "cf4f39db4baecbcbf0fd5e1eb8b455906335c7211ce0d3f7d7e1c2c9c269c08d",
+    "provider_calls": false,
+    "paid_submission": false,
+    "automatic_paid_retry": false
+  }
+}

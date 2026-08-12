@@ -1,0 +1,250 @@
+{
+  "schema_version": 5,
+  "job_id": "promopages-10060-tune-prompts-20260811-v5-14-promopages-govorit-s-auditoriei-05",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.3.0",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 10,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "50f2ecf95c314c2cd31ea503c97ef2634958117cad9ed6f1f70cd568b24f0953",
+    "contract_fingerprint": "sha256:3fde33b4ce84974cc4b03303f66ee481aca69a855a817878db7eda87d2746a16",
+    "instruction_bundle_sha256": "a5ca4de3a148c606e8731d1ffad9cfe2f21df95741fe919fbda71ddef3d3ec62",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "0fa57bc80111b3c16bf3b15e92796528860ad9b1555921cab86c33956f9bc786"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "ea8a541b2ea886ded2105f16c6b4ab0a03c9cce9a39b76d9130538681556cf8d"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "de89b4f68f6702a181ae7ff5e912d9f5c69b89e9b3bfa5cd28660e7bd6a11a31"
+      }
+    ],
+    "inputs_sha256": "sha256:b23fed38455c87a273acee3d9e852f6cf750a6ffc2871ce286cd0b95f6e2a1c2",
+    "execution_fingerprint": "sha256:b9b80c19e2ce593a1c8d6233c39b45bca5629e6c394aede0d7214de0574dafc6",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019ff23a-5d2a-7d80-8860-4a283cf46540"
+    },
+    "authored_payload_sha256": "a620b58a36b63e04aa8fbc9c7102461c310d8d529e0480498969b007d50a8ded",
+    "draft_file_sha256": "25dd6ddf7e0299cd8c57fae8f793ce97268eafc79e3fa6bb7de3cf37261cc167"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+      "sha256": "08c47d81a6d97dd43527539d464e3df3be38725d6fd9341b7e49a304755bb34a",
+      "bytes": 688842
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/content.json",
+      "sha256": "6bdfb616dfd822fa1acdbf1106455008389804ffd3a9e6c00f37b5d6b69434d5",
+      "bytes": 21581,
+      "locator": {
+        "article_id": "14-promopages-govorit-s-auditoriei",
+        "title": "Как сейчас говорить с аудиторией, чтобы у вас покупали",
+        "lead": "Разбираем, как удержать внимание, вызвать доверие и подвести человека к покупке",
+        "image_id": "05",
+        "block_index": 22,
+        "role": "article_image",
+        "caption": "",
+        "file": "05.png",
+        "manifest_file_path": "PROMOPAGES-10060/articles/14-promopages-govorit-s-auditoriei/05.png",
+        "current_heading": {
+          "block_index": 18,
+          "level": 2,
+          "text": "Говорите с конкретным человеком, а не всей ЦА"
+        },
+        "nearest_text_before": {
+          "block_index": 21,
+          "type": "paragraph",
+          "text": "Именно поэтому универсальную статью лучше адаптировать под разные сегменты: менять заголовок, вступление, примеры и аргументы. В ПромоСтраницах можно запустить несколько версий параллельно и сравнить, какая подача лучше привлекает людей и приводит их на сайт."
+        },
+        "nearest_text_after": {
+          "block_index": 23,
+          "type": "paragraph",
+          "text": "✍🏻 Найти такие сегменты поможет бесплатная креативная ИИ-студия ПромоСтраниц. Нейросеть изучит продукт по сайту, предложит несколько портретов аудитории и определит возможные барьеры перед покупкой. Затем поможет подготовить отдельные версии статей для разных групп"
+        }
+      }
+    },
+    "user_direction": null,
+    "repair_feedback": {
+      "path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5/repair-feedback/14-05.json",
+      "sha256": "6f361c0f52406d6039dced840af9a63468b50e80da460284edc95a7f6e9d2b24",
+      "bytes": 2499,
+      "canonical_sha256": "0299b1cc0e4b3e07faa4c12484508b0979ee13ce3ff4bcb7b897e383e2973f5c",
+      "models": {
+        "alibaba/wan-2.2": {
+          "evaluation_id": "14#05::alibaba/wan-2.2",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the existing two-column interface card grid",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Сохраняются ровно две карточки сегментов и две карточки форматов со всеми исходными надписями, glyphs и controls."
+            ],
+            "topology_anchors": [
+              "Двухколоночная компоновка, границы карточек и взаимное расположение всех UI-элементов неизменны."
+            ],
+            "rigid_regions": [
+              "the interface plane, four cards, text glyphs, and controls"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the existing two-column interface card grid"
+            ]
+          }
+        },
+        "google/veo-3.1-lite": {
+          "evaluation_id": "14#05::google/veo-3.1-lite",
+          "outcome": "unrated",
+          "review_note": null,
+          "evidence_strength": "inferred",
+          "failure_codes": [
+            "route_rejected"
+          ],
+          "required_execution_mode": "i2v",
+          "fallback_policy": "none",
+          "camera_repair": {
+            "move": "push-in",
+            "focal_target": "the existing two-column interface card grid",
+            "target_retention": "continuously-visible",
+            "max_screen_travel_percent": 8,
+            "reveal_unseen_space": false
+          },
+          "preservation": {
+            "entity_counts": [
+              "Сохраняются ровно две карточки сегментов и две карточки форматов со всеми исходными надписями, glyphs и controls."
+            ],
+            "topology_anchors": [
+              "Двухколоночная компоновка, границы карточек и взаимное расположение всех UI-элементов неизменны."
+            ],
+            "rigid_regions": [
+              "the interface plane, four cards, text glyphs, and controls"
+            ],
+            "contacts": [],
+            "must_remain_visible": [
+              "the existing two-column interface card grid"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "image_reading": [
+      "Широкий статичный скриншот интерфейса на белой плоскости с двухколоночной компоновкой.",
+      "Слева видны ровно две карточки сегментов аудитории: «Жильцы квартир» и «Владельцы загородных домов».",
+      "Справа видны ровно две крупные карточки предлагаемых форматов статьи; все карточки содержат точный русский текст, glyphs и controls.",
+      "Физическое движение элементов интерфейса не доказано; безопасна только камера при полностью неподвижном UI."
+    ],
+    "article_context": "Изображение иллюстрирует переход от широкого описания аудитории к конкретным сегментам и отдельным форматам статей: интерфейс ИИ-студии помогает адаптировать подачу для разных групп, сохраняя параллельные варианты для сравнения.",
+    "structured_intent": {
+      "editorial_meaning": "Показать, как единая широкая аудитория раскладывается на конкретные сегменты, для которых предлагаются отдельные форматы статьи.",
+      "initial_state": "Полностью видимый статичный интерфейс: слева две карточки сегментов аудитории, справа две карточки предлагаемых форматов статьи.",
+      "motion_owner": "Камера.",
+      "primary_action": "Камера непрерывно приближается к существующей двухколоночной сетке карточек.",
+      "attention_anchor": "Существующая двухколоночная сетка из четырёх интерфейсных карточек.",
+      "motion_boundary": "Двигаться может только камера; плоскость интерфейса, четыре карточки, весь текст, glyphs, layout и controls остаются source-locked и не меняют состояние; границы исходного пространства не раскрываются.",
+      "terminal_state": "В последнем кадре та же полная сетка из четырёх карточек видна немного крупнее, без изменения содержимого или состояния интерфейса.",
+      "geometry_invariant": "Интерфейс остаётся единой жёсткой плоскостью; двухколоночная компоновка, границы карточек и взаимное расположение всех элементов неизменны.",
+      "identity_invariant": "Сохраняются ровно две карточки сегментов и две карточки форматов, все исходные русские надписи, числа, glyphs, иконки и controls.",
+      "semantic_invariant": "Интерфейс продолжает показывать неизменное сопоставление двух сегментов аудитории с двумя предложенными форматами материалов.",
+      "feasibility_assessment": "Кадр является статичным UI-скриншотом с точным текстом и controls; источник не доказывает безопасного автономного движения интерфейсных элементов. Допустимо только ограниченное движение камеры без изменения UI и без показа пространства за исходным кадром.",
+      "rendering_strategy": "camera-only"
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "execution_mode": "i2v",
+      "scene_plan": "Пятисекундный непрерывный shot: камера сразу начинает ровный центрированный push-in к существующей сетке карточек, без панорамирования и перекадрирования. Весь интерфейс остаётся жёсткой неподвижной плоскостью; четыре карточки непрерывно видны. К последним кадрам приближение плавно замедляется, давая читаемое изменение масштаба при перемещении не более 8% экрана и не открывая пространства за исходными границами.",
+      "positive_prompt": "The camera begins a smooth centered push-in toward the existing two-column interface card grid, keeping all four cards continuously visible while the entire UI remains one rigid, unchanged plane. By the final frame, the grid is modestly closer with no more than 8% screen travel, and every original text glyph and control retains its state and position.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:d38bae21d4be8ece845825a95c55b4bfe8cb03aa8819f412895214be5aa52a4d",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "execution_mode": "i2v",
+      "scene_plan": "Четырёхсекундный focused shot: камера без задержки выполняет один мягкий центрированный push-in к двухколоночной сетке, движется равномерно большую часть времени и замедляется только у финала. Интерфейс не анимируется, все четыре карточки сохраняют исходную геометрию и остаются целиком видимыми; финал показывает умеренно более крупную композицию в пределах 8% screen travel без reveal невидимого пространства.",
+      "positive_prompt": "The camera moves immediately in one gentle centered push toward the existing two-column interface card grid, keeping all four cards continuously visible as a single rigid, unchanged UI plane. At the end, the grid is clearly but slightly closer within 8% screen travel, with every original label, glyph, and control unchanged.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:59cfbb97a0439e9aef1c45238985357f142dd7bc556e9658f2d4eef6bdf73033",
+      "negative_prompt": null
+    }
+  ]
+}

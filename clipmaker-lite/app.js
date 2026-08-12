@@ -15,8 +15,13 @@
     "../clipmaker-lite-test/promopages-10060-campaigns-20260807-v1-manifest.json";
   const PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH =
     "../clipmaker-lite-test/promopages-10060-s3-delivery.json";
+  const PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_PATH =
+    "../clipmaker-lite-test/promopages-10060-tune-approved-s3-overlay.json";
+  const TUNE_MANIFEST_PATH = "../clipmaker-lite-test/tune-manifest.json";
   const PROMOPAGES_10060_S3_DELIVERY_ROLE =
     "promopages-10060-s3-delivery";
+  const PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_ROLE =
+    "promopages-10060-tune-approved-s3-overlay";
   const PROMOPAGES_10060_S3_BUCKET = "promopages-front-bundles";
   const PROMOPAGES_10060_S3_OBJECT_PREFIX = "front-images/exp_video/";
   const PROMOPAGES_10060_S3_PUBLIC_BASE =
@@ -183,6 +188,16 @@
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_IMAGE_COUNT = 170;
   const EXPECTED_PROMOPAGES_10060_WITH_CAMPAIGN_20260807_OUTPUT_COUNT = 510;
   const EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT = 510;
+  const EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT = 45;
+  const EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS = {
+    "alibaba/wan-2.2": 16,
+    "alibaba/wan-2.7": 12,
+    "google/veo-3.1-lite": 17,
+  };
+  const PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS = [
+    "17#11::alibaba/wan-2.2",
+    "18#06::alibaba/wan-2.2",
+  ];
   const PROVIDER_FILTERED_STATUS = "provider-filtered";
   const PROVIDER_FILTERED_RECORDED_STATUS = "provider-failed";
   const PROVIDER_FILTERED_SELECTION = "terminal-retry-v1-exhausted";
@@ -3623,6 +3638,417 @@
     }));
   };
 
+  const tuneApprovedOverlayKey = (articleSlug, imageId, modelId) =>
+    `${articleSlug}\u0000${imageId}\u0000${modelId}`;
+
+  const validateAndApplyPromopages10060TuneApprovedS3Overlay = (
+    manifest,
+    tuneManifest,
+    reviewArticles,
+  ) => {
+    const expectedManifestFields = [
+      "bucket",
+      "evaluation_inputs",
+      "manifest_role",
+      "model_counts",
+      "object_prefix",
+      "outputs",
+      "public_base_url",
+      "schema_version",
+      "selected_output_count",
+      "selection_contract",
+      "selection_policy",
+      "ticket",
+      "tune_manifest",
+    ];
+    assert(
+      manifest &&
+        typeof manifest === "object" &&
+        canonicalJson(Object.keys(manifest).sort()) ===
+          canonicalJson(expectedManifestFields) &&
+        manifest.schema_version === 1 &&
+        manifest.manifest_role ===
+          PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_ROLE &&
+        manifest.ticket === "PROMOPAGES-10060" &&
+        manifest.bucket === PROMOPAGES_10060_S3_BUCKET &&
+        manifest.object_prefix === PROMOPAGES_10060_S3_OBJECT_PREFIX &&
+        manifest.public_base_url === PROMOPAGES_10060_S3_PUBLIC_BASE,
+      "Tune-approved S3 overlay имеет неверную identity.",
+    );
+
+    const selectionContract = manifest.selection_contract;
+    assert(
+      selectionContract &&
+        typeof selectionContract === "object" &&
+        canonicalJson(Object.keys(selectionContract).sort()) ===
+          canonicalJson(["path", "sha256"]) &&
+        selectionContract.path ===
+          "PROMOPAGES-10060/tune-s3-export/selection-contract.json" &&
+        isSha256(selectionContract.sha256),
+      "Tune-approved S3 overlay не привязан к selection contract.",
+    );
+    const expectedEvaluationPaths = new Set([
+      "PROMOPAGES-10060/tune-s3-export/inputs/promopages-10060-tune-prompts-20260811-v4-evaluation.json",
+      "PROMOPAGES-10060/tune-s3-export/inputs/promopages-10060-tune-review-20260811-v6-evaluation.json",
+    ]);
+    assert(
+      Array.isArray(manifest.evaluation_inputs) &&
+        manifest.evaluation_inputs.length === expectedEvaluationPaths.size,
+      "Tune-approved S3 overlay должен содержать два evaluation receipt.",
+    );
+    const evaluationPaths = new Set();
+    manifest.evaluation_inputs.forEach((receipt) => {
+      assert(
+        receipt &&
+          typeof receipt === "object" &&
+          canonicalJson(Object.keys(receipt).sort()) ===
+            canonicalJson(["batch_id", "kind", "path", "sha256"]) &&
+          typeof receipt.kind === "string" &&
+          receipt.kind.trim() &&
+          expectedEvaluationPaths.has(receipt.path) &&
+          !evaluationPaths.has(receipt.path) &&
+          isSha256(receipt.sha256) &&
+          typeof receipt.batch_id === "string" &&
+          receipt.batch_id.trim(),
+        "Tune-approved S3 overlay содержит неверный evaluation receipt.",
+      );
+      evaluationPaths.add(receipt.path);
+    });
+    assert(
+      evaluationPaths.size === expectedEvaluationPaths.size,
+      "Tune-approved S3 overlay не покрывает оба evaluation input.",
+    );
+
+    const selectionPolicy = manifest.selection_policy;
+    assert(
+      selectionPolicy &&
+        typeof selectionPolicy === "object" &&
+        canonicalJson(Object.keys(selectionPolicy).sort()) ===
+          canonicalJson([
+            "approved_outcome",
+            "current_tune_binding_required",
+            "deduplication_key",
+            "explicit_latest_wan_evaluation_ids",
+            "precedence",
+            "previous_tuned_fallback_allowed",
+          ]) &&
+        selectionPolicy.approved_outcome === "helped" &&
+        selectionPolicy.deduplication_key === "evaluation_id" &&
+        selectionPolicy.precedence ===
+          "v6-helped-over-v4; preserve-v4-helped-when-v6-is-not-helped" &&
+        selectionPolicy.current_tune_binding_required === true &&
+        selectionPolicy.previous_tuned_fallback_allowed === false &&
+        canonicalJson(selectionPolicy.explicit_latest_wan_evaluation_ids) ===
+          canonicalJson(PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS),
+      "Tune-approved S3 overlay содержит неверную selection policy.",
+    );
+
+    const tuneBinding = manifest.tune_manifest;
+    assert(
+      tuneBinding &&
+        typeof tuneBinding === "object" &&
+        canonicalJson(Object.keys(tuneBinding).sort()) ===
+          canonicalJson(["batch_id", "media_commit_sha", "path", "sha256"]) &&
+        tuneBinding.path === "clipmaker-lite-test/tune-manifest.json" &&
+        isSha256(tuneBinding.sha256) &&
+        typeof tuneBinding.batch_id === "string" &&
+        tuneBinding.batch_id.trim() &&
+        typeof tuneBinding.media_commit_sha === "string" &&
+        /^[a-f0-9]{40}$/.test(tuneBinding.media_commit_sha),
+      "Tune-approved S3 overlay не привязан к Tune manifest.",
+    );
+    assert(
+      tuneManifest &&
+        typeof tuneManifest === "object" &&
+        tuneManifest.schema_version === 2 &&
+        tuneManifest.manifest_role === "clipmaker-lite-tune-review" &&
+        tuneManifest.ticket === "PROMOPAGES-10060" &&
+        tuneManifest.agent_id === "clipmaker-lite" &&
+        tuneManifest.batch_id === tuneBinding.batch_id &&
+        tuneManifest.scope?.media_commit_sha === tuneBinding.media_commit_sha &&
+        Array.isArray(tuneManifest.cases),
+      "Tune-approved S3 overlay расходится с текущим Tune manifest.",
+    );
+    assert(
+      manifest.selected_output_count ===
+        EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT &&
+        canonicalJson(manifest.model_counts) ===
+          canonicalJson(EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS) &&
+        Array.isArray(manifest.outputs) &&
+        manifest.outputs.length ===
+          EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT,
+      "Tune-approved S3 overlay должен содержать ровно 45 выбранных роликов (16 / 12 / 17).",
+    );
+
+    const canonicalByKey = new Map();
+    reviewArticles.forEach((article) => {
+      article.images.forEach((record) => {
+        record.outputs.forEach((output) => {
+          const key = tuneApprovedOverlayKey(
+            article.article_slug,
+            record.image.image_id,
+            output.model_id,
+          );
+          assert(
+            !canonicalByKey.has(key) &&
+              output.availableVideo === true &&
+              output.delivery === "public-s3" &&
+              typeof output.publicVideoUrl === "string" &&
+              output.publicVideoUrl.startsWith(PROMOPAGES_10060_S3_PUBLIC_BASE),
+            "Tune-approved S3 overlay требует полный baseline S3 на 510 роликов.",
+          );
+          canonicalByKey.set(key, { article, record, output });
+        });
+      });
+    });
+    assert(
+      canonicalByKey.size === EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT,
+      "Tune-approved S3 overlay требует ровно 510 baseline logical outputs.",
+    );
+
+    const tuneTargets = new Map();
+    tuneManifest.cases.forEach((tuneCase) => {
+      assert(
+        tuneCase &&
+          typeof tuneCase === "object" &&
+          typeof tuneCase.case_id === "string" &&
+          typeof tuneCase.article_number === "string" &&
+          typeof tuneCase.article_slug === "string" &&
+          typeof tuneCase.publication_id === "string" &&
+          tuneCase.source &&
+          typeof tuneCase.source.image_id === "string" &&
+          tuneCase.source.role === "article_image" &&
+          Array.isArray(tuneCase.targets),
+        "Текущий Tune manifest содержит неверный case для S3 overlay.",
+      );
+      tuneCase.targets.forEach((target) => {
+        const evaluationId = `${tuneCase.case_id}::${target?.model_id}`;
+        assert(
+          target &&
+            typeof target === "object" &&
+            MODEL_ORDER.includes(target.model_id) &&
+            Number.isInteger(target.sheet_row) &&
+            target.sheet_row > 0 &&
+            (!hasOwn(target, "evaluation_id") ||
+              target.evaluation_id === evaluationId) &&
+            !tuneTargets.has(evaluationId),
+          "Текущий Tune manifest повторяет или искажает evaluation target.",
+        );
+        tuneTargets.set(evaluationId, { tuneCase, target });
+      });
+    });
+
+    const expectedRowFields = [
+      "approval_kind",
+      "approval_source",
+      "article_number",
+      "article_slug",
+      "bytes",
+      "case_id",
+      "evaluation_id",
+      "experiment",
+      "generation_origin",
+      "image_id",
+      "model_id",
+      "object_key",
+      "publication_id",
+      "sha256",
+      "sheet_row",
+      "source_video_path",
+      "yastatic_url",
+    ];
+    const replacements = new Map();
+    const selectedSourcePaths = new Set();
+    const selectedObjectKeys = new Set();
+    const selectedPublicUrls = new Set();
+    const actualModelCounts = Object.fromEntries(
+      MODEL_ORDER.map((modelId) => [modelId, 0]),
+    );
+    manifest.outputs.forEach((row) => {
+      assert(
+        row &&
+          typeof row === "object" &&
+          canonicalJson(Object.keys(row).sort()) ===
+            canonicalJson(expectedRowFields),
+        "Tune-approved S3 overlay output имеет неверную форму.",
+      );
+      const tuneEntry = tuneTargets.get(row.evaluation_id);
+      const tuneCase = tuneEntry?.tuneCase;
+      const target = tuneEntry?.target;
+      const tuned = target?.tuned;
+      const video = tuned?.video;
+      const key = tuneApprovedOverlayKey(
+        row.article_slug,
+        row.image_id,
+        row.model_id,
+      );
+      const canonical = canonicalByKey.get(key);
+      const route = PROMOPAGES_10060_S3_ARTICLE_ROUTES[row.article_slug];
+      const experiment = PROMOPAGES_10060_S3_MODEL_DIRECTORIES[row.model_id];
+      const expectedObjectKey = route
+        ? `${PROMOPAGES_10060_S3_OBJECT_PREFIX}${route[0]}__${route[1]}/${route[2]}/${experiment}/image_${row.image_id}--sha256-${row.sha256.slice(0, 12)}.mp4`
+        : null;
+      const approvalIsHelped =
+        row.approval_kind === "helped" &&
+        ["v4-evaluation", "v6-evaluation"].includes(row.approval_source);
+      const approvalIsExplicit =
+        row.approval_kind === "explicit-latest-wan" &&
+        row.approval_source === "explicit-latest-wan" &&
+        PROMOPAGES_10060_TUNE_EXPLICIT_LATEST_WAN_IDS.includes(
+          row.evaluation_id,
+        );
+      assert(
+        tuneEntry &&
+          canonical &&
+          canonical.record.image.role === "article_image" &&
+          row.case_id === tuneCase.case_id &&
+          row.article_number === tuneCase.article_number &&
+          row.article_slug === tuneCase.article_slug &&
+          row.publication_id === tuneCase.publication_id &&
+          row.image_id === tuneCase.source.image_id &&
+          row.model_id === target.model_id &&
+          row.sheet_row === target.sheet_row &&
+          row.evaluation_id === `${row.case_id}::${row.model_id}` &&
+          (approvalIsHelped || approvalIsExplicit) &&
+          video &&
+          video.state === "available" &&
+          ["succeeded", "verification-failed"].includes(video.status) &&
+          video.delivery === "repository-raw" &&
+          isCanonicalRelativePath(video.repository_video_path) &&
+          video.repository_video_path.endsWith(".mp4") &&
+          video.repository_video_path === row.source_video_path &&
+          isSha256(row.sha256) &&
+          video.sha256 === row.sha256 &&
+          Number.isInteger(row.bytes) &&
+          row.bytes > 0 &&
+          video.bytes === row.bytes &&
+          video.media?.sha256 === row.sha256 &&
+          video.media?.bytes === row.bytes &&
+          video.generation?.origin === row.generation_origin &&
+          typeof tuned.positive_prompt === "string" &&
+          tuned.positive_prompt.trim() &&
+          tuned.negative_prompt === null &&
+          row.experiment === experiment &&
+          row.object_key === expectedObjectKey &&
+          isCanonicalRelativePath(row.object_key) &&
+          row.yastatic_url === `${PROMOPAGES_10060_S3_PUBLIC_BASE}${row.object_key}` &&
+          !replacements.has(key) &&
+          !selectedSourcePaths.has(row.source_video_path) &&
+          !selectedObjectKeys.has(row.object_key) &&
+          !selectedPublicUrls.has(row.yastatic_url),
+        `Tune-approved S3 overlay не прошёл current-Tune/S3 binding: ${row.evaluation_id ?? "unknown"}.`,
+      );
+
+      const {
+        contract_check: _baselineContractCheck,
+        error: _baselineError,
+        lite_run_id: _baselineLiteRunId,
+        media: _baselineMedia,
+        normalizedInputRetry: _baselineNormalizedInputRetry,
+        positive_prompt: _baselinePositivePrompt,
+        negative_prompt: _baselineNegativePrompt,
+        providerFiltered: _baselineProviderFiltered,
+        providerUnavailable: _baselineProviderUnavailable,
+        provider_run_id: _baselineProviderRunId,
+        prompt_path: _baselinePromptPath,
+        publicVideoObjectKey: _baselinePublicVideoObjectKey,
+        publicVideoUrl: _baselinePublicVideoUrl,
+        recorded_status: _baselineRecordedStatus,
+        retry: _baselineRetry,
+        run_path: _baselineRunPath,
+        selected_attempt: _baselineSelectedAttempt,
+        video_path: _baselineVideoPath,
+        ...canonicalIdentity
+      } = canonical.output;
+      replacements.set(key, {
+        ...canonicalIdentity,
+        status: video.status,
+        recorded_status: video.status,
+        selected_attempt: `tune-approved-s3:${row.approval_kind}`,
+        lite_run_id: target.planning?.run_id ?? null,
+        provider_run_id: video.generation?.provider_run_id ?? null,
+        prompt_path: video.generation?.prompt_path ?? null,
+        run_path: video.generation?.run_path ?? null,
+        video_path: video.repository_video_path,
+        media: video.media,
+        contract_check: video.contract_check,
+        error: null,
+        scene_plan: tuned.scene_plan,
+        positive_prompt: tuned.positive_prompt,
+        negative_prompt: tuned.negative_prompt,
+        runtime: tuned.runtime,
+        generation: video.generation,
+        availableVideo: true,
+        providerFiltered: false,
+        providerUnavailable: false,
+        normalizedInputRetry: false,
+        delivery: "public-s3",
+        publicVideoUrl: row.yastatic_url,
+        publicVideoObjectKey: row.object_key,
+        tuneApproval: {
+          evaluationId: row.evaluation_id,
+          sheetRow: row.sheet_row,
+          kind: row.approval_kind,
+          source: row.approval_source,
+          generationOrigin: row.generation_origin,
+        },
+      });
+      selectedSourcePaths.add(row.source_video_path);
+      selectedObjectKeys.add(row.object_key);
+      selectedPublicUrls.add(row.yastatic_url);
+      actualModelCounts[row.model_id] += 1;
+    });
+    assert(
+      replacements.size === EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_OUTPUT_COUNT &&
+        canonicalJson(actualModelCounts) ===
+          canonicalJson(EXPECTED_PROMOPAGES_10060_TUNE_APPROVED_MODEL_COUNTS),
+      "Tune-approved S3 overlay фактически не совпадает с 45 / 16 / 12 / 17.",
+    );
+
+    const replaceOutput = (articleSlug, imageId, output) =>
+      replacements.get(
+        tuneApprovedOverlayKey(articleSlug, imageId, output.model_id),
+      ) || output;
+    const articles = reviewArticles.map((article) => {
+      let selectedForArticle = 0;
+      const images = article.images.map((record) => {
+        const outputs = record.outputs.map((output) => {
+          const selected = replaceOutput(
+            article.article_slug,
+            record.image.image_id,
+            output,
+          );
+          if (selected !== output) selectedForArticle += 1;
+          return selected;
+        });
+        const displayOutputs = (record.displayOutputs || record.outputs).map(
+          (output) =>
+            replaceOutput(
+              article.article_slug,
+              record.image.image_id,
+              output,
+            ),
+        );
+        return { ...record, outputs, displayOutputs };
+      });
+      return {
+        ...article,
+        images,
+        tuneApprovedOutputCount: selectedForArticle,
+        sourceStatus: selectedForArticle
+          ? `${article.sourceStatus} · Tune-approved ${selectedForArticle}`
+          : article.sourceStatus,
+      };
+    });
+    return {
+      articles,
+      selectedOutputCount: replacements.size,
+      baselineOutputCount:
+        EXPECTED_PROMOPAGES_10060_S3_DELIVERY_OUTPUT_COUNT - replacements.size,
+      modelCounts: actualModelCounts,
+    };
+  };
+
   const datasetCounts = (items) => {
     const videoPaths = new Set();
     let imageCount = 0;
@@ -4246,9 +4672,15 @@
     const publicVideoUrl =
       typeof output.publicVideoUrl === "string" ? output.publicVideoUrl : null;
     const videoUrl = publicVideoUrl || asAssetUrl(output.video_path, output.delivery);
-    const promptLabel = output.showcaseLabel
-      ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
-      : "";
+    const promptLabel = output.tuneApproval
+      ? `<p class="promptLabel">${escapeHtml(
+          output.tuneApproval.kind === "helped"
+            ? "Tune · Helped"
+            : "Tune · последняя Wan-итерация",
+        )}</p>`
+      : output.showcaseLabel
+        ? `<p class="promptLabel">${escapeHtml(output.showcaseLabel)}</p>`
+        : "";
     const isFeaturedWinner = smoothExperiment && output.isFeaturedWinner === true;
     const winnerBadge = isFeaturedWinner
       ? '<p class="winnerBadge">Визуальный победитель</p>'
@@ -4386,6 +4818,12 @@
           ["Размер", formatMiB(output.media.bytes)],
           ...(output.route_label
             ? [["Маршрут", output.route_label]]
+            : []),
+          ...(output.tuneApproval
+            ? [[
+                "Tune selection",
+                `${output.tuneApproval.evaluationId} · ${output.tuneApproval.source}`,
+              ]]
             : []),
           ...(loopPlayback
             ? [
@@ -5167,6 +5605,8 @@
       reviewArticle02Response,
       reviewCampaign20260807Response,
       reviewS3DeliveryResponse,
+      reviewTuneApprovedS3OverlayResponse,
+      tuneManifestResponse,
     ] =
       await Promise.all([
       fetch(PROMOPAGES_10060_MANIFEST_PATH, { cache: "no-store" }),
@@ -5174,6 +5614,8 @@
       fetch(PROMOPAGES_10060_ARTICLE_02_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_CAMPAIGN_20260807_MANIFEST_PATH, { cache: "no-store" }),
       fetch(PROMOPAGES_10060_S3_DELIVERY_MANIFEST_PATH, { cache: "no-store" }),
+      fetch(PROMOPAGES_10060_TUNE_APPROVED_S3_OVERLAY_PATH, { cache: "no-store" }),
+      fetch(TUNE_MANIFEST_PATH, { cache: "no-store" }),
     ]);
     if (!reviewResponse.ok) {
       throw new Error(
@@ -5203,6 +5645,16 @@
         `S3 delivery-манифест PROMOPAGES-10060 вернул HTTP ${reviewS3DeliveryResponse.status}.`,
       );
     }
+    if (!reviewTuneApprovedS3OverlayResponse.ok) {
+      throw new Error(
+        `Tune-approved S3 overlay PROMOPAGES-10060 вернул HTTP ${reviewTuneApprovedS3OverlayResponse.status}.`,
+      );
+    }
+    if (!tuneManifestResponse.ok) {
+      throw new Error(
+        `Tune manifest PROMOPAGES-10060 вернул HTTP ${tuneManifestResponse.status}.`,
+      );
+    }
 
     const reviewManifest = await reviewResponse.json();
     const reviewExtensionManifest = reviewExtensionResponse.ok
@@ -5215,6 +5667,9 @@
       ? await reviewCampaign20260807Response.json()
       : null;
     const reviewS3DeliveryManifest = await reviewS3DeliveryResponse.json();
+    const reviewTuneApprovedS3OverlayManifest =
+      await reviewTuneApprovedS3OverlayResponse.json();
+    const tuneManifest = await tuneManifestResponse.json();
     const reviewDataset = validatePromopages10060Manifest(reviewManifest, []);
     const reviewExtensionDataset = reviewExtensionManifest
       ? validatePromopages10060Manifest(
@@ -5265,10 +5720,17 @@
       ...reviewArticle02Dataset.articles,
       ...reviewCampaign20260807Dataset.articles,
     ]);
-    const reviewArticles = validatePromopages10060S3Delivery(
+    const baselineReviewArticles = validatePromopages10060S3Delivery(
       reviewS3DeliveryManifest,
       canonicalReviewArticles,
     );
+    const tuneApprovedReview =
+      validateAndApplyPromopages10060TuneApprovedS3Overlay(
+        reviewTuneApprovedS3OverlayManifest,
+        tuneManifest,
+        baselineReviewArticles,
+      );
+    const reviewArticles = tuneApprovedReview.articles;
     const unavailableArticles = mergeUnavailableArticleCollections(
       reviewArticles,
       reviewDataset.unavailableArticles,
@@ -5325,7 +5787,7 @@
     }
     return {
       reviewArticles,
-      sourceStatus: `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${imageCount} изображений / ${outputCount} результатов · S3/yastatic ${reviewS3DeliveryManifest.verified_output_count} MP4 · provider-filtered ${filteredOutputCount} · provider-unavailable ${providerUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`,
+      sourceStatus: `PROMOPAGES-10060 · ${reviewArticles.length} статей / ${imageCount} изображений / ${outputCount} результатов · S3/yastatic 510 active · Tune-approved ${tuneApprovedReview.selectedOutputCount} · baseline ${tuneApprovedReview.baselineOutputCount} · provider-filtered ${filteredOutputCount} · provider-unavailable ${providerUnavailableOutputCount} · недоступно статей ${unavailableArticles.length}`,
     };
   };
 

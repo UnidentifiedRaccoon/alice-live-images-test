@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v1",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v1-17-volma-nalivnoi-pol-08-wan-2-2",
+  "case_id": "17#08",
+  "sheet_row": 237,
+  "model_id": "alibaba/wan-2.2",
+  "execution_mode": "i2v",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060-campaigns-20260805-v1/articles/17-volma-nalivnoi-pol/08.png",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+    "width": 1068,
+    "height": 699
+  },
+  "provider_input": {
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a268ddbbf5214766a58cd74_6a268df3bf5214766a58d1cc/orig",
+    "sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+    "width": 1068,
+    "height": 699,
+    "normalized_overlay": null
+  },
+  "structured_intent": {
+    "editorial_meaning": "Emphasize that interrupted, slow pouring can culminate in extensive cracking and demolition rather than a sound continuous floor.",
+    "initial_state": "A damaged floor is already broken into cracked sections, with a raised slab fragment, scattered rubble and several unattended tools visible in a dusty room.",
+    "motion_owner": "camera",
+    "primary_action": "Move continuously through the visible depth toward the central broken floor section.",
+    "terminal_state": "The existing central fracture and raised slab fragment are more prominent through visible parallax, while every floor fragment and tool remains stationary.",
+    "geometry_invariant": "All cracks, slab fragments, rubble and tools retain their rigid shapes, locations and existing contacts with the floor.",
+    "identity_invariant": "The same broken floor sections, one powered tool and the visible hand tools remain present and recognizable; nothing is added, removed or duplicated.",
+    "semantic_invariant": "The floor remains visibly failed and under demolition, sustaining the warning about severe cracking through the last frame.",
+    "feasibility_assessment": "The image clearly proves a static cracked floor, loose rubble, unattended tools and usable foreground-to-background depth. It does not prove active demolition, tool contact, crack propagation, pouring direction or any safe autonomous object motion, so only source-grounded camera motion is justified.",
+    "rendering_strategy": "camera-only"
+  },
+  "scene_plan": "Over five seconds, begin a moderate, continuous push-in immediately toward the central raised slab and its deepest fracture. Keep the room and all tools physically static while foreground-to-background parallax remains clearly visible; ease gently near the end when the central crack occupies slightly more of the composition.",
+  "prompt": {
+    "positive": "The camera makes a steady bounded push-in toward the central cracked slab, with the nearest hand tools shifting about 7% of the frame through source-grounded parallax. The broken floor, rubble and unattended power tool retain their rigid shapes and fixed positions, ending with the deep central fracture more prominent.",
+    "negative": null,
+    "rewritten": false
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "planning": {
+    "batch_id": "promopages-10060-tune-prompts-20260811-v4",
+    "run_id": "promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-08",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v4-17-volma-nalivnoi-pol-08/result.json",
+    "result_sha256": "387c3add366594f9bbd27e3ba8c80c76e487a499b8894ecb3ced97126639514c",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.2.0",
+      "contract_fingerprint": "sha256:bf9abc3d7db6bc6317f59ba73d2d756f3aab2cccfc6fbc46fe32f895d1658e66",
+      "instruction_bundle_sha256": "53119f62c2db5e784a4d88671704c8407fbad2ff2189bafe3c947759590584ee",
+      "source_image_sha256": "c3adb2cf6dfc843ffa3833476dbb77613304d9264dd6d91fd5fc537634425cdb",
+      "article_context_sha256": "6e9fb5a5f81df1f6926c705472e91a4327b7edbe021f7853d851ecce38c143b5",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  },
+  "bindings": {
+    "tune_manifest_path": "clipmaker-lite-test/tune-manifest.json",
+    "tune_manifest_sha256": "c48cd1b4d1cf9fda8314d16cee3ec5065618edca3caa6a3ba40bffb446bc70bb",
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}

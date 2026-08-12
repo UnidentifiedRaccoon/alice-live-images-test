@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-tune-v6-retry-video-prompt",
+  "ticket": "PROMOPAGES-10060",
+  "batch_id": "promopages-10060-tune-videos-20260811-v6",
+  "agent_id": "clipmaker-lite",
+  "provider_run_id": "promopages-10060-tune-videos-20260811-v6-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+  "case_id": "10#07",
+  "sheet_row": 122,
+  "model_id": "google/veo-3.1-lite",
+  "execution_mode": "i2v",
+  "retry_reason": "terminal-provider-no-output-new-lite-prompt",
+  "canonical_source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig",
+    "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+    "width": 2048,
+    "height": 1365
+  },
+  "provider_source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-10060/articles/10-krasnaya-polyana-reis-zaderzhali/07.jpeg",
+    "url": "https://avatars.mds.yandex.net/get-promoarticles/7545082/pub_6a54bb73d6edb03d5192b7e1_6a54bbb2f3f63851d4217dea/orig",
+    "sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+    "width": 2048,
+    "height": 1365,
+    "normalized_source": null
+  },
+  "scene_plan": "Over four seconds, begin a smooth centered push-in immediately and maintain an even, low-jerk pace toward the whole dining group. Limit total screen travel to about 3%, preserve the full original framing and all contacts, and ease gently only near the end so the observable endpoint is the complete scene appearing slightly closer with every person still visible.",
+  "prompt": {
+    "positive": "The camera makes one gentle centered push-in toward the complete existing dining scene at an even real-time pace, with all four people continuously visible and every pose and hand-to-object contact unchanged. By the final frame, the group and breakfast table appear about 3% closer without exposing any space beyond the source frame.",
+    "positive_utf8_sha256": "070ddb4c09d6d8b43d72f838b035deeaf5bcf6fb391cb7071a3f71aa6b1993ee",
+    "scene_plan_utf8_sha256": "b54fad640dcab6a488daf1af6cd8ea23a58227f1ccedb14319887e2ee2bc056a",
+    "negative": null,
+    "rewritten_by_provider_coordinator": false
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "planning": {
+    "lineage_kind": "new-provenance-verified-lite-camera-only",
+    "batch_id": "promopages-10060-tune-prompts-20260811-v5-r7",
+    "run_id": "promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07",
+    "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07/result.json",
+    "result_sha256": "fd469099b3ab4080f3134952de2cec367490309055607b4563f5f24122df463b",
+    "prompt_manifest_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r7/prompt-manifest.json",
+    "prompt_manifest_sha256": "7bbbc1fee981480edfcdc268e5611f1fe6d91b3b0ac0270597c02d7f0045e5d5",
+    "repair_feedback_path": "clipmaker-lite-test/runs/promopages-10060-tune-prompts-20260811-v5-r6/repair-feedback/10-07.json",
+    "repair_feedback_sha256": "b5d02187e1d1597a2787eeaaf2fa6859974d681d0792760378f5bb8983602cfa",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "result_path": "artifacts/clipmaker-lite/v1/promopages-10060-tune-prompts-20260811-v5-r6-10-krasnaya-polyana-reis-zaderzhali-07/result.json",
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.3.0",
+      "contract_fingerprint": "sha256:765bb9b83e9f525cb074e684902a22104a10805bb4f08ff0e2918d0c22d6552d",
+      "instruction_bundle_sha256": "d5ef0e02dd4c5d1e31623db9076a709a136021079018c49fc08def812ac8f08b",
+      "runner": {
+        "path": "scripts/clipmaker_lite_runner.py",
+        "sha256": "a9589f935553141860b55477f5a16fe9d74329a2c00d69d9fea5a425be4b9b12"
+      },
+      "execution": {
+        "executor_id": "codex-exec",
+        "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+        "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+        "version": "codex-cli 0.147.0-alpha.6.5",
+        "requested_model": null,
+        "thread_id": "019ff280-686c-79c1-be87-b9a2a5dce130"
+      },
+      "models": [
+        "google/veo-3.1-lite"
+      ],
+      "source_image_sha256": "4391de739b38a59f9f5e6905a36e849aa5f708faaf5c6cb57dbffedaf8eeb675",
+      "article_context_sha256": "b0a44f5e519e7dd1b64cb20aa07f34106013f9774f88c73636e6465b4e18333e"
+    }
+  },
+  "prior_attempt": {
+    "batch_id": "promopages-10060-tune-videos-20260811-v5",
+    "provider_run_id": "promopages-10060-tune-videos-20260811-v5-10-krasnaya-polyana-reis-zaderzhali-07-veo-3-1-lite",
+    "status": "provider-failed",
+    "prompt_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.prompt.json",
+    "prompt_sha256": "c4b8e436a781da4477181ae6f708cbf5881f596f3ea6412bb57b2a0d8a552eb9",
+    "run_path": "clipmaker-lite-test/runs/promopages-10060-tune-videos-20260811-v5/videos/10-krasnaya-polyana-reis-zaderzhali/veo-3.1-lite/07.run.json",
+    "run_sha256": "8361417d6bda21a06465f4952721ae79561c8b615a9a00ce6f2689a2a793d98c",
+    "provider_job_id": "pivxeTXch0waPlU20UzI",
+    "provider_may_be_active": false,
+    "error": "provider poll/download: Eliza/OpenRouter job pivxeTXch0waPlU20UzI failed with status failed: Video generation completed with no output (content may have been filtered)",
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "receipts_mutated": false
+  },
+  "policy": {
+    "new_immutable_provider_run": true,
+    "automatic_paid_retry": false,
+    "fallback": null,
+    "s3_upload": false
+  },
+  "bindings": {
+    "generation_routes_path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "generation_routes_sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b"
+  }
+}
