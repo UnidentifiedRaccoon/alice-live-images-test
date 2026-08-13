@@ -174,16 +174,16 @@
             "model_id": "alibaba/wan-2.7",
             "status": "succeeded",
             "recorded_status": "verification-failed",
-            "selected_attempt_id": "retry-01",
+            "selected_attempt_id": "primary",
             "selected_prompt": {
-              "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
+              "positive": "Glide steadily right toward the central residential avenue at normal real-time speed, producing gentle parallax between the foreground trees, the flanking buildings, and the distant district. End with a slightly clearer view along the existing courtyard axis as the visible foliage softly sways in place.",
               "negative": ""
             },
             "attempt_count": 2,
             "attempts": [
               {
                 "attempt_id": "primary",
-                "status": "verification-failed",
+                "status": "succeeded",
                 "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "Glide steadily right toward the central residential avenue at normal real-time speed, producing gentle parallax between the foreground trees, the flanking buildings, and the distant district. End with a slightly clearer view along the existing courtyard axis as the visible foliage softly sways in place.",
@@ -226,21 +226,25 @@
                   ]
                 },
                 "media_acceptance": {
-                  "accepted": false,
-                  "mode": "strict-contract",
-                  "policy_id": null,
-                  "policy_sha256": null,
+                  "accepted": true,
+                  "mode": "operator-exception",
+                  "policy_id": "level-image-04-wan-2.7-primary-native-size-v2",
+                  "policy_sha256": "a7d2420488117dcf99d3151b536bfbbcd3881fcf0e45f6f50508049c849177a8",
                   "model_id": "alibaba/wan-2.7",
                   "adapter": "eliza-openrouter",
                   "target_generate_audio": false,
                   "observed_has_audio": true,
-                  "waived_warnings": []
+                  "waived_warnings": [
+                    "audio",
+                    "resolution",
+                    "aspect_ratio"
+                  ]
                 },
                 "error": "Media contract verification failed: audio, resolution, aspect_ratio"
               },
               {
                 "attempt_id": "retry-01",
-                "status": "succeeded",
+                "status": "verification-failed",
                 "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
@@ -283,24 +287,20 @@
                   ]
                 },
                 "media_acceptance": {
-                  "accepted": true,
-                  "mode": "operator-exception",
-                  "policy_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
-                  "policy_sha256": "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e",
+                  "accepted": false,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
                   "model_id": "alibaba/wan-2.7",
                   "adapter": "eliza-openrouter",
                   "target_generate_audio": false,
                   "observed_has_audio": true,
-                  "waived_warnings": [
-                    "audio",
-                    "resolution",
-                    "aspect_ratio"
-                  ]
+                  "waived_warnings": []
                 },
                 "error": "Media contract verification failed: audio, resolution, aspect_ratio"
               }
             ],
-            "video_url": "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/level-group__69ee06293ba10e0ae4b765d1/6a048ddca495b52c9d873940/wan_2_7/image_04--sha256-7eba763b0f8c.mp4",
+            "video_url": "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/level-group__69ee06293ba10e0ae4b765d1/6a048ddca495b52c9d873940/wan_2_7/image_04--sha256-6fc6af439367.mp4",
             "media": {
               "container": "mov,mp4,m4a,3gp,3g2,mj2",
               "codec": "h264",
@@ -310,8 +310,8 @@
               "fps": 30.0,
               "frames": 150,
               "has_audio": true,
-              "bytes": 21070882,
-              "sha256": "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+              "bytes": 30743398,
+              "sha256": "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be"
             },
             "contract_check": {
               "requested": {
@@ -338,8 +338,8 @@
             "media_acceptance": {
               "accepted": true,
               "mode": "operator-exception",
-              "policy_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
-              "policy_sha256": "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e",
+              "policy_id": "level-image-04-wan-2.7-primary-native-size-v2",
+              "policy_sha256": "a7d2420488117dcf99d3151b536bfbbcd3881fcf0e45f6f50508049c849177a8",
               "model_id": "alibaba/wan-2.7",
               "adapter": "eliza-openrouter",
               "target_generate_audio": false,
@@ -622,9 +622,9 @@
             "model_id": "alibaba/wan-2.7",
             "status": "succeeded",
             "recorded_status": "verification-failed",
-            "selected_attempt_id": "primary",
+            "selected_attempt_id": "retry-02",
             "selected_prompt": {
-              "positive": "The couple continues strolling toward the camera in one smooth, relaxed motion, keeping both ice-cream cones upright. They end a little closer together and nearer the viewer, still smiling at each other.",
+              "positive": "The couple continue strolling forward side by side in a smooth natural rhythm, keeping their smiles and eye contact while the cones remain upright in their hands. They finish several steps farther along, still walking together with the same relaxed mood.",
               "negative": ""
             },
             "attempt_count": 2,
@@ -744,7 +744,7 @@
                 "error": "Media contract verification failed: audio"
               }
             ],
-            "video_url": "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/banki-ru__5b0fb7c448c85e2421e049ab/6a4f5fe924801975680d9be5/wan_2_7/image_01--sha256-bc02f8355bd3.mp4",
+            "video_url": "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/banki-ru__5b0fb7c448c85e2421e049ab/6a4f5fe924801975680d9be5/wan_2_7/image_01--sha256-d9061944628b.mp4",
             "media": {
               "container": "mov,mp4,m4a,3gp,3g2,mj2",
               "codec": "h264",
@@ -754,8 +754,8 @@
               "fps": 30.0,
               "frames": 150,
               "has_audio": true,
-              "bytes": 12659844,
-              "sha256": "bc02f8355bd387e03fa4cc31fbd60b70e2ae313ba7366b342dfd2951f33b87be"
+              "bytes": 9680295,
+              "sha256": "d9061944628be5b1b8ab5a2779c2ffacbad8c1eb4240a75c90a188da1283a452"
             },
             "contract_check": {
               "requested": {
