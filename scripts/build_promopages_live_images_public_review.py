@@ -27,6 +27,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import clipmaker_lite_runner as runner  # noqa: E402
+from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
 
 
 BATCH_ID = "promopages-live-images-20260813-v1"
@@ -185,17 +186,21 @@ def _normalize_prompt(value: Any, *, label: str) -> dict[str, str]:
     return {"positive": value["positive"], "negative": negative}
 
 
-def _normalize_attempt(value: Any, *, label: str) -> dict[str, Any]:
+def _normalize_attempt(
+    value: Any, *, label: str, model_id: str
+) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ReviewManifestError(f"{label} attempt must be an object")
     attempt_id = value.get("attempt_id")
     status = value.get("status")
+    recorded_status = value.get("recorded_status")
     provider_run_id = value.get("provider_run_id")
     error = value.get("error")
     provider_response = value.get("provider_response")
     if (
         not _is_nonempty_string(attempt_id)
         or not _is_nonempty_string(status)
+        or not _is_nonempty_string(recorded_status)
         or provider_run_id is not None
         and not _is_nonempty_string(provider_run_id)
         or error is not None
@@ -204,12 +209,46 @@ def _normalize_attempt(value: Any, *, label: str) -> dict[str, Any]:
         and not isinstance(provider_response, dict)
     ):
         raise ReviewManifestError(f"{label} attempt audit is invalid")
+    media = value.get("media")
+    contract_check = value.get("contract_check")
+    media_acceptance = value.get("media_acceptance")
+    if (media is None, contract_check is None, media_acceptance is None).count(True) not in {0, 3}:
+        raise ReviewManifestError(f"{label} attempt media audit is incomplete")
+    if media is not None:
+        media = _validate_media(media, label=label)
+        contract_check = _validate_contract_check(contract_check, label=label)
+        if not native.validate_media_acceptance(
+            model_id, media, contract_check, media_acceptance
+        ):
+            raise ReviewManifestError(f"{label} media acceptance is invalid")
+        if media_acceptance["accepted"] is True:
+            expected_recorded = (
+                "succeeded"
+                if media_acceptance["mode"] == "strict-contract"
+                else "verification-failed"
+            )
+            if status != "succeeded" or recorded_status != expected_recorded:
+                raise ReviewManifestError(f"{label} effective attempt status differs")
+        elif (
+            status != "verification-failed"
+            or recorded_status != "verification-failed"
+            or contract_check.get("conforms") is not False
+            or not contract_check.get("warnings")
+        ):
+            raise ReviewManifestError(f"{label} rejected attempt audit differs")
+        media_acceptance = copy.deepcopy(media_acceptance)
+    elif status != recorded_status:
+        raise ReviewManifestError(f"{label} attempt status has no acceptance basis")
     return {
         "attempt_id": attempt_id,
         "status": status,
+        "recorded_status": recorded_status,
         "prompt": _normalize_prompt(value.get("prompt"), label=label),
         "provider_run_id": provider_run_id,
         "provider_response": copy.deepcopy(provider_response),
+        "media": media,
+        "contract_check": copy.deepcopy(contract_check),
+        "media_acceptance": media_acceptance,
         "error": error,
     }
 
@@ -400,7 +439,9 @@ def _verify_provenance(
     }
 
 
-def _validate_attempts(raw: Mapping[str, Any], *, label: str) -> list[dict[str, Any]]:
+def _validate_attempts(
+    raw: Mapping[str, Any], *, label: str, model_id: str
+) -> list[dict[str, Any]]:
     attempt_count = raw.get("attempt_count")
     attempts = raw.get("attempts")
     if (
@@ -410,7 +451,9 @@ def _validate_attempts(raw: Mapping[str, Any], *, label: str) -> list[dict[str, 
     ):
         raise ReviewManifestError(f"{label} attempt count differs")
     normalized = [
-        _normalize_attempt(attempt, label=f"{label}/{index + 1}")
+        _normalize_attempt(
+            attempt, label=f"{label}/{index + 1}", model_id=model_id
+        )
         for index, attempt in enumerate(attempts)
     ]
     attempt_ids = [attempt["attempt_id"] for attempt in normalized]
@@ -436,8 +479,9 @@ def _validate_media(value: Any, *, label: str) -> dict[str, Any]:
 def _validate_contract_check(value: Any, *, label: str) -> dict[str, Any]:
     if (
         not isinstance(value, dict)
-        or value.get("conforms") is not True
+        or not isinstance(value.get("conforms"), bool)
         or not isinstance(value.get("warnings"), list)
+        or any(not isinstance(item, str) for item in value["warnings"])
     ):
         raise ReviewManifestError(f"{label} media contract is invalid")
     return copy.deepcopy(value)
@@ -451,7 +495,7 @@ def _public_output(
     model_id: str,
 ) -> dict[str, Any]:
     label = f"{contract['article_slug']}/{contract['image_id']}/{model_id}"
-    attempts = _validate_attempts(raw, label=label)
+    attempts = _validate_attempts(raw, label=label, model_id=model_id)
     status = raw.get("status")
     if status == "unavailable":
         if (
@@ -461,6 +505,8 @@ def _public_output(
             or raw.get("video_path") is not None
             or raw.get("media") is not None
             or raw.get("contract_check") is not None
+            or raw.get("media_acceptance") is not None
+            or raw.get("recorded_status") is not None
             or not _is_nonempty_string(raw.get("error"))
             or any(attempt["status"] == "succeeded" for attempt in attempts)
             or delivery is not None
@@ -476,6 +522,8 @@ def _public_output(
             "video_url": None,
             "media": None,
             "contract_check": None,
+            "media_acceptance": None,
+            "recorded_status": None,
             "error": raw["error"],
         }
 
@@ -489,9 +537,12 @@ def _public_output(
         None,
     )
     selected_prompt = _normalize_prompt(raw.get("selected_prompt"), label=label)
+    recorded_status = raw.get("recorded_status")
     if (
         selected is None
         or selected["status"] != "succeeded"
+        or not _is_nonempty_string(recorded_status)
+        or selected["recorded_status"] != recorded_status
         or selected["prompt"] != selected_prompt
         or not _is_nonempty_string(raw.get("provider_run_id"))
         or selected["provider_run_id"] != raw["provider_run_id"]
@@ -501,6 +552,16 @@ def _public_output(
         raise ReviewManifestError(f"Succeeded selection audit differs: {label}")
     media = _validate_media(raw.get("media"), label=label)
     contract_check = _validate_contract_check(raw.get("contract_check"), label=label)
+    media_acceptance = raw.get("media_acceptance")
+    if (
+        not native.validate_media_acceptance(
+            model_id, media, contract_check, media_acceptance
+        )
+        or selected["media"] != media
+        or selected["contract_check"] != contract_check
+        or selected["media_acceptance"] != media_acceptance
+    ):
+        raise ReviewManifestError(f"Succeeded media acceptance audit differs: {label}")
 
     for field in ("article_slug", "publication_id", "image_id", "media_id"):
         if delivery.get(field) != contract[field]:
@@ -511,6 +572,8 @@ def _public_output(
         or delivery.get("provider_run_id") != raw["provider_run_id"]
         or delivery.get("sha256") != media["sha256"]
         or delivery.get("bytes") != media["bytes"]
+        or delivery.get("recorded_status") != recorded_status
+        or delivery.get("media_acceptance") != media_acceptance
     ):
         raise ReviewManifestError(f"S3 delivery selection or media differs: {label}")
 
@@ -526,6 +589,7 @@ def _public_output(
     return {
         "model_id": model_id,
         "status": "succeeded",
+        "recorded_status": recorded_status,
         "selected_attempt_id": selected_attempt_id,
         "selected_prompt": selected_prompt,
         "attempt_count": len(attempts),
@@ -533,6 +597,7 @@ def _public_output(
         "video_url": video_url,
         "media": media,
         "contract_check": contract_check,
+        "media_acceptance": copy.deepcopy(media_acceptance),
         "error": None,
     }
 

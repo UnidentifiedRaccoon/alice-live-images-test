@@ -30,6 +30,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import promopages_10060_s3_export as transport  # noqa: E402
+from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
 
 
 BATCH_ID = "promopages-live-images-20260813-v1"
@@ -205,7 +206,13 @@ def _validate_final_manifest(value: Mapping[str, Any]) -> list[dict[str, Any]]:
                 not isinstance(row.get("video_path"), str)
                 or not isinstance(row.get("media"), dict)
                 or not isinstance(row.get("contract_check"), dict)
-                or row["contract_check"].get("conforms") is not True
+                or not isinstance(row.get("media_acceptance"), dict)
+                or not native.validate_media_acceptance(
+                    row["model_id"],
+                    row["media"],
+                    row["contract_check"],
+                    row["media_acceptance"],
+                )
                 or row.get("selected_attempt_id") is None
                 or row.get("error") is not None
             ):
@@ -217,7 +224,9 @@ def _validate_final_manifest(value: Mapping[str, Any]) -> list[dict[str, Any]]:
                     "video_path",
                     "media",
                     "contract_check",
+                    "media_acceptance",
                     "selected_attempt_id",
+                    "recorded_status",
                 )
             ) or not isinstance(row.get("error"), str) or not row["error"].strip():
                 raise ExportError(f"Unavailable selection has upload data: {key}")
@@ -347,6 +356,7 @@ def build_export(
                 "media_id": route["media_id"],
                 "model_id": row["model_id"],
                 "experiment": MODEL_DIRS[row["model_id"]],
+                "recorded_status": row.get("recorded_status"),
                 "selected_attempt_id": row["selected_attempt_id"],
                 "provider_run_id": row.get("provider_run_id"),
                 "source_video_path": row.get("video_path"),
@@ -355,6 +365,7 @@ def build_export(
                 "yastatic_url": None,
                 "media": None,
                 "contract_check": row.get("contract_check"),
+                "media_acceptance": row.get("media_acceptance"),
                 "error": row.get("error"),
             }
             if row["status"] == "succeeded":
@@ -458,6 +469,13 @@ def verify_export(output_dir: Path) -> dict[str, Any]:
         if row.get("package_status") != "ready":
             raise ExportError("Unsupported package output status")
         ready_count += 1
+        if not native.validate_media_acceptance(
+            str(row.get("model_id")),
+            row.get("media"),
+            row.get("contract_check"),
+            row.get("media_acceptance"),
+        ):
+            raise ExportError("Ready package output has invalid media acceptance")
         relative = _safe_relative(str(row.get("relative_path")))
         object_key = OBJECT_PREFIX + relative.as_posix()
         if row.get("object_key") != object_key or row.get("yastatic_url") != _public_url(object_key):
@@ -513,10 +531,12 @@ def _delivery_manifest(ready: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
                 "image_id": row["image_id"],
                 "media_id": row["media_id"],
                 "model_id": row["model_id"],
+                "recorded_status": row["recorded_status"],
                 "selected_attempt_id": row["selected_attempt_id"],
                 "provider_run_id": row["provider_run_id"],
                 "sha256": row["media"]["sha256"],
                 "bytes": row["media"]["bytes"],
+                "media_acceptance": row["media_acceptance"],
                 "object_key": row["object_key"],
                 "yastatic_url": row["yastatic_url"],
             }

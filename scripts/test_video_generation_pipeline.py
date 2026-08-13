@@ -277,6 +277,15 @@ class VideoGenerationPipelineTest(unittest.TestCase):
             pipeline.route_for_model("google/veo-3.1-lite")["provider_key"],
             "google-vertex",
         )
+        self.assertEqual(
+            pipeline.OUTPUT_ACCEPTANCE_POLICY_DOCUMENT["contract"],
+            "clipmaker-lite-output-acceptance/v1",
+        )
+        self.assertEqual(
+            pipeline.OUTPUT_ACCEPTANCE_POLICY_DOCUMENT["policies"][0]["policy_id"],
+            "wan-2.7-openrouter-audio-v1",
+        )
+        self.assertEqual(len(pipeline.OUTPUT_ACCEPTANCE_POLICY_SHA256), 64)
         with self.assertRaisesRegex(pipeline.PipelineError, "No exact generation route"):
             pipeline.route_for_model("alibaba/wan-latest")
 
@@ -1073,6 +1082,43 @@ class VideoGenerationPipelineTest(unittest.TestCase):
         self.assertTrue(check["checks"]["duration"])
         self.assertFalse(check["checks"]["audio"])
         self.assertIn("generate_audio=False", check["warnings"][0])
+
+        acceptance = pipeline.media_acceptance("alibaba/wan-2.7", media, check)
+        self.assertTrue(acceptance["accepted"])
+        self.assertEqual(acceptance["mode"], "route-exception")
+        self.assertEqual(acceptance["policy_id"], "wan-2.7-openrouter-audio-v1")
+        self.assertEqual(acceptance["waived_warnings"], ["audio"])
+        self.assertFalse(acceptance["target_generate_audio"])
+        self.assertTrue(acceptance["observed_has_audio"])
+        self.assertTrue(
+            pipeline.validate_media_acceptance(
+                "alibaba/wan-2.7", media, check, acceptance
+            )
+        )
+
+    def test_output_audio_exception_is_exact_model_and_exact_failed_check(self) -> None:
+        media = {"duration_seconds": 3.0, "has_audio": True, "frames": 90, "fps": 30.0}
+        wan_check = pipeline.assess_contract("alibaba/wan-2.7", media)
+        veo_check = pipeline.assess_contract("google/veo-3.1-lite", media)
+
+        self.assertFalse(
+            pipeline.media_acceptance("google/veo-3.1-lite", media, veo_check)["accepted"]
+        )
+        invalid = {
+            **wan_check,
+            "checks": {**wan_check["checks"], "resolution": False},
+            "warnings": [*wan_check["warnings"], "resolution"],
+        }
+        self.assertFalse(
+            pipeline.media_acceptance("alibaba/wan-2.7", media, invalid)["accepted"]
+        )
+        accepted = pipeline.media_acceptance("alibaba/wan-2.7", media, wan_check)
+        tampered = {**accepted, "waived_warnings": ["audio", "resolution"]}
+        self.assertFalse(
+            pipeline.validate_media_acceptance(
+                "alibaba/wan-2.7", media, wan_check, tampered
+            )
+        )
 
     def test_paths_are_article_local_and_model_specific(self) -> None:
         root = Path("/tmp/example-root")

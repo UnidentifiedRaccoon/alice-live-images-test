@@ -21,6 +21,13 @@ const MODEL_FOLDERS = {
   "alibaba/wan-2.7": "wan_2_7",
   "google/veo-3.1-lite": "veo_3_1",
 };
+const MODEL_ADAPTERS = {
+  "alibaba/wan-2.2": "eliza-segmind",
+  "alibaba/wan-2.7": "eliza-openrouter",
+  "google/veo-3.1-lite": "eliza-openrouter",
+};
+const WAN_27_AUDIO_POLICY_SHA256 =
+  "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce";
 const ARTICLE_FIXTURES = [
   {
     publication_id: "6a4f5fe924801975680d9be5",
@@ -83,6 +90,7 @@ const makeManifest = () => {
           {
             attempt_id: attemptId,
             status: "succeeded",
+            recorded_status: "succeeded",
             prompt: { ...prompt },
             provider_run_id: `provider-${outputNumber}`,
             error: null,
@@ -95,8 +103,20 @@ const makeManifest = () => {
           width: modelId === "alibaba/wan-2.2" ? 1280 : 1920,
           height: modelId === "alibaba/wan-2.2" ? 720 : 1080,
           duration_seconds: modelId === "google/veo-3.1-lite" ? 4 : 5,
+          has_audio: false,
         },
         contract_check: { conforms: true, warnings: [] },
+        media_acceptance: {
+          accepted: true,
+          mode: "strict-contract",
+          policy_id: null,
+          policy_sha256: null,
+          model_id: modelId,
+          adapter: MODEL_ADAPTERS[modelId],
+          target_generate_audio: false,
+          observed_has_audio: false,
+          waived_warnings: [],
+        },
         error: null,
       };
     });
@@ -122,6 +142,14 @@ const makeManifest = () => {
       },
     };
   });
+  for (const article of articles) {
+    for (const output of article.image.outputs) {
+      const selectedAttempt = output.attempts[0];
+      selectedAttempt.media = clone(output.media);
+      selectedAttempt.contract_check = clone(output.contract_check);
+      selectedAttempt.media_acceptance = clone(output.media_acceptance);
+    }
+  }
   return {
     schema_version: 1,
     manifest_role: "clipmaker-lite-public-review",
@@ -137,6 +165,47 @@ const makeManifest = () => {
     expected_outputs: 6,
     articles,
   };
+};
+
+const applyWan27AudioException = (manifest, articleIndex = 0) => {
+  const output = manifest.articles[articleIndex].image.outputs[1];
+  const selectedAttempt = output.attempts.find(
+    (attempt) => attempt.attempt_id === output.selected_attempt_id,
+  );
+  selectedAttempt.recorded_status = "verification-failed";
+  selectedAttempt.error = "Media contract verification failed: audio";
+  output.media.has_audio = true;
+  output.contract_check = {
+    requested: {
+      duration_seconds: 5,
+      resolution: "1080p",
+      aspect_ratio: "16:9",
+      generate_audio: false,
+    },
+    checks: {
+      duration: true,
+      audio: false,
+      resolution: true,
+      aspect_ratio: true,
+    },
+    conforms: false,
+    warnings: ["audio"],
+  };
+  output.media_acceptance = {
+    accepted: true,
+    mode: "route-exception",
+    policy_id: "wan-2.7-openrouter-audio-v1",
+    policy_sha256: WAN_27_AUDIO_POLICY_SHA256,
+    model_id: "alibaba/wan-2.7",
+    adapter: "eliza-openrouter",
+    target_generate_audio: false,
+    observed_has_audio: true,
+    waived_warnings: ["audio"],
+  };
+  selectedAttempt.media = clone(output.media);
+  selectedAttempt.contract_check = clone(output.contract_check);
+  selectedAttempt.media_acceptance = clone(output.media_acceptance);
+  return output;
 };
 
 const loadHooks = () => {
@@ -166,6 +235,7 @@ test("page is an isolated accessible review surface using shared styles", () => 
   assert.match(html, /id="caseViewport"[\s\S]*aria-busy="true"/);
   assert.doesNotMatch(html, /clipmaker-lite\/app\.js/);
   assert.doesNotMatch(html, /promopages-10060-manifest/);
+  assert.match(html, /src="app\.js\?v=2"/);
 });
 
 test("validates the exact two-image, three-model public contract", () => {
@@ -181,10 +251,54 @@ test("validates the exact two-image, three-model public contract", () => {
   output.video_url = null;
   output.media = null;
   output.contract_check = null;
+  output.media_acceptance = null;
   output.error = "Provider returned no technically valid MP4 after the final attempt";
   output.attempts[0].status = "provider-failed";
+  output.attempts[0].recorded_status = "provider-failed";
   output.attempts[0].error = output.error;
   assert.equal(hooks.validateManifest(unavailable), unavailable);
+});
+
+test("accepts only the exact Wan 2.7 OpenRouter audio exception and labels it visibly", () => {
+  const hooks = loadHooks();
+  const manifest = makeManifest();
+  const output = applyWan27AudioException(manifest);
+  assert.equal(hooks.validateManifest(manifest), manifest);
+
+  const html = hooks.renderOutput(output, manifest.articles[0].image.source_url);
+  assert.match(html, /Принято с исключением · аудио/);
+  assert.match(html, /исходный verification-failed/);
+
+  const mutations = {
+    policyHash(value) {
+      value.media_acceptance.policy_sha256 = "f".repeat(64);
+    },
+    model(value) {
+      value.media_acceptance.model_id = "google/veo-3.1-lite";
+    },
+    warning(value) {
+      value.contract_check.warnings.push("resolution");
+    },
+    failedResolution(value) {
+      value.contract_check.checks.resolution = false;
+    },
+    rawStatus(value) {
+      value.attempts[0].recorded_status = "succeeded";
+    },
+    targetAudio(value) {
+      value.media_acceptance.target_generate_audio = true;
+    },
+  };
+  for (const [name, mutate] of Object.entries(mutations)) {
+    const candidate = makeManifest();
+    const candidateOutput = applyWan27AudioException(candidate);
+    mutate(candidateOutput);
+    assert.throws(
+      () => hooks.validateManifest(candidate),
+      undefined,
+      `${name} exception drift must fail closed`,
+    );
+  }
 });
 
 test("rejects identity, source, provenance, model and S3 hash drift", () => {

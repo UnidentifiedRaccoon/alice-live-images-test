@@ -226,11 +226,16 @@ class LiveImagesPipelineTest(unittest.TestCase):
                                     "model_id": model_id,
                                     "provider_run_id": pipeline._primary_provider_run_id(source, model_id),
                                     "status": "succeeded",
+                                    "recorded_status": "succeeded",
                                     "accepted": True,
                                     "prompt": {"positive": "primary", "negative": None},
                                     "video_path": "primary.mp4",
                                     "media": {"bytes": 1, "sha256": "a" * 64},
                                     "contract_check": {"conforms": True},
+                                    "media_acceptance": {
+                                        "accepted": True,
+                                        "mode": "strict-contract",
+                                    },
                                     "error": None,
                                 }
                             )
@@ -244,11 +249,16 @@ class LiveImagesPipelineTest(unittest.TestCase):
                         "model_id": logical["model_id"],
                         "provider_run_id": selected["provider_run_id"],
                         "status": "succeeded",
+                        "recorded_status": "succeeded",
                         "accepted": True,
                         "prompt": {"positive": "retry", "negative": None},
                         "video_path": "retry.mp4",
                         "media": {"bytes": 1, "sha256": "b" * 64},
                         "contract_check": {"conforms": True},
+                        "media_acceptance": {
+                            "accepted": True,
+                            "mode": "strict-contract",
+                        },
                         "error": None,
                     }
                 ]
@@ -265,6 +275,9 @@ class LiveImagesPipelineTest(unittest.TestCase):
             ][0]
             self.assertEqual(selected["selected_attempt_id"], "retry-01")
             self.assertEqual(selected["selected_prompt"]["positive"], "retry")
+            self.assertEqual(selected["recorded_status"], "succeeded")
+            self.assertEqual(selected["media_acceptance"]["mode"], "strict-contract")
+            self.assertEqual(selected["attempts"][0]["recorded_status"], "succeeded")
             self.assertEqual(sum(row["selected_attempt_id"] == "primary" for row in final["outputs"]), 5)
 
 

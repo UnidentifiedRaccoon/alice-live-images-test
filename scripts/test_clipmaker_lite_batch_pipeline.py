@@ -1759,6 +1759,69 @@ class ClipmakerLiteBatchPipelineTest(unittest.TestCase):
             self.assertFalse(persisted["contract_check"]["conforms"])
             self.assertEqual(persisted["contract_check"]["warnings"], check["warnings"])
 
+    def test_verify_accepts_wan27_audio_only_exception_without_rewriting_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            row = self.temp_row(root, "alibaba/wan-2.7")
+            entry = row["entry"]
+            media = {**self.valid_media(entry.model_id), "has_audio": True}
+            check = batch.strict_media_contract(entry, media)
+            self.assertEqual(check["warnings"], ["audio"])
+            acceptance = batch.media_acceptance(entry, media, check)
+            self.assertTrue(acceptance["accepted"])
+            self.assertEqual(acceptance["mode"], "route-exception")
+            self.assertEqual(acceptance["policy_id"], "wan-2.7-openrouter-audio-v1")
+            row["paths"]["video"].write_bytes(b"raw provider mp4")
+            transport.atomic_write_json(
+                row["paths"]["prompt"], batch.prompt_artifact(row["job"])
+            )
+            run = transport.read_json(row["paths"]["run"])
+            run.update(
+                {
+                    "status": "verification-failed",
+                    "media": media,
+                    "contract_check": check,
+                    "error": "Media contract verification failed: audio",
+                }
+            )
+            transport.atomic_write_json(row["paths"]["run"], run)
+            manifest_path = Path("manifest.json")
+
+            with (
+                mock.patch.object(batch, "matrix", return_value=(entry,)),
+                mock.patch.object(batch, "materialize_entry", return_value=row),
+                mock.patch.object(batch, "MANIFEST_PATH", manifest_path),
+                mock.patch.object(transport, "ffprobe_media", return_value=media),
+            ):
+                manifest = batch.manifest_document([row], root, "fixed")
+                transport.atomic_write_json(root / manifest_path, manifest)
+                ok, errors = batch.verify(root)
+
+            self.assertTrue(ok, errors)
+            self.assertEqual(manifest["conforming_outputs"], 0)
+            self.assertEqual(manifest["accepted_outputs"], 1)
+            self.assertEqual(
+                manifest["outputs"][0]["media_acceptance"], acceptance
+            )
+            persisted = transport.read_json(row["paths"]["run"])
+            self.assertEqual(persisted["status"], "verification-failed")
+            self.assertEqual(persisted["contract_check"], check)
+            self.assertNotIn("media_acceptance", persisted)
+
+    def test_wan27_audio_exception_rejects_any_additional_warning(self) -> None:
+        entry = next(item for item in batch.matrix() if item.model_id == "alibaba/wan-2.7")
+        media = {
+            **self.valid_media(entry.model_id),
+            "width": 1972,
+            "height": 1050,
+            "has_audio": True,
+        }
+        check = batch.strict_media_contract(entry, media)
+
+        self.assertIn("audio", check["warnings"])
+        self.assertIn("resolution", check["warnings"])
+        self.assertFalse(batch.media_acceptance(entry, media, check)["accepted"])
+
     def test_verify_warning_flag_does_not_accept_missing_raw_mp4(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
