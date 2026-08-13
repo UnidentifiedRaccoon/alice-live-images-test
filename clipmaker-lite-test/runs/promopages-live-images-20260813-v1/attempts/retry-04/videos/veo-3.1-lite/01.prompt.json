@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1-retry-04",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+    "sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+    "width": 2000,
+    "height": 1125
+  },
+  "structured_intent": {
+    "editorial_meaning": "Moving forward together with an easy, confident mood reinforces the article’s promise of a straightforward way to find a suitable dollar-exchange offer.",
+    "initial_state": "A smiling couple is side by side facing forward, looking warmly at each other while each holds an upright ice-cream cone at chest level.",
+    "primary_action": "The couple walks forward together in one relaxed, continuous movement.",
+    "terminal_state": "The couple is visibly farther along their forward walk, still side by side in a natural shared stride, smiling at each other with both cones upright.",
+    "geometry_invariant": "Each person’s hand remains visibly wrapped around the same upright ice-cream cone throughout the movement.",
+    "semantic_invariant": "Their warm, confident shared mood remains unchanged through the last frame."
+  },
+  "prompt": {
+    "positive": "The camera tracks backward smoothly at normal real-time speed as the couple walks forward together, ending clearly mid-stride with both upright cones and the same warm mutual gaze. Keep exactly three rigid decorative rings fixed to the background at their original size, position, depth, orientation, and occlusion order, never intersecting either person or creating fragments.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01/result.json",
+    "sha256": "7e37c20c82bc46f866f872b83e6f9b6ee9bb4503a4ff4257b3507f79ff65b07e",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.4",
+      "contract_fingerprint": "sha256:44b6acdb9707feaec6cd6acef22a295182454d3efd6d87fa4fe70dbd08337769",
+      "instruction_bundle_sha256": "9e99869be3cfb7af99ac94559315cd66c339b4cc42238829781963ca17ecfce8",
+      "source_image_sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+      "article_context_sha256": "aae809117e895bdb149a270a3ec0de70ce41a7989ef4b3756d8e721027e076ab",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}
