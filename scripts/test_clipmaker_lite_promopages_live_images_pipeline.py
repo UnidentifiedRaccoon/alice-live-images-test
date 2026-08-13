@@ -132,6 +132,13 @@ class LiveImagesPipelineTest(unittest.TestCase):
             writer.writerows(rows)
         return root, pipeline.discover(root)
 
+    def write_operator_policy(self, root: Path) -> None:
+        repository = Path(pipeline.__file__).resolve().parents[1]
+        source = repository / pipeline.OPERATOR_ACCEPTANCE_REL
+        target = root / pipeline.OPERATOR_ACCEPTANCE_REL
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+
     def test_discovery_selects_only_body_photo_and_coverless_banki_image(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             _root, sources = self.make_fixture(directory)
@@ -279,6 +286,43 @@ class LiveImagesPipelineTest(unittest.TestCase):
             self.assertEqual(selected["media_acceptance"]["mode"], "strict-contract")
             self.assertEqual(selected["attempts"][0]["recorded_status"], "succeeded")
             self.assertEqual(sum(row["selected_attempt_id"] == "primary" for row in final["outputs"]), 5)
+
+    def test_operator_acceptance_is_exact_to_level_retry_media_and_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, _sources = self.make_fixture(directory)
+            self.write_operator_policy(root)
+            document, policy_sha = pipeline.load_operator_acceptance(root)
+            decision = document["decisions"][0]
+            row = {
+                **decision["scope"],
+                **decision["selected_attempt"],
+                "recorded_status": decision["expected_recorded_status"],
+            }
+            acceptance = pipeline.operator_media_acceptance(
+                root, row, decision["expected_media"], decision["expected_contract_check"]
+            )
+            self.assertEqual(acceptance["mode"], "operator-exception")
+            self.assertEqual(acceptance["policy_sha256"], policy_sha)
+            for field, changed in (
+                ("attempt_id", "primary"),
+                ("provider_run_id", "changed"),
+                ("publication_id", "0" * 24),
+            ):
+                with self.subTest(field=field):
+                    bad = dict(row)
+                    bad[field] = changed
+                    self.assertIsNone(
+                        pipeline.operator_media_acceptance(
+                            root, bad, decision["expected_media"], decision["expected_contract_check"]
+                        )
+                    )
+            bad_media = dict(decision["expected_media"])
+            bad_media["width"] = 1920
+            self.assertIsNone(
+                pipeline.operator_media_acceptance(
+                    root, row, bad_media, decision["expected_contract_check"]
+                )
+            )
 
 
 if __name__ == "__main__":

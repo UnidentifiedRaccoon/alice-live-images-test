@@ -253,6 +253,12 @@ PUBLIC_REVIEW_OUTPUT_ACCEPTANCE_PATH = (
     ROOT / "docs/agents/clipmaker-lite/output-acceptance.json"
 )
 PUBLIC_REVIEW_WAN_27_AUDIO_POLICY_ID = "wan-2.7-openrouter-audio-v1"
+PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_ID = (
+    "level-image-04-wan-2.7-retry-01-native-size-v1"
+)
+PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_SHA256 = (
+    "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e"
+)
 PUBLIC_REVIEW_ARTICLES = {
     "6a4f5fe924801975680d9be5": {
         "brand": "Банки.ру",
@@ -2653,6 +2659,7 @@ def _validate_public_review_media_acceptance(
     *,
     label: str,
     model_id: str,
+    article_contract: dict[str, Any],
 ) -> None:
     acceptance = output.get("media_acceptance")
     media = output.get("media")
@@ -2694,6 +2701,44 @@ def _validate_public_review_media_acceptance(
             or selected_attempt.get("recorded_status") != "succeeded"
         ):
             raise ValueError(f"{label} strict media acceptance is invalid")
+        return
+
+    if acceptance.get("mode") == "operator-exception":
+        if (
+            article_contract.get("brand") != "Level Group"
+            or article_contract.get("image_id") != "04"
+            or model_id != "alibaba/wan-2.7"
+            or output.get("selected_attempt_id") != "retry-01"
+            or selected_attempt.get("provider_run_id")
+            != "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7"
+            or acceptance.get("policy_id")
+            != PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_ID
+            or acceptance.get("policy_sha256")
+            != PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_SHA256
+            or acceptance.get("observed_has_audio") is not True
+            or acceptance.get("waived_warnings")
+            != ["audio", "resolution", "aspect_ratio"]
+            or media.get("sha256")
+            != "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+            or media.get("bytes") != 21_070_882
+            or media.get("width") != 1972
+            or media.get("height") != 1050
+            or media.get("duration_seconds") != 5.0
+            or media.get("fps") != 30.0
+            or media.get("frames") != 150
+            or contract_check.get("conforms") is not False
+            or contract_check.get("warnings")
+            != ["audio", "resolution", "aspect_ratio"]
+            or contract_check.get("checks")
+            != {
+                "duration": True,
+                "audio": False,
+                "resolution": False,
+                "aspect_ratio": False,
+            }
+            or selected_attempt.get("recorded_status") != "verification-failed"
+        ):
+            raise ValueError(f"{label} operator media exception is invalid")
         return
 
     checks = contract_check.get("checks")
@@ -2814,6 +2859,7 @@ def _validate_public_review_output(
         selected_attempt,
         label=label,
         model_id=model_id,
+        article_contract=article_contract,
     )
     if (
         selected_attempt.get("media") != media

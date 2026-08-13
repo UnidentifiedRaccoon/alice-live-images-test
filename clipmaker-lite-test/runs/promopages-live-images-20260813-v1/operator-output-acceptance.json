@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "contract": "clipmaker-lite-batch-operator-acceptance/v1",
+  "batch_id": "promopages-live-images-20260813-v1",
+  "decisions": [
+    {
+      "decision_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
+      "scope": {
+        "article_slug": "01-level-ipoteka-2026",
+        "publication_id": "6a048ddca495b52c9d873940",
+        "image_id": "04",
+        "media_id": "6a049156a495b52c9d87cb75",
+        "model_id": "alibaba/wan-2.7",
+        "adapter": "eliza-openrouter"
+      },
+      "selected_attempt": {
+        "attempt_id": "retry-01",
+        "provider_run_id": "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7"
+      },
+      "expected_media": {
+        "sha256": "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09",
+        "bytes": 21070882,
+        "width": 1972,
+        "height": 1050,
+        "duration_seconds": 5.0,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true
+      },
+      "expected_recorded_status": "verification-failed",
+      "expected_contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "inherited_policy": {
+        "policy_id": "wan-2.7-openrouter-audio-v1",
+        "policy_sha256": "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce"
+      },
+      "additional_waived_warnings": [
+        "resolution",
+        "aspect_ratio"
+      ],
+      "reason": "Operator approved provider-native dimensions for this exact selected output."
+    }
+  ]
+}

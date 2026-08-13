@@ -75,6 +75,10 @@ GENERATION_MANIFEST_REL = BATCH_ROOT_REL / "generation-manifest.json"
 ATTEMPTS_REL = BATCH_ROOT_REL / "prompt-attempts.json"
 FINAL_SELECTION_REL = BATCH_ROOT_REL / "final-selection.json"
 VERIFICATION_REL = BATCH_ROOT_REL / "verification.json"
+OPERATOR_ACCEPTANCE_REL = BATCH_ROOT_REL / "operator-output-acceptance.json"
+
+OPERATOR_ACCEPTANCE_CONTRACT = "clipmaker-lite-batch-operator-acceptance/v1"
+OPERATOR_ACCEPTANCE_ID = "level-image-04-wan-2.7-retry-01-native-size-v1"
 
 HARD_BUDGET_CAP_USD = Decimal("5.00")
 ACCOUNTING_COST_PER_SUBMIT_USD = Decimal("0.35")
@@ -86,6 +90,148 @@ MAX_ESTIMATED_COST_USD = ACCOUNTING_COST_PER_SUBMIT_USD * MAX_TOTAL_RESERVATIONS
 
 class PipelineError(RuntimeError):
     """Fail-closed task-specific coordinator error."""
+
+
+def _canonical_json_sha256(value: Any) -> str:
+    encoded = json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def load_operator_acceptance(root: Path) -> tuple[dict[str, Any], str]:
+    """Load the exact user-authorized, batch-local output acceptance."""
+
+    path = root / OPERATOR_ACCEPTANCE_REL
+    if not path.is_file():
+        return {
+            "schema_version": 1,
+            "contract": OPERATOR_ACCEPTANCE_CONTRACT,
+            "batch_id": BATCH_ID,
+            "decisions": [],
+        }, ""
+    value = _read_json(path)
+    expected_decision = {
+        "decision_id": OPERATOR_ACCEPTANCE_ID,
+        "scope": {
+            "article_slug": "01-level-ipoteka-2026",
+            "publication_id": "6a048ddca495b52c9d873940",
+            "image_id": "04",
+            "media_id": "6a049156a495b52c9d87cb75",
+            "model_id": "alibaba/wan-2.7",
+            "adapter": "eliza-openrouter",
+        },
+        "selected_attempt": {
+            "attempt_id": "retry-01",
+            "provider_run_id": (
+                "promopages-live-images-20260813-v1-retry-01-"
+                "01-level-ipoteka-2026-04-wan-2-7"
+            ),
+        },
+        "expected_media": {
+            "sha256": (
+                "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+            ),
+            "bytes": 21_070_882,
+            "width": 1972,
+            "height": 1050,
+            "duration_seconds": 5.0,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": True,
+        },
+        "expected_recorded_status": "verification-failed",
+        "expected_contract_check": {
+            "requested": {
+                "duration_seconds": 5,
+                "resolution": "1080p",
+                "aspect_ratio": "16:9",
+                "generate_audio": False,
+                "frames": None,
+                "fps": None,
+            },
+            "checks": {
+                "duration": True,
+                "audio": False,
+                "resolution": False,
+                "aspect_ratio": False,
+            },
+            "conforms": False,
+            "warnings": ["audio", "resolution", "aspect_ratio"],
+        },
+        "inherited_policy": {
+            "policy_id": "wan-2.7-openrouter-audio-v1",
+            "policy_sha256": transport.OUTPUT_ACCEPTANCE_POLICY_SHA256,
+        },
+        "additional_waived_warnings": ["resolution", "aspect_ratio"],
+        "reason": "Operator approved provider-native dimensions for this exact selected output.",
+    }
+    expected = {
+        "schema_version": 1,
+        "contract": OPERATOR_ACCEPTANCE_CONTRACT,
+        "batch_id": BATCH_ID,
+        "decisions": [expected_decision],
+    }
+    if value != expected:
+        raise PipelineError("Batch-local operator acceptance identity differs")
+    return value, _canonical_json_sha256(value)
+
+
+def operator_media_acceptance(
+    root: Path,
+    row: Mapping[str, Any],
+    media: Mapping[str, Any],
+    contract_check: Mapping[str, Any],
+) -> dict[str, Any] | None:
+    """Accept only the exact Level retry authorized by the user."""
+
+    document, policy_sha256 = load_operator_acceptance(root)
+    if not document["decisions"]:
+        return None
+    policy = document["decisions"][0]
+    scope = policy["scope"]
+    selected = policy["selected_attempt"]
+    expected_media = policy["expected_media"]
+    if (
+        (row.get("attempt_id") or row.get("selected_attempt_id"))
+        != selected["attempt_id"]
+        or row.get("article_slug") != scope["article_slug"]
+        or row.get("publication_id") != scope["publication_id"]
+        or row.get("image_id") != scope["image_id"]
+        or row.get("media_id") != scope["media_id"]
+        or row.get("model_id") != scope["model_id"]
+        or row.get("provider_run_id") != selected["provider_run_id"]
+        or row.get("recorded_status") != policy["expected_recorded_status"]
+        or any(media.get(key) != expected_media[key] for key in expected_media)
+        or contract_check != policy["expected_contract_check"]
+    ):
+        return None
+    return {
+        "accepted": True,
+        "mode": "operator-exception",
+        "policy_id": policy["decision_id"],
+        "policy_sha256": policy_sha256,
+        "model_id": scope["model_id"],
+        "adapter": scope["adapter"],
+        "target_generate_audio": False,
+        "observed_has_audio": True,
+        "waived_warnings": list(policy["expected_contract_check"]["warnings"]),
+    }
+
+
+def validate_task_media_acceptance(
+    root: Path,
+    row: Mapping[str, Any],
+    media: Mapping[str, Any],
+    contract_check: Mapping[str, Any],
+    acceptance: Any,
+) -> bool:
+    if native.validate_media_acceptance(
+        str(row.get("model_id")), dict(media), dict(contract_check), acceptance
+    ):
+        return True
+    expected = operator_media_acceptance(root, row, media, contract_check)
+    return isinstance(acceptance, dict) and expected is not None and acceptance == expected
 
 
 @dataclass(frozen=True)
@@ -1029,6 +1175,32 @@ def _attempt_artifacts(
                 media_acceptance = native.media_acceptance(
                     entry, media, contract_check
                 )
+                if media_acceptance.get("accepted") is not True:
+                    operator_acceptance = operator_media_acceptance(
+                        root,
+                        {
+                            "attempt_id": attempt_id,
+                            "article_slug": entry.sample.article_slug,
+                            "publication_id": next(
+                                spec.publication_id
+                                for spec in ARTICLE_SPECS
+                                if spec.slug == entry.sample.article_slug
+                            ),
+                            "image_id": entry.sample.image_id,
+                            "media_id": next(
+                                spec.selected_media_id
+                                for spec in ARTICLE_SPECS
+                                if spec.slug == entry.sample.article_slug
+                            ),
+                            "model_id": entry.model_id,
+                            "provider_run_id": entry.provider_run_id,
+                            "recorded_status": status,
+                        },
+                        media,
+                        contract_check,
+                    )
+                    if operator_acceptance is not None:
+                        media_acceptance = operator_acceptance
                 accepted_status = (
                     status == "succeeded"
                     if media_acceptance.get("mode") == "strict-contract"

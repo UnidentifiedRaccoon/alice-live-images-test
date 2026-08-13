@@ -28,6 +28,8 @@ const MODEL_ADAPTERS = {
 };
 const WAN_27_AUDIO_POLICY_SHA256 =
   "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce";
+const LEVEL_OPERATOR_POLICY_SHA256 =
+  "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e";
 const ARTICLE_FIXTURES = [
   {
     publication_id: "6a4f5fe924801975680d9be5",
@@ -208,6 +210,59 @@ const applyWan27AudioException = (manifest, articleIndex = 0) => {
   return output;
 };
 
+const applyLevelOperatorException = (manifest) => {
+  const output = manifest.articles[1].image.outputs[1];
+  const selectedAttempt = output.attempts[0];
+  output.selected_attempt_id = "retry-01";
+  selectedAttempt.attempt_id = "retry-01";
+  selectedAttempt.provider_run_id =
+    "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7";
+  selectedAttempt.recorded_status = "verification-failed";
+  selectedAttempt.error = "Media contract verification failed: audio, resolution, aspect_ratio";
+  output.media = {
+    sha256: "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09",
+    bytes: 21070882,
+    width: 1972,
+    height: 1050,
+    duration_seconds: 5,
+    fps: 30,
+    frames: 150,
+    has_audio: true,
+  };
+  output.video_url =
+    "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/" +
+    "level-group__69ee06293ba10e0ae4b765d1/6a048ddca495b52c9d873940/wan_2_7/" +
+    "image_04--sha256-7eba763b0f8c.mp4";
+  output.contract_check = {
+    requested: {
+      duration_seconds: 5,
+      resolution: "1080p",
+      aspect_ratio: "16:9",
+      generate_audio: false,
+      frames: null,
+      fps: null,
+    },
+    checks: {duration: true, audio: false, resolution: false, aspect_ratio: false},
+    conforms: false,
+    warnings: ["audio", "resolution", "aspect_ratio"],
+  };
+  output.media_acceptance = {
+    accepted: true,
+    mode: "operator-exception",
+    policy_id: "level-image-04-wan-2.7-retry-01-native-size-v1",
+    policy_sha256: LEVEL_OPERATOR_POLICY_SHA256,
+    model_id: "alibaba/wan-2.7",
+    adapter: "eliza-openrouter",
+    target_generate_audio: false,
+    observed_has_audio: true,
+    waived_warnings: ["audio", "resolution", "aspect_ratio"],
+  };
+  selectedAttempt.media = clone(output.media);
+  selectedAttempt.contract_check = clone(output.contract_check);
+  selectedAttempt.media_acceptance = clone(output.media_acceptance);
+  return output;
+};
+
 const loadHooks = () => {
   const source = fs.readFileSync(APP_PATH, "utf8");
   const context = {
@@ -235,7 +290,7 @@ test("page is an isolated accessible review surface using shared styles", () => 
   assert.match(html, /id="caseViewport"[\s\S]*aria-busy="true"/);
   assert.doesNotMatch(html, /clipmaker-lite\/app\.js/);
   assert.doesNotMatch(html, /promopages-10060-manifest/);
-  assert.match(html, /src="app\.js\?v=2"/);
+  assert.match(html, /src="app\.js\?v=3"/);
 });
 
 test("validates the exact two-image, three-model public contract", () => {
@@ -298,6 +353,27 @@ test("accepts only the exact Wan 2.7 OpenRouter audio exception and labels it vi
       undefined,
       `${name} exception drift must fail closed`,
     );
+  }
+});
+
+test("accepts only the exact Level operator exception and labels provider size", () => {
+  const hooks = loadHooks();
+  const manifest = makeManifest();
+  const output = applyLevelOperatorException(manifest);
+  assert.equal(hooks.validateManifest(manifest), manifest);
+  assert.match(hooks.renderOutput(output, manifest.articles[1].image.source_url), /Принято оператором · размер провайдера/);
+
+  for (const mutate of [
+    (value) => { value.media.sha256 = "f".repeat(64); },
+    (value) => { value.media.width = 1920; },
+    (value) => { value.selected_attempt_id = "primary"; },
+    (value) => { value.media_acceptance.policy_sha256 = "f".repeat(64); },
+    (value) => { value.contract_check.checks.resolution = true; },
+  ]) {
+    const candidate = makeManifest();
+    const candidateOutput = applyLevelOperatorException(candidate);
+    mutate(candidateOutput);
+    assert.throws(() => hooks.validateManifest(candidate));
   }
 });
 
