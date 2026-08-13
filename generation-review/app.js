@@ -28,9 +28,9 @@
   const WAN_27_AUDIO_POLICY_SHA256 =
     "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce";
   const LEVEL_WAN_27_OPERATOR_POLICY_ID =
-    "level-image-04-wan-2.7-retry-01-native-size-v1";
+    "level-image-04-wan-2.7-primary-native-size-v2";
   const LEVEL_WAN_27_OPERATOR_POLICY_SHA256 =
-    "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e";
+    "a7d2420488117dcf99d3151b536bfbbcd3881fcf0e45f6f50508049c849177a8";
   const PUBLIC_BASE_URL =
     "https://yastatic.net/s3/promopages-front-bundles/";
   const ARTICLE_CONTRACTS = {
@@ -167,16 +167,16 @@
     if (acceptance.mode === "operator-exception") {
       assert(
         label.startsWith("6a048ddca495b52c9d873940/04/alibaba/wan-2.7") &&
-          output.selected_attempt_id === "retry-01" &&
+          output.selected_attempt_id === "primary" &&
           selectedAttempt.provider_run_id ===
-            "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7" &&
+            "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-7" &&
           acceptance.policy_id === LEVEL_WAN_27_OPERATOR_POLICY_ID &&
           acceptance.policy_sha256 === LEVEL_WAN_27_OPERATOR_POLICY_SHA256 &&
           acceptance.observed_has_audio === true &&
           arraysEqual(acceptance.waived_warnings, ["audio", "resolution", "aspect_ratio"]) &&
           output.media.sha256 ===
-            "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09" &&
-          output.media.bytes === 21070882 &&
+            "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be" &&
+          output.media.bytes === 30743398 &&
           output.media.width === 1972 &&
           output.media.height === 1050 &&
           output.media.duration_seconds === 5 &&
@@ -191,7 +191,7 @@
             aspect_ratio: false,
           }) &&
           selectedAttempt.recorded_status === "verification-failed",
-        `${label}: operator exception вышло за точное решение для Level retry-01`,
+        `${label}: operator exception вышло за точное решение для Level primary`,
       );
       return;
     }
