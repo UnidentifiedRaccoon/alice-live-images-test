@@ -78,7 +78,7 @@ VERIFICATION_REL = BATCH_ROOT_REL / "verification.json"
 OPERATOR_ACCEPTANCE_REL = BATCH_ROOT_REL / "operator-output-acceptance.json"
 
 OPERATOR_ACCEPTANCE_CONTRACT = "clipmaker-lite-batch-operator-acceptance/v1"
-OPERATOR_ACCEPTANCE_ID = "level-image-04-wan-2.7-retry-01-native-size-v1"
+OPERATOR_ACCEPTANCE_ID = "level-image-04-wan-2.7-primary-native-size-v2"
 
 HARD_BUDGET_CAP_USD = Decimal("5.00")
 ACCOUNTING_COST_PER_SUBMIT_USD = Decimal("0.35")
@@ -122,17 +122,17 @@ def load_operator_acceptance(root: Path) -> tuple[dict[str, Any], str]:
             "adapter": "eliza-openrouter",
         },
         "selected_attempt": {
-            "attempt_id": "retry-01",
+            "attempt_id": "primary",
             "provider_run_id": (
-                "promopages-live-images-20260813-v1-retry-01-"
+                "promopages-live-images-20260813-v1-"
                 "01-level-ipoteka-2026-04-wan-2-7"
             ),
         },
         "expected_media": {
             "sha256": (
-                "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+                "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be"
             ),
-            "bytes": 21_070_882,
+            "bytes": 30_743_398,
             "width": 1972,
             "height": 1050,
             "duration_seconds": 5.0,
@@ -164,7 +164,10 @@ def load_operator_acceptance(root: Path) -> tuple[dict[str, Any], str]:
             "policy_sha256": transport.OUTPUT_ACCEPTANCE_POLICY_SHA256,
         },
         "additional_waived_warnings": ["resolution", "aspect_ratio"],
-        "reason": "Operator approved provider-native dimensions for this exact selected output.",
+        "reason": (
+            "Operator selected the Level primary variant and approved provider-native "
+            "dimensions for this exact output."
+        ),
     }
     expected = {
         "schema_version": 1,
@@ -183,7 +186,7 @@ def operator_media_acceptance(
     media: Mapping[str, Any],
     contract_check: Mapping[str, Any],
 ) -> dict[str, Any] | None:
-    """Accept only the exact Level retry authorized by the user."""
+    """Accept only the exact Level primary output authorized by the user."""
 
     document, policy_sha256 = load_operator_acceptance(root)
     if not document["decisions"]:

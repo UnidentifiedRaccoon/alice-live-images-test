@@ -29,7 +29,7 @@ const MODEL_ADAPTERS = {
 const WAN_27_AUDIO_POLICY_SHA256 =
   "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce";
 const LEVEL_OPERATOR_POLICY_SHA256 =
-  "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e";
+  "a7d2420488117dcf99d3151b536bfbbcd3881fcf0e45f6f50508049c849177a8";
 const ARTICLE_FIXTURES = [
   {
     publication_id: "6a4f5fe924801975680d9be5",
@@ -213,15 +213,15 @@ const applyWan27AudioException = (manifest, articleIndex = 0) => {
 const applyLevelOperatorException = (manifest) => {
   const output = manifest.articles[1].image.outputs[1];
   const selectedAttempt = output.attempts[0];
-  output.selected_attempt_id = "retry-01";
-  selectedAttempt.attempt_id = "retry-01";
+  output.selected_attempt_id = "primary";
+  selectedAttempt.attempt_id = "primary";
   selectedAttempt.provider_run_id =
-    "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7";
+    "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-7";
   selectedAttempt.recorded_status = "verification-failed";
   selectedAttempt.error = "Media contract verification failed: audio, resolution, aspect_ratio";
   output.media = {
-    sha256: "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09",
-    bytes: 21070882,
+    sha256: "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be",
+    bytes: 30743398,
     width: 1972,
     height: 1050,
     duration_seconds: 5,
@@ -232,7 +232,7 @@ const applyLevelOperatorException = (manifest) => {
   output.video_url =
     "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/" +
     "level-group__69ee06293ba10e0ae4b765d1/6a048ddca495b52c9d873940/wan_2_7/" +
-    "image_04--sha256-7eba763b0f8c.mp4";
+    "image_04--sha256-6fc6af439367.mp4";
   output.contract_check = {
     requested: {
       duration_seconds: 5,
@@ -249,7 +249,7 @@ const applyLevelOperatorException = (manifest) => {
   output.media_acceptance = {
     accepted: true,
     mode: "operator-exception",
-    policy_id: "level-image-04-wan-2.7-retry-01-native-size-v1",
+    policy_id: "level-image-04-wan-2.7-primary-native-size-v2",
     policy_sha256: LEVEL_OPERATOR_POLICY_SHA256,
     model_id: "alibaba/wan-2.7",
     adapter: "eliza-openrouter",
@@ -290,7 +290,7 @@ test("page is an isolated accessible review surface using shared styles", () => 
   assert.match(html, /id="caseViewport"[\s\S]*aria-busy="true"/);
   assert.doesNotMatch(html, /clipmaker-lite\/app\.js/);
   assert.doesNotMatch(html, /promopages-10060-manifest/);
-  assert.match(html, /src="app\.js\?v=3"/);
+  assert.match(html, /src="app\.js\?v=4"/);
 });
 
 test("validates the exact two-image, three-model public contract", () => {
@@ -366,7 +366,7 @@ test("accepts only the exact Level operator exception and labels provider size",
   for (const mutate of [
     (value) => { value.media.sha256 = "f".repeat(64); },
     (value) => { value.media.width = 1920; },
-    (value) => { value.selected_attempt_id = "primary"; },
+    (value) => { value.selected_attempt_id = "retry-01"; },
     (value) => { value.media_acceptance.policy_sha256 = "f".repeat(64); },
     (value) => { value.contract_check.checks.resolution = true; },
   ]) {
