@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "contract": "clipmaker-lite-output-acceptance/v1",
+  "policies": [
+    {
+      "policy_id": "wan-2.7-openrouter-audio-v1",
+      "model_id": "alibaba/wan-2.7",
+      "adapter": "eliza-openrouter",
+      "target_generate_audio": false,
+      "observed_has_audio": true,
+      "waived_warnings": [
+        "audio"
+      ],
+      "require_all_other_checks": true
+    }
+  ]
+}

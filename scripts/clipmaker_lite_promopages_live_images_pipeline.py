@@ -1020,19 +1020,28 @@ def _attempt_artifacts(
         error = receipt.get("error") if isinstance(receipt, dict) else "missing run receipt"
         media = None
         contract_check = None
+        media_acceptance = None
         accepted = False
         if paths["video"].is_file() and isinstance(receipt, dict):
             try:
                 media = transport.ffprobe_media(paths["video"])
                 contract_check = native.strict_media_contract(entry, media)
-                accepted = (
+                media_acceptance = native.media_acceptance(
+                    entry, media, contract_check
+                )
+                accepted_status = (
                     status == "succeeded"
+                    if media_acceptance.get("mode") == "strict-contract"
+                    else status == "verification-failed"
+                )
+                accepted = (
+                    media_acceptance.get("accepted") is True
+                    and accepted_status
                     and receipt.get("media") == media
                     and receipt.get("contract_check") == contract_check
-                    and contract_check.get("conforms") is True
                 )
                 if not accepted and error is None:
-                    error = "selected media did not pass the strict contract"
+                    error = "selected media did not pass an explicit acceptance policy"
             except (OSError, transport.PipelineError, native.BatchPipelineError) as exc:
                 error = transport.safe_error(exc)
         rows.append(
@@ -1044,6 +1053,7 @@ def _attempt_artifacts(
                 "planning_run_id": entry.planning_run_id,
                 "provider_run_id": entry.provider_run_id,
                 "status": "succeeded" if accepted else status,
+                "recorded_status": status,
                 "accepted": accepted,
                 "prompt": (
                     prompt.get("prompt")
@@ -1055,6 +1065,7 @@ def _attempt_artifacts(
                 "video_path": _relative(paths["video"], root) if paths["video"].is_file() else None,
                 "media": media,
                 "contract_check": contract_check,
+                "media_acceptance": media_acceptance,
                 "provider_response": (
                     receipt.get("provider_response")
                     if isinstance(receipt, dict)
@@ -1114,9 +1125,13 @@ def build_final_selection(
                 {
                     "attempt_id": row["attempt_id"],
                     "status": row["status"],
+                    "recorded_status": row["recorded_status"],
                     "prompt": row["prompt"],
                     "provider_run_id": row["provider_run_id"],
                     "provider_response": row.get("provider_response"),
+                    "media": row["media"],
+                    "contract_check": row["contract_check"],
+                    "media_acceptance": row["media_acceptance"],
                     "error": row["error"],
                 }
                 for row in attempts
@@ -1130,12 +1145,14 @@ def build_final_selection(
                     "media_id": source.spec.selected_media_id,
                     "model_id": model_id,
                     "status": "succeeded" if accepted else "unavailable",
+                    "recorded_status": chosen["recorded_status"] if accepted else None,
                     "selected_attempt_id": chosen["attempt_id"] if accepted else None,
                     "selected_prompt": chosen["prompt"] if accepted else None,
                     "provider_run_id": chosen["provider_run_id"] if accepted else None,
                     "video_path": chosen["video_path"] if accepted else None,
                     "media": chosen["media"] if accepted else None,
                     "contract_check": chosen["contract_check"] if accepted else None,
+                    "media_acceptance": chosen["media_acceptance"] if accepted else None,
                     "error": None if accepted else str(chosen["error"] or chosen["status"]),
                     "attempt_count": len(attempts),
                     "attempts": attempts_summary,

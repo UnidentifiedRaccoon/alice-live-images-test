@@ -13,6 +13,22 @@ from pathlib import Path
 from scripts import promopages_live_images_s3_export as exporter
 
 
+def _strict_acceptance(model_id: str) -> dict:
+    return {
+        "accepted": True,
+        "mode": "strict-contract",
+        "policy_id": None,
+        "policy_sha256": None,
+        "model_id": model_id,
+        "adapter": (
+            "eliza-segmind" if model_id == "alibaba/wan-2.2" else "eliza-openrouter"
+        ),
+        "target_generate_audio": False,
+        "observed_has_audio": False,
+        "waived_warnings": [],
+    }
+
+
 class LiveImagesS3ExportTest(unittest.TestCase):
     def write_json(self, path: Path, value: object) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -39,12 +55,14 @@ class LiveImagesS3ExportTest(unittest.TestCase):
                             "media_id": route["media_id"],
                             "model_id": model_id,
                             "status": "unavailable",
+                            "recorded_status": None,
                             "selected_attempt_id": None,
                             "selected_prompt": None,
                             "provider_run_id": None,
                             "video_path": None,
                             "media": None,
                             "contract_check": None,
+                            "media_acceptance": None,
                             "error": "fixture provider failure",
                             "attempt_count": 1,
                             "attempts": [],
@@ -65,6 +83,7 @@ class LiveImagesS3ExportTest(unittest.TestCase):
                         "media_id": route["media_id"],
                         "model_id": model_id,
                         "status": "succeeded",
+                        "recorded_status": "succeeded",
                         "selected_attempt_id": "primary",
                         "selected_prompt": {"positive": "fixture", "negative": None},
                         "provider_run_id": f"provider-{index}",
@@ -78,7 +97,13 @@ class LiveImagesS3ExportTest(unittest.TestCase):
                             "height": 720,
                             "has_audio": False,
                         },
-                        "contract_check": {"conforms": True, "warnings": []},
+                        "contract_check": {
+                            "requested": {"generate_audio": False},
+                            "checks": {"audio": True},
+                            "conforms": True,
+                            "warnings": [],
+                        },
+                        "media_acceptance": _strict_acceptance(model_id),
                         "error": None,
                         "attempt_count": 1,
                         "attempts": [],
@@ -144,6 +169,47 @@ class LiveImagesS3ExportTest(unittest.TestCase):
             self.assertEqual(len(unavailable), 1)
             self.assertIsNone(unavailable[0]["object_key"])
             self.assertTrue(exporter.verify_export(output)["verified"])
+
+    def test_rejects_audio_exception_with_any_non_audio_warning(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            _root, final_path, output = self.make_fixture(directory)
+            final = json.loads(final_path.read_text(encoding="utf-8"))
+            target = next(
+                row
+                for row in final["outputs"]
+                if row["model_id"] == "alibaba/wan-2.7"
+            )
+            target["recorded_status"] = "verification-failed"
+            target["media"]["has_audio"] = True
+            audio_only_check = {
+                "conforms": False,
+                "warnings": ["audio"],
+                "checks": {"audio": False, "resolution": True},
+                "requested": {"generate_audio": False},
+            }
+            entry = exporter.native.Entry(
+                exporter.native.Sample(
+                    "s3-fixture",
+                    target["article_slug"],
+                    target["image_id"],
+                    "fixture.png",
+                    "0" * 64,
+                    2000,
+                    1125,
+                ),
+                target["model_id"],
+            )
+            target["media_acceptance"] = exporter.native.media_acceptance(
+                entry, target["media"], audio_only_check
+            )
+            target["contract_check"] = {
+                **audio_only_check,
+                "warnings": ["audio", "resolution"],
+                "checks": {"audio": False, "resolution": False},
+            }
+            self.write_json(final_path, final)
+            with self.assertRaisesRegex(exporter.ExportError, "Succeeded selection"):
+                exporter.build_export(_root, final_path, output, materialize_mode="copy")
 
     def test_upload_dry_run_never_invokes_yc(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

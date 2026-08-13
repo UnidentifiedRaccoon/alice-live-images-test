@@ -244,6 +244,15 @@ PUBLIC_REVIEW_MODEL_DIRECTORIES = {
     "alibaba/wan-2.7": "wan_2_7",
     "google/veo-3.1-lite": "veo_3_1",
 }
+PUBLIC_REVIEW_MODEL_ADAPTERS = {
+    "alibaba/wan-2.2": "eliza-segmind",
+    "alibaba/wan-2.7": "eliza-openrouter",
+    "google/veo-3.1-lite": "eliza-openrouter",
+}
+PUBLIC_REVIEW_OUTPUT_ACCEPTANCE_PATH = (
+    ROOT / "docs/agents/clipmaker-lite/output-acceptance.json"
+)
+PUBLIC_REVIEW_WAN_27_AUDIO_POLICY_ID = "wan-2.7-openrouter-audio-v1"
 PUBLIC_REVIEW_ARTICLES = {
     "6a4f5fe924801975680d9be5": {
         "brand": "Банки.ру",
@@ -2625,6 +2634,99 @@ def _validate_public_review_prompt(value: Any, *, label: str) -> None:
         raise ValueError(f"{label} prompt is invalid")
 
 
+def _public_review_output_acceptance_sha256() -> str:
+    document = json.loads(
+        PUBLIC_REVIEW_OUTPUT_ACCEPTANCE_PATH.read_text(encoding="utf-8")
+    )
+    canonical = json.dumps(
+        document,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
+def _validate_public_review_media_acceptance(
+    output: dict[str, Any],
+    selected_attempt: dict[str, Any],
+    *,
+    label: str,
+    model_id: str,
+) -> None:
+    acceptance = output.get("media_acceptance")
+    media = output.get("media")
+    contract_check = output.get("contract_check")
+    expected_fields = {
+        "accepted",
+        "mode",
+        "policy_id",
+        "policy_sha256",
+        "model_id",
+        "adapter",
+        "target_generate_audio",
+        "observed_has_audio",
+        "waived_warnings",
+    }
+    if (
+        not isinstance(acceptance, dict)
+        or set(acceptance) != expected_fields
+        or acceptance.get("accepted") is not True
+        or acceptance.get("model_id") != model_id
+        or acceptance.get("adapter") != PUBLIC_REVIEW_MODEL_ADAPTERS[model_id]
+        or acceptance.get("target_generate_audio") is not False
+        or not isinstance(media, dict)
+        or not isinstance(media.get("has_audio"), bool)
+        or acceptance.get("observed_has_audio") is not media["has_audio"]
+        or not isinstance(acceptance.get("waived_warnings"), list)
+        or not isinstance(contract_check, dict)
+    ):
+        raise ValueError(f"{label} media acceptance is invalid")
+
+    if acceptance.get("mode") == "strict-contract":
+        if (
+            acceptance.get("policy_id") is not None
+            or acceptance.get("policy_sha256") is not None
+            or acceptance.get("observed_has_audio") is not False
+            or acceptance.get("waived_warnings") != []
+            or contract_check.get("conforms") is not True
+            or contract_check.get("warnings") != []
+            or selected_attempt.get("recorded_status") != "succeeded"
+        ):
+            raise ValueError(f"{label} strict media acceptance is invalid")
+        return
+
+    checks = contract_check.get("checks")
+    requested = contract_check.get("requested")
+    if (
+        acceptance.get("mode") != "route-exception"
+        or model_id != "alibaba/wan-2.7"
+        or acceptance.get("adapter") != "eliza-openrouter"
+        or acceptance.get("policy_id")
+        != PUBLIC_REVIEW_WAN_27_AUDIO_POLICY_ID
+        or acceptance.get("policy_sha256")
+        != _public_review_output_acceptance_sha256()
+        or acceptance.get("observed_has_audio") is not True
+        or acceptance.get("waived_warnings") != ["audio"]
+        or contract_check.get("conforms") is not False
+        or contract_check.get("warnings") != ["audio"]
+        or not isinstance(requested, dict)
+        or requested.get("duration_seconds") != 5
+        or requested.get("resolution") != "1080p"
+        or requested.get("aspect_ratio") != "16:9"
+        or requested.get("generate_audio") is not False
+        or not isinstance(checks, dict)
+        or set(checks) != {"duration", "audio", "resolution", "aspect_ratio"}
+        or checks.get("audio") is not False
+        or any(
+            not isinstance(value, bool) or value != (key != "audio")
+            for key, value in checks.items()
+        )
+        or selected_attempt.get("recorded_status") != "verification-failed"
+    ):
+        raise ValueError(f"{label} route audio exception is invalid")
+
+
 def _validate_public_review_output(
     article: dict[str, Any],
     article_contract: dict[str, Any],
@@ -2654,6 +2756,7 @@ def _validate_public_review_output(
             or not _is_non_empty_string(attempt.get("attempt_id"))
             or attempt["attempt_id"] in attempt_ids
             or not _is_non_empty_string(attempt.get("status"))
+            or not _is_non_empty_string(attempt.get("recorded_status"))
             or attempt.get("provider_run_id") is not None
             and not _is_non_empty_string(attempt.get("provider_run_id"))
             or attempt.get("error") is not None
@@ -2673,6 +2776,7 @@ def _validate_public_review_output(
             or output.get("video_url") is not None
             or output.get("media") is not None
             or output.get("contract_check") is not None
+            or output.get("media_acceptance") is not None
             or not _is_non_empty_string(output.get("error"))
             or any(attempt.get("status") == "succeeded" for attempt in output["attempts"])
         ):
@@ -2698,12 +2802,26 @@ def _validate_public_review_output(
         or not _is_positive_int(media.get("width"))
         or not _is_positive_int(media.get("height"))
         or not _is_positive_number(media.get("duration_seconds"))
+        or not isinstance(media.get("has_audio"), bool)
         or not isinstance(contract_check, dict)
-        or contract_check.get("conforms") is not True
         or not isinstance(contract_check.get("warnings"), list)
         or output.get("error") is not None
     ):
         raise ValueError(f"{label} selected media or contract check is invalid")
+
+    _validate_public_review_media_acceptance(
+        output,
+        selected_attempt,
+        label=label,
+        model_id=model_id,
+    )
+    if (
+        selected_attempt.get("media") != media
+        or selected_attempt.get("contract_check") != contract_check
+        or selected_attempt.get("media_acceptance")
+        != output.get("media_acceptance")
+    ):
+        raise ValueError(f"{label} selected media differs from attempt audit")
 
     expected_video_url = (
         f"{PUBLIC_REVIEW_S3_BASE_URL}front-images/exp_video/"

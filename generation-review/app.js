@@ -19,6 +19,14 @@
     "alibaba/wan-2.7": "wan_2_7",
     "google/veo-3.1-lite": "veo_3_1",
   };
+  const MODEL_ADAPTERS = {
+    "alibaba/wan-2.2": "eliza-segmind",
+    "alibaba/wan-2.7": "eliza-openrouter",
+    "google/veo-3.1-lite": "eliza-openrouter",
+  };
+  const WAN_27_AUDIO_POLICY_ID = "wan-2.7-openrouter-audio-v1";
+  const WAN_27_AUDIO_POLICY_SHA256 =
+    "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce";
   const PUBLIC_BASE_URL =
     "https://yastatic.net/s3/promopages-front-bundles/";
   const ARTICLE_CONTRACTS = {
@@ -57,6 +65,10 @@
     Array.isArray(right) &&
     left.length === right.length &&
     left.every((value, index) => value === right[index]);
+  const objectHasExactKeys = (value, keys) =>
+    isObject(value) && arraysEqual(Object.keys(value).sort(), [...keys].sort());
+  const valuesEqual = (left, right) =>
+    JSON.stringify(left) === JSON.stringify(right);
 
   const assert = (condition, message) => {
     if (!condition) {
@@ -74,6 +86,10 @@
     assert(isObject(attempt), `${label}: попытка должна быть объектом`);
     assert(isNonEmptyString(attempt.attempt_id), `${label}: attempt_id пуст`);
     assert(isNonEmptyString(attempt.status), `${label}: status попытки пуст`);
+    assert(
+      isNonEmptyString(attempt.recorded_status),
+      `${label}: recorded_status попытки пуст`,
+    );
     validatePrompt(attempt.prompt, `${label}/${attempt.attempt_id}`);
     assert(
       attempt.provider_run_id === null || isNonEmptyString(attempt.provider_run_id),
@@ -82,6 +98,104 @@
     assert(
       attempt.error === null || isNonEmptyString(attempt.error),
       `${label}: error попытки некорректен`,
+    );
+  };
+
+  const validateMediaAcceptance = (output, selectedAttempt, label) => {
+    const acceptance = output.media_acceptance;
+    assert(
+      objectHasExactKeys(acceptance, [
+        "accepted",
+        "mode",
+        "policy_id",
+        "policy_sha256",
+        "model_id",
+        "adapter",
+        "target_generate_audio",
+        "observed_has_audio",
+        "waived_warnings",
+      ]),
+      `${label}: media_acceptance отсутствует или имеет лишние поля`,
+    );
+    assert(acceptance.accepted === true, `${label}: media не принято`);
+    assert(acceptance.model_id === output.model_id, `${label}: acceptance model drift`);
+    assert(
+      acceptance.adapter === MODEL_ADAPTERS[output.model_id],
+      `${label}: acceptance adapter drift`,
+    );
+    assert(
+      acceptance.target_generate_audio === false,
+      `${label}: audio target должен оставаться false`,
+    );
+    assert(
+      typeof acceptance.observed_has_audio === "boolean" &&
+        acceptance.observed_has_audio === output.media.has_audio,
+      `${label}: observed audio расходится с media`,
+    );
+    assert(
+      Array.isArray(acceptance.waived_warnings),
+      `${label}: waived_warnings отсутствуют`,
+    );
+
+    if (acceptance.mode === "strict-contract") {
+      assert(acceptance.policy_id === null, `${label}: strict policy_id должен быть null`);
+      assert(
+        acceptance.policy_sha256 === null,
+        `${label}: strict policy_sha256 должен быть null`,
+      );
+      assert(
+        acceptance.observed_has_audio === false &&
+          acceptance.waived_warnings.length === 0,
+        `${label}: strict acceptance содержит исключение`,
+      );
+      assert(
+        output.contract_check.conforms === true &&
+          arraysEqual(output.contract_check.warnings, []),
+        `${label}: MP4 не прошёл строгий контракт`,
+      );
+      assert(
+        selectedAttempt.recorded_status === "succeeded",
+        `${label}: strict selected attempt расходится с raw audit`,
+      );
+      return;
+    }
+
+    assert(acceptance.mode === "route-exception", `${label}: неизвестный acceptance mode`);
+    assert(
+      output.model_id === "alibaba/wan-2.7" &&
+        acceptance.adapter === "eliza-openrouter" &&
+        acceptance.policy_id === WAN_27_AUDIO_POLICY_ID &&
+        acceptance.policy_sha256 === WAN_27_AUDIO_POLICY_SHA256 &&
+        acceptance.observed_has_audio === true &&
+        arraysEqual(acceptance.waived_warnings, ["audio"]),
+      `${label}: route exception вышло за разрешённую Wan 2.7 audio policy`,
+    );
+    assert(
+      output.contract_check.conforms === false &&
+        arraysEqual(output.contract_check.warnings, ["audio"]),
+      `${label}: route exception может снять только audio warning`,
+    );
+    assert(
+      isObject(output.contract_check.requested) &&
+        output.contract_check.requested.duration_seconds === 5 &&
+        output.contract_check.requested.resolution === "1080p" &&
+        output.contract_check.requested.aspect_ratio === "16:9" &&
+        output.contract_check.requested.generate_audio === false &&
+        objectHasExactKeys(output.contract_check.checks, [
+          "duration",
+          "audio",
+          "resolution",
+          "aspect_ratio",
+        ]) &&
+        output.contract_check.checks.audio === false &&
+        Object.entries(output.contract_check.checks).every(
+          ([name, passed]) => name === "audio" ? passed === false : passed === true,
+        ),
+      `${label}: raw contract check не подтверждает isolated audio warning`,
+    );
+    assert(
+      selectedAttempt.recorded_status === "verification-failed",
+      `${label}: route exception потеряло raw verification failure`,
     );
   };
 
@@ -121,6 +235,7 @@
       assert(output.video_url === null, `${label}: unavailable содержит video_url`);
       assert(output.media === null, `${label}: unavailable содержит media`);
       assert(output.contract_check === null, `${label}: unavailable содержит contract_check`);
+      assert(output.media_acceptance === null, `${label}: unavailable содержит media_acceptance`);
       assert(isNonEmptyString(output.error), `${label}: причина недоступности пуста`);
       return;
     }
@@ -146,10 +261,16 @@
       );
     }
     assert(isObject(output.contract_check), `${label}: contract_check отсутствует`);
-    assert(output.contract_check.conforms === true, `${label}: MP4 не прошёл контракт`);
     assert(
       Array.isArray(output.contract_check.warnings),
       `${label}: contract warnings отсутствуют`,
+    );
+    validateMediaAcceptance(output, selectedAttempt, label);
+    assert(
+      valuesEqual(selectedAttempt.media, output.media) &&
+        valuesEqual(selectedAttempt.contract_check, output.contract_check) &&
+        valuesEqual(selectedAttempt.media_acceptance, output.media_acceptance),
+      `${label}: selected media расходится с audit попытки`,
     );
     assert(output.error === null, `${label}: успешный output содержит error`);
     assert(
@@ -255,8 +376,11 @@
           ? ` · run ${attempt.provider_run_id}`
           : "";
         const error = attempt.error ? ` · ${attempt.error}` : "";
+        const recorded = attempt.recorded_status === attempt.status
+          ? ""
+          : ` · исходный ${attempt.recorded_status}`;
         return [
-          `${index + 1}. ${attempt.attempt_id} · ${attempt.status}${provider}${error}`,
+          `${index + 1}. ${attempt.attempt_id} · ${attempt.status}${recorded}${provider}${error}`,
           `Positive: ${attempt.prompt.positive}`,
           `Negative: ${attempt.prompt.negative || "—"}`,
         ].join("\n");
@@ -351,7 +475,12 @@
           ["Длительность", `${media.duration_seconds.toFixed(2)} с`],
           ["Файл", formatBytes(media.bytes)],
           ["SHA-256", media.sha256.slice(0, 12)],
-          ["Контракт", "Пройден"],
+          [
+            "Контракт",
+            output.media_acceptance.mode === "route-exception"
+              ? "Принято с исключением · аудио"
+              : "Пройден",
+          ],
         ])}
         ${renderPromptDetails(output)}
       </article>`;
@@ -423,6 +552,7 @@
     parseSelection,
     expectedVideoUrl,
     escapeHtml,
+    renderOutput,
     constants: Object.freeze({ BATCH_ID, MANIFEST_URL, MODELS }),
   });
   globalThis.__generationReviewTestHooks = testHooks;

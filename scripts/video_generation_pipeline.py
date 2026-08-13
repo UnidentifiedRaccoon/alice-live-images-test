@@ -179,6 +179,7 @@ def parse_segmind_undersize_task_failure(
 
 
 GENERATION_ROUTES_PATH = ROOT / "docs/agents/clipmaker-lite/generation-routes.json"
+OUTPUT_ACCEPTANCE_PATH = ROOT / "docs/agents/clipmaker-lite/output-acceptance.json"
 
 
 def _load_generation_routes(path: Path = GENERATION_ROUTES_PATH) -> dict[str, Any]:
@@ -234,6 +235,168 @@ def route_for_model(model_id: str) -> dict[str, Any]:
     if route is None:
         raise PipelineError(f"No exact generation route for model_id: {model_id}")
     return route
+
+
+def _load_output_acceptance_policy(
+    path: Path = OUTPUT_ACCEPTANCE_PATH,
+) -> tuple[dict[str, Any], str]:
+    """Load the versioned output-only exceptions without changing generation."""
+
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            document = json.load(handle)
+    except FileNotFoundError as exc:
+        raise PipelineError(f"Output acceptance policy does not exist: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise PipelineError(f"Invalid output acceptance policy {path}: {exc}") from exc
+    if (
+        not isinstance(document, dict)
+        or document.get("schema_version") != 1
+        or document.get("contract") != "clipmaker-lite-output-acceptance/v1"
+    ):
+        raise PipelineError("Output acceptance policy must use contract v1")
+    policies = document.get("policies")
+    if not isinstance(policies, list) or not policies:
+        raise PipelineError("Output acceptance policy must contain policies")
+    expected_keys = {
+        "policy_id",
+        "model_id",
+        "adapter",
+        "target_generate_audio",
+        "observed_has_audio",
+        "waived_warnings",
+        "require_all_other_checks",
+    }
+    seen_ids: set[str] = set()
+    seen_routes: set[tuple[str, str]] = set()
+    for policy in policies:
+        if not isinstance(policy, dict) or set(policy) != expected_keys:
+            raise PipelineError("Output acceptance policy entry has invalid keys")
+        policy_id = policy.get("policy_id")
+        model_id = policy.get("model_id")
+        adapter = policy.get("adapter")
+        if (
+            not isinstance(policy_id, str)
+            or not policy_id
+            or not isinstance(model_id, str)
+            or not isinstance(adapter, str)
+        ):
+            raise PipelineError("Output acceptance policy identity is invalid")
+        if policy_id in seen_ids or (model_id, adapter) in seen_routes:
+            raise PipelineError("Output acceptance policy identities must be unique")
+        seen_ids.add(policy_id)
+        seen_routes.add((model_id, adapter))
+        if model_id not in GENERATION_ROUTES:
+            raise PipelineError(f"Output acceptance policy has unknown model: {model_id}")
+        if route_for_model(model_id)["adapter"] != adapter:
+            raise PipelineError(f"Output acceptance policy adapter mismatch: {model_id}")
+        if (
+            policy.get("target_generate_audio") is not False
+            or policy.get("observed_has_audio") is not True
+            or policy.get("waived_warnings") != ["audio"]
+            or policy.get("require_all_other_checks") is not True
+        ):
+            raise PipelineError("Only the exact no-audio target/audio-output exception is supported")
+    canonical = json.dumps(
+        document,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return document, hashlib.sha256(canonical).hexdigest()
+
+
+OUTPUT_ACCEPTANCE_POLICY_DOCUMENT, OUTPUT_ACCEPTANCE_POLICY_SHA256 = (
+    _load_output_acceptance_policy()
+)
+
+
+def _contract_failed_checks(contract_check: dict[str, Any]) -> list[str] | None:
+    checks = contract_check.get("checks")
+    if not isinstance(checks, dict) or not checks:
+        return None
+    if any(not isinstance(name, str) or not isinstance(value, bool) for name, value in checks.items()):
+        return None
+    return [name for name, passed in checks.items() if not passed]
+
+
+def _warnings_are_exact_audio(contract_check: dict[str, Any]) -> bool:
+    warnings = contract_check.get("warnings")
+    if warnings == ["audio"]:
+        return True
+    return (
+        isinstance(warnings, list)
+        and len(warnings) == 1
+        and warnings[0]
+        == "provider returned has_audio=True despite generate_audio=False"
+    )
+
+
+def media_acceptance(
+    model_id: str,
+    media: dict[str, Any],
+    contract_check: dict[str, Any],
+) -> dict[str, Any]:
+    """Return an auditable strict or exact route-exception decision."""
+
+    adapter = route_for_model(model_id)["adapter"]
+    requested = contract_check.get("requested")
+    target_audio = requested.get("generate_audio") if isinstance(requested, dict) else None
+    observed_audio = media.get("has_audio")
+    base = {
+        "accepted": False,
+        "mode": "strict-contract",
+        "policy_id": None,
+        "policy_sha256": None,
+        "model_id": model_id,
+        "adapter": adapter,
+        "target_generate_audio": target_audio,
+        "observed_has_audio": observed_audio,
+        "waived_warnings": [],
+    }
+    failed_checks = _contract_failed_checks(contract_check)
+    if (
+        contract_check.get("conforms") is True
+        and failed_checks == []
+        and contract_check.get("warnings") == []
+        and isinstance(target_audio, bool)
+        and observed_audio is target_audio
+    ):
+        return {**base, "accepted": True}
+    for policy in OUTPUT_ACCEPTANCE_POLICY_DOCUMENT["policies"]:
+        if policy["model_id"] != model_id or policy["adapter"] != adapter:
+            continue
+        if (
+            contract_check.get("conforms") is False
+            and failed_checks == policy["waived_warnings"]
+            and _warnings_are_exact_audio(contract_check)
+            and target_audio is policy["target_generate_audio"]
+            and observed_audio is policy["observed_has_audio"]
+        ):
+            return {
+                **base,
+                "accepted": True,
+                "mode": "route-exception",
+                "policy_id": policy["policy_id"],
+                "policy_sha256": OUTPUT_ACCEPTANCE_POLICY_SHA256,
+                "waived_warnings": list(policy["waived_warnings"]),
+            }
+    return base
+
+
+def validate_media_acceptance(
+    model_id: str,
+    media: dict[str, Any],
+    contract_check: dict[str, Any],
+    acceptance: Any,
+) -> bool:
+    """Validate an externally stored acceptance overlay by exact recomputation."""
+
+    return isinstance(acceptance, dict) and acceptance == media_acceptance(
+        model_id,
+        media,
+        contract_check,
+    )
 
 
 DEFAULT_SAMPLES = ROOT / "PROMOPAGES-9857/video-samples.json"
@@ -1877,6 +2040,13 @@ def write_aggregate_manifest(rows: list[dict[str, Any]], root: Path = ROOT) -> d
         run = read_json(run_path) if run_path.exists() else {"status": "missing"}
         status = run.get("status", "missing")
         counts[status] = counts.get(status, 0) + 1
+        media = run.get("media")
+        contract_check = run.get("contract_check")
+        acceptance = (
+            media_acceptance(row["prompt"]["model_id"], media, contract_check)
+            if isinstance(media, dict) and isinstance(contract_check, dict)
+            else None
+        )
         outputs.append(
             {
                 "sample_id": row["sample"]["sample_id"],
@@ -1887,8 +2057,9 @@ def write_aggregate_manifest(rows: list[dict[str, Any]], root: Path = ROOT) -> d
                 "prompt_path": relative(row["paths"]["prompt"], root),
                 "run_path": relative(run_path, root),
                 "video_path": relative(row["paths"]["video"], root),
-                "media": run.get("media"),
-                "contract_check": run.get("contract_check"),
+                "media": media,
+                "contract_check": contract_check,
+                "media_acceptance": acceptance,
                 "error": run.get("error"),
             }
         )
@@ -2181,7 +2352,6 @@ def verify_materialized(root: Path = ROOT, allow_incomplete: bool = False) -> tu
             if not allow_incomplete:
                 errors.append(f"Not succeeded ({run.get('status')}): {label}")
             continue
-        succeeded += 1
         expected_request = build_request_preview(row["sample"], row["prompt"])
         expected_request_sha256 = request_fingerprint(expected_request, row["sample"])
         if run.get("request") != expected_request:
@@ -2208,6 +2378,16 @@ def verify_materialized(root: Path = ROOT, allow_incomplete: bool = False) -> tu
         )
         if run.get("contract_check") != expected_contract:
             errors.append(f"Recorded contract check mismatch: {label}")
+        acceptance = media_acceptance(
+            row["prompt"]["model_id"],
+            media,
+            expected_contract,
+        )
+        if not acceptance["accepted"]:
+            warnings = expected_contract.get("warnings") or ["unknown contract failure"]
+            errors.append(f"Media contract failed ({', '.join(warnings)}): {label}")
+        elif run.get("contract_check") == expected_contract:
+            succeeded += 1
     if not allow_incomplete and succeeded != EXPECTED_RESULT_COUNT:
         errors.append(f"Expected {EXPECTED_RESULT_COUNT} succeeded outputs, got {succeeded}")
     return not errors, errors

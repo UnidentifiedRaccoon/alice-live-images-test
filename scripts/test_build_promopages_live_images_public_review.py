@@ -15,6 +15,27 @@ def _sha(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
+def _acceptance(
+    model_id: str,
+    media: dict[str, Any],
+    contract_check: dict[str, Any],
+    article: dict[str, Any],
+) -> dict[str, Any]:
+    entry = review.native.Entry(
+        review.native.Sample(
+            sample_id="public-review-fixture",
+            article_slug=article["article_slug"],
+            image_id=article["image_id"],
+            filename="fixture.png",
+            source_sha256=article["source_sha256"],
+            width=article["width"],
+            height=article["height"],
+        ),
+        model_id,
+    )
+    return review.native.media_acceptance(entry, media, contract_check)
+
+
 def _fixtures() -> tuple[dict[str, Any], dict[str, Any]]:
     articles: list[dict[str, Any]] = []
     outputs: list[dict[str, Any]] = []
@@ -60,6 +81,15 @@ def _fixtures() -> tuple[dict[str, Any], dict[str, Any]]:
                 "bytes": 1_000_000 + model_index,
                 "sha256": media_sha,
             }
+            contract_check = {
+                "requested": {"generate_audio": False},
+                "checks": {"audio": True},
+                "conforms": True,
+                "warnings": [],
+            }
+            media_acceptance = _acceptance(
+                model_id, media, contract_check, contract
+            )
             output = {
                 "article_number": contract["article_number"],
                 "article_slug": contract["article_slug"],
@@ -68,6 +98,7 @@ def _fixtures() -> tuple[dict[str, Any], dict[str, Any]]:
                 "media_id": contract["media_id"],
                 "model_id": model_id,
                 "status": "succeeded",
+                "recorded_status": "succeeded",
                 "selected_attempt_id": attempt_id,
                 "selected_prompt": copy.deepcopy(prompt),
                 "provider_run_id": provider_run_id,
@@ -76,24 +107,24 @@ def _fixtures() -> tuple[dict[str, Any], dict[str, Any]]:
                     f"{contract['article_slug']}/{model_id}/{contract['image_id']}.mp4"
                 ),
                 "media": media,
-                "contract_check": {
-                    "requested": {"generate_audio": False},
-                    "checks": {"audio": True},
-                    "conforms": True,
-                    "warnings": [],
-                },
+                "contract_check": contract_check,
+                "media_acceptance": media_acceptance,
                 "error": None,
                 "attempt_count": 1,
                 "attempts": [
                     {
                         "attempt_id": attempt_id,
                         "status": "succeeded",
+                        "recorded_status": "succeeded",
                         "prompt": copy.deepcopy(prompt),
                         "provider_run_id": provider_run_id,
                         "provider_response": {
                             "http_status": 200,
                             "request_id": f"request-{attempt_id}",
                         },
+                        "media": copy.deepcopy(media),
+                        "contract_check": copy.deepcopy(contract_check),
+                        "media_acceptance": copy.deepcopy(media_acceptance),
                         "error": None,
                     }
                 ],
@@ -111,10 +142,12 @@ def _fixtures() -> tuple[dict[str, Any], dict[str, Any]]:
                     "image_id": contract["image_id"],
                     "media_id": contract["media_id"],
                     "model_id": model_id,
+                    "recorded_status": "succeeded",
                     "selected_attempt_id": attempt_id,
                     "provider_run_id": provider_run_id,
                     "sha256": media_sha,
                     "bytes": media["bytes"],
+                    "media_acceptance": copy.deepcopy(media_acceptance),
                     "object_key": object_key,
                     "yastatic_url": review.PUBLIC_BASE_URL + object_key,
                 }
@@ -229,16 +262,22 @@ class PublicReviewBuilderTest(unittest.TestCase):
         target.update(
             {
                 "status": "unavailable",
+                "recorded_status": None,
                 "selected_attempt_id": None,
                 "selected_prompt": None,
                 "provider_run_id": None,
                 "video_path": None,
                 "media": None,
                 "contract_check": None,
+                "media_acceptance": None,
                 "error": "No technically valid MP4 after the final attempt",
             }
         )
         target["attempts"][0]["status"] = "verification-failed"
+        target["attempts"][0]["recorded_status"] = "verification-failed"
+        target["attempts"][0]["media"] = None
+        target["attempts"][0]["contract_check"] = None
+        target["attempts"][0]["media_acceptance"] = None
         target["attempts"][0]["error"] = "Media contract verification failed"
         delivery["outputs"] = [
             row
@@ -260,6 +299,8 @@ class PublicReviewBuilderTest(unittest.TestCase):
             "video_url",
             "media",
             "contract_check",
+            "media_acceptance",
+            "recorded_status",
         ):
             self.assertIsNone(output[field])
         self.assertTrue(output["error"])
@@ -278,6 +319,103 @@ class PublicReviewBuilderTest(unittest.TestCase):
             self.assertEqual(output["selected_prompt"]["negative"], "")
             self.assertEqual(output["attempts"][0]["prompt"]["negative"], "")
             self.assertIn("request_id", output["attempts"][0]["provider_response"])
+
+    def test_accepts_exact_wan_27_audio_exception_and_preserves_raw_audit(self) -> None:
+        final, delivery = _fixtures()
+        target = next(
+            output
+            for output in final["outputs"]
+            if output["article_slug"] == review.ARTICLE_CONTRACTS[1]["article_slug"]
+            and output["model_id"] == "alibaba/wan-2.7"
+        )
+        target["media"]["has_audio"] = True
+        target["contract_check"] = {
+            "requested": {"generate_audio": False},
+            "checks": {
+                "duration": True,
+                "audio": False,
+                "resolution": True,
+                "aspect_ratio": True,
+            },
+            "conforms": False,
+            "warnings": ["audio"],
+        }
+        contract = review.ARTICLE_CONTRACTS[1]
+        target["media_acceptance"] = _acceptance(
+            target["model_id"], target["media"], target["contract_check"], contract
+        )
+        target["recorded_status"] = "verification-failed"
+        attempt = target["attempts"][0]
+        attempt.update(
+            {
+                "status": "succeeded",
+                "recorded_status": "verification-failed",
+                "media": copy.deepcopy(target["media"]),
+                "contract_check": copy.deepcopy(target["contract_check"]),
+                "media_acceptance": copy.deepcopy(target["media_acceptance"]),
+                "error": "Media contract verification failed: audio",
+            }
+        )
+        delivered = next(
+            row
+            for row in delivery["outputs"]
+            if row["article_slug"] == target["article_slug"]
+            and row["model_id"] == target["model_id"]
+        )
+        delivered["recorded_status"] = "verification-failed"
+        delivered["media_acceptance"] = copy.deepcopy(target["media_acceptance"])
+
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest = self._build(Path(temporary), final, delivery)
+        public = manifest["articles"][1]["image"]["outputs"][1]
+        self.assertEqual(public["status"], "succeeded")
+        self.assertEqual(public["recorded_status"], "verification-failed")
+        self.assertFalse(public["contract_check"]["conforms"])
+        self.assertEqual(public["contract_check"]["warnings"], ["audio"])
+        self.assertEqual(public["media_acceptance"]["mode"], "route-exception")
+        self.assertEqual(public["attempts"][0]["recorded_status"], "verification-failed")
+
+    def test_rejects_wan_27_exception_that_waives_resolution(self) -> None:
+        final, delivery = _fixtures()
+        target = next(
+            output
+            for output in final["outputs"]
+            if output["article_slug"] == review.ARTICLE_CONTRACTS[1]["article_slug"]
+            and output["model_id"] == "alibaba/wan-2.7"
+        )
+        target["media"]["has_audio"] = True
+        audio_only_check = {
+            "requested": {"generate_audio": False},
+            "checks": {"audio": False, "resolution": True},
+            "conforms": False,
+            "warnings": ["audio"],
+        }
+        target["media_acceptance"] = _acceptance(
+            target["model_id"],
+            target["media"],
+            audio_only_check,
+            review.ARTICLE_CONTRACTS[1],
+        )
+        target["contract_check"] = {
+            **audio_only_check,
+            "checks": {"audio": False, "resolution": False},
+            "warnings": ["audio", "resolution"],
+        }
+        target["recorded_status"] = "verification-failed"
+        attempt = target["attempts"][0]
+        attempt.update(
+            {
+                "recorded_status": "verification-failed",
+                "media": copy.deepcopy(target["media"]),
+                "contract_check": copy.deepcopy(target["contract_check"]),
+                "media_acceptance": copy.deepcopy(target["media_acceptance"]),
+            }
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(
+                review.ReviewManifestError, "media acceptance is invalid"
+            ):
+                self._build(Path(temporary), final, delivery)
 
 
 if __name__ == "__main__":

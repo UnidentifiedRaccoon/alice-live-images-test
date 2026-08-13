@@ -716,6 +716,32 @@ def strict_media_contract(entry: Entry, media: dict[str, Any]) -> dict[str, Any]
     }
 
 
+def media_acceptance(
+    entry: Entry,
+    media: dict[str, Any],
+    contract_check: dict[str, Any],
+) -> dict[str, Any]:
+    """Apply the shared output policy without changing the strict receipt."""
+
+    return transport.media_acceptance(entry.model_id, media, contract_check)
+
+
+def validate_media_acceptance(
+    model_id: str,
+    media: dict[str, Any],
+    contract_check: dict[str, Any],
+    acceptance: Any,
+) -> bool:
+    """Validate a serialized acceptance overlay without constructing an Entry."""
+
+    return transport.validate_media_acceptance(
+        model_id,
+        media,
+        contract_check,
+        acceptance,
+    )
+
+
 def _persist_run(path: Path, run: dict[str, Any]) -> None:
     if isinstance(run.get("error"), str):
         run["error"] = transport.safe_error(run["error"])
@@ -1482,6 +1508,8 @@ def complete_media_is_accepted(
     contract_check: Any,
     *,
     allow_contract_warnings: bool,
+    entry: Entry | None = None,
+    media: dict[str, Any] | None = None,
 ) -> bool:
     """Accept only a conforming success or an explicitly allowed raw MP4.
 
@@ -1495,6 +1523,13 @@ def complete_media_is_accepted(
         return False
     conforms = contract_check.get("conforms")
     if status == "succeeded" and conforms is True:
+        return True
+    if (
+        status in {"succeeded", "verification-failed"}
+        and entry is not None
+        and isinstance(media, dict)
+        and media_acceptance(entry, media, contract_check)["accepted"] is True
+    ):
         return True
     return (
         allow_contract_warnings
@@ -1511,6 +1546,7 @@ def manifest_document(
     outputs: list[dict[str, Any]] = []
     summary: dict[str, int] = {}
     conforming = 0
+    accepted = 0
     for row in rows:
         paths = row["paths"]
         run = read_json(paths["run"]) if paths["run"].is_file() else {"status": "missing"}
@@ -1518,8 +1554,16 @@ def manifest_document(
         status = effective_run_status(run)
         summary[status] = summary.get(status, 0) + 1
         check = run.get("contract_check")
+        media = run.get("media")
+        acceptance = (
+            media_acceptance(row["entry"], media, check)
+            if isinstance(media, dict) and isinstance(check, dict)
+            else None
+        )
         if isinstance(check, dict) and check.get("conforms") is True:
             conforming += 1
+        if isinstance(acceptance, dict) and acceptance.get("accepted") is True:
+            accepted += 1
         outputs.append(
             {
                 "lite_run_id": row["entry"].planning_run_id,
@@ -1536,6 +1580,7 @@ def manifest_document(
                 "video_path": relative(paths["video"], root),
                 "media": run.get("media"),
                 "contract_check": check,
+                "media_acceptance": acceptance,
                 "error": (
                     run.get("error")
                     or (
@@ -1556,6 +1601,7 @@ def manifest_document(
         "expected_outputs": len(matrix()),
         "summary": summary,
         "conforming_outputs": conforming,
+        "accepted_outputs": accepted,
         "outputs": outputs,
     }
 
@@ -2006,6 +2052,8 @@ def verify(
             status,
             expected_contract,
             allow_contract_warnings=allow_contract_warnings,
+            entry=entry,
+            media=media,
         ):
             if recorded_media_matches and recorded_contract_matches:
                 accepted_complete += 1

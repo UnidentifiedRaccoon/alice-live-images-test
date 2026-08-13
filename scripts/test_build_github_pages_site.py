@@ -132,6 +132,7 @@ def _public_review_fixture():
                         {
                             "attempt_id": attempt_id,
                             "status": "succeeded",
+                            "recorded_status": "succeeded",
                             "prompt": prompt,
                             "provider_run_id": f"provider-{output_number}",
                             "error": None,
@@ -146,8 +147,20 @@ def _public_review_fixture():
                         "duration_seconds": (
                             4 if model_id == "google/veo-3.1-lite" else 5
                         ),
+                        "has_audio": False,
                     },
                     "contract_check": {"conforms": True, "warnings": []},
+                    "media_acceptance": {
+                        "accepted": True,
+                        "mode": "strict-contract",
+                        "policy_id": None,
+                        "policy_sha256": None,
+                        "model_id": model_id,
+                        "adapter": pages.PUBLIC_REVIEW_MODEL_ADAPTERS[model_id],
+                        "target_generate_audio": False,
+                        "observed_has_audio": False,
+                        "waived_warnings": [],
+                    },
                     "error": None,
                 }
             )
@@ -174,6 +187,16 @@ def _public_review_fixture():
                 },
             }
         )
+    for article in articles:
+        for output in article["image"]["outputs"]:
+            selected_attempt = output["attempts"][0]
+            selected_attempt["media"] = json.loads(json.dumps(output["media"]))
+            selected_attempt["contract_check"] = json.loads(
+                json.dumps(output["contract_check"])
+            )
+            selected_attempt["media_acceptance"] = json.loads(
+                json.dumps(output["media_acceptance"])
+            )
     return {
         "schema_version": 1,
         "manifest_role": pages.PUBLIC_REVIEW_ROLE,
@@ -189,6 +212,57 @@ def _public_review_fixture():
         "expected_outputs": 6,
         "articles": articles,
     }
+
+
+def _apply_public_review_wan_27_audio_exception(manifest, *, article_index=0):
+    output = manifest["articles"][article_index]["image"]["outputs"][1]
+    selected_attempt = next(
+        attempt
+        for attempt in output["attempts"]
+        if attempt["attempt_id"] == output["selected_attempt_id"]
+    )
+    selected_attempt.update(
+        {
+            "recorded_status": "verification-failed",
+            "error": "Media contract verification failed: audio",
+        }
+    )
+    output["media"]["has_audio"] = True
+    output["contract_check"] = {
+        "requested": {
+            "duration_seconds": 5,
+            "resolution": "1080p",
+            "aspect_ratio": "16:9",
+            "generate_audio": False,
+        },
+        "checks": {
+            "duration": True,
+            "audio": False,
+            "resolution": True,
+            "aspect_ratio": True,
+        },
+        "conforms": False,
+        "warnings": ["audio"],
+    }
+    output["media_acceptance"] = {
+        "accepted": True,
+        "mode": "route-exception",
+        "policy_id": pages.PUBLIC_REVIEW_WAN_27_AUDIO_POLICY_ID,
+        "policy_sha256": pages._public_review_output_acceptance_sha256(),
+        "model_id": "alibaba/wan-2.7",
+        "adapter": "eliza-openrouter",
+        "target_generate_audio": False,
+        "observed_has_audio": True,
+        "waived_warnings": ["audio"],
+    }
+    selected_attempt["media"] = json.loads(json.dumps(output["media"]))
+    selected_attempt["contract_check"] = json.loads(
+        json.dumps(output["contract_check"])
+    )
+    selected_attempt["media_acceptance"] = json.loads(
+        json.dumps(output["media_acceptance"])
+    )
+    return output
 
 
 def _provider_filtered_output(article_slug, image_id, model_id):
@@ -1431,13 +1505,51 @@ class GitHubPagesSiteTest(unittest.TestCase):
                 "video_url": None,
                 "media": None,
                 "contract_check": None,
+                "media_acceptance": None,
                 "error": "No technically valid MP4 after the final attempt",
             }
         )
         output["attempts"][0].update(
-            {"status": "provider-failed", "error": output["error"]}
+            {
+                "status": "provider-failed",
+                "recorded_status": "provider-failed",
+                "error": output["error"],
+            }
         )
         pages._validate_public_review_manifest(unavailable)
+
+    def test_public_review_accepts_only_exact_wan_27_audio_route_exception(self):
+        manifest = _public_review_fixture()
+        _apply_public_review_wan_27_audio_exception(manifest)
+        pages._validate_public_review_manifest(manifest)
+
+        mutations = {
+            "policy hash": lambda output: output["media_acceptance"].update(
+                {"policy_sha256": "f" * 64}
+            ),
+            "model": lambda output: output["media_acceptance"].update(
+                {"model_id": "google/veo-3.1-lite"}
+            ),
+            "warning": lambda output: output["contract_check"]["warnings"].append(
+                "resolution"
+            ),
+            "failed resolution": lambda output: output["contract_check"][
+                "checks"
+            ].update({"resolution": False}),
+            "raw status": lambda output: output["attempts"][0].update(
+                {"recorded_status": "succeeded"}
+            ),
+            "target audio": lambda output: output["media_acceptance"].update(
+                {"target_generate_audio": True}
+            ),
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(name=name):
+                candidate = _public_review_fixture()
+                output = _apply_public_review_wan_27_audio_exception(candidate)
+                mutate(output)
+                with self.assertRaisesRegex(ValueError, "exception|acceptance"):
+                    pages._validate_public_review_manifest(candidate)
 
     def test_public_review_manifest_drift_fails_closed(self):
         def mutate_batch(manifest):
