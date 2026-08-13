@@ -287,7 +287,7 @@ class LiveImagesPipelineTest(unittest.TestCase):
             self.assertEqual(selected["attempts"][0]["recorded_status"], "succeeded")
             self.assertEqual(sum(row["selected_attempt_id"] == "primary" for row in final["outputs"]), 5)
 
-    def test_operator_acceptance_is_exact_to_level_retry_media_and_contract(self) -> None:
+    def test_operator_acceptance_is_exact_to_level_primary_media_and_contract(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root, _sources = self.make_fixture(directory)
             self.write_operator_policy(root)
@@ -304,7 +304,7 @@ class LiveImagesPipelineTest(unittest.TestCase):
             self.assertEqual(acceptance["mode"], "operator-exception")
             self.assertEqual(acceptance["policy_sha256"], policy_sha)
             for field, changed in (
-                ("attempt_id", "primary"),
+                ("attempt_id", "retry-01"),
                 ("provider_run_id", "changed"),
                 ("publication_id", "0" * 24),
             ):

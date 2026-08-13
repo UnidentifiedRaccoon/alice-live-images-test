@@ -254,10 +254,10 @@ PUBLIC_REVIEW_OUTPUT_ACCEPTANCE_PATH = (
 )
 PUBLIC_REVIEW_WAN_27_AUDIO_POLICY_ID = "wan-2.7-openrouter-audio-v1"
 PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_ID = (
-    "level-image-04-wan-2.7-retry-01-native-size-v1"
+    "level-image-04-wan-2.7-primary-native-size-v2"
 )
 PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_SHA256 = (
-    "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e"
+    "a7d2420488117dcf99d3151b536bfbbcd3881fcf0e45f6f50508049c849177a8"
 )
 PUBLIC_REVIEW_ARTICLES = {
     "6a4f5fe924801975680d9be5": {
@@ -2708,9 +2708,9 @@ def _validate_public_review_media_acceptance(
             article_contract.get("brand") != "Level Group"
             or article_contract.get("image_id") != "04"
             or model_id != "alibaba/wan-2.7"
-            or output.get("selected_attempt_id") != "retry-01"
+            or output.get("selected_attempt_id") != "primary"
             or selected_attempt.get("provider_run_id")
-            != "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7"
+            != "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-7"
             or acceptance.get("policy_id")
             != PUBLIC_REVIEW_LEVEL_WAN_27_OPERATOR_POLICY_ID
             or acceptance.get("policy_sha256")
@@ -2719,8 +2719,8 @@ def _validate_public_review_media_acceptance(
             or acceptance.get("waived_warnings")
             != ["audio", "resolution", "aspect_ratio"]
             or media.get("sha256")
-            != "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
-            or media.get("bytes") != 21_070_882
+            != "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be"
+            or media.get("bytes") != 30_743_398
             or media.get("width") != 1972
             or media.get("height") != 1050
             or media.get("duration_seconds") != 5.0
