@@ -54,6 +54,7 @@
           {
             "model_id": "alibaba/wan-2.2",
             "status": "succeeded",
+            "recorded_status": "succeeded",
             "selected_attempt_id": "primary",
             "selected_prompt": {
               "positive": "Track gently to the right toward the central avenue at normal real-time speed as the foreground treetops shift left against the residential blocks. By the final frames, the source-grounded parallax clearly opens a little more of the central courtyard axis while the trees sway lightly in place.",
@@ -64,6 +65,7 @@
               {
                 "attempt_id": "primary",
                 "status": "succeeded",
+                "recorded_status": "succeeded",
                 "prompt": {
                   "positive": "Track gently to the right toward the central avenue at normal real-time speed as the foreground treetops shift left against the residential blocks. By the final frames, the source-grounded parallax clearly opens a little more of the central courtyard axis while the trees sway lightly in place.",
                   "negative": ""
@@ -75,6 +77,49 @@
                   "request_id": "41ec6dbb8ae258aeb7e51c4ffad690f0",
                   "response_cost": "0.18",
                   "automatic_retry": false
+                },
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 5.0,
+                  "width": 1312,
+                  "height": 688,
+                  "fps": 30.0,
+                  "frames": 150,
+                  "has_audio": false,
+                  "bytes": 20815538,
+                  "sha256": "622a02c9867b3634985b1b046cf89172dacd08f0a432d31d6d5b367c72f69086"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 5,
+                    "resolution": "720p",
+                    "aspect_ratio": "source",
+                    "generate_audio": false,
+                    "frames": 150,
+                    "fps": 30
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": true,
+                    "frames": true,
+                    "fps": true,
+                    "resolution": true,
+                    "aspect_ratio": true
+                  },
+                  "conforms": true,
+                  "warnings": []
+                },
+                "media_acceptance": {
+                  "accepted": true,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
+                  "model_id": "alibaba/wan-2.2",
+                  "adapter": "eliza-segmind",
+                  "target_generate_audio": false,
+                  "observed_has_audio": false,
+                  "waived_warnings": []
                 },
                 "error": null
               }
@@ -112,6 +157,17 @@
               "conforms": true,
               "warnings": []
             },
+            "media_acceptance": {
+              "accepted": true,
+              "mode": "strict-contract",
+              "policy_id": null,
+              "policy_sha256": null,
+              "model_id": "alibaba/wan-2.2",
+              "adapter": "eliza-segmind",
+              "target_generate_audio": false,
+              "observed_has_audio": false,
+              "waived_warnings": []
+            },
             "error": null
           },
           {
@@ -124,34 +180,129 @@
               {
                 "attempt_id": "primary",
                 "status": "verification-failed",
+                "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "Glide steadily right toward the central residential avenue at normal real-time speed, producing gentle parallax between the foreground trees, the flanking buildings, and the distant district. End with a slightly clearer view along the existing courtyard axis as the visible foliage softly sways in place.",
                   "negative": ""
                 },
                 "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-7",
                 "provider_response": null,
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 5.0,
+                  "width": 1972,
+                  "height": 1050,
+                  "fps": 30.0,
+                  "frames": 150,
+                  "has_audio": true,
+                  "bytes": 30743398,
+                  "sha256": "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 5,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": false,
+                    "frames": null,
+                    "fps": null
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": false,
+                    "resolution": false,
+                    "aspect_ratio": false
+                  },
+                  "conforms": false,
+                  "warnings": [
+                    "audio",
+                    "resolution",
+                    "aspect_ratio"
+                  ]
+                },
+                "media_acceptance": {
+                  "accepted": false,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
+                  "model_id": "alibaba/wan-2.7",
+                  "adapter": "eliza-openrouter",
+                  "target_generate_audio": false,
+                  "observed_has_audio": true,
+                  "waived_warnings": []
+                },
                 "error": "Media contract verification failed: audio, resolution, aspect_ratio"
               },
               {
                 "attempt_id": "retry-01",
                 "status": "verification-failed",
+                "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
                   "negative": ""
                 },
                 "provider_run_id": "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7",
                 "provider_response": null,
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 5.0,
+                  "width": 1972,
+                  "height": 1050,
+                  "fps": 30.0,
+                  "frames": 150,
+                  "has_audio": true,
+                  "bytes": 21070882,
+                  "sha256": "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 5,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": false,
+                    "frames": null,
+                    "fps": null
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": false,
+                    "resolution": false,
+                    "aspect_ratio": false
+                  },
+                  "conforms": false,
+                  "warnings": [
+                    "audio",
+                    "resolution",
+                    "aspect_ratio"
+                  ]
+                },
+                "media_acceptance": {
+                  "accepted": false,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
+                  "model_id": "alibaba/wan-2.7",
+                  "adapter": "eliza-openrouter",
+                  "target_generate_audio": false,
+                  "observed_has_audio": true,
+                  "waived_warnings": []
+                },
                 "error": "Media contract verification failed: audio, resolution, aspect_ratio"
               }
             ],
             "video_url": null,
             "media": null,
             "contract_check": null,
+            "media_acceptance": null,
+            "recorded_status": null,
             "error": "Media contract verification failed: audio, resolution, aspect_ratio"
           },
           {
             "model_id": "google/veo-3.1-lite",
             "status": "succeeded",
+            "recorded_status": "succeeded",
             "selected_attempt_id": "primary",
             "selected_prompt": {
               "positive": "Move the camera continuously to the right toward the central avenue at normal real-time speed, with clear restrained parallax as the foreground canopy slides left relative to the buildings. Finish with more of the existing central courtyard axis visibly opened while the trees gently sway in place.",
@@ -162,12 +313,54 @@
               {
                 "attempt_id": "primary",
                 "status": "succeeded",
+                "recorded_status": "succeeded",
                 "prompt": {
                   "positive": "Move the camera continuously to the right toward the central avenue at normal real-time speed, with clear restrained parallax as the foreground canopy slides left relative to the buildings. Finish with more of the existing central courtyard axis visibly opened while the trees gently sway in place.",
                   "negative": ""
                 },
                 "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-veo-3-1-lite",
                 "provider_response": null,
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 4.0,
+                  "width": 1920,
+                  "height": 1080,
+                  "fps": 24.0,
+                  "frames": 96,
+                  "has_audio": false,
+                  "bytes": 15846920,
+                  "sha256": "d33c3dd465d63bb12a9e1568b01569c7e04ff4d1bb0e05faa9b84aaa448fa0cb"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 4,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": false,
+                    "frames": null,
+                    "fps": null
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": true,
+                    "resolution": true,
+                    "aspect_ratio": true
+                  },
+                  "conforms": true,
+                  "warnings": []
+                },
+                "media_acceptance": {
+                  "accepted": true,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
+                  "model_id": "google/veo-3.1-lite",
+                  "adapter": "eliza-openrouter",
+                  "target_generate_audio": false,
+                  "observed_has_audio": false,
+                  "waived_warnings": []
+                },
                 "error": null
               }
             ],
@@ -201,6 +394,17 @@
               },
               "conforms": true,
               "warnings": []
+            },
+            "media_acceptance": {
+              "accepted": true,
+              "mode": "strict-contract",
+              "policy_id": null,
+              "policy_sha256": null,
+              "model_id": "google/veo-3.1-lite",
+              "adapter": "eliza-openrouter",
+              "target_generate_audio": false,
+              "observed_has_audio": false,
+              "waived_warnings": []
             },
             "error": null
           }
@@ -245,6 +449,7 @@
           {
             "model_id": "alibaba/wan-2.2",
             "status": "succeeded",
+            "recorded_status": "succeeded",
             "selected_attempt_id": "primary",
             "selected_prompt": {
               "positive": "The couple walks forward together at a relaxed, even pace, with gentle natural body sway and the ice-cream cones held upright in their hands. By the final frames they have moved visibly closer while still smiling at each other.",
@@ -255,6 +460,7 @@
               {
                 "attempt_id": "primary",
                 "status": "succeeded",
+                "recorded_status": "succeeded",
                 "prompt": {
                   "positive": "The couple walks forward together at a relaxed, even pace, with gentle natural body sway and the ice-cream cones held upright in their hands. By the final frames they have moved visibly closer while still smiling at each other.",
                   "negative": ""
@@ -266,6 +472,49 @@
                   "request_id": "774b63f4440e0bf317eac5abf05f4c5c",
                   "response_cost": "0.18",
                   "automatic_retry": false
+                },
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 5.0,
+                  "width": 1280,
+                  "height": 720,
+                  "fps": 30.0,
+                  "frames": 150,
+                  "has_audio": false,
+                  "bytes": 11801384,
+                  "sha256": "cbd4d8754361d39b37422dfd8cc1baf2ac41de22ca42fbdc3544fff778bfb2bf"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 5,
+                    "resolution": "720p",
+                    "aspect_ratio": "source",
+                    "generate_audio": false,
+                    "frames": 150,
+                    "fps": 30
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": true,
+                    "frames": true,
+                    "fps": true,
+                    "resolution": true,
+                    "aspect_ratio": true
+                  },
+                  "conforms": true,
+                  "warnings": []
+                },
+                "media_acceptance": {
+                  "accepted": true,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
+                  "model_id": "alibaba/wan-2.2",
+                  "adapter": "eliza-segmind",
+                  "target_generate_audio": false,
+                  "observed_has_audio": false,
+                  "waived_warnings": []
                 },
                 "error": null
               }
@@ -303,46 +552,197 @@
               "conforms": true,
               "warnings": []
             },
+            "media_acceptance": {
+              "accepted": true,
+              "mode": "strict-contract",
+              "policy_id": null,
+              "policy_sha256": null,
+              "model_id": "alibaba/wan-2.2",
+              "adapter": "eliza-segmind",
+              "target_generate_audio": false,
+              "observed_has_audio": false,
+              "waived_warnings": []
+            },
             "error": null
           },
           {
             "model_id": "alibaba/wan-2.7",
-            "status": "unavailable",
-            "selected_attempt_id": null,
-            "selected_prompt": null,
+            "status": "succeeded",
+            "recorded_status": "verification-failed",
+            "selected_attempt_id": "primary",
+            "selected_prompt": {
+              "positive": "The couple continues strolling toward the camera in one smooth, relaxed motion, keeping both ice-cream cones upright. They end a little closer together and nearer the viewer, still smiling at each other.",
+              "negative": ""
+            },
             "attempt_count": 2,
             "attempts": [
               {
                 "attempt_id": "primary",
-                "status": "verification-failed",
+                "status": "succeeded",
+                "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "The couple continues strolling toward the camera in one smooth, relaxed motion, keeping both ice-cream cones upright. They end a little closer together and nearer the viewer, still smiling at each other.",
                   "negative": ""
                 },
                 "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-7",
                 "provider_response": null,
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 5.0,
+                  "width": 1920,
+                  "height": 1080,
+                  "fps": 30.0,
+                  "frames": 150,
+                  "has_audio": true,
+                  "bytes": 12659844,
+                  "sha256": "bc02f8355bd387e03fa4cc31fbd60b70e2ae313ba7366b342dfd2951f33b87be"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 5,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": false,
+                    "frames": null,
+                    "fps": null
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": false,
+                    "resolution": true,
+                    "aspect_ratio": true
+                  },
+                  "conforms": false,
+                  "warnings": [
+                    "audio"
+                  ]
+                },
+                "media_acceptance": {
+                  "accepted": true,
+                  "mode": "route-exception",
+                  "policy_id": "wan-2.7-openrouter-audio-v1",
+                  "policy_sha256": "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce",
+                  "model_id": "alibaba/wan-2.7",
+                  "adapter": "eliza-openrouter",
+                  "target_generate_audio": false,
+                  "observed_has_audio": true,
+                  "waived_warnings": [
+                    "audio"
+                  ]
+                },
                 "error": "Media contract verification failed: audio"
               },
               {
                 "attempt_id": "retry-02",
-                "status": "verification-failed",
+                "status": "succeeded",
+                "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "The couple continue strolling forward side by side in a smooth natural rhythm, keeping their smiles and eye contact while the cones remain upright in their hands. They finish several steps farther along, still walking together with the same relaxed mood.",
                   "negative": ""
                 },
                 "provider_run_id": "promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01-wan-2-7",
                 "provider_response": null,
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 5.0,
+                  "width": 1920,
+                  "height": 1080,
+                  "fps": 30.0,
+                  "frames": 150,
+                  "has_audio": true,
+                  "bytes": 9680295,
+                  "sha256": "d9061944628be5b1b8ab5a2779c2ffacbad8c1eb4240a75c90a188da1283a452"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 5,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": false,
+                    "frames": null,
+                    "fps": null
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": false,
+                    "resolution": true,
+                    "aspect_ratio": true
+                  },
+                  "conforms": false,
+                  "warnings": [
+                    "audio"
+                  ]
+                },
+                "media_acceptance": {
+                  "accepted": true,
+                  "mode": "route-exception",
+                  "policy_id": "wan-2.7-openrouter-audio-v1",
+                  "policy_sha256": "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce",
+                  "model_id": "alibaba/wan-2.7",
+                  "adapter": "eliza-openrouter",
+                  "target_generate_audio": false,
+                  "observed_has_audio": true,
+                  "waived_warnings": [
+                    "audio"
+                  ]
+                },
                 "error": "Media contract verification failed: audio"
               }
             ],
-            "video_url": null,
-            "media": null,
-            "contract_check": null,
-            "error": "Media contract verification failed: audio"
+            "video_url": "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/banki-ru__5b0fb7c448c85e2421e049ab/6a4f5fe924801975680d9be5/wan_2_7/image_01--sha256-bc02f8355bd3.mp4",
+            "media": {
+              "container": "mov,mp4,m4a,3gp,3g2,mj2",
+              "codec": "h264",
+              "duration_seconds": 5.0,
+              "width": 1920,
+              "height": 1080,
+              "fps": 30.0,
+              "frames": 150,
+              "has_audio": true,
+              "bytes": 12659844,
+              "sha256": "bc02f8355bd387e03fa4cc31fbd60b70e2ae313ba7366b342dfd2951f33b87be"
+            },
+            "contract_check": {
+              "requested": {
+                "duration_seconds": 5,
+                "resolution": "1080p",
+                "aspect_ratio": "16:9",
+                "generate_audio": false,
+                "frames": null,
+                "fps": null
+              },
+              "checks": {
+                "duration": true,
+                "audio": false,
+                "resolution": true,
+                "aspect_ratio": true
+              },
+              "conforms": false,
+              "warnings": [
+                "audio"
+              ]
+            },
+            "media_acceptance": {
+              "accepted": true,
+              "mode": "route-exception",
+              "policy_id": "wan-2.7-openrouter-audio-v1",
+              "policy_sha256": "13c954c8304f3b5e9eea8c34a892b59a04db9fa118b8de70553b41ece03f56ce",
+              "model_id": "alibaba/wan-2.7",
+              "adapter": "eliza-openrouter",
+              "target_generate_audio": false,
+              "observed_has_audio": true,
+              "waived_warnings": [
+                "audio"
+              ]
+            },
+            "error": null
           },
           {
             "model_id": "google/veo-3.1-lite",
             "status": "succeeded",
+            "recorded_status": "succeeded",
             "selected_attempt_id": "primary",
             "selected_prompt": {
               "positive": "Track backward smoothly as the couple walks forward together at a natural pace, their hair and clothing moving gently while each cone stays upright. By the end they have advanced visibly through the plaza and remain smiling at each other.",
@@ -353,12 +753,54 @@
               {
                 "attempt_id": "primary",
                 "status": "succeeded",
+                "recorded_status": "succeeded",
                 "prompt": {
                   "positive": "Track backward smoothly as the couple walks forward together at a natural pace, their hair and clothing moving gently while each cone stays upright. By the end they have advanced visibly through the plaza and remain smiling at each other.",
                   "negative": ""
                 },
                 "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
                 "provider_response": null,
+                "media": {
+                  "container": "mov,mp4,m4a,3gp,3g2,mj2",
+                  "codec": "h264",
+                  "duration_seconds": 4.0,
+                  "width": 1920,
+                  "height": 1080,
+                  "fps": 24.0,
+                  "frames": 96,
+                  "has_audio": false,
+                  "bytes": 11279591,
+                  "sha256": "d52dcc5e34968a63a5f13d208f21d288e32cb231bf40c997653c2cde6ec23ca9"
+                },
+                "contract_check": {
+                  "requested": {
+                    "duration_seconds": 4,
+                    "resolution": "1080p",
+                    "aspect_ratio": "16:9",
+                    "generate_audio": false,
+                    "frames": null,
+                    "fps": null
+                  },
+                  "checks": {
+                    "duration": true,
+                    "audio": true,
+                    "resolution": true,
+                    "aspect_ratio": true
+                  },
+                  "conforms": true,
+                  "warnings": []
+                },
+                "media_acceptance": {
+                  "accepted": true,
+                  "mode": "strict-contract",
+                  "policy_id": null,
+                  "policy_sha256": null,
+                  "model_id": "google/veo-3.1-lite",
+                  "adapter": "eliza-openrouter",
+                  "target_generate_audio": false,
+                  "observed_has_audio": false,
+                  "waived_warnings": []
+                },
                 "error": null
               }
             ],
@@ -392,6 +834,17 @@
               },
               "conforms": true,
               "warnings": []
+            },
+            "media_acceptance": {
+              "accepted": true,
+              "mode": "strict-contract",
+              "policy_id": null,
+              "policy_sha256": null,
+              "model_id": "google/veo-3.1-lite",
+              "adapter": "eliza-openrouter",
+              "target_generate_audio": false,
+              "observed_has_audio": false,
+              "waived_warnings": []
             },
             "error": null
           }
