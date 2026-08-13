@@ -28,6 +28,7 @@ if str(ROOT) not in sys.path:
 
 from scripts import clipmaker_lite_runner as runner  # noqa: E402
 from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
+from scripts import clipmaker_lite_promopages_live_images_pipeline as task  # noqa: E402
 
 
 BATCH_ID = "promopages-live-images-20260813-v1"
@@ -187,7 +188,7 @@ def _normalize_prompt(value: Any, *, label: str) -> dict[str, str]:
 
 
 def _normalize_attempt(
-    value: Any, *, label: str, model_id: str
+    value: Any, *, label: str, model_id: str, root: Path
 ) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ReviewManifestError(f"{label} attempt must be an object")
@@ -217,8 +218,25 @@ def _normalize_attempt(
     if media is not None:
         media = _validate_media(media, label=label)
         contract_check = _validate_contract_check(contract_check, label=label)
-        if not native.validate_media_acceptance(
-            model_id, media, contract_check, media_acceptance
+        acceptance_row = {
+            **value,
+            "model_id": model_id,
+            "article_slug": label.split("/", 1)[0],
+        }
+        acceptance_contract = next(
+            item
+            for item in ARTICLE_CONTRACTS
+            if item["article_slug"] == acceptance_row["article_slug"]
+        )
+        acceptance_row.update(
+            {
+                "publication_id": acceptance_contract["publication_id"],
+                "image_id": acceptance_contract["image_id"],
+                "media_id": acceptance_contract["media_id"],
+            }
+        )
+        if not task.validate_task_media_acceptance(
+            root, acceptance_row, media, contract_check, media_acceptance
         ):
             raise ReviewManifestError(f"{label} media acceptance is invalid")
         if media_acceptance["accepted"] is True:
@@ -440,7 +458,7 @@ def _verify_provenance(
 
 
 def _validate_attempts(
-    raw: Mapping[str, Any], *, label: str, model_id: str
+    raw: Mapping[str, Any], *, label: str, model_id: str, root: Path
 ) -> list[dict[str, Any]]:
     attempt_count = raw.get("attempt_count")
     attempts = raw.get("attempts")
@@ -452,7 +470,7 @@ def _validate_attempts(
         raise ReviewManifestError(f"{label} attempt count differs")
     normalized = [
         _normalize_attempt(
-            attempt, label=f"{label}/{index + 1}", model_id=model_id
+            attempt, label=f"{label}/{index + 1}", model_id=model_id, root=root
         )
         for index, attempt in enumerate(attempts)
     ]
@@ -493,9 +511,10 @@ def _public_output(
     contract: Mapping[str, Any],
     *,
     model_id: str,
+    root: Path,
 ) -> dict[str, Any]:
     label = f"{contract['article_slug']}/{contract['image_id']}/{model_id}"
-    attempts = _validate_attempts(raw, label=label, model_id=model_id)
+    attempts = _validate_attempts(raw, label=label, model_id=model_id, root=root)
     status = raw.get("status")
     if status == "unavailable":
         if (
@@ -554,8 +573,8 @@ def _public_output(
     contract_check = _validate_contract_check(raw.get("contract_check"), label=label)
     media_acceptance = raw.get("media_acceptance")
     if (
-        not native.validate_media_acceptance(
-            model_id, media, contract_check, media_acceptance
+        not task.validate_task_media_acceptance(
+            root, raw, media, contract_check, media_acceptance
         )
         or selected["media"] != media
         or selected["contract_check"] != contract_check
@@ -645,7 +664,7 @@ def build_manifest(
             selected = output_index[key]
             delivered = delivery_index.get(key)
             public_output = _public_output(
-                selected, delivered, contract, model_id=model_id
+                selected, delivered, contract, model_id=model_id, root=root
             )
             if public_output["status"] == "succeeded":
                 successful_keys.add(key)

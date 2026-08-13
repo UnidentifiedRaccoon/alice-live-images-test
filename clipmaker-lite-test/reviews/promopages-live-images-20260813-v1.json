@@ -172,9 +172,13 @@
           },
           {
             "model_id": "alibaba/wan-2.7",
-            "status": "unavailable",
-            "selected_attempt_id": null,
-            "selected_prompt": null,
+            "status": "succeeded",
+            "recorded_status": "verification-failed",
+            "selected_attempt_id": "retry-01",
+            "selected_prompt": {
+              "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
+              "negative": ""
+            },
             "attempt_count": 2,
             "attempts": [
               {
@@ -236,7 +240,7 @@
               },
               {
                 "attempt_id": "retry-01",
-                "status": "verification-failed",
+                "status": "succeeded",
                 "recorded_status": "verification-failed",
                 "prompt": {
                   "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
@@ -279,25 +283,74 @@
                   ]
                 },
                 "media_acceptance": {
-                  "accepted": false,
-                  "mode": "strict-contract",
-                  "policy_id": null,
-                  "policy_sha256": null,
+                  "accepted": true,
+                  "mode": "operator-exception",
+                  "policy_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
+                  "policy_sha256": "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e",
                   "model_id": "alibaba/wan-2.7",
                   "adapter": "eliza-openrouter",
                   "target_generate_audio": false,
                   "observed_has_audio": true,
-                  "waived_warnings": []
+                  "waived_warnings": [
+                    "audio",
+                    "resolution",
+                    "aspect_ratio"
+                  ]
                 },
                 "error": "Media contract verification failed: audio, resolution, aspect_ratio"
               }
             ],
-            "video_url": null,
-            "media": null,
-            "contract_check": null,
-            "media_acceptance": null,
-            "recorded_status": null,
-            "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+            "video_url": "https://yastatic.net/s3/promopages-front-bundles/front-images/exp_video/level-group__69ee06293ba10e0ae4b765d1/6a048ddca495b52c9d873940/wan_2_7/image_04--sha256-7eba763b0f8c.mp4",
+            "media": {
+              "container": "mov,mp4,m4a,3gp,3g2,mj2",
+              "codec": "h264",
+              "duration_seconds": 5.0,
+              "width": 1972,
+              "height": 1050,
+              "fps": 30.0,
+              "frames": 150,
+              "has_audio": true,
+              "bytes": 21070882,
+              "sha256": "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+            },
+            "contract_check": {
+              "requested": {
+                "duration_seconds": 5,
+                "resolution": "1080p",
+                "aspect_ratio": "16:9",
+                "generate_audio": false,
+                "frames": null,
+                "fps": null
+              },
+              "checks": {
+                "duration": true,
+                "audio": false,
+                "resolution": false,
+                "aspect_ratio": false
+              },
+              "conforms": false,
+              "warnings": [
+                "audio",
+                "resolution",
+                "aspect_ratio"
+              ]
+            },
+            "media_acceptance": {
+              "accepted": true,
+              "mode": "operator-exception",
+              "policy_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
+              "policy_sha256": "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e",
+              "model_id": "alibaba/wan-2.7",
+              "adapter": "eliza-openrouter",
+              "target_generate_audio": false,
+              "observed_has_audio": true,
+              "waived_warnings": [
+                "audio",
+                "resolution",
+                "aspect_ratio"
+              ]
+            },
+            "error": null
           },
           {
             "model_id": "google/veo-3.1-lite",

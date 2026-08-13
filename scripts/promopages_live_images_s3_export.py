@@ -31,6 +31,7 @@ if str(ROOT) not in sys.path:
 
 from scripts import promopages_10060_s3_export as transport  # noqa: E402
 from scripts import clipmaker_lite_batch_pipeline as native  # noqa: E402
+from scripts import clipmaker_lite_promopages_live_images_pipeline as task  # noqa: E402
 
 
 BATCH_ID = "promopages-live-images-20260813-v1"
@@ -207,11 +208,8 @@ def _validate_final_manifest(value: Mapping[str, Any]) -> list[dict[str, Any]]:
                 or not isinstance(row.get("media"), dict)
                 or not isinstance(row.get("contract_check"), dict)
                 or not isinstance(row.get("media_acceptance"), dict)
-                or not native.validate_media_acceptance(
-                    row["model_id"],
-                    row["media"],
-                    row["contract_check"],
-                    row["media_acceptance"],
+                or not task.validate_task_media_acceptance(
+                    ROOT, row, row["media"], row["contract_check"], row["media_acceptance"]
                 )
                 or row.get("selected_attempt_id") is None
                 or row.get("error") is not None
@@ -469,11 +467,8 @@ def verify_export(output_dir: Path) -> dict[str, Any]:
         if row.get("package_status") != "ready":
             raise ExportError("Unsupported package output status")
         ready_count += 1
-        if not native.validate_media_acceptance(
-            str(row.get("model_id")),
-            row.get("media"),
-            row.get("contract_check"),
-            row.get("media_acceptance"),
+        if not task.validate_task_media_acceptance(
+            ROOT, row, row.get("media"), row.get("contract_check"), row.get("media_acceptance")
         ):
             raise ExportError("Ready package output has invalid media acceptance")
         relative = _safe_relative(str(row.get("relative_path")))

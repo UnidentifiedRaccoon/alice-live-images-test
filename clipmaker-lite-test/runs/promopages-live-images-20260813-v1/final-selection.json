@@ -40,7 +40,9 @@
       "response_cost": "0.18"
     }
   ],
-  "requested_retry_selections": [],
+  "requested_retry_selections": [
+    "retry-01"
+  ],
   "articles": [
     {
       "article_number": "01",
@@ -212,16 +214,65 @@
       "image_id": "04",
       "media_id": "6a049156a495b52c9d87cb75",
       "model_id": "alibaba/wan-2.7",
-      "status": "unavailable",
-      "recorded_status": null,
-      "selected_attempt_id": null,
-      "selected_prompt": null,
-      "provider_run_id": null,
-      "video_path": null,
-      "media": null,
-      "contract_check": null,
-      "media_acceptance": null,
-      "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+      "status": "succeeded",
+      "recorded_status": "verification-failed",
+      "selected_attempt_id": "retry-01",
+      "selected_prompt": {
+        "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
+        "negative": null
+      },
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-01/videos/wan-2.7/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1972,
+        "height": 1050,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": true,
+        "bytes": 21070882,
+        "sha256": "7eba763b0f8c47061ca0cf389f3be28bf53d1b23726506e00e55f30182fb9d09"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": false,
+          "resolution": false,
+          "aspect_ratio": false
+        },
+        "conforms": false,
+        "warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "media_acceptance": {
+        "accepted": true,
+        "mode": "operator-exception",
+        "policy_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
+        "policy_sha256": "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e",
+        "model_id": "alibaba/wan-2.7",
+        "adapter": "eliza-openrouter",
+        "target_generate_audio": false,
+        "observed_has_audio": true,
+        "waived_warnings": [
+          "audio",
+          "resolution",
+          "aspect_ratio"
+        ]
+      },
+      "error": null,
       "attempt_count": 2,
       "attempts": [
         {
@@ -283,7 +334,7 @@
         },
         {
           "attempt_id": "retry-01",
-          "status": "verification-failed",
+          "status": "succeeded",
           "recorded_status": "verification-failed",
           "prompt": {
             "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
@@ -326,15 +377,19 @@
             ]
           },
           "media_acceptance": {
-            "accepted": false,
-            "mode": "strict-contract",
-            "policy_id": null,
-            "policy_sha256": null,
+            "accepted": true,
+            "mode": "operator-exception",
+            "policy_id": "level-image-04-wan-2.7-retry-01-native-size-v1",
+            "policy_sha256": "28dfdfd647146a4e6b93e509c2ad34a7cd86c9f7b2ab374e702e311c217e349e",
             "model_id": "alibaba/wan-2.7",
             "adapter": "eliza-openrouter",
             "target_generate_audio": false,
             "observed_has_audio": true,
-            "waived_warnings": []
+            "waived_warnings": [
+              "audio",
+              "resolution",
+              "aspect_ratio"
+            ]
           },
           "error": "Media contract verification failed: audio, resolution, aspect_ratio"
         }
