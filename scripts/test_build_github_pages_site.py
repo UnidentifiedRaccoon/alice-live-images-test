@@ -62,6 +62,135 @@ NORMALIZED_URL = (
 )
 
 
+def _public_review_fixture():
+    articles = []
+    output_number = 0
+    article_specs = (
+        {
+            "publication_id": "6a4f5fe924801975680d9be5",
+            "brand": "Банки.ру",
+            "title": "В каких банках можно выгодно купить доллар?",
+            "article_url": (
+                "https://banki.promo.page/save/"
+                "v-kakih-bankah-mojno-vygodno-kupit-dollar-"
+                "6a4f5fe924801975680d9be5_0_0"
+            ),
+            "image_id": "01",
+            "media_id": "6a4f718952e3ce75a3110deb",
+            "width": 2000,
+            "height": 1125,
+            "caption": "",
+            "source_url": pages.PUBLIC_REVIEW_ARTICLES[
+                "6a4f5fe924801975680d9be5"
+            ]["source_url"],
+            "cabinet_path": "banki-ru__5b0fb7c448c85e2421e049ab",
+        },
+        {
+            "publication_id": "6a048ddca495b52c9d873940",
+            "brand": "Level Group",
+            "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+            "article_url": (
+                "https://level-group.promo.page/media/"
+                "brat-ipoteku-v-ii-polovine-2026-goda-otvechaiut-eksperty-"
+                "6a048ddca495b52c9d873940_0_0"
+            ),
+            "image_id": "04",
+            "media_id": "6a049156a495b52c9d87cb75",
+            "width": 1920,
+            "height": 1023,
+            "caption": "Покупатели выбирают квартиру в офисе продаж Level Group",
+            "source_url": pages.PUBLIC_REVIEW_ARTICLES[
+                "6a048ddca495b52c9d873940"
+            ]["source_url"],
+            "cabinet_path": "level-group__69ee06293ba10e0ae4b765d1",
+        },
+    )
+    for spec in article_specs:
+        outputs = []
+        for model_id in pages.PUBLIC_REVIEW_MODELS:
+            output_number += 1
+            sha256 = format(output_number, "x") * 64
+            attempt_id = f"attempt-{output_number}"
+            prompt = {
+                "positive": f"Subtle stable editorial motion for {spec['media_id']}.",
+                "negative": "No morphing, no camera shake, no text changes.",
+            }
+            video_url = (
+                f"{pages.PUBLIC_REVIEW_S3_BASE_URL}front-images/exp_video/"
+                f"{spec['cabinet_path']}/{spec['publication_id']}/"
+                f"{pages.PUBLIC_REVIEW_MODEL_DIRECTORIES[model_id]}/"
+                f"image_{spec['image_id']}--sha256-{sha256[:12]}.mp4"
+            )
+            outputs.append(
+                {
+                    "model_id": model_id,
+                    "status": "succeeded",
+                    "selected_attempt_id": attempt_id,
+                    "selected_prompt": prompt,
+                    "attempt_count": 1,
+                    "attempts": [
+                        {
+                            "attempt_id": attempt_id,
+                            "status": "succeeded",
+                            "prompt": prompt,
+                            "provider_run_id": f"provider-{output_number}",
+                            "error": None,
+                        }
+                    ],
+                    "video_url": video_url,
+                    "media": {
+                        "sha256": sha256,
+                        "bytes": 1_000_000 + output_number,
+                        "width": 1280 if model_id == "alibaba/wan-2.2" else 1920,
+                        "height": 720 if model_id == "alibaba/wan-2.2" else 1080,
+                        "duration_seconds": (
+                            4 if model_id == "google/veo-3.1-lite" else 5
+                        ),
+                    },
+                    "contract_check": {"conforms": True, "warnings": []},
+                    "error": None,
+                }
+            )
+        articles.append(
+            {
+                "publication_id": spec["publication_id"],
+                "brand": spec["brand"],
+                "title": spec["title"],
+                "article_url": spec["article_url"],
+                "image": {
+                    "image_id": spec["image_id"],
+                    "media_id": spec["media_id"],
+                    "width": spec["width"],
+                    "height": spec["height"],
+                    "caption": spec["caption"],
+                    "source_url": spec["source_url"],
+                    "provenance": {
+                        "verified": True,
+                        "agent_id": "clipmaker-lite",
+                        "contract_version": pages.PUBLIC_REVIEW_CONTRACT_VERSION,
+                        "runner_version": pages.PUBLIC_REVIEW_RUNNER_VERSION,
+                    },
+                    "outputs": outputs,
+                },
+            }
+        )
+    return {
+        "schema_version": 1,
+        "manifest_role": pages.PUBLIC_REVIEW_ROLE,
+        "batch_id": pages.PUBLIC_REVIEW_BATCH_ID,
+        "producer": {
+            "agent_id": "clipmaker-lite",
+            "contract_version": pages.PUBLIC_REVIEW_CONTRACT_VERSION,
+            "runner_version": pages.PUBLIC_REVIEW_RUNNER_VERSION,
+        },
+        "models": list(pages.PUBLIC_REVIEW_MODELS),
+        "article_count": 2,
+        "image_count": 2,
+        "expected_outputs": 6,
+        "articles": articles,
+    }
+
+
 def _provider_filtered_output(article_slug, image_id, model_id):
     request_sha = "1" * 64
     namespace = (
@@ -1288,6 +1417,92 @@ def _write_promopages_collection_fixture(root, *, include_campaign_extension):
 
 
 class GitHubPagesSiteTest(unittest.TestCase):
+    def test_public_review_manifest_validates_exact_sources_models_and_s3_urls(self):
+        manifest = _public_review_fixture()
+        pages._validate_public_review_manifest(manifest)
+
+        unavailable = json.loads(json.dumps(manifest))
+        output = unavailable["articles"][0]["image"]["outputs"][1]
+        output.update(
+            {
+                "status": "unavailable",
+                "selected_attempt_id": None,
+                "selected_prompt": None,
+                "video_url": None,
+                "media": None,
+                "contract_check": None,
+                "error": "No technically valid MP4 after the final attempt",
+            }
+        )
+        output["attempts"][0].update(
+            {"status": "provider-failed", "error": output["error"]}
+        )
+        pages._validate_public_review_manifest(unavailable)
+
+    def test_public_review_manifest_drift_fails_closed(self):
+        def mutate_batch(manifest):
+            manifest["batch_id"] = "wrong-batch"
+
+        def mutate_source(manifest):
+            manifest["articles"][0]["image"]["source_url"] += "?changed=1"
+
+        def mutate_provenance(manifest):
+            manifest["articles"][1]["image"]["provenance"]["verified"] = False
+
+        def mutate_model_order(manifest):
+            manifest["articles"][0]["image"]["outputs"].reverse()
+
+        def mutate_s3_route(manifest):
+            output = manifest["articles"][0]["image"]["outputs"][0]
+            output["video_url"] = output["video_url"].replace(
+                "wan_2_2", "wan_2_7"
+            )
+
+        def mutate_hash(manifest):
+            manifest["articles"][1]["image"]["outputs"][2]["media"][
+                "sha256"
+            ] = "f" * 64
+
+        mutations = {
+            "batch": mutate_batch,
+            "source": mutate_source,
+            "provenance": mutate_provenance,
+            "model order": mutate_model_order,
+            "S3 route": mutate_s3_route,
+            "media hash": mutate_hash,
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(name=name):
+                manifest = json.loads(json.dumps(_public_review_fixture()))
+                mutate(manifest)
+                with self.assertRaises(ValueError):
+                    pages._validate_public_review_manifest(manifest)
+
+    def test_public_review_manifest_is_published_when_present(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            manifest_path = root / pages.PUBLIC_REVIEW_RELATIVE_PATH
+            manifest_path.parent.mkdir(parents=True)
+            manifest_path.write_text(
+                json.dumps(_public_review_fixture(), ensure_ascii=False),
+                encoding="utf-8",
+            )
+            relative_paths = set()
+            pages._collect_public_review_manifest_path(root, relative_paths)
+            self.assertEqual(relative_paths, {pages.PUBLIC_REVIEW_RELATIVE_PATH})
+
+    def test_public_review_manifest_is_optional_until_generation_finishes(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            relative_paths = set()
+            pages._collect_public_review_manifest_path(
+                Path(temporary_directory), relative_paths
+            )
+            self.assertEqual(relative_paths, set())
+
+    def test_generation_review_static_files_are_in_pages_payload(self):
+        self.assertIn("generation-review/index.html", pages.STATIC_FILES)
+        self.assertIn("generation-review/app.js", pages.STATIC_FILES)
+
     def test_s3_delivery_overlay_matches_all_available_canonical_outputs(self):
         source_manifests = [
             json.loads(PROMOPAGES_10060_MANIFEST_PATH.read_text(encoding="utf-8")),
@@ -2026,15 +2241,18 @@ class GitHubPagesSiteTest(unittest.TestCase):
 
         self.assertEqual(
             len(paths),
-            253
+            255
             + int(PROMOPAGES_10060_ARTICLE_02_PATH.is_file())
             + int(PROMOPAGES_10060_EXTENSION_PATH.is_file())
-            + int(PROMOPAGES_10060_CAMPAIGN_20260807_PATH.is_file()),
+            + int(PROMOPAGES_10060_CAMPAIGN_20260807_PATH.is_file())
+            + int((ROOT / pages.PUBLIC_REVIEW_RELATIVE_PATH).is_file()),
         )
         self.assertGreater(total_bytes, 900_000_000)
         self.assertLessEqual(total_bytes, pages.MAX_SITE_BYTES)
         self.assertIn(Path("clipmaker-lite/index.html"), paths)
         self.assertIn(Path("ab-preparation/index.html"), paths)
+        self.assertIn(Path("generation-review/index.html"), paths)
+        self.assertIn(Path("generation-review/app.js"), paths)
         self.assertIn(Path("clipmaker-lite-test/manifest.json"), paths)
         self.assertIn(
             Path("clipmaker-lite-test/promopages-9930-manifest.json"), paths

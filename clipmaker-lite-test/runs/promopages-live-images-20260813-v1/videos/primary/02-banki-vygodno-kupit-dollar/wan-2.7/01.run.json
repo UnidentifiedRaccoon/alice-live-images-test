@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "sample_id": "02-banki-vygodno-kupit-dollar-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/02-banki-vygodno-kupit-dollar/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/02-banki-vygodno-kupit-dollar/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The couple continues strolling toward the camera in one smooth, relaxed motion, keeping both ice-cream cones upright. They end a little closer together and nearer the viewer, still smiling at each other.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "3bea523a09e9822abcb8f406be72126653674338e7c0fca6080fd755c97d677b",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "hKdipiiLVvxcMFom1Ce1",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-13T12:51:47Z",
+  "completed_at": "2026-08-13T12:53:40Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 12659844,
+    "sha256": "bc02f8355bd387e03fa4cc31fbd60b70e2ae313ba7366b342dfd2951f33b87be"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-live-images-20260813-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-7",
+  "lite_result_sha256": "cc596dd31767ad9a6828af6e51a5d7ef8eecf0d2a34fc42b780ba797c875bbd5",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

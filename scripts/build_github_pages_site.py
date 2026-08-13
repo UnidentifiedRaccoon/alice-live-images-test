@@ -224,6 +224,55 @@ PROMOPAGES_10060_EXTENSION_NORMALIZED_SUPERSEDED_RUN_ID = (
 )
 MAX_PROVIDER_SOURCE_BYTES = 20 * 1024 * 1024
 
+PUBLIC_REVIEW_RELATIVE_PATH = Path(
+    "clipmaker-lite-test/reviews/promopages-live-images-20260813-v1.json"
+)
+PUBLIC_REVIEW_BATCH_ID = "promopages-live-images-20260813-v1"
+PUBLIC_REVIEW_ROLE = "clipmaker-lite-public-review"
+PUBLIC_REVIEW_CONTRACT_VERSION = "2.1.4"
+PUBLIC_REVIEW_RUNNER_VERSION = 8
+PUBLIC_REVIEW_S3_BASE_URL = (
+    "https://yastatic.net/s3/promopages-front-bundles/"
+)
+PUBLIC_REVIEW_MODELS = (
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite",
+)
+PUBLIC_REVIEW_MODEL_DIRECTORIES = {
+    "alibaba/wan-2.2": "wan_2_2",
+    "alibaba/wan-2.7": "wan_2_7",
+    "google/veo-3.1-lite": "veo_3_1",
+}
+PUBLIC_REVIEW_ARTICLES = {
+    "6a4f5fe924801975680d9be5": {
+        "brand": "Банки.ру",
+        "title": "В каких банках можно выгодно купить доллар?",
+        "image_id": "01",
+        "media_id": "6a4f718952e3ce75a3110deb",
+        "width": 2000,
+        "height": 1125,
+        "source_url": (
+            "https://avatars.mds.yandex.net/get-promoarticles/5126709/"
+            "pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig"
+        ),
+        "cabinet_path": "banki-ru__5b0fb7c448c85e2421e049ab",
+    },
+    "6a048ddca495b52c9d873940": {
+        "brand": "Level Group",
+        "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+        "image_id": "04",
+        "media_id": "6a049156a495b52c9d87cb75",
+        "width": 1920,
+        "height": 1023,
+        "source_url": (
+            "https://avatars.mds.yandex.net/get-promoarticles/6165752/"
+            "pub_6a048ddca495b52c9d873940_6a049156a495b52c9d87cb75/orig"
+        ),
+        "cabinet_path": "level-group__69ee06293ba10e0ae4b765d1",
+    },
+}
+
 STATIC_FILES = (
     ".nojekyll",
     "index.html",
@@ -248,6 +297,8 @@ STATIC_FILES = (
     "clipmaker-lite/styles.css",
     "clipmaker-lite/app.js",
     "ab-preparation/index.html",
+    "generation-review/index.html",
+    "generation-review/app.js",
     "clipmaker-lite-test/manifest.json",
     "clipmaker-lite-test/promopages-9930-manifest.json",
     "clipmaker-lite-test/case-21-manifest.json",
@@ -2549,9 +2600,222 @@ def _collect_promopages_10060_extension_paths(
         )
 
 
+def _is_non_empty_string(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _is_positive_int(value: Any) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool) and value > 0
+
+
+def _is_positive_number(value: Any) -> bool:
+    return (
+        isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and value > 0
+    )
+
+
+def _validate_public_review_prompt(value: Any, *, label: str) -> None:
+    if (
+        not isinstance(value, dict)
+        or not _is_non_empty_string(value.get("positive"))
+        or not isinstance(value.get("negative"), str)
+    ):
+        raise ValueError(f"{label} prompt is invalid")
+
+
+def _validate_public_review_output(
+    article: dict[str, Any],
+    article_contract: dict[str, Any],
+    output: Any,
+    *,
+    model_id: str,
+) -> None:
+    label = (
+        "Clipmaker Lite public review/"
+        f"{article['publication_id']}/{article_contract['image_id']}/{model_id}"
+    )
+    if (
+        not isinstance(output, dict)
+        or output.get("model_id") != model_id
+        or output.get("status") not in {"succeeded", "unavailable"}
+        or not _is_positive_int(output.get("attempt_count"))
+        or not isinstance(output.get("attempts"), list)
+        or len(output["attempts"]) != output["attempt_count"]
+    ):
+        raise ValueError(f"{label} output identity or attempts are invalid")
+
+    attempt_ids: set[str] = set()
+    attempts_by_id: dict[str, dict[str, Any]] = {}
+    for attempt in output["attempts"]:
+        if (
+            not isinstance(attempt, dict)
+            or not _is_non_empty_string(attempt.get("attempt_id"))
+            or attempt["attempt_id"] in attempt_ids
+            or not _is_non_empty_string(attempt.get("status"))
+            or attempt.get("provider_run_id") is not None
+            and not _is_non_empty_string(attempt.get("provider_run_id"))
+            or attempt.get("error") is not None
+            and not _is_non_empty_string(attempt.get("error"))
+        ):
+            raise ValueError(f"{label} attempt audit is invalid")
+        _validate_public_review_prompt(
+            attempt.get("prompt"), label=f"{label}/{attempt['attempt_id']}"
+        )
+        attempt_ids.add(attempt["attempt_id"])
+        attempts_by_id[attempt["attempt_id"]] = attempt
+
+    if output["status"] == "unavailable":
+        if (
+            output.get("selected_attempt_id") is not None
+            or output.get("selected_prompt") is not None
+            or output.get("video_url") is not None
+            or output.get("media") is not None
+            or output.get("contract_check") is not None
+            or not _is_non_empty_string(output.get("error"))
+            or any(attempt.get("status") == "succeeded" for attempt in output["attempts"])
+        ):
+            raise ValueError(f"{label} unavailable output contains selected media")
+        return
+
+    selected_attempt_id = output.get("selected_attempt_id")
+    selected_attempt = attempts_by_id.get(selected_attempt_id)
+    if selected_attempt is None or selected_attempt.get("status") != "succeeded":
+        raise ValueError(f"{label} selected attempt is not a succeeded audit record")
+    _validate_public_review_prompt(
+        output.get("selected_prompt"), label=f"{label}/selected"
+    )
+    if output["selected_prompt"] != selected_attempt.get("prompt"):
+        raise ValueError(f"{label} selected prompt differs from its attempt")
+
+    media = output.get("media")
+    contract_check = output.get("contract_check")
+    if (
+        not isinstance(media, dict)
+        or not _is_sha256(media.get("sha256"))
+        or not _is_positive_int(media.get("bytes"))
+        or not _is_positive_int(media.get("width"))
+        or not _is_positive_int(media.get("height"))
+        or not _is_positive_number(media.get("duration_seconds"))
+        or not isinstance(contract_check, dict)
+        or contract_check.get("conforms") is not True
+        or not isinstance(contract_check.get("warnings"), list)
+        or output.get("error") is not None
+    ):
+        raise ValueError(f"{label} selected media or contract check is invalid")
+
+    expected_video_url = (
+        f"{PUBLIC_REVIEW_S3_BASE_URL}front-images/exp_video/"
+        f"{article_contract['cabinet_path']}/{article['publication_id']}/"
+        f"{PUBLIC_REVIEW_MODEL_DIRECTORIES[model_id]}/"
+        f"image_{article_contract['image_id']}--sha256-"
+        f"{media['sha256'][:12]}.mp4"
+    )
+    if output.get("video_url") != expected_video_url:
+        raise ValueError(
+            f"{label} yastatic URL differs from its S3 route or media hash"
+        )
+
+
+def _validate_public_review_manifest(manifest: Any) -> None:
+    """Validate the isolated two-image review payload before Pages publishing."""
+
+    label = "Clipmaker Lite public review manifest"
+    producer = manifest.get("producer") if isinstance(manifest, dict) else None
+    if (
+        not isinstance(manifest, dict)
+        or manifest.get("schema_version") != 1
+        or manifest.get("manifest_role") != PUBLIC_REVIEW_ROLE
+        or manifest.get("batch_id") != PUBLIC_REVIEW_BATCH_ID
+        or not isinstance(producer, dict)
+        or producer.get("agent_id") != "clipmaker-lite"
+        or producer.get("contract_version") != PUBLIC_REVIEW_CONTRACT_VERSION
+        or producer.get("runner_version") != PUBLIC_REVIEW_RUNNER_VERSION
+        or manifest.get("models") != list(PUBLIC_REVIEW_MODELS)
+        or manifest.get("article_count") != 2
+        or manifest.get("image_count") != 2
+        or manifest.get("expected_outputs") != 6
+        or not isinstance(manifest.get("articles"), list)
+        or len(manifest["articles"]) != 2
+    ):
+        raise ValueError(f"{label} identity or declared counts are invalid")
+
+    seen_publication_ids: set[str] = set()
+    output_count = 0
+    for article in manifest["articles"]:
+        publication_id = (
+            article.get("publication_id") if isinstance(article, dict) else None
+        )
+        article_contract = PUBLIC_REVIEW_ARTICLES.get(publication_id)
+        image = article.get("image") if isinstance(article, dict) else None
+        if (
+            article_contract is None
+            or publication_id in seen_publication_ids
+            or article.get("brand") != article_contract["brand"]
+            or article.get("title") != article_contract["title"]
+            or not _is_non_empty_string(article.get("article_url"))
+            or not article["article_url"].startswith("https://")
+            or publication_id not in article["article_url"]
+            or not isinstance(image, dict)
+            or image.get("image_id") != article_contract["image_id"]
+            or image.get("media_id") != article_contract["media_id"]
+            or image.get("width") != article_contract["width"]
+            or image.get("height") != article_contract["height"]
+            or image.get("source_url") != article_contract["source_url"]
+            or not isinstance(image.get("caption"), str)
+        ):
+            raise ValueError(f"{label} article or frozen source binding is invalid")
+        seen_publication_ids.add(publication_id)
+
+        provenance = image.get("provenance")
+        outputs = image.get("outputs")
+        if (
+            not isinstance(provenance, dict)
+            or provenance.get("verified") is not True
+            or provenance.get("agent_id") != "clipmaker-lite"
+            or provenance.get("contract_version")
+            != PUBLIC_REVIEW_CONTRACT_VERSION
+            or provenance.get("runner_version") != PUBLIC_REVIEW_RUNNER_VERSION
+            or not isinstance(outputs, list)
+            or len(outputs) != len(PUBLIC_REVIEW_MODELS)
+        ):
+            raise ValueError(f"{label} Lite provenance or output inventory is invalid")
+        for index, model_id in enumerate(PUBLIC_REVIEW_MODELS):
+            _validate_public_review_output(
+                article,
+                article_contract,
+                outputs[index],
+                model_id=model_id,
+            )
+        output_count += len(outputs)
+
+    if (
+        seen_publication_ids != set(PUBLIC_REVIEW_ARTICLES)
+        or output_count != manifest["expected_outputs"]
+    ):
+        raise ValueError(f"{label} publication or output set is incomplete")
+
+
+def _collect_public_review_manifest_path(
+    root: Path, relative_paths: set[Path]
+) -> None:
+    """Publish the compact review manifest when the generation run produced it."""
+
+    manifest_path = root / PUBLIC_REVIEW_RELATIVE_PATH
+    if not manifest_path.is_file():
+        return
+    if manifest_path.is_symlink():
+        raise ValueError("Clipmaker Lite public review manifest must be a regular file")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    _validate_public_review_manifest(manifest)
+    relative_paths.add(PUBLIC_REVIEW_RELATIVE_PATH)
+
+
 def collect_site_paths(root: Path = ROOT) -> tuple[Path, ...]:
     root = root.resolve()
     relative_paths = {_safe_relative_path(path) for path in STATIC_FILES}
+    _collect_public_review_manifest_path(root, relative_paths)
 
     for tree in STATIC_TREES:
         relative_paths.update(_tree_files(root, tree))

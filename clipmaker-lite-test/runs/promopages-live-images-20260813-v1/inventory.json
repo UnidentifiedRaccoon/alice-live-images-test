@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "manifest_role": "promopages-live-images-frozen-generation-inventory",
+  "dataset_prefix": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1",
+  "agent_id": "clipmaker-lite",
+  "article_config": {
+    "path": "PROMOPAGES-live-images-20260813-v1/articles.json",
+    "sha256": "9473da317749d6267f3d7c7bb21ee5e9c2c2dacb58f9f053bc1f5b042ec3539f"
+  },
+  "source_manifest": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/manifest.csv",
+    "sha256": "ebb17fe12d9112d7ec989c9d5cd6462951e93d82659fd2bcbb2787e1a2b4c65e"
+  },
+  "contract": {
+    "path": "docs/agents/clipmaker-lite/contract.json",
+    "sha256": "95fdca872771e9f861ed6ce48dc257dec109f2a3c5ec1d0bd71adcc7b10e8ff9",
+    "contract_version": "2.1.4",
+    "runner_version": 8
+  },
+  "generation_routes": {
+    "path": "docs/agents/clipmaker-lite/generation-routes.json",
+    "sha256": "05d2870675b88d2b2f506298f1e2f39d79d0a64c94ff3d02b927a668ca97de1b",
+    "policy": {
+      "resolution": "exact-model-id",
+      "automatic_fallback": false,
+      "normal_run_discovery": false,
+      "forbidden_discovery_paths": [
+        "/videos/models",
+        "/gradio_api/info",
+        "/config"
+      ]
+    },
+    "models": {
+      "alibaba/wan-2.2": {
+        "adapter": "eliza-segmind",
+        "transport": "eliza-synchronous-binary",
+        "capacity": 1
+      },
+      "alibaba/wan-2.7": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      },
+      "google/veo-3.1-lite": {
+        "adapter": "eliza-openrouter",
+        "transport": "eliza-video-jobs",
+        "capacity": 3
+      }
+    }
+  },
+  "models": [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 2,
+  "image_count": 2,
+  "expected_outputs": 6,
+  "selection_rule": "exclude all covers; exclude Level body graphs 02 and 03; select Level body image 04 and the sole Банки.ру body image 01",
+  "generation_policy": {
+    "independent_route_pools": true,
+    "route_capacities": {
+      "alibaba/wan-2.2": 1,
+      "alibaba/wan-2.7": 3,
+      "google/veo-3.1-lite": 3
+    },
+    "exact_model_routes_only": true,
+    "route_discovery": false,
+    "automatic_fallback": false,
+    "automatic_paid_retry": false,
+    "aggregate_manifest_writer": "coordinator-only"
+  },
+  "cost": {
+    "hard_budget_cap_usd": 5.0,
+    "accounting_cost_per_submit_usd": 0.35,
+    "primary_reservations": 6,
+    "maximum_new_prompt_attempts": 8,
+    "retry_reservations": 0,
+    "total_reservations": 6,
+    "maximum_total_reservations": 14,
+    "estimated_reserved_cost_usd": 2.1,
+    "maximum_estimated_cost_usd": 4.9,
+    "headroom_usd": 2.9
+  },
+  "articles": [
+    {
+      "article_number": "01",
+      "article_slug": "01-level-ipoteka-2026",
+      "brand": "Level Group",
+      "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+      "url": "https://level-group.promo.page/media/brat-ipoteku-v-ii-polovine-2026-goda-otvechaiut-eksperty-6a048ddca495b52c9d873940_0_0",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-live-images-20260813-v1/articles/01-level-ipoteka-2026/content.json",
+        "sha256": "b831d2af33df468d7e98c4b1142842b6676e099e23aa94c1bb9fa5feb3e5199f"
+      },
+      "image": {
+        "image_id": "04",
+        "media_id": "6a049156a495b52c9d87cb75",
+        "role": "article_image",
+        "file": "04.jpeg",
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/01-level-ipoteka-2026/04.jpeg",
+        "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a048ddca495b52c9d873940_6a049156a495b52c9d87cb75/orig",
+        "sha256": "e65e115579ed3143be9ee01f93bcb4f3cf68bf48ed58be9834c84babd98fcd49",
+        "width": 1920,
+        "height": 1023,
+        "caption": "Ещё Банк России обсуждает возможность предоставлять льготную ипотеку только по месту регистрации родителей. В таком случае не получится купить квартиру в нужном городе без регистрации"
+      },
+      "planning_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04"
+    },
+    {
+      "article_number": "02",
+      "article_slug": "02-banki-vygodno-kupit-dollar",
+      "brand": "Банки.ру",
+      "title": "В каких банках можно выгодно купить доллар?",
+      "url": "https://banki.promo.page/save/v-kakih-bankah-mojno-vygodno-kupit-dollar-6a4f5fe924801975680d9be5_0_0",
+      "publication_id": "6a4f5fe924801975680d9be5",
+      "context": {
+        "path": "PROMOPAGES-9884/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/content.json",
+        "sha256": "aae809117e895bdb149a270a3ec0de70ce41a7989ef4b3756d8e721027e076ab"
+      },
+      "image": {
+        "image_id": "01",
+        "media_id": "6a4f718952e3ce75a3110deb",
+        "role": "article_image",
+        "file": "01.jpeg",
+        "source_path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+        "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig",
+        "sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+        "width": 2000,
+        "height": 1125,
+        "caption": ""
+      },
+      "planning_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01"
+    }
+  ]
+}

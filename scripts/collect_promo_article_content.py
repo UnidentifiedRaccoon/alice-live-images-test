@@ -388,20 +388,22 @@ def _cover_rows(
     publication: dict[str, Any],
 ) -> list[dict[str, str]]:
     covers = [row for row in rows if row["block_index"] == ""]
-    if not covers:
-        raise ValueError("manifest has no cover image")
-
     head_image = publication.get("headImage") or {}
     if not isinstance(head_image, dict):
         raise ValueError("publication.headImage must be an object")
+    design = head_image.get("design")
+    cover_disabled = isinstance(design, dict) and design.get("id") == "0"
     source_ids: list[str] = []
-    for field in ("imageDesktop", "imageMobile"):
-        image = head_image.get(field) or {}
-        if not isinstance(image, dict):
-            raise ValueError(f"publication.headImage.{field} must be an object")
-        image_id = image.get("id")
-        if image_id and image_id not in source_ids:
-            source_ids.append(_required_string(image_id, f"headImage.{field}.id"))
+    if not cover_disabled:
+        for field in ("imageDesktop", "imageMobile"):
+            image = head_image.get(field) or {}
+            if not isinstance(image, dict):
+                raise ValueError(f"publication.headImage.{field} must be an object")
+            image_id = image.get("id")
+            if image_id and image_id not in source_ids:
+                source_ids.append(
+                    _required_string(image_id, f"headImage.{field}.id")
+                )
 
     manifest_ids = [row["image_id"] for row in covers]
     if manifest_ids != source_ids:
@@ -409,6 +411,12 @@ def _cover_rows(
             "cover images differ between page and manifest: "
             f"page={source_ids}, manifest={manifest_ids}"
         )
+
+    # PromoPages publications may intentionally have no cover.  Accept that
+    # state only when both sources agree; a cover present on just one side is
+    # rejected by the equality check above.
+    if not covers:
+        return []
 
     expected_roles = ["cover"] + ["cover_mobile"] * max(0, len(covers) - 1)
     actual_roles = [row["image_role"] for row in covers]

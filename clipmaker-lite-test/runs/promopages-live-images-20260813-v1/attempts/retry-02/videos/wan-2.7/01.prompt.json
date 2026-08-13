@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1-retry-02",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+    "sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+    "width": 2000,
+    "height": 1125
+  },
+  "structured_intent": {
+    "editorial_meaning": "Лёгкая совместная прогулка передаёт уверенность и позитивное ощущение простого выбора подходящего предложения по обмену валюты.",
+    "initial_state": "Улыбающаяся пара находится рядом в процессе прогулки, смотрит друг на друга и держит перед собой по рожку мороженого.",
+    "primary_action": "Пара продолжает вместе идти вперёд спокойными естественными шагами.",
+    "terminal_state": "К последнему кадру оба продвинулись вперёд на несколько естественных шагов, по-прежнему идут рядом, улыбаются и смотрят друг на друга.",
+    "geometry_invariant": "Каждый рожок мороженого остаётся вертикально удерживаемым в руке своего владельца.",
+    "semantic_invariant": "Тёплое, уверенное и непринуждённое настроение пары сохраняется до последнего кадра."
+  },
+  "prompt": {
+    "positive": "The couple continue strolling forward side by side in a smooth natural rhythm, keeping their smiles and eye contact while the cones remain upright in their hands. They finish several steps farther along, still walking together with the same relaxed mood.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01/result.json",
+    "sha256": "31c01e9912d7a3e44a0c263ae2e68dc19ccd75f334c638bdad4f2c739cdf8645",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.4",
+      "contract_fingerprint": "sha256:44b6acdb9707feaec6cd6acef22a295182454d3efd6d87fa4fe70dbd08337769",
+      "instruction_bundle_sha256": "9e99869be3cfb7af99ac94559315cd66c339b4cc42238829781963ca17ecfce8",
+      "source_image_sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+      "article_context_sha256": "aae809117e895bdb149a270a3ec0de70ce41a7989ef4b3756d8e721027e076ab",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f0f4" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <meta
+      name="description"
+      content="Публичное сравнение новых генераций Clipmaker Lite для двух публикаций."
+    />
+    <title>Alice Live · Новые генерации Clipmaker Lite</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../shared.css?v=12" />
+    <link rel="stylesheet" href="../clipmaker-lite/styles.css?v=13" />
+  </head>
+  <body>
+    <a class="skipLink" href="#caseTitle">К выбранной публикации</a>
+
+    <header class="siteHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../index.html" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+        <a class="controlButton" href="../ab-preparation/">
+          Подготовка к A/B
+        </a>
+      </div>
+    </header>
+
+    <main class="liteApp" id="mainContent">
+      <header class="liteHero">
+        <div class="liteHeroCopy">
+          <p class="eyebrow">Clipmaker Lite · Новые генерации</p>
+          <h1>Проверка перед&nbsp;A/B.</h1>
+          <p class="liteHeroDescription">
+            Изолированное сравнение исходных изображений и результатов трёх
+            моделей. Для каждой модели доступны выбранный промпт, технические
+            параметры и история попыток.
+          </p>
+          <p class="datasetSourceStatus" id="datasetSourceStatus" aria-live="polite">
+            Проверяем публичный манифест…
+          </p>
+        </div>
+
+        <dl class="datasetSummary" aria-label="Состав выборки">
+          <div>
+            <dt>Публикации</dt>
+            <dd id="articleCountSummary">—</dd>
+          </div>
+          <div>
+            <dt>Изображения</dt>
+            <dd id="imageCountSummary">—</dd>
+          </div>
+          <div>
+            <dt>Модели</dt>
+            <dd id="modelCountSummary">—</dd>
+          </div>
+        </dl>
+      </header>
+
+      <section class="caseNavigator" aria-label="Выбор публикации">
+        <div class="navigatorCopy">
+          <p class="caseFolio">
+            Публикация <span id="currentNumber">—</span><span aria-hidden="true"> / </span
+            ><span class="visuallyHidden">из</span><span id="totalNumber">—</span>
+          </p>
+          <h2 id="caseTitle" tabindex="-1">Подготавливаем сравнение…</h2>
+          <p class="caseDatasetMeta" id="caseDatasetMeta">
+            Источник и изображение уточняются…
+          </p>
+        </div>
+
+        <div class="navigatorControls">
+          <button class="controlButton" id="previousCase" type="button" disabled>
+            ← Назад
+          </button>
+          <label class="caseSelectLabel" for="caseSelect">
+            <span class="visuallyHidden">Выберите публикацию</span>
+            <select id="caseSelect" disabled>
+              <option>Загрузка…</option>
+            </select>
+          </label>
+          <button class="controlButton strong" id="nextCase" type="button" disabled>
+            Дальше →
+          </button>
+        </div>
+
+        <p class="navigatorStatus" id="navigatorStatus" role="status" aria-live="polite">
+          Загружаем проверенные данные…
+        </p>
+      </section>
+
+      <section class="datasetError" id="datasetError" role="alert" hidden>
+        <h2>Манифест новых генераций не загрузился</h2>
+        <p id="datasetErrorText">Обновите страницу или проверьте параметры ссылки.</p>
+      </section>
+
+      <section
+        class="caseViewport"
+        id="caseViewport"
+        aria-labelledby="caseTitle"
+        aria-busy="true"
+      >
+        <p class="loadingState">Проверяем контракты и готовим сравнение…</p>
+      </section>
+    </main>
+
+    <script src="app.js?v=1" defer></script>
+  </body>
+</html>
