@@ -384,7 +384,9 @@ def image_occurrences(page_data: dict[str, Any]) -> list[dict[str, Any]]:
     head_image = publication.get("headImage") or {}
     desktop = head_image.get("imageDesktop") or {}
     mobile = head_image.get("imageMobile") or {}
-    if desktop.get("id"):
+    design = head_image.get("design") or {}
+    cover_disabled = isinstance(design, dict) and design.get("id") == "0"
+    if not cover_disabled and desktop.get("id"):
         occurrences.append(
             {
                 "image_id": desktop["id"],
@@ -393,7 +395,11 @@ def image_occurrences(page_data: dict[str, Any]) -> list[dict[str, Any]]:
                 "gallery_index": "",
             }
         )
-    if mobile.get("id") and mobile.get("id") != desktop.get("id"):
+    if (
+        not cover_disabled
+        and mobile.get("id")
+        and mobile.get("id") != desktop.get("id")
+    ):
         occurrences.append(
             {
                 "image_id": mobile["id"],

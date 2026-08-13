@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1-retry-01",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7",
+  "model_id": "alibaba/wan-2.7",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/01-level-ipoteka-2026/04.jpeg",
+    "sha256": "e65e115579ed3143be9ee01f93bcb4f3cf68bf48ed58be9834c84babd98fcd49",
+    "width": 1920,
+    "height": 1023
+  },
+  "structured_intent": {
+    "editorial_meaning": "Подчеркнуть современный жилой комплекс как реальный объект ипотечного выбора, доступность которого может зависеть от правил льготной программы и региона покупки.",
+    "initial_state": "С высокой точки наблюдения видны неподвижные жилые корпуса и дворы, расположенные несколькими планами за лесным передним планом.",
+    "primary_action": "Точка наблюдения непрерывно приближается к центральной группе жилых корпусов, проявляя параллакс между видимыми планами.",
+    "terminal_state": "Центральные корпуса и ось дворов видны немного ближе и яснее, а разделение переднего, среднего и дальнего планов становится более заметным.",
+    "geometry_invariant": "Ближайшие башни, центральные дворы и дальние жилые корпуса сохраняют исходное взаимное расположение в единой планировке квартала.",
+    "semantic_invariant": "Жилой комплекс до последнего кадра остаётся узнаваемым современным объектом потенциальной покупки, без изменения его места или характера."
+  },
+  "prompt": {
+    "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "atlas-cloud",
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04/result.json",
+    "sha256": "b4e94560d94d169450c7936ef039dec860d969a1128fb9b99235ecaad6814b3a",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.4",
+      "contract_fingerprint": "sha256:44b6acdb9707feaec6cd6acef22a295182454d3efd6d87fa4fe70dbd08337769",
+      "instruction_bundle_sha256": "9e99869be3cfb7af99ac94559315cd66c339b4cc42238829781963ca17ecfce8",
+      "source_image_sha256": "e65e115579ed3143be9ee01f93bcb4f3cf68bf48ed58be9834c84babd98fcd49",
+      "article_context_sha256": "b831d2af33df468d7e98c4b1142842b6676e099e23aa94c1bb9fa5feb3e5199f",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

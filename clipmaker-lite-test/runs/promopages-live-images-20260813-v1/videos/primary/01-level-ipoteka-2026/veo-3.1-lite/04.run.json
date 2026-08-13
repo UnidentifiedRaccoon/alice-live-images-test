@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "sample_id": "01-level-ipoteka-2026-04",
+  "image_id": "04",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/01-level-ipoteka-2026/veo-3.1-lite/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/01-level-ipoteka-2026/veo-3.1-lite/04.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "Move the camera continuously to the right toward the central avenue at normal real-time speed, with clear restrained parallax as the foreground canopy slides left relative to the buildings. Finish with more of the existing central courtyard axis visibly opened while the trees gently sway in place.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a048ddca495b52c9d873940_6a049156a495b52c9d87cb75/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "368e06c122140db5e40cc85d7b91d30319efbe689aefdc9ff04ce196f67356be",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "1Q2Peh4P7ivkXU4jbXP0",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-13T12:51:50Z",
+  "completed_at": "2026-08-13T12:54:28Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 15846920,
+    "sha256": "d33c3dd465d63bb12a9e1568b01569c7e04ff4d1bb0e05faa9b84aaa448fa0cb"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-live-images-20260813-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04",
+  "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-veo-3-1-lite",
+  "lite_result_sha256": "b9b65a0b1188c4e630ac47e79c7eaa2fab0324e961839323e7239653f332b840",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

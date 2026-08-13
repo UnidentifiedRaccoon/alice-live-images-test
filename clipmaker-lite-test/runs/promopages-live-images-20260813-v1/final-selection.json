@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "manifest_role": "clipmaker-lite-final-selection",
+  "dataset_prefix": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.1.4",
+    "runner_version": 8
+  },
+  "models": [
+    "alibaba/wan-2.2",
+    "alibaba/wan-2.7",
+    "google/veo-3.1-lite"
+  ],
+  "article_count": 2,
+  "image_count": 2,
+  "expected_outputs": 6,
+  "cost": {
+    "hard_budget_cap_usd": 5.0,
+    "accounting_cost_per_submit_usd": 0.35,
+    "primary_reservations": 6,
+    "maximum_new_prompt_attempts": 8,
+    "retry_reservations": 2,
+    "total_reservations": 8,
+    "maximum_total_reservations": 14,
+    "estimated_reserved_cost_usd": 2.8,
+    "maximum_estimated_cost_usd": 4.9,
+    "headroom_usd": 2.2
+  },
+  "observed_wan_22_costs": [
+    {
+      "attempt_id": "primary",
+      "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-2",
+      "response_cost": "0.18"
+    },
+    {
+      "attempt_id": "primary",
+      "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "response_cost": "0.18"
+    }
+  ],
+  "requested_retry_selections": [],
+  "articles": [
+    {
+      "article_number": "01",
+      "article_slug": "01-level-ipoteka-2026",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "brand": "Level Group",
+      "title": "Брать ипотеку в II половине 2026 года? Отвечают эксперты",
+      "article_url": "https://level-group.promo.page/media/brat-ipoteku-v-ii-polovine-2026-goda-otvechaiut-eksperty-6a048ddca495b52c9d873940_0_0",
+      "image": {
+        "image_id": "04",
+        "media_id": "6a049156a495b52c9d87cb75",
+        "width": 1920,
+        "height": 1023,
+        "caption": "Ещё Банк России обсуждает возможность предоставлять льготную ипотеку только по месту регистрации родителей. В таком случае не получится купить квартиру в нужном городе без регистрации",
+        "source_url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a048ddca495b52c9d873940_6a049156a495b52c9d87cb75/orig",
+        "source_sha256": "e65e115579ed3143be9ee01f93bcb4f3cf68bf48ed58be9834c84babd98fcd49",
+        "planning_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04"
+      }
+    },
+    {
+      "article_number": "02",
+      "article_slug": "02-banki-vygodno-kupit-dollar",
+      "publication_id": "6a4f5fe924801975680d9be5",
+      "brand": "Банки.ру",
+      "title": "В каких банках можно выгодно купить доллар?",
+      "article_url": "https://banki.promo.page/save/v-kakih-bankah-mojno-vygodno-kupit-dollar-6a4f5fe924801975680d9be5_0_0",
+      "image": {
+        "image_id": "01",
+        "media_id": "6a4f718952e3ce75a3110deb",
+        "width": 2000,
+        "height": 1125,
+        "caption": "",
+        "source_url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig",
+        "source_sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+        "planning_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "article_number": "01",
+      "article_slug": "01-level-ipoteka-2026",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "image_id": "04",
+      "media_id": "6a049156a495b52c9d87cb75",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "selected_attempt_id": "primary",
+      "selected_prompt": {
+        "positive": "Track gently to the right toward the central avenue at normal real-time speed as the foreground treetops shift left against the residential blocks. By the final frames, the source-grounded parallax clearly opens a little more of the central courtyard axis while the trees sway lightly in place.",
+        "negative": null
+      },
+      "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-2",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/01-level-ipoteka-2026/wan-2.2/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1312,
+        "height": 688,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 20815538,
+        "sha256": "622a02c9867b3634985b1b046cf89172dacd08f0a432d31d6d5b367c72f69086"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null,
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt_id": "primary",
+          "status": "succeeded",
+          "prompt": {
+            "positive": "Track gently to the right toward the central avenue at normal real-time speed as the foreground treetops shift left against the residential blocks. By the final frames, the source-grounded parallax clearly opens a little more of the central courtyard axis while the trees sway lightly in place.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-2",
+          "provider_response": {
+            "http_status": 200,
+            "content_type": "video/mp4",
+            "request_id": "41ec6dbb8ae258aeb7e51c4ffad690f0",
+            "response_cost": "0.18",
+            "automatic_retry": false
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "article_number": "01",
+      "article_slug": "01-level-ipoteka-2026",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "image_id": "04",
+      "media_id": "6a049156a495b52c9d87cb75",
+      "model_id": "alibaba/wan-2.7",
+      "status": "unavailable",
+      "selected_attempt_id": null,
+      "selected_prompt": null,
+      "provider_run_id": null,
+      "video_path": null,
+      "media": null,
+      "contract_check": null,
+      "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+      "attempt_count": 2,
+      "attempts": [
+        {
+          "attempt_id": "primary",
+          "status": "verification-failed",
+          "prompt": {
+            "positive": "Glide steadily right toward the central residential avenue at normal real-time speed, producing gentle parallax between the foreground trees, the flanking buildings, and the distant district. End with a slightly clearer view along the existing courtyard axis as the visible foliage softly sways in place.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-7",
+          "provider_response": null,
+          "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+        },
+        {
+          "attempt_id": "retry-01",
+          "status": "verification-failed",
+          "prompt": {
+            "positive": "Gently track forward toward the central courtyard axis at normal real-time speed, producing steady parallax across the foreground canopy and successive residential blocks. The visible foliage sways lightly in place; end with the central buildings closer and the layered depth more apparent.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-01-01-level-ipoteka-2026-04-wan-2-7",
+          "provider_response": null,
+          "error": "Media contract verification failed: audio, resolution, aspect_ratio"
+        }
+      ]
+    },
+    {
+      "article_number": "01",
+      "article_slug": "01-level-ipoteka-2026",
+      "publication_id": "6a048ddca495b52c9d873940",
+      "image_id": "04",
+      "media_id": "6a049156a495b52c9d87cb75",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "selected_attempt_id": "primary",
+      "selected_prompt": {
+        "positive": "Move the camera continuously to the right toward the central avenue at normal real-time speed, with clear restrained parallax as the foreground canopy slides left relative to the buildings. Finish with more of the existing central courtyard axis visibly opened while the trees gently sway in place.",
+        "negative": null
+      },
+      "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-veo-3-1-lite",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/01-level-ipoteka-2026/veo-3.1-lite/04.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 15846920,
+        "sha256": "d33c3dd465d63bb12a9e1568b01569c7e04ff4d1bb0e05faa9b84aaa448fa0cb"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null,
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt_id": "primary",
+          "status": "succeeded",
+          "prompt": {
+            "positive": "Move the camera continuously to the right toward the central avenue at normal real-time speed, with clear restrained parallax as the foreground canopy slides left relative to the buildings. Finish with more of the existing central courtyard axis visibly opened while the trees gently sway in place.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-veo-3-1-lite",
+          "provider_response": null,
+          "error": null
+        }
+      ]
+    },
+    {
+      "article_number": "02",
+      "article_slug": "02-banki-vygodno-kupit-dollar",
+      "publication_id": "6a4f5fe924801975680d9be5",
+      "image_id": "01",
+      "media_id": "6a4f718952e3ce75a3110deb",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "selected_attempt_id": "primary",
+      "selected_prompt": {
+        "positive": "The couple walks forward together at a relaxed, even pace, with gentle natural body sway and the ice-cream cones held upright in their hands. By the final frames they have moved visibly closer while still smiling at each other.",
+        "negative": null
+      },
+      "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/02-banki-vygodno-kupit-dollar/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1280,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 11801384,
+        "sha256": "cbd4d8754361d39b37422dfd8cc1baf2ac41de22ca42fbdc3544fff778bfb2bf"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null,
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt_id": "primary",
+          "status": "succeeded",
+          "prompt": {
+            "positive": "The couple walks forward together at a relaxed, even pace, with gentle natural body sway and the ice-cream cones held upright in their hands. By the final frames they have moved visibly closer while still smiling at each other.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+          "provider_response": {
+            "http_status": 200,
+            "content_type": "video/mp4",
+            "request_id": "774b63f4440e0bf317eac5abf05f4c5c",
+            "response_cost": "0.18",
+            "automatic_retry": false
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "article_number": "02",
+      "article_slug": "02-banki-vygodno-kupit-dollar",
+      "publication_id": "6a4f5fe924801975680d9be5",
+      "image_id": "01",
+      "media_id": "6a4f718952e3ce75a3110deb",
+      "model_id": "alibaba/wan-2.7",
+      "status": "unavailable",
+      "selected_attempt_id": null,
+      "selected_prompt": null,
+      "provider_run_id": null,
+      "video_path": null,
+      "media": null,
+      "contract_check": null,
+      "error": "Media contract verification failed: audio",
+      "attempt_count": 2,
+      "attempts": [
+        {
+          "attempt_id": "primary",
+          "status": "verification-failed",
+          "prompt": {
+            "positive": "The couple continues strolling toward the camera in one smooth, relaxed motion, keeping both ice-cream cones upright. They end a little closer together and nearer the viewer, still smiling at each other.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-7",
+          "provider_response": null,
+          "error": "Media contract verification failed: audio"
+        },
+        {
+          "attempt_id": "retry-02",
+          "status": "verification-failed",
+          "prompt": {
+            "positive": "The couple continue strolling forward side by side in a smooth natural rhythm, keeping their smiles and eye contact while the cones remain upright in their hands. They finish several steps farther along, still walking together with the same relaxed mood.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01-wan-2-7",
+          "provider_response": null,
+          "error": "Media contract verification failed: audio"
+        }
+      ]
+    },
+    {
+      "article_number": "02",
+      "article_slug": "02-banki-vygodno-kupit-dollar",
+      "publication_id": "6a4f5fe924801975680d9be5",
+      "image_id": "01",
+      "media_id": "6a4f718952e3ce75a3110deb",
+      "model_id": "google/veo-3.1-lite",
+      "status": "succeeded",
+      "selected_attempt_id": "primary",
+      "selected_prompt": {
+        "positive": "Track backward smoothly as the couple walks forward together at a natural pace, their hair and clothing moving gently while each cone stays upright. By the end they have advanced visibly through the plaza and remain smiling at each other.",
+        "negative": null
+      },
+      "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/02-banki-vygodno-kupit-dollar/veo-3.1-lite/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 4.0,
+        "width": 1920,
+        "height": 1080,
+        "fps": 24.0,
+        "frames": 96,
+        "has_audio": false,
+        "bytes": 11279591,
+        "sha256": "d52dcc5e34968a63a5f13d208f21d288e32cb231bf40c997653c2cde6ec23ca9"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 4,
+          "resolution": "1080p",
+          "aspect_ratio": "16:9",
+          "generate_audio": false,
+          "frames": null,
+          "fps": null
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "error": null,
+      "attempt_count": 1,
+      "attempts": [
+        {
+          "attempt_id": "primary",
+          "status": "succeeded",
+          "prompt": {
+            "positive": "Track backward smoothly as the couple walks forward together at a natural pace, their hair and clothing moving gently while each cone stays upright. By the end they have advanced visibly through the plaza and remain smiling at each other.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+          "provider_response": null,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

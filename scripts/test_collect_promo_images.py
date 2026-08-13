@@ -120,6 +120,72 @@ class CollectPromoImagesTest(unittest.TestCase):
                         manifest_rows = list(csv.DictReader(source))
                     self.assertEqual(manifest_rows[0]["file_path"], expected_path)
 
+    def test_design_zero_omits_legacy_cover_images(self) -> None:
+        page_data = self.page_data()
+        publication = page_data["publication"]
+        assert isinstance(publication, dict)
+        publication["headImage"] = {
+            "design": {"id": "0"},
+            "imageDesktop": {"id": "legacy-desktop"},
+            "imageMobile": {"id": "legacy-mobile"},
+        }
+        publication["content"] = {
+            "articleContent": {
+                "contentState": json.dumps(
+                    {
+                        "draftJsState": {
+                            "blocks": [
+                                {
+                                    "type": "atomic:image",
+                                    "data": {"image": {"id": "body-source"}},
+                                }
+                            ]
+                        }
+                    }
+                )
+            }
+        }
+
+        self.assertEqual(
+            collector.image_occurrences(page_data),
+            [
+                {
+                    "image_id": "body-source",
+                    "role": "article_image",
+                    "block_index": 0,
+                    "gallery_index": "",
+                }
+            ],
+        )
+
+    def test_nonzero_design_preserves_cover_images(self) -> None:
+        page_data = self.page_data()
+        publication = page_data["publication"]
+        assert isinstance(publication, dict)
+        publication["headImage"] = {
+            "design": {"id": "6"},
+            "imageDesktop": {"id": "desktop-source"},
+            "imageMobile": {"id": "mobile-source"},
+        }
+
+        self.assertEqual(
+            collector.image_occurrences(page_data),
+            [
+                {
+                    "image_id": "desktop-source",
+                    "role": "cover",
+                    "block_index": "",
+                    "gallery_index": "",
+                },
+                {
+                    "image_id": "mobile-source",
+                    "role": "cover_mobile",
+                    "block_index": "",
+                    "gallery_index": "",
+                },
+            ],
+        )
+
     def test_prefix_and_article_folder_reject_unsafe_paths(self) -> None:
         for value in ("../escape", "ticket/name", "/absolute", "ticket\\name", "."):
             with self.subTest(prefix=value), self.assertRaises(ValueError):

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "sample_id": "01-level-ipoteka-2026-04",
+  "image_id": "04",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/01-level-ipoteka-2026/wan-2.7/04.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/01-level-ipoteka-2026/wan-2.7/04.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "Glide steadily right toward the central residential avenue at normal real-time speed, producing gentle parallax between the foreground trees, the flanking buildings, and the distant district. End with a slightly clearer view along the existing courtyard axis as the visible foliage softly sways in place.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/6165752/pub_6a048ddca495b52c9d873940_6a049156a495b52c9d87cb75/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "256e62ef4ff0550c3ad6101973b49d9780075658fe7e55a25399d2f6fb83999a",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "oKj0i3XaAMXEnSdUHA1M",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-13T12:51:47Z",
+  "completed_at": "2026-08-13T12:53:07Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1972,
+    "height": 1050,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 30743398,
+    "sha256": "6fc6af439367c51b2c29c04dbfdd245a2620b5db4632e3f2121c06faaffc92be"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": false,
+      "aspect_ratio": false
+    },
+    "conforms": false,
+    "warnings": [
+      "audio",
+      "resolution",
+      "aspect_ratio"
+    ]
+  },
+  "error": "Media contract verification failed: audio, resolution, aspect_ratio",
+  "batch_id": "promopages-live-images-20260813-v1",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04",
+  "provider_run_id": "promopages-live-images-20260813-v1-01-level-ipoteka-2026-04-wan-2-7",
+  "lite_result_sha256": "b9b65a0b1188c4e630ac47e79c7eaa2fab0324e961839323e7239653f332b840",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

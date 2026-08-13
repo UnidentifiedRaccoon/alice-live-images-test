@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "sample_id": "02-banki-vygodno-kupit-dollar-01",
+  "image_id": "01",
+  "model_id": "alibaba/wan-2.7",
+  "adapter": "eliza-openrouter",
+  "status": "verification-failed",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-02/videos/wan-2.7/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-02/videos/wan-2.7/01.mp4",
+  "request": {
+    "model": "alibaba/wan-2.7",
+    "prompt": "The couple continue strolling forward side by side in a smooth natural rhythm, keeping their smiles and eye contact while the cones remain upright in their hands. They finish several steps farther along, still walking together with the same relaxed mood.",
+    "duration": 5,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "atlas-cloud": {
+          "parameters": {
+            "prompt_extend": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "a9872baee73d8a05a8084b34fa23371f17e5d80584a55a068e827882d3c8954d",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "Pcqn1aWaqxXNDyVbXvbt",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-13T12:57:11Z",
+  "completed_at": "2026-08-13T12:58:28Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 5.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.0,
+    "frames": 150,
+    "has_audio": true,
+    "bytes": 9680295,
+    "sha256": "d9061944628be5b1b8ab5a2779c2ffacbad8c1eb4240a75c90a188da1283a452"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 5,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": false,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": false,
+    "warnings": [
+      "audio"
+    ]
+  },
+  "error": "Media contract verification failed: audio",
+  "batch_id": "promopages-live-images-20260813-v1-retry-02",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-02-02-banki-vygodno-kupit-dollar-01-wan-2-7",
+  "lite_result_sha256": "31c01e9912d7a3e44a0c263ae2e68dc19ccd75f334c638bdad4f2c739cdf8645",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

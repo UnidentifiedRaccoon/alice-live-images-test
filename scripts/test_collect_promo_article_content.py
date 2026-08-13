@@ -450,6 +450,99 @@ class CollectPromoArticleContentTest(unittest.TestCase):
         self.assertEqual(gallery["gallery_index"], 0)
         self.assertEqual(gallery["caption"], "Zero-index caption")
 
+    def test_coverless_article_succeeds_when_manifest_and_source_have_no_cover(
+        self,
+    ) -> None:
+        rows = [
+            self.manifest_row(
+                "01",
+                "body-source",
+                "article_image",
+                block_index="0",
+            )
+        ]
+        page_data = self.page_data(
+            [
+                self.raw_block(
+                    "atomic:image",
+                    "Body caption",
+                    data={"image": {"id": "body-source"}},
+                )
+            ]
+        )
+        page_data["publication"]["headImage"] = {}
+
+        content, unresolved = self.build(rows, page_data)
+
+        self.assertEqual(unresolved, [])
+        self.assertEqual(len(content["blocks"]), 1)
+        self.assertEqual(content["blocks"][0]["role"], "article_image")
+        self.assertEqual(content["blocks"][0]["source_image_id"], "body-source")
+
+    def test_coverless_manifest_rejects_source_only_cover(self) -> None:
+        rows = [
+            self.manifest_row(
+                "01",
+                "body-source",
+                "article_image",
+                block_index="0",
+            )
+        ]
+        page_data = self.page_data(
+            [
+                self.raw_block(
+                    "atomic:image",
+                    data={"image": {"id": "body-source"}},
+                )
+            ]
+        )
+        page_data["publication"]["headImage"]["design"] = {"id": "6"}
+
+        with self.assertRaisesRegex(ValueError, "cover images differ"):
+            self.build(rows, page_data)
+
+    def test_design_zero_treats_legacy_source_ids_as_no_effective_cover(self) -> None:
+        rows = [
+            self.manifest_row(
+                "01",
+                "body-source",
+                "article_image",
+                block_index="0",
+            )
+        ]
+        page_data = self.page_data(
+            [
+                self.raw_block(
+                    "atomic:image",
+                    data={"image": {"id": "body-source"}},
+                )
+            ]
+        )
+        page_data["publication"]["headImage"] = {
+            "design": {"id": "0"},
+            "imageDesktop": {"id": "legacy-desktop"},
+            "imageMobile": {"id": "legacy-mobile"},
+        }
+
+        content, unresolved = self.build(rows, page_data)
+
+        self.assertEqual(unresolved, [])
+        self.assertEqual(
+            [block["role"] for block in content["blocks"]],
+            ["article_image"],
+        )
+
+    def test_design_zero_rejects_manifest_only_cover(self) -> None:
+        rows = [self.manifest_row("01", "cover-source", "cover")]
+        page_data = self.page_data([])
+        page_data["publication"]["headImage"] = {
+            "design": {"id": "0"},
+            "imageDesktop": {"id": "cover-source"},
+        }
+
+        with self.assertRaisesRegex(ValueError, "cover images differ"):
+            self.build(rows, page_data)
+
     def test_gallery_uses_only_images_order_and_ignores_legacy_and_junk_ids(self) -> None:
         rows = [
             self.manifest_row("01", "cover-source", "cover"),
