@@ -21,12 +21,12 @@
     "accounting_cost_per_submit_usd": 0.35,
     "primary_reservations": 6,
     "maximum_new_prompt_attempts": 8,
-    "retry_reservations": 2,
-    "total_reservations": 8,
+    "retry_reservations": 4,
+    "total_reservations": 10,
     "maximum_total_reservations": 14,
-    "estimated_reserved_cost_usd": 2.8,
+    "estimated_reserved_cost_usd": 3.5,
     "maximum_estimated_cost_usd": 4.9,
-    "headroom_usd": 2.2
+    "headroom_usd": 1.5
   },
   "observed_wan_22_costs": [
     {
@@ -41,7 +41,8 @@
     }
   ],
   "requested_retry_selections": [
-    "retry-02"
+    "retry-02",
+    "retry-04"
   ],
   "articles": [
     {
@@ -824,13 +825,13 @@
       "model_id": "google/veo-3.1-lite",
       "status": "succeeded",
       "recorded_status": "succeeded",
-      "selected_attempt_id": "primary",
+      "selected_attempt_id": "retry-04",
       "selected_prompt": {
-        "positive": "Track backward smoothly as the couple walks forward together at a natural pace, their hair and clothing moving gently while each cone stays upright. By the end they have advanced visibly through the plaza and remain smiling at each other.",
+        "positive": "The camera tracks backward smoothly at normal real-time speed as the couple walks forward together, ending clearly mid-stride with both upright cones and the same warm mutual gaze. Keep exactly three rigid decorative rings fixed to the background at their original size, position, depth, orientation, and occlusion order, never intersecting either person or creating fragments.",
         "negative": null
       },
-      "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
-      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/02-banki-vygodno-kupit-dollar/veo-3.1-lite/01.mp4",
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-04/videos/veo-3.1-lite/01.mp4",
       "media": {
         "container": "mov,mp4,m4a,3gp,3g2,mj2",
         "codec": "h264",
@@ -840,8 +841,8 @@
         "fps": 24.0,
         "frames": 96,
         "has_audio": false,
-        "bytes": 11279591,
-        "sha256": "d52dcc5e34968a63a5f13d208f21d288e32cb231bf40c997653c2cde6ec23ca9"
+        "bytes": 10785979,
+        "sha256": "cd6b71058421c12fe91ff0a31c21fedb7ef1e87cf91807161370b70c732e3bb2"
       },
       "contract_check": {
         "requested": {
@@ -873,7 +874,7 @@
         "waived_warnings": []
       },
       "error": null,
-      "attempt_count": 1,
+      "attempt_count": 3,
       "attempts": [
         {
           "attempt_id": "primary",
@@ -896,6 +897,112 @@
             "has_audio": false,
             "bytes": 11279591,
             "sha256": "d52dcc5e34968a63a5f13d208f21d288e32cb231bf40c997653c2cde6ec23ca9"
+          },
+          "contract_check": {
+            "requested": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratio": "16:9",
+              "generate_audio": false,
+              "frames": null,
+              "fps": null
+            },
+            "checks": {
+              "duration": true,
+              "audio": true,
+              "resolution": true,
+              "aspect_ratio": true
+            },
+            "conforms": true,
+            "warnings": []
+          },
+          "media_acceptance": {
+            "accepted": true,
+            "mode": "strict-contract",
+            "policy_id": null,
+            "policy_sha256": null,
+            "model_id": "google/veo-3.1-lite",
+            "adapter": "eliza-openrouter",
+            "target_generate_audio": false,
+            "observed_has_audio": false,
+            "waived_warnings": []
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "retry-03",
+          "status": "succeeded",
+          "recorded_status": "succeeded",
+          "prompt": {
+            "positive": "At normal real-time speed, track backward smoothly as the smiling couple walks forward together for several natural steps. The rigid rings keep their original world-space depth order; the right ring clears outward to screen right from in front of the man’s right shoulder without crossing his body in the final frame.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-03-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+          "provider_response": null,
+          "media": {
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 4.0,
+            "width": 1920,
+            "height": 1080,
+            "fps": 24.0,
+            "frames": 96,
+            "has_audio": false,
+            "bytes": 10345604,
+            "sha256": "f51fb105e9a24008d4d675935f8ed0b092e5fb8e4dd4dbbcf8c1e68f04d3d418"
+          },
+          "contract_check": {
+            "requested": {
+              "duration_seconds": 4,
+              "resolution": "1080p",
+              "aspect_ratio": "16:9",
+              "generate_audio": false,
+              "frames": null,
+              "fps": null
+            },
+            "checks": {
+              "duration": true,
+              "audio": true,
+              "resolution": true,
+              "aspect_ratio": true
+            },
+            "conforms": true,
+            "warnings": []
+          },
+          "media_acceptance": {
+            "accepted": true,
+            "mode": "strict-contract",
+            "policy_id": null,
+            "policy_sha256": null,
+            "model_id": "google/veo-3.1-lite",
+            "adapter": "eliza-openrouter",
+            "target_generate_audio": false,
+            "observed_has_audio": false,
+            "waived_warnings": []
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "retry-04",
+          "status": "succeeded",
+          "recorded_status": "succeeded",
+          "prompt": {
+            "positive": "The camera tracks backward smoothly at normal real-time speed as the couple walks forward together, ending clearly mid-stride with both upright cones and the same warm mutual gaze. Keep exactly three rigid decorative rings fixed to the background at their original size, position, depth, orientation, and occlusion order, never intersecting either person or creating fragments.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+          "provider_response": null,
+          "media": {
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 4.0,
+            "width": 1920,
+            "height": 1080,
+            "fps": 24.0,
+            "frames": 96,
+            "has_audio": false,
+            "bytes": 10785979,
+            "sha256": "cd6b71058421c12fe91ff0a31c21fedb7ef1e87cf91807161370b70c732e3bb2"
           },
           "contract_check": {
             "requested": {

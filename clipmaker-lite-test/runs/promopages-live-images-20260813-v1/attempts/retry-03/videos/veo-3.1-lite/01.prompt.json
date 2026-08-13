@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1-retry-03",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-03-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-03-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+  "model_id": "google/veo-3.1-lite",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+    "sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+    "width": 2000,
+    "height": 1125
+  },
+  "structured_intent": {
+    "editorial_meaning": "Confident forward movement expresses the ease and optimism of finding a suitable dollar-exchange offer.",
+    "initial_state": "A smiling couple is together in the foreground holding upright ice-cream cones and looking at each other, with three decorative rings arranged at distinct visible depths around them.",
+    "primary_action": "The couple walks forward together at a natural pace.",
+    "terminal_state": "The couple has advanced several natural steps while remaining side by side, smiling at each other with both ice-cream cones still upright, and the right ring has cleared outward to screen right.",
+    "geometry_invariant": "The right decorative ring stays in front of the man’s right shoulder while overlapping and clears outward to screen right without crossing his body.",
+    "semantic_invariant": "Their relaxed, upbeat sense of confidence and connection persists through the last frame."
+  },
+  "prompt": {
+    "positive": "At normal real-time speed, track backward smoothly as the smiling couple walks forward together for several natural steps. The rigid rings keep their original world-space depth order; the right ring clears outward to screen right from in front of the man’s right shoulder without crossing his body in the final frame.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 4,
+    "resolution": "1080p",
+    "aspect_ratios": [
+      "16:9",
+      "9:16"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "provider": "google-vertex",
+    "prompt_expansion": {
+      "parameter": "enhancePrompt",
+      "value": true
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-live-images-20260813-v1-retry-03-02-banki-vygodno-kupit-dollar-01/result.json",
+    "sha256": "52eb5ec840ef6725d0f3bd7053e1afcf493db8976e40dd8822696b5d4ef44524",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.4",
+      "contract_fingerprint": "sha256:44b6acdb9707feaec6cd6acef22a295182454d3efd6d87fa4fe70dbd08337769",
+      "instruction_bundle_sha256": "9e99869be3cfb7af99ac94559315cd66c339b4cc42238829781963ca17ecfce8",
+      "source_image_sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+      "article_context_sha256": "aae809117e895bdb149a270a3ec0de70ce41a7989ef4b3756d8e721027e076ab",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

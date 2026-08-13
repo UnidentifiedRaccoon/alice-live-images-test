@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "sample_id": "02-banki-vygodno-kupit-dollar-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-04/videos/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-04/videos/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "The camera tracks backward smoothly at normal real-time speed as the couple walks forward together, ending clearly mid-stride with both upright cones and the same warm mutual gaze. Keep exactly three rigid decorative rings fixed to the background at their original size, position, depth, orientation, and occlusion order, never intersecting either person or creating fragments.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "4159560b074fa57cd864a0ce863c2c59ee2338b23d8dfb09b9ef86be7aadbd0e",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "dl3kcpPBmYJIixQWoGCL",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-13T16:45:07Z",
+  "completed_at": "2026-08-13T16:47:10Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 10785979,
+    "sha256": "cd6b71058421c12fe91ff0a31c21fedb7ef1e87cf91807161370b70c732e3bb2"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-live-images-20260813-v1-retry-04",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-04-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+  "lite_result_sha256": "7e37c20c82bc46f866f872b83e6f9b6ee9bb4503a4ff4257b3507f79ff65b07e",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}

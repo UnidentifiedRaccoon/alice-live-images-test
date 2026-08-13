@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "sample_id": "02-banki-vygodno-kupit-dollar-01",
+  "image_id": "01",
+  "model_id": "google/veo-3.1-lite",
+  "adapter": "eliza-openrouter",
+  "status": "succeeded",
+  "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-03/videos/veo-3.1-lite/01.prompt.json",
+  "output_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-03/videos/veo-3.1-lite/01.mp4",
+  "request": {
+    "model": "google/veo-3.1-lite",
+    "prompt": "At normal real-time speed, track backward smoothly as the smiling couple walks forward together for several natural steps. The rigid rings keep their original world-space depth order; the right ring clears outward to screen right from in front of the man’s right shoulder without crossing his body in the final frame.",
+    "duration": 4,
+    "resolution": "1080p",
+    "aspect_ratio": "16:9",
+    "seed": 9681,
+    "generate_audio": false,
+    "frame_images": [
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "https://avatars.mds.yandex.net/get-promoarticles/5126709/pub_6a4f5fe924801975680d9be5_6a4f718952e3ce75a3110deb/orig"
+        },
+        "frame_type": "first_frame"
+      }
+    ],
+    "provider": {
+      "options": {
+        "google-vertex": {
+          "parameters": {
+            "enhancePrompt": true
+          }
+        }
+      }
+    }
+  },
+  "request_sha256": "dadb8bdd723b82bb57243b97e96a9343feead0d65e962537126119edc55f6c52",
+  "request_fingerprint_version": 2,
+  "provider_job_id": "r5pGLoQo71KqQnwRTtqz",
+  "provider_session_hash": null,
+  "submitted_at": "2026-08-13T16:39:33Z",
+  "completed_at": "2026-08-13T16:41:30Z",
+  "media": {
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "codec": "h264",
+    "duration_seconds": 4.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 96,
+    "has_audio": false,
+    "bytes": 10345604,
+    "sha256": "f51fb105e9a24008d4d675935f8ed0b092e5fb8e4dd4dbbcf8c1e68f04d3d418"
+  },
+  "contract_check": {
+    "requested": {
+      "duration_seconds": 4,
+      "resolution": "1080p",
+      "aspect_ratio": "16:9",
+      "generate_audio": false,
+      "frames": null,
+      "fps": null
+    },
+    "checks": {
+      "duration": true,
+      "audio": true,
+      "resolution": true,
+      "aspect_ratio": true
+    },
+    "conforms": true,
+    "warnings": []
+  },
+  "error": null,
+  "batch_id": "promopages-live-images-20260813-v1-retry-03",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-03-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-03-02-banki-vygodno-kupit-dollar-01-veo-3-1-lite",
+  "lite_result_sha256": "52eb5ec840ef6725d0f3bd7053e1afcf493db8976e40dd8822696b5d4ef44524",
+  "provider_may_be_active": false,
+  "last_worker_failure": null
+}
