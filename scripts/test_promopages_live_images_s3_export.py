@@ -266,9 +266,83 @@ class LiveImagesS3ExportTest(unittest.TestCase):
                 "uploaded": 0,
                 "skipped": 6,
                 "verified": 6,
+                "delivery_verified": 6,
             })
             delivery = json.loads((output / "delivery-manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(delivery["verified_output_count"], 6)
+
+    def test_execute_scopes_writes_to_exact_object_and_verifies_full_delivery(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            _root, output, manifest = self.build_fixture(directory)
+            ready = [row for row in manifest["outputs"] if row["package_status"] == "ready"]
+            target = ready[3]
+            by_key = {row["object_key"]: row for row in ready}
+            put_keys: list[str] = []
+            target_head_calls = 0
+
+            def exact_head(row):
+                return {
+                    "ContentLength": row["media"]["bytes"],
+                    "ContentType": exporter.CONTENT_TYPE,
+                    "CacheControl": exporter.CACHE_CONTROL,
+                    "ContentDisposition": "inline",
+                    "Metadata": {
+                        "sha256": row["media"]["sha256"],
+                        "publication-id": row["publication_id"],
+                        "image-id": row["image_id"],
+                        "experiment": row["experiment"],
+                    },
+                }
+
+            def fake_runner(command, capture_output=True, text=True):
+                nonlocal target_head_calls
+                if "list-objects-v2" in command:
+                    return subprocess.CompletedProcess(command, 0, "{}", "")
+                if "head-object" in command:
+                    key = command[command.index("--key") + 1]
+                    if key == target["object_key"]:
+                        target_head_calls += 1
+                        if target_head_calls == 1:
+                            return subprocess.CompletedProcess(command, 1, "", "Not Found")
+                    return subprocess.CompletedProcess(command, 0, json.dumps(exact_head(by_key[key])), "")
+                if "put-object" in command:
+                    key = command[command.index("--key") + 1]
+                    put_keys.append(key)
+                    return subprocess.CompletedProcess(command, 0, "{}", "")
+                raise AssertionError(f"unexpected yc command: {command}")
+
+            report = exporter.upload_export(
+                output,
+                execute=True,
+                yc_profile="fixture",
+                only_object_keys=[target["object_key"]],
+                runner=fake_runner,
+                verify_cdn=lambda row: {
+                    "verified": True,
+                    "content_length": row["media"]["bytes"],
+                },
+            )
+            self.assertEqual(put_keys, [target["object_key"]])
+            self.assertEqual(report["counts"], {
+                "total": 1,
+                "uploaded": 1,
+                "skipped": 0,
+                "verified": 1,
+                "delivery_verified": 6,
+            })
+            delivery = json.loads((output / "delivery-manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(delivery["verified_output_count"], 6)
+
+    def test_execute_rejects_unknown_scoped_object(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            _root, output, _manifest = self.build_fixture(directory)
+            with self.assertRaisesRegex(exporter.ExportError, "Unknown --only-object-key"):
+                exporter.upload_export(
+                    output,
+                    execute=True,
+                    yc_profile="fixture",
+                    only_object_keys=["front-images/exp_video/not-in-package.mp4"],
+                )
 
     def test_execute_refuses_immutable_key_collision(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
