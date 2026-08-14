@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1-retry-07",
+  "agent_id": "clipmaker-lite",
+  "updated_at": "2026-08-14T09:53:38Z",
+  "expected_outputs": 1,
+  "summary": {
+    "succeeded": 1
+  },
+  "conforming_outputs": 1,
+  "accepted_outputs": 1,
+  "outputs": [
+    {
+      "lite_run_id": "promopages-live-images-20260813-v1-retry-07-02-banki-vygodno-kupit-dollar-01",
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-07-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "sample_id": "02-banki-vygodno-kupit-dollar-01",
+      "article_slug": "02-banki-vygodno-kupit-dollar",
+      "source_path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+      "model_id": "alibaba/wan-2.2",
+      "status": "succeeded",
+      "recorded_status": "succeeded",
+      "provider_may_be_active": false,
+      "prompt_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-07/videos/wan-2.2/01.prompt.json",
+      "run_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-07/videos/wan-2.2/01.run.json",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-07/videos/wan-2.2/01.mp4",
+      "media": {
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "codec": "h264",
+        "duration_seconds": 5.0,
+        "width": 1280,
+        "height": 720,
+        "fps": 30.0,
+        "frames": 150,
+        "has_audio": false,
+        "bytes": 11854951,
+        "sha256": "8fde12931866e2bc86cf3c0a22123026073522d2647615478f6c66876ba8ece6"
+      },
+      "contract_check": {
+        "requested": {
+          "duration_seconds": 5,
+          "resolution": "720p",
+          "aspect_ratio": "source",
+          "generate_audio": false,
+          "frames": 150,
+          "fps": 30
+        },
+        "checks": {
+          "duration": true,
+          "audio": true,
+          "frames": true,
+          "fps": true,
+          "resolution": true,
+          "aspect_ratio": true
+        },
+        "conforms": true,
+        "warnings": []
+      },
+      "media_acceptance": {
+        "accepted": true,
+        "mode": "strict-contract",
+        "policy_id": null,
+        "policy_sha256": null,
+        "model_id": "alibaba/wan-2.2",
+        "adapter": "eliza-segmind",
+        "target_generate_audio": false,
+        "observed_has_audio": false,
+        "waived_warnings": []
+      },
+      "error": null
+    }
+  ]
+}

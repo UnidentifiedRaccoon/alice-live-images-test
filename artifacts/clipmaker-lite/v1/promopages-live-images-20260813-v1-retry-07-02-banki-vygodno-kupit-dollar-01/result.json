@@ -1,0 +1,196 @@
+{
+  "schema_version": 3,
+  "job_id": "promopages-live-images-20260813-v1-retry-07-02-banki-vygodno-kupit-dollar-01",
+  "producer": {
+    "agent_id": "clipmaker-lite",
+    "contract_version": "2.1.4",
+    "runner_id": "clipmaker-lite-runner",
+    "runner_version": 8,
+    "manifest_path": "docs/agents/clipmaker-lite/contract.json",
+    "manifest_sha256": "202b1666a4944d40c78b0a3ade0844f1a535d041aedf90e6f776d312215a75a1",
+    "contract_fingerprint": "sha256:44b6acdb9707feaec6cd6acef22a295182454d3efd6d87fa4fe70dbd08337769",
+    "instruction_bundle_sha256": "9e99869be3cfb7af99ac94559315cd66c339b4cc42238829781963ca17ecfce8",
+    "runner": {
+      "path": "scripts/clipmaker_lite_runner.py",
+      "sha256": "d82645536e5a06f0b0d5656041a359ed8725292cf3d05b1bb74d24252cd8000c"
+    },
+    "loaded_contract_files": [
+      {
+        "role": "base_instruction",
+        "path": "docs/agents/clipmaker-lite/README.md",
+        "sha256": "b914fe836fb01b34baaf18ebd5d232c037802e78ec829d182c03b5b1caa06248"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.2",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.2.md",
+        "sha256": "5d595581f7e4ee32ae642e20fde71ce5f06185b5f6626b94238b4f5e403e3286"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "alibaba/wan-2.7",
+        "path": "docs/agents/clipmaker-lite/models/alibaba-wan-2.7.md",
+        "sha256": "f41eb38ce2b0eab7d07f2040f5b8881f0baf5057d96a699b9e86430f493bebe2"
+      },
+      {
+        "role": "model_spec",
+        "model_id": "google/veo-3.1-lite",
+        "path": "docs/agents/clipmaker-lite/models/google-veo-3.1-lite.md",
+        "sha256": "e40202d65953ab31ea9e72eee394dde683b70d0126fc0ab93c6d23d577b68345"
+      }
+    ],
+    "inputs_sha256": "sha256:a630092ba34e8baa4955fc7730e384ea42507c92923ac23877b2ee7b3475cd57",
+    "execution_fingerprint": "sha256:8285332d28b54636d6bf862cb12cca27e6ed3282b5550a783396ab1e7585f477",
+    "execution": {
+      "executor_id": "codex-exec",
+      "binary_path": "/Applications/ChatGPT.app/Contents/Resources/codex",
+      "binary_sha256": "04ddea2f332bd524bf6cc02f8efcf45f0afa0c7d9b97d77aaef7bb84adf3d4c5",
+      "version": "codex-cli 0.147.0-alpha.6.5",
+      "requested_model": null,
+      "thread_id": "019fffac-ca4f-72c3-a038-544c446611ef"
+    },
+    "authored_payload_sha256": "c2fe8d3818779e9e50b5453e67c33610c0371cf130fdf468da527bdc98d3d234",
+    "draft_file_sha256": "919d58f5d61f79c7fa094048cb6d946dc02168c25282a860ba31d39debcc2a42"
+  },
+  "inputs": {
+    "source_image": {
+      "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+      "sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+      "bytes": 818591
+    },
+    "article_context": {
+      "path": "PROMOPAGES-9884/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/content.json",
+      "sha256": "aae809117e895bdb149a270a3ec0de70ce41a7989ef4b3756d8e721027e076ab",
+      "bytes": 4497,
+      "locator": {
+        "article_id": "02-banki-vygodno-kupit-dollar",
+        "title": "В каких банках можно выгодно купить доллар?",
+        "lead": "Хотите купить/продать доллар выгодно? Смотрите курсы на Банки.ру!",
+        "image_id": "01",
+        "block_index": 2,
+        "role": "article_image",
+        "caption": "",
+        "file": "01.jpeg",
+        "manifest_file_path": "PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+        "current_heading": null,
+        "nearest_text_before": {
+          "block_index": 1,
+          "type": "paragraph",
+          "text": "Чтобы вам было легче найти, в каких банках сейчас выгодный курс, переходите на сайт Банки.ру!"
+        },
+        "nearest_text_after": {
+          "block_index": 3,
+          "type": "list_item",
+          "text": "Переходите по ссылке, выбирайте предложение, которое вам подходит и нажимайте кнопку \"подробнее\" — появится список отделений банка с адресами."
+        }
+      }
+    },
+    "user_direction": null
+  },
+  "analysis": {
+    "image_reading": [
+      "A smiling couple walks side by side through a modern city plaza, looking at each other while each holds an ice-cream cone upright.",
+      "Large stylized coin-like discs float around the couple; the people dominate the foreground while towers and palms establish strong urban depth.",
+      "Their wind-swept hair and open clothing can move naturally, while the cones provide a clear hand-held geometry constraint."
+    ],
+    "article_context": "The body image gives the currency-comparison article an upbeat, aspirational tone, presenting a favorable exchange choice as something that supports relaxed travel and enjoyable everyday experiences.",
+    "structured_intent": {
+      "editorial_meaning": "A favorable, well-informed currency choice can enable relaxed and enjoyable experiences.",
+      "initial_state": "A smiling couple is side by side in the foreground, looking at each other and holding ice-cream cones upright as they appear mid-stroll.",
+      "primary_action": "The couple continues walking forward together.",
+      "terminal_state": "The couple has visibly advanced forward together and remains smiling at each other.",
+      "geometry_invariant": "Each ice-cream cone remains visibly held upright in its owner's hand.",
+      "semantic_invariant": "Their relaxed, cheerful connection is maintained through the last frame."
+    }
+  },
+  "models": [
+    {
+      "model_id": "alibaba/wan-2.2",
+      "scene_plan": "For five seconds, use a fixed camera as the couple sustains one relaxed forward stroll. Their shoulders and torsos show moderate walking sway, with subtle hair and shirt movement as secondary motion; both cones stay upright and continuously visible. Their advance remains readable through the end, where they are slightly nearer and still smiling at each other.",
+      "positive_prompt": "The couple continues strolling forward together at a relaxed, even pace, with gentle body sway and hair moving in the breeze while their ice-cream cones remain upright in their hands. By the final frames they have advanced visibly and still share the same warm smile.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "720p",
+        "aspect_ratios": [
+          "source"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "gateway": "eliza",
+        "provider": "segmind",
+        "provider_model_id": "segmind/wan-2.2-i2v-flash",
+        "adapter": "eliza-segmind",
+        "synchronous": true,
+        "automatic_retry": false,
+        "frames": 150,
+        "fps": 30,
+        "seed": 220214,
+        "watermark": false,
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": false
+        },
+        "negative_prompt_transport": {
+          "mode": "separate_field",
+          "parameter": "negative_prompt",
+          "null_serialization": "empty_string"
+        }
+      },
+      "model_contract_fingerprint": "sha256:19c51443f7b102f199ddb3f7a1e4f1cc55b039bf0db7f9dda90c6a98053a1e65",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "alibaba/wan-2.7",
+      "scene_plan": "Across the full five-second shot, keep the camera fixed and let the couple's continuous forward walk supply the motion, using an even cadence and moderate upper-body sway. Wind adds restrained movement to existing hair and clothing without becoming a separate event. The final frame shows clear forward progress while their mutual gaze, smiles, and upright hand-held cones remain intact.",
+      "positive_prompt": "The couple walks steadily forward side by side, their hair and loose clothing flowing softly as they keep both ice-cream cones upright. They finish visibly farther along their stroll, still smiling warmly at each other.",
+      "runtime": {
+        "duration_seconds": 5,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16",
+          "1:1",
+          "4:3",
+          "3:4"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "atlas-cloud",
+        "prompt_expansion": {
+          "parameter": "prompt_extend",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:b0830b6294534fa499fddf2916f9285695093a2cb35a0cb8325b1a1a9b5ba540",
+      "negative_prompt": null
+    },
+    {
+      "model_id": "google/veo-3.1-lite",
+      "scene_plan": "Compress the focused stroll into four seconds with a fixed camera and immediate, smooth forward movement. Use a slightly brisker but natural cadence than the five-second variants, restrained torso sway, and light residual hair motion. End with the pair observably closer to the camera, their cones upright and their cheerful connection unchanged.",
+      "positive_prompt": "The couple takes several smooth steps forward together as their hair lifts gently in the breeze, keeping each ice-cream cone upright. Near the end they are visibly closer, still exchanging the same cheerful look.",
+      "runtime": {
+        "duration_seconds": 4,
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "9:16"
+        ],
+        "generate_audio": false,
+        "frame_inputs": [
+          "first_frame"
+        ],
+        "provider": "google-vertex",
+        "prompt_expansion": {
+          "parameter": "enhancePrompt",
+          "value": true
+        }
+      },
+      "model_contract_fingerprint": "sha256:48f40a6acd0548b9f61ed6b18c8d37e543db68905c25e79c95a36b0529310605",
+      "negative_prompt": null
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "ticket": "PROMOPAGES-live-images-20260813-v1",
+  "batch_id": "promopages-live-images-20260813-v1-retry-06",
+  "agent_id": "clipmaker-lite",
+  "lite_run_id": "promopages-live-images-20260813-v1-retry-06-02-banki-vygodno-kupit-dollar-01",
+  "provider_run_id": "promopages-live-images-20260813-v1-retry-06-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+  "model_id": "alibaba/wan-2.2",
+  "source": {
+    "path": "PROMOPAGES-9857/PROMOPAGES-live-images-20260813-v1/articles/02-banki-vygodno-kupit-dollar/01.jpeg",
+    "sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+    "width": 2000,
+    "height": 1125
+  },
+  "structured_intent": {
+    "editorial_meaning": "Лёгкая совместная прогулка передаёт позитивное чувство от простого выбора выгодного предложения по обмену валюты.",
+    "initial_state": "Пара находится рядом в фазе прогулочного шага, улыбается и смотрит друг на друга; каждый держит перед собой рожок мороженого.",
+    "primary_action": "Пара вместе продолжает один спокойный шаг вперёд.",
+    "terminal_state": "Пара завершает совместный шаг с перенесённым весом, по-прежнему улыбаясь друг другу и удерживая оба рожка вертикально.",
+    "geometry_invariant": "Каждый человек непрерывно удерживает свой рожок рукой в вертикальном положении.",
+    "semantic_invariant": "До последнего кадра сохраняются взаимная доброжелательность и ощущение приятного, уверенного выбора."
+  },
+  "prompt": {
+    "positive": "The couple walks forward together at a relaxed, even pace as their hair and loose clothing sway gently, while a smooth tracking camera keeps both faces and ice-cream cones in view. By the final frames they complete one natural synchronized step, still smiling at each other with both cones upright in their hands.",
+    "negative": null
+  },
+  "runtime": {
+    "duration_seconds": 5,
+    "resolution": "720p",
+    "aspect_ratios": [
+      "source"
+    ],
+    "generate_audio": false,
+    "frame_inputs": [
+      "first_frame"
+    ],
+    "gateway": "eliza",
+    "provider": "segmind",
+    "provider_model_id": "segmind/wan-2.2-i2v-flash",
+    "adapter": "eliza-segmind",
+    "synchronous": true,
+    "automatic_retry": false,
+    "frames": 150,
+    "fps": 30,
+    "seed": 220214,
+    "watermark": false,
+    "prompt_expansion": {
+      "parameter": "prompt_extend",
+      "value": false
+    },
+    "negative_prompt_transport": {
+      "mode": "separate_field",
+      "parameter": "negative_prompt",
+      "null_serialization": "empty_string"
+    }
+  },
+  "lite_result": {
+    "path": "artifacts/clipmaker-lite/v1/promopages-live-images-20260813-v1-retry-06-02-banki-vygodno-kupit-dollar-01/result.json",
+    "sha256": "3dcabfc7ce9fa8761eaebe56d538442f694c14c6d2e10cb2c1743956248ac8e4",
+    "provenance": {
+      "verified": true,
+      "verification_scope": "trusted-workspace-route",
+      "cryptographically_signed": false,
+      "agent_id": "clipmaker-lite",
+      "contract_version": "2.1.4",
+      "contract_fingerprint": "sha256:44b6acdb9707feaec6cd6acef22a295182454d3efd6d87fa4fe70dbd08337769",
+      "instruction_bundle_sha256": "9e99869be3cfb7af99ac94559315cd66c339b4cc42238829781963ca17ecfce8",
+      "source_image_sha256": "82f180a2e7ec64bbf46ba4089cef8494109c5960df2d89206e8faf570dbf3a65",
+      "article_context_sha256": "aae809117e895bdb149a270a3ec0de70ce41a7989ef4b3756d8e721027e076ab",
+      "models": [
+        "alibaba/wan-2.2",
+        "alibaba/wan-2.7",
+        "google/veo-3.1-lite"
+      ]
+    }
+  }
+}

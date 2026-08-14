@@ -4,9 +4,10 @@
 The coordinator freezes exactly two article-body images, prepares one isolated
 three-model Lite plan per image, and delegates provider transport to the tested
 ``clipmaker_lite_batch_pipeline`` bridge.  Provider retries are never automatic:
-an operator must reserve a new prompt attempt with an explicit direction.  Each
-reservation receives fresh planning and provider namespaces and is charged to
-the immutable batch-local budget ledger before any paid submit can occur.
+an operator must reserve either a directed prompt attempt or an autonomous Lite
+attempt with no additional direction.  Each reservation receives fresh planning
+and provider namespaces and is charged to the immutable batch-local budget
+ledger before any paid submit can occur.
 """
 
 from __future__ import annotations
@@ -86,6 +87,7 @@ PRIMARY_RESERVATIONS = 6
 MAX_NEW_PROMPT_ATTEMPTS = 8
 MAX_TOTAL_RESERVATIONS = PRIMARY_RESERVATIONS + MAX_NEW_PROMPT_ATTEMPTS
 MAX_ESTIMATED_COST_USD = ACCOUNTING_COST_PER_SUBMIT_USD * MAX_TOTAL_RESERVATIONS
+AUTONOMOUS_RETRY_MODE = "clipmaker-lite-autonomous"
 
 
 class PipelineError(RuntimeError):
@@ -752,6 +754,20 @@ def load_attempt_registry(root: Path = ROOT) -> dict[str, Any]:
             raise PipelineError(f"Prompt attempt ledger order differs: {attempt_id}")
         if attempt_id in seen:
             raise PipelineError(f"Duplicate prompt attempt: {attempt_id}")
+        direction = attempt.get("direction")
+        retry_mode = attempt.get("retry_mode")
+        if retry_mode == AUTONOMOUS_RETRY_MODE:
+            if direction is not None:
+                raise PipelineError(
+                    f"Autonomous prompt attempt has a direction: {attempt_id}"
+                )
+        elif retry_mode is None:
+            if not isinstance(direction, str) or not direction.strip():
+                raise PipelineError(
+                    f"Directed prompt attempt has no direction: {attempt_id}"
+                )
+        else:
+            raise PipelineError(f"Unknown prompt retry mode: {attempt_id}")
         seen.add(attempt_id)
     return value
 
@@ -777,21 +793,29 @@ def _resolve_primary_target(
 def reserve_retry(
     sources: Sequence[Source],
     provider_run_id: str,
-    direction: str,
+    direction: str | None,
     root: Path = ROOT,
+    *,
+    autonomous: bool = False,
 ) -> dict[str, Any]:
-    direction = direction.strip()
-    if not direction:
-        raise PipelineError("Retry direction must be non-empty")
+    if autonomous:
+        if direction is not None:
+            raise PipelineError("Autonomous retry must not include a direction")
+    else:
+        if not isinstance(direction, str) or not direction.strip():
+            raise PipelineError("Retry direction must be non-empty")
+        direction = direction.strip()
     source, model_id = _resolve_primary_target(sources, provider_run_id)
     registry = load_attempt_registry(root)
     attempts = list(registry["attempts"])
-    for attempt in attempts:
-        if (
-            attempt.get("primary_provider_run_id") == provider_run_id
-            and attempt.get("direction") == direction
-        ):
-            return attempt
+    if not autonomous:
+        for attempt in attempts:
+            if (
+                attempt.get("primary_provider_run_id") == provider_run_id
+                and attempt.get("direction") == direction
+                and attempt.get("retry_mode") is None
+            ):
+                return attempt
     if len(attempts) >= MAX_NEW_PROMPT_ATTEMPTS:
         raise PipelineError("All eight new prompt-attempt reservations are exhausted")
     ordinal = len(attempts) + 1
@@ -815,6 +839,8 @@ def reserve_retry(
         ),
         "accounting_reservation_usd": float(ACCOUNTING_COST_PER_SUBMIT_USD),
     }
+    if autonomous:
+        attempt["retry_mode"] = AUTONOMOUS_RETRY_MODE
     attempts.append(attempt)
     updated = dict(registry)
     updated["attempts"] = attempts
@@ -851,21 +877,31 @@ def _planning_targets(
     if attempt_id is None:
         return [(source, source.planning_run_id, None) for source in sources]
     attempt = _attempt_by_id(root, attempt_id)
+    direction = attempt.get("direction")
+    if direction is None:
+        if attempt.get("retry_mode") != AUTONOMOUS_RETRY_MODE:
+            raise PipelineError(f"Retry direction is invalid: {attempt_id}")
+    elif not isinstance(direction, str) or not direction.strip():
+        raise PipelineError(f"Retry direction is invalid: {attempt_id}")
     return [
         (
             _source_for_attempt(sources, attempt),
             str(attempt["planning_run_id"]),
-            str(attempt["direction"]),
+            direction,
         )
     ]
 
 
 def _planning_state(
-    source: Source, planning_run_id: str, root: Path
+    source: Source,
+    planning_run_id: str,
+    root: Path,
+    expected_direction: str | None,
 ) -> str | None:
     directory = root / "artifacts/clipmaker-lite/v1" / planning_run_id
     if (directory / "result.json").is_file():
         summary = runner.provenance_summary(root, planning_run_id)
+        result = _read_json(directory / "result.json")
         if (
             summary.get("verified") is not True
             or summary.get("agent_id") != AGENT_ID
@@ -873,13 +909,19 @@ def _planning_state(
             or summary.get("models") != list(MODEL_IDS)
             or summary.get("source_image_sha256") != source.source_sha256
             or summary.get("article_context_sha256") != source.context_sha256
+            or not isinstance(result.get("inputs"), dict)
+            or result["inputs"].get("user_direction") != expected_direction
         ):
             raise PipelineError(f"Planning provenance differs: {planning_run_id}")
         return "verified"
     if (directory / "job.json").is_file():
-        _job, selection, _directory = runner.validate_prepared_job(root, planning_run_id)
+        job, selection, _directory = runner.validate_prepared_job(root, planning_run_id)
         selected = [item.get("model_id") for item in selection.get("selected_models", [])]
-        if selected != list(MODEL_IDS):
+        if (
+            selected != list(MODEL_IDS)
+            or not isinstance(job.get("inputs"), dict)
+            or job["inputs"].get("user_direction") != expected_direction
+        ):
             raise PipelineError(f"Prepared planning model set differs: {planning_run_id}")
         return "prepared"
     return None
@@ -890,7 +932,7 @@ def prepare_plans(
 ) -> dict[str, int]:
     counts = {"verified": 0, "prepared": 0, "pending": 0}
     for source, planning_run_id, direction in _planning_targets(sources, root, attempt_id):
-        state = _planning_state(source, planning_run_id, root)
+        state = _planning_state(source, planning_run_id, root, direction)
         if state is not None:
             counts[state] += 1
             continue
@@ -922,7 +964,10 @@ def prepare_plans(
             stderr=subprocess.PIPE,
             check=False,
         )
-        if completed.returncode or _planning_state(source, planning_run_id, root) != "prepared":
+        if (
+            completed.returncode
+            or _planning_state(source, planning_run_id, root, direction) != "prepared"
+        ):
             raise PipelineError(
                 f"Planning prepare failed for {planning_run_id}: "
                 f"{transport.safe_error(completed.stderr or completed.stdout)}"
@@ -949,7 +994,7 @@ def run_plans(
     if not allow_external_processing:
         raise PipelineError("Real Lite planning requires --allow-external-processing")
     for source, planning_run_id, _direction in targets:
-        if _planning_state(source, planning_run_id, root) == "verified":
+        if _planning_state(source, planning_run_id, root, _direction) == "verified":
             continue
         command = [
             sys.executable,
@@ -970,7 +1015,10 @@ def run_plans(
             timeout=timeout + 60,
             check=False,
         )
-        if completed.returncode or _planning_state(source, planning_run_id, root) != "verified":
+        if (
+            completed.returncode
+            or _planning_state(source, planning_run_id, root, _direction) != "verified"
+        ):
             raise PipelineError(
                 f"Planning run failed for {planning_run_id}: "
                 f"{transport.safe_error(completed.stderr or completed.stdout)}"
@@ -1493,7 +1541,9 @@ def _parser() -> argparse.ArgumentParser:
         command.add_argument("--allow-external-processing", action="store_true")
     reserve = commands.add_parser("reserve-retry")
     reserve.add_argument("--provider-run-id", required=True)
-    reserve.add_argument("--direction", required=True)
+    retry_mode = reserve.add_mutually_exclusive_group(required=True)
+    retry_mode.add_argument("--direction")
+    retry_mode.add_argument("--autonomous", action="store_true")
     verify_command = commands.add_parser("verify")
     verify_command.add_argument("--allow-incomplete", action="store_true")
     finalize_command = commands.add_parser("finalize")
@@ -1546,7 +1596,11 @@ def main(argv: Sequence[str] | None = None, root: Path = ROOT) -> int:
             )
         if args.command == "reserve-retry":
             attempt = reserve_retry(
-                sources, args.provider_run_id, args.direction, root
+                sources,
+                args.provider_run_id,
+                args.direction,
+                root,
+                autonomous=args.autonomous,
             )
             print(f"PASS: reserved {attempt['attempt_id']} -> {attempt['provider_run_id']}")
             return 0

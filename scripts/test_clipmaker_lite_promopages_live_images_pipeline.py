@@ -192,6 +192,42 @@ class LiveImagesPipelineTest(unittest.TestCase):
             with self.assertRaisesRegex(pipeline.PipelineError, "eight"):
                 pipeline.reserve_retry(sources, primary_id, "Ninth direction", root)
 
+    def test_autonomous_retries_are_fresh_and_have_no_direction(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root, sources = self.make_fixture(directory)
+            pipeline.write_inventory(sources, root)
+            primary_id = pipeline._primary_provider_run_id(
+                sources[1], "alibaba/wan-2.2"
+            )
+            first = pipeline.reserve_retry(
+                sources, primary_id, None, root, autonomous=True
+            )
+            second = pipeline.reserve_retry(
+                sources, primary_id, None, root, autonomous=True
+            )
+            self.assertEqual(first["attempt_id"], "retry-01")
+            self.assertEqual(second["attempt_id"], "retry-02")
+            self.assertNotEqual(first["planning_run_id"], second["planning_run_id"])
+            self.assertNotEqual(first["provider_run_id"], second["provider_run_id"])
+            self.assertIsNone(first["direction"])
+            self.assertEqual(
+                first["retry_mode"], pipeline.AUTONOMOUS_RETRY_MODE
+            )
+            targets = pipeline._planning_targets(
+                sources, root, first["attempt_id"]
+            )
+            self.assertEqual(targets[0][2], None)
+            with self.assertRaisesRegex(
+                pipeline.PipelineError, "must not include a direction"
+            ):
+                pipeline.reserve_retry(
+                    sources,
+                    primary_id,
+                    "Do something",
+                    root,
+                    autonomous=True,
+                )
+
     def test_native_configuration_has_exact_primary_and_retry_matrices(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root, sources = self.make_fixture(directory)
