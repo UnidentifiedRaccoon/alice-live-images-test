@@ -545,6 +545,7 @@ def upload_export(
     *,
     execute: bool,
     yc_profile: str | None = None,
+    only_object_keys: Sequence[str] | None = None,
     runner: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
     verify_cdn: Callable[[Mapping[str, Any]], dict[str, Any]] = transport._verify_yastatic,
 ) -> dict[str, Any]:
@@ -554,6 +555,17 @@ def upload_export(
     output_dir = output_dir.resolve(strict=True)
     manifest = _read_json(output_dir / "manifest.json")
     ready = [row for row in manifest["outputs"] if row["package_status"] == "ready"]
+    ready_by_key = {row["object_key"]: row for row in ready}
+    if only_object_keys is None:
+        upload_rows = ready
+    else:
+        requested_keys = list(only_object_keys)
+        if not requested_keys or len(requested_keys) != len(set(requested_keys)):
+            raise ExportError("--only-object-key values must be non-empty and unique")
+        unknown = [key for key in requested_keys if key not in ready_by_key]
+        if unknown:
+            raise ExportError("Unknown --only-object-key: " + ", ".join(unknown))
+        upload_rows = [ready_by_key[key] for key in requested_keys]
     operations = [
         {
             "operation": "head-then-put-if-missing",
@@ -562,7 +574,7 @@ def upload_export(
             "bytes": row["media"]["bytes"],
             "yastatic_url": row["yastatic_url"],
         }
-        for row in ready
+        for row in upload_rows
     ]
     if not execute:
         return {
@@ -602,12 +614,18 @@ def upload_export(
         "batch_id": BATCH_ID,
         "started_at": datetime.now(timezone.utc).isoformat(),
         "completed_at": None,
-        "counts": {"total": len(ready), "uploaded": 0, "skipped": 0, "verified": 0},
+        "counts": {
+            "total": len(upload_rows),
+            "uploaded": 0,
+            "skipped": 0,
+            "verified": 0,
+            "delivery_verified": 0,
+        },
         "objects": [],
     }
     report_path = output_dir / "upload-report.json"
     _atomic_write_json(report_path, report)
-    for row in ready:
+    for row in upload_rows:
         item = {
             "object_key": row["object_key"],
             "yastatic_url": row["yastatic_url"],
@@ -647,8 +665,17 @@ def upload_export(
             raise ExportError(str(exc)) from exc
     report["completed_at"] = datetime.now(timezone.utc).isoformat()
     _atomic_write_json(report_path, report)
-    if report["counts"]["verified"] != len(ready):
-        raise ExportError("Refusing a partial S3 delivery manifest")
+    if report["counts"]["verified"] != len(upload_rows):
+        raise ExportError("Refusing an incomplete scoped upload report")
+    for row in ready:
+        head = transport._head_object(row, yc_profile, runner)
+        if head is None or not transport._head_matches(row, head):
+            raise ExportError(
+                "Refusing a partial S3 delivery manifest; object is missing or mismatched: "
+                + row["object_key"]
+            )
+        verify_cdn(row)
+        report["counts"]["delivery_verified"] += 1
     _atomic_write_json(delivery_path, _delivery_manifest(ready))
     return report
 
@@ -667,6 +694,14 @@ def _parser() -> argparse.ArgumentParser:
     upload.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_DIR)
     upload.add_argument("--yc-profile", default="promopages-internal")
     upload.add_argument("--execute", action="store_true")
+    upload.add_argument(
+        "--only-object-key",
+        action="append",
+        help=(
+            "Upload only this exact ready object key (repeatable). Other ready objects are "
+            "verified read-only before the complete delivery manifest is written."
+        ),
+    )
     return parser
 
 
@@ -691,6 +726,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 args.output,
                 execute=args.execute,
                 yc_profile=args.yc_profile,
+                only_object_keys=args.only_object_key,
             )
             print(json.dumps(result, ensure_ascii=False, indent=2))
             return 0

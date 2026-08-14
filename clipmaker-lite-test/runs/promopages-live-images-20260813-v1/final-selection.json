@@ -21,12 +21,12 @@
     "accounting_cost_per_submit_usd": 0.35,
     "primary_reservations": 6,
     "maximum_new_prompt_attempts": 8,
-    "retry_reservations": 4,
-    "total_reservations": 10,
+    "retry_reservations": 7,
+    "total_reservations": 13,
     "maximum_total_reservations": 14,
-    "estimated_reserved_cost_usd": 3.5,
+    "estimated_reserved_cost_usd": 4.55,
     "maximum_estimated_cost_usd": 4.9,
-    "headroom_usd": 1.5
+    "headroom_usd": 0.45
   },
   "observed_wan_22_costs": [
     {
@@ -38,11 +38,27 @@
       "attempt_id": "primary",
       "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-2",
       "response_cost": "0.18"
+    },
+    {
+      "attempt_id": "retry-05",
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-05-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "response_cost": "0.18"
+    },
+    {
+      "attempt_id": "retry-06",
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-06-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "response_cost": "0.18"
+    },
+    {
+      "attempt_id": "retry-07",
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-07-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "response_cost": "0.18"
     }
   ],
   "requested_retry_selections": [
     "retry-02",
-    "retry-04"
+    "retry-04",
+    "retry-07"
   ],
   "articles": [
     {
@@ -520,13 +536,13 @@
       "model_id": "alibaba/wan-2.2",
       "status": "succeeded",
       "recorded_status": "succeeded",
-      "selected_attempt_id": "primary",
+      "selected_attempt_id": "retry-07",
       "selected_prompt": {
-        "positive": "The couple walks forward together at a relaxed, even pace, with gentle natural body sway and the ice-cream cones held upright in their hands. By the final frames they have moved visibly closer while still smiling at each other.",
+        "positive": "The couple continues strolling forward together at a relaxed, even pace, with gentle body sway and hair moving in the breeze while their ice-cream cones remain upright in their hands. By the final frames they have advanced visibly and still share the same warm smile.",
         "negative": null
       },
-      "provider_run_id": "promopages-live-images-20260813-v1-02-banki-vygodno-kupit-dollar-01-wan-2-2",
-      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/videos/primary/02-banki-vygodno-kupit-dollar/wan-2.2/01.mp4",
+      "provider_run_id": "promopages-live-images-20260813-v1-retry-07-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+      "video_path": "clipmaker-lite-test/runs/promopages-live-images-20260813-v1/attempts/retry-07/videos/wan-2.2/01.mp4",
       "media": {
         "container": "mov,mp4,m4a,3gp,3g2,mj2",
         "codec": "h264",
@@ -536,8 +552,8 @@
         "fps": 30.0,
         "frames": 150,
         "has_audio": false,
-        "bytes": 11801384,
-        "sha256": "cbd4d8754361d39b37422dfd8cc1baf2ac41de22ca42fbdc3544fff778bfb2bf"
+        "bytes": 11854951,
+        "sha256": "8fde12931866e2bc86cf3c0a22123026073522d2647615478f6c66876ba8ece6"
       },
       "contract_check": {
         "requested": {
@@ -571,7 +587,7 @@
         "waived_warnings": []
       },
       "error": null,
-      "attempt_count": 1,
+      "attempt_count": 4,
       "attempts": [
         {
           "attempt_id": "primary",
@@ -600,6 +616,189 @@
             "has_audio": false,
             "bytes": 11801384,
             "sha256": "cbd4d8754361d39b37422dfd8cc1baf2ac41de22ca42fbdc3544fff778bfb2bf"
+          },
+          "contract_check": {
+            "requested": {
+              "duration_seconds": 5,
+              "resolution": "720p",
+              "aspect_ratio": "source",
+              "generate_audio": false,
+              "frames": 150,
+              "fps": 30
+            },
+            "checks": {
+              "duration": true,
+              "audio": true,
+              "frames": true,
+              "fps": true,
+              "resolution": true,
+              "aspect_ratio": true
+            },
+            "conforms": true,
+            "warnings": []
+          },
+          "media_acceptance": {
+            "accepted": true,
+            "mode": "strict-contract",
+            "policy_id": null,
+            "policy_sha256": null,
+            "model_id": "alibaba/wan-2.2",
+            "adapter": "eliza-segmind",
+            "target_generate_audio": false,
+            "observed_has_audio": false,
+            "waived_warnings": []
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "retry-05",
+          "status": "succeeded",
+          "recorded_status": "succeeded",
+          "prompt": {
+            "positive": "The couple walks forward together at a relaxed, even pace, their free arms and clothing swaying gently while both ice-cream cones stay upright in their hands. Keep their warm shared gaze and smiles as they complete another natural step near the end.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-05-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+          "provider_response": {
+            "http_status": 200,
+            "content_type": "video/mp4",
+            "request_id": "5904ad9d53d0eade10a4b63d5668a9e0",
+            "response_cost": "0.18",
+            "automatic_retry": false
+          },
+          "media": {
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1280,
+            "height": 720,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": false,
+            "bytes": 11043281,
+            "sha256": "090e36b904cd84c74b5abd918b315ac5c72647d73e3308e9dd79d1cae7c17382"
+          },
+          "contract_check": {
+            "requested": {
+              "duration_seconds": 5,
+              "resolution": "720p",
+              "aspect_ratio": "source",
+              "generate_audio": false,
+              "frames": 150,
+              "fps": 30
+            },
+            "checks": {
+              "duration": true,
+              "audio": true,
+              "frames": true,
+              "fps": true,
+              "resolution": true,
+              "aspect_ratio": true
+            },
+            "conforms": true,
+            "warnings": []
+          },
+          "media_acceptance": {
+            "accepted": true,
+            "mode": "strict-contract",
+            "policy_id": null,
+            "policy_sha256": null,
+            "model_id": "alibaba/wan-2.2",
+            "adapter": "eliza-segmind",
+            "target_generate_audio": false,
+            "observed_has_audio": false,
+            "waived_warnings": []
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "retry-06",
+          "status": "succeeded",
+          "recorded_status": "succeeded",
+          "prompt": {
+            "positive": "The couple walks forward together at a relaxed, even pace as their hair and loose clothing sway gently, while a smooth tracking camera keeps both faces and ice-cream cones in view. By the final frames they complete one natural synchronized step, still smiling at each other with both cones upright in their hands.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-06-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+          "provider_response": {
+            "http_status": 200,
+            "content_type": "video/mp4",
+            "request_id": "752e6172110af06829382cf577b52cbf",
+            "response_cost": "0.18",
+            "automatic_retry": false
+          },
+          "media": {
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1280,
+            "height": 720,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": false,
+            "bytes": 12507248,
+            "sha256": "9c686b43e7f389b22ad56fd76bbef3d0f077949a9f2dd35500b8f74908b8e4ff"
+          },
+          "contract_check": {
+            "requested": {
+              "duration_seconds": 5,
+              "resolution": "720p",
+              "aspect_ratio": "source",
+              "generate_audio": false,
+              "frames": 150,
+              "fps": 30
+            },
+            "checks": {
+              "duration": true,
+              "audio": true,
+              "frames": true,
+              "fps": true,
+              "resolution": true,
+              "aspect_ratio": true
+            },
+            "conforms": true,
+            "warnings": []
+          },
+          "media_acceptance": {
+            "accepted": true,
+            "mode": "strict-contract",
+            "policy_id": null,
+            "policy_sha256": null,
+            "model_id": "alibaba/wan-2.2",
+            "adapter": "eliza-segmind",
+            "target_generate_audio": false,
+            "observed_has_audio": false,
+            "waived_warnings": []
+          },
+          "error": null
+        },
+        {
+          "attempt_id": "retry-07",
+          "status": "succeeded",
+          "recorded_status": "succeeded",
+          "prompt": {
+            "positive": "The couple continues strolling forward together at a relaxed, even pace, with gentle body sway and hair moving in the breeze while their ice-cream cones remain upright in their hands. By the final frames they have advanced visibly and still share the same warm smile.",
+            "negative": null
+          },
+          "provider_run_id": "promopages-live-images-20260813-v1-retry-07-02-banki-vygodno-kupit-dollar-01-wan-2-2",
+          "provider_response": {
+            "http_status": 200,
+            "content_type": "video/mp4",
+            "request_id": "faa37d0f336496571cdced1fd09d83a6",
+            "response_cost": "0.18",
+            "automatic_retry": false
+          },
+          "media": {
+            "container": "mov,mp4,m4a,3gp,3g2,mj2",
+            "codec": "h264",
+            "duration_seconds": 5.0,
+            "width": 1280,
+            "height": 720,
+            "fps": 30.0,
+            "frames": 150,
+            "has_audio": false,
+            "bytes": 11854951,
+            "sha256": "8fde12931866e2bc86cf3c0a22123026073522d2647615478f6c66876ba8ece6"
           },
           "contract_check": {
             "requested": {
