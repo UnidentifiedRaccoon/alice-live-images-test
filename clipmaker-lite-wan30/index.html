@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f0f4" />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+    <meta
+      name="description"
+      content="Отдельное сравнение Clipmaker Lite: Veo 3.1 Lite, Wan 2.7 и Wan 3.0 на 21 статье."
+    />
+    <title>Alice Live · Clipmaker Lite · Wan 3.0</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../shared.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=1" />
+  </head>
+  <body data-demo="clipmaker-lite-wan30">
+    <a class="skipLink" href="#caseTitle">К выбранному кейсу</a>
+
+    <header class="siteHeader wanHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../index.html" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span>
+            <strong>Alice Live</strong>
+            <small>Media Lab</small>
+          </span>
+        </a>
+        <p class="experimentLabel">Clipmaker Lite · отдельный эксперимент</p>
+        <a class="historyLink" href="../clipmaker-lite/">
+          Историческая медиатека <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="wanApp" id="mainContent">
+      <header class="wanHero">
+        <div class="wanHeroCopy">
+          <p class="eyebrow">21 статья · единый first frame</p>
+          <h1>Clipmaker Lite.<br />Wan 3.0.</h1>
+          <p class="wanHeroDescription">
+            Отдельная рабочая выборка для покадрового сравнения Veo 3.1 Lite,
+            Wan 2.7 и Wan 3.0. Исходник, статусы, технические параметры и
+            авторский план сцены остаются рядом с каждым результатом.
+          </p>
+          <p class="datasetSourceStatus" id="datasetSourceStatus" aria-live="polite">
+            Загружаем манифест эксперимента…
+          </p>
+        </div>
+
+        <div class="heroAudit">
+          <dl class="datasetSummary" aria-label="Состав выборки">
+            <div>
+              <dt>Статьи</dt>
+              <dd id="articleCountSummary">—</dd>
+            </div>
+            <div>
+              <dt>MP4 доступны</dt>
+              <dd id="availableCountSummary">—</dd>
+            </div>
+            <div>
+              <dt>Wan 3.0</dt>
+              <dd id="wan30CountSummary">—</dd>
+            </div>
+          </dl>
+          <details class="manifestSummaryDetails">
+            <summary>Сводка манифеста</summary>
+            <pre id="manifestSummary">Ожидаем данные…</pre>
+          </details>
+        </div>
+      </header>
+
+      <section class="caseNavigator" aria-label="Выбор и управление кейсом">
+        <div class="navigatorCopy">
+          <p class="caseFolio">
+            Кейс <span id="currentNumber">—</span><span aria-hidden="true"> / </span
+            ><span class="visuallyHidden">из</span><span id="totalNumber">—</span>
+          </p>
+          <h2 id="caseTitle" tabindex="-1">Подготавливаем выборку…</h2>
+          <p class="caseMeta" id="caseMeta">Источник и статус уточняются…</p>
+        </div>
+
+        <div class="navigatorControls">
+          <button class="controlButton" id="previousCase" type="button" disabled>
+            ← Назад
+          </button>
+          <label class="caseSelectLabel" for="caseSelect">
+            <span class="visuallyHidden">Выберите статью</span>
+            <select id="caseSelect" disabled>
+              <option>Загрузка…</option>
+            </select>
+          </label>
+          <button class="controlButton strong" id="nextCase" type="button" disabled>
+            Дальше →
+          </button>
+        </div>
+
+        <div class="transportBlock">
+          <div class="transportControls" role="group" aria-label="Синхронное управление видео">
+            <button class="controlButton strong" id="playPause" type="button" disabled>
+              Воспроизвести
+            </button>
+            <button class="controlButton" id="restartVideos" type="button" disabled>
+              С начала
+            </button>
+            <button
+              class="controlButton"
+              id="muteVideos"
+              type="button"
+              aria-pressed="true"
+              disabled
+            >
+              Включить звук
+            </button>
+          </div>
+          <p class="keyboardHint">
+            Клавиши: <kbd>←</kbd><kbd>→</kbd> кейс · <kbd>Space</kbd> старт/пауза ·
+            <kbd>R</kbd> сначала · <kbd>M</kbd> звук
+          </p>
+        </div>
+
+        <p class="navigatorStatus" id="navigatorStatus" role="status" aria-live="polite">
+          Загружаем нормализованные данные…
+        </p>
+      </section>
+
+      <section class="datasetError" id="datasetError" role="alert" hidden>
+        <h2>Манифест эксперимента не загрузился</h2>
+        <p id="datasetErrorText">
+          Откройте демо через локальный сервер и обновите страницу.
+        </p>
+      </section>
+
+      <section
+        class="comparisonViewport"
+        id="comparisonViewport"
+        aria-labelledby="caseTitle"
+        aria-busy="true"
+      >
+        <div class="comparisonGuide" aria-hidden="true">
+          <span>Источник</span>
+          <span>Результаты моделей · одинаковый масштаб</span>
+        </div>
+        <div class="comparisonGrid" id="comparisonGrid">
+          <p class="loadingState">Проверяем манифест и готовим первое сравнение…</p>
+        </div>
+      </section>
+
+      <noscript>
+        <p class="datasetError">Для просмотра сравнения нужен JavaScript.</p>
+      </noscript>
+    </main>
+
+    <script src="app.js?v=2" defer></script>
+  </body>
+</html>
