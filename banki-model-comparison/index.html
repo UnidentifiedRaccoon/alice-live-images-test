@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f0f4" />
+    <meta name="description" content="Сравнение пяти image-to-video моделей Clipmaker Lite на одном кадре Банки.ру." />
+    <title>Alice Live · Банки.ру · 5 моделей</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../shared.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=1" />
+  </head>
+  <body data-demo="banki-model-comparison">
+    <a class="skipLink" href="#modelViewer">К сравнению моделей</a>
+
+    <header class="siteHeader comparisonHeader">
+      <div class="siteHeaderInner">
+        <a class="wordmark" href="../index.html" aria-label="Alice Live Media Lab">
+          <span class="wordmarkDot" aria-hidden="true"></span>
+          <span><strong>Alice Live</strong><small>Media Lab</small></span>
+        </a>
+        <p class="headerContext">Clipmaker Lite · Банки.ру</p>
+        <a class="historyLink" href="../clipmaker-lite/">Медиатека <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+
+    <main class="comparisonApp">
+      <section class="hero" aria-labelledby="pageTitle">
+        <div class="heroCopy">
+          <h1 id="pageTitle">Один кадр.<br />Пять моделей.</h1>
+          <p>
+            Финальные доступные результаты MiniMax H3, Wan 3.0, Veo 3.1 Lite,
+            Wan 2.7 и Wan 2.2 на одном изображении из статьи
+            «В каких банках можно выгодно купить доллар?»
+          </p>
+          <dl class="heroFacts" aria-label="Состав сравнения">
+            <div><dt>Модели</dt><dd>5</dd></div>
+            <div><dt>Ролики</dt><dd>5</dd></div>
+            <div><dt>Исходник</dt><dd>16:9</dd></div>
+          </dl>
+        </div>
+
+        <figure class="sourceFigure">
+          <img src="media/source.jpeg" width="2000" height="1125" alt="Пара с мороженым идёт по площади на фоне небоскрёбов и декоративных колец" />
+          <figcaption>
+            <span>Исходный кадр</span>
+            <span>2000 × 1125 · body image</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="modelChooser" aria-label="Выберите модель">
+        <div class="modelTabs" id="modelTabs" role="tablist" aria-label="Пять моделей"></div>
+        <p class="keyboardHint">Клавиши <kbd>←</kbd><kbd>→</kbd> переключают модели · <kbd>Space</kbd> запускает видео</p>
+      </section>
+
+      <section class="modelViewer" id="modelViewer" aria-live="polite">
+        <div class="videoStage">
+          <video id="modelVideo" controls playsinline preload="metadata" poster="media/source.jpeg"></video>
+          <div class="videoControls" role="group" aria-label="Управление выбранным видео">
+            <button class="controlButton strong" id="playPause" type="button">Воспроизвести</button>
+            <button class="controlButton" id="restart" type="button">С начала</button>
+          </div>
+        </div>
+
+        <article class="modelInfo" id="modelPanel" role="tabpanel" tabindex="0">
+          <p class="modelCount" id="modelCount">01 / 05</p>
+          <h2 id="modelName">MiniMax H3</h2>
+          <p class="modelId" id="modelId">minimax/hailuo-3</p>
+          <p class="modelSummary" id="modelSummary"></p>
+
+          <dl class="metrics" aria-label="Параметры результата">
+            <div><dt>Длительность</dt><dd id="duration">—</dd></div>
+            <div><dt>Разрешение</dt><dd id="resolution">—</dd></div>
+            <div><dt>Частота</dt><dd id="fps">—</dd></div>
+            <div><dt>Вес</dt><dd id="fileSize">—</dd></div>
+          </dl>
+
+          <p class="audioNote" id="audioNote"></p>
+
+          <details class="promptDetails">
+            <summary>Показать prompt Clipmaker Lite</summary>
+            <p id="prompt"></p>
+          </details>
+
+          <p class="attemptLine" id="attemptLine"></p>
+        </article>
+      </section>
+
+      <section class="comparisonTableSection" aria-labelledby="comparisonTitle">
+        <div class="sectionIntro">
+          <h2 id="comparisonTitle">Параметры рядом</h2>
+          <p>Все playback-файлы бесшумные. Оригиналы с неожиданной аудиодорожкой сохранены отдельно.</p>
+        </div>
+        <div class="tableScroller" tabindex="0" aria-label="Прокручиваемая таблица сравнения">
+          <table>
+            <thead>
+              <tr><th>Модель</th><th>Длительность</th><th>Кадр</th><th>FPS</th><th>Попытка</th><th>Аудио провайдера</th></tr>
+            </thead>
+            <tbody id="comparisonBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js?v=1" defer></script>
+  </body>
+</html>
